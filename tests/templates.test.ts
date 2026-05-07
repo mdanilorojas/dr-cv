@@ -169,3 +169,40 @@ describe("renderPage2", () => {
     expect(html).toContain("verified");
   });
 });
+
+import { renderSkillsSheet } from "../generators/templates/skills-sheet.js";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+
+const here = path.dirname(fileURLToPath(import.meta.url));
+const tokensPath = path.join(here, "..", "design-system", "tokens.css");
+const tokensCss = readFileSync(tokensPath, "utf8");
+
+describe("renderSkillsSheet full page", () => {
+  it("returns a full HTML document with doctype, head and body", () => {
+    const fullFixture: SkillsSheetData = {
+      ...fixture,
+      experience: { current: [] },
+      clients: [],
+      testimonials: [],
+    };
+    const html = renderSkillsSheet(fullFixture, "en", tokensCss);
+    expect(html).toMatch(/^<!doctype html>/i);
+    expect(html).toContain("<html");
+    expect(html).toContain("</html>");
+    expect(html).toContain('<style>');
+  });
+
+  it("inlines the design tokens CSS", () => {
+    const html = renderSkillsSheet(fixture, "en", tokensCss);
+    expect(html).toContain("--accent");
+    expect(html).toContain(tokensCss.slice(0, 80));
+  });
+
+  it("contains both page articles", () => {
+    const html = renderSkillsSheet(fixture, "en", tokensCss);
+    const pageCount = (html.match(/<article class="page">/g) ?? []).length;
+    expect(pageCount).toBe(2);
+  });
+});
