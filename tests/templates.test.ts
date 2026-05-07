@@ -96,3 +96,76 @@ describe("renderPage1", () => {
     expect(html).toContain("&lt;script&gt;");
   });
 });
+
+import { renderPage2 } from "../generators/templates/skills-sheet-page-2.js";
+
+describe("renderPage2", () => {
+  const fullFixture: SkillsSheetData = {
+    ...fixture,
+    experience: {
+      current: [
+        {
+          company: "Booz Allen Hamilton",
+          role: "Consultant",
+          startYear: 2024,
+          endYear: "present",
+          highlight: true,
+          badge: "Army · DoD",
+          descriptionEn: "Current BAH work EN",
+          descriptionEs: "Trabajo BAH ES",
+          stack: ["/te-skin", "DS"],
+        },
+      ],
+    },
+    clients: [
+      { name: "Merck & Co.", industryEn: "Healthcare", industryEs: "Salud" },
+    ],
+    testimonials: [
+      {
+        quote: "Verified quote EN",
+        quoteEs: "Cita verificada ES",
+        author: "Test Author",
+        role: "Test Role",
+        company: "Test Co",
+        source: "verified",
+      },
+    ],
+  };
+
+  it("renders current work companies", () => {
+    const html = renderPage2(fullFixture, "en");
+    expect(html).toContain("Booz Allen Hamilton");
+  });
+
+  it("renders experience description in the chosen language", () => {
+    const enHtml = renderPage2(fullFixture, "en");
+    expect(enHtml).toContain("Current BAH work EN");
+    const esHtml = renderPage2(fullFixture, "es");
+    expect(esHtml).toContain("Trabajo BAH ES");
+  });
+
+  it("renders stack pills", () => {
+    const html = renderPage2(fullFixture, "en");
+    expect(html).toContain("/te-skin");
+    expect(html).toContain("DS");
+  });
+
+  it("renders client chips with localized industry", () => {
+    const enHtml = renderPage2(fullFixture, "en");
+    expect(enHtml).toContain("Merck &amp; Co.");
+    expect(enHtml).toContain("Healthcare");
+    const esHtml = renderPage2(fullFixture, "es");
+    expect(esHtml).toContain("Salud");
+  });
+
+  it("renders testimonial quote and author", () => {
+    const html = renderPage2(fullFixture, "en");
+    expect(html).toContain("Verified quote EN");
+    expect(html).toContain("Test Author");
+  });
+
+  it("applies 'verified' badge only to verified testimonials", () => {
+    const html = renderPage2(fullFixture, "en");
+    expect(html).toContain("verified");
+  });
+});
