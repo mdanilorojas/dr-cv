@@ -1,0 +1,4 @@
+byOutcome:
+  name: Only outcome here
+  axis: "malformed"
+  groups: []

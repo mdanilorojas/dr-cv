@@ -1,0 +1,15 @@
+byLayer:
+  name: Test A
+  axis: "test axis layer"
+  groups:
+    - title: Strategy
+      skills:
+        - { name: "Test skill 1", level: mastered }
+        - { name: "Test skill 2", level: learning }
+byOutcome:
+  name: Test B
+  axis: "test axis outcome"
+  groups:
+    - title: Discovery
+      skills:
+        - { name: "Test skill 3", level: mastered }
