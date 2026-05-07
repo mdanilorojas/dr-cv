@@ -1,0 +1,20 @@
+current:
+  - company: "Booz Allen Hamilton"
+    role: "Design-engineering consultant"
+    startYear: 2024
+    endYear: present
+    highlight: true
+    badge: "Army · DoD"
+    descriptionEn: "Design-engineering across the Trusted Environments umbrella — landing, Developer Portal product, and PM collaboration. Two parallel DS (/te-skin as agent-consumable skill + TE Black dark-first w/ a11y audit in tokens). SharePoint SPA. Cross-team consulting to Army/DoD product teams."
+    descriptionEs: "Design-engineering en Trusted Environments — landing, producto Developer Portal y colaboración PM. Dos DS paralelos (/te-skin como skill consumible por agentes + TE Black dark-first con audit a11y en tokens). SPA SharePoint. Consultoría transversal a equipos Army/DoD."
+    stack: ["/te-skin", "Developer Portal", "TE Black DS", "SharePoint SPA", "Houdini", "Army · DoD"]
+
+  - company: "EnRegla"
+    role: "Founder · product · engineering"
+    startYear: 2026
+    endYear: present
+    highlight: true
+    badge: "paying pilots"
+    descriptionEn: "SaaS de compliance multi-sede for LATAM SMBs. 0 → 1.0-MVP in production in 40 days. 346 commits, 21 SQL migrations, 31 UI components, 1 edge function with cron, DS migration 17-parts × 5 recursive rounds (78.4 → 95.6)."
+    descriptionEs: "SaaS de compliance multi-sede para PYMES LATAM. 0 → 1.0-MVP en producción en 40 días. 346 commits, 21 migraciones SQL, 31 componentes UI, 1 edge function con cron, migración DS 17-partes × 5 rondas (78.4 → 95.6)."
+    stack: ["React 19", "Supabase", "Claude Code", "MCP", "RLS"]
