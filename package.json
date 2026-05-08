@@ -11,7 +11,8 @@
     "build:skills-sheet": "tsx generators/skills-sheet.ts",
     "build:cvs": "tsx generators/cv.ts",
     "build:landing": "tsx generators/landing.ts",
-    "build:all": "npm run build:skills-sheet && npm run build:cvs && npm run build:landing",
+    "build:landing-huly": "tsx generators/huly-landing.ts",
+    "build:all": "npm run build:skills-sheet && npm run build:cvs && npm run build:landing && npm run build:landing-huly",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"

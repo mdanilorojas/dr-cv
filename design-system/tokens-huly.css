@@ -1,0 +1,114 @@
+/* =========================================================================
+ * dr-cv · Huly-faithful tokens
+ * Derived from docs/references/huly-design-system.md (2026-05-07 scrape).
+ * Used by the /landing-huly/ generator. Does NOT replace tokens-landing.css.
+ * Preserves orange (#FF8964) as the primary accent.
+ * ========================================================================= */
+
+:root {
+  /* ---- surface ---- */
+  --hl-bg-primary:     #090A0C;
+  --hl-bg-primary-2:   #0B0C0E;
+  --hl-bg-secondary:   #F6F4F0;   /* cream light, slightly warmer than Huly's #F6F6F6 */
+  --hl-bg-elevated:    #0C0C0D;
+  --hl-bg-elevated-2:  #18191B;
+  --hl-bg-toolbar:     #303236;
+  --hl-bg-inverse:     #111111;
+
+  /* ---- text on dark ---- */
+  --hl-text:           #FFFFFF;
+  --hl-text-body:      #E5E5E7;
+  --hl-text-85:        #D7D8DB;
+  --hl-text-80:        #C9CBCF;
+  --hl-text-70:        #B0B2B7;
+  --hl-text-60:        #95979E;
+  --hl-text-50:        #797D86;
+  --hl-text-40:        #61656B;
+
+  /* ---- text on light ---- */
+  --hl-text-dark:          #0B0C0E;
+  --hl-text-dark-body:     #303236;
+  --hl-text-dark-muted:    #4A4B50;
+
+  /* ---- accents ---- */
+  --hl-accent:         #FF8964;    /* warm orange — primary */
+  --hl-accent-deep:    #F58041;
+  --hl-accent-burn:    #CD3100;
+  --hl-accent-cool:    #5683DA;    /* blue — secondary, used sparingly */
+  --hl-accent-cool-bright: #478BEB;
+  --hl-cta-text:       #5A250A;    /* deep brown — CTA pill text */
+
+  /* ---- CTA glow stops (Huly exact) ---- */
+  --hl-glow-1:         #FFFFF5;
+  --hl-glow-2:         #FFAA81;
+  --hl-glow-3:         #FFDA9F;
+
+  /* ---- Headline gradient stops (Huly exact) ---- */
+  --hl-head-1:         #FFFFFF;
+  --hl-head-2:         #D5D8F6;
+  --hl-head-3:         #FDF7FE;
+
+  /* ---- ring / lines ---- */
+  --hl-ring-card:      rgba(255, 255, 255, 0.40);
+  --hl-line:           rgba(255, 255, 255, 0.10);
+  --hl-line-strong:    rgba(255, 255, 255, 0.22);
+  --hl-line-dark:      #E5E2DA;
+
+  /* ---- shadows ---- */
+  --hl-shadow-card:      0 6px 25px rgba(0, 0, 0, 0.50);
+  --hl-shadow-card-hover:0 14px 30px rgba(0, 0, 0, 0.80);
+  --hl-shadow-float:     0 10px 20px rgba(0, 0, 0, 0.50);
+
+  /* ---- typography ---- */
+  --hl-font-body:      'Inter', 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+  --hl-font-display:   'JetBrains Mono', 'Geist Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+  --hl-font-mono:      'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+
+  /* ---- type scale (Huly clamp-adapted) ---- */
+  --hl-text-h1:        clamp(40px, 7vw, 84px);
+  --hl-text-h2:        clamp(36px, 5.5vw, 80px);
+  --hl-text-h3:        clamp(20px, 2.6vw, 32px);
+  --hl-text-lead:      18px;
+  --hl-text-body:      16px;
+  --hl-text-small:     14px;
+  --hl-text-micro:     12px;
+  --hl-text-nano:      11px;
+
+  /* ---- tracking / leading ---- */
+  --hl-track-snug:     -0.01em;
+  --hl-track-snugger:  -0.02em;
+  --hl-track-tight:    -0.04em;
+  --hl-track-tighter:  -0.05em;
+  --hl-lead-h1:        0.9;
+  --hl-lead-h2:        0.8;
+  --hl-lead-tight:     1.25;
+  --hl-lead-body:      1.55;
+
+  /* ---- radius ---- */
+  --hl-radius-pill:    9999px;
+  --hl-radius-sm:      6px;
+  --hl-radius:         10px;
+  --hl-radius-card:    12px;
+  --hl-radius-lg:      20px;
+  --hl-radius-xl:      30px;
+
+  /* ---- motion ---- */
+  --hl-ease:           cubic-bezier(0.4, 0, 0.2, 1);
+  --hl-dur-fast:       200ms;
+  --hl-dur-med:        300ms;
+  --hl-dur-slow:       500ms;
+
+  /* ---- layout ---- */
+  --hl-container:      80rem;
+  --hl-container-narrow: 64rem;
+  --hl-container-wide: 88rem;
+  --hl-pad-x:          clamp(20px, 4vw, 32px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --hl-dur-fast: 0ms;
+    --hl-dur-med: 0ms;
+    --hl-dur-slow: 0ms;
+  }
+}
