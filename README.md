@@ -27,7 +27,31 @@ Produces:
 - `dist/skills-sheet-en.html` + `.pdf` (2 A4 pages)
 - `dist/skills-sheet-es.html` + `.pdf` (2 A4 pages)
 
-Edit any file under `/data/*.yaml`, rebuild, and the PDFs reflect the change.
+## Phase 2 · CV variants — shipped
+
+```bash
+npm run build:cvs
+```
+
+Produces 5 PDFs in `dist/cvs/`:
+- `cv-warm-{en,es}.pdf` — LinkedIn warm (Agentic Designer, featured-dark, 5 testimonials)
+- `cv-serious-{en,es}.pdf` — LinkedIn serious (accent border, verified-only testimonials)
+- `cv-bairesdev-en.pdf` — BairesDev placement (minimalist sans+mono, grayscale, no testimonials)
+
+## Phase 3 · Landing page — shipped
+
+```bash
+npm run build:landing
+npx http-server dist/landing    # serve locally
+```
+
+Produces:
+- `dist/landing/index.html` (English)
+- `dist/landing/es/index.html` (Spanish)
+
+Single-file tab-SPA per language, dark-dominant Huly aesthetic. Open in any browser.
+
+Edit any file under `/data/*.yaml` or `/data/landing.yaml`, rebuild, and the output reflects the change.
 
 ---
 
@@ -65,16 +89,17 @@ dr-cv/
 |---|---|
 | `npm install` | Install deps (Node 20+, TS, vitest, puppeteer, js-yaml) |
 | `npm run build:skills-sheet` | Regenerate `dist/skills-sheet-{en,es}.{html,pdf}` |
-| `npm test` | Run the full test suite |
+| `npm run build:cvs` | Regenerate 5 CV PDFs in `dist/cvs/` |
+| `npm run build:landing` | Regenerate `dist/landing/{index.html, es/index.html}` |
+| `npm run build:all` | Run all three generators in sequence |
+| `npm test` | Run the full test suite (158 tests) |
 | `npm run typecheck` | Verify TypeScript types |
 
 ---
 
 ## Next phases
 
-- **Phase 2** — CV variants (LinkedIn warm, LinkedIn serious, BairesDev plain)
-- **Phase 3** — Landing page at `danilorojas.design` (Huly-inspired, tab-SPA)
-- **Phase 4+** — The "me" agent conversational interface · testimonial pipeline · auto-update agents
+- **Phase 4+** — The "me" agent conversational interface · testimonial pipeline · auto-update agents · custom domain (`danilorojas.design`)
 
 Each phase gets its own spec + plan before code.
 
