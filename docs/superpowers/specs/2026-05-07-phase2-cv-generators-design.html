@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dr-cv · Phase 2 · CV Generators Spec · 2026-05-07</title>
+<style>
+  :root {
+    --ink:#0B0C0E; --ink-body:#303236; --ink-mute:#6b7078;
+    --line:#d8d8d8; --line-soft:#ececec; --bg:#fafaf7;
+    --bg-card:#fff; --bg-section:#f2f0ea; --bg-ink:#0B0C0E;
+    --accent:#FF8964; --accent-deep:#CD3100; --accent-ink:#5A250A;
+    --accent-cool:#5683DA;
+    --font-body:"Inter","Helvetica Neue",Arial,sans-serif;
+    --font-display:"JetBrains Mono","SF Mono",ui-monospace,Menlo,monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0;font-family:var(--font-body);font-size:15px;line-height:1.6;
+    color:var(--ink-body);background:var(--bg);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:920px;margin:0 auto;padding:48px 32px 120px;}
+
+  .hero{margin-bottom:48px;padding-bottom:24px;border-bottom:2px solid var(--ink);
+    display:grid;grid-template-columns:1fr auto;gap:24px;align-items:flex-end}
+  .hero .kicker{font-family:var(--font-display);font-size:11px;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .hero h1{font-family:var(--font-display);font-size:40px;letter-spacing:-0.03em;
+    line-height:1.05;color:var(--ink);margin:0 0 10px;font-weight:600}
+  .hero h1 .accent{color:var(--accent)}
+  .hero .sub{font-size:15px;color:var(--ink-mute);max-width:560px}
+  .hero .meta{font-family:var(--font-display);font-size:11px;color:var(--ink-mute);
+    text-align:right;letter-spacing:0.08em;text-transform:uppercase;line-height:1.7}
+  .hero .meta b{color:var(--ink);font-weight:500}
+
+  .toc{background:var(--bg-card);border:1px solid var(--line);border-radius:10px;
+    padding:20px 28px;margin-bottom:48px}
+  .toc h2{font-family:var(--font-display);font-size:10px;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+  .toc ol{margin:0;padding-left:18px;column-count:2;column-gap:32px}
+  .toc li{margin-bottom:6px;font-size:14px}
+  .toc a{color:var(--ink);text-decoration:none}
+  .toc a:hover{color:var(--accent)}
+
+  section{margin-bottom:56px;scroll-margin-top:24px}
+  section h2{font-family:var(--font-display);font-size:12px;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--accent);font-weight:500;margin:0 0 6px}
+  section h3.display{font-family:var(--font-display);font-size:28px;letter-spacing:-0.025em;
+    line-height:1.15;color:var(--ink);margin:0 0 20px;font-weight:600}
+  section p{margin:0 0 14px}
+  section ul{margin:0 0 14px;padding-left:22px}
+  section ul li{margin-bottom:6px}
+  section b,section strong{color:var(--ink);font-weight:600}
+
+  /* variant cards */
+  .variants{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+  @media (max-width:760px){.variants{grid-template-columns:1fr}}
+  .variant{background:var(--bg-card);border:1px solid var(--line);border-radius:10px;
+    padding:20px 22px;position:relative}
+  .variant.warm{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+  .variant.serious{border-color:var(--ink)}
+  .variant.bairesdev{background:var(--bg-section)}
+  .variant .n{font-family:var(--font-display);font-size:11px;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .variant.serious .n{color:var(--ink)}
+  .variant.bairesdev .n{color:var(--ink-mute)}
+  .variant h4{font-family:var(--font-display);font-size:16px;letter-spacing:-0.02em;
+    font-weight:600;color:var(--ink);margin:0 0 6px}
+  .variant p{font-size:13px;color:var(--ink-body);margin:0 0 10px}
+  .variant ul{margin:0 0 6px;padding-left:16px;font-size:12.5px;line-height:1.5;color:var(--ink-body)}
+  .variant ul li{margin-bottom:3px}
+  .variant .when{font-family:var(--font-display);font-size:10px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--ink-mute);margin-top:10px}
+
+  /* file tree */
+  pre{background:var(--bg-ink);color:#E5E5E7;border-radius:8px;padding:18px 20px;
+    overflow-x:auto;line-height:1.5;margin:14px 0;font-family:var(--font-display);font-size:12.5px}
+  code{font-family:var(--font-display);font-size:12.5px;background:var(--line-soft);
+    color:var(--ink);padding:1px 6px;border-radius:4px}
+  pre code{background:transparent;color:inherit;padding:0}
+
+  /* data flow diagram */
+  .flow-wrap{margin:24px 0;padding:24px;background:var(--bg-card);
+    border:1px solid var(--line);border-radius:10px}
+  .flow-wrap svg{display:block;width:100%;height:auto}
+  .fl-box{fill:#fff;stroke:var(--ink);stroke-width:1}
+  .fl-box-data{fill:var(--bg-section);stroke:var(--ink);stroke-width:1}
+  .fl-box-variant{fill:var(--bg-ink);stroke:var(--bg-ink)}
+  .fl-box-variant.warm{fill:var(--accent);stroke:var(--accent-deep)}
+  .fl-box-output{fill:#fff;stroke:var(--accent);stroke-width:1.2}
+  .fl-lbl{font-family:var(--font-body);font-size:12.5px;fill:var(--ink)}
+  .fl-lbl-sm{font-family:var(--font-body);font-size:10.5px;fill:var(--ink-mute)}
+  .fl-lbl-tag{font-family:var(--font-display);font-size:9px;letter-spacing:1.4px;
+    text-transform:uppercase;fill:var(--accent)}
+  .fl-lbl-white{fill:#fafaf7}
+
+  /* component table */
+  table{width:100%;border-collapse:collapse;font-size:13px;background:var(--bg-card);
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:14px 0}
+  th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  th{background:var(--bg-section);font-family:var(--font-display);font-size:11px;
+    letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);font-weight:600}
+  tr:last-child td{border-bottom:0}
+  td code{font-size:12px}
+
+  /* callout */
+  .callout{border-left:3px solid var(--accent);background:var(--bg-section);
+    padding:14px 18px;border-radius:0 8px 8px 0;margin:18px 0;font-size:13.5px}
+  .callout h4{font-family:var(--font-display);font-size:11px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+
+  /* variant preview — tiny fake CV mockups side by side */
+  .preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+  @media (max-width:760px){.preview-grid{grid-template-columns:1fr}}
+  .mockup{border:1px solid var(--line);border-radius:6px;padding:12px;height:220px;
+    background:var(--bg-card);font-size:8px;line-height:1.35;color:var(--ink-body);
+    overflow:hidden;position:relative}
+  .mockup.warm{background:var(--bg)}
+  .mockup.serious{background:#fff}
+  .mockup.bairesdev{background:#fff;color:#333}
+  .mockup-name{font-family:var(--font-display);font-size:14px;font-weight:600;
+    letter-spacing:-0.04em;color:var(--ink);margin-bottom:3px}
+  .mockup.warm .mockup-name .accent{color:var(--accent)}
+  .mockup.serious .mockup-name .accent{color:var(--accent)}
+  .mockup.bairesdev .mockup-name .accent{color:inherit}
+  .mockup-role{font-family:var(--font-display);font-size:7px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px}
+  .mockup-bar{height:1.5px;background:var(--ink);margin-bottom:4px;width:40%}
+  .mockup.bairesdev .mockup-bar{width:100%;height:1px}
+  .mockup-dot{display:inline-block;width:6px;height:6px;border-radius:50%;
+    background:var(--accent);margin-right:4px;vertical-align:middle}
+  .mockup.bairesdev .mockup-dot{display:none}
+  .mockup-section{margin-top:6px;padding-top:4px;border-top:1px dashed var(--line-soft)}
+  .mockup-pill{display:inline-block;border:1px solid var(--line);border-radius:99px;
+    padding:1px 5px;font-size:6.5px;margin-right:2px;margin-bottom:2px}
+  .mockup-case{background:var(--bg-ink);color:#fff;padding:4px 6px;border-radius:4px;
+    margin-top:4px;font-size:7px}
+  .mockup.serious .mockup-case{background:transparent;color:var(--ink);
+    border:1px solid var(--accent);padding:4px 6px}
+  .mockup.bairesdev .mockup-case{background:var(--bg-section);color:var(--ink-body);
+    border:0;padding:3px 5px}
+  .mockup-label{position:absolute;top:6px;right:8px;font-family:var(--font-display);
+    font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute)}
+  .mockup.warm .mockup-label{color:var(--accent)}
+
+  /* success */
+  .success{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:760px){.success{grid-template-columns:1fr}}
+  .success div{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;
+    padding:14px 16px;font-size:13px}
+  .success div b{display:block;font-family:var(--font-display);font-size:10px;
+    letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+
+  /* next step */
+  .next{margin:60px 0 0;padding:32px 36px;background:var(--bg-ink);color:#fafaf7;
+    border-radius:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px}
+  .next h3{font-family:var(--font-display);font-size:22px;letter-spacing:-0.025em;
+    font-weight:600;margin:0 0 6px;color:#fafaf7}
+  .next p{font-size:14px;color:#c9cbcf;margin:0}
+  .next .cta{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;
+    border-radius:9999px;
+    background:radial-gradient(ellipse at 50% 50%,#FFFFF5 0%,#FFAA81 40%,#FFDA9F 70%);
+    color:var(--accent-ink);font-family:var(--font-display);font-size:11px;
+    font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+    border:1px solid rgba(255,137,100,.5);
+    box-shadow:0 0 0 1px rgba(255,255,255,.6) inset,0 2px 12px rgba(255,137,100,.3);
+    text-decoration:none}
+  @media (max-width:620px){.next{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div>
+      <div class="kicker">spec · phase 2 · 2026.05.07</div>
+      <h1>CV <span class="accent">generators</span></h1>
+      <p class="sub">Three CV variants from one data source. Component-composed. Warm for LinkedIn, Serious for enterprise, BairesDev plain for template placement.</p>
+    </div>
+    <div class="meta">
+      <div><b>Danilo Rojas</b></div>
+      <div>Phase 2 · spec</div>
+      <div>status · ready</div>
+      <div>after · writing-plans</div>
+    </div>
+  </header>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#goal">Goal</a></li>
+      <li><a href="#non-goals">Non-goals</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#variants">Three variants</a></li>
+      <li><a href="#preview">Variant preview</a></li>
+      <li><a href="#components">Component library</a></li>
+      <li><a href="#flow">Data flow</a></li>
+      <li><a href="#schema">Schema additions</a></li>
+      <li><a href="#success">Success criteria</a></li>
+      <li><a href="#risks">Risks &amp; open items</a></li>
+      <li><a href="#next">Next step</a></li>
+    </ol>
+  </nav>
+
+  <!-- PROBLEM -->
+  <section id="problem">
+    <h2>01 · Problem</h2>
+    <h3 class="display">Hand-written CV drafts violate the thesis.</h3>
+    <p>Phase 1 shipped the skills sheet generator: <code>/data/*.yaml</code> → HTML + PDF via one command. But the three CV variants still live as hand-written HTML drafts in <code>docs/superpowers/visuals/2026-05-07-light-system/</code>. They are frozen. Updating them requires editing three files by hand — the opposite of the "system that keeps itself alive" thesis.</p>
+    <p>Danilo runs three distinct go-to-market channels: LinkedIn warm outreach (direct to prospects), LinkedIn serious (enterprise decision-makers), and BairesDev placement (his current employer forwards the CV to US clients). Each audience expects a different tone at a different formality. One CV cannot cover all three.</p>
+  </section>
+
+  <!-- GOAL -->
+  <section id="goal">
+    <h2>02 · Goal</h2>
+    <h3 class="display">Three generators. One data source. Five PDFs.</h3>
+    <p>Read everything from <code>/data/</code>. Emit a shared component library. Compose three thin variant files. Orchestrator produces <b>5 PDFs in one <code>npm run build:cvs</code></b>: Warm EN+ES, Serious EN+ES, BairesDev EN only.</p>
+    <div class="callout">
+      <h4>Framing</h4>
+      Voice divergence without content divergence. The same data underneath, three voices on top. Changing a case study in <code>/data/cases/te-skin.md</code> updates all three variants.
+    </div>
+  </section>
+
+  <!-- NON-GOALS -->
+  <section id="non-goals">
+    <h2>03 · Non-goals</h2>
+    <ul>
+      <li>NOT writing new content — everything from <code>/data/</code>.</li>
+      <li>NOT changing design tokens — reuse <code>design-system/tokens.css</code>.</li>
+      <li>NOT adding PDF features beyond Phase 1 (no metadata, bookmarks, watermark).</li>
+      <li>NOT web-shareable URLs — Phase 3 landing owns that.</li>
+      <li>NOT touching Phase 1 skills-sheet generator. It stays untouched.</li>
+    </ul>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section id="architecture">
+    <h2>04 · Architecture</h2>
+    <h3 class="display">Components + composers.</h3>
+    <p>Each CV variant is a <b>composer</b> ~80–120 lines long that picks which components to include, in what order, with what options. Components are pure functions <code>(props) =&gt; html</code>. No state, no side effects, testable in isolation.</p>
+
+    <pre><code>dr-cv/
+├── data/
+│   ├── education.yaml                 # NEW
+│   ├── cases/                         # NEW
+│   │   ├── te-skin.md
+│   │   ├── te-black.md
+│   │   ├── enregla.md
+│   │   └── life-update-mobile.md
+│   ├── experience.yaml                # MODIFY: add `past` section
+│   └── testimonials/
+│       └── attributed.yaml            # NEW
+├── generators/templates/cv/           # NEW
+│   ├── components/
+│   │   ├── identity-block.ts
+│   │   ├── summary-block.ts
+│   │   ├── experience-item.ts
+│   │   ├── case-card.ts
+│   │   ├── skills-sidebar.ts
+│   │   ├── testimonial-item.ts
+│   │   └── education-block.ts
+│   ├── shared-styles.ts
+│   ├── warm.ts                        # composer
+│   ├── serious.ts                     # composer
+│   └── bairesdev.ts                   # composer
+├── generators/cv.ts                   # NEW orchestrator
+└── dist/cvs/                          # 5 output PDFs</code></pre>
+  </section>
+
+  <!-- VARIANTS -->
+  <section id="variants">
+    <h2>05 · Three variants</h2>
+    <div class="variants">
+      <div class="variant warm">
+        <div class="n">warm</div>
+        <h4>LinkedIn · direct</h4>
+        <p>Human, warm, occasional personal phrases. Live dot animated. Orange accent. JetBrains Mono display. 4 case cards (1 dark featured). 5 testimonials (2 verified + 3 attributed with disclosure).</p>
+        <div class="when">EN + ES · 2 pp A4</div>
+      </div>
+
+      <div class="variant serious">
+        <div class="n">serious</div>
+        <h4>LinkedIn · enterprise</h4>
+        <p>Measured, institutional. "Curriculum Vitae" header. Featured card uses accent border (no dark fill). 4 case cards. Only 2 verified testimonials. "references available on request" footer.</p>
+        <div class="when">EN + ES · 2 pp A4</div>
+      </div>
+
+      <div class="variant bairesdev">
+        <div class="n">bairesdev</div>
+        <h4>Template · placement</h4>
+        <p>Zero voice. Zero rhetoric. Inter everywhere. No orange. No live dot. Role: "Product Designer &amp; Engineer · 15+ years". BairesDev as current employer, BAH as placement. No testimonials. 2 case cards plain.</p>
+        <div class="when">EN only · 2 pp A4</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREVIEW -->
+  <section id="preview">
+    <h2>06 · Visual preview</h2>
+    <h3 class="display">Voice divergence at a glance.</h3>
+    <p>Rough mockups showing how the same data renders three ways:</p>
+
+    <div class="preview-grid">
+      <div class="mockup warm">
+        <span class="mockup-label">warm</span>
+        <div class="mockup-name">Danilo <span class="accent">Rojas</span></div>
+        <div class="mockup-role"><span class="mockup-dot"></span>Agentic Designer · Product Engineer</div>
+        <div class="mockup-bar"></div>
+        <div style="font-size:7.5px;color:var(--ink-mute);margin-bottom:4px">hello · summary</div>
+        <div style="font-size:9px;font-family:var(--font-display);letter-spacing:-0.02em;color:var(--ink)">I ship real products — and I ship the tools agents use...</div>
+        <div class="mockup-section">
+          <div style="font-family:var(--font-display);font-size:7px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">selected cases</div>
+          <div class="mockup-case">/te-skin · agent-consumable DS</div>
+          <div style="margin-top:3px">
+            <span class="mockup-pill">TE Black</span><span class="mockup-pill">EnRegla</span><span class="mockup-pill">Life Update</span>
+          </div>
+        </div>
+        <div class="mockup-section" style="font-style:italic;color:var(--ink);border-left:2px solid var(--accent);padding-left:6px;margin-left:0">
+          "doing wonderful things using AI in the right ways..." — Jennifer Sheppard
+        </div>
+      </div>
+
+      <div class="mockup serious">
+        <span class="mockup-label">serious</span>
+        <div class="mockup-name">Danilo <span class="accent">Rojas</span></div>
+        <div class="mockup-role">Agentic Designer · Product Engineer</div>
+        <div class="mockup-bar"></div>
+        <div style="font-size:7.5px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">professional summary</div>
+        <div style="font-size:9px;font-family:var(--font-display);letter-spacing:-0.02em;color:var(--ink)">Systems engineer and product designer with fifteen years...</div>
+        <div class="mockup-section">
+          <div style="font-family:var(--font-display);font-size:7px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);margin-bottom:3px">selected cases</div>
+          <div class="mockup-case">/te-skin · DS as agent skill</div>
+          <div style="margin-top:3px">
+            <span class="mockup-pill">TE Black</span><span class="mockup-pill">EnRegla</span><span class="mockup-pill">Life Update</span>
+          </div>
+        </div>
+        <div class="mockup-section" style="font-size:7.5px;color:var(--ink-mute)">
+          References available on request.
+        </div>
+      </div>
+
+      <div class="mockup bairesdev">
+        <span class="mockup-label">bairesdev</span>
+        <div class="mockup-name" style="color:#1a1a1a">Danilo Rojas</div>
+        <div class="mockup-role" style="color:#6b6b6b">Product Designer &amp; Engineer · 15+ years</div>
+        <div class="mockup-bar"></div>
+        <div style="font-size:7.5px;color:#6b6b6b;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">professional summary</div>
+        <div style="font-size:9px;font-family:var(--font-body);color:#333">Systems engineer and product designer with fifteen years of experience...</div>
+        <div class="mockup-section">
+          <div style="font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:#1a1a1a;margin-bottom:3px;font-weight:600">experience highlights</div>
+          <div class="mockup-case">BairesDev · at Booz Allen Hamilton · 2024 — present</div>
+          <div class="mockup-case" style="margin-top:2px">Xentinels DesignOps · 2016 — present</div>
+        </div>
+        <div class="mockup-section" style="font-size:7.5px;color:#6b6b6b">
+          References available on request.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section id="components">
+    <h2>07 · Component library</h2>
+    <h3 class="display">Eight pure functions, each with one job.</h3>
+    <table>
+      <thead><tr><th>Component</th><th>Responsibility</th><th>Variant differences via options</th></tr></thead>
+      <tbody>
+        <tr><td><code>identity-block</code></td><td>Name + role + contact band</td><td>Warm: live dot. BairesDev: conservative layout, no orange.</td></tr>
+        <tr><td><code>summary-block</code></td><td>Intro tagline + paragraph</td><td>Warm: "hello · summary". Serious: "Professional Summary". BairesDev: same as serious, Inter only.</td></tr>
+        <tr><td><code>experience-item</code></td><td>Single job entry</td><td>Options: full bullets vs condensed. BairesDev uses condensed.</td></tr>
+        <tr><td><code>case-card</code></td><td>Case study card</td><td>Warm: featured dark for 1st. Serious: accent border no fill. BairesDev: plain bordered.</td></tr>
+        <tr><td><code>skills-sidebar</code></td><td>Left column skills pills</td><td>BairesDev: grid key/value. Warm/Serious: grouped pills.</td></tr>
+        <tr><td><code>testimonial-item</code></td><td>Verified or attributed quote</td><td>Badge color differs by source.</td></tr>
+        <tr><td><code>client-chip</code></td><td>Enterprise client chip</td><td>Shared across all three.</td></tr>
+        <tr><td><code>education-block</code></td><td>Degrees + certifications list</td><td>Same across all three.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- FLOW -->
+  <section id="flow">
+    <h2>08 · Data flow</h2>
+    <div class="flow-wrap">
+      <svg viewBox="0 0 860 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#303236"/>
+          </marker>
+        </defs>
+
+        <rect class="fl-box-data" x="10" y="110" width="160" height="60" rx="6"/>
+        <text class="fl-lbl-tag" x="90" y="102" text-anchor="middle">source</text>
+        <text class="fl-lbl" x="90" y="138" text-anchor="middle">/data/*.yaml</text>
+        <text class="fl-lbl-sm" x="90" y="156" text-anchor="middle">+ /data/cases/*.md</text>
+
+        <rect class="fl-box" x="200" y="110" width="140" height="60" rx="6"/>
+        <text class="fl-lbl-tag" x="270" y="102" text-anchor="middle">load</text>
+        <text class="fl-lbl" x="270" y="138" text-anchor="middle">CvData (typed)</text>
+        <text class="fl-lbl-sm" x="270" y="156" text-anchor="middle">load-data.ts</text>
+
+        <rect class="fl-box-variant warm" x="370" y="30" width="140" height="60" rx="6"/>
+        <text class="fl-lbl-tag fl-lbl-white" x="440" y="22" text-anchor="middle">variant</text>
+        <text class="fl-lbl fl-lbl-white" x="440" y="58" text-anchor="middle">warm.ts</text>
+        <text class="fl-lbl-sm fl-lbl-white" x="440" y="76" text-anchor="middle">compose components</text>
+
+        <rect class="fl-box-variant" x="370" y="110" width="140" height="60" rx="6"/>
+        <text class="fl-lbl-tag fl-lbl-white" x="440" y="102" text-anchor="middle">variant</text>
+        <text class="fl-lbl fl-lbl-white" x="440" y="138" text-anchor="middle">serious.ts</text>
+        <text class="fl-lbl-sm fl-lbl-white" x="440" y="156" text-anchor="middle">compose components</text>
+
+        <rect class="fl-box-variant" x="370" y="190" width="140" height="60" rx="6"/>
+        <text class="fl-lbl-tag fl-lbl-white" x="440" y="182" text-anchor="middle">variant</text>
+        <text class="fl-lbl fl-lbl-white" x="440" y="218" text-anchor="middle">bairesdev.ts</text>
+        <text class="fl-lbl-sm fl-lbl-white" x="440" y="236" text-anchor="middle">compose components</text>
+
+        <rect class="fl-box-output" x="550" y="15" width="120" height="50" rx="6"/>
+        <text class="fl-lbl" x="610" y="42" text-anchor="middle">warm EN html</text>
+        <rect class="fl-box-output" x="550" y="70" width="120" height="50" rx="6"/>
+        <text class="fl-lbl" x="610" y="97" text-anchor="middle">warm ES html</text>
+        <rect class="fl-box-output" x="550" y="125" width="120" height="50" rx="6"/>
+        <text class="fl-lbl" x="610" y="152" text-anchor="middle">serious EN html</text>
+        <rect class="fl-box-output" x="550" y="180" width="120" height="50" rx="6"/>
+        <text class="fl-lbl" x="610" y="207" text-anchor="middle">serious ES html</text>
+        <rect class="fl-box-output" x="550" y="235" width="120" height="50" rx="6"/>
+        <text class="fl-lbl" x="610" y="262" text-anchor="middle">bairesdev EN html</text>
+
+        <rect class="fl-box-output" x="700" y="125" width="140" height="60" rx="6"/>
+        <text class="fl-lbl-tag" x="770" y="117" text-anchor="middle">render</text>
+        <text class="fl-lbl" x="770" y="153" text-anchor="middle">5 PDFs</text>
+        <text class="fl-lbl-sm" x="770" y="171" text-anchor="middle">puppeteer</text>
+
+        <path d="M170,140 L200,140" stroke="#303236" fill="none" marker-end="url(#arr)"/>
+        <path d="M340,140 L360,70" stroke="#303236" fill="none" marker-end="url(#arr)"/>
+        <path d="M340,140 L360,140" stroke="#303236" fill="none" marker-end="url(#arr)"/>
+        <path d="M340,140 L360,215" stroke="#303236" fill="none" marker-end="url(#arr)"/>
+
+        <path d="M510,60 L548,40" stroke="#303236" fill="none" marker-end="url(#arr)"/>
+        <path d="M510,60 L548,95" stroke="#303236" fill="none" marker-end="url(#arr)"/>
+        <path d="M510,140 L548,150" stroke="#303236" fill="none" marker-end="url(#arr)"/>
+        <path d="M510,140 L548,205" stroke="#303236" fill="none" marker-end="url(#arr)"/>
+        <path d="M510,220 L548,260" stroke="#303236" fill="none" marker-end="url(#arr)"/>
+
+        <path d="M670,155 L700,155" stroke="#303236" fill="none" marker-end="url(#arr)"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- SCHEMA -->
+  <section id="schema">
+    <h2>09 · Schema additions</h2>
+    <h3 class="display">What gets added to /data/.</h3>
+    <ul>
+      <li><code>/data/experience.yaml</code> <b>MODIFY</b>: add <code>past</code> section with Xentinels, Arpatel, Tecniequipos, Canadian Bank Note. Xentinels is listed in <code>past</code> because BairesDev becomes current; its <code>endYear</code> stays <code>present</code> to preserve "2016 — Present" on CV.</li>
+      <li><code>/data/education.yaml</code> <b>NEW</b>: B.Sc. EPN 2015, Google UX 2021, Design Thinking IBM 2020, UX &amp; UI Fundamental Patterns.</li>
+      <li><code>/data/cases/*.md</code> <b>NEW</b>: 4 files with YAML front matter (title, client, hook, bullets, stack, featured flag). Body is free-form narrative for Phase 3 landing; CV generators only read front matter.</li>
+      <li><code>/data/testimonials/attributed.yaml</code> <b>NEW</b>: 3 attributed items already drafted, ready to port.</li>
+      <li><code>generators/lib/types.ts</code> <b>MODIFY</b>: add <code>Case</code>, <code>Education</code>, <code>CvData</code> types.</li>
+      <li><code>generators/lib/load-data.ts</code> <b>MODIFY</b>: add loaders for new types.</li>
+    </ul>
+  </section>
+
+  <!-- SUCCESS -->
+  <section id="success">
+    <h2>10 · Success criteria</h2>
+    <div class="success">
+      <div><b>one command</b>
+        <code>npm run build:cvs</code> emits 5 PDFs in under 30 seconds.</div>
+      <div><b>a4 fit</b>
+        All 5 PDFs fit A4, 2 pages max each.</div>
+      <div><b>warm signature</b>
+        Live dot, orange accent, JetBrains Mono display.</div>
+      <div><b>serious signature</b>
+        Accent border on featured (no dark fill), formal copy.</div>
+      <div><b>bairesdev discipline</b>
+        No orange, Inter everywhere, no "Agentic Designer" in header.</div>
+      <div><b>component reuse</b>
+        Editing <code>identity-block.ts</code> propagates to all 3 variants.</div>
+    </div>
+  </section>
+
+  <!-- RISKS -->
+  <section id="risks">
+    <h2>11 · Risks &amp; open items</h2>
+    <ul>
+      <li><b>Case markdown parsing:</b> front-matter extraction between <code>---</code> delimiters, parsed by <code>js-yaml</code>. No new dependency. Narrative body ignored in Phase 2.</li>
+      <li><b>PDF page count:</b> BairesDev is 2 pp by design. Warm/Serious may overflow if content dense. Fallback: reduce case bullets from 3 to 2, tighten line-height.</li>
+      <li><b>BairesDev styling (decided):</b> skip <code>tokens.css</code> entirely for BairesDev and use a minimal inline grayscale stylesheet. Isolates it from Warm/Serious changes, avoids specificity wars.</li>
+      <li><b>Output directory:</b> Phase 1 outputs at <code>dist/</code>, Phase 2 at <code>dist/cvs/</code>. Clean separation.</li>
+    </ul>
+  </section>
+
+  <div class="next" id="next">
+    <div>
+      <h3>Ready for writing-plans.</h3>
+      <p>Brainstorming complete. Next step: invoke <code>writing-plans</code> to produce the Phase 2 implementation plan (schema expansion + components + composers + orchestrator, all TDD).</p>
+    </div>
+    <a class="cta" href="#">writing-plans · Phase 2 →</a>
+  </div>
+
+</div>
+</body>
+</html>
