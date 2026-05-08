@@ -83,7 +83,9 @@ function renderHero(
   return `<section id="top" class="hl-section hl-section--hero" aria-label="Hero">
   <div class="hl-hero__bg" aria-hidden="true">
     <div class="hl-hero__aurora"></div>
-    <div class="hl-hero__mask"></div>
+    <div class="hl-hero__beam-bloom"></div>
+    <div class="hl-hero__beam"></div>
+    <canvas class="hl-hero__particles" aria-hidden="true"></canvas>
   </div>
   <div class="hl-container">
     <div class="hl-hero__grid">
@@ -283,11 +285,27 @@ function renderMethodSection(data: LandingData, lang: Lang): string {
     ? "Fifteen years of craft meets Claude Code, MCP servers, subagent orchestration, and skills-lock reproducibility. The leverage is real — the craft is mine."
     : "Quince años de craft con Claude Code, MCP servers, orquestación de subagentes y skills-lock reproducible. El apalancamiento es real — el craft es mío.";
   const giraldez = data.testimonials.find((t) => t.author.includes("Giraldez")) ?? data.testimonials[0];
+  const auraLabel = lang === "en" ? "combination" : "combinación";
   return `<section id="method" class="hl-section hl-section--dark-alt" aria-labelledby="method-h2">
   <div class="hl-container hl-section__inner">
     <div class="hl-section__eyebrow">${escapeHtml(eyebrow)}</div>
     <h2 id="method-h2" class="hl-h2 hl-h2--gradient">${escapeHtml(h2)}</h2>
     <p class="hl-sub">${escapeHtml(sub)}</p>
+
+    <div class="hl-method-row">
+      <div class="hl-aura" aria-hidden="true">
+        <div class="hl-aura__icon">
+          <span>●</span>
+        </div>
+      </div>
+      <div class="hl-method-row__text">
+        <p class="hl-method-row__kicker">${escapeHtml(auraLabel)}</p>
+        <p class="hl-method-row__copy">${escapeHtml(lang === "en"
+          ? "Profile + agentic AI. The chromatic ring is the signal — concentric frequencies that amplify the craft at the center."
+          : "Perfil + IA agéntica. El anillo cromático es la señal — frecuencias concéntricas que amplifican el craft en el centro.")}</p>
+      </div>
+    </div>
+
     ${renderMethodDiagram(lang)}
     ${renderProofNumbers(data.positioning, lang)}
     ${giraldez ? renderTestimonial(giraldez, lang) : ""}

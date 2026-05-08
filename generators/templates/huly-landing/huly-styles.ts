@@ -169,60 +169,155 @@ img { max-width: 100%; display: block; }
   text-transform: uppercase;
 }
 
-/* ============== HERO MASK BG ============== */
+/* ============== HERO BEAM + PARTICLES (Huly signature) ============== */
 .hl-hero__bg {
   position: absolute; inset: 0; z-index: 0;
   pointer-events: none;
+  overflow: hidden;
 }
+/* Soft ambient aurora behind everything else */
 .hl-hero__aurora {
   position: absolute;
-  left: 50%; bottom: -20%;
+  left: 50%; bottom: -30%;
   transform: translateX(-50%);
   width: 150vw;
-  max-width: 2200px;
-  aspect-ratio: 1.07 / 1;
+  max-width: 2400px;
+  aspect-ratio: 1.2 / 1;
   background:
-    radial-gradient(ellipse 60% 55% at 20% 80%, rgba(86,131,218,0.22) 0%, transparent 55%),
-    radial-gradient(ellipse 55% 50% at 80% 70%, rgba(255,137,100,0.28) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 40% at 50% 90%, rgba(213,216,246,0.18) 0%, transparent 60%);
-  filter: blur(40px);
+    radial-gradient(ellipse 60% 55% at 20% 80%, rgba(86,131,218,0.20) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 50% at 80% 75%, rgba(255,137,100,0.24) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 90%, rgba(213,216,246,0.14) 0%, transparent 60%);
+  filter: blur(48px);
   mix-blend-mode: lighten;
-  opacity: 0.9;
+  opacity: 0.85;
 }
-.hl-hero__mask {
-  position: absolute; inset: 0;
-  background:
-    repeating-linear-gradient(
-      110deg,
-      transparent 0 80px,
-      rgba(255,255,255,0.015) 80px 81px
-    ),
-    repeating-linear-gradient(
-      70deg,
-      transparent 0 100px,
-      rgba(255,137,100,0.015) 100px 101px
-    );
-  mix-blend-mode: overlay;
-  --hl-mask-x: 50%;
-  --hl-mask-y: 60%;
-  --hl-mask-size: 0px;
-  clip-path: circle(var(--hl-mask-size) at var(--hl-mask-x) var(--hl-mask-y));
-  transition: clip-path var(--hl-dur-med) var(--hl-ease);
+/* Vertical light column — core */
+.hl-hero__beam {
+  position: absolute;
+  left: 50%; bottom: -4%;
+  transform: translateX(-50%);
+  width: 92px; height: 108%;
+  background: linear-gradient(to top,
+    rgba(210, 228, 255, 0.65) 0%,
+    rgba(170, 200, 255, 0.30) 34%,
+    rgba(130, 180, 255, 0.08) 70%,
+    transparent 100%);
+  filter: blur(6px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+/* Beam bloom — wider soft halo */
+.hl-hero__beam-bloom {
+  position: absolute;
+  left: 50%; bottom: -8%;
+  transform: translateX(-50%);
+  width: 520px; height: 96%;
+  background: radial-gradient(ellipse 40% 60% at 50% 100%,
+    rgba(255, 200, 170, 0.18) 0%,
+    rgba(140, 180, 255, 0.10) 35%,
+    transparent 72%);
+  filter: blur(32px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+/* Canvas for ascending particles (JS-driven) */
+.hl-hero__particles {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hl-hero__particles { display: none; }
 }
 .hl-hero__fade {
   position: absolute;
   left: 0; right: 0; bottom: 0;
   height: 340px;
   background: linear-gradient(to bottom, rgba(9,10,12,0) 0%, var(--hl-bg-primary) 50%);
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
 }
 
-/* ============== CTA pill (Huly signature) ============== */
+/* ============== MESH TEXTURE on dark cards ============== */
+.hl-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
+  background-size: 18px 18px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 35%, transparent 85%);
+          mask-image: radial-gradient(ellipse at center, #000 35%, transparent 85%);
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 0;
+}
+.hl-card > * { position: relative; z-index: 1; }
+
+/* ============== IRIDESCENT chromatic ring (notifications/accent) ============== */
+@property --hl-a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.hl-aura {
+  --hl-aura-size: 160px;
+  position: relative;
+  width: var(--hl-aura-size);
+  height: var(--hl-aura-size);
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+.hl-aura::before,
+.hl-aura::after {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background: conic-gradient(from var(--hl-a),
+    #FF8964, #FF5EAE, #A855F7, #3B82F6, #22D3EE, #FF8964);
+  -webkit-mask: radial-gradient(circle, transparent 38%, #000 44%, #000 58%, transparent 66%);
+          mask: radial-gradient(circle, transparent 38%, #000 44%, #000 58%, transparent 66%);
+  animation: hl-aura-spin 14s linear infinite;
+  pointer-events: none;
+}
+.hl-aura::before { filter: blur(6px);  opacity: 0.95; }
+.hl-aura::after  { filter: blur(22px); opacity: 0.60; }
+.hl-aura__icon {
+  position: relative;
+  z-index: 1;
+  width: 58%; height: 58%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #1a1f2e, #07090f);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 10px 40px rgba(0,0,0,0.6);
+  display: grid;
+  place-items: center;
+  color: var(--hl-text);
+  font-family: var(--hl-font-display);
+  font-size: 28px;
+  font-weight: 500;
+}
+@keyframes hl-aura-spin { to { --hl-a: 360deg; } }
+@media (prefers-reduced-motion: reduce) {
+  .hl-aura::before, .hl-aura::after { animation: none; }
+}
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .hl-aura::before,
+  .hl-aura::after {
+    background: radial-gradient(circle, #FF8964, #A855F7, #22D3EE);
+  }
+}
+
+/* ============== CTA pill (Huly signature + cursor-follow glow) ============== */
 .hl-cta {
   position: relative;
   display: inline-flex;
   isolation: isolate;
+  --hl-mx: 50%;
+  --hl-my: 50%;
 }
 .hl-cta__pill {
   position: relative;
@@ -245,42 +340,64 @@ img { max-width: 100%; display: block; }
   transition: transform var(--hl-dur-fast) var(--hl-ease);
 }
 .hl-cta__pill:hover { transform: translateY(-1px); }
+
+/* Core warm base — static radial at pill center */
 .hl-cta__pill::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(50% 50% at 50% 50%,
+  background: radial-gradient(70% 120% at 50% 50%,
     var(--hl-glow-1) 3.5%,
-    var(--hl-glow-2) 26.5%,
-    var(--hl-glow-3) 37.5%,
-    rgba(255,170,129,0.50) 49%,
-    rgba(210,106,58,0) 92.5%);
+    var(--hl-glow-2) 28%,
+    var(--hl-glow-3) 44%,
+    rgba(255,170,129,0.40) 60%,
+    rgba(210,106,58,0) 95%);
   z-index: -1;
+  transition: opacity var(--hl-dur-med) var(--hl-ease);
 }
+/* Cursor-follow layer — brighter highlight that tracks the pointer */
 .hl-cta__pill::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(43.3% 44.23% at 50% 49.51%,
-    #FFFFF7 29%,
-    #FFFACD 48.5%,
-    #F4D2BF 60.71%,
-    rgba(214,211,210,0) 100%);
-  filter: blur(5px);
+  background: radial-gradient(140px circle at var(--hl-mx) var(--hl-my),
+    #FFFFFF 0%,
+    #FFFACD 22%,
+    #FFAA81 44%,
+    rgba(255,170,129,0.35) 62%,
+    rgba(255,255,255,0) 85%);
+  mix-blend-mode: plus-lighter;
+  filter: blur(4px);
   z-index: -1;
+  transition: opacity var(--hl-dur-med) var(--hl-ease);
+  opacity: 0.9;
 }
+.hl-cta:hover .hl-cta__pill::after,
+.hl-cta:focus-within .hl-cta__pill::after {
+  opacity: 1;
+}
+
+/* External aura halo — Huly's signature spill */
 .hl-cta__aura {
   position: absolute;
-  inset: -9px;
+  inset: -12px;
   border-radius: var(--hl-radius-pill);
-  background: radial-gradient(50% 60% at 50% 50%, rgba(255,218,159,0.45) 0%, rgba(255,137,100,0) 75%);
-  filter: blur(18px);
+  background: radial-gradient(180px circle at var(--hl-mx) var(--hl-my),
+    rgba(255,218,159,0.55) 0%,
+    rgba(255,137,100,0.25) 40%,
+    rgba(255,137,100,0) 75%);
+  filter: blur(22px);
   z-index: 1;
   pointer-events: none;
+  transition: opacity var(--hl-dur-med) var(--hl-ease);
 }
 .hl-cta__arrow { font-family: var(--hl-font-body); position: relative; z-index: 3; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hl-cta__pill::after { background: radial-gradient(60% 80% at 50% 50%, rgba(255,255,255,0.6), rgba(255,170,129,0) 80%); }
+}
 
 .hl-cta--ghost {
   display: inline-flex; align-items: center; gap: 10px;
@@ -499,6 +616,53 @@ img { max-width: 100%; display: block; }
   color: var(--hl-text-85);
   letter-spacing: 0.04em;
   text-transform: lowercase;
+}
+
+/* ============== method aura row ============== */
+.hl-method-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 40px;
+  align-items: center;
+  margin: 48px 0 56px;
+  padding: 40px;
+  background: rgba(0,0,0,0.35);
+  border-radius: var(--hl-radius-card);
+  box-shadow: 0 0 0 1px var(--hl-line) inset;
+  position: relative;
+  overflow: hidden;
+}
+.hl-method-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 18px 18px;
+  -webkit-mask-image: radial-gradient(ellipse at 70% 50%, #000 30%, transparent 80%);
+          mask-image: radial-gradient(ellipse at 70% 50%, #000 30%, transparent 80%);
+  pointer-events: none;
+}
+.hl-method-row > * { position: relative; z-index: 1; }
+.hl-method-row__kicker {
+  font-family: var(--hl-font-mono);
+  font-size: var(--hl-text-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hl-accent);
+  margin: 0 0 12px;
+}
+.hl-method-row__copy {
+  font-family: var(--hl-font-display);
+  font-size: clamp(18px, 2.4vw, 24px);
+  line-height: 1.35;
+  letter-spacing: var(--hl-track-snugger);
+  color: var(--hl-text);
+  margin: 0;
+  max-width: 56ch;
+}
+@media (max-width: 720px) {
+  .hl-method-row { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
+  .hl-method-row .hl-aura { --hl-aura-size: 140px; justify-self: center; }
 }
 
 /* ============== method diagram ============== */
