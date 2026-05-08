@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>dr-cv · Visual Universe · 10-round research · master index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07080d;
+    --bg-2:#0b0d15;
+    --bg-card:#10131c;
+    --bg-deep:#05060a;
+    --line:#1d2030;
+    --line-soft:#161927;
+    --ink:#e7e9f0;
+    --ink-dim:#9aa0b4;
+    --mute:#5d6378;
+    --accent:#FF8964;
+    --accent-dim:#7a3f2d;
+    --accent-soft:rgba(255,137,100,.12);
+    --accent-ring:rgba(255,137,100,.38);
+    --ok:#7ed9a1;
+    --warn:#f2c472;
+    --bad:#e47a7a;
+    --cool:#9b8cff;
+    --terra:#CC785C;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    font-size:14.5px;line-height:1.55;letter-spacing:-.003em;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1400px 600px at 85% -15%, rgba(255,137,100,.08), transparent 60%),
+      radial-gradient(1000px 520px at -8% 28%, rgba(155,140,255,.05), transparent 62%);
+  }
+  code,.mono{font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:-.01em}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px dotted rgba(255,137,100,.35)}
+  a:hover{color:#fff;border-bottom-color:#fff}
+
+  .wrap{max-width:1320px;margin:0 auto;padding:64px 32px 140px}
+
+  /* ============ HEADER ============ */
+  header.hero{
+    border-bottom:1px solid var(--line);padding-bottom:48px;margin-bottom:80px;
+    position:relative;overflow:hidden;
+  }
+  header.hero::before{
+    content:"";position:absolute;right:-120px;top:-100px;width:520px;height:520px;
+    background:radial-gradient(circle at 50% 50%,rgba(255,137,100,.14),transparent 62%);
+    filter:blur(44px);pointer-events:none;
+  }
+  header.hero > *{position:relative;z-index:1}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:18px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow .live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(255,137,100,.14),0 0 12px var(--accent);animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{50%{box-shadow:0 0 0 7px rgba(255,137,100,.04),0 0 18px var(--accent)}}
+
+  /* H1 embodies Final-1 (Warm Huly Refined) visual treatment */
+  h1.page{
+    font-family:'JetBrains Mono',monospace;font-weight:700;
+    font-size:clamp(44px,7.2vw,92px);line-height:0.96;letter-spacing:-.045em;
+    margin:0 0 20px;color:#fff;max-width:1120px;
+  }
+  h1.page .grad{
+    background:linear-gradient(115deg,#fff 28%,#FFE1D1 66%,var(--accent));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  h1.page .slash{color:var(--mute);font-weight:400;margin:0 10px}
+  h1.page .acc{color:var(--accent)}
+  .sub{color:var(--ink-dim);font-size:18px;max-width:960px;margin:0 0 12px;line-height:1.55}
+  .meta-row{
+    display:flex;gap:26px;flex-wrap:wrap;margin-top:24px;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--mute);
+  }
+  .meta-row b{color:var(--ink-dim);font-weight:500}
+
+  /* ============ SECTION ============ */
+  h2.sec{
+    font-size:28px;font-weight:600;letter-spacing:-.02em;
+    margin:100px 0 12px;padding-bottom:14px;border-bottom:1px solid var(--line);
+    display:flex;align-items:baseline;gap:14px;
+  }
+  h2.sec .n{color:var(--mute);font-weight:400;font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.06em}
+  h2.sec .tail{margin-left:auto;color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:.08em}
+  .sec-intro{color:var(--ink-dim);margin:16px 0 32px;max-width:880px;font-size:15.5px}
+
+  /* ============ EXEC SUMMARY ============ */
+  .exec{
+    background:linear-gradient(175deg,var(--bg-card),var(--bg-2));
+    border:1px solid var(--line);border-radius:16px;padding:32px 36px;
+    color:var(--ink);font-size:15.5px;line-height:1.72;
+  }
+  .exec p{margin:0 0 14px}
+  .exec p:last-child{margin-bottom:0}
+  .exec b{color:#fff;font-weight:500}
+  .exec .acc{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.02em}
+
+  /* ============ NAV TILES ============ */
+  .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .tile{
+    background:linear-gradient(180deg,var(--bg-card),var(--bg-2));
+    border:1px solid var(--line);border-radius:14px;padding:20px 20px 18px;
+    text-decoration:none !important;border-bottom:1px solid var(--line) !important;
+    color:var(--ink);position:relative;overflow:hidden;
+    display:flex;flex-direction:column;min-height:168px;
+    transition:border-color .15s, transform .15s;
+  }
+  .tile:hover{border-color:var(--accent-ring);transform:translateY(-2px)}
+  .tile .n{
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--accent);letter-spacing:.14em;margin-bottom:8px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .tile .n .kb{color:var(--mute);font-size:10px}
+  .tile h3{margin:0 0 8px;font-size:15px;font-weight:600;letter-spacing:-.015em;line-height:1.22;color:#fff}
+  .tile p{margin:0;color:var(--ink-dim);font-size:12.5px;line-height:1.48;flex:1}
+  .tile .arrow{margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--mute);letter-spacing:.06em}
+  .tile.final{border-top:3px solid var(--accent);background:linear-gradient(180deg,rgba(255,137,100,.05),var(--bg-2))}
+  .tile.final .n{color:var(--accent)}
+
+  /* ============ TIMELINE ============ */
+  .timeline{
+    position:relative;padding-left:28px;margin-top:8px;
+  }
+  .timeline::before{
+    content:"";position:absolute;left:7px;top:10px;bottom:10px;width:2px;
+    background:linear-gradient(180deg,var(--mute) 0%,var(--accent) 40%,var(--accent) 100%);
+    border-radius:1px;
+  }
+  .tl-row{
+    position:relative;padding:16px 22px;margin-bottom:10px;
+    background:var(--bg-card);border:1px solid var(--line);border-radius:10px;
+    display:grid;grid-template-columns:90px 1fr auto;gap:18px;align-items:center;
+  }
+  .tl-row::before{
+    content:"";position:absolute;left:-25px;top:22px;width:10px;height:10px;
+    border-radius:50%;background:var(--mute);box-shadow:0 0 0 3px var(--bg);
+  }
+  .tl-row.big::before{background:var(--accent);box-shadow:0 0 0 3px var(--bg),0 0 12px var(--accent)}
+  .tl-row .r{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--accent);letter-spacing:.08em;font-weight:500}
+  .tl-row.big .r{font-size:12.5px}
+  .tl-row .ttl{color:#fff;font-size:14px;line-height:1.45}
+  .tl-row .ttl b{color:#fff;font-weight:500}
+  .tl-row .ttl span.muted{color:var(--ink-dim)}
+  .tl-row .tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mute);letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:1px solid var(--line);white-space:nowrap}
+  .tl-row.big .tag{background:var(--accent-soft);border-color:var(--accent-dim);color:var(--accent)}
+  .tl-row.phase-gather .tag{color:var(--cool);border-color:rgba(155,140,255,.3);background:rgba(155,140,255,.06)}
+  .tl-row.phase-verdict .tag{color:var(--ok);border-color:rgba(126,217,161,.3);background:rgba(126,217,161,.06)}
+
+  /* ============ 3 FINALISTS ============ */
+  .finalists{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .fn{
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    background:linear-gradient(180deg,var(--bg-card),var(--bg-2));
+    display:flex;flex-direction:column;
+  }
+  .fn.f1{border-top:3px solid var(--accent)}
+  .fn.f2{border-top:3px solid var(--ok)}
+  .fn.f3{border-top:3px solid var(--terra)}
+  .fn-head{padding:18px 22px 16px;border-bottom:1px solid var(--line-soft)}
+  .fn-head .no{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+  .fn-head h4{margin:0;font-size:18px;font-weight:700;letter-spacing:-.02em}
+  .fn-head .thesis{color:var(--ink-dim);font-size:12.5px;margin-top:6px;line-height:1.5}
+  .fn .mock{
+    min-height:230px;position:relative;overflow:hidden;padding:24px;
+  }
+  /* F1 mock */
+  .fn.f1 .mock{background:#090A0C}
+  .fn.f1 .mock::before{content:"";position:absolute;right:-80px;top:-80px;width:240px;height:240px;background:radial-gradient(circle,rgba(255,137,100,.22),transparent 65%);filter:blur(38px);pointer-events:none}
+  .fn.f1 .mock > *{position:relative;z-index:1}
+  .fn.f1 .mock .eye{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mute);letter-spacing:.08em;margin-bottom:12px;display:flex;gap:8px;align-items:center}
+  .fn.f1 .mock .eye .d{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2.4s ease-in-out infinite}
+  .fn.f1 .mock .hh{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:26px;line-height:0.98;letter-spacing:-.04em;color:#fff;margin:0 0 10px}
+  .fn.f1 .mock .hh .g{background:linear-gradient(115deg,#fff,#FFE1D1 65%,var(--accent));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .fn.f1 .mock .hh .a{color:var(--accent)}
+  .fn.f1 .mock .ss{color:rgba(255,255,255,.56);font-size:11.5px;line-height:1.5;margin-bottom:12px}
+  .fn.f1 .mock .btns{display:flex;gap:6px;flex-wrap:wrap}
+  .fn.f1 .mock .btn{font-family:'JetBrains Mono',monospace;font-size:9.5px;padding:5px 10px;border-radius:999px;border:1px solid var(--accent-dim);background:var(--accent-soft);color:var(--accent);letter-spacing:.04em}
+  .fn.f1 .mock .btn.pr{background:var(--accent);color:#2a0f04;border-color:var(--accent)}
+  /* F2 mock */
+  .fn.f2 .mock{background:#070a08;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+  .fn.f2 .mock .l{position:relative;z-index:1}
+  .fn.f2 .mock .eye{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ok);letter-spacing:.08em;margin-bottom:10px;display:flex;gap:6px;align-items:center}
+  .fn.f2 .mock .eye .d{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);animation:pulse 2.1s ease-in-out infinite}
+  .fn.f2 .mock .hh{font-family:'Inter',sans-serif;font-weight:700;font-size:22px;line-height:1.02;letter-spacing:-.03em;color:#fff;margin:0 0 8px}
+  .fn.f2 .mock .hh em{font-style:normal;color:var(--ok)}
+  .fn.f2 .mock .ss{color:rgba(255,255,255,.56);font-size:11px;line-height:1.45;margin-bottom:10px;max-width:90%}
+  .fn.f2 .mock .btn{font-family:'JetBrains Mono',monospace;font-size:9.5px;padding:5px 10px;border-radius:999px;border:1px solid var(--accent-dim);background:var(--accent);color:#2a0f04;letter-spacing:.04em;display:inline-block}
+  .fn.f2 .mock .pdf{
+    width:105px;aspect-ratio:3/4;background:#fefdf8;border-radius:6px;
+    box-shadow:0 20px 50px rgba(0,0,0,.6),0 0 0 1px #1a1b22;
+    padding:10px 9px;font-family:'Inter',sans-serif;
+    transform:perspective(800px) rotateY(-14deg) rotateX(3deg);
+    position:relative;overflow:hidden;
+  }
+  .fn.f2 .mock .pdf .nm{font-size:11px;font-weight:800;color:#090A0C;letter-spacing:-.01em;line-height:1}
+  .fn.f2 .mock .pdf .rl{font-family:'JetBrains Mono',monospace;font-size:6px;color:var(--accent);margin-top:2px;letter-spacing:.04em;text-transform:uppercase}
+  .fn.f2 .mock .pdf .rule{height:1.5px;background:var(--accent);width:40%;margin:6px 0}
+  .fn.f2 .mock .pdf .lines{height:4px;background:#ddd;border-radius:1px;margin-bottom:3px;width:88%}
+  .fn.f2 .mock .pdf .lines.s{width:62%}
+  .fn.f2 .mock .pdf .chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:5.5px;color:var(--accent);border:1px solid var(--accent);padding:1px 3px;border-radius:2px;margin:1px 1px 1px 0}
+  /* F3 mock */
+  .fn.f3 .mock{background:#0B0906;padding:22px 24px}
+  .fn.f3 .mock::before{content:"";position:absolute;left:-40px;bottom:-60%;width:260px;height:260px;background:radial-gradient(circle,rgba(204,120,92,.2),transparent 62%);filter:blur(40px);pointer-events:none}
+  .fn.f3 .mock > *{position:relative;z-index:1}
+  .fn.f3 .mock .eye{font-family:'Fraunces',serif;font-style:italic;font-size:11px;color:var(--terra);margin-bottom:10px;letter-spacing:.01em}
+  .fn.f3 .mock .hh{font-family:'Fraunces','Instrument Serif',Georgia,serif;font-weight:500;font-size:32px;line-height:0.98;letter-spacing:-.02em;color:#F2EADF;margin:0 0 8px}
+  .fn.f3 .mock .hh em{font-style:italic;color:var(--terra);font-weight:400}
+  .fn.f3 .mock .rule{width:32px;height:1px;background:var(--terra);margin:12px 0;opacity:.7}
+  .fn.f3 .mock .ss{color:rgba(242,234,223,.64);font-weight:300;font-size:11.5px;line-height:1.5;margin-bottom:10px;max-width:90%}
+  .fn.f3 .mock .btn{font-family:'Fraunces',serif;font-style:italic;font-size:11px;padding:5px 12px;border-radius:999px;border:1px solid var(--terra);background:var(--terra);color:#1A0C06;display:inline-block}
+
+  .fn-foot{padding:14px 22px;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;gap:10px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-dim);letter-spacing:.04em}
+  .fn-foot b{color:#fff;font-weight:500}
+  .fn.f1 .fn-foot b{color:var(--accent)}
+  .fn.f2 .fn-foot b{color:var(--ok)}
+  .fn.f3 .fn-foot b{color:var(--terra)}
+
+  /* ============ MATRIX ============ */
+  .matrix-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--bg-2);margin-top:8px}
+  table.mx{border-collapse:collapse;width:100%;min-width:1000px;font-size:12.5px}
+  table.mx th, table.mx td{padding:14px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft)}
+  table.mx th{background:#0a0c14;color:var(--ink-dim);font-family:'JetBrains Mono',monospace;font-weight:500;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em}
+  table.mx td:first-child, table.mx th:first-child{position:sticky;left:0;background:#0a0c14;z-index:1;min-width:180px;color:#fff;font-weight:600}
+  table.mx td.dcell .num{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:11px;display:block;letter-spacing:.08em;margin-bottom:4px}
+  .fit-5{display:inline-flex;gap:3px}
+  .fit-5 i{width:10px;height:14px;border-radius:2px;background:var(--line);display:inline-block}
+  .fit-5 i.on{background:var(--accent)}
+  .fit-5.f2 i.on{background:var(--ok)}
+  .fit-5.f3 i.on{background:var(--terra)}
+
+  /* ============ PICK ============ */
+  .pick-box{
+    margin-top:20px;padding:32px 36px;
+    background:linear-gradient(165deg,#130e0b,#0a0c14 60%);
+    border:1px solid var(--accent);border-radius:18px;
+    box-shadow:0 0 0 1px rgba(255,137,100,.1),0 30px 80px rgba(0,0,0,.35);
+    position:relative;overflow:hidden;
+  }
+  .pick-box::before{content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;background:radial-gradient(circle,rgba(255,137,100,.18),transparent 65%);filter:blur(40px);pointer-events:none}
+  .pick-box > *{position:relative;z-index:1}
+  .pick-box h3{margin:0 0 14px;font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;letter-spacing:-.025em;line-height:1.15;color:#fff}
+  .pick-box h3 em{font-style:normal;color:var(--accent)}
+  .pick-box p{color:var(--ink);font-size:15px;line-height:1.7;margin:0}
+  .pick-box p b{color:#fff}
+  .pick-box p .k{color:var(--accent)}
+
+  /* ============ HOW TO CONTINUE ============ */
+  .continue{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;
+  }
+  .continue .left h3{margin:0 0 8px;font-size:18px;font-weight:600;letter-spacing:-.015em}
+  .continue .left p{margin:0;color:var(--ink-dim);font-size:13.5px;line-height:1.6}
+  .continue code.cmd{
+    display:inline-block;background:var(--bg-deep);border:1px solid var(--accent-dim);
+    color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:14px;
+    padding:12px 22px;border-radius:10px;letter-spacing:.02em;
+    box-shadow:0 0 0 1px rgba(255,137,100,.1);
+    white-space:nowrap;
+  }
+
+  /* ============ EVIDENCE ============ */
+  .evid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:6px}
+  .evid .group h3{margin:0 0 14px;font-size:15px;font-weight:600;letter-spacing:-.01em}
+  .evid ul{margin:0;padding:0;list-style:none}
+  .evid li{padding:9px 12px;border-bottom:1px dashed var(--line-soft);font-size:12.5px;color:var(--ink-dim);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .evid li:last-child{border-bottom:none}
+  .evid li a{border-bottom:none;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:12px}
+  .evid li a:hover{color:#fff}
+  .evid li .n{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+
+  /* ============ CREDITS ============ */
+  .credits{
+    margin-top:72px;padding:28px 32px;border:1px solid var(--line);border-radius:14px;
+    background:linear-gradient(180deg,var(--bg-card),var(--bg-2));
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-dim);
+  }
+  .credits .k{color:var(--accent);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;display:block}
+  .credits .v{color:#fff;font-size:18px;font-weight:500;letter-spacing:-.01em}
+  .credits .v .mu{color:var(--mute);font-weight:400;font-size:12px;margin-left:4px}
+
+  footer{
+    margin-top:56px;padding-top:22px;border-top:1px solid var(--line);
+    color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+
+  @media (max-width:1100px){
+    .tiles{grid-template-columns:repeat(2,1fr)}
+    .finalists{grid-template-columns:1fr}
+    .tl-row{grid-template-columns:80px 1fr;gap:14px}
+    .tl-row .tag{grid-column:2}
+    .evid{grid-template-columns:1fr}
+    .credits{grid-template-columns:repeat(2,1fr)}
+    .continue{grid-template-columns:1fr}
+    h1.page{font-size:36px}
+    .wrap{padding:36px 20px 80px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================== HEADER ================== -->
+<header class="hero">
+  <div class="eyebrow"><span class="live-dot"></span> dr-cv · Visual Universe · 10-round research · 2026-05-08</div>
+  <h1 class="page">
+    <span class="grad">Ten rounds</span> of visual<br>
+    research <span class="slash">·</span> <span class="acc">one verdict.</span>
+  </h1>
+  <p class="sub">
+    A 427 KB research trail across thirty-plus sites, seventy-plus techniques, and six candidate directions, condensed to a single shippable spec.
+    The master index ties every round together so Danilo can browse the decision as a tree, not a thread.
+  </p>
+  <div class="meta-row">
+    <span><b>date</b> 2026-05-08</span>
+    <span><b>rounds</b> 10 / 10</span>
+    <span><b>accent</b> <code>#FF8964</code></span>
+    <span><b>winner</b> <code>Final-1 · Warm Huly Refined</code></span>
+    <span><b>ship ETA</b> ~36 h / 4–5 working days</span>
+  </div>
+</header>
+
+
+<!-- ================== EXEC SUMMARY ================== -->
+<h2 class="sec"><span class="n">01</span>Executive summary <span class="tail">≤ 300 words</span></h2>
+
+<div class="exec">
+  <p>
+    Ten rounds of research asked one question: <b>what should dr-cv actually look like, and how should it be built?</b>
+    Rounds 1–4 mapped the universe — thirty sites across AI landings, designer portfolios, studios, and awwwards winners — and found a recurring
+    grammar: dark canvas, restrained accent, editorial typography, live data, inline case chapters. Round 5 surfaced four fresh techniques missing from the
+    first sweep (cursor-scrubbed timelines, command palettes, bracket-nav, inline interactive widgets).
+  </p>
+  <p>
+    Rounds 6–8 were the verdict rounds. Round 6 killed WebGL maximalism: <span class="acc">Tier LOW is enough — CSS + canvas 2D outperforms three.js at 1/40th the cost.</span>
+    Round 7 resolved palette + type: <span class="acc">Warm Huly</span> (near-black + apricot #FF8964, JetBrains Mono display + Inter body). Round 8 resolved structure:
+    <span class="acc">Proposal A (Restrained Huly, 7 sections, long-scroll)</span> was the only proposal that absorbed Danilo's full content — 4 cases, 2 active clients, a 15-year arc,
+    method, 2 real testimonials, 4 numeric proofs — without compromising any of them.
+  </p>
+  <p>
+    Round 9 distilled everything into six internally-coherent directions, ranked D1/D5/D3 as the top three. Round 10 converged: <b>ship Final-1 · Warm Huly Refined.</b>
+    It is the only direction that aligns with every prior verdict simultaneously: tier LOW motion, Warm Huly palette, Proposal A structure, top-ranked fit, lowest cost, and
+    a direct evolution of the existing <code>generators/templates/huly-landing/</code> codebase. Final-2 (AI Product-Tour) is held as a secondary CTA inside Final-1;
+    Final-3 (Editorial Craft) is held as a v2 evolution for once F1 is in production with real traffic data.
+  </p>
+</div>
+
+
+<!-- ================== NAV TILES ================== -->
+<h2 class="sec"><span class="n">02</span>Ten rounds · navigate <span class="tail">1-line synopsis · size</span></h2>
+<p class="sec-intro">
+  Every tile links to the full round HTML. Rounds grow in density from ~37 KB gather rounds (R1–R3) to ~76 KB convergence (R10).
+</p>
+
+<div class="tiles">
+
+  <a class="tile" href="round-01/index.html">
+    <div class="n"><span>R01</span><span class="kb">38 KB</span></div>
+    <h3>Wide scan · 30 sites</h3>
+    <p>Initial universe: AI landings, portfolios, studios, commercial SaaS. First taxonomy of palettes + motion gestures.</p>
+    <div class="arrow">→ round-01/index.html</div>
+  </a>
+
+  <a class="tile" href="round-02/index.html">
+    <div class="n"><span>R02</span><span class="kb">42 KB</span></div>
+    <h3>AI landings deep</h3>
+    <p>Anthropic, Linear, Langchain, Inkeep, Cursor, v0, Replicate. Shared grammar: agent-verb H1, numeric chips, dark canvas.</p>
+    <div class="arrow">→ round-02/index.html</div>
+  </a>
+
+  <a class="tile" href="round-03/index.html">
+    <div class="n"><span>R03</span><span class="kb">36 KB</span></div>
+    <h3>Designer portfolios</h3>
+    <p>Brittany, rauno.me, emilkowal.ski, henry.codes, paco.me. Terminal-minimal vs editorial writer vs inline-demo archetypes.</p>
+    <div class="arrow">→ round-03/index.html</div>
+  </a>
+
+  <a class="tile" href="round-04/index.html">
+    <div class="n"><span>R04</span><span class="kb">41 KB</span></div>
+    <h3>Studios deep</h3>
+    <p>Basement, Active Theory, Lusion, Immersive Garden, 14islands. WebGL theatrics + signature-material lessons.</p>
+    <div class="arrow">→ round-04/index.html</div>
+  </a>
+
+  <a class="tile" href="round-05/index.html">
+    <div class="n"><span>R05</span><span class="kb">48 KB</span></div>
+    <h3>Awwwards 2024–26 gaps</h3>
+    <p>Fresh techniques missing from R1–R4: Getty cursor-scrub, cmdk palettes, bracket-nav, docs-as-product-demo.</p>
+    <div class="arrow">→ round-05/index.html</div>
+  </a>
+
+  <a class="tile" href="round-06/index.html">
+    <div class="n"><span>R06</span><span class="kb">42 KB</span></div>
+    <h3>Motion / shader verdict</h3>
+    <p>Tier LOW wins. CSS + canvas 2D at 1/40th bundle of R3F. WebGL hero is 4–6 month trap for solo dev.</p>
+    <div class="arrow">→ round-06/index.html</div>
+  </a>
+
+  <a class="tile" href="round-07/index.html">
+    <div class="n"><span>R07</span><span class="kb">59 KB</span></div>
+    <h3>Palette + type verdict</h3>
+    <p>Warm Huly wins. Near-black + apricot #FF8964. JetBrains Mono display + Inter body. No third face.</p>
+    <div class="arrow">→ round-07/index.html</div>
+  </a>
+
+  <a class="tile" href="round-08/index.html">
+    <div class="n"><span>R08</span><span class="kb">57 KB</span></div>
+    <h3>Layout / narrative verdict</h3>
+    <p>Proposal A wins. 7-section long-scroll absorbs all content without flattening. Hero → marquee → work → method → about → testimonials → contact.</p>
+    <div class="arrow">→ round-08/index.html</div>
+  </a>
+
+  <a class="tile" href="round-09/index.html">
+    <div class="n"><span>R09</span><span class="kb">63 KB</span></div>
+    <h3>6 directions shortlisted</h3>
+    <p>Six internally-coherent directions × 8 attributes. Top 3 = D1 Warm Huly · D5 Product-Tour · D3 Editorial.</p>
+    <div class="arrow">→ round-09/index.html</div>
+  </a>
+
+  <a class="tile final" href="round-10/index.html">
+    <div class="n"><span>R10 · FINAL</span><span class="kb">76 KB</span></div>
+    <h3>Convergence · final 3</h3>
+    <p>Each finalist resolved to palette hex, font stack, scroll map, motion list, signature move, copy, production plan. <b style="color:var(--accent)">Ship Final-1.</b></p>
+    <div class="arrow" style="color:var(--accent)">→ round-10/index.html</div>
+  </a>
+
+</div>
+
+
+<!-- ================== KEY FINDINGS TIMELINE ================== -->
+<h2 class="sec"><span class="n">03</span>Key findings · timeline <span class="tail">how conclusions evolved</span></h2>
+<p class="sec-intro">
+  The shape of the research: four gather rounds, one gaps round, three verdict rounds, a shortlist, and the convergence.
+</p>
+
+<div class="timeline">
+
+  <div class="tl-row phase-gather">
+    <span class="r">R01 → R04</span>
+    <span class="ttl"><b>Gather.</b> <span class="muted">30+ sites catalogued across AI, portfolio, studio, awwwards archetypes. No verdicts — only observation.</span></span>
+    <span class="tag">phase · gather</span>
+  </div>
+
+  <div class="tl-row phase-gather">
+    <span class="r">R05</span>
+    <span class="ttl"><b>Gaps.</b> <span class="muted">Fresh 2024–26 techniques surfaced: Getty cursor-scrub timelines, cmdk palettes, bracket-nav, inline Emil-style widgets, docs-as-product-demo (anime.js).</span></span>
+    <span class="tag">phase · gaps</span>
+  </div>
+
+  <div class="tl-row phase-verdict">
+    <span class="r">R06</span>
+    <span class="ttl"><b>Motion verdict · Tier LOW.</b> <span class="muted">Pure CSS + canvas 2D beats three.js for a solo-designer landing at 1/40th bundle + zero R3F learning curve. WebGL heroes are a 4–6 month trap.</span></span>
+    <span class="tag">verdict · motion</span>
+  </div>
+
+  <div class="tl-row phase-verdict">
+    <span class="r">R07</span>
+    <span class="ttl"><b>Palette + type verdict · Warm Huly.</b> <span class="muted">Near-black (#090A0C) + apricot (#FF8964) + JetBrains Mono display + Inter body. Dark-only, no light band maintenance.</span></span>
+    <span class="tag">verdict · palette</span>
+  </div>
+
+  <div class="tl-row phase-verdict">
+    <span class="r">R08</span>
+    <span class="ttl"><b>Structure verdict · Proposal A.</b> <span class="muted">7-section long-scroll (Hero → marquee → work → method → about → testimonials → contact). Only proposal that absorbs all 4 cases + 2 testimonials + 15-yr arc + method + 4 numeric proofs without flattening any.</span></span>
+    <span class="tag">verdict · structure</span>
+  </div>
+
+  <div class="tl-row phase-verdict">
+    <span class="r">R09</span>
+    <span class="ttl"><b>Shortlist · 6 → top 3.</b> <span class="muted">Six directions scored across 8 attributes. Top 3 = D1 Warm Huly Refined (safest, 4/5 fit), D5 AI Product-Tour (5/5 fit), D3 Editorial Craft (4/5 fit).</span></span>
+    <span class="tag">shortlist</span>
+  </div>
+
+  <div class="tl-row big">
+    <span class="r">R10 · FINAL</span>
+    <span class="ttl"><b>Convergence · Final-1 wins.</b> <span class="muted">The only direction that aligns with every prior verdict simultaneously. ~36 h / 4–5 days. Direct evolution of existing huly-landing codebase. Ships this week.</span></span>
+    <span class="tag">ship</span>
+  </div>
+
+</div>
+
+
+<!-- ================== 3 FINALISTS ================== -->
+<h2 class="sec"><span class="n">04</span>The three finalists <span class="tail">inline hero previews</span></h2>
+<p class="sec-intro">
+  Live mockups in their own palette + type systems. See <a href="round-10/index.html">Round 10</a> for the full spec of each.
+</p>
+
+<div class="finalists">
+
+  <article class="fn f1">
+    <div class="fn-head">
+      <div class="no">FINAL 01 · WINNER</div>
+      <h4>Warm Huly Refined</h4>
+      <p class="thesis">Warmest AI-native personal brand. Huly grammar + apricot gradient in H1 + live GitHub strip.</p>
+    </div>
+    <div class="mock">
+      <div class="eye"><span class="d"></span><span>danilorojas.design · live</span></div>
+      <div class="hh"><span class="g">Danilo Rojas</span> — <span class="a">Agentic Designer</span><br>shipping real products.</div>
+      <div class="ss">I keep the craft; agents give me the leverage. 15 yrs · active at Booz Allen Hamilton.</div>
+      <div class="btns">
+        <span class="btn pr">See the work ↓</span>
+        <span class="btn">Download skills sheet</span>
+      </div>
+    </div>
+    <div class="fn-foot">
+      <span>Tier <b>LOW</b></span>
+      <span><b>~172 KB</b> gz</span>
+      <span><b>~36 h</b></span>
+    </div>
+  </article>
+
+  <article class="fn f2">
+    <div class="fn-head">
+      <div class="no">FINAL 02 · RUNNER-UP</div>
+      <h4>AI Product-Tour</h4>
+      <p class="thesis">Landing IS the product demo. Cursor hero pattern, but the product is Danilo's 5 real CV PDFs.</p>
+    </div>
+    <div class="mock">
+      <div class="l">
+        <div class="eye"><span class="d"></span><span>// 5 PDFs shipped · live</span></div>
+        <div class="hh">Run a CV like you run a <em>product</em>.</div>
+        <div class="ss">This page generated 5 PDFs. I ship real products; agents give me the leverage.</div>
+        <span class="btn">Generate my CV ▸</span>
+      </div>
+      <div class="pdf">
+        <div class="nm">Danilo Rojas</div>
+        <div class="rl">Agentic Designer</div>
+        <div class="rule"></div>
+        <div class="lines"></div>
+        <div class="lines s"></div>
+        <div class="lines"></div>
+        <div class="lines s"></div>
+        <div style="margin-top:6px">
+          <span class="chip">React</span><span class="chip">TS</span><span class="chip">MCP</span>
+        </div>
+      </div>
+    </div>
+    <div class="fn-foot">
+      <span>Tier <b>LOW</b></span>
+      <span><b>~134 KB</b> gz</span>
+      <span><b>~32 h</b></span>
+    </div>
+  </article>
+
+  <article class="fn f3">
+    <div class="fn-head">
+      <div class="no">FINAL 03 · DARK HORSE</div>
+      <h4>Editorial Craft</h4>
+      <p class="thesis">Warmest. Anthropic terracotta + serif display + cases-as-chapters with inline widgets.</p>
+    </div>
+    <div class="mock">
+      <div class="eye">Danilo Rojas — field notes, 2011 → 2026</div>
+      <div class="hh">Agentic Designer<br>shipping <em>real</em> products.</div>
+      <div class="rule"></div>
+      <div class="ss">15 years of delivery — enterprise clients, production SaaS, active consulting at Booz Allen. I keep the craft.</div>
+      <span class="btn">Read the cases →</span>
+    </div>
+    <div class="fn-foot">
+      <span>Tier <b>LOW</b></span>
+      <span><b>~208 KB</b> gz</span>
+      <span><b>~55 h</b></span>
+    </div>
+  </article>
+
+</div>
+
+
+<!-- ================== MATRIX ================== -->
+<h2 class="sec"><span class="n">05</span>Decision matrix <span class="tail">the money table</span></h2>
+<p class="sec-intro">
+  The 5 dimensions that resolve the pick. Full rationale in <a href="round-10/index.html#decision">Round 10 · §05</a>.
+</p>
+
+<div class="matrix-wrap">
+<table class="mx">
+  <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th>Positioning fit</th>
+      <th>Ship-this-weekend feasibility</th>
+      <th>Distinctiveness in 2026</th>
+      <th>Compatibility w/ landing-huly</th>
+      <th>Scalability (blog · agent · v2)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="dcell"><span class="num">F1 · WINNER</span>Warm Huly Refined</td>
+      <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · serio+cálido, dev-literate, designer-first</td>
+      <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · ~36 h · evolves current landing</td>
+      <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span> 3 · warmer than Huly; livestrip is rare</td>
+      <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · direct fork of <code>huly-landing/</code></td>
+      <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · natural home for /writing + /agent</td>
+    </tr>
+    <tr>
+      <td class="dcell"><span class="num">F2</span>AI Product-Tour</td>
+      <td><span class="fit-5 f2"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4 · proves agentic via evidence; tool-risk</td>
+      <td><span class="fit-5 f2"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · ~32 h · Phase 2 already ships artifacts</td>
+      <td><span class="fit-5 f2"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4 · "landing is the product" is rare</td>
+      <td><span class="fit-5 f2"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4 · shares tokens + data pipeline</td>
+      <td><span class="fit-5 f2"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span> 3 · tool-shaped frame narrows growth</td>
+    </tr>
+    <tr>
+      <td class="dcell"><span class="num">F3</span>Editorial Craft</td>
+      <td><span class="fit-5 f3"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4 · warmest; reads "writer" strongly</td>
+      <td><span class="fit-5 f3"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2 · ~55 h + PDF re-type knock-on</td>
+      <td><span class="fit-5 f3"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · no one else reads as a monograph</td>
+      <td><span class="fit-5 f3"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2 · needs Fraunces + PDF composers</td>
+      <td><span class="fit-5 f3"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · natural home for long-form blog</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<!-- ================== PICK ================== -->
+<h2 class="sec"><span class="n">06</span>The pick <span class="tail">one paragraph · opinionated</span></h2>
+
+<section class="pick-box">
+  <h3>Ship <em>Final-1 · Warm Huly Refined.</em></h3>
+  <p>
+    <b>F1 is the only direction that answers every question the research raised with a simultaneous yes.</b> R6 said Tier LOW; F1 uses
+    CSS + canvas 2D. R7 said Warm Huly; F1 is Warm Huly by name. R8 said Proposal A; F1 is Proposal A verbatim. R9 ranked it highest on fit × lowest on cost.
+    When four independent rounds converge on the same answer, the correct move is to <span class="k">ship what the research already proved</span>,
+    not override it with taste. Distinctiveness is a second-order problem; existence is first-order. Hold Final-2's "artifact download" CTA as a secondary action inside F1's hero,
+    and keep Final-3 as a v2 evolution for August once F1 has real traffic data to justify the editorial upgrade.
+  </p>
+</section>
+
+
+<!-- ================== HOW TO CONTINUE ================== -->
+<h2 class="sec"><span class="n">07</span>How to continue <span class="tail">next action</span></h2>
+
+<div class="continue">
+  <div class="left">
+    <h3>When you decide, tell me <code>ship Final-1</code> and I implement it.</h3>
+    <p>
+      I'll fork <code>generators/templates/huly-landing/</code> into <code>warm-huly-refined/</code>, wire the 8 palette tokens + typography scale,
+      rewrite the hero with the bg-clip gradient + canvas-2D glow + live-data strip, and ship Sections 03–07 from the existing <code>data/*.yaml</code> and <code>data/cases/*.md</code>.
+      Total: ~36 h / 4–5 working days. Full plan in Round 10.
+    </p>
+  </div>
+  <code class="cmd">ship Final-1</code>
+</div>
+
+
+<!-- ================== EVIDENCE ================== -->
+<h2 class="sec"><span class="n">08</span>Index of evidence <span class="tail">linked references</span></h2>
+<p class="sec-intro">The files that fed the ten rounds. Everything cited above is checked in here.</p>
+
+<div class="evid">
+  <div class="group">
+    <h3>Visual universe rounds</h3>
+    <ul>
+      <li><a href="round-01/index.html">round-01/index.html</a><span class="n">R01 · 38 KB</span></li>
+      <li><a href="round-02/index.html">round-02/index.html</a><span class="n">R02 · 42 KB</span></li>
+      <li><a href="round-03/index.html">round-03/index.html</a><span class="n">R03 · 36 KB</span></li>
+      <li><a href="round-04/index.html">round-04/index.html</a><span class="n">R04 · 41 KB</span></li>
+      <li><a href="round-05/index.html">round-05/index.html</a><span class="n">R05 · 48 KB</span></li>
+      <li><a href="round-06/index.html">round-06/index.html</a><span class="n">R06 · 42 KB</span></li>
+      <li><a href="round-07/index.html">round-07/index.html</a><span class="n">R07 · 59 KB</span></li>
+      <li><a href="round-08/index.html">round-08/index.html</a><span class="n">R08 · 57 KB</span></li>
+      <li><a href="round-09/index.html">round-09/index.html</a><span class="n">R09 · 63 KB</span></li>
+      <li><a href="round-10/index.html">round-10/index.html</a><span class="n">R10 · 76 KB</span></li>
+    </ul>
+  </div>
+  <div class="group">
+    <h3>Design-system &amp; shader references</h3>
+    <ul>
+      <li><a href="../huly-design-system.md">docs/references/huly-design-system.md</a><span class="n">tokens · palette</span></li>
+      <li><a href="../huly-shader-research.md">docs/references/huly-shader-research.md</a><span class="n">shader effects · canvas 2D</span></li>
+      <li><a href="../shader-research-2026-05-08.md">docs/references/shader-research-2026-05-08.md</a><span class="n">2026 shader survey</span></li>
+      <li><a href="assets/">docs/references/visual-universe/assets/</a><span class="n">reference PNG · shots</span></li>
+      <li><a href="../../../data/">data/*.yaml</a><span class="n">identity · positioning · skills · cases</span></li>
+      <li><a href="../../../data/cases/">data/cases/*.md</a><span class="n">te-skin · te-black · enregla · life-update</span></li>
+      <li><a href="../../../generators/templates/huly-landing/">generators/templates/huly-landing/</a><span class="n">current landing codebase</span></li>
+      <li><a href="../../../dist/landing-huly/index.html">dist/landing-huly/index.html</a><span class="n">rendered landing v1</span></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ================== CREDITS ================== -->
+<section class="credits">
+  <div>
+    <span class="k">date</span>
+    <div class="v">2026-05-08 <span class="mu">· ISO</span></div>
+  </div>
+  <div>
+    <span class="k">rounds</span>
+    <div class="v">10 / 10 <span class="mu">· complete</span></div>
+  </div>
+  <div>
+    <span class="k">sites surveyed</span>
+    <div class="v">30+ <span class="mu">· R1–R5</span></div>
+  </div>
+  <div>
+    <span class="k">techniques catalogued</span>
+    <div class="v">70+ <span class="mu">· motion + palette + type + layout</span></div>
+  </div>
+</section>
+
+<footer>
+  <span>C:\dev\dr-cv\docs\references\visual-universe\master.html</span>
+  <span>dr-cv · visual universe · master · 2026-05-08</span>
+  <span>winner · Final-1 · Warm Huly Refined</span>
+</footer>
+
+</div>
+</body>
+</html>

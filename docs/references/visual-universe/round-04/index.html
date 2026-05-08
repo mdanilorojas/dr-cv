@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Round 4 · Creative studios · deep dive (8 agencies)</title>
+<style>
+  :root{
+    --bg:#0b0b0d;
+    --bg-soft:#141418;
+    --bg-card:#17171c;
+    --line:#26262d;
+    --ink:#ececf1;
+    --ink-dim:#a7a7b1;
+    --ink-mute:#6f6f7a;
+    --accent:#FF8964;
+    --accent-soft:rgba(255,137,100,.14);
+    --good:#7ad9a1;
+    --warn:#f1c27d;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55}
+  code,.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:56px 32px 120px}
+  header.top{border-bottom:1px solid var(--line);padding-bottom:28px;margin-bottom:48px}
+  .kicker{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  h1{font-size:44px;line-height:1.08;letter-spacing:-.02em;margin:10px 0 14px;font-weight:700}
+  h1 .dim{color:var(--ink-dim);font-weight:400}
+  .sub{color:var(--ink-dim);max-width:760px;margin:0}
+  h2{font-size:26px;letter-spacing:-.01em;margin:0 0 18px}
+  h3{font-size:18px;margin:0 0 10px}
+  h4{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin:0 0 6px;font-family:"JetBrains Mono",monospace;font-weight:500}
+
+  /* archetype block */
+  .archetypes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0 0 72px}
+  .arc{background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:22px;position:relative;overflow:hidden}
+  .arc::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--accent);opacity:.8}
+  .arc h3{color:var(--ink);margin-bottom:4px}
+  .arc .tag{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
+  .arc p{color:var(--ink-dim);margin:10px 0 0;font-size:14px}
+  .arc .members{margin-top:14px;font-size:12px;color:var(--ink-mute);font-family:"JetBrains Mono",monospace}
+
+  /* studio cards */
+  .studios{display:grid;grid-template-columns:1fr;gap:22px;margin-bottom:72px}
+  .studio{background:var(--bg-card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .studio header{padding:22px 26px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .studio header .name{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .studio header h2{margin:0;font-size:22px}
+  .studio header .url{color:var(--ink-mute);font-family:"JetBrains Mono",monospace;font-size:12px}
+  .studio header .arc-tag{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:4px 10px;border-radius:999px}
+  .grid8{display:grid;grid-template-columns:repeat(2,1fr);gap:0}
+  .grid8 .cell{padding:18px 26px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .grid8 .cell:nth-child(2n){border-right:none}
+  .grid8 .cell:nth-last-child(-n+2){border-bottom:none}
+  .cell p{margin:0;color:var(--ink-dim);font-size:14px}
+  .cell .steal{color:var(--ink);border-left:2px solid var(--accent);padding-left:12px}
+
+  /* swatches */
+  .swatches{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .sw{display:flex;align-items:center;gap:6px;padding:3px 8px;border:1px solid var(--line);border-radius:999px;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-dim)}
+  .sw .dot{width:10px;height:10px;border-radius:50%;display:inline-block;border:1px solid rgba(255,255,255,.08)}
+
+  /* pills */
+  .pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .pill{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-dim);border:1px solid var(--line);padding:3px 8px;border-radius:999px}
+  .pill.hot{color:var(--accent);border-color:rgba(255,137,100,.3)}
+
+  /* cursor meter */
+  .meter{display:inline-flex;gap:3px;margin-left:8px;vertical-align:middle}
+  .meter i{width:10px;height:10px;border-radius:2px;background:var(--line)}
+  .meter i.on{background:var(--accent)}
+
+  /* transferable section */
+  .steal-section{margin-top:48px}
+  .steals{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .steal-card{background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:22px;position:relative}
+  .steal-card .n{font-family:"JetBrains Mono",monospace;color:var(--accent);font-size:12px;letter-spacing:.1em}
+  .steal-card h3{margin:6px 0 4px;font-size:17px}
+  .steal-card .src{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-mute);margin-bottom:12px}
+  .steal-card p{margin:0;color:var(--ink-dim);font-size:14px}
+  .steal-card .how{margin-top:10px;padding:10px 12px;background:var(--bg-soft);border-radius:8px;border-left:2px solid var(--accent);font-size:13px;color:var(--ink)}
+
+  hr{border:0;border-top:1px solid var(--line);margin:56px 0}
+  .note{color:var(--ink-mute);font-size:12px;font-family:"JetBrains Mono",monospace}
+
+  @media (max-width:900px){
+    .archetypes{grid-template-columns:1fr}
+    .grid8{grid-template-columns:1fr}
+    .grid8 .cell{border-right:none}
+    .grid8 .cell:nth-last-child(-n+2){border-bottom:1px solid var(--line)}
+    .grid8 .cell:last-child{border-bottom:none}
+    .steals{grid-template-columns:1fr}
+    h1{font-size:32px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="kicker">Round 4 · visual universe · dr-cv</div>
+    <h1>Creative studios, deep dive <span class="dim">— 8 agencies that set the motion high-water mark</span></h1>
+    <p class="sub">The craft ceiling in browser motion lives inside these studios. Even though a solo portfolio
+    can't ship a 12-week Porsche configurator, each of them has at least one technique that scales down
+    cleanly to one person + agents. This round categorizes them into three archetypes, then mines each
+    for a single, executable technique.</p>
+    <p class="note">Sources: live fetches where renderable + prior Awwwards / SOTD observation of these studios.
+    Some JS-heavy heroes were not parseable via static fetch and are reconstructed from public-domain knowledge.</p>
+  </header>
+
+  <!-- ARCHETYPES -->
+  <section>
+    <h2>Studio archetypes</h2>
+    <div class="archetypes">
+      <div class="arc">
+        <span class="tag">Archetype A</span>
+        <h3>Cinematic WebGL maximalist</h3>
+        <p>Full-bleed 3D hero, postprocessing stacked (bloom + DOF + grain), gltf models, scroll-bound camera rigs.
+        Work dominated by luxury, auto, entertainment. The site itself is a flagship case study.</p>
+        <p class="members">active theory · lusion · immersive garden · resn</p>
+      </div>
+      <div class="arc">
+        <span class="tag">Archetype B</span>
+        <h3>Editorial / narrative craft</h3>
+        <p>Light or warm palettes, strong typographic systems, cinematic photography, restrained motion. The hero
+        is a statement or a slow reel; cases read like printed features. Luxury + cultural clients dominate.</p>
+        <p class="members">exo ape · 14islands · huncwot · unseen (archetypal)</p>
+      </div>
+      <div class="arc">
+        <span class="tag">Archetype C</span>
+        <h3>Playful dev-swagger</h3>
+        <p>Tech/SaaS clients, dev-first tone, brutalist type, irreverent copy ("cool shit"), occasional 3D cameo.
+        The site performs: fast LCP, interactive widgets, logo wall of YC-era startups.</p>
+        <p class="members">basement.studio · (adjacent: vercel, rauno, paper)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDIOS -->
+  <section class="studios">
+
+    <!-- 1. ACTIVE THEORY -->
+    <article class="studio">
+      <header>
+        <div class="name">
+          <h2>1 · Active Theory</h2>
+          <span class="url">activetheory.net</span>
+        </div>
+        <span class="arc-tag">Archetype A · Cinematic WebGL</span>
+      </header>
+      <div class="grid8">
+        <div class="cell">
+          <h4>A · Category + specialty</h4>
+          <p>Self-billed as <b>"Creative Digital Experiences"</b>. LA-based. Awwwards hall-of-famers; historically the
+          go-to for Google, Meta, Beats, HBO when a campaign needs a WebGL-first microsite. Clients: Google, Meta,
+          Beats by Dre, HBO, Unity, US Open, Lexus.</p>
+        </div>
+        <div class="cell">
+          <h4>B · Hero / opening act</h4>
+          <p>Custom WebGL reel, auto-play muted, often a particle-field or volumetric shader behind an all-caps
+          display title. Scene loads from preloader with progress bar. <span class="pills"><span class="pill hot">Three.js</span><span class="pill">custom shaders</span><span class="pill">preloader</span></span></p>
+        </div>
+        <div class="cell">
+          <h4>C · Case-study treatment</h4>
+          <p>Full-bleed video reel per project, picture-in-picture UI, often launched inside a bespoke viewer with
+          its own navigation. Signature move: the case-study thumbnail <b>morphs into the detail page</b> via shared
+          WebGL texture rather than an image swap.</p>
+        </div>
+        <div class="cell">
+          <h4>D · Palette</h4>
+          <p>Near-black background <code>#0A0A0A</code> with bright accent pulled per case (pink, cyan, amber).
+          Dark dominant, accent-per-project.</p>
+          <div class="swatches">
+            <span class="sw"><i class="dot" style="background:#0A0A0A"></i>#0A0A0A</span>
+            <span class="sw"><i class="dot" style="background:#F5F5F5"></i>#F5F5F5</span>
+            <span class="sw"><i class="dot" style="background:#FF3366"></i>#FF3366</span>
+          </div>
+        </div>
+        <div class="cell">
+          <h4>E · Typography</h4>
+          <p>Condensed grotesque for display (TWK Everett / Söhne Breit-type cuts), neutral sans for body.
+          Occasionally variable-axis weight shift on hover.</p>
+        </div>
+        <div class="cell">
+          <h4>F · Motion / shader stack</h4>
+          <p>Three.js (in-house framework on top, "Theatre.js"-adjacent). Bloom + chromatic aberration + film grain
+          are standard. Heavy use of glTF, HDRI, post-shaders.
+          <span class="meter" title="cursor interactivity"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></p>
+          <div class="pills"><span class="pill hot">Three.js</span><span class="pill hot">GLSL</span><span class="pill">GSAP</span><span class="pill">HDRI</span><span class="pill">postprocessing</span></div>
+        </div>
+        <div class="cell">
+          <h4>G · Narrative / copy</h4>
+          <p>H1 short and declarative ("Creative Digital Experiences", ~30 chars). No manifesto page; a
+          minimalist About. Tone: confident craft — not loud, but <i>assumed tier-1</i>.</p>
+        </div>
+        <div class="cell">
+          <h4>H · What dr-cv could steal</h4>
+          <p class="steal">Treat the personal hero canvas like a <b>shared texture</b>: the same shader you show on
+          load should "dock" behind the skills sheet and the CV preview, not restart. It creates the impression of
+          one continuous world, which is the whole point of a WebGL site.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2. RESN -->
+    <article class="studio">
+      <header>
+        <div class="name">
+          <h2>2 · Resn</h2>
+          <span class="url">resn.co.nz</span>
+        </div>
+        <span class="arc-tag">Archetype A · Cinematic WebGL (playful wing)</span>
+      </header>
+      <div class="grid8">
+        <div class="cell">
+          <h4>A · Category + specialty</h4>
+          <p>"Creative Digital Agency — Ideation, Design, and Development". NZ/Amsterdam. Specialty: playful,
+          character-driven 3D worlds and interactive games. Clients historically include Google, Pepsi, Cartoon Network,
+          Samsung, Nickelodeon.</p>
+        </div>
+        <div class="cell">
+          <h4>B · Hero / opening act</h4>
+          <p>Often an intentionally <b>weird or broken-looking</b> intro (old browser icons, CRT glitch). Auto-play,
+          muted, with exaggerated cursor-driven distortion to set "this will be fun" expectations immediately.</p>
+        </div>
+        <div class="cell">
+          <h4>C · Case-study treatment</h4>
+          <p>Tile grid, each tile a <b>live WebGL scene</b>, not a static image. Hovering a tile triggers its own shader
+          to "wake up". Case pages are chaptered like a game.</p>
+        </div>
+        <div class="cell">
+          <h4>D · Palette</h4>
+          <p>Saturated-and-weird: cyan, hot pink, safety orange on black. Rarely a dignified neutral palette — the point
+          is that it looks like a toy.</p>
+          <div class="swatches">
+            <span class="sw"><i class="dot" style="background:#000000"></i>#000000</span>
+            <span class="sw"><i class="dot" style="background:#00E5FF"></i>#00E5FF</span>
+            <span class="sw"><i class="dot" style="background:#FF2D95"></i>#FF2D95</span>
+            <span class="sw"><i class="dot" style="background:#FFC700"></i>#FFC700</span>
+          </div>
+        </div>
+        <div class="cell">
+          <h4>E · Typography</h4>
+          <p>Display in rounded geometric + rotated labels; often inline emoji-style glyphs. Body is secondary — the
+          scene carries meaning.</p>
+        </div>
+        <div class="cell">
+          <h4>F · Motion / shader stack</h4>
+          <p>Three.js, Cannon.js/Rapier for physics, Rive for character rigs. Heavy cursor feedback (objects chase
+          the cursor, squash-and-stretch).
+          <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></p>
+          <div class="pills"><span class="pill hot">Three.js</span><span class="pill">Cannon/Rapier</span><span class="pill">Rive</span><span class="pill">GSAP</span></div>
+        </div>
+        <div class="cell">
+          <h4>G · Narrative / copy</h4>
+          <p>Short, ironic H1 ("We make weird shit on the internet" energy). Manifesto tucked inside a joke page.
+          Tone: <b>swagger disguised as humor</b>.</p>
+        </div>
+        <div class="cell">
+          <h4>H · What dr-cv could steal</h4>
+          <p class="steal">Make one case-study tile <b>live</b>, not a still. A single-shader card that reacts to cursor
+          is enough to signal "this site is not a template". Solo budget: one tile, one shader, one afternoon.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3. 14ISLANDS (ueno replacement) -->
+    <article class="studio">
+      <header>
+        <div class="name">
+          <h2>3 · 14islands <span class="note">(replacing ueno.co, dissolved 2021)</span></h2>
+          <span class="url">14islands.com</span>
+        </div>
+        <span class="arc-tag">Archetype B · Editorial craft (with tech teeth)</span>
+      </header>
+      <div class="grid8">
+        <div class="cell">
+          <h4>A · Category + specialty</h4>
+          <p>"Creative design &amp; technology agency". Stockholm/Portugal. Authors of the influential
+          <code>@14islands/r3f-scroll-rig</code>. Clients: Cartier, Google (Interland, Santa Tracker), UNDP, Galxe,
+          Poly AI, Axolot.</p>
+        </div>
+        <div class="cell">
+          <h4>B · Hero / opening act</h4>
+          <p>Clean editorial hero: "Creative agency" + one sentence tagline, <b>no auto-play video</b>. The "wow"
+          happens on scroll, not on load. Signals craft, not showboating.</p>
+        </div>
+        <div class="cell">
+          <h4>C · Case-study treatment</h4>
+          <p>Case thumbnails with gradient artwork + category tag ("Luxury", "AI", "Web3"). Signature trick: DOM
+          images <b>upgrade to WebGL planes</b> when a scroll-rig is mounted, allowing shader effects on what look
+          like ordinary images. You cannot tell where HTML ends and WebGL begins.</p>
+        </div>
+        <div class="cell">
+          <h4>D · Palette</h4>
+          <p>Light-dominant (near-white <code>#F6F6F4</code>), ink <code>#111</code>, with gradient accents pulled
+          from each project's art direction.</p>
+          <div class="swatches">
+            <span class="sw"><i class="dot" style="background:#F6F6F4"></i>#F6F6F4</span>
+            <span class="sw"><i class="dot" style="background:#111111"></i>#111111</span>
+            <span class="sw"><i class="dot" style="background:linear-gradient(90deg,#FF6EC7,#7A5CFF)"></i>gradient</span>
+          </div>
+        </div>
+        <div class="cell">
+          <h4>E · Typography</h4>
+          <p>Neue Haas Grotesk / Söhne type feel. Sparse, generous leading. Editorial, not brutalist.</p>
+        </div>
+        <div class="cell">
+          <h4>F · Motion / shader stack</h4>
+          <p>React-Three-Fiber + their own scroll-rig, GSAP only for tweens. Smooth scroll with Lenis. Light
+          postprocessing, usually subtle grain or noise.
+          <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></p>
+          <div class="pills"><span class="pill hot">R3F</span><span class="pill hot">scroll-rig</span><span class="pill">Lenis</span><span class="pill">GSAP</span></div>
+        </div>
+        <div class="cell">
+          <h4>G · Narrative / copy</h4>
+          <p>H1 is two words ("Creative agency"). Entire site is humble. About page leads with values, not awards.
+          Tone: <b>craft-first, quiet confidence</b>.</p>
+        </div>
+        <div class="cell">
+          <h4>H · What dr-cv could steal</h4>
+          <p class="steal">Use their open-source <code>@14islands/r3f-scroll-rig</code> to give a few key DOM images
+          (project covers, featured client logos) a WebGL upgrade: grain, RGB split, liquid-reveal on enter. The rest
+          of the site stays as HTML, so it's fast, accessible, and maintainable by one person.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4. BASEMENT -->
+    <article class="studio">
+      <header>
+        <div class="name">
+          <h2>4 · basement.studio</h2>
+          <span class="url">basement.studio</span>
+        </div>
+        <span class="arc-tag">Archetype C · Playful dev-swagger</span>
+      </header>
+      <div class="grid8">
+        <div class="cell">
+          <h4>A · Category + specialty</h4>
+          <p>"A digital studio &amp; branding powerhouse making cool shit that performs." Argentina (same hemisphere
+          as dr-cv's author). Dev-heavy. Clients: <b>Vercel, Linear, Cursor, Scale, Cognition, Eleven Labs,
+          Harvey, Solana, MrBeast</b>. This is the logo wall Danilo's peers stare at.</p>
+        </div>
+        <div class="cell">
+          <h4>B · Hero / opening act</h4>
+          <p>Text-first. Bold H1, immediate logo marquee, no 3D. LCP is fast on purpose — the site is a SaaS pitch
+          pretending to be a portfolio.</p>
+        </div>
+        <div class="cell">
+          <h4>C · Case-study treatment</h4>
+          <p>Card grid + service tags ("Websites &amp; Features", "IRL Experience Design"). Each case opens into a
+          long-form devblog-style page with big hero, annotated screenshots, occasional interactive widget from the
+          real project embedded inline.</p>
+        </div>
+        <div class="cell">
+          <h4>D · Palette</h4>
+          <p>Dark near-black with a single playful accent (usually a lime or hot pink chosen per season). Secondary
+          type in mid-gray.</p>
+          <div class="swatches">
+            <span class="sw"><i class="dot" style="background:#0B0B0E"></i>#0B0B0E</span>
+            <span class="sw"><i class="dot" style="background:#E3FF5C"></i>#E3FF5C</span>
+            <span class="sw"><i class="dot" style="background:#FF4D8F"></i>#FF4D8F</span>
+          </div>
+        </div>
+        <div class="cell">
+          <h4>E · Typography</h4>
+          <p>Mono-forward. Display is a neo-grot (Basement Grotesque, their own), with JetBrains Mono / Geist Mono
+          in labels and numbers. Dev fingerprint.</p>
+        </div>
+        <div class="cell">
+          <h4>F · Motion / shader stack</h4>
+          <p>Next.js + Framer Motion + GSAP. Occasional R3F cameo on a single case. Cursor interactivity is tasteful,
+          not obnoxious.
+          <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></p>
+          <div class="pills"><span class="pill hot">Next.js</span><span class="pill">Framer Motion</span><span class="pill">GSAP</span><span class="pill">R3F cameo</span></div>
+        </div>
+        <div class="cell">
+          <h4>G · Narrative / copy</h4>
+          <p>H1 is a whole sentence (~75 chars) with profanity. Manifesto is the site itself. Tone:
+          <b>swagger, irreverent, proud dev-first</b>. "We build cool shit that performs" is the thesis.</p>
+        </div>
+        <div class="cell">
+          <h4>H · What dr-cv could steal</h4>
+          <p class="steal">Borrow the <b>"logo marquee above the fold"</b> structure: H1, one-line thesis, then an
+          animated row of real client logos before the user scrolls. Instant credibility with zero 3D budget. For
+          dr-cv: Booz Allen / Merck / Mondelez / Banco Pichincha / BairesDev.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 5. HUNCWOT -->
+    <article class="studio">
+      <header>
+        <div class="name">
+          <h2>5 · Huncwot</h2>
+          <span class="url">huncwot.com</span>
+        </div>
+        <span class="arc-tag">Archetype B · Editorial craft</span>
+      </header>
+      <div class="grid8">
+        <div class="cell">
+          <h4>A · Category + specialty</h4>
+          <p>Award-winning digital agency out of Warsaw. Specialty is <b>cultural / institutional storytelling</b>:
+          Obama Foundation (Obama Presidency Oral History), Columbia University (Elders Project, Harvard Film Archive),
+          European Film Academy, Adam Mickiewicz Institute.</p>
+        </div>
+        <div class="cell">
+          <h4>B · Hero / opening act</h4>
+          <p>Text-based H1: <i>"Crafting digital products that AI can only dream of."</i> No loud media. A scroll-cue
+          arrow. The weight is in the copy.</p>
+        </div>
+        <div class="cell">
+          <h4>C · Case-study treatment</h4>
+          <p>Numbered sequentially (01–06). Each case includes: expertise tags, client, awards shelf, testimonial
+          quote, "visit website" CTA. Academy ratio (1.375:1) frames are a signature. Feels like a printed
+          monograph.</p>
+        </div>
+        <div class="cell">
+          <h4>D · Palette</h4>
+          <p>Neutral paper-light bg, ink text, warm accent. Occasional sepia / film-stock tint in case hero imagery.</p>
+          <div class="swatches">
+            <span class="sw"><i class="dot" style="background:#EDE9E2"></i>#EDE9E2</span>
+            <span class="sw"><i class="dot" style="background:#121110"></i>#121110</span>
+            <span class="sw"><i class="dot" style="background:#B66A3B"></i>#B66A3B</span>
+          </div>
+        </div>
+        <div class="cell">
+          <h4>E · Typography</h4>
+          <p>Editorial serif for headings (Tiempos / GT Sectra vibes) + neutral sans for body. Their editorial instinct
+          is the whole brand.</p>
+        </div>
+        <div class="cell">
+          <h4>F · Motion / shader stack</h4>
+          <p>Subtle: fade-up on scroll, slow parallax, occasional video loops. Not a shader studio; motion is
+          cinematic restraint.
+          <span class="meter"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></p>
+          <div class="pills"><span class="pill">GSAP</span><span class="pill">Lenis</span><span class="pill">video loops</span></div>
+        </div>
+        <div class="cell">
+          <h4>G · Narrative / copy</h4>
+          <p>H1 is one confident sentence (~50 chars). Testimonial per case is non-negotiable. Tone:
+          <b>swagger through restraint</b> — they don't raise their voice, because Harvard already did.</p>
+        </div>
+        <div class="cell">
+          <h4>H · What dr-cv could steal</h4>
+          <p class="steal">Add a <b>testimonial quote inline inside each case study</b>, not in a separate section.
+          Danilo already has Jennifer Sheppard and Alexander Giraldez — pair each quote with the Trusted Environments
+          case it validates. Proof where the claim lives.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 6. UNSEEN -->
+    <article class="studio">
+      <header>
+        <div class="name">
+          <h2>6 · Unseen Studio</h2>
+          <span class="url">unseen.studio <span class="note">(fetch blocked; reconstructed from public observation)</span></span>
+        </div>
+        <span class="arc-tag">Archetype B · Editorial craft (minimalist wing)</span>
+      </header>
+      <div class="grid8">
+        <div class="cell">
+          <h4>A · Category + specialty</h4>
+          <p>Tokyo-based, small team. Brand + digital craft for fashion, hospitality, and architecture clients.
+          Highly curated roster, few cases, each one deep.</p>
+        </div>
+        <div class="cell">
+          <h4>B · Hero / opening act</h4>
+          <p>Near-empty page: logo, one line of copy, a silent looping photograph or 24fps film fragment. Respects
+          whitespace the way a print magazine does.</p>
+        </div>
+        <div class="cell">
+          <h4>C · Case-study treatment</h4>
+          <p>One case per scroll-screen. Signature move: <b>the hero photograph "breathes"</b> — a 2-second loop at
+          low opacity under the title, rather than playing a full reel. Feels cinematic but weighs almost nothing.</p>
+        </div>
+        <div class="cell">
+          <h4>D · Palette</h4>
+          <p>Off-white and ink, with exactly one accent per case pulled from the client's own art direction.</p>
+          <div class="swatches">
+            <span class="sw"><i class="dot" style="background:#F2EFEA"></i>#F2EFEA</span>
+            <span class="sw"><i class="dot" style="background:#0D0D0D"></i>#0D0D0D</span>
+          </div>
+        </div>
+        <div class="cell">
+          <h4>E · Typography</h4>
+          <p>One serif (often a revival cut: ABC Arizona, Migra, PP Editorial New), paired with a neutral mono for
+          metadata. No third typeface.</p>
+        </div>
+        <div class="cell">
+          <h4>F · Motion / shader stack</h4>
+          <p>Almost no 3D. Smooth scroll + <b>viewport-bound video loops</b> + text-mask reveals. The aesthetic
+          comes from restraint, not GLSL.
+          <span class="meter"><i class="on"></i><i></i><i></i><i></i><i></i></span></p>
+          <div class="pills"><span class="pill">Lenis</span><span class="pill">GSAP ScrollTrigger</span><span class="pill">video loops</span></div>
+        </div>
+        <div class="cell">
+          <h4>G · Narrative / copy</h4>
+          <p>H1 is 3–5 words. No manifesto, no About novel. Tone: <b>philosophical humility</b>. They are confident
+          enough to disappear behind their clients.</p>
+        </div>
+        <div class="cell">
+          <h4>H · What dr-cv could steal</h4>
+          <p class="steal">Use a <b>single serif display face paired with one mono</b> for the entire site. Kills the
+          "AI-generated design" look instantly. Dr-cv currently leans on Inter + JetBrains Mono — consider swapping
+          display to a serif cut (PP Editorial New or Fraunces) for the name + H1 only.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 7. LUSION -->
+    <article class="studio">
+      <header>
+        <div class="name">
+          <h2>7 · Lusion</h2>
+          <span class="url">lusion.co</span>
+        </div>
+        <span class="arc-tag">Archetype A · Cinematic WebGL</span>
+      </header>
+      <div class="grid8">
+        <div class="cell">
+          <h4>A · Category + specialty</h4>
+          <p>"3D visual storytelling and interactive web experiences." Sydney. Experimental / R&amp;D feel.
+          Clients: Porsche (Dream Machine), Meta (Spatial Fusion), Devin AI, Oryzo AI, Choo Choo World, Soda AR.</p>
+        </div>
+        <div class="cell">
+          <h4>B · Hero / opening act</h4>
+          <p>WebGL hero, auto-play, "Play Reel" CTA. Usually a signature material: glass, liquid metal, or a
+          custom noise-displaced plane. Preloader with percentage.</p>
+        </div>
+        <div class="cell">
+          <h4>C · Case-study treatment</h4>
+          <p>Card grid with service tags ("web, design, development, 3D, animation, AR, Web3"). Each case page is
+          its own micro-world with bespoke camera rig. They treat each case like a short film.</p>
+        </div>
+        <div class="cell">
+          <h4>D · Palette</h4>
+          <p>Dark dominant, highly saturated per-case accents. Porsche case leans chrome + amber; Meta case leans
+          cyan + white.</p>
+          <div class="swatches">
+            <span class="sw"><i class="dot" style="background:#08080A"></i>#08080A</span>
+            <span class="sw"><i class="dot" style="background:#FAFAFA"></i>#FAFAFA</span>
+            <span class="sw"><i class="dot" style="background:#FFAE3C"></i>#FFAE3C</span>
+          </div>
+        </div>
+        <div class="cell">
+          <h4>E · Typography</h4>
+          <p>Condensed grotesque / variable font. Occasional stretch on the axis as a hover effect. Mono for case
+          metadata.</p>
+        </div>
+        <div class="cell">
+          <h4>F · Motion / shader stack</h4>
+          <p>Three.js, custom GLSL (refraction, SDF, parallax-occlusion), postprocessing (bloom, DOF, chromatic).
+          Heavy HDRI usage. Cursor is a magnet that influences shader params.
+          <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></p>
+          <div class="pills"><span class="pill hot">Three.js</span><span class="pill hot">GLSL</span><span class="pill">HDRI</span><span class="pill">postprocessing</span><span class="pill">GSAP</span></div>
+        </div>
+        <div class="cell">
+          <h4>G · Narrative / copy</h4>
+          <p>H1 is long-form (~120 chars), craft-swagger. Has a real About with a manifesto-adjacent paragraph about
+          originality over trend-chasing.</p>
+        </div>
+        <div class="cell">
+          <h4>H · What dr-cv could steal</h4>
+          <p class="steal">Pick <b>one signature material</b> (glass, iridescence, liquid) and reuse it across the
+          whole site — on the avatar, on the CV cover, on the skills-sheet header. A single consistent shader is the
+          "logo" of a WebGL portfolio.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 8. IMMERSIVE GARDEN -->
+    <article class="studio">
+      <header>
+        <div class="name">
+          <h2>8 · Immersive Garden</h2>
+          <span class="url">ig.com.pt / immersive-g.com</span>
+        </div>
+        <span class="arc-tag">Archetype A · Cinematic WebGL (luxury wing)</span>
+      </header>
+      <div class="grid8">
+        <div class="cell">
+          <h4>A · Category + specialty</h4>
+          <p>Paris/Lisbon. "Global leader in groundbreaking digital design and strategy" — luxury-dominated roster:
+          <b>Louis Vuitton, Cartier, Dior, Longines, OMEGA, Girard-Perregaux</b>. Also heritage/cultural and crypto
+          (Gleec, Hatom).</p>
+        </div>
+        <div class="cell">
+          <h4>B · Hero / opening act</h4>
+          <p>Often a <b>glTF 3D product</b> (watch, bottle, bag) spinning on a plinth with studio-HDRI lighting.
+          Auto-play, cursor rotates the object. Preloader is luxurious (monogram + shimmer).</p>
+        </div>
+        <div class="cell">
+          <h4>C · Case-study treatment</h4>
+          <p>Portfolio-driven, 16+ projects, brief descriptive tagline + project type ("Web Experience", "E-Shop",
+          "Corporate"). Case detail page is a <b>scroll-bound camera fly-through</b> of the product.</p>
+        </div>
+        <div class="cell">
+          <h4>D · Palette</h4>
+          <p>Black + cream + gold accent. Luxury house rules. Occasionally a per-case accent pulled from the Maison.</p>
+          <div class="swatches">
+            <span class="sw"><i class="dot" style="background:#000000"></i>#000000</span>
+            <span class="sw"><i class="dot" style="background:#F3EFE7"></i>#F3EFE7</span>
+            <span class="sw"><i class="dot" style="background:#C9A15B"></i>#C9A15B</span>
+          </div>
+        </div>
+        <div class="cell">
+          <h4>E · Typography</h4>
+          <p>High-contrast didone (Canela / Butler / GT Super) paired with a neutral sans. Classical luxury
+          typography — the opposite of basement.studio.</p>
+        </div>
+        <div class="cell">
+          <h4>F · Motion / shader stack</h4>
+          <p>Three.js + R3F. Physically-based materials, HDRI, DRACO-compressed glTF. Postprocessing: bloom + DOF +
+          subtle vignette. Cursor rotates hero product.
+          <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></p>
+          <div class="pills"><span class="pill hot">R3F</span><span class="pill hot">glTF + DRACO</span><span class="pill">HDRI</span><span class="pill">postprocessing</span></div>
+        </div>
+        <div class="cell">
+          <h4>G · Narrative / copy</h4>
+          <p>H1: aspirational and declarative ("Transcend anything seen or felt before…"). Copy uses luxury
+          verbs: <i>transcend, craft, unparalleled</i>. Tone: <b>swagger with dignity</b>.</p>
+        </div>
+        <div class="cell">
+          <h4>H · What dr-cv could steal</h4>
+          <p class="steal">Host <b>one glTF "hero object"</b> — say, a 3D rendering of the CV or skills sheet as a
+          physical artifact — that the cursor rotates. It reframes the portfolio as a product, not a résumé. Solo-
+          doable in an afternoon with R3F + one PBR model.</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- TRANSFERABLE -->
+  <section class="steal-section">
+    <h2>Transferable techniques for a solo portfolio</h2>
+    <p class="sub" style="margin-bottom:28px">Eight techniques that survive the jump from a 10-person studio to one
+    person with agents. Prioritized by ROI: visual impact ÷ implementation cost.</p>
+
+    <div class="steals">
+
+      <div class="steal-card">
+        <div class="n">01 · high priority</div>
+        <h3>Shared-texture hero that docks behind sections</h3>
+        <div class="src">Source: Active Theory — one continuous scene, not repeated canvases</div>
+        <p>Instead of restarting the shader on each page, keep one persistent WebGL canvas fixed behind the DOM.
+        Sections scroll over it; the shader params morph on scroll.</p>
+        <div class="how"><b>Solo recipe:</b> One R3F <code>&lt;Canvas&gt;</code> mounted at the root, position:fixed,
+        z-index:-1. Use <code>@14islands/r3f-scroll-rig</code> or Lenis + <code>useScroll</code> to drive uniforms.
+        One afternoon.</div>
+      </div>
+
+      <div class="steal-card">
+        <div class="n">02 · high priority</div>
+        <h3>Logo marquee above the fold</h3>
+        <div class="src">Source: basement.studio — instant credibility, zero 3D</div>
+        <p>H1 + one-line thesis + an animated horizontal strip of real client logos before the first scroll.
+        Converts a "who is this guy" reaction into "he worked with real brands" in two seconds.</p>
+        <div class="how"><b>Solo recipe:</b> CSS <code>@keyframes</code> translateX on a duplicated logo row. Clients
+        for dr-cv: Booz Allen (Trusted Environments), Merck, Mondelēz, Banco Pichincha, BairesDev. Fifteen minutes.</div>
+      </div>
+
+      <div class="steal-card">
+        <div class="n">03 · high priority</div>
+        <h3>One live case-study tile</h3>
+        <div class="src">Source: Resn — not every tile needs to be a still</div>
+        <p>Make exactly one tile in the case-study grid a live WebGL scene that reacts to cursor. The other tiles
+        stay as images. The one live tile changes the whole grid's perceived tier.</p>
+        <div class="how"><b>Solo recipe:</b> A single fullscreen-quad shader (noise + cursor displacement) masked
+        to the tile's bounds. 60 lines of GLSL, one afternoon. Pick the most important case for dr-cv (EnRegla or
+        Trusted Environments) for the live tile.</div>
+      </div>
+
+      <div class="steal-card">
+        <div class="n">04 · medium priority</div>
+        <h3>DOM-to-WebGL image upgrade</h3>
+        <div class="src">Source: 14islands — <code>r3f-scroll-rig</code>, open source</div>
+        <p>Images stay as semantic <code>&lt;img&gt;</code> for a11y and SEO. On mount, a scroll-rig lifts them
+        into WebGL planes so they can take grain, RGB split, or liquid-reveal shaders without sacrificing the
+        HTML tree.</p>
+        <div class="how"><b>Solo recipe:</b> <code>npm i @14islands/r3f-scroll-rig</code>, wrap app in
+        <code>&lt;GlobalCanvas&gt;</code>, tag images with <code>&lt;ScrollScene&gt;</code>. Library does the
+        orchestration. Half a day.</div>
+      </div>
+
+      <div class="steal-card">
+        <div class="n">05 · medium priority</div>
+        <h3>Inline testimonial per case</h3>
+        <div class="src">Source: Huncwot — proof where the claim lives</div>
+        <p>Drop the testimonial quote <i>inside</i> the relevant case study, not on a standalone "Testimonials"
+        page. The quote appears next to the claim it validates, so it reads as evidence, not marketing.</p>
+        <div class="how"><b>Solo recipe:</b> Data already exists — Jennifer Sheppard and Alexander Giraldez, both
+        with verbal use-freely permission (see <code>user_bah_testimonials_real.md</code>). Pair each with the
+        Trusted Environments sub-case. Copy-paste.</div>
+      </div>
+
+      <div class="steal-card">
+        <div class="n">06 · medium priority</div>
+        <h3>One signature material, reused everywhere</h3>
+        <div class="src">Source: Lusion — the shader is the logo</div>
+        <p>Pick one visual material (iridescence, frosted glass, liquid chrome) and reuse it on the avatar, the
+        CV header, the skills-sheet cover, the favicon. It becomes a recognizable signature rather than another
+        WebGL demo.</p>
+        <div class="how"><b>Solo recipe:</b> Write one shader material once, re-import it. R3F
+        <code>shaderMaterial</code> + drei <code>MeshTransmissionMaterial</code> is a good starting point.
+        Half a day of iteration to find the right material, then reuse is free.</div>
+      </div>
+
+      <div class="steal-card">
+        <div class="n">07 · low priority, high wow</div>
+        <h3>One glTF "hero object" the cursor rotates</h3>
+        <div class="src">Source: Immersive Garden — portfolio as product, not résumé</div>
+        <p>Model the CV (or a stack of the 5 PDFs from Phase 2) as a physical object on a plinth. Cursor rotates it.
+        Reframes Danilo's work as artifacts the visitor can pick up.</p>
+        <div class="how"><b>Solo recipe:</b> Model in Blender (or generate), export glTF, DRACO-compress, load in
+        R3F with <code>&lt;useGLTF&gt;</code>, add <code>&lt;OrbitControls enableZoom={false}&gt;</code>. One day
+        including modelling.</div>
+      </div>
+
+      <div class="steal-card">
+        <div class="n">08 · low priority, high distinction</div>
+        <h3>Serif + mono, no third typeface</h3>
+        <div class="src">Source: Unseen — restraint as a stylistic weapon</div>
+        <p>Swap the display face on name + H1 only to a distinctive serif (PP Editorial New, Fraunces, Migra,
+        GT Sectra). Keep Inter / JetBrains Mono everywhere else. Kills the "ChatGPT-generated landing" signature
+        that all-sans portfolios share.</p>
+        <div class="how"><b>Solo recipe:</b> One @font-face, 40 KB. Apply to two selectors (<code>h1</code>,
+        <code>.name</code>). Ten minutes. Biggest perceptual upgrade per byte on this list.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr/>
+  <p class="note">round-04/index.html · dr-cv visual universe · 2026-05-08 · danilo + claude opus 4.7</p>
+</div>
+</body>
+</html>

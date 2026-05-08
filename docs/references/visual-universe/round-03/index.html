@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Round 3 · Designer/engineer portfolios · deep dive (10 sites)</title>
+<style>
+  :root{
+    --bg:#07080d;
+    --bg-alt:#0d0f16;
+    --bg-card:#10131c;
+    --line:#1e2230;
+    --text:#e7e9f0;
+    --muted:#8a90a0;
+    --dim:#5a6072;
+    --accent:#FF8964;
+    --accent-dim:#b85e44;
+    --ok:#7ee787;
+    --warn:#f7c873;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    font-size:15px;line-height:1.55;letter-spacing:-0.005em;
+    -webkit-font-smoothing:antialiased;
+  }
+  code,.mono{
+    font-family:'JetBrains Mono','SF Mono',ui-monospace,Menlo,monospace;
+    font-size:12.5px;letter-spacing:-0.01em;
+  }
+  a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim);}
+  a:hover{color:#fff;border-bottom-color:#fff;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:48px 32px 96px;}
+  header.top{
+    border-bottom:1px solid var(--line);padding-bottom:32px;margin-bottom:48px;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',ui-monospace,monospace;
+    font-size:11.5px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:'Inter',sans-serif;font-weight:600;
+    font-size:40px;line-height:1.1;letter-spacing:-0.03em;margin:0 0 14px;
+  }
+  h1 span.slash{color:var(--dim);font-weight:400;}
+  .sub{color:var(--muted);font-size:16px;max-width:720px;}
+  .meta-row{display:flex;gap:24px;flex-wrap:wrap;margin-top:20px;font-size:12.5px;color:var(--dim);}
+  .meta-row b{color:var(--muted);font-weight:500;}
+
+  /* Archetypes */
+  .archetypes{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:0 0 64px;
+  }
+  .arc{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:22px;
+    position:relative;overflow:hidden;
+  }
+  .arc::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(600px 120px at top left,rgba(255,137,100,0.06),transparent 60%);
+  }
+  .arc .tag{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);
+    letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;
+  }
+  .arc h3{margin:0 0 8px;font-size:17px;font-weight:600;letter-spacing:-0.02em;}
+  .arc p{margin:0 0 14px;color:var(--muted);font-size:13.5px;line-height:1.5;}
+  .arc .members{display:flex;flex-wrap:wrap;gap:6px;}
+  .arc .chip{
+    background:rgba(255,137,100,0.08);border:1px solid rgba(255,137,100,0.25);
+    color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    padding:3px 8px;border-radius:4px;
+  }
+  .arc.dev .chip{background:rgba(126,231,135,0.08);border-color:rgba(126,231,135,0.2);color:var(--ok);}
+  .arc.edit .chip{background:rgba(247,200,115,0.08);border-color:rgba(247,200,115,0.2);color:var(--warn);}
+  .arc.dev::before{background:radial-gradient(600px 120px at top left,rgba(126,231,135,0.06),transparent 60%);}
+  .arc.edit::before{background:radial-gradient(600px 120px at top left,rgba(247,200,115,0.06),transparent 60%);}
+
+  h2.section{
+    font-size:22px;font-weight:600;letter-spacing:-0.02em;
+    margin:72px 0 24px;padding-bottom:10px;border-bottom:1px solid var(--line);
+  }
+  h2.section .n{color:var(--dim);font-weight:400;margin-right:10px;font-family:'JetBrains Mono',monospace;font-size:14px;}
+
+  /* Site card */
+  .site{
+    background:var(--bg-alt);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:22px;
+  }
+  .site-head{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    flex-wrap:wrap;gap:18px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px dashed var(--line);
+  }
+  .site-head .left h3{
+    margin:0 0 4px;font-size:20px;font-weight:600;letter-spacing:-0.02em;
+  }
+  .site-head .left .url{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted);}
+  .site-head .right .pill{
+    display:inline-block;background:rgba(255,137,100,0.1);color:var(--accent);
+    border:1px solid rgba(255,137,100,0.3);padding:4px 10px;border-radius:20px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.04em;
+  }
+  .site-head .right .pill.dev{background:rgba(126,231,135,0.08);color:var(--ok);border-color:rgba(126,231,135,0.25);}
+  .site-head .right .pill.edit{background:rgba(247,200,115,0.08);color:var(--warn);border-color:rgba(247,200,115,0.25);}
+
+  .grid{display:grid;grid-template-columns:180px 1fr;gap:12px 20px;}
+  .grid dt{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--dim);padding-top:3px;
+  }
+  .grid dd{margin:0;color:var(--text);font-size:14px;line-height:1.55;}
+  .grid dd.quote{
+    border-left:2px solid var(--accent);padding:4px 0 4px 12px;color:var(--text);
+    font-style:italic;
+  }
+  .grid dd .label{color:var(--muted);font-size:12.5px;margin-right:4px;}
+  .grid dd ul{margin:4px 0;padding-left:18px;}
+  .grid dd ul li{margin-bottom:3px;color:var(--muted);}
+  .grid dd ul li b{color:var(--text);font-weight:500;}
+  .swatch{
+    display:inline-flex;align-items:center;gap:6px;margin-right:10px;margin-bottom:4px;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);
+  }
+  .swatch span.sw{
+    display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,0.1);
+  }
+  .impression{
+    margin-top:18px;padding:14px 16px;background:rgba(255,137,100,0.04);
+    border-left:3px solid var(--accent);border-radius:0 6px 6px 0;
+    color:var(--text);font-size:13.5px;line-height:1.6;
+  }
+
+  /* Recommendations */
+  .recs{display:grid;grid-template-columns:1fr;gap:18px;}
+  .rec{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:12px;
+    padding:24px 26px;display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:flex-start;
+  }
+  .rec .num{
+    font-family:'JetBrains Mono',monospace;font-size:28px;color:var(--accent);
+    font-weight:500;letter-spacing:-0.02em;line-height:1;
+  }
+  .rec h4{margin:0 0 6px;font-size:17px;font-weight:600;letter-spacing:-0.02em;}
+  .rec .src{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+    margin-bottom:10px;letter-spacing:0.04em;
+  }
+  .rec .src b{color:var(--accent);font-weight:500;}
+  .rec p{margin:0 0 8px;color:var(--text);font-size:13.5px;line-height:1.6;}
+  .rec .how{
+    background:rgba(126,231,135,0.04);border-left:2px solid var(--ok);
+    padding:8px 12px;margin-top:10px;border-radius:0 4px 4px 0;
+    font-size:12.5px;color:var(--muted);
+  }
+  .rec .how b{color:var(--ok);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.05em;}
+
+  footer{
+    margin-top:80px;padding-top:24px;border-top:1px solid var(--line);
+    color:var(--dim);font-size:12px;font-family:'JetBrains Mono',monospace;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+
+  @media (max-width:860px){
+    .archetypes{grid-template-columns:1fr;}
+    .grid{grid-template-columns:1fr;}
+    .grid dt{padding-top:12px;border-top:1px solid var(--line);}
+    h1{font-size:30px;}
+    .rec{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">dr-cv · visual universe · round 03 / 10</div>
+  <h1>Designer/engineer portfolios <span class="slash">·</span> deep dive</h1>
+  <p class="sub">
+    Ten personal portfolios from working designers and engineers, studied with the specific goal of informing
+    the visual language of dr-cv (Danilo Rojas' "Agentic Designer" landing). These are the most directly
+    relevant references in the 10-round universe because our own surface IS a portfolio.
+  </p>
+  <div class="meta-row">
+    <span><b>Date</b> 2026-05-08</span>
+    <span><b>Reference baseline</b> huly.io (scraped in round 01)</span>
+    <span><b>Stack notes</b> detected where markup exposed it</span>
+    <span><b>Accent</b> <code>#FF8964</code></span>
+  </div>
+</header>
+
+<!-- ============ ARCHETYPES ============ -->
+<section>
+  <h2 class="section"><span class="n">01</span>Three archetypes</h2>
+  <p class="sub" style="margin-bottom:22px;">
+    After reading all 10 sites back-to-back, the space splits cleanly into three stances. Each makes a
+    different trade between <b>spectacle</b>, <b>substance</b>, and <b>voice</b>. dr-cv can pick one and
+    commit, or (more interesting) pick two and let them collide.
+  </p>
+
+  <div class="archetypes">
+    <div class="arc">
+      <div class="tag">Archetype A</div>
+      <h3>Maximalist WebGL playground</h3>
+      <p>
+        The portfolio itself is the case study. 3D scene, physics, a "hero moment" that makes you DM the link.
+        Risk: looks like a technical flex, not a hire-me pitch.
+      </p>
+      <div class="members">
+        <span class="chip">bruno-simon.com</span>
+        <span class="chip">robin-noguier.com</span>
+      </div>
+    </div>
+
+    <div class="arc dev">
+      <div class="tag">Archetype B</div>
+      <h3>Developer-terminal minimalist</h3>
+      <p>
+        Content-first, one viewport wide, opinionated type, near-zero ornament. The craft is in the
+        micro-interactions, not the surface. This is the Vercel / Linear / Raycast house style.
+      </p>
+      <div class="members">
+        <span class="chip">brittanychiang.com</span>
+        <span class="chip">paco.me</span>
+        <span class="chip">rauno.me</span>
+        <span class="chip">ped.ro</span>
+        <span class="chip">emilkowal.ski</span>
+        <span class="chip">jhey.dev</span>
+      </div>
+    </div>
+
+    <div class="arc edit">
+      <div class="tag">Archetype C</div>
+      <h3>Editorial / literary garden</h3>
+      <p>
+        Long scroll, first-person voice, writing treated as equal to work. Lowercase headers, decorative
+        glyphs, a "dear friend" tone. Portfolio as zine, not product page.
+      </p>
+      <div class="members">
+        <span class="chip">olivierlarose.com</span>
+        <span class="chip">henry.codes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INDIVIDUAL SITES ============ -->
+
+<h2 class="section"><span class="n">02</span>Ten sites · field notes</h2>
+
+<!-- SITE 1: Robin Noguier -->
+<article class="site">
+  <div class="site-head">
+    <div class="left">
+      <h3>Robin Noguier</h3>
+      <div class="url">robin-noguier.com</div>
+    </div>
+    <div class="right"><span class="pill">A · Maximalist WebGL</span></div>
+  </div>
+  <dl class="grid">
+    <dt>Role / tagline</dt>
+    <dd>"Interactive Designer"<br/><span class="label">tag:</span> <i>"The designer you didn't know you needed.. until today"</i></dd>
+    <dt>Hero H1</dt>
+    <dd class="quote">ROBIN NOGUIER</dd>
+    <dt>Sections</dt>
+    <dd>About link visible. Case studies are the site — each project gets its own WebGL microsite reachable from a 3D carousel.</dd>
+    <dt>Palette</dt>
+    <dd>
+      <span class="swatch"><span class="sw" style="background:#0a0a0a;"></span>dark bg</span>
+      <span class="swatch"><span class="sw" style="background:#ffffff;"></span>white type</span>
+      <span class="swatch"><span class="sw" style="background:linear-gradient(90deg,#ff5e6c,#c94cff);"></span>project-driven accents</span>
+      <br/><span class="label">gesture:</span> no site-wide accent — each case study brings its own color world.
+    </dd>
+    <dt>Typography</dt>
+    <dd>All-caps condensed display for the name. Restrained sans body. Strong editorial feel, not terminal.</dd>
+    <dt>Motion</dt>
+    <dd>
+      <ul>
+        <li><b>Hero moment:</b> 3D WebGL carousel of project "cards" you drag through.</li>
+        <li><b>Stack:</b> three.js + GLSL shaders (award-level pedigree).</li>
+        <li><b>Cursor:</b> custom drag cursor; inertia on swipe.</li>
+      </ul>
+    </dd>
+    <dt>Case studies</dt>
+    <dd>Full-bleed, immersive per project. Fewer than 10 shown, curated hard.</dd>
+    <dt>Voice</dt>
+    <dd>Playful, cheeky ("…until today"). Confidence without chest-beating.</dd>
+  </dl>
+  <div class="impression">
+    <b>Impression:</b> Feels like a film title sequence you can touch. The portfolio commits fully to
+    "I am the experience" — zero separation between the wrapper and the work. Dangerous template for
+    anyone without WebGL chops; but the lesson is commitment: one big gesture beats five small ones.
+  </div>
+</article>
+
+<!-- SITE 2: Bruno Simon -->
+<article class="site">
+  <div class="site-head">
+    <div class="left">
+      <h3>Bruno Simon</h3>
+      <div class="url">bruno-simon.com</div>
+    </div>
+    <div class="right"><span class="pill">A · Maximalist WebGL</span></div>
+  </div>
+  <dl class="grid">
+    <dt>Role / tagline</dt>
+    <dd><i>"Bruno Simon, creative developer (mostly for the web)"</i></dd>
+    <dt>Hero H1</dt>
+    <dd class="quote">Bruno's Home</dd>
+    <dt>Sections</dt>
+    <dd>Home · Options (audio/quality/renderer) · Controls · Achievements · Circuit (leaderboard) · Whispers (visitor messages) · Behind the Scene (stack) · Discord.</dd>
+    <dt>Palette</dt>
+    <dd>
+      <span class="swatch"><span class="sw" style="background:#1a1d24;"></span>dusk bg</span>
+      <span class="swatch"><span class="sw" style="background:#f4d35e;"></span>warm yellows</span>
+      <span class="swatch"><span class="sw" style="background:#ee6c4d;"></span>flame orange</span>
+      <span class="swatch"><span class="sw" style="background:#ffffff;"></span>white</span>
+      <br/><span class="label">gesture:</span> playful automotive palette — headlights, flames, abyssal deep-blue.
+    </dd>
+    <dt>Typography</dt>
+    <dd>
+      <ul>
+        <li><b>Display:</b> Amatic SC (hand-drawn serif) — anti-corporate signal.</li>
+        <li><b>Body:</b> Nunito geometric sans.</li>
+        <li>Typography is decorative furniture inside the 3D world, not the hierarchy itself.</li>
+      </ul>
+    </dd>
+    <dt>Motion</dt>
+    <dd>
+      <ul>
+        <li><b>Hero moment:</b> you DRIVE A CAR around a 3D portfolio — the whole site is the interaction.</li>
+        <li><b>Stack:</b> three.js + WebGPU, Rapier physics, Howler.js audio, gamepad/keyboard/touch controls.</li>
+        <li>Achievements + leaderboard = persistent state, not just a toy.</li>
+      </ul>
+    </dd>
+    <dt>Case studies</dt>
+    <dd>None traditional. Exploration replaces showcasing.</dd>
+    <dt>Voice</dt>
+    <dd>Welcoming, dry ("And don't break anything!"). Zero corporate register.</dd>
+  </dl>
+  <div class="impression">
+    <b>Impression:</b> The canonical "portfolio-as-game." Works because Bruno's product IS Three.js teaching.
+    Not portable to dr-cv as a whole, but the <i>achievements + Circuit + Whispers</i> pattern — light gamification
+    over a content site — is stealable. Imagine a dr-cv visitor unlocking case studies by engaging agents.
+  </div>
+</article>
+
+<!-- SITE 3: Olivier Larose -->
+<article class="site">
+  <div class="site-head">
+    <div class="left">
+      <h3>Olivier Larose</h3>
+      <div class="url">olivierlarose.com</div>
+    </div>
+    <div class="right"><span class="pill edit">C · Editorial garden</span></div>
+  </div>
+  <dl class="grid">
+    <dt>Role / tagline</dt>
+    <dd><i>"Independent Front End ☼Developer☀"</i> — based in Montreal.</dd>
+    <dt>Hero H1</dt>
+    <dd class="quote">Independent Front End ☼Developer☀</dd>
+    <dt>Sections</dt>
+    <dd>Portfolio (primary) · Blog · Contact · LinkedIn.</dd>
+    <dt>Palette</dt>
+    <dd>
+      <span class="swatch"><span class="sw" style="background:#f6f5f1;"></span>warm paper</span>
+      <span class="swatch"><span class="sw" style="background:#111111;"></span>near-black</span>
+      <span class="swatch"><span class="sw" style="background:#e5e2da;"></span>soft cream</span>
+      <br/><span class="label">gesture:</span> project thumbnails bring their own color; shell stays neutral/paper.
+    </dd>
+    <dt>Typography</dt>
+    <dd>Minimal sans; decorative Unicode glyphs (☼, ☀, ⚗, ✨, ©) used as bullets + ornament. Feels handmade.</dd>
+    <dt>Motion</dt>
+    <dd>
+      <ul>
+        <li>Scroll-driven page transitions (site is famous for GSAP + Lenis smooth-scroll tutorials).</li>
+        <li><b>Stack:</b> Next.js + GSAP + Lenis (confirmed via his blog).</li>
+        <li>Cursor follow + text reveal on enter.</li>
+      </ul>
+    </dd>
+    <dt>Case studies</dt>
+    <dd>Grid-ish card list, ~16 projects, chronologically 2025→2019. Each card: title · tags · client/agency · year · 3 images.</dd>
+    <dt>Voice</dt>
+    <dd>Professional-personable; technical vocabulary ("auth", "animations") softened by emoji sparkle.</dd>
+  </dl>
+  <div class="impression">
+    <b>Impression:</b> Teaches the most reusable lesson: a portfolio can be editorial AND code-literate at
+    the same time. The decorative glyphs (☼ ⚗ ✨) do heavy lifting — they signal personality with zero
+    illustration budget. For dr-cv, this is the cheapest "voice" lever we have.
+  </div>
+</article>
+
+<!-- SITE 4: Brittany Chiang -->
+<article class="site">
+  <div class="site-head">
+    <div class="left">
+      <h3>Brittany Chiang</h3>
+      <div class="url">brittanychiang.com (v4)</div>
+    </div>
+    <div class="right"><span class="pill dev">B · Dev-terminal</span></div>
+  </div>
+  <dl class="grid">
+    <dt>Role / tagline</dt>
+    <dd><i>"Frontend Engineer"</i></dd>
+    <dt>Hero H1</dt>
+    <dd class="quote">I build accessible, pixel-perfect experiences for the web.</dd>
+    <dt>Sections</dt>
+    <dd>About · Experience · Projects · Writing · social rail (GitHub, LinkedIn, CodePen, Instagram, Goodreads).</dd>
+    <dt>Palette</dt>
+    <dd>
+      <span class="swatch"><span class="sw" style="background:#0a192f;"></span>navy #0a192f</span>
+      <span class="swatch"><span class="sw" style="background:#112240;"></span>navy-alt</span>
+      <span class="swatch"><span class="sw" style="background:#ccd6f6;"></span>lightest slate</span>
+      <span class="swatch"><span class="sw" style="background:#64ffda;"></span>teal accent</span>
+      <br/><span class="label">gesture:</span> single accent (#64ffda teal) — every hover, every link, one color.
+    </dd>
+    <dt>Typography</dt>
+    <dd>
+      <ul>
+        <li><b>Body:</b> Inter (explicit).</li>
+        <li><b>Mono:</b> SF Mono for tech tags and small metadata.</li>
+        <li>Restrained scale — no massive hero. Content-first.</li>
+      </ul>
+    </dd>
+    <dt>Motion</dt>
+    <dd>
+      <ul>
+        <li>Left-pane nav highlights active section on scroll (spy-scroll).</li>
+        <li>Subtle hover states — image lift, arrow slide.</li>
+        <li>"Click to time travel" Tardis gag → v1/v2/v3 portfolios.</li>
+        <li><b>Stack:</b> Next.js + Tailwind + Framer Motion (public repo).</li>
+      </ul>
+    </dd>
+    <dt>Case studies</dt>
+    <dd>Experience is a vertical list of 6 roles (2024→2015), not a grid. Each: title · company link · 2-3 line blurb · tech chips. Projects = 4 featured cards then archive.</dd>
+    <dt>Voice</dt>
+    <dd>Conversational-professional ("sharp eye for the little details", Korok-seed tangent). Humble, craft-oriented.</dd>
+  </dl>
+  <div class="impression">
+    <b>Impression:</b> The most copied developer portfolio on earth for a reason. Fixed left-rail bio +
+    scrolling right column of sections + spy-scroll highlight = solved navigation for long pages. For dr-cv,
+    this is the defensive template we should beat or consciously skip — not accidentally clone.
+  </div>
+</article>
+
+<!-- SITE 5: Paco Coursey -->
+<article class="site">
+  <div class="site-head">
+    <div class="left">
+      <h3>Paco Coursey</h3>
+      <div class="url">paco.me</div>
+    </div>
+    <div class="right"><span class="pill dev">B · Dev-terminal</span></div>
+  </div>
+  <dl class="grid">
+    <dt>Role / tagline</dt>
+    <dd><i>"Crafting interfaces. Building polished software and web experiences."</i></dd>
+    <dt>Hero H1</dt>
+    <dd class="quote">Paco Coursey</dd>
+    <dt>Sections</dt>
+    <dd>Building (Craft) · Projects (⌘K, Writer, Next Themes) · Writing + archive · Now · Connect.</dd>
+    <dt>Palette</dt>
+    <dd>
+      <span class="swatch"><span class="sw" style="background:#ffffff;"></span>white / <span class="sw" style="background:#0a0a0a;"></span>black</span>
+      <span class="swatch"><span class="sw" style="background:#666666;"></span>mid-grey body</span>
+      <br/><span class="label">gesture:</span> no accent color at all — contrast and whitespace do every job.
+    </dd>
+    <dt>Typography</dt>
+    <dd>Single sans family (likely system/Inter). H2 section heads. Tight measure (~60ch) — reads like a blog.</dd>
+    <dt>Motion</dt>
+    <dd>
+      <ul>
+        <li>Fade-ins on mount. View transitions between pages.</li>
+        <li>Famous for ⌘K (cmdk) — command menu overlay.</li>
+        <li><b>Stack:</b> Next.js + React + custom primitives (he ships them as OSS).</li>
+      </ul>
+    </dd>
+    <dt>Case studies</dt>
+    <dd>No case studies. Projects are short linked blurbs. Writing carries the proof-of-work.</dd>
+    <dt>Voice</dt>
+    <dd>Introspective, ambitious-humble. <i>"Pray at the altar of hard work"</i>, <i>"guiltlessly exploring"</i>.</dd>
+  </dl>
+  <div class="impression">
+    <b>Impression:</b> A portfolio that refuses to be a portfolio. The entire site fits on one screen; the
+    "Now" section is the conversion hook. Teaches that if you ship visible OSS (⌘K, next-themes), you don't
+    need case studies — the internet writes them for you. Relevant for dr-cv only AFTER phase 3 when
+    EnRegla + Aura are visible in the wild.
+  </div>
+</article>
+
+<!-- SITE 6: Rauno Freiberg -->
+<article class="site">
+  <div class="site-head">
+    <div class="left">
+      <h3>Rauno Freiberg</h3>
+      <div class="url">rauno.me</div>
+    </div>
+    <div class="right"><span class="pill dev">B · Dev-terminal</span></div>
+  </div>
+  <dl class="grid">
+    <dt>Role / tagline</dt>
+    <dd><i>"Rauno Freiberg is an Estonian interaction designer working with Vercel and Devouring Details"</i></dd>
+    <dt>Hero H1</dt>
+    <dd class="quote">Rauno Freiberg</dd>
+    <dt>Sections</dt>
+    <dd>Devouring Details (external) · Craft · History of Software Design · Projects · Field Notes · archives (2023, 2022) · GitHub · Twitter.</dd>
+    <dt>Palette</dt>
+    <dd>
+      <span class="swatch"><span class="sw" style="background:#fafafa;"></span>near-white</span>
+      <span class="swatch"><span class="sw" style="background:#1a1a1a;"></span>near-black</span>
+      <span class="swatch"><span class="sw" style="background:#888888;"></span>muted grey</span>
+      <br/><span class="label">gesture:</span> radical monochrome. No color at all. Craft speaks.
+    </dd>
+    <dt>Typography</dt>
+    <dd>Single tight sans. Text-only hierarchy. Paragraphs short, almost aphoristic.</dd>
+    <dt>Motion</dt>
+    <dd>
+      <ul>
+        <li>Micro-interactions only: copy-to-clipboard ("Email / Copied"), hover precision.</li>
+        <li>"Craft" subdomain is a lab of interaction-design experiments.</li>
+        <li><b>Stack:</b> Next.js (he's ex-Vercel/Linear).</li>
+      </ul>
+    </dd>
+    <dt>Case studies</dt>
+    <dd>Almost none. Instead, a manifesto + links. The work is the Craft page.</dd>
+    <dt>Voice</dt>
+    <dd>Declarative manifesto: <i>"Make it fast. Make it beautiful. Make it consistent."</i> Zero filler words.</dd>
+  </dl>
+  <div class="impression">
+    <b>Impression:</b> The purest expression of "interaction design is a trade, not a style." The site earns
+    your respect by refusing to sell you anything. For dr-cv we can't afford this posture — we ARE selling —
+    but the <i>Craft page pattern</i> (interactive demos of agent interventions) is directly applicable
+    and would differentiate us instantly.
+  </div>
+</article>
+
+<!-- SITE 7: Pedro Duarte -->
+<article class="site">
+  <div class="site-head">
+    <div class="left">
+      <h3>Pedro Duarte</h3>
+      <div class="url">ped.ro</div>
+    </div>
+    <div class="right"><span class="pill dev">B · Dev-terminal</span></div>
+  </div>
+  <dl class="grid">
+    <dt>Role / tagline</dt>
+    <dd>Works on Radix / shadcn primitives; currently at Raycast — <i>"helping early-stage tech startups flourish"</i>.</dd>
+    <dt>Hero H1</dt>
+    <dd class="quote">Yo! I'm Pedro Duarte.</dd>
+    <dt>Sections</dt>
+    <dd>Home · Writing · Speaking · Shooting (photography). No traditional case studies.</dd>
+    <dt>Palette</dt>
+    <dd>
+      <span class="swatch"><span class="sw" style="background:#111111;"></span>black (dark default)</span>
+      <span class="swatch"><span class="sw" style="background:#ededed;"></span>off-white type</span>
+      <span class="swatch"><span class="sw" style="background:#7c3aed;"></span>violet accent</span>
+      <br/><span class="label">gesture:</span> single violet accent; dark-first with clean light toggle.
+    </dd>
+    <dt>Typography</dt>
+    <dd>Inter sans. Blog-reading measure. Scale is restrained even on writing posts.</dd>
+    <dt>Motion</dt>
+    <dd>
+      <ul>
+        <li>MDX writing with per-post custom interactive components (his signature).</li>
+        <li><b>Stack:</b> Next.js + Radix + Stitches (historically) — all his own OSS.</li>
+      </ul>
+    </dd>
+    <dt>Case studies</dt>
+    <dd>Zero case studies. Speaking page + Writing page carry the authority.</dd>
+    <dt>Voice</dt>
+    <dd>Casual-earnest ("Yo!"), self-aware (<i>"I'm not sure how to intro myself anymore"</i>), product-enthusiast.</dd>
+  </dl>
+  <div class="impression">
+    <b>Impression:</b> Another "OSS-shipper doesn't need a portfolio" site. The lesson for dr-cv: the
+    <i>Speaking</i> section is a strong credibility lever we haven't tapped — "talks/workshops/mentions"
+    would be a cheap way to show authority without inventing case studies.
+  </div>
+</article>
+
+<!-- SITE 8: Emil Kowalski -->
+<article class="site">
+  <div class="site-head">
+    <div class="left">
+      <h3>Emil Kowalski</h3>
+      <div class="url">emilkowal.ski</div>
+    </div>
+    <div class="right"><span class="pill dev">B · Dev-terminal</span></div>
+  </div>
+  <dl class="grid">
+    <dt>Role / tagline</dt>
+    <dd><i>"I work on the Web team at Linear."</i> (previously Vercel design). Creator of Sonner (toasts) and Vaul (drawers).</dd>
+    <dt>Hero H1</dt>
+    <dd>Not a classic H1 — opens with the <i>"Animations on the Web"</i> course announcement card, then his one-liner.</dd>
+    <dt>Sections</dt>
+    <dd>Course announcement · About/Today · Projects (3 — Sonner, Vaul, a third) · Writing (14 essays on animation & UI) · Newsletter · Twitter/GitHub.</dd>
+    <dt>Palette</dt>
+    <dd>
+      <span class="swatch"><span class="sw" style="background:#ffffff;"></span>white</span>
+      <span class="swatch"><span class="sw" style="background:#101010;"></span>black</span>
+      <span class="swatch"><span class="sw" style="background:#5f6368;"></span>grey body</span>
+      <br/><span class="label">gesture:</span> mono palette; the MOTION itself is the color — springs, drawers, fades.
+    </dd>
+    <dt>Typography</dt>
+    <dd>Sans-serif, quiet. No display moment. The content sells itself.</dd>
+    <dt>Motion</dt>
+    <dd>
+      <ul>
+        <li>Interactive demos inline in essays — <b>this is the signature</b>.</li>
+        <li>Every component (Vaul drawer, Sonner toast) is embedded live on the page.</li>
+        <li><b>Stack:</b> Next.js + Framer Motion + his own OSS.</li>
+      </ul>
+    </dd>
+    <dt>Case studies</dt>
+    <dd>3 projects, linked out. Writing carries 80% of the weight — 14 essays, each a mini case study.</dd>
+    <dt>Voice</dt>
+    <dd>Direct, unpretentious: <i>"settling for good enough is not good enough"</i>, <i>"think deeply"</i>.</dd>
+  </dl>
+  <div class="impression">
+    <b>Impression:</b> The "inline interactive demo inside a blog post" pattern is Emil's superpower and
+    the single most stealable technique for dr-cv. An essay that says "here's how an agent diffs a design
+    token" with a working widget embedded IS the case study.
+  </div>
+</article>
+
+<!-- SITE 9: Jhey Tompkins -->
+<article class="site">
+  <div class="site-head">
+    <div class="left">
+      <h3>Jhey Tompkins</h3>
+      <div class="url">jhey.dev</div>
+    </div>
+    <div class="right"><span class="pill dev">B · Dev-terminal</span></div>
+  </div>
+  <dl class="grid">
+    <dt>Role / tagline</dt>
+    <dd><i>"Staff Design Engineer @ Shopify"</i> · <i>"Making your ideas click"</i></dd>
+    <dt>Hero H1</dt>
+    <dd class="quote">Jhey Tompkins — Staff Design Engineer @ Shopify</dd>
+    <dt>Sections</dt>
+    <dd>UI demos / CodePen showcase · social (X, Steam, Spotify Now Playing) · writing.</dd>
+    <dt>Palette</dt>
+    <dd>
+      <span class="swatch"><span class="sw" style="background:#0d1117;"></span>dark default</span>
+      <span class="swatch"><span class="sw" style="background:#ff4d6d;"></span>hot pink</span>
+      <span class="swatch"><span class="sw" style="background:#ffd60a;"></span>lemon yellow</span>
+      <br/><span class="label">gesture:</span> loud playful multi-accent — matches CSS-demo personality.
+    </dd>
+    <dt>Typography</dt>
+    <dd>Display sans used confidently; larger scale than Rauno or Emil. Section heads have weight.</dd>
+    <dt>Motion</dt>
+    <dd>
+      <ul>
+        <li>Every block is a CSS/SVG/Canvas experiment — the page IS a demo reel.</li>
+        <li>Spotify integration (live "now playing"), weather data — real-time personal signals.</li>
+        <li><b>Stack:</b> vanilla CSS wizardry + CodePen embeds + a bit of JS.</li>
+      </ul>
+    </dd>
+    <dt>Case studies</dt>
+    <dd>Work is the CodePen corpus — externalized. Fewer than 10 hero demos embedded.</dd>
+    <dt>Voice</dt>
+    <dd>Playful-confident: <i>"the kind that make you say, 'Wait, how did you do that?'"</i>.</dd>
+  </dl>
+  <div class="impression">
+    <b>Impression:</b> Dev-terminal archetype but with the saturation turned UP. Proves the archetype
+    doesn't have to mean monochrome. The "live personal data" (now-playing, weather) is a tiny detail
+    that makes the site feel like a person's house, not a landing page.
+  </div>
+</article>
+
+<!-- SITE 10: Henry Desroches -->
+<article class="site">
+  <div class="site-head">
+    <div class="left">
+      <h3>Henry Desroches</h3>
+      <div class="url">henry.codes</div>
+    </div>
+    <div class="right"><span class="pill edit">C · Editorial garden</span></div>
+  </div>
+  <dl class="grid">
+    <dt>Role / tagline</dt>
+    <dd><i>"creative developer (he/him/él)"</i> · <i>"creative web developer and designer"</i></dd>
+    <dt>Hero H1</dt>
+    <dd class="quote">True Terrors of the New Dark Web</dd>
+    <dt>Sections</dt>
+    <dd>Garden (Articles / Notes / Case Studies) · Meta (About / Now / contact) · Selected Works · Articles.</dd>
+    <dt>Palette</dt>
+    <dd>
+      <span class="swatch"><span class="sw" style="background:#0a0a0a;"></span>dark</span>
+      <span class="swatch"><span class="sw" style="background:#f0ead6;"></span>parchment</span>
+      <span class="swatch"><span class="sw" style="background:#c99858;"></span>amber</span>
+      <br/><span class="label">gesture:</span> literary warmth — feels like a hand-bound journal.
+    </dd>
+    <dt>Typography</dt>
+    <dd>Serif-inflected display for headers; lowercase styling; "dear friend" direct-address. Poetic rhythm.</dd>
+    <dt>Motion</dt>
+    <dd>
+      <ul>
+        <li>Scroll cautions in copy — <i>"Scroll with caution and with care"</i> — implies a deliberate reveal sequence.</li>
+        <li>Less about library, more about pacing.</li>
+      </ul>
+    </dd>
+    <dt>Case studies</dt>
+    <dd>List format; named clients (Stripe, YouTube, NYT, Uber Eats); ~7 projects + archive.</dd>
+    <dt>Voice</dt>
+    <dd>Poetic, intimate, introspective; activist undertone; vulnerability as a posture.</dd>
+  </dl>
+  <div class="impression">
+    <b>Impression:</b> The most risky archetype and the most distinctive. A portfolio that reads like an
+    essay. For dr-cv this is <i>NOT</i> the right register (we're serio-cálido, not literary), but the
+    named-clients-as-typography device (STRIPE · YOUTUBE · NYT set big and quiet) is directly stealable
+    for the BAH / Booz Allen / Trusted Environments credit line.
+  </div>
+</article>
+
+
+<!-- ============ RECOMMENDATIONS ============ -->
+<h2 class="section"><span class="n">03</span>Five recommendations for dr-cv</h2>
+<p class="sub" style="margin-bottom:26px;">
+  Each recommendation is tied to a specific source site + a specific technique we'd adapt. None of these is
+  "copy the whole thing" — they're discrete moves we can compose.
+</p>
+
+<div class="recs">
+
+  <div class="rec">
+    <div class="num">01</div>
+    <div>
+      <h4>Pick archetype B with one "hero moment" from archetype A</h4>
+      <div class="src">SOURCE · <b>brittanychiang.com</b> + <b>robin-noguier.com</b></div>
+      <p>
+        Ship a developer-terminal baseline (Brittany's fixed-left-bio + scrolling-right-sections pattern)
+        so the site is readable, accessible, and signals seriousness. Then invest in exactly ONE WebGL/Canvas
+        moment in the hero — not a game, just a single motion gesture that reacts to presence
+        (agent-avatar breathing, a tokenized gradient reshaping on scroll).
+      </p>
+      <div class="how"><b>WHY:</b> serio-cálido brand can't afford maximalist chaos; but a single lit candle in a quiet room signals "I can do this when it matters."</div>
+    </div>
+  </div>
+
+  <div class="rec">
+    <div class="num">02</div>
+    <div>
+      <h4>Inline interactive demos inside case studies — not screenshots</h4>
+      <div class="src">SOURCE · <b>emilkowal.ski</b></div>
+      <p>
+        For each case study (EnRegla, Aura, Life Update, Trusted Environments DS), embed a working widget
+        that illustrates the agent intervention: a token diff, a before/after slider, a live command-palette
+        where the visitor asks the agent to "generate a variant."
+      </p>
+      <div class="how"><b>WHY:</b> our thesis ("profile + agentic AI = combination") is invisible in static screenshots. A working 10-line demo PROVES the method in a way copy cannot.</div>
+    </div>
+  </div>
+
+  <div class="rec">
+    <div class="num">03</div>
+    <div>
+      <h4>Ship a "Craft" subpage of interaction micro-experiments</h4>
+      <div class="src">SOURCE · <b>rauno.me/craft</b></div>
+      <p>
+        A dedicated URL (<code>dr-cv.dev/craft</code>) with 6-12 small interactive pieces: agent-driven
+        form validation, a live prompt-to-component demo, a tokenized theming playground, a diff viewer.
+        Each piece links to the underlying repo.
+      </p>
+      <div class="how"><b>WHY:</b> decouples "proof of craft" from "case studies we can't fully share" (BAH NDA). Craft lives publicly; case studies can stay summary-only.</div>
+    </div>
+  </div>
+
+  <div class="rec">
+    <div class="num">04</div>
+    <div>
+      <h4>Set client names as typographic furniture, not logo wall</h4>
+      <div class="src">SOURCE · <b>henry.codes</b></div>
+      <p>
+        Instead of a "Trusted by" logo grid (corporate, generic), render the client list as large quiet
+        display type: <code>BOOZ ALLEN · MERCK · MONDELĒZ · BANCO PICHINCHA</code>. Fade each on scroll-in.
+        Feels editorial, bypasses the BAH-logo-permission problem, and reads as confident.
+      </p>
+      <div class="how"><b>WHY:</b> we already flagged the BAH logo can't be published. Typography sidesteps it AND looks better than the alternative.</div>
+    </div>
+  </div>
+
+  <div class="rec">
+    <div class="num">05</div>
+    <div>
+      <h4>Add a "Now" page and live personal signals</h4>
+      <div class="src">SOURCE · <b>paco.me</b> + <b>jhey.dev</b></div>
+      <p>
+        A <code>/now</code> page describing what Danilo is currently focused on (quarterly updates). Plus a
+        small real-time strip in the footer: current project, commit of the day, "last deploy: 2 hours ago."
+        Agent-generated, refreshed automatically from the github repo.
+      </p>
+      <div class="how"><b>WHY:</b> the /now page is the highest-trust conversion element among the 10 sites we read. Live repo signals also dogfood the "agentic" thesis — the site updates itself.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span>dr-cv · round 03 · designer portfolios</span>
+  <span>10 sites · 3 archetypes · 5 recommendations</span>
+  <span>next: round 04</span>
+</footer>
+
+</div>
+</body>
+</html>

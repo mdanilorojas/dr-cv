@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Round 6 · Motion &amp; shader techniques — synthesis</title>
+<style>
+  :root{
+    --bg:#07080d;
+    --bg-2:#0b0d15;
+    --bg-card:#10131c;
+    --bg-soft:#0d1019;
+    --line:#1d2030;
+    --line-soft:#161927;
+    --ink:#e7e9f0;
+    --dim:#9097a9;
+    --mute:#5d6378;
+    --accent:#FF8964;
+    --accent-soft:rgba(255,137,100,.12);
+    --accent-line:rgba(255,137,100,.3);
+    --ok:#7ed9a1;
+    --warn:#f2c472;
+    --bad:#e47a7a;
+    --fresh:#7dc8ff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+  body{
+    font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    font-size:14.5px;line-height:1.55;letter-spacing:-0.003em;
+    -webkit-font-smoothing:antialiased;
+  }
+  code,.mono{font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12.5px}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px dotted rgba(255,137,100,.35)}
+  a:hover{color:#fff;border-bottom-color:#fff}
+
+  .wrap{max-width:1240px;margin:0 auto;padding:48px 28px 120px}
+
+  /* header */
+  header.top{border-bottom:1px solid var(--line);padding-bottom:28px;margin-bottom:48px}
+  .kicker{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  }
+  h1{font-size:42px;line-height:1.08;letter-spacing:-.02em;margin:10px 0 14px;font-weight:700}
+  h1 .slash{color:var(--mute);font-weight:400;margin:0 6px}
+  .sub{color:var(--dim);max-width:780px;margin:0;font-size:15.5px}
+  .meta-row{
+    display:flex;gap:22px;flex-wrap:wrap;margin-top:18px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mute);
+  }
+  .meta-row b{color:var(--dim);font-weight:500}
+
+  /* section headers */
+  h2.sec{
+    font-size:24px;font-weight:600;letter-spacing:-.015em;
+    margin:72px 0 6px;padding-top:28px;border-top:1px solid var(--line);
+    display:flex;align-items:baseline;gap:14px;
+  }
+  h2.sec .n{
+    font-family:'JetBrains Mono',monospace;color:var(--accent);
+    font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  }
+  .sec-sub{color:var(--dim);margin:6px 0 26px;max-width:820px;font-size:14.5px}
+
+  /* section 1 — technique table */
+  .tech-wrap{
+    overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--bg-2);
+  }
+  table.tech{border-collapse:collapse;width:100%;min-width:1020px;font-size:12.5px}
+  table.tech th,table.tech td{
+    padding:11px 14px;text-align:left;vertical-align:top;
+    border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);
+  }
+  table.tech th{
+    background:#0a0c14;color:var(--dim);font-family:'JetBrains Mono',monospace;
+    font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+    position:sticky;top:0;z-index:2;
+  }
+  table.tech td:first-child,table.tech th:first-child{
+    position:sticky;left:0;background:#0a0c14;z-index:1;min-width:200px;
+  }
+  table.tech td:first-child{color:var(--ink);font-weight:500}
+  table.tech tr:hover td{background:#11131c}
+  table.tech tr:hover td:first-child{background:#121521}
+  .libs{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--dim)}
+  .sites{color:var(--dim);font-size:12px}
+  .sites a{font-size:12px}
+  /* 1-5 score pips */
+  .pips{display:inline-flex;gap:3px}
+  .pips i{width:8px;height:14px;border-radius:2px;background:var(--line);display:inline-block}
+  .pips i.on{background:var(--accent)}
+  /* freshness tag */
+  .fresh-tag{
+    display:inline-block;padding:3px 8px;border-radius:999px;
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    letter-spacing:.05em;text-transform:uppercase;font-weight:500;
+  }
+  .fresh-tag.overused{background:rgba(228,122,122,.1);color:var(--bad);border:1px solid rgba(228,122,122,.3)}
+  .fresh-tag.fresh{background:rgba(125,200,255,.1);color:var(--fresh);border:1px solid rgba(125,200,255,.3)}
+  .fresh-tag.under{background:rgba(126,217,161,.1);color:var(--ok);border:1px solid rgba(126,217,161,.3)}
+  .fresh-tag.neutral{background:rgba(242,196,114,.08);color:var(--warn);border:1px solid rgba(242,196,114,.28)}
+
+  /* section 2 — library cage match */
+  .cage{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+  .lib{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:12px;
+    padding:22px 22px 18px;position:relative;overflow:hidden;
+  }
+  .lib::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);
+  }
+  .lib h3{margin:0 0 2px;font-size:17px;letter-spacing:-.015em;font-weight:600}
+  .lib .size{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--accent);
+    letter-spacing:.04em;margin-bottom:14px;
+  }
+  .lib dl{margin:0;padding:0;display:grid;grid-template-columns:78px 1fr;gap:8px 12px}
+  .lib dt{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--mute);
+    letter-spacing:.06em;text-transform:uppercase;padding-top:3px;
+  }
+  .lib dd{margin:0;color:var(--ink);font-size:13px;line-height:1.5}
+  .lib dd.best{color:#a8eac0}
+  .lib dd.worst{color:#e9a2a2}
+  .lib .example{
+    margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);
+  }
+  .lib .example a{font-family:'JetBrains Mono',monospace;font-size:11px}
+  .lib .verdict{
+    margin-top:12px;padding:10px 12px;background:var(--accent-soft);
+    border-left:2px solid var(--accent);border-radius:0 6px 6px 0;
+    font-size:12.5px;color:var(--ink);
+  }
+  .lib .verdict b{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em}
+  .lib .pips{margin-left:4px;vertical-align:middle}
+
+  /* sections 3 & 4 — overused / fresh */
+  .verdict-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .v-card{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;position:relative;
+  }
+  .v-card.over{border-left:3px solid var(--bad)}
+  .v-card.fresh{border-left:3px solid var(--fresh)}
+  .v-card .num{
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--mute);letter-spacing:.08em;
+  }
+  .v-card h4{margin:4px 0 6px;font-size:16px;letter-spacing:-.01em;font-weight:600}
+  .v-card p{margin:0 0 8px;color:var(--dim);font-size:13.5px;line-height:1.55}
+  .v-card p b{color:var(--ink);font-weight:500}
+  .v-card .ev{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mute);
+    margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);
+  }
+  .v-card .ev b{color:var(--dim);font-weight:500}
+
+  /* section 5 — risk tiers */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tier{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:14px;
+    padding:26px;position:relative;overflow:hidden;
+  }
+  .tier.low::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--ok)}
+  .tier.med::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--warn)}
+  .tier.high::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--bad)}
+  .tier .badge{
+    display:inline-block;padding:3px 10px;border-radius:999px;
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    letter-spacing:.08em;text-transform:uppercase;font-weight:500;
+  }
+  .tier.low .badge{background:rgba(126,217,161,.1);color:var(--ok);border:1px solid rgba(126,217,161,.3)}
+  .tier.med .badge{background:rgba(242,196,114,.1);color:var(--warn);border:1px solid rgba(242,196,114,.3)}
+  .tier.high .badge{background:rgba(228,122,122,.1);color:var(--bad);border:1px solid rgba(228,122,122,.3)}
+  .tier h3{margin:12px 0 8px;font-size:19px;letter-spacing:-.015em;font-weight:600}
+  .tier .lead{color:var(--dim);margin:0 0 16px;font-size:13.5px}
+  .tier dl{margin:0;display:grid;grid-template-columns:94px 1fr;gap:10px 14px;font-size:13px}
+  .tier dt{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--mute);
+    text-transform:uppercase;letter-spacing:.06em;padding-top:2px;
+  }
+  .tier dd{margin:0;color:var(--ink);line-height:1.5}
+  .tier dd b{color:var(--accent);font-weight:500}
+  .tier .stack{
+    margin-top:14px;padding:12px 14px;background:var(--bg-soft);
+    border:1px solid var(--line-soft);border-radius:8px;font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;color:var(--dim);line-height:1.7;
+  }
+  .tier .stack b{color:var(--ink)}
+
+  /* verdict callout */
+  .verdict-box{
+    margin-top:72px;padding:28px 30px;
+    background:linear-gradient(165deg,#140f0c 0%,#0a0c14 65%);
+    border:1px solid var(--accent-line);border-radius:14px;
+  }
+  .verdict-box .kicker{margin-bottom:8px}
+  .verdict-box h2{margin:0 0 10px;font-size:24px;letter-spacing:-.015em;border:0;padding:0}
+  .verdict-box p{color:var(--ink);margin:0 0 12px;font-size:15px;line-height:1.6}
+  .verdict-box p b{color:var(--accent)}
+  .verdict-box .rationale{
+    color:var(--dim);font-size:13.5px;margin-top:10px;padding-top:14px;
+    border-top:1px dashed var(--line);
+  }
+
+  footer{
+    margin-top:72px;padding-top:22px;border-top:1px solid var(--line);
+    color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+
+  @media (max-width:960px){
+    .cage,.tiers,.verdict-grid{grid-template-columns:1fr}
+    h1{font-size:30px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================== HEADER ================== -->
+<header class="top">
+  <div class="kicker">dr-cv · visual universe · round 06 / 10</div>
+  <h1>Motion &amp; shader techniques <span class="slash">·</span> synthesis</h1>
+  <p class="sub">
+    Cross-cut of the 35+ sites documented in rounds 01–04. The previous rounds were breadth-first;
+    this one is pattern-first. The question stops being <i>"what does each site do?"</i> and becomes
+    <i>"which techniques are now ante, which are over-exposed, and which still bank wow?"</i>
+  </p>
+  <div class="meta-row">
+    <span><b>Date</b> 2026-05-08</span>
+    <span><b>Sources</b> R1 (30 sites) · R2 (9 AI) · R3 (10 portfolios) · R4 (8 studios)</span>
+    <span><b>Baseline</b> huly.io · huly-shader-research.md</span>
+    <span><b>Accent</b> <code>#FF8964</code></span>
+  </div>
+</header>
+
+<!-- ================== SECTION 1 — TECHNIQUE CATALOG ================== -->
+<h2 class="sec"><span class="n">01</span>The technique catalog</h2>
+<p class="sec-sub">
+  Twenty recurring motion/shader techniques scored for feasibility in a solo dr-cv build
+  and for freshness in 2026. <b>Feasibility</b> = 1 (out of scope for one person) → 5 (ship in an afternoon).
+  <b>Freshness</b> tags are opinionated: <span class="fresh-tag overused">overused</span>
+  <span class="fresh-tag neutral">ante</span>
+  <span class="fresh-tag fresh">fresh</span>
+  <span class="fresh-tag under">underused</span>.
+</p>
+
+<div class="tech-wrap">
+<table class="tech">
+  <thead>
+    <tr>
+      <th>Technique</th>
+      <th>Libraries</th>
+      <th>Example sites (R1–R4)</th>
+      <th>Feasibility</th>
+      <th>Freshness 2026</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>WebGL volumetric beam / god-rays</td>
+      <td class="libs">three + postprocessing <code>GodRaysEffect</code>, custom GLSL</td>
+      <td class="sites">lusion.co · activetheory.net · immersive-g.com · <i>huly.io (CSS-faked)</i></td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2</td>
+      <td><span class="fresh-tag overused">overused</span></td>
+    </tr>
+    <tr>
+      <td>Cursor-tethered blur / distortion</td>
+      <td class="libs">GSAP + GLSL displacement, OGL, Rive state machine</td>
+      <td class="sites">resn.co.nz · lusion.co · noomoagency.com · kprverse.com</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span> 3</td>
+      <td><span class="fresh-tag neutral">ante</span></td>
+    </tr>
+    <tr>
+      <td>Scroll-pinned docking 3D scene</td>
+      <td class="libs">R3F + <code>@14islands/r3f-scroll-rig</code>, Lenis, GSAP ScrollTrigger</td>
+      <td class="sites">14islands.com · activetheory.net · lusion.co · igloo.inc</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span> 3</td>
+      <td><span class="fresh-tag neutral">ante</span></td>
+    </tr>
+    <tr>
+      <td>Rive state-machine UI</td>
+      <td class="libs"><code>@rive-app/canvas</code></td>
+      <td class="sites">huly.io · resn.co.nz (character rigs)</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4</td>
+      <td><span class="fresh-tag under">underused</span></td>
+    </tr>
+    <tr>
+      <td>Lottie microinteractions</td>
+      <td class="libs"><code>lottie-web</code>, <code>@lottiefiles/dotlottie-web</code></td>
+      <td class="sites">inkeep.com (icons) · manayerbamate.com</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5</td>
+      <td><span class="fresh-tag overused">overused</span></td>
+    </tr>
+    <tr>
+      <td>Three.js <code>MeshPhysicalMaterial</code> (metallic / iridescence)</td>
+      <td class="libs">three + drei <code>Environment</code> / <code>MeshTransmissionMaterial</code></td>
+      <td class="sites">raycast.com (cube) · immersive-g.com · lusion.co · igloo.inc</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2</td>
+      <td><span class="fresh-tag fresh">fresh</span></td>
+    </tr>
+    <tr>
+      <td>Chromatic aberration on hover</td>
+      <td class="libs">SVG <code>feColorMatrix</code>, CSS <code>text-shadow</code> triple-stack, postprocessing pass</td>
+      <td class="sites">activetheory.net · robin-noguier.com · kprverse.com</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4</td>
+      <td><span class="fresh-tag overused">overused</span></td>
+    </tr>
+    <tr>
+      <td>Ambient grain overlay</td>
+      <td class="libs">SVG <code>feTurbulence</code>, tiled PNG, CSS pseudo + <code>mix-blend-mode</code></td>
+      <td class="sites">14islands.com · huncwot.com · unseen.studio · henry.codes</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5</td>
+      <td><span class="fresh-tag neutral">ante</span></td>
+    </tr>
+    <tr>
+      <td>CSS <code>conic-gradient</code> aura</td>
+      <td class="libs">pure CSS + <code>@property</code></td>
+      <td class="sites">huly.io (notification ring) · raycast.com (cube rim)</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5</td>
+      <td><span class="fresh-tag fresh">fresh</span></td>
+    </tr>
+    <tr>
+      <td>Marquee infinity scroll (logos)</td>
+      <td class="libs">CSS <code>@keyframes</code> <code>translateX</code></td>
+      <td class="sites">basement.studio · v0.app · cursor.com · vercel.com</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5</td>
+      <td><span class="fresh-tag neutral">ante</span></td>
+    </tr>
+    <tr>
+      <td>Glass morphism <code>backdrop-filter</code></td>
+      <td class="libs">pure CSS</td>
+      <td class="sites">raycast.com · igloo.inc · anthropic.com (subtle)</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5</td>
+      <td><span class="fresh-tag overused">overused</span></td>
+    </tr>
+    <tr>
+      <td>Text mask reveal on scroll</td>
+      <td class="libs">GSAP <code>SplitText</code> + ScrollTrigger, CSS <code>clip-path</code></td>
+      <td class="sites">olivierlarose.com · unseen.studio · 14islands.com · huncwot.com</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4</td>
+      <td><span class="fresh-tag neutral">ante</span></td>
+    </tr>
+    <tr>
+      <td>Horizontal scroll gallery</td>
+      <td class="libs">GSAP ScrollTrigger <code>pin</code>, embla, Swiper</td>
+      <td class="sites">robin-noguier.com · noomoagency.com · lusion.co</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span> 3</td>
+      <td><span class="fresh-tag overused">overused</span></td>
+    </tr>
+    <tr>
+      <td>Magnetic buttons</td>
+      <td class="libs">GSAP + pointer math, Framer Motion <code>useMotionValue</code></td>
+      <td class="sites">olivierlarose.com · basement.studio · noomoagency.com</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5</td>
+      <td><span class="fresh-tag overused">overused</span></td>
+    </tr>
+    <tr>
+      <td>Parallax depth layers</td>
+      <td class="libs">Rellax, Lenis + CSS transforms, Framer Motion <code>useScroll</code></td>
+      <td class="sites">manayerbamate.com · dontboardme.com · lusion.co</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4</td>
+      <td><span class="fresh-tag overused">overused</span></td>
+    </tr>
+    <tr>
+      <td>Shader noise (Perlin / Worley / Voronoi)</td>
+      <td class="libs">OGL + GLSL, three <code>ShaderMaterial</code>, <code>simplex-noise</code></td>
+      <td class="sites">robin-noguier.com (OGL) · lusion.co · kprverse.com</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2</td>
+      <td><span class="fresh-tag neutral">ante</span></td>
+    </tr>
+    <tr>
+      <td>Draggable physics cards</td>
+      <td class="libs">matter.js, cannon-es, Rapier (wasm)</td>
+      <td class="sites">bruno-simon.com (whole site) · resn.co.nz</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2</td>
+      <td><span class="fresh-tag under">underused</span></td>
+    </tr>
+    <tr>
+      <td>Video background with color grade</td>
+      <td class="libs"><code>&lt;video loop muted&gt;</code> + CSS <code>filter</code> / <code>mix-blend-mode</code></td>
+      <td class="sites">unseen.studio · landonorris.com · huncwot.com</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5</td>
+      <td><span class="fresh-tag neutral">ante</span></td>
+    </tr>
+    <tr>
+      <td>Liquid metal / chrome shader</td>
+      <td class="libs">three <code>MeshPhysicalMaterial</code> + HDRI, custom GLSL refraction, Shadertoy ports</td>
+      <td class="sites">lusion.co (Porsche) · immersive-g.com · igloo.inc</td>
+      <td><span class="pips"><i class="on"></i><i></i><i></i><i></i><i></i></span> 1</td>
+      <td><span class="fresh-tag fresh">fresh</span></td>
+    </tr>
+    <tr>
+      <td>Scroll-driven SVG draw</td>
+      <td class="libs">GSAP <code>DrawSVG</code>, IntersectionObserver + <code>stroke-dashoffset</code></td>
+      <td class="sites">langchain.com · anthropic.com (subtle) · emilkowal.ski (essays)</td>
+      <td><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5</td>
+      <td><span class="fresh-tag under">underused</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ================== SECTION 2 — LIBRARY CAGE MATCH ================== -->
+<h2 class="sec"><span class="n">02</span>Library cage match</h2>
+<p class="sec-sub">
+  Six libraries, one solo dev, no co-founder. Bundle cost is gzipped over-the-wire.
+  Feasibility-for-dr-cv assumes Danilo has shipped React but never Three.js in production.
+</p>
+
+<div class="cage">
+
+  <div class="lib">
+    <h3>Three.js + R3F</h3>
+    <div class="size">~280–350 KB gzipped (three 150 + R3F 40 + drei loaders + postprocessing 80)</div>
+    <dl>
+      <dt>Learning</dt><dd><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 — weeks to competence, months to lighting mastery</dd>
+      <dt>Best use</dt><dd class="best">One PBR hero object + HDRI, docked behind DOM. The <i>raycast.com</i> cube playbook.</dd>
+      <dt>Worst use</dt><dd class="worst">Full-site camera rigs solo. Becomes the project, not a piece of it.</dd>
+    </dl>
+    <div class="example">ex · <a href="https://lusion.co">lusion.co</a> · <a href="https://www.framer.com">framer.com</a></div>
+    <div class="verdict"><b>dr-cv feasibility</b> <span class="pips"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2/5. Viable only if scoped to one scene, one material, one HDRI. Scope creep kills it.</div>
+  </div>
+
+  <div class="lib">
+    <h3>OGL</h3>
+    <div class="size">~6 KB gzipped — order of magnitude smaller than three</div>
+    <dl>
+      <dt>Learning</dt><dd><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4 — easy JS, hard GLSL (no PBR safety net)</dd>
+      <dt>Best use</dt><dd class="best">One fullscreen fragment shader as hero: cymatics ring, iridescent plane, noise-displaced field.</dd>
+      <dt>Worst use</dt><dd class="worst">Loading glTF models. You'll rewrite three poorly.</dd>
+    </dl>
+    <div class="example">ex · <a href="https://www.robin-noguier.com">robin-noguier.com</a></div>
+    <div class="verdict"><b>dr-cv feasibility</b> <span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span> 3/5. Awwwards-adjacent polish at 1/40th the bundle, but demands one real GLSL skill.</div>
+  </div>
+
+  <div class="lib">
+    <h3>Rive</h3>
+    <div class="size">~120 KB gzipped WASM + 20–200 KB per <code>.riv</code></div>
+    <dl>
+      <dt>Learning</dt><dd><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span> 3 — editor is Figma-adjacent; state machines take a week to click</dd>
+      <dt>Best use</dt><dd class="best">Stateful vector animations that react to hover/click/scroll. Huly's entire motion layer.</dd>
+      <dt>Worst use</dt><dd class="worst">Photoreal materials, iridescence, volumetric beams. Zero shader surface.</dd>
+    </dl>
+    <div class="example">ex · <a href="https://huly.io">huly.io</a> · <a href="https://www.duolingo.com">duolingo.com</a></div>
+    <div class="verdict"><b>dr-cv feasibility</b> <span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4/5. The Huly-grade polish lever. Authoring time &gt; coding time, which favors a designer-led solo dev.</div>
+  </div>
+
+  <div class="lib">
+    <h3>GSAP (+ ScrollTrigger, SplitText, Flip)</h3>
+    <div class="size">~50 KB gzipped core; +10–15 KB per plugin</div>
+    <dl>
+      <dt>Learning</dt><dd><span class="pips"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2 — API is the most polished in the space</dd>
+      <dt>Best use</dt><dd class="best">Scroll-pinned sequences, text reveals, timeline choreography that plain CSS can't sequence.</dd>
+      <dt>Worst use</dt><dd class="worst">Tiny state transitions on a component (Framer Motion wins there).</dd>
+    </dl>
+    <div class="example">ex · <a href="https://olivierlarose.com">olivierlarose.com</a> · <a href="https://huncwot.com">huncwot.com</a></div>
+    <div class="verdict"><b>dr-cv feasibility</b> <span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5/5. As of 2024 GSAP + all plugins are free for commercial. No reason not to adopt.</div>
+  </div>
+
+  <div class="lib">
+    <h3>Framer Motion</h3>
+    <div class="size">~35 KB gzipped (tree-shakable)</div>
+    <dl>
+      <dt>Learning</dt><dd><span class="pips"><i class="on"></i><i></i><i></i><i></i><i></i></span> 1 — declarative React, identical mental model to JSX</dd>
+      <dt>Best use</dt><dd class="best">Component-scoped animation: layout shifts, presence, drag, gesture, shared-element transitions.</dd>
+      <dt>Worst use</dt><dd class="worst">Long scroll-pinned sequences choreographed across 10+ elements. GSAP beats it there.</dd>
+    </dl>
+    <div class="example">ex · <a href="https://emilkowal.ski">emilkowal.ski</a> · <a href="https://cursor.com">cursor.com</a></div>
+    <div class="verdict"><b>dr-cv feasibility</b> <span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5/5. The Next.js-native default. Inline interactive demos (Emil's pattern) live here.</div>
+  </div>
+
+  <div class="lib">
+    <h3>Canvas 2D (vanilla)</h3>
+    <div class="size">0 KB — browser native</div>
+    <dl>
+      <dt>Learning</dt><dd><span class="pips"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2 — the API is small; the hard part is perf discipline</dd>
+      <dt>Best use</dt><dd class="best">Particle fields, beam motes, type-writer terminals, dithered halftones. Huly's ascending particles.</dd>
+      <dt>Worst use</dt><dd class="worst">3D, lighting, materials. Wrong tool.</dd>
+    </dl>
+    <div class="example">ex · <a href="https://huly.io">huly.io (beam particles)</a> · <a href="https://jhey.dev">jhey.dev</a></div>
+    <div class="verdict"><b>dr-cv feasibility</b> <span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5/5. Already referenced in <code>huly-shader-research.md</code> effect #1 (~1.3 KB gzipped). Free signature motion.</div>
+  </div>
+
+</div>
+
+<!-- ================== SECTION 3 — OVERUSED ================== -->
+<h2 class="sec"><span class="n">03</span>What's over-used in 2026</h2>
+<p class="sec-sub">
+  Eight techniques that have crossed the line from "fresh" to "everyone's landing looks like this."
+  Using them isn't wrong — but they won't earn a single compliment. They're the price of admission, not the hook.
+</p>
+
+<div class="verdict-grid">
+
+  <div class="v-card over">
+    <div class="num">01 · overused</div>
+    <h4>Radial gradient blob behind the hero headline</h4>
+    <p>The "purple-to-cyan mesh blob under the H1" is the 2024–25 equivalent of 2018's gradient button. <b>Every AI landing has one.</b> Cursor, v0, Vercel, Linear, Inkeep, LangChain — same move, same 700-blur, same 0.4 opacity.</p>
+    <p class="ev"><b>ev:</b> 7 / 9 AI sites in R2 use this. It's the default Vercel template.</p>
+  </div>
+
+  <div class="v-card over">
+    <div class="num">02 · overused</div>
+    <h4>Warm radial glow on the primary CTA pill</h4>
+    <p>Cursor-following radial halo on a rounded rectangle. Huly has it, Linear has it, basement has it, a hundred Tailwind UI kits ship it. <b>Safe but invisible in 2026.</b> If you do it, it should behave differently on idle (breathing) than on hover (following).</p>
+    <p class="ev"><b>ev:</b> huly.io baseline · cursor.com · linear.app</p>
+  </div>
+
+  <div class="v-card over">
+    <div class="num">03 · overused</div>
+    <h4>Magnetic buttons</h4>
+    <p>Button lunges toward cursor inside a 60px radius. Was novel in 2021 via Olivier Larose's GSAP tutorial; by 2026 it's the default "interactive" flex on awwwards portfolios. <b>Skip unless the whole site commits to physics.</b></p>
+    <p class="ev"><b>ev:</b> noomoagency.com · basement.studio · olivierlarose.com</p>
+  </div>
+
+  <div class="v-card over">
+    <div class="num">04 · overused</div>
+    <h4>Chromatic aberration on type hover</h4>
+    <p>Three-channel RGB split on letterforms during hover/scroll. Stunning once; exhausting across 20 headlines. <b>Reads "I watched a GLSL tutorial" more than it reads "signature."</b></p>
+    <p class="ev"><b>ev:</b> activetheory.net · robin-noguier.com · kprverse.com</p>
+  </div>
+
+  <div class="v-card over">
+    <div class="num">05 · overused</div>
+    <h4>Glass morphism with <code>backdrop-filter</code></h4>
+    <p>Frosted translucent cards over a colored background. Apple made it prestige in 2020; by 2026 it's the fallback when no other idea shows up. <b>Still fine for a single element (nav bar). Avoid on 5+ components.</b></p>
+    <p class="ev"><b>ev:</b> raycast.com · igloo.inc · most Tailwind starters</p>
+  </div>
+
+  <div class="v-card over">
+    <div class="num">06 · overused</div>
+    <h4>Horizontal scroll pinned galleries</h4>
+    <p>Vertical scroll becomes horizontal inside a pinned section. GSAP ScrollTrigger tutorial copy-paste. <b>Breaks accessibility, confuses mobile, and every awwwards winner 2022–2024 did it.</b></p>
+    <p class="ev"><b>ev:</b> robin-noguier.com · noomoagency.com · lusion.co</p>
+  </div>
+
+  <div class="v-card over">
+    <div class="num">07 · overused</div>
+    <h4>Full-bleed looping Lottie behind text</h4>
+    <p>A 200 KB Lottie JSON of abstract shapes looping behind hero copy. Enterprise SaaS (Inkeep, Gong, Clay) all ship this. <b>Rive does the same job with interactivity; Lottie just loops.</b></p>
+    <p class="ev"><b>ev:</b> inkeep.com · most Y Combinator S22–S25 landings</p>
+  </div>
+
+  <div class="v-card over">
+    <div class="num">08 · overused</div>
+    <h4>Terminal / IDE mock as hero screenshot</h4>
+    <p>A photoshopped "IDE window" with faked code, faked status bar, faked git indicator. Cursor earned it (their product IS an IDE). Everyone else is cosplaying. <b>If you're not shipping an editor, don't show one.</b></p>
+    <p class="ev"><b>ev:</b> cursor.com (authentic) · dozens of AI-coding clones (derivative)</p>
+  </div>
+
+</div>
+
+<!-- ================== SECTION 4 — FRESH ================== -->
+<h2 class="sec"><span class="n">04</span>What's still fresh / underused</h2>
+<p class="sec-sub">
+  Eight moves that would make dr-cv <b>distinguishable</b> in the AI-landing crowd right now.
+  Several are tier-2 studio techniques that the solo-AI-tool crowd hasn't copied yet.
+</p>
+
+<div class="verdict-grid">
+
+  <div class="v-card fresh">
+    <div class="num">01 · fresh</div>
+    <h4>Conic-gradient aura around a single object</h4>
+    <p>Animated iridescent halo encoded as <code>conic-gradient</code> + <code>@property</code>, masked to a ring. <b>Pure CSS, zero JS.</b> Huly uses it behind the notification bell — almost nobody else has caught on. It's also in <code>huly-shader-research.md</code> effect #2 (0 KB JS).</p>
+    <p class="ev"><b>ev:</b> huly.io · <code>docs/references/huly-shader-research.md</code></p>
+  </div>
+
+  <div class="v-card fresh">
+    <div class="num">02 · fresh</div>
+    <h4>Ascending-mote light beam (canvas 2D)</h4>
+    <p>~45 particles rising inside a CSS-drawn light cone. Zero WebGL, ~1.3 KB gzipped. Reads as Huly's signature hero without the Rive+WASM bill. Works against the "profile + agentic AI" metaphor — <b>agents as motes in the beam</b>.</p>
+    <p class="ev"><b>ev:</b> huly.io · <code>huly-shader-research.md</code> effect #1</p>
+  </div>
+
+  <div class="v-card fresh">
+    <div class="num">03 · fresh / underused</div>
+    <h4>Rive state machines driving real UI</h4>
+    <p>Instead of decorative animation, hook Rive state machines into actual interactions — tab switches, status indicators, agent-activity feeds. Huly does it; no agentic-landing peer does. <b>Fresh because Rive is still misread as a Lottie replacement.</b></p>
+    <p class="ev"><b>ev:</b> huly.io · shader-research dossier §3</p>
+  </div>
+
+  <div class="v-card fresh">
+    <div class="num">04 · underused</div>
+    <h4>Scroll-driven SVG draw as "agent walking the page"</h4>
+    <p><code>stroke-dashoffset</code> tied to IntersectionObserver. Draws a single line that threads through sections as the user scrolls — <b>the line IS the agent's path</b>. LangChain hints at it; nobody in our R2 set commits. Cheapest wow-per-byte on this list.</p>
+    <p class="ev"><b>ev:</b> langchain.com (partial) · emilkowal.ski essay embeds</p>
+  </div>
+
+  <div class="v-card fresh">
+    <div class="num">05 · fresh</div>
+    <h4>One PBR hero object on a plinth</h4>
+    <p>Raycast's cube is the canonical reference. Single glTF, HDRI environment, cursor rotates it, <b>no scroll-bound camera rig</b>. Cheap at Tier-2, high at perceived quality. A physical rendering of the <i>CV / skills-sheet</i> as a stacked object would fit dr-cv's "artifact, not résumé" narrative.</p>
+    <p class="ev"><b>ev:</b> raycast.com · immersive-g.com · <code>shader-research §1</code></p>
+  </div>
+
+  <div class="v-card fresh">
+    <div class="num">06 · underused</div>
+    <h4>Inline interactive micro-demo inside the case study</h4>
+    <p>Emil Kowalski's signature: the essay about animation contains a working toast widget. For dr-cv: a case study about agent workflows contains a working mini-agent. <b>Proof of craft lives where the claim lives.</b> Radically underused in AI landings.</p>
+    <p class="ev"><b>ev:</b> emilkowal.ski · rauno.me/craft</p>
+  </div>
+
+  <div class="v-card fresh">
+    <div class="num">07 · fresh</div>
+    <h4>DOM-to-WebGL image upgrade (<code>@14islands/r3f-scroll-rig</code>)</h4>
+    <p>Semantic <code>&lt;img&gt;</code> tags get lifted into WebGL planes on scroll so they can accept grain / RGB split / liquid-reveal shaders <b>without sacrificing HTML / a11y / SEO</b>. Still rare outside 14islands' own work. Lets dr-cv have shader effects with screen-readers intact.</p>
+    <p class="ev"><b>ev:</b> 14islands.com · their own open-source scroll-rig</p>
+  </div>
+
+  <div class="v-card fresh">
+    <div class="num">08 · underused</div>
+    <h4>Serif-display H1 in a monospace-heavy layout</h4>
+    <p>Every AI landing uses Inter or Geist. A single distinctive serif (PP Editorial New, Fraunces, Migra, GT Sectra) on name + H1 instantly escapes the <i>"ChatGPT-generated landing"</i> visual signature. <b>Biggest perceptual upgrade per byte</b> (one @font-face, ~40 KB).</p>
+    <p class="ev"><b>ev:</b> unseen.studio · huncwot.com · henry.codes · round-04 steal #08</p>
+  </div>
+
+</div>
+
+<!-- ================== SECTION 5 — THREE SHADER SETUPS ================== -->
+<h2 class="sec"><span class="n">05</span>Three shader setups for dr-cv, ranked by risk</h2>
+<p class="sec-sub">
+  Concrete build plans. Each assumes one solo dev (Danilo + agents), no prior Three.js production shipping.
+  Bundle costs are gzipped on the wire. Time estimates include learning, scoping, and iteration — not just code.
+</p>
+
+<div class="tiers">
+
+  <!-- LOW RISK -->
+  <div class="tier low">
+    <span class="badge">Low risk</span>
+    <h3>CSS-first + canvas 2D motif</h3>
+    <p class="lead">What <code>huly-shader-research.md</code> already covers. No WebGL. No npm install.</p>
+    <dl>
+      <dt>Scope</dt>
+      <dd>
+        Light-beam hero (canvas 2D motes + CSS cone) ·
+        conic-gradient aura around one glyph ·
+        dotted-lattice card backdrops ·
+        cursor-glow CTA buttons ·
+        scroll-driven SVG draw for the agent-path thread.
+      </dd>
+      <dt>Bundle</dt>
+      <dd><b>~1.6 KB gzipped JS</b> + 0 KB CSS deltas. Dwarfed by one product screenshot.</dd>
+      <dt>Time</dt>
+      <dd><b>3–5 days</b> of design + implementation for a solo dev. Every effect is already written and tested.</dd>
+      <dt>Risk</dt>
+      <dd>Near-zero. <code>prefers-reduced-motion</code> gates already built. Safari / Firefox clean.</dd>
+      <dt>Ceiling</dt>
+      <dd>Huly-adjacent polish. Cannot deliver PBR metallic or true iridescence. Reads as <b>craft, not spectacle</b>.</dd>
+    </dl>
+    <div class="stack">
+      <b>Stack</b><br>
+      CSS (conic + radial + mix-blend-mode)<br>
+      canvas 2D (~45 particles)<br>
+      IntersectionObserver + stroke-dashoffset<br>
+      GSAP ScrollTrigger (optional, +50 KB)<br>
+      Framer Motion for component-scoped transitions<br>
+      <b>No WebGL. No Rive. No Three.js.</b>
+    </div>
+  </div>
+
+  <!-- MEDIUM RISK -->
+  <div class="tier med">
+    <span class="badge">Medium risk</span>
+    <h3>Three.js + R3F single hero object</h3>
+    <p class="lead">One PBR scene, one iridescent material, one HDRI. Everything else stays DOM.</p>
+    <dl>
+      <dt>Scope</dt>
+      <dd>
+        Raycast-style hero: a physical rendering of <b>the dr-cv skills-sheet / CV PDF as a stacked artifact</b> on a plinth ·
+        cursor rotates it (no scroll-bound camera) ·
+        <code>MeshPhysicalMaterial</code> with <code>iridescence: 1</code> + <code>city</code> HDRI from drei ·
+        fallback static PNG under <code>prefers-reduced-motion</code> + WebGL unavailable.
+      </dd>
+      <dt>Bundle</dt>
+      <dd><b>~280 KB gzipped</b> (three 150 + R3F 40 + drei env + suspense boundary). Code-splittable; not loaded on mobile.</dd>
+      <dt>Time</dt>
+      <dd><b>3–5 weeks</b> cold start. Week 1: tutorials + the Bruno Simon three.js journey materials. Week 2: HDRI + material. Week 3: glTF modeling / export. Weeks 4–5: polish, mobile fallback, perf.</dd>
+      <dt>Risk</dt>
+      <dd>Medium. Main failure mode is <b>scope creep</b> (adding scroll-bound camera turns it into Tier 3). A strict "one scene, no postprocessing" rule keeps it sane.</dd>
+      <dt>Ceiling</dt>
+      <dd>Raycast-grade. The artifact metaphor is defensible for a CV site ("my work is a product, rotate it") in a way Raycast's decorative cube is not.</dd>
+    </dl>
+    <div class="stack">
+      <b>Stack</b><br>
+      three (150 KB) + @react-three/fiber (40 KB)<br>
+      @react-three/drei: <code>Environment</code>, <code>Float</code>, <code>OrbitControls</code><br>
+      one glTF model (~100 KB DRACO-compressed)<br>
+      <b>No postprocessing</b> (bloom, DOF, god-rays are Tier 3 territory)<br>
+      Framer Motion for the rest of the page<br>
+      <code>prefers-reduced-motion</code> + <code>@react-three/fiber</code> error boundary
+    </div>
+  </div>
+
+  <!-- HIGH RISK -->
+  <div class="tier high">
+    <span class="badge">High risk</span>
+    <h3>Multi-scene R3F + postprocessing + scroll camera</h3>
+    <p class="lead">Active Theory / Lusion territory. The site becomes the case study.</p>
+    <dl>
+      <dt>Scope</dt>
+      <dd>
+        Persistent R3F canvas fixed behind DOM ·
+        scene swaps per section (hero / skills-sheet / case-studies / contact) ·
+        scroll-driven camera rig via <code>@14islands/r3f-scroll-rig</code> ·
+        postprocessing (bloom + DOF + grain + chromatic), god-rays on beam ·
+        custom <code>ShaderMaterial</code> for noise-displaced plane ·
+        DOM-to-WebGL image upgrade on case thumbnails ·
+        preloader with progress ·
+        WebGPU fallback to WebGL2.
+      </dd>
+      <dt>Bundle</dt>
+      <dd><b>400–550 KB gzipped</b> once postprocessing + scroll-rig + custom shaders are wired. Mobile must load a stripped build.</dd>
+      <dt>Time</dt>
+      <dd><b>8–12+ weeks</b> cold start for a solo dev. Realistically: <b>4–6 months</b> to reach Awwwards-submission polish. Custom GLSL, performance budgeting across devices, and art-direction iteration all compound.</dd>
+      <dt>Risk</dt>
+      <dd>High. <b>This IS the project, not a feature of it.</b> Phase-2 CV generators and Phase-3 landing copy get starved. Abandonment cost is near-total — sunk shaders don't port down cleanly.</dd>
+      <dt>Ceiling</dt>
+      <dd>Lusion / Active Theory. Unambiguously tier-1. But the gap between Tier 2 and Tier 3 is <b>3x time for &lt;30% perceived uplift</b> on a CV site, where copy and case-study proof dominate conversion.</dd>
+    </dl>
+    <div class="stack">
+      <b>Stack</b><br>
+      three + @react-three/fiber + @react-three/drei (loaders, env, materials)<br>
+      @react-three/postprocessing (bloom, DOF, god-rays, chromatic)<br>
+      @14islands/r3f-scroll-rig (DOM-to-WebGL)<br>
+      Lenis (smooth scroll) + GSAP ScrollTrigger<br>
+      Custom <code>ShaderMaterial</code> + shaderMaterial helper<br>
+      HDRI environments + DRACO-compressed glTF<br>
+      <b>Plus</b> a strict device-tier detection + mobile static fallback
+    </div>
+  </div>
+
+</div>
+
+<!-- ================== VERDICT ================== -->
+<section class="verdict-box">
+  <div class="kicker">verdict for dr-cv v3</div>
+  <h2>Ship LOW. Earmark MEDIUM for v3.1.</h2>
+  <p>
+    The <b>LOW-risk tier (CSS + canvas 2D + scroll-SVG)</b> already clears every identified "ante" technique
+    and claims four of the eight <b>still-fresh</b> moves: conic-gradient aura, ascending light-beam,
+    scroll-driven SVG draw, and the serif-H1 swap. That's enough distinction against the AI-landing crowd —
+    Cursor, Linear, v0, Vercel, Inkeep all ship far less motion than Low-tier delivers.
+  </p>
+  <p>
+    The <b>MEDIUM tier</b> is a real option for v3.1 once positioning and copy are validated with traffic.
+    The Raycast-style PBR artifact pays off precisely because dr-cv has a tangible object to render
+    (the skills-sheet PDF + CV variants). That metaphor is not fakeable by competitors who don't ship artifacts.
+  </p>
+  <p>
+    The <b>HIGH tier</b> is a trap for this phase. Lusion-grade output requires 4–6 months solo. In that window,
+    Phase 2 CV generators (already shipping) and Phase 3 landing copy are the higher-leverage work.
+    <b>Do not ship WebGL before shipping a working landing.</b>
+  </p>
+  <p class="rationale">
+    <b>Library picks for Low tier:</b> CSS-only for conic-aura + light-beam CSS · vanilla canvas 2D (~1.3 KB)
+    for particles · GSAP ScrollTrigger + SplitText for section choreography · Framer Motion for component transitions ·
+    one serif @font-face (Fraunces or PP Editorial New). Total JS over-the-wire: <b>~90 KB gzipped</b> on top of Next.js.
+    Everything else is HTML, CSS, and SVG.
+  </p>
+</section>
+
+<footer>
+  <span>C:\dev\dr-cv\docs\references\visual-universe\round-06\index.html</span>
+  <span>round 06 / 10 · motion &amp; shader synthesis · 2026-05-08</span>
+</footer>
+
+</div>
+</body>
+</html>

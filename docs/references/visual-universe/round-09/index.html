@@ -1,0 +1,1185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Round 9 · The 6 directions · dr-cv visual universe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Serif&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07080d;
+    --bg-2:#0b0d15;
+    --bg-card:#10131c;
+    --bg-soft:#0d1019;
+    --bg-deep:#05060a;
+    --line:#1d2030;
+    --line-soft:#161927;
+    --ink:#e7e9f0;
+    --ink-dim:#9aa0b4;
+    --mute:#5d6378;
+    --accent:#FF8964;
+    --accent-dim:#7a3f2d;
+    --accent-soft:rgba(255,137,100,.12);
+    --accent-line:rgba(255,137,100,.3);
+    --ok:#7ed9a1;
+    --warn:#f2c472;
+    --bad:#e47a7a;
+    --cool:#9b8cff;
+    --fresh:#7dc8ff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    font-size:14.5px;line-height:1.55;letter-spacing:-.003em;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 500px at 80% -10%, rgba(155,140,255,.05), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, rgba(255,137,100,.04), transparent 60%);
+  }
+  code,.mono{font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:-.01em}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px dotted rgba(255,137,100,.35)}
+  a:hover{color:#fff;border-bottom-color:#fff}
+
+  .wrap{max-width:1280px;margin:0 auto;padding:56px 32px 140px}
+
+  /* ---------- HEADER ---------- */
+  header.top{border-bottom:1px solid var(--line);padding-bottom:36px;margin-bottom:56px}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1.page{font-size:46px;line-height:1.06;letter-spacing:-.025em;margin:0 0 14px;font-weight:700}
+  h1.page .slash{color:var(--mute);font-weight:400;margin:0 8px}
+  .sub{color:var(--ink-dim);max-width:880px;margin:0;font-size:16.5px}
+  .meta-row{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--mute)}
+  .meta-row b{color:var(--ink-dim);font-weight:500}
+
+  h2.section{
+    font-size:28px;font-weight:600;letter-spacing:-.02em;
+    margin:96px 0 10px;padding-bottom:14px;border-bottom:1px solid var(--line);
+    display:flex;align-items:baseline;gap:14px;
+  }
+  h2.section .n{color:var(--mute);font-weight:400;font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.06em}
+  h2.section .tail{margin-left:auto;color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:.08em}
+  .section-intro{color:var(--ink-dim);margin:16px 0 32px;max-width:860px;font-size:15px}
+
+  /* ---------- DIRECTION CARD ---------- */
+  .direction{
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:0;
+    margin-bottom:28px;
+    overflow:hidden;
+    background:linear-gradient(180deg,var(--bg-card),var(--bg-2));
+    position:relative;
+  }
+  .direction.d1{border-top:3px solid var(--accent)}
+  .direction.d2{border-top:3px solid var(--fresh)}
+  .direction.d3{border-top:3px solid var(--warn)}
+  .direction.d4{border-top:3px solid var(--cool)}
+  .direction.d5{border-top:3px solid var(--ok)}
+  .direction.d6{border-top:3px solid #ff6b9d}
+
+  .d-head{
+    display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px;
+    padding:26px 34px 22px;border-bottom:1px solid var(--line-soft);
+  }
+  .d-head .rank{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mute);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;display:block}
+  .d-head .name{font-size:26px;font-weight:700;letter-spacing:-.02em;margin:0;line-height:1.05}
+  .d-head .thesis{color:var(--ink-dim);font-size:14px;margin-top:6px;max-width:640px;line-height:1.5}
+  .d-head .badge{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    letter-spacing:.1em;text-transform:uppercase;font-weight:500;
+    padding:6px 12px;border-radius:999px;border:1px solid var(--line);
+  }
+  .direction.d1 .d-head .badge{color:var(--accent);border-color:var(--accent-dim);background:var(--accent-soft)}
+  .direction.d2 .d-head .badge{color:var(--fresh);border-color:rgba(125,200,255,.3);background:rgba(125,200,255,.08)}
+  .direction.d3 .d-head .badge{color:var(--warn);border-color:rgba(242,196,114,.3);background:rgba(242,196,114,.08)}
+  .direction.d4 .d-head .badge{color:var(--cool);border-color:rgba(155,140,255,.3);background:rgba(155,140,255,.08)}
+  .direction.d5 .d-head .badge{color:var(--ok);border-color:rgba(126,217,161,.3);background:rgba(126,217,161,.08)}
+  .direction.d6 .d-head .badge{color:#ff6b9d;border-color:rgba(255,107,157,.3);background:rgba(255,107,157,.08)}
+
+  /* ---------- SPECIMEN (big, live) ---------- */
+  .specimen{
+    padding:56px 46px 48px;
+    background:var(--bg-deep);
+    border-bottom:1px solid var(--line-soft);
+    position:relative;overflow:hidden;
+  }
+  .specimen .eyebrow-spec{
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--accent);letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px;
+  }
+  .specimen .subhead{
+    color:rgba(255,255,255,.58);font-size:17px;line-height:1.55;margin:20px 0 24px;max-width:640px;
+  }
+  .specimen .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+  .specimen .pill{
+    font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 16px;border-radius:999px;
+    letter-spacing:.04em;border:1px solid var(--accent-dim);background:var(--accent-soft);color:var(--accent);
+  }
+  .specimen .pill.ghost{color:var(--ink-dim);background:transparent;border-color:var(--line)}
+
+  /* D1 Warm-Huly specimen */
+  .d1 .specimen{background:#090A0C}
+  .d1 .specimen::after{
+    content:"";position:absolute;right:-140px;top:-140px;width:460px;height:460px;
+    background:radial-gradient(circle at 50% 50%,rgba(255,137,100,.18),transparent 65%);
+    filter:blur(40px);pointer-events:none;
+  }
+  .d1 .specimen > *{position:relative;z-index:1}
+  .d1 .specimen h2{
+    font-family:'JetBrains Mono',monospace;font-weight:700;
+    font-size:clamp(34px,6.5vw,68px);line-height:0.96;letter-spacing:-.04em;
+    margin:0;color:#fff;
+  }
+  .d1 .specimen h2 .grad{
+    background:linear-gradient(135deg,#fff 30%,#FFD9C7 75%,#FFE7DD);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  }
+  .d1 .specimen h2 .acc{color:var(--accent)}
+  .d1 .specimen .pill{box-shadow:0 0 0 0 rgba(255,137,100,.3),inset 0 0 20px rgba(255,137,100,.1)}
+
+  /* D2 Terminal Agentic specimen */
+  .d2 .specimen{background:#08090d;padding:36px 40px}
+  .d2 .specimen .term-chrome{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:#666;letter-spacing:.06em;margin-bottom:14px;
+    display:flex;gap:12px;align-items:center;
+  }
+  .d2 .specimen .term-chrome .dot{width:10px;height:10px;border-radius:50%;background:#333}
+  .d2 .specimen .term-chrome .dot.g{background:#7ed9a1}
+  .d2 .specimen .prompt{color:#7ed9a1;font-family:'JetBrains Mono',monospace;font-size:12px;margin-bottom:10px}
+  .d2 .specimen h2{
+    font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-weight:500;
+    font-size:clamp(26px,4.8vw,50px);line-height:1.08;letter-spacing:-.025em;
+    margin:0;color:#e7f5ef;
+  }
+  .d2 .specimen h2 .caret{display:inline-block;width:.5em;height:1em;background:#7ed9a1;margin-left:4px;vertical-align:middle;animation:blink 1.1s steps(1) infinite}
+  .d2 .specimen h2 em{font-style:normal;color:#7ed9a1}
+  .d2 .specimen .kbd-row{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#888}
+  .d2 .specimen .kbd{border:1px solid #2a2f38;padding:3px 8px;border-radius:4px;background:#11131a;color:#bbb}
+  @keyframes blink{50%{opacity:0}}
+
+  /* D3 Editorial Craft specimen */
+  .d3 .specimen{background:#0B0906;padding-top:60px}
+  .d3 .specimen::before{
+    content:"";position:absolute;left:-40px;bottom:-40%;width:560px;height:560px;
+    background:radial-gradient(circle,rgba(204,120,92,.14),transparent 60%);filter:blur(50px);pointer-events:none;
+  }
+  .d3 .specimen > *{position:relative}
+  .d3 .specimen .eyebrow-spec{color:#CC785C;font-family:'Fraunces',serif;font-size:12.5px;font-style:italic;text-transform:none;letter-spacing:0}
+  .d3 .specimen h2{
+    font-family:'Fraunces','Instrument Serif',Georgia,serif;font-weight:500;
+    font-size:clamp(38px,7vw,80px);line-height:1.0;letter-spacing:-.02em;
+    margin:0;color:#F2EADF;font-variation-settings:"opsz" 144,"SOFT" 30;
+  }
+  .d3 .specimen h2 em{font-style:italic;color:#CC785C;font-weight:400}
+  .d3 .specimen .subhead{color:rgba(242,234,223,.68);font-family:'Inter',sans-serif;font-weight:300;font-size:17.5px}
+  .d3 .specimen .pill{color:#CC785C;border-color:#7a3820;background:rgba(204,120,92,.08)}
+  .d3 .specimen .divider{width:40px;height:1px;background:#CC785C;margin:24px 0 14px;opacity:.6}
+
+  /* D4 Agentic Atelier specimen */
+  .d4 .specimen{background:#05060a;padding:46px 44px}
+  .d4 .specimen h2{
+    font-family:'Inter',sans-serif;font-weight:800;
+    font-size:clamp(30px,5.6vw,60px);line-height:.98;letter-spacing:-.04em;
+    margin:0;color:#fff;
+  }
+  .d4 .specimen h2 .br{color:var(--cool)}
+  .d4 .specimen .bracket-nav{
+    display:flex;gap:18px;flex-wrap:wrap;margin:22px 0 0;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-dim);letter-spacing:.04em;
+  }
+  .d4 .specimen .bracket-nav .b{color:var(--cool)}
+  .d4 .specimen .artifact-strip{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:24px;
+  }
+  .d4 .specimen .artifact{
+    aspect-ratio:3/4;border-radius:6px;
+    background:linear-gradient(145deg,#1a1c28,#0a0b10);
+    border:1px solid #1e2030;
+    position:relative;overflow:hidden;
+    font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(155,140,255,.5);
+    padding:10px;
+    display:flex;flex-direction:column;justify-content:flex-end;
+  }
+  .d4 .specimen .artifact.featured{background:linear-gradient(145deg,#2a2440,#0a0b10);border-color:rgba(155,140,255,.3)}
+  .d4 .specimen .artifact .yr{font-size:11px;color:var(--cool)}
+  .d4 .specimen .artifact .ttl{font-size:10px;color:#888;margin-top:2px}
+
+  /* D5 AI Product-Tour specimen */
+  .d5 .specimen{background:#070a08;padding:40px 44px}
+  .d5 .specimen .split{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:center}
+  .d5 .specimen h2{
+    font-family:'Inter',sans-serif;font-weight:700;
+    font-size:clamp(28px,4.8vw,52px);line-height:1.02;letter-spacing:-.035em;
+    margin:0;color:#fff;
+  }
+  .d5 .specimen h2 em{font-style:normal;color:var(--ok)}
+  .d5 .specimen .subhead{font-size:15.5px;margin:16px 0 18px}
+  .d5 .specimen .pill{color:var(--ok);border-color:rgba(126,217,161,.3);background:rgba(126,217,161,.08)}
+  .d5 .specimen .screenshot{
+    aspect-ratio:3/4;border-radius:10px;
+    background:#fefdf8;
+    box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px #1a1b22;
+    position:relative;overflow:hidden;padding:18px 16px;
+    font-family:'JetBrains Mono',monospace;
+    transform:perspective(900px) rotateY(-6deg) rotateX(2deg);
+  }
+  .d5 .specimen .screenshot .head{font-size:9px;color:#888;letter-spacing:.08em;margin-bottom:4px}
+  .d5 .specimen .screenshot .name-big{font-family:'Inter',sans-serif;font-size:20px;font-weight:700;color:#090A0C;letter-spacing:-.02em}
+  .d5 .specimen .screenshot .role{font-size:9px;color:#FF8964;margin-top:2px;letter-spacing:.04em}
+  .d5 .specimen .screenshot .rule{height:2px;background:#FF8964;width:40%;margin:10px 0}
+  .d5 .specimen .screenshot .chunk{font-size:8.5px;color:#555;line-height:1.4;margin-bottom:8px}
+  .d5 .specimen .screenshot .chunk b{color:#090A0C}
+  .d5 .specimen .screenshot .chip{display:inline-block;font-size:7.5px;color:#FF8964;border:1px solid #FF8964;padding:1px 5px;border-radius:3px;margin:1px 2px 1px 0}
+
+  /* D6 Chromatic Craft specimen */
+  .d6 .specimen{background:#070810;padding:52px 44px}
+  .d6 .specimen::before{
+    content:"";position:absolute;right:-20%;top:-20%;width:540px;height:540px;border-radius:50%;
+    background:conic-gradient(from 140deg,#ff6b9d,#a76fff,#5683da,#ff8964,#ff6b9d);
+    filter:blur(46px);opacity:.42;pointer-events:none;
+  }
+  .d6 .specimen::after{
+    content:"";position:absolute;right:14%;top:18%;width:220px;height:220px;border-radius:50%;
+    background:conic-gradient(from 20deg,#fff 0%,#FFD9C7 20%,#a76fff 40%,#5683da 60%,#FFD9C7 85%,#fff 100%);
+    filter:blur(2px);opacity:.6;mix-blend-mode:screen;pointer-events:none;
+    animation:spin 12s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .d6 .specimen > *{position:relative;z-index:1}
+  .d6 .specimen h2{
+    font-family:'JetBrains Mono',monospace;font-weight:700;
+    font-size:clamp(32px,6vw,64px);line-height:0.98;letter-spacing:-.04em;
+    margin:0;color:#fff;max-width:60%;
+  }
+  .d6 .specimen h2 .grad{
+    background:linear-gradient(110deg,#fff,#FFD9C7 40%,#a76fff 70%,#5683da);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .d6 .specimen .subhead{max-width:520px}
+  .d6 .specimen .pill{color:#ff9ec8;border-color:rgba(255,107,157,.35);background:rgba(255,107,157,.08)}
+
+  /* ---------- ATTRIBUTES GRID ---------- */
+  .attrs{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:0;border-bottom:1px solid var(--line-soft)}
+  .attrs > .cell{
+    padding:20px 24px;border-right:1px solid var(--line-soft);
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .attrs > .cell:last-child{border-right:none}
+  .attrs .k{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mute);letter-spacing:.1em;text-transform:uppercase}
+  .attrs .v{color:var(--ink);font-size:13.5px;line-height:1.55}
+  .attrs .v b{color:#fff;font-weight:500}
+
+  /* palette swatches */
+  .palette-strip{display:grid;grid-template-columns:repeat(5,1fr);height:48px;border-radius:6px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);margin-top:4px}
+  .palette-strip .sw{display:flex;align-items:flex-end;padding:4px 6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.02em}
+
+  /* tech block (lower grid) */
+  .tech-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+  .tech-grid > .cell{padding:18px 24px;border-right:1px solid var(--line-soft);}
+  .tech-grid > .cell:last-child{border-right:none}
+  .tech-grid .k{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mute);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;display:block}
+  .tech-grid .v{color:var(--ink);font-size:13px;line-height:1.55}
+  .tech-grid .v b{color:#fff;font-weight:500}
+  .tech-grid .refs{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .tech-grid .refs .chip{
+    background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--ink-dim);
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:3px 8px;border-radius:4px;letter-spacing:-.01em;
+  }
+
+  /* motion tier pip */
+  .tier-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;
+    padding:4px 10px;border-radius:4px;letter-spacing:.05em;margin-top:4px;
+  }
+  .tier-pill.low{background:rgba(126,217,161,.1);color:var(--ok);border:1px solid rgba(126,217,161,.3)}
+  .tier-pill.med{background:rgba(242,196,114,.1);color:var(--warn);border:1px solid rgba(242,196,114,.3)}
+  .tier-pill.high{background:rgba(228,122,122,.1);color:var(--bad);border:1px solid rgba(228,122,122,.3)}
+
+  /* cost pill */
+  .cost-pill{
+    display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;
+    padding:3px 10px;border-radius:4px;border:1px solid var(--line);color:var(--ink-dim);letter-spacing:.04em;
+  }
+
+  /* risk box + signature box */
+  .note-row{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--line-soft)}
+  .note-row > .cell{padding:18px 24px;border-right:1px solid var(--line-soft)}
+  .note-row > .cell:last-child{border-right:none}
+  .note-row .k{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;display:block}
+  .note-row .k.bad{color:var(--bad)}
+  .note-row .v{color:var(--ink);font-size:13px;line-height:1.55}
+  .note-row .v b{color:#fff;font-weight:500}
+
+  /* ==== SECTION 2: MATRIX ==== */
+  .matrix-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--bg-2)}
+  table.matrix{border-collapse:collapse;width:100%;min-width:1100px;font-size:12.5px}
+  table.matrix th, table.matrix td{
+    padding:12px 14px;text-align:left;vertical-align:top;
+    border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);
+  }
+  table.matrix th{
+    background:#0a0c14;color:var(--ink-dim);font-family:'JetBrains Mono',monospace;
+    font-weight:500;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;
+    position:sticky;top:0;
+  }
+  table.matrix td:first-child, table.matrix th:first-child{
+    position:sticky;left:0;background:#0a0c14;z-index:1;min-width:170px;
+    color:#fff;font-weight:600;
+  }
+  table.matrix td.dir-cell{font-family:'Inter',sans-serif;font-size:13px}
+  table.matrix td.dir-cell .num{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:11px;display:block;letter-spacing:.08em}
+  table.matrix tr:hover td{background:#11131c}
+  table.matrix tr:hover td:first-child{background:#13152a}
+  .fit-5{display:inline-flex;gap:3px}
+  .fit-5 i{width:10px;height:14px;border-radius:2px;background:var(--line);display:inline-block}
+  .fit-5 i.on{background:var(--accent)}
+  .swatch-inline{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(255,255,255,.12);vertical-align:middle;margin-right:4px}
+  .cost-inline{font-family:'JetBrains Mono',monospace;font-size:11px}
+
+  /* ==== SECTION 3: DECISION ==== */
+  .decision-box{
+    margin-top:20px;padding:32px 36px;
+    background:linear-gradient(165deg,#120e0a,#0a0c14 65%);
+    border:1px solid var(--accent-line);border-radius:16px;
+  }
+  .decision-box .eyebrow{margin-bottom:14px}
+  .decision-box h3{margin:0 0 18px;font-size:24px;letter-spacing:-.015em;font-weight:700;line-height:1.2}
+  .decision-box h3 em{font-style:normal;color:var(--accent)}
+  .decision-box .q-intro{color:var(--ink);font-size:15.5px;line-height:1.65;margin-bottom:22px}
+  .decision-box .q-intro b{color:var(--accent)}
+
+  .frames{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+  .frame{background:var(--bg-deep);border:1px solid var(--line-soft);border-radius:10px;padding:20px 22px}
+  .frame .letter{font-family:'JetBrains Mono',monospace;font-size:28px;color:var(--accent);font-weight:500;line-height:1}
+  .frame h4{margin:6px 0 4px;font-size:17px;font-weight:600;letter-spacing:-.015em}
+  .frame .lbl{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-dim);letter-spacing:.06em;margin-bottom:10px}
+  .frame p{color:var(--ink-dim);font-size:13px;line-height:1.55;margin:0 0 12px}
+  .frame .dirs{display:flex;flex-direction:column;gap:6px;margin-top:8px;padding-top:12px;border-top:1px dashed var(--line-soft)}
+  .frame .dir-ln{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink);
+    display:flex;gap:8px;align-items:baseline;
+  }
+  .frame .dir-ln .tag{color:var(--accent);font-weight:500;min-width:30px}
+  .frame .dir-ln .ttl{color:var(--ink-dim)}
+
+  footer{
+    margin-top:96px;padding-top:22px;border-top:1px solid var(--line);
+    color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+
+  @media (max-width:1000px){
+    .attrs, .tech-grid, .note-row{grid-template-columns:1fr}
+    .attrs > .cell, .tech-grid > .cell, .note-row > .cell{border-right:none;border-bottom:1px solid var(--line-soft)}
+    .d-head{grid-template-columns:1fr}
+    .frames{grid-template-columns:1fr}
+    .d5 .specimen .split{grid-template-columns:1fr}
+    h1.page{font-size:32px}
+    .wrap{padding:32px 18px 80px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- =========================== HEADER =========================== -->
+<header class="top">
+  <div class="eyebrow">dr-cv · visual universe · round 09 / 10</div>
+  <h1 class="page">The 6 directions <span class="slash">·</span> shortlist</h1>
+  <p class="sub">
+    Rounds 1–8 mapped the territory: AI-landing grammar, portfolio archetypes, studio theatrics, Awwwards editorial, motion tiers, palette &amp; type, and narrative structure.
+    Round 9 distills the universe into <b>six concrete, internally-coherent directions</b>. Each is a full proposal — palette, type, hero, structure, motion, copy — not a mix-and-match menu. Round 10 converges on three. The user picks one.
+  </p>
+  <div class="meta-row">
+    <span><b>date</b> 2026-05-08</span>
+    <span><b>inputs</b> R1–R8 · identity + positioning + skills</span>
+    <span><b>accent</b> <code>#FF8964</code></span>
+    <span><b>next</b> round 10 · final 3</span>
+  </div>
+</header>
+
+<!-- =========================== SECTION 1: DIRECTIONS =========================== -->
+<h2 class="section"><span class="n">01</span>The 6 directions <span class="tail">full-scale H1 specimens</span></h2>
+<p class="section-intro">
+  Each card renders Danilo's real H1 candidate at approximately hero scale in the direction's type + palette system — so differences are legible to the eye, not just the spreadsheet.
+  Copy is drafted in Danilo's voice from <code>positioning.yaml</code> (<i>"I ship real products — and I ship the tools agents use to help me ship them"</i>), with direction-specific rephrasing where the pattern demands it.
+</p>
+
+<!-- =========== D1 WARM-HULY REFINED =========== -->
+<article class="direction d1" id="d1">
+  <div class="d-head">
+    <div>
+      <span class="rank">Direction 01 · safest</span>
+      <h3 class="name">Warm-Huly Refined</h3>
+      <p class="thesis">Danilo extends the Huly design system into a personal brand. The warmest, calmest AI-native landing in the category — mono display, apricot accent, zero gimmicks.</p>
+    </div>
+    <span class="badge">Safe · on-brief</span>
+  </div>
+
+  <div class="specimen">
+    <div class="eyebrow-spec">// danilorojas.design</div>
+    <h2>
+      <span class="grad">Danilo Rojas</span><br>
+      <span class="acc">— Agentic Designer</span><br>
+      shipping real products.
+    </h2>
+    <p class="subhead">I keep the craft; agents give me the leverage. Fifteen years of delivery · active at Booz Allen Hamilton · SaaS live in production.</p>
+    <div class="ctas">
+      <span class="pill">See the work ↓</span>
+      <span class="pill ghost">Download skills sheet (PDF)</span>
+    </div>
+  </div>
+
+  <div class="attrs">
+    <div class="cell">
+      <span class="k">Reference mix</span>
+      <div class="v">
+        <a href="https://huly.io" target="_blank">huly.io</a> (baseline) ·
+        <a href="https://linear.app" target="_blank">linear.app</a> (agents in H1) ·
+        <a href="https://basement.studio" target="_blank">basement.studio</a> (logo marquee) ·
+        <a href="https://cursor.com" target="_blank">cursor.com</a> (status-card grid) ·
+        <a href="https://anthropic.com" target="_blank">anthropic.com</a> (warm restraint)
+      </div>
+    </div>
+    <div class="cell">
+      <span class="k">Palette</span>
+      <div class="palette-strip">
+        <div class="sw" style="background:#090A0C;color:#888">#090A0C</div>
+        <div class="sw" style="background:#14151A;color:#888">#14151A</div>
+        <div class="sw" style="background:#F3F3F5;color:#333">#F3F3F5</div>
+        <div class="sw" style="background:#9AA0B4;color:#111">#9AA0B4</div>
+        <div class="sw" style="background:#FF8964;color:#3a1a0a">#FF8964</div>
+      </div>
+      <div class="v" style="font-size:12px;color:var(--ink-dim);margin-top:2px">Near-black + warm apricot. bg-clip gradient on H1, radial glow on CTA.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Typography</span>
+      <div class="v"><b>JetBrains Mono 700</b> display · <b>Inter 400</b> body · <b>JetBrains Mono 500 UPPER</b> labels. No serif, no third face.</div>
+    </div>
+  </div>
+
+  <div class="tech-grid">
+    <div class="cell">
+      <span class="k">Hero pattern (R8)</span>
+      <div class="v"><b>Pattern 02 · Manifesto H1</b> with a thin Pattern 05 live-data strip below (commits/40d, last deploy, agent activity from real GitHub).</div>
+    </div>
+    <div class="cell">
+      <span class="k">Structure (7 sections)</span>
+      <div class="v">Hero → marquee → work → method → about → testimonials → contact. <b>Dark-throughout long-scroll</b>, inline case expanders. Proposal A from R8.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Motion tier (R6)</span>
+      <span class="tier-pill low">LOW · CSS + canvas 2D</span>
+      <div class="v" style="margin-top:8px">Conic-gradient aura, light-beam canvas, scroll-SVG draw, Framer Motion for case expansion. <b>~90 KB JS gzipped.</b></div>
+    </div>
+  </div>
+
+  <div class="note-row">
+    <div class="cell">
+      <span class="k">Signature technique</span>
+      <div class="v"><b>Warm apricot bg-clip gradient INSIDE the H1 type</b> paired with radial glow on the CTA. One color decision visible in two surgical places. The rest of the page is monochrome dark.</div>
+    </div>
+    <div class="cell">
+      <span class="k bad">Risk</span>
+      <div class="v">Reads as "almost huly.io" to anyone who has seen huly.io. Safe to the point of blending in with the Huly/Linear/Vercel lineage. No single memorable gesture.</div>
+    </div>
+  </div>
+
+  <div class="note-row" style="border-bottom:none">
+    <div class="cell">
+      <span class="k">Production cost</span>
+      <span class="cost-pill">~1 week · solo</span>
+      <div class="v" style="margin-top:4px;font-size:12px;color:var(--ink-dim)">Tokens mostly exist in <code>huly-design-system.md</code>. Distance to in-browser hero ≈ one weekend of token wiring.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Example H1 / subhead / CTA</span>
+      <div class="v">
+        <b>H1:</b> <i>"Danilo Rojas — Agentic Designer shipping real products."</i><br>
+        <b>Subhead:</b> I keep the craft; agents give me the leverage. 15 yrs · active at Booz Allen.<br>
+        <b>CTA:</b> [See the work ↓]  ·  [Download skills sheet (PDF)]
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- =========== D2 TERMINAL AGENTIC =========== -->
+<article class="direction d2" id="d2">
+  <div class="d-head">
+    <div>
+      <span class="rank">Direction 02 · code-literate</span>
+      <h3 class="name">Terminal Agentic</h3>
+      <p class="thesis">Danilo is the designer who thinks like an engineer. Brittany Chiang meets Cursor meets v0 — mono-first, keyboard-shortcut hints visible, the site behaves like an IDE.</p>
+    </div>
+    <span class="badge">Signature · developer</span>
+  </div>
+
+  <div class="specimen">
+    <div class="term-chrome"><span class="dot"></span><span class="dot g"></span><span class="dot"></span><span>~/dr-cv · main · agent-designer.tsx</span></div>
+    <div class="prompt">&gt; danilo@dr-cv ~ $ ship --leverage=agents</div>
+    <h2>
+      ship_products() &amp;<br>
+      <em>ship_the_tools(agents)</em> —<br>
+      i design both.<span class="caret"></span>
+    </h2>
+    <p class="subhead" style="color:rgba(255,255,255,.5);font-family:'JetBrains Mono',monospace;font-size:14px">// 15 yrs shipping · 346 commits / 40d · active at Booz Allen Hamilton</p>
+    <div class="kbd-row">
+      <span><span class="kbd">⌘K</span> command palette</span>
+      <span><span class="kbd">g</span><span class="kbd">w</span> go to work</span>
+      <span><span class="kbd">g</span><span class="kbd">c</span> go to contact</span>
+      <span><span class="kbd">/</span> search</span>
+    </div>
+  </div>
+
+  <div class="attrs">
+    <div class="cell">
+      <span class="k">Reference mix</span>
+      <div class="v">
+        <a href="https://brittanychiang.com" target="_blank">brittanychiang.com</a> (dev-portfolio floor) ·
+        <a href="https://cursor.com" target="_blank">cursor.com</a> (IDE hero) ·
+        <a href="https://v0.app" target="_blank">v0.app</a> (prompt-as-hero) ·
+        <a href="https://paco.me" target="_blank">paco.me</a> (⌘K) ·
+        <a href="https://kprverse.com" target="_blank">kprverse.com</a> (terminal chrome)
+      </div>
+    </div>
+    <div class="cell">
+      <span class="k">Palette</span>
+      <div class="palette-strip">
+        <div class="sw" style="background:#08090d;color:#666">#08090D</div>
+        <div class="sw" style="background:#11131a;color:#666">#11131A</div>
+        <div class="sw" style="background:#e7f5ef;color:#111">#E7F5EF</div>
+        <div class="sw" style="background:#7ed9a1;color:#032">#7ED9A1</div>
+        <div class="sw" style="background:#FF8964;color:#3a1a0a">#FF8964</div>
+      </div>
+      <div class="v" style="font-size:12px;color:var(--ink-dim);margin-top:2px">OLED black + terminal green for active state, apricot reserved for CTAs only.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Typography</span>
+      <div class="v"><b>IBM Plex Mono 500</b> display · <b>JetBrains Mono 400</b> body · <b>Inter 400</b> only inside case-study prose. <b>~85% of the page is mono.</b></div>
+    </div>
+  </div>
+
+  <div class="tech-grid">
+    <div class="cell">
+      <span class="k">Hero pattern (R8)</span>
+      <div class="v"><b>Pattern 04 · Terminal/minimalist</b> fused with <b>Pattern 05 · live data</b>. The hero IS a rendered terminal session; the commits/deploy strip is visible output.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Structure (8 sections)</span>
+      <div class="v">Boot splash → hero terminal → /work (ls -la cases) → /craft (interactive demos) → /about (git log) → /writing → /contact → /colophon. Section headings prefixed with <code>/</code>.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Motion tier (R6)</span>
+      <span class="tier-pill low">LOW · CSS + canvas 2D</span>
+      <div class="v" style="margin-top:8px">Blinking caret, typewriter mount, ⌘K command palette (cmdk lib), spy-scroll left-rail. No WebGL, no Rive.</div>
+    </div>
+  </div>
+
+  <div class="note-row">
+    <div class="cell">
+      <span class="k">Signature technique</span>
+      <div class="v"><b>Functional ⌘K command palette as the primary nav.</b> Keyboard-driven everything: <code>g w</code> to work, <code>g c</code> to contact, <code>/</code> to search cases. Paco Coursey's cmdk, exposed as the brand.</div>
+    </div>
+    <div class="cell">
+      <span class="k bad">Risk</span>
+      <div class="v">R7 T4 verdict: all-mono screams "developer, not designer" and <b>contradicts "Agentic Designer" positioning at the label level</b>. Non-technical recruiters / designers may bounce before reading the work.</div>
+    </div>
+  </div>
+
+  <div class="note-row" style="border-bottom:none">
+    <div class="cell">
+      <span class="k">Production cost</span>
+      <span class="cost-pill">1–2 weeks · solo</span>
+      <div class="v" style="margin-top:4px;font-size:12px;color:var(--ink-dim)">cmdk + typewriter + spy-scroll are all npm-installable. Most time goes into copy-as-code discipline (every label fits in a monospace gutter).</div>
+    </div>
+    <div class="cell">
+      <span class="k">Example H1 / subhead / CTA</span>
+      <div class="v" style="font-family:'JetBrains Mono',monospace;font-size:13px">
+        <b>H1:</b> <i>ship_products() &amp; ship_the_tools(agents) — i design both._</i><br>
+        <b>Subhead:</b> // 15 yrs shipping · 346 commits / 40d · active at Booz Allen<br>
+        <b>CTA:</b> <code>[⌘K]</code> open palette  ·  <code>[g w]</code> go to work
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- =========== D3 EDITORIAL CRAFT =========== -->
+<article class="direction d3" id="d3">
+  <div class="d-head">
+    <div>
+      <span class="rank">Direction 03 · warmest</span>
+      <h3 class="name">Editorial Craft</h3>
+      <p class="thesis">Danilo is a design practitioner who writes. Anthropic meets rauno.me meets a hardcover book cover — serif display, cream-on-warm-black, long-form reading with embedded case images.</p>
+    </div>
+    <span class="badge">Signature · editorial</span>
+  </div>
+
+  <div class="specimen">
+    <div class="eyebrow-spec">Danilo Rojas — field notes, 2011 → 2026</div>
+    <h2>
+      Agentic Designer<br>
+      shipping <em>real</em> products.
+    </h2>
+    <div class="divider"></div>
+    <p class="subhead">
+      Fifteen years of delivery &mdash; enterprise clients, production SaaS, active consulting at Booz Allen Hamilton.
+      I keep the craft. Agents give me the leverage.
+    </p>
+    <div class="ctas">
+      <span class="pill">Read the cases →</span>
+      <span class="pill ghost" style="color:rgba(242,234,223,.6);border-color:rgba(242,234,223,.2)">danilorojas@hotmail.com</span>
+    </div>
+  </div>
+
+  <div class="attrs">
+    <div class="cell">
+      <span class="k">Reference mix</span>
+      <div class="v">
+        <a href="https://emilkowal.ski" target="_blank">emilkowal.ski</a> (inline demos) ·
+        <a href="https://rauno.me" target="_blank">rauno.me</a> (quiet density) ·
+        <a href="https://anthropic.com" target="_blank">anthropic.com</a> (cream + terracotta) ·
+        <a href="https://henry.codes" target="_blank">henry.codes</a> (literary voice) ·
+        <a href="https://huncwot.com" target="_blank">huncwot.com</a> (numbered monograph)
+      </div>
+    </div>
+    <div class="cell">
+      <span class="k">Palette</span>
+      <div class="palette-strip">
+        <div class="sw" style="background:#0B0906;color:#999">#0B0906</div>
+        <div class="sw" style="background:#1A1410;color:#998">#1A1410</div>
+        <div class="sw" style="background:#F2EADF;color:#3a2018">#F2EADF</div>
+        <div class="sw" style="background:#A89788;color:#2a1a10">#A89788</div>
+        <div class="sw" style="background:#CC785C;color:#3a1a0a">#CC785C</div>
+      </div>
+      <div class="v" style="font-size:12px;color:var(--ink-dim);margin-top:2px">Warm near-black with brown tint, cream text, Anthropic terracotta accent (replacing apricot).</div>
+    </div>
+    <div class="cell">
+      <span class="k">Typography</span>
+      <div class="v"><b>Fraunces 500 opsz 144</b> display (italic cut on accents) · <b>Inter 300</b> body · <b>JetBrains Mono 500</b> only in case metadata / dates. R7 T3 + T5 hybrid.</div>
+    </div>
+  </div>
+
+  <div class="tech-grid">
+    <div class="cell">
+      <span class="k">Hero pattern (R8)</span>
+      <div class="v"><b>Pattern 07 · Poster-sentence</b>. No product screenshot, no illustration. A serif sentence at 80px+ and a scroll cue. Mont-fort / David Whyte register.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Structure (8 sections)</span>
+      <div class="v">Intro → interleaved 15-yr timeline → case 01 (as chapter with inline widget) → case 02 → case 03 → case 04 → method colophon → contact mailto. <b>Editorial developer · Proposal B from R8.</b></div>
+    </div>
+    <div class="cell">
+      <span class="k">Motion tier (R6)</span>
+      <span class="tier-pill low">LOW · CSS + text-reveal</span>
+      <div class="v" style="margin-top:8px">Text-mask reveal on scroll, fade-ins, ambient grain overlay, copy-to-clipboard feedback chips. Zero shader theatrics.</div>
+    </div>
+  </div>
+
+  <div class="note-row">
+    <div class="cell">
+      <span class="k">Signature technique</span>
+      <div class="v"><b>Emil Kowalski inline-demo pattern</b>: each case study embeds ONE working widget that proves the claim (token diff slider for /te-skin, working mini-agent for EnRegla). The essay IS the case study; the widget IS the proof.</div>
+    </div>
+    <div class="cell">
+      <span class="k bad">Risk</span>
+      <div class="v">Reads "wellness startup" or "literary novelist" if the accent pastels drift. Terracotta + brown-black grounds it — but also requires re-typesetting all Phase 2 PDF artifacts to match. <b>Knock-on cost to skills sheet + CV composers is real.</b></div>
+    </div>
+  </div>
+
+  <div class="note-row" style="border-bottom:none">
+    <div class="cell">
+      <span class="k">Production cost</span>
+      <span class="cost-pill">3–5 weeks · solo</span>
+      <div class="v" style="margin-top:4px;font-size:12px;color:var(--ink-dim)">Landing itself is ~2 weeks; inline interactive widgets (one per case) push to 3–5. Phase 2 PDF re-typeset adds a further week.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Example H1 / subhead / CTA</span>
+      <div class="v">
+        <b>H1:</b> <i>"Agentic Designer shipping <em style="color:#CC785C">real</em> products."</i> <span style="color:var(--ink-dim);font-size:12px">(serif, italic on the accent word)</span><br>
+        <b>Subhead:</b> 15 yrs of delivery. Craft is mine; leverage is the agents'.<br>
+        <b>CTA:</b> [Read the cases →]  ·  [danilorojas@hotmail.com]
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- =========== D4 AGENTIC ATELIER =========== -->
+<article class="direction d4" id="d4">
+  <div class="d-head">
+    <div>
+      <span class="rank">Direction 04 · curatorial</span>
+      <h3 class="name">Agentic Atelier</h3>
+      <p class="thesis">Danilo is a curator of artifacts. Dark gallery, each case a framed object, bracket-nav like a museum catalog, cursor-scrubbed career timeline à la Getty. Numeric proof as wall labels.</p>
+    </div>
+    <span class="badge">Signature · gallery</span>
+  </div>
+
+  <div class="specimen">
+    <div class="eyebrow-spec" style="color:var(--cool)">[ INDEX · 2011 → 2026 · 04 ARTIFACTS ]</div>
+    <h2>
+      Agentic <span class="br">Designer</span> —<br>
+      an inventory of<br>
+      shipped things.
+    </h2>
+    <div class="bracket-nav">
+      <span>[<span class="b">01</span>] /te-skin <span style="color:var(--mute)">· 2024</span></span>
+      <span>[<span class="b">02</span>] /te-black <span style="color:var(--mute)">· 2025</span></span>
+      <span>[<span class="b">03</span>] EnRegla <span style="color:var(--mute)">· 2026</span></span>
+      <span>[<span class="b">04</span>] Life Update <span style="color:var(--mute)">· 2026</span></span>
+    </div>
+    <div class="artifact-strip">
+      <div class="artifact"><div class="yr">2024</div><div class="ttl">TE Skin · DS</div></div>
+      <div class="artifact featured"><div class="yr">2025</div><div class="ttl">TE Black · a11y</div></div>
+      <div class="artifact"><div class="yr">2026</div><div class="ttl">EnRegla · SaaS</div></div>
+      <div class="artifact"><div class="yr">2026</div><div class="ttl">Life Update</div></div>
+    </div>
+  </div>
+
+  <div class="attrs">
+    <div class="cell">
+      <span class="k">Reference mix</span>
+      <div class="v">
+        <a href="https://www.getty.edu/tracingart" target="_blank">getty.edu/tracingart</a> (scroll-scrub time) ·
+        <a href="https://inkfishnyc.com" target="_blank">inkfishnyc.com</a> ([01]–[17]) ·
+        <a href="https://www.thelinestudio.com" target="_blank">thelinestudio.com</a> (/ slash-nav) ·
+        <a href="https://www.robin-noguier.com" target="_blank">robin-noguier.com</a> (framed carousel) ·
+        <a href="https://unseen.studio" target="_blank">unseen.studio</a> (one serif, one mono)
+      </div>
+    </div>
+    <div class="cell">
+      <span class="k">Palette</span>
+      <div class="palette-strip">
+        <div class="sw" style="background:#05060a;color:#666">#05060A</div>
+        <div class="sw" style="background:#10131c;color:#666">#10131C</div>
+        <div class="sw" style="background:#e7e9f0;color:#222">#E7E9F0</div>
+        <div class="sw" style="background:#9b8cff;color:#1a1a2a">#9B8CFF</div>
+        <div class="sw" style="background:#FF8964;color:#3a1a0a">#FF8964</div>
+      </div>
+      <div class="v" style="font-size:12px;color:var(--ink-dim);margin-top:2px">Deeper OLED black, lilac for bracket-nav / timeline, apricot reserved for CTAs and "active" artifact.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Typography</span>
+      <div class="v"><b>Inter 800 condensed -0.04em</b> display (R7 T2) · <b>JetBrains Mono 500</b> for <code>[01]</code>–<code>[04]</code> labels and timeline metadata · <b>Inter 400</b> body.</div>
+    </div>
+  </div>
+
+  <div class="tech-grid">
+    <div class="cell">
+      <span class="k">Hero pattern (R8)</span>
+      <div class="v"><b>Pattern 02 manifesto</b> + a 4-up artifact grid visible above the fold. Bracket-nav chips replace breadcrumb. One artifact "featured" (glows).</div>
+    </div>
+    <div class="cell">
+      <span class="k">Structure (6 sections)</span>
+      <div class="v">Hero + bracket-nav → <b>cursor-scrubbed career timeline</b> (2011→2026, one artifact per checkpoint) → 4 framed cases (full-viewport each) → about → contact. Proposal A structure with C's spine.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Motion tier (R6)</span>
+      <span class="tier-pill med">MED · canvas + scroll-scrub</span>
+      <div class="v" style="margin-top:8px">GSAP ScrollTrigger pinning + cursor-scrub on timeline. One canvas-2D artifact-breathing effect on the featured case. No WebGL/R3F.</div>
+    </div>
+  </div>
+
+  <div class="note-row">
+    <div class="cell">
+      <span class="k">Signature technique</span>
+      <div class="v"><b>Cursor-scrubbed single-subject timeline</b> (R5 Getty TracingArt). One artifact pinned, scroll moves year metadata across the screen. Replaces the chronological CV block entirely and resolves the 2022–2026 narrative gap by showing the artifact <em>evolve</em>, not by apologizing.</div>
+    </div>
+    <div class="cell">
+      <span class="k bad">Risk</span>
+      <div class="v">Compressing 4 differentiated cases into timeline beats can flatten their distinctness (R8's verdict on Proposal C). Also: bracket-nav is a fresh 2024–26 move, but in 18 months it'll be the next thing "every awwwards site does."</div>
+    </div>
+  </div>
+
+  <div class="note-row" style="border-bottom:none">
+    <div class="cell">
+      <span class="k">Production cost</span>
+      <span class="cost-pill">2–3 weeks · solo</span>
+      <div class="v" style="margin-top:4px;font-size:12px;color:var(--ink-dim)">GSAP ScrollTrigger is the only new dep. Most time goes into authoring the 6 timeline beats (2011/2015/2018/2022/2024/2026) with real artifact images per beat.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Example H1 / subhead / CTA</span>
+      <div class="v">
+        <b>H1:</b> <i>"Agentic Designer — an inventory of shipped things."</i><br>
+        <b>Subhead:</b> 04 artifacts, 15 years, one method. Scrub to see it.<br>
+        <b>CTA:</b> [Scrub the archive ↓]  ·  <code>[04]</code> cases
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- =========== D5 AI PRODUCT-TOUR =========== -->
+<article class="direction d5" id="d5">
+  <div class="d-head">
+    <div>
+      <span class="rank">Direction 05 · meta-proof</span>
+      <h3 class="name">AI Product-Tour</h3>
+      <p class="thesis">Danilo's site IS the product demo. Cursor/Linear/Replicate hero pattern, but the "product" is dr-cv's own skills-sheet PDF + CV composer output. The landing sells the artifacts it ships.</p>
+    </div>
+    <span class="badge">Signature · meta</span>
+  </div>
+
+  <div class="specimen">
+    <div class="split">
+      <div>
+        <div class="eyebrow-spec" style="color:var(--ok)">// shipped by dr-cv · 5 PDFs · live</div>
+        <h2>
+          Run a CV like you<br>
+          run a <em>product</em>.
+        </h2>
+        <p class="subhead">The page you're reading generated five PDFs, one skills sheet, and a landing. I ship real products — agents give me the leverage. Click any artifact to download.</p>
+        <div class="ctas">
+          <span class="pill">Generate my CV ▸</span>
+          <span class="pill ghost">See all 5 outputs</span>
+        </div>
+      </div>
+      <div class="screenshot">
+        <div class="head">// CV · WARM · EN · page 1/1</div>
+        <div class="name-big">Danilo Rojas</div>
+        <div class="role">AGENTIC DESIGNER · PRODUCT ENGINEER</div>
+        <div class="rule"></div>
+        <div class="chunk"><b>TE SKIN · Booz Allen</b><br>Agent-consumable DS skill. 95.6 migration.</div>
+        <div class="chunk"><b>EnRegla</b><br>0→1.0 SaaS. 346 commits / 40 days.</div>
+        <div class="chunk"><b>Life Update Mobile</b><br>Gemini at runtime. Shipped.</div>
+        <div style="margin-top:6px">
+          <span class="chip">React</span><span class="chip">TS</span><span class="chip">Next</span><span class="chip">MCP</span><span class="chip">R3F</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="attrs">
+    <div class="cell">
+      <span class="k">Reference mix</span>
+      <div class="v">
+        <a href="https://cursor.com" target="_blank">cursor.com</a> (IDE screenshot hero) ·
+        <a href="https://linear.app" target="_blank">linear.app</a> (product mock) ·
+        <a href="https://replicate.com" target="_blank">replicate.com</a> ("run X with an API") ·
+        <a href="https://v0.app" target="_blank">v0.app</a> (prompt → artifact) ·
+        <a href="https://animejs.com" target="_blank">animejs.com</a> (docs-as-demo R5 T10)
+      </div>
+    </div>
+    <div class="cell">
+      <span class="k">Palette</span>
+      <div class="palette-strip">
+        <div class="sw" style="background:#070a08;color:#666">#070A08</div>
+        <div class="sw" style="background:#0d1410;color:#666">#0D1410</div>
+        <div class="sw" style="background:#f3f3f5;color:#333">#F3F3F5</div>
+        <div class="sw" style="background:#7ed9a1;color:#032">#7ED9A1</div>
+        <div class="sw" style="background:#FF8964;color:#3a1a0a">#FF8964</div>
+      </div>
+      <div class="v" style="font-size:12px;color:var(--ink-dim);margin-top:2px">Near-black with faint green tint (suggests "live/running"), ok-green for success states, apricot on PDF artifacts.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Typography</span>
+      <div class="v"><b>Inter 700 -0.035em</b> display (SaaS-native) · <b>Inter 400</b> body · <b>JetBrains Mono 500</b> for PDF filenames, version tags, ship logs.</div>
+    </div>
+  </div>
+
+  <div class="tech-grid">
+    <div class="cell">
+      <span class="k">Hero pattern (R8)</span>
+      <div class="v"><b>Pattern 01 · Product screenshot</b> — but the "product" is the real CV PDF rendered as a tilted preview card. Click → download. Pure SaaS-landing register.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Structure (6 sections)</span>
+      <div class="v">Hero w/ PDF preview → "5 artifacts" gallery (warm EN/ES, serious EN/ES, bairesdev EN) → "How the agents ship this" method → 4 case chips → about → contact. Each artifact clickable/downloadable.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Motion tier (R6)</span>
+      <span class="tier-pill low">LOW · CSS transforms</span>
+      <div class="v" style="margin-top:8px">PDF card tilt on hover, status dots pulse ("live"), typewriter on hero subhead, scroll-SVG "the agent walking" through method diagram. No WebGL.</div>
+    </div>
+  </div>
+
+  <div class="note-row">
+    <div class="cell">
+      <span class="k">Signature technique</span>
+      <div class="v"><b>Every page artifact is downloadable, versioned, and live.</b> The landing is a distribution surface for the 5 PDFs already emitted by Phase 2. "Docs-as-product-demo" (anime.js R5 T10) — the site proves the thesis by being <em>the direct output</em> of the thesis.</div>
+    </div>
+    <div class="cell">
+      <span class="k bad">Risk</span>
+      <div class="v">Too SaaS, too "tool" — may read as "I'm selling a CV generator" instead of "hire me." Also, a CV PDF is not as visually-seductive as Cursor's IDE (R8 caveat). Requires the PDFs themselves to be beautiful artifacts.</div>
+    </div>
+  </div>
+
+  <div class="note-row" style="border-bottom:none">
+    <div class="cell">
+      <span class="k">Production cost</span>
+      <span class="cost-pill">1–2 weeks · solo</span>
+      <div class="v" style="margin-top:4px;font-size:12px;color:var(--ink-dim)">Phase 2 already ships 5 PDFs. Work is mainly wiring them into the landing as first-class artifacts + writing the "how it was made" colophon section.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Example H1 / subhead / CTA</span>
+      <div class="v">
+        <b>H1:</b> <i>"Run a CV like you run a product."</i><br>
+        <b>Subhead:</b> This page generated 5 PDFs. I ship real products — agents give me the leverage.<br>
+        <b>CTA:</b> [Generate my CV ▸]  ·  [See all 5 outputs]
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- =========== D6 CHROMATIC CRAFT =========== -->
+<article class="direction d6" id="d6">
+  <div class="d-head">
+    <div>
+      <span class="rank">Direction 06 · one wow moment</span>
+      <h3 class="name">Chromatic Craft</h3>
+      <p class="thesis">Danilo pairs Huly restraint with one iridescent WebGL hero object. Proposal A's body, Raycast's hero cube, Lusion's signature material. The one "holy crap" moment in an otherwise quiet page.</p>
+    </div>
+    <span class="badge">Bold · one shader</span>
+  </div>
+
+  <div class="specimen">
+    <h2>
+      <span class="grad">Agentic Designer</span><br>
+      shipping real products —<br>
+      with one iridescent thing.
+    </h2>
+    <p class="subhead">Fifteen years shipping. 346 commits / 40 days. Active at Booz Allen Hamilton. Cursor rotates the object →</p>
+    <div class="ctas">
+      <span class="pill">See the work ↓</span>
+      <span class="pill ghost">Rotate the artifact</span>
+    </div>
+  </div>
+
+  <div class="attrs">
+    <div class="cell">
+      <span class="k">Reference mix</span>
+      <div class="v">
+        <a href="https://raycast.com" target="_blank">raycast.com</a> (single PBR cube) ·
+        <a href="https://lusion.co" target="_blank">lusion.co</a> (signature material) ·
+        <a href="https://huly.io" target="_blank">huly.io</a> (dark canvas body) ·
+        <a href="https://www.immersive-g.com" target="_blank">immersive-g.com</a> (cursor-rotated object) ·
+        <a href="https://14islands.com" target="_blank">14islands.com</a> (r3f-scroll-rig for graceful DOM)
+      </div>
+    </div>
+    <div class="cell">
+      <span class="k">Palette</span>
+      <div class="palette-strip">
+        <div class="sw" style="background:#070810;color:#888">#070810</div>
+        <div class="sw" style="background:#14151A;color:#888">#14151A</div>
+        <div class="sw" style="background:#F3F3F5;color:#333">#F3F3F5</div>
+        <div class="sw" style="background:#9B8CFF;color:#1a1a2a">iridescent</div>
+        <div class="sw" style="background:#FF8964;color:#3a1a0a">#FF8964</div>
+      </div>
+      <div class="v" style="font-size:12px;color:var(--ink-dim);margin-top:2px">Warm-Huly base + iridescent material (lilac/apricot/sky shifting) confined to ONE 3D object. Rest stays monochrome dark.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Typography</span>
+      <div class="v"><b>JetBrains Mono 700</b> display (same as D1) · <b>Inter 400</b> body · <b>JetBrains Mono 500 UPPER</b> labels. Type does not change; only one element introduces chroma.</div>
+    </div>
+  </div>
+
+  <div class="tech-grid">
+    <div class="cell">
+      <span class="k">Hero pattern (R8)</span>
+      <div class="v"><b>Pattern 02 manifesto</b> with a <b>Pattern 03 WebGL cameo</b>: a PBR-rendered artifact (stack of the 5 CV PDFs or a single skills-sheet object) sits to the side of the H1, cursor rotates it.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Structure (7 sections)</span>
+      <div class="v">Proposal A structure exactly (hero → marquee → work → method → about → testimonials → contact) — only the hero differs from D1. Object reappears as a tiny corner watermark below the fold.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Motion tier (R6)</span>
+      <span class="tier-pill med">MED · R3F · one scene</span>
+      <div class="v" style="margin-top:8px">R3F + drei Environment + MeshPhysicalMaterial (iridescence: 1). One glTF object. No postprocessing, no scroll-bound camera. <b>Scope creep would kill it.</b></div>
+    </div>
+  </div>
+
+  <div class="note-row">
+    <div class="cell">
+      <span class="k">Signature technique</span>
+      <div class="v"><b>One signature material, reused everywhere as brand</b> (R4 Lusion steal). The iridescent material also lands on the favicon, the CV PDF header (embedded as static PNG), and the avatar. The shader IS the logo. "Portfolio as product" (R4 Immersive Garden steal).</div>
+    </div>
+    <div class="cell">
+      <span class="k bad">Risk</span>
+      <div class="v">R6 HIGH-tier trap by a different name. A "medium" R3F integration still costs <b>3–5 weeks</b> of learning + iteration for a solo dev who hasn't shipped Three.js in production. One scope slip and it becomes the project. <b>Starves Phase 3 landing copy and case studies.</b></div>
+    </div>
+  </div>
+
+  <div class="note-row" style="border-bottom:none">
+    <div class="cell">
+      <span class="k">Production cost</span>
+      <span class="cost-pill">3–5 weeks · solo</span>
+      <div class="v" style="margin-top:4px;font-size:12px;color:var(--ink-dim)">Week 1: tutorials + material. Week 2: HDRI + glTF. Week 3: iridescence tuning. Weeks 4–5: mobile fallback + prefers-reduced-motion + perf. Add +1 week for modelling the artifact.</div>
+    </div>
+    <div class="cell">
+      <span class="k">Example H1 / subhead / CTA</span>
+      <div class="v">
+        <b>H1:</b> <i>"Agentic Designer shipping real products — with one iridescent thing."</i><br>
+        <b>Subhead:</b> The artifact rotates with your cursor. The rest of the page is quiet.<br>
+        <b>CTA:</b> [See the work ↓]  ·  [Rotate the artifact]
+      </div>
+    </div>
+  </div>
+</article>
+
+
+<!-- =========================== SECTION 2: COMPARISON MATRIX =========================== -->
+<h2 class="section"><span class="n">02</span>Comparison matrix <span class="tail">6 directions × 8 attributes</span></h2>
+<p class="section-intro">
+  Side-by-side so trade-offs are visible. "Fit for Agentic-Designer positioning" is scored 1–5 against dr-cv's specific brief: serio + cálido, dev-literate, portfolio-adjacent, artifact-shipping, honest about agent leverage.
+</p>
+
+<div class="matrix-wrap">
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Thesis</th>
+        <th>Palette gesture</th>
+        <th>Motion tier</th>
+        <th>Hero pattern</th>
+        <th>Signature move</th>
+        <th>Cost</th>
+        <th>Risk</th>
+        <th>Fit 1–5</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <td class="dir-cell"><span class="num">D1</span>Warm-Huly Refined</td>
+        <td>Danilo as the warmest AI-native personal brand</td>
+        <td><span class="swatch-inline" style="background:#FF8964"></span>apricot on near-black + bg-clip gradient in H1</td>
+        <td><span class="tier-pill low">LOW</span></td>
+        <td>P02 Manifesto + P05 live data strip</td>
+        <td>bg-clip apricot gradient inside H1 type</td>
+        <td class="cost-inline">~1 wk</td>
+        <td>"Too safe" · reads as huly.io-adjacent</td>
+        <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4</td>
+      </tr>
+
+      <tr>
+        <td class="dir-cell"><span class="num">D2</span>Terminal Agentic</td>
+        <td>Danilo as the designer who thinks like an engineer</td>
+        <td><span class="swatch-inline" style="background:#7ED9A1"></span>OLED + terminal green, apricot CTAs only</td>
+        <td><span class="tier-pill low">LOW</span></td>
+        <td>P04 Terminal + P05 live data</td>
+        <td>Functional ⌘K command palette as primary nav</td>
+        <td class="cost-inline">1–2 wks</td>
+        <td>Contradicts "Designer" label · alienates non-eng recruiters</td>
+        <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span> 3</td>
+      </tr>
+
+      <tr>
+        <td class="dir-cell"><span class="num">D3</span>Editorial Craft</td>
+        <td>Danilo as a design practitioner who writes</td>
+        <td><span class="swatch-inline" style="background:#CC785C"></span>terracotta + cream on brown-black (Anthropic)</td>
+        <td><span class="tier-pill low">LOW</span></td>
+        <td>P07 Poster-sentence (serif)</td>
+        <td>Emil-style inline interactive widget per case</td>
+        <td class="cost-inline">3–5 wks</td>
+        <td>Reads "literary" · Phase 2 PDF re-typeset knock-on</td>
+        <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4</td>
+      </tr>
+
+      <tr>
+        <td class="dir-cell"><span class="num">D4</span>Agentic Atelier</td>
+        <td>Danilo as curator of an inventory</td>
+        <td><span class="swatch-inline" style="background:#9B8CFF"></span>deep OLED + lilac timeline + apricot CTAs</td>
+        <td><span class="tier-pill med">MED</span></td>
+        <td>P02 + bracket-nav + 4-up artifact grid</td>
+        <td>Cursor-scrubbed single-subject career timeline (Getty)</td>
+        <td class="cost-inline">2–3 wks</td>
+        <td>Compresses 4 cases into beats · bracket-nav may age</td>
+        <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4</td>
+      </tr>
+
+      <tr>
+        <td class="dir-cell"><span class="num">D5</span>AI Product-Tour</td>
+        <td>Danilo's site IS the product demo — it ships real artifacts</td>
+        <td><span class="swatch-inline" style="background:#FF8964"></span>near-black + ok-green + apricot (SaaS-native)</td>
+        <td><span class="tier-pill low">LOW</span></td>
+        <td>P01 Product screenshot (PDF as hero)</td>
+        <td>Every artifact downloadable · docs-as-product (anime.js)</td>
+        <td class="cost-inline">1–2 wks</td>
+        <td>Reads "I sell a CV tool" not "hire me" · PDF beauty dependent</td>
+        <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5</td>
+      </tr>
+
+      <tr>
+        <td class="dir-cell"><span class="num">D6</span>Chromatic Craft</td>
+        <td>Danilo is quiet except for one iridescent move</td>
+        <td><span class="swatch-inline" style="background:#FF8964"></span>Warm-Huly + iridescent material in ONE object</td>
+        <td><span class="tier-pill med">MED</span></td>
+        <td>P02 manifesto + P03 WebGL cameo</td>
+        <td>One signature material reused as brand (logo, favicon, avatar)</td>
+        <td class="cost-inline">3–5 wks</td>
+        <td>R6 high-tier trap · scope creep kills Phase 3</td>
+        <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span> 3</td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+
+<!-- =========================== SECTION 3: THE DECISION QUESTION =========================== -->
+<h2 class="section"><span class="n">03</span>The decision question <span class="tail">to guide Round 10</span></h2>
+
+<div class="decision-box">
+  <div class="eyebrow">one question · three frames · six directions mapped</div>
+  <h3>Is dr-cv positioned primarily as<br>
+    <em>a product, a practitioner, or a signal?</em>
+  </h3>
+
+  <p class="q-intro">
+    Every one of the six directions commits to a different <b>answer</b> to that question — which is why they don't mix. Round 10's job is to pick one frame and bring the top three directions under it. Here is the mapping:
+  </p>
+
+  <div class="frames">
+
+    <!-- A: Product -->
+    <div class="frame">
+      <div class="letter">A</div>
+      <div class="lbl">THE PRODUCT FRAME</div>
+      <h4>Danilo ships artifacts</h4>
+      <p>The page is a distribution surface for real things: 5 PDFs, a skills sheet, a landing. The thesis is <b>proved by the output</b>, not described. SaaS-native register.</p>
+      <div class="dirs">
+        <div class="dir-ln"><span class="tag">D5</span><span class="ttl">AI Product-Tour (primary)</span></div>
+        <div class="dir-ln"><span class="tag">D1</span><span class="ttl">Warm-Huly (adjacent)</span></div>
+      </div>
+    </div>
+
+    <!-- B: Practitioner -->
+    <div class="frame">
+      <div class="letter">B</div>
+      <div class="lbl">THE PRACTITIONER FRAME</div>
+      <h4>Danilo is a design craftsman</h4>
+      <p>The page is a writer's document: long-form prose, inline demos, named clients, testimonials where the claim lives. The thesis is <b>proved by craft density</b>, not by volume.</p>
+      <div class="dirs">
+        <div class="dir-ln"><span class="tag">D3</span><span class="ttl">Editorial Craft (primary)</span></div>
+        <div class="dir-ln"><span class="tag">D4</span><span class="ttl">Agentic Atelier (curator adjacency)</span></div>
+      </div>
+    </div>
+
+    <!-- C: Signal -->
+    <div class="frame">
+      <div class="letter">C</div>
+      <div class="lbl">THE SIGNAL FRAME</div>
+      <h4>Danilo has a distinct POV</h4>
+      <p>The page is a worldview statement: the title "Agentic Designer" IS the argument; restraint or spectacle is the calling card. The thesis is <b>proved by aesthetic commitment</b>, not by artifacts.</p>
+      <div class="dirs">
+        <div class="dir-ln"><span class="tag">D2</span><span class="ttl">Terminal Agentic (eng POV)</span></div>
+        <div class="dir-ln"><span class="tag">D6</span><span class="ttl">Chromatic Craft (aesthetic POV)</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<footer>
+  <span>C:\dev\dr-cv\docs\references\visual-universe\round-09\index.html</span>
+  <span>round 09 / 10 · six directions shortlist · 2026-05-08</span>
+  <span>next · round 10 · final 3 convergence</span>
+</footer>
+
+</div>
+</body>
+</html>

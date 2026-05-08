@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Round 8 · Layout &amp; narrative structure · synthesis</title>
+<style>
+  :root{
+    --bg:#07080d;
+    --bg-2:#0b0d15;
+    --bg-card:#10131c;
+    --bg-soft:#0d1019;
+    --bg-deep:#05060a;
+    --line:#1d2030;
+    --line-soft:#161927;
+    --ink:#e7e9f0;
+    --ink-dim:#9aa0b4;
+    --mute:#5d6378;
+    --accent:#FF8964;
+    --accent-dim:#7a3f2d;
+    --accent-soft:rgba(255,137,100,.12);
+    --accent-line:rgba(255,137,100,.3);
+    --ok:#7ed9a1;
+    --warn:#f2c472;
+    --bad:#e47a7a;
+    --cool:#9b8cff;
+    --fresh:#7dc8ff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+  body{
+    font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    font-size:14.5px;line-height:1.55;letter-spacing:-.003em;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 500px at 80% -10%, rgba(155,140,255,.05), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, rgba(255,137,100,.04), transparent 60%);
+  }
+  code,.mono{font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:-.01em}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px dotted rgba(255,137,100,.35)}
+  a:hover{color:#fff;border-bottom-color:#fff}
+
+  .wrap{max-width:1240px;margin:0 auto;padding:56px 32px 140px}
+
+  /* header */
+  header.top{border-bottom:1px solid var(--line);padding-bottom:32px;margin-bottom:56px}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-size:44px;line-height:1.08;letter-spacing:-.025em;margin:0 0 14px;font-weight:700}
+  h1 .slash{color:var(--mute);font-weight:400;margin:0 6px}
+  .sub{color:var(--ink-dim);max-width:820px;margin:0;font-size:16px}
+  .meta-row{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--mute)}
+  .meta-row b{color:var(--ink-dim);font-weight:500}
+
+  h2.section{
+    font-size:26px;font-weight:600;letter-spacing:-.02em;
+    margin:88px 0 10px;padding-bottom:14px;border-bottom:1px solid var(--line);
+    display:flex;align-items:baseline;gap:14px;
+  }
+  h2.section .n{color:var(--mute);font-weight:400;font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.06em}
+  h2.section .tail{margin-left:auto;color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:.08em}
+  .section-intro{color:var(--ink-dim);margin:14px 0 28px;max-width:840px}
+
+  /* === Section 1: hero patterns === */
+  .heroes{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .hero{background:linear-gradient(180deg,var(--bg-card),var(--bg-2));border:1px solid var(--line);border-radius:12px;padding:22px 24px;position:relative;overflow:hidden}
+  .hero .badge{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+  .hero h3{margin:0 0 6px;font-size:17px;font-weight:600;letter-spacing:-.015em}
+  .hero p.sum{color:var(--ink-dim);font-size:13.5px;margin:0 0 14px;line-height:1.55}
+  .hero .mini{
+    background:#000;border:1px solid var(--line);border-radius:10px;
+    height:120px;margin:0 0 14px;position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  /* hero-mini variants */
+  .m-screenshot{background:linear-gradient(180deg,#0a0a0c 0%,#101116 100%)}
+  .m-screenshot::before{content:"";position:absolute;inset:18px 18px 18px 40%;background:#16171c;border:1px solid #22242e;border-radius:6px;box-shadow:0 4px 24px rgba(255,137,100,.08)}
+  .m-screenshot::after{content:"";position:absolute;left:18px;top:30%;width:32%;height:10px;background:#e5e5e7;border-radius:2px;box-shadow:0 16px 0 #444,0 32px 0 #333}
+  .m-manifesto{background:#0a0a0c}
+  .m-manifesto::before{content:"I ship real products.";position:absolute;top:30%;left:12%;right:12%;font-family:'Instrument Serif',Georgia,serif;font-size:22px;color:#f2eadf;letter-spacing:-.02em;line-height:1.1}
+  .m-manifesto::after{content:"—";position:absolute;bottom:22%;left:12%;color:var(--accent);font-size:14px}
+  .m-webgl{background:radial-gradient(circle at 30% 40%,#ff8964 0%,#7a3f2d 30%,#0a0a0c 70%)}
+  .m-webgl::before{content:"";position:absolute;inset:20% 30%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.4),transparent 70%);filter:blur(8px)}
+  .m-terminal{background:#0a0a0c;font-family:'JetBrains Mono',monospace;padding:14px 18px;display:block !important;color:#64ffda;font-size:13px;line-height:1.5}
+  .m-terminal::before{content:"> danilo@dr-cv ~ $";display:block;color:#666;font-size:11px;margin-bottom:6px}
+  .m-terminal::after{content:"hi, I ship agents_";display:block;color:#64ffda}
+  .m-live{background:#0a0a0c;padding:12px;display:flex !important;flex-direction:column;justify-content:center;gap:6px}
+  .m-live .row{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#aaa}
+  .m-live .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+  .m-live .bar{flex:1;height:4px;background:#222;border-radius:2px;overflow:hidden;position:relative}
+  .m-live .bar i{position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--accent),transparent);width:40%;animation:slide 2.4s linear infinite}
+  @keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
+  .m-gated{background:#0a0a0c}
+  .m-gated::before{content:"HOLD TO ENTER";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.3em;color:#fff;opacity:.7}
+  .m-gated::after{content:"";position:absolute;bottom:22px;left:22px;right:22px;height:2px;background:linear-gradient(90deg,var(--accent) 40%,#222 40%);border-radius:1px}
+  .m-poster{background:#0a0a0c;padding:18px;display:block !important}
+  .m-poster .big{font-family:Inter,sans-serif;font-weight:800;font-size:26px;line-height:.95;letter-spacing:-.03em;color:#fff;margin-bottom:auto}
+  .m-poster .cue{font-family:'JetBrains Mono',monospace;font-size:10px;color:#666;margin-top:14px;letter-spacing:.2em}
+
+  .hero dl{margin:0;padding:0;display:grid;grid-template-columns:90px 1fr;gap:6px 12px;font-size:12.5px}
+  .hero dt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;padding-top:2px}
+  .hero dd{margin:0;color:var(--ink-dim);line-height:1.5}
+  .hero dd b{color:var(--ink);font-weight:500}
+  .hero .fit{margin-top:12px;padding:10px 12px;background:var(--accent-soft);border-left:2px solid var(--accent);border-radius:0 6px 6px 0;font-size:12px;color:var(--ink);line-height:1.5}
+  .hero .fit b{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:3px}
+
+  /* === Section 2: section rhythms === */
+  .rhythms{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .rhythm{background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:24px 26px}
+  .rhythm h3{margin:0 0 4px;font-size:18px;font-weight:600;letter-spacing:-.015em}
+  .rhythm .tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+  .rhythm p.lede{color:var(--ink-dim);font-size:13.5px;margin:0 0 16px;line-height:1.55}
+
+  .scroll-map{display:flex;flex-direction:column;gap:4px;margin:14px 0;padding:10px;background:var(--bg-deep);border:1px solid var(--line-soft);border-radius:10px}
+  .scroll-map .seg{
+    position:relative;border-radius:6px;padding:8px 10px;font-size:11px;
+    font-family:'JetBrains Mono',monospace;letter-spacing:.02em;
+    display:flex;justify-content:space-between;align-items:center;gap:8px;
+  }
+  .scroll-map .seg .name{color:var(--ink)}
+  .scroll-map .seg .vh{color:var(--mute);font-size:10px}
+  .scroll-map .seg.dark{background:#0a0a0c;border:1px solid #1a1c26}
+  .scroll-map .seg.darker{background:#05060a;border:1px solid #141620}
+  .scroll-map .seg.light{background:#f3f3f5;color:#111;border:1px solid #d8d8dd}
+  .scroll-map .seg.light .name{color:#111}
+  .scroll-map .seg.light .vh{color:#666}
+  .scroll-map .seg.warm{background:linear-gradient(90deg,rgba(255,137,100,.18),rgba(255,137,100,.05));border:1px solid rgba(255,137,100,.3)}
+  .scroll-map .seg.warm .name{color:var(--accent)}
+  .scroll-map .seg.cream{background:#f2eadf;color:#1b1814;border:1px solid #d5c9b5}
+  .scroll-map .seg.cream .name{color:#1b1814}
+  .scroll-map .seg.cream .vh{color:#6a5a4a}
+
+  .rhythm .pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .rhythm .pros-cons .cell{padding:10px 12px;border-radius:8px;font-size:12px;line-height:1.5}
+  .rhythm .pros{background:rgba(126,217,161,.06);border-left:2px solid var(--ok);color:var(--ink-dim)}
+  .rhythm .cons{background:rgba(228,122,122,.06);border-left:2px solid var(--bad);color:var(--ink-dim)}
+  .rhythm .pros b, .rhythm .cons b{color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px}
+  .rhythm .pros b{color:var(--ok)}
+  .rhythm .cons b{color:var(--bad)}
+
+  /* === Section 3: copy narrative === */
+  .copy-patterns{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:28px}
+  .cp{background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:22px 26px;display:grid;grid-template-columns:220px 1fr;gap:22px;align-items:flex-start}
+  .cp .left{border-right:1px dashed var(--line);padding-right:22px}
+  .cp .left .tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+  .cp .left h3{margin:0 0 6px;font-size:17px;font-weight:600;letter-spacing:-.015em}
+  .cp .left p{color:var(--ink-dim);font-size:12.5px;margin:0;line-height:1.5}
+  .cp .left p b{color:var(--ink)}
+  .cp .left .src{margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--mute)}
+
+  .cp .right{display:flex;flex-direction:column;gap:10px}
+  .cp .ex{background:var(--bg-deep);border:1px solid var(--line-soft);border-radius:8px;padding:14px 16px}
+  .cp .ex .h1{font-family:Inter,sans-serif;font-weight:700;font-size:19px;letter-spacing:-.02em;color:#fff;margin:0 0 4px;line-height:1.15}
+  .cp .ex .h1 em{font-style:normal;color:var(--accent)}
+  .cp .ex.serif .h1{font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:22px;letter-spacing:-.01em}
+  .cp .ex.mono .h1{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:17px;letter-spacing:-.02em}
+  .cp .ex .sub{color:var(--ink-dim);font-size:13px;margin:0 0 8px;line-height:1.4}
+  .cp .ex .cta{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .cp .ex .cta .pill{font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:4px 10px;border-radius:999px;color:var(--accent);border:1px solid var(--accent-dim);background:var(--accent-soft);letter-spacing:.04em}
+  .cp .ex .cta .pill.ghost{color:var(--ink-dim);background:transparent;border-color:var(--line)}
+
+  /* === Section 4: proposals === */
+  .proposals{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px}
+  .prop{background:linear-gradient(180deg,var(--bg-card),var(--bg-2));border:1px solid var(--line);border-radius:14px;padding:24px 22px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+  .prop .head{margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--line)}
+  .prop .tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+  .prop h3{margin:0 0 6px;font-size:18px;font-weight:600;letter-spacing:-.015em}
+  .prop p.motto{color:var(--ink-dim);font-size:13px;margin:0;line-height:1.5}
+  .prop.A{border-top:3px solid var(--accent)}
+  .prop.B{border-top:3px solid var(--cool)}
+  .prop.C{border-top:3px solid var(--warn)}
+
+  /* scroll map timeline */
+  .timeline{position:relative;padding-left:20px;margin:8px 0 14px}
+  .timeline::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--accent),rgba(255,137,100,.15));border-radius:1px}
+  .prop.B .timeline::before{background:linear-gradient(180deg,var(--cool),rgba(155,140,255,.15))}
+  .prop.C .timeline::before{background:linear-gradient(180deg,var(--warn),rgba(242,196,114,.15))}
+  .tl-node{position:relative;margin-bottom:10px;padding:10px 12px;background:var(--bg-deep);border:1px solid var(--line-soft);border-radius:8px}
+  .tl-node::before{content:"";position:absolute;left:-18px;top:14px;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--bg-card)}
+  .prop.B .tl-node::before{background:var(--cool)}
+  .prop.C .tl-node::before{background:var(--warn)}
+  .tl-node .row1{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:4px}
+  .tl-node .n{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink);font-weight:500;letter-spacing:.02em}
+  .tl-node .vh{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mute);letter-spacing:.04em}
+  .tl-node .content{color:var(--ink-dim);font-size:11.5px;margin:2px 0;line-height:1.45}
+  .tl-node .content b{color:var(--ink)}
+  .tl-node .motion{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);margin-top:4px;letter-spacing:.03em}
+  .prop.B .tl-node .motion{color:var(--cool)}
+  .prop.C .tl-node .motion{color:var(--warn)}
+
+  .prop .footer{margin-top:auto;padding-top:14px;border-top:1px dashed var(--line);font-size:12px;color:var(--ink-dim);line-height:1.55}
+  .prop .footer b{color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px}
+  .prop .why-order{color:var(--ink);font-size:12px;margin-top:8px;padding:10px 12px;background:var(--accent-soft);border-left:2px solid var(--accent);border-radius:0 6px 6px 0;line-height:1.5}
+  .prop.B .why-order{background:rgba(155,140,255,.08);border-left-color:var(--cool)}
+  .prop.C .why-order{background:rgba(242,196,114,.08);border-left-color:var(--warn)}
+  .prop .why-order b{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:3px;color:var(--accent)}
+  .prop.B .why-order b{color:var(--cool)}
+  .prop.C .why-order b{color:var(--warn)}
+
+  /* === Section 5: transitions === */
+  .transitions{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .trans{background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+  .trans .head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px}
+  .trans .head h3{margin:0;font-size:16px;font-weight:600;letter-spacing:-.015em}
+  .trans .badge{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid var(--line)}
+  .trans.A .badge{color:var(--accent);border-color:var(--accent-dim);background:var(--accent-soft)}
+  .trans.B .badge{color:var(--cool);border-color:rgba(155,140,255,.3);background:rgba(155,140,255,.06)}
+  .trans.C .badge{color:var(--warn);border-color:rgba(242,196,114,.3);background:rgba(242,196,114,.06)}
+  .trans p.tech{color:var(--ink-dim);font-size:13px;line-height:1.6;margin:0 0 12px}
+  .trans p.tech b{color:var(--ink)}
+  .trans .demo{background:var(--bg-deep);border:1px solid var(--line-soft);border-radius:8px;padding:14px;position:relative;overflow:hidden}
+  .trans .demo .from,.trans .demo .to{padding:10px 12px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink);position:relative}
+  .trans .demo .arrow{text-align:center;margin:6px 0;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--accent)}
+  .trans.B .demo .arrow{color:var(--cool)}
+  .trans.C .demo .arrow{color:var(--warn)}
+  .trans.A .demo .from{background:#0a0a0c;border:1px solid #1a1c26}
+  .trans.A .demo .to{background:#f3f3f5;color:#111;border:1px solid #d8d8dd}
+  .trans.B .demo .from{background:#0a0a0c;border:1px solid #1a1c26}
+  .trans.B .demo .to{background:#0a0a0c;border:1px solid #1a1c26;padding-left:28px}
+  .trans.B .demo .to::before{content:"";position:absolute;left:10px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:var(--cool)}
+  .trans.C .demo{display:flex;gap:8px;align-items:center}
+  .trans.C .demo .obj{width:50px;height:50px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#7a3f2d);box-shadow:0 4px 16px rgba(255,137,100,.3);flex-shrink:0}
+  .trans.C .demo .ctx{flex:1;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-dim);line-height:1.5}
+  .trans.C .demo .ctx .yr{color:var(--warn)}
+
+  /* === Verdict === */
+  .verdict-box{
+    margin-top:72px;padding:32px 36px;
+    background:linear-gradient(165deg,#140f0c 0%,#0a0c14 65%);
+    border:1px solid var(--accent-line);border-radius:14px;
+  }
+  .verdict-box .eyebrow{margin-bottom:10px}
+  .verdict-box h2{margin:0 0 14px;font-size:26px;letter-spacing:-.015em;border:0;padding:0;font-weight:700}
+  .verdict-box h2 em{font-style:normal;color:var(--accent)}
+  .verdict-box p{color:var(--ink);margin:0 0 14px;font-size:15.5px;line-height:1.65}
+  .verdict-box p b{color:var(--accent)}
+  .verdict-box ul{margin:10px 0 0;padding-left:22px;color:var(--ink-dim);font-size:13.5px}
+  .verdict-box ul li{margin-bottom:6px;line-height:1.55}
+  .verdict-box ul li b{color:var(--ink);font-weight:500}
+  .verdict-box .final{margin-top:18px;padding-top:18px;border-top:1px dashed var(--line);color:var(--ink);font-size:14px;line-height:1.6}
+  .verdict-box .final b{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:6px}
+
+  footer{
+    margin-top:72px;padding-top:22px;border-top:1px solid var(--line);
+    color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+
+  @media (max-width:1000px){
+    .heroes,.rhythms,.transitions{grid-template-columns:1fr}
+    .proposals{grid-template-columns:1fr}
+    .cp{grid-template-columns:1fr}
+    .cp .left{border-right:none;border-bottom:1px dashed var(--line);padding-right:0;padding-bottom:14px}
+    h1{font-size:32px}
+    .wrap{padding:32px 18px 80px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================== HEADER ================== -->
+<header class="top">
+  <div class="eyebrow">dr-cv · visual universe · round 08 / 10</div>
+  <h1>Layout &amp; narrative structure <span class="slash">·</span> synthesis</h1>
+  <p class="sub">
+    Rounds 1–7 mined sites, techniques, palette, and type. Round 8 asks the structural question:
+    <b>how should dr-cv be sequenced as a scroll narrative?</b> What hero pattern opens the story,
+    what section rhythm carries the reader, what copy structure packages the thesis — and given
+    Danilo's actual content density (4 cases · 2 active clients · 15-year arc · method · testimonials · numeric proof),
+    which of three end-to-end proposals actually earns the ship.
+  </p>
+  <div class="meta-row">
+    <span><b>date</b> 2026-05-08</span>
+    <span><b>sources</b> R1–R7 + data/identity + positioning + skills + 4 cases</span>
+    <span><b>accent</b> <code>#FF8964</code></span>
+    <span><b>next</b> round 09</span>
+  </div>
+</header>
+
+<!-- ================== SECTION 1: HERO PATTERNS ================== -->
+<h2 class="section"><span class="n">01</span>Six hero patterns observed <span class="tail">across R1–R5</span></h2>
+<p class="section-intro">
+  Every hero is a first contract with the visitor. Below are the six distinct opening patterns the research universe
+  actually uses — plus a seventh that emerges from the overlap. Each card shows a sketched mini-hero, three real
+  exemplars, and a one-line verdict for dr-cv against its "serio + cálido, agentic-designer, not maximalist" brief.
+</p>
+
+<div class="heroes">
+
+  <article class="hero">
+    <div class="badge">Pattern 01 · product screenshot</div>
+    <h3>Product screenshot / IDE mock hero</h3>
+    <p class="sum">Real product UI floats next to a short declarative H1. The interface IS the proof — no illustration needed.</p>
+    <div class="mini m-screenshot"></div>
+    <dl>
+      <dt>exemplars</dt><dd><b>cursor.com</b> · <b>linear.app</b> · <b>replicate.com</b></dd>
+      <dt>works when</dt><dd>the product is unambiguously visual and already polished</dd>
+      <dt>fails when</dt><dd>screenshots are faked or you don't ship the product shown</dd>
+    </dl>
+    <div class="fit"><b>dr-cv fit</b>Possible. The skills-sheet PDF and CV PDF are real products — we could float a composited PDF preview as the "screenshot." Risk: a CV is not as visually-legible as an IDE.</div>
+  </article>
+
+  <article class="hero">
+    <div class="badge">Pattern 02 · manifesto H1</div>
+    <h3>Manifesto / editorial H1</h3>
+    <p class="sum">Hero is one sentence set large. No product, no illustration. The claim IS the hero, sometimes paired with a scroll cue only.</p>
+    <div class="mini m-manifesto"></div>
+    <dl>
+      <dt>exemplars</dt><dd><b>anthropic.com</b> · <b>huncwot.com</b> · <b>mont-fort.com</b></dd>
+      <dt>works when</dt><dd>the sentence can carry 84–120px without apology</dd>
+      <dt>fails when</dt><dd>the claim is vague or the voice is corporate-generic</dd>
+    </dl>
+    <div class="fit"><b>dr-cv fit</b>Native to our brief. Danilo's thesis <em>"I ship real products — and I ship the tools agents use to help me ship them"</em> is already a paradox line that wants to be set at 72–88px.</div>
+  </article>
+
+  <article class="hero">
+    <div class="badge">Pattern 03 · WebGL scene</div>
+    <h3>WebGL / 3D scene hero</h3>
+    <p class="sum">Full-bleed shader canvas, preloader with progress, cursor-reactive object. Maximalist signal of "we can do this."</p>
+    <div class="mini m-webgl"></div>
+    <dl>
+      <dt>exemplars</dt><dd><b>bruno-simon.com</b> · <b>lusion.co</b> · <b>activetheory.net</b></dd>
+      <dt>works when</dt><dd>WebGL IS the deliverable (3D studio, game, agency flex)</dd>
+      <dt>fails when</dt><dd>it reads as technical flex unrelated to the offer</dd>
+    </dl>
+    <div class="fit"><b>dr-cv fit</b>Skip as-is. R6 verdict is explicit: Low tier (CSS + canvas 2D) is enough. A full WebGL hero is 4–6 months solo — steals from the cases that actually sell.</div>
+  </article>
+
+  <article class="hero">
+    <div class="badge">Pattern 04 · terminal / minimalist</div>
+    <h3>Terminal / minimalist mono</h3>
+    <p class="sum">Tiny intro sentence, all mono, cursor caret. Zero decoration. "I write code; that's the whole point."</p>
+    <div class="mini m-terminal"></div>
+    <dl>
+      <dt>exemplars</dt><dd><b>brittanychiang.com</b> · <b>kprverse.com</b> · <b>rauno.me</b></dd>
+      <dt>works when</dt><dd>the audience is engineer-first and the body carries dense content</dd>
+      <dt>fails when</dt><dd>positioning claims "designer" — contradicts the terminal cosplay</dd>
+    </dl>
+    <div class="fit"><b>dr-cv fit</b>Partial. R7's T4 verdict stands: all-mono contradicts "Agentic <em>Designer</em>." Reserve terminal register for a /ship-log strip or /craft sub-page, not the hero.</div>
+  </article>
+
+  <article class="hero">
+    <div class="badge">Pattern 05 · live data</div>
+    <h3>Live-data hero</h3>
+    <p class="sum">Real-time signals — commits, now-playing, agent activity — ticker alongside the H1. The page dogfoods the claim.</p>
+    <div class="mini m-live">
+      <div class="row"><span class="dot"></span>346 commits · 40d</div>
+      <div class="row"><span>last deploy</span><span class="bar"><i></i></span><span>2h ago</span></div>
+      <div class="row" style="color:var(--accent)">agent · edit-component-tokens · running</div>
+    </div>
+    <dl>
+      <dt>exemplars</dt><dd><b>jhey.dev</b> (now-playing) · <b>paco.me</b> (/now) · <b>GitHub</b> contribution graph</dd>
+      <dt>works when</dt><dd>the real-time signal is pulled from an actual source</dd>
+      <dt>fails when</dt><dd>the ticker is faked — smelled instantly</dd>
+    </dl>
+    <div class="fit"><b>dr-cv fit</b>Strong secondary. Commits-in-40d, last-deploy, agent-activity pulled from the real GitHub repo is on-brand and cheap. Use as a strip below the H1, not the H1 itself.</div>
+  </article>
+
+  <article class="hero">
+    <div class="badge">Pattern 06 · gated entry</div>
+    <h3>Gated / hold-to-enter</h3>
+    <p class="sum">The hero demands a gesture (hold, drag, scroll-unlock) before the site proceeds. Friction as filter.</p>
+    <div class="mini m-gated"></div>
+    <dl>
+      <dt>exemplars</dt><dd><b>siena.film</b> · <b>zentry.com</b> (ritual-scroll) · <b>v0.app</b> (prompt gate, soft)</dd>
+      <dt>works when</dt><dd>the content behind the gate is genuinely curatorial</dd>
+      <dt>fails when</dt><dd>applied to commercial landings — reads as self-important</dd>
+    </dl>
+    <div class="fit"><b>dr-cv fit</b>Niche. Could gate the BAH case study specifically ("this wasn't for everybody"), but gating the landing itself is hostile to a hire-me pitch.</div>
+  </article>
+
+  <article class="hero">
+    <div class="badge">Pattern 07 · poster-sentence</div>
+    <h3>Poster-sentence hero (the 7th)</h3>
+    <p class="sum">One long sentence set at 120px covers the entire first screen. No CTA. No subhead. Just a scroll cue. The sentence IS the site's thesis.</p>
+    <div class="mini m-poster">
+      <div class="big">Design craft for a world of teams and agents.</div>
+      <div class="cue">↓ SCROLL</div>
+    </div>
+    <dl>
+      <dt>exemplars</dt><dd><b>mont-fort.com</b> · <b>zentry.com</b> · <b>oryzo.ai</b></dd>
+      <dt>works when</dt><dd>you can write one sentence that fully describes you</dd>
+      <dt>fails when</dt><dd>the sentence needs a subhead to land</dd>
+    </dl>
+    <div class="fit"><b>dr-cv fit</b>Very strong. Extension of Pattern 02 but with a single-sentence discipline R5 showed winning across commodities, film, and AI. The cleanest way to ship a hero in one week.</div>
+  </article>
+
+  <article class="hero" style="background:linear-gradient(135deg,rgba(255,137,100,.08),var(--bg-card));border-color:var(--accent-dim)">
+    <div class="badge" style="color:var(--accent)">synthesis</div>
+    <h3>dr-cv hero pick</h3>
+    <p class="sum" style="color:var(--ink)">
+      Manifesto H1 (Pattern 02) or Poster-sentence (Pattern 07), with a live-data strip (Pattern 05) pulled from
+      the real GitHub repo sitting underneath as the quiet proof. Avoid Patterns 03 (WebGL) and 06 (gated) for the landing itself.
+    </p>
+    <div class="fit" style="background:var(--bg-deep);border-left-color:var(--accent)">
+      <b>why the combo</b>
+      Pattern 02/07 carries the thesis with dignity; Pattern 05 gives the page a heartbeat that says "this is not a one-time landing — the agents are running right now."
+    </div>
+  </article>
+
+</div>
+
+<!-- ================== SECTION 2: SECTION RHYTHMS ================== -->
+<h2 class="section"><span class="n">02</span>Four section-rhythm archetypes <span class="tail">annotated scroll maps</span></h2>
+<p class="section-intro">
+  How do great landings pace light/dark bands, hero → proof → contact, or horizontal detours? Four rhythms
+  recur across the universe. Each has a legitimate use — and a failure mode — for a site with dr-cv's content density.
+</p>
+
+<div class="rhythms">
+
+  <!-- R1 -->
+  <div class="rhythm">
+    <div class="tag">Rhythm A · long-scroll product</div>
+    <h3>Dark/light band alternation</h3>
+    <p class="lede">The Huly / Linear / Vercel pattern. Dark hero → lighter band for trust (clients, testimonials) → dark for feature section → lighter for pricing/cta. Contrast creates chapter feel.</p>
+    <div class="scroll-map">
+      <div class="seg dark"><span class="name">Hero · manifesto H1</span><span class="vh">100vh</span></div>
+      <div class="seg dark"><span class="name">Logo marquee / live strip</span><span class="vh">20vh</span></div>
+      <div class="seg light"><span class="name">Proof band · numbers</span><span class="vh">60vh</span></div>
+      <div class="seg dark"><span class="name">Feature cards · method</span><span class="vh">90vh</span></div>
+      <div class="seg light"><span class="name">Testimonials · cream</span><span class="vh">70vh</span></div>
+      <div class="seg dark"><span class="name">CTA / footer</span><span class="vh">50vh</span></div>
+    </div>
+    <div class="pros-cons">
+      <div class="cell pros"><b>pros</b>Solved navigation for long content. Contrast creates rhythm. Accessible.</div>
+      <div class="cell cons"><b>cons</b>Requires shipping two theme variants of every component — 2× CSS maintenance. Our recommended palette (Warm Huly, dark-only) resists the light bands.</div>
+    </div>
+  </div>
+
+  <!-- R2 -->
+  <div class="rhythm">
+    <div class="tag">Rhythm B · case-study scroll</div>
+    <h3>Hero → case → case → case → contact</h3>
+    <p class="lede">The Brittany / Rauno / Robin Noguier pattern. No features, no pricing. Short hero; cases are the entire middle; contact is one line at the bottom. Portfolio-native.</p>
+    <div class="scroll-map">
+      <div class="seg dark"><span class="name">Hero · name + thesis</span><span class="vh">80vh</span></div>
+      <div class="seg dark"><span class="name">Live-data / proof strip</span><span class="vh">20vh</span></div>
+      <div class="seg dark"><span class="name">Case 01 · /te-skin</span><span class="vh">100vh</span></div>
+      <div class="seg dark"><span class="name">Case 02 · /te-black</span><span class="vh">100vh</span></div>
+      <div class="seg dark"><span class="name">Case 03 · EnRegla</span><span class="vh">100vh</span></div>
+      <div class="seg dark"><span class="name">Case 04 · Life Update</span><span class="vh">100vh</span></div>
+      <div class="seg warm"><span class="name">About · 15-yr timeline</span><span class="vh">70vh</span></div>
+      <div class="seg dark"><span class="name">Contact · mailto</span><span class="vh">40vh</span></div>
+    </div>
+    <div class="pros-cons">
+      <div class="cell pros"><b>pros</b>Fits a portfolio-first brief perfectly. Every case gets its own viewport. Matches dr-cv's 4-case inventory exactly.</div>
+      <div class="cell cons"><b>cons</b>About/timeline arrives late; first-time visitors may bounce before seeing the 15-year arc that explains the authority.</div>
+    </div>
+  </div>
+
+  <!-- R3 -->
+  <div class="rhythm">
+    <div class="tag">Rhythm C · tab SPA</div>
+    <h3>Tabbed single-page app (current dr-cv v1)</h3>
+    <p class="lede">One hero, then all sections collapsed behind tabs (Work / Method / About / Writing). The user picks the path. The Huly landing v1 already ships this.</p>
+    <div class="scroll-map">
+      <div class="seg dark"><span class="name">Hero · H1 + thesis</span><span class="vh">100vh</span></div>
+      <div class="seg warm"><span class="name">Tab nav · Work / Method / About / Writing</span><span class="vh">10vh</span></div>
+      <div class="seg dark"><span class="name">Active tab content · swap in place</span><span class="vh">~90vh</span></div>
+      <div class="seg dark"><span class="name">Footer · contact</span><span class="vh">30vh</span></div>
+    </div>
+    <div class="pros-cons">
+      <div class="cell pros"><b>pros</b>Dense content without long scroll. Interactive feel. Already exists in landing-huly v1 so zero new cost.</div>
+      <div class="cell cons"><b>cons</b>Kills narrative arc — no ordering enforced, no story. Tab content often under-read. Bad for SEO / share-a-link scenarios where a specific case should be the destination.</div>
+    </div>
+  </div>
+
+  <!-- R4 -->
+  <div class="rhythm">
+    <div class="tag">Rhythm D · horizontal gallery</div>
+    <h3>Horizontal-scroll detour</h3>
+    <p class="lede">Vertical scroll transitions into a horizontal pinned section (Robin Noguier's case carousel, Active Theory scene swap). Spectacle. Breaks reader autopilot.</p>
+    <div class="scroll-map">
+      <div class="seg dark"><span class="name">Hero</span><span class="vh">100vh</span></div>
+      <div class="seg warm"><span class="name">→→→ horizontal · 4 cases slide by →→→</span><span class="vh">300vh pinned</span></div>
+      <div class="seg dark"><span class="name">Method / about</span><span class="vh">80vh</span></div>
+      <div class="seg dark"><span class="name">Contact</span><span class="vh">40vh</span></div>
+    </div>
+    <div class="pros-cons">
+      <div class="cell pros"><b>pros</b>Memorable. Cases feel like a museum hallway. Good for a small number of curated cases (exactly what we have: 4).</div>
+      <div class="cell cons"><b>cons</b>R6 flags horizontal-pin as <b>over-used / a11y-hostile / mobile-broken</b>. Awwwards 2022–24 ran it to death. Skip.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================== SECTION 3: COPY NARRATIVE ================== -->
+<h2 class="section"><span class="n">03</span>Copy narrative patterns <span class="tail">H1 + subhead + proof + CTA</span></h2>
+<p class="section-intro">
+  Four cross-cut copy structures show up in the winners. Each packages the same 4 ingredients (H1, subhead, proof, CTA)
+  in a different order and voice. For each, one dr-cv instance is drafted in Danilo's actual voice using identity.yaml,
+  positioning.yaml, and skills.yaml — no invented data.
+</p>
+
+<div class="copy-patterns">
+
+  <!-- Pattern 1: agent + verb + outcome -->
+  <div class="cp">
+    <div class="left">
+      <div class="tag">Pattern A · agent + verb + outcome</div>
+      <h3>"Ship agents that…"</h3>
+      <p><b>Linear, LangChain, Inkeep.</b> Lead with a verb the reader wants. "Agent" sits in the object position, not the subject. Proof lives below as numeric chips. CTA is always imperative.</p>
+      <div class="src">R2 dominant pattern · 5/9 AI sites</div>
+    </div>
+    <div class="right">
+      <div class="ex">
+        <div class="h1">I ship products. <em>Agents give me the leverage.</em></div>
+        <div class="sub">15 years of delivery · active at Booz Allen Hamilton · SaaS live in production.</div>
+        <div class="cta">
+          <span class="pill">See the work ↓</span>
+          <span class="pill ghost">Download CV</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pattern 2: paradox line -->
+  <div class="cp">
+    <div class="left">
+      <div class="tag">Pattern B · paradox line</div>
+      <h3>"X and also not-X"</h3>
+      <p><b>Huncwot ("products AI can only dream of"), current dr-cv positioning.yaml.</b> The sentence sets up a tension that can only be resolved by clicking into the cases. The headline works as a hook because it's almost self-contradicting.</p>
+      <div class="src">R7 recommended H1 · Pattern B high-brand</div>
+    </div>
+    <div class="right">
+      <div class="ex serif">
+        <div class="h1">I ship real products — <em>and I ship the tools agents use to ship them.</em></div>
+        <div class="sub">Agentic Designer · Product Engineer · Quito · Open to work, remote global.</div>
+        <div class="cta">
+          <span class="pill">Read the cases</span>
+          <span class="pill ghost">danilorojas@hotmail.com</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pattern 3: numeric proof -->
+  <div class="cp">
+    <div class="left">
+      <div class="tag">Pattern C · numeric proof stack</div>
+      <h3>"15 years. 346 commits. 95.6."</h3>
+      <p><b>Terminal Industries tickers, GitHub graphs, Replicate model counts.</b> Four numbers do the entire job — no adjectives. The H1 is plural nouns, not a verb; proof replaces adjective-heavy writing.</p>
+      <div class="src">R5 T6 (counter-cycling numerals) · proofNumbers in positioning.yaml</div>
+    </div>
+    <div class="right">
+      <div class="ex mono">
+        <div class="h1">15+ years. <em>346 commits / 40 days.</em> 95.6 DS migration. 1.0 SaaS live.</div>
+        <div class="sub">Numbers are real; each clickable to the commit, the score, the pilot.</div>
+        <div class="cta">
+          <span class="pill">Open the skills sheet (PDF)</span>
+          <span class="pill ghost">github.com/mdanilorojas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pattern 4: minimalist terminal -->
+  <div class="cp">
+    <div class="left">
+      <div class="tag">Pattern D · minimalist terminal</div>
+      <h3>"hi, I'm ___"</h3>
+      <p><b>Brittany Chiang, ped.ro, rauno.me.</b> Lowercase, short, almost a chat intro. Proof moves entirely into the body. The hero doesn't try to sell — it just introduces.</p>
+      <div class="src">R3 dev-terminal archetype · restraint as brand</div>
+    </div>
+    <div class="right">
+      <div class="ex mono">
+        <div class="h1">hi, i'm danilo <em>— i design products agents ship with me.</em></div>
+        <div class="sub">15 years shipping. Currently building at Booz Allen Hamilton and EnRegla.</div>
+        <div class="cta">
+          <span class="pill">/work</span>
+          <span class="pill ghost">/contact</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================== SECTION 4: THREE PROPOSALS ================== -->
+<h2 class="section"><span class="n">04</span>Three structural proposals <span class="tail">end-to-end scroll maps</span></h2>
+<p class="section-intro">
+  Three candidate layouts for dr-cv, each a full scroll arc. Every node lists section name, rough height,
+  primary content, and the motion/interaction layer on that screen. A "why this order" footer anchors each
+  proposal to a narrative theory. One wins; see Section 6.
+</p>
+
+<div class="proposals">
+
+  <!-- PROPOSAL A -->
+  <div class="prop A">
+    <div class="head">
+      <div class="tag">Proposal A · evolution of landing-huly v1</div>
+      <h3>Restrained Huly</h3>
+      <p class="motto">Hero → marquee → work → method → about → contact. Long-scroll single page, warm dark palette throughout, inline case expanders.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-node">
+        <div class="row1"><span class="n">01 · Hero</span><span class="vh">100vh</span></div>
+        <div class="content">Manifesto H1 (paradox line, Pattern B). Subhead one line. <b>Live-data strip</b> below: commits/40d, last deploy, agent activity.</div>
+        <div class="motion">motion · bg-clip apricot gradient on H1 · canvas 2D light-beam</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">02 · Client marquee</span><span class="vh">18vh</span></div>
+        <div class="content">Infinite CSS marquee: <b>BOOZ ALLEN · MERCK · MONDELĒZ · BANCO PICHINCHA · BAIRESDEV</b>. Typographic, no logos.</div>
+        <div class="motion">motion · CSS translateX · respects prefers-reduced-motion</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">03 · Work</span><span class="vh">≈280vh</span></div>
+        <div class="content">4 case cards stacked. Each <b>expands inline</b> with hook + 3 bullets + testimonial + stack chips. No modal, no separate page.</div>
+        <div class="motion">motion · Framer Motion layout animation on expand · inline live widget on one featured card</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">04 · Method</span><span class="vh">90vh</span></div>
+        <div class="content">"Profile + agentic AI = combination." Three pillars: design · engineering · agents. Diagram (SVG) of agent-orchestration, not prose.</div>
+        <div class="motion">motion · scroll-driven SVG draw · the line IS the agent's path</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">05 · About · 15-yr timeline</span><span class="vh">110vh</span></div>
+        <div class="content">Career arc 2011→2026. Enterprise → consulting → solo-agent-multiplied. <b>Acknowledged 2022–2026 narrative gap</b> filled with "recursive learning" chapter.</div>
+        <div class="motion">motion · vertical timeline spy-scroll (Brittany pattern)</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">06 · Testimonials</span><span class="vh">60vh</span></div>
+        <div class="content">Jennifer Sheppard + Alexander Giraldez pulled up here as real, named, permission-granted quotes. Also appear inline inside /te-skin case.</div>
+        <div class="motion">motion · static, text-mask reveal on scroll</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">07 · Contact</span><span class="vh">50vh</span></div>
+        <div class="content">Large mailto + LinkedIn + GitHub. Warm CTA glow. "soon" note on danilorojas.design.</div>
+        <div class="motion">motion · conic-gradient aura around primary button</div>
+      </div>
+    </div>
+
+    <div class="why-order">
+      <b>why this order</b>
+      Thesis → proof-of-brand → proof-of-work → proof-of-method → proof-of-history → proof-of-people → action. Trust builds across 7 nodes; the reader earns each next level by scrolling. Matches R2's "8/9 AI sites long-scroll" consensus.
+    </div>
+
+    <div class="footer">
+      <b>rating</b>
+      Fit with content density: <b style="color:var(--ok)">strong</b> · signature risk: <b style="color:var(--warn)">medium</b> · implementation cost: <b style="color:var(--ok)">~1 week</b>
+    </div>
+  </div>
+
+  <!-- PROPOSAL B -->
+  <div class="prop B">
+    <div class="head">
+      <div class="tag">Proposal B · Brittany + Emil + Rauno inspired</div>
+      <h3>Editorial developer</h3>
+      <p class="motto">Single long page of interleaved prose. Terminal-minimal intro, cases as narrative chapters, method as colophon, contact as mailto. No marquee, no feature grid.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-node">
+        <div class="row1"><span class="n">01 · Intro</span><span class="vh">60vh</span></div>
+        <div class="content">Pattern D terminal-intro: "hi, i'm danilo." Tiny H1. Thesis as second paragraph. No CTA above fold — scroll cue only.</div>
+        <div class="motion">motion · blinking caret · fade-in on mount</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">02 · About · interleaved timeline</span><span class="vh">120vh</span></div>
+        <div class="content">Prose + inline year chips. 2011 AS/400 → 2018 figma-backstage → 2024 Booz Allen → 2026 EnRegla. Short paragraphs with data embedded.</div>
+        <div class="motion">motion · IntersectionObserver year-chip reveals</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">03 · Case 01 · /te-skin</span><span class="vh">140vh</span></div>
+        <div class="content">Full chapter. Problem → move → proof. <b>Jennifer Sheppard testimonial inline</b> mid-section. Inline working mini-agent widget (Emil pattern).</div>
+        <div class="motion">motion · inline interactive demo · copy-to-clipboard chip</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">04 · Case 02 · /te-black</span><span class="vh">130vh</span></div>
+        <div class="content">Dark-first DS with a11y audit in tokens. Alexander Giraldez quote inline. Token diff widget embedded.</div>
+        <div class="motion">motion · token diff slider · before/after</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">05 · Case 03 · EnRegla</span><span class="vh">130vh</span></div>
+        <div class="content">0→1.0-MVP in 40 days. 346 commits. Recursive DS migration 78.4→95.6. One live chart pulling real repo stats.</div>
+        <div class="motion">motion · animated number count-up · real repo fetch</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">06 · Case 04 · Life Update</span><span class="vh">120vh</span></div>
+        <div class="content">Mobile, Gemini API at runtime. Proof that agentic thinking extends to shipped client apps, not just tooling.</div>
+        <div class="motion">motion · phone-shaped frame with embedded demo</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">07 · Method · colophon</span><span class="vh">80vh</span></div>
+        <div class="content">"How this site was built" — lists the agents, the MCPs, the subagent orchestration. The page explains itself.</div>
+        <div class="motion">motion · static list · no motion needed</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">08 · Contact</span><span class="vh">40vh</span></div>
+        <div class="content">One mailto line. No form. No CTA glow. "write me." Paco-me aesthetic.</div>
+        <div class="motion">motion · none</div>
+      </div>
+    </div>
+
+    <div class="why-order">
+      <b>why this order</b>
+      Identity → history → cases-as-chapters → self-aware colophon. Trust builds through voice and density, not tempo changes. The "about before cases" inversion (vs Proposal A) is deliberate: editorial readers expect a narrator before the stories.
+    </div>
+
+    <div class="footer">
+      <b>rating</b>
+      Fit with content density: <b style="color:var(--ok)">very strong</b> · signature risk: <b style="color:var(--warn)">medium</b> — can read "too developer" · implementation cost: <b style="color:var(--warn)">~2–3 weeks</b> (inline widgets)
+    </div>
+  </div>
+
+  <!-- PROPOSAL C -->
+  <div class="prop C">
+    <div class="head">
+      <div class="tag">Proposal C · Getty + Siena inspired</div>
+      <h3>Scroll-scrubbed artifact</h3>
+      <p class="motto">Hero pins a single artifact (the skills-sheet PDF or a stack of the 5 CV variants). Scroll scrubs years 2011→2026. Metadata — clients, outcomes, numbers — reveals around the object. The page is one object and its biography.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-node">
+        <div class="row1"><span class="n">01 · Hero · artifact pin</span><span class="vh">80vh</span></div>
+        <div class="content">PBR-rendered stack of the <b>5 CV PDFs</b> on a plinth, or the skills-sheet as a physical object. Tiny label: "Danilo Rojas · artifact inventory · 2011→2026."</div>
+        <div class="motion">motion · R3F MeshPhysicalMaterial · cursor rotates · iridescence signature</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">02 · Scroll-scrub · 2011</span><span class="vh">80vh pinned</span></div>
+        <div class="content">Artifact stays; background metadata changes: "2011 · AS/400 · first enterprise client." Client name + outcome + small artifact thumbnail.</div>
+        <div class="motion">motion · ScrollTrigger pinned container · metadata fade-swap</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">03 · Scroll-scrub · 2015</span><span class="vh">80vh pinned</span></div>
+        <div class="content">"2015 · Mondelēz · first DS shipped in production." Artifact rotates to a different PDF. Small testimonial appears right column.</div>
+        <div class="motion">motion · camera orbits artifact on scroll</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">04 · Scroll-scrub · 2018</span><span class="vh">80vh pinned</span></div>
+        <div class="content">"2018 · Banco Pichincha · design ops lead." The figma-backstage repos era (now archived, per audit answers).</div>
+        <div class="motion">motion · artifact material shifts material tone</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">05 · Scroll-scrub · 2024</span><span class="vh">80vh pinned</span></div>
+        <div class="content">"2024 · Booz Allen Hamilton · /te-skin · /te-black · landing v4.5." Testimonials from Jennifer + Alexander slide in.</div>
+        <div class="motion">motion · Jennifer's quote swims into right rail</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">06 · Scroll-scrub · 2026</span><span class="vh">80vh pinned</span></div>
+        <div class="content">"2026 · EnRegla · 346 commits · paying pilots." Artifact settles into final composition: the skills-sheet + 4 CVs stacked.</div>
+        <div class="motion">motion · artifact unpins · physics settle · counter animation 0→346</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">07 · Release · cases grid</span><span class="vh">120vh</span></div>
+        <div class="content">After 6 timeline beats, the artifact releases; a traditional 4-case grid appears below for readers who want linear access. Artifact stays as faint watermark.</div>
+        <div class="motion">motion · artifact scales to corner watermark</div>
+      </div>
+      <div class="tl-node">
+        <div class="row1"><span class="n">08 · Method + contact</span><span class="vh">70vh</span></div>
+        <div class="content">Brief colophon + mailto. Short.</div>
+        <div class="motion">motion · static</div>
+      </div>
+    </div>
+
+    <div class="why-order">
+      <b>why this order</b>
+      The Getty TracingArt insight: <b>time is the spine</b>, one object is the constant. The 15-year arc becomes the literal scroll. The "narrative gap" 2022–2026 is resolved by showing the artifact evolve, not by writing an apology for it.
+    </div>
+
+    <div class="footer">
+      <b>rating</b>
+      Fit with content density: <b style="color:var(--warn)">medium</b> — compresses 4 cases into timeline beats · signature risk: <b style="color:var(--ok)">very high (good)</b> — nobody else is doing this · implementation cost: <b style="color:var(--bad)">~4–6 weeks</b> (R3F + scroll-rig + glTF modelling)
+    </div>
+  </div>
+
+</div>
+
+<!-- ================== SECTION 5: TRANSITIONS ================== -->
+<h2 class="section"><span class="n">05</span>Narrative glue · one transition per proposal <span class="tail">how sections connect</span></h2>
+<p class="section-intro">
+  A scroll map is only half the story — the <i>how</i> of getting from one section to the next is what makes the
+  page feel composed rather than assembled. One concrete transition recipe per proposal below.
+</p>
+
+<div class="transitions">
+
+  <!-- A -->
+  <div class="trans A">
+    <div class="head">
+      <h3>Proposal A · warm band handoff</h3>
+      <span class="badge">Restrained Huly</span>
+    </div>
+    <p class="tech">
+      Between <b>Hero → Client marquee → Work</b>: the hero's <b>apricot bg-clip gradient</b> slowly fades into a narrow warm band that IS the marquee. The marquee is not a new section — it's the hero's gradient compressed to 18vh.
+      When the user scrolls into Work, the warm band dissolves into pure <code>#090A0C</code>. Zero section boundary lines; color does the chaptering.
+    </p>
+    <div class="demo">
+      <div class="from">hero · #090A0C · H1 with apricot gradient</div>
+      <div class="arrow">↓ warm band (fades) ↓</div>
+      <div class="to">work · #f3f3f5 · inline case cards</div>
+    </div>
+  </div>
+
+  <!-- B -->
+  <div class="trans B">
+    <div class="head">
+      <h3>Proposal B · recurring character</h3>
+      <span class="badge">Editorial dev</span>
+    </div>
+    <p class="tech">
+      A <b>pinned object in the top-right corner</b> re-contextualizes every section. Above the fold it's Danilo's terminal prompt. In <b>About</b> it becomes a calendar ("now: 2026 q2"). In each <b>case</b> it becomes the client logo typographically set (Booz Allen · Mondelēz · EnRegla). The object is the same component;
+      only its content swaps. Gives the editorial scroll a <b>narrator signature</b>.
+    </p>
+    <div class="demo">
+      <div class="from">intro · &gt; danilo@dr-cv $_</div>
+      <div class="arrow">↓ same node, new text ↓</div>
+      <div class="to">case 01 · • BOOZ ALLEN · 2024–26</div>
+    </div>
+  </div>
+
+  <!-- C -->
+  <div class="trans C">
+    <div class="head">
+      <h3>Proposal C · pinned artifact</h3>
+      <span class="badge">Scroll-scrubbed</span>
+    </div>
+    <p class="tech">
+      The <b>artifact itself is the transition</b>. The 3D object stays pinned for 6 viewport lengths; only the <b>year metadata, client name, testimonial, and the artifact's own material</b> change per scroll increment.
+      The reader never leaves the hero — they travel <i>through</i> it. At the final beat (2026), the artifact unpins and scales down to the corner as a watermark for the rest of the page.
+    </p>
+    <div class="demo">
+      <div class="obj"></div>
+      <div class="ctx">
+        <span class="yr">→ 2015</span> · Mondelēz · first DS shipped<br>
+        <span class="yr">→ 2024</span> · Booz Allen · /te-skin v2.0<br>
+        <span class="yr">→ 2026</span> · EnRegla · 346 commits
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================== SECTION 6: VERDICT ================== -->
+<section class="verdict-box">
+  <div class="eyebrow">verdict for dr-cv</div>
+  <h2>Ship <em>Proposal A · Restrained Huly.</em></h2>
+  <p>
+    Proposal A is the only proposal that <b>absorbs Danilo's full content inventory</b> — 4 cases, 2 active clients, a 15-year timeline,
+    a method, two real testimonials, four numeric proofs — without compromising any of them. The restrained long-scroll gives each artifact
+    its own viewport, and the "Warm Huly" palette chosen in R7 is dark-only by design, which is actually a <b>feature</b> here: it removes the
+    light-band maintenance cost that Rhythm A normally imposes. A dark-throughout single-page scroll with warm accents carries the chapter
+    change through typography and spacing instead of theme swaps.
+  </p>
+  <p>
+    Proposal B (editorial developer) is a close second and the most stylistically <b>distinctive</b>, but it reframes the brief: cases become
+    essays, and the inline widgets (one per case) push implementation from ~1 week to 2–3 weeks. Worth keeping as a <b>v2 evolution</b> once
+    traffic and conversion data justify the investment — the Emil Kowalski inline-demo pattern is the single most stealable move in the whole universe,
+    but it belongs inside an already-shipped landing, not blocking the first one.
+  </p>
+  <p>
+    Proposal C (scroll-scrubbed artifact) is the one the Awwwards jury would notice — and the wrong bet for this phase. It requires <b>4–6 weeks of R3F plus glTF work</b>
+    (R6's HIGH-tier trap), it compresses 4 differentiated cases into timeline beats that flatten their distinctness, and it starves Phase 3 landing copy the moment
+    it starts. Keep the <b>"artifact as watermark"</b> idea in the back pocket for a v3 "portfolio as object" pivot — it's a strong brand move that just isn't ready for ship.
+  </p>
+
+  <ul>
+    <li><b>Density fit.</b> Danilo has 4 cases, 2 active clients, 15-year arc, method, 2 testimonials, 4 proof numbers — Proposal A gives each its own viewport without sacrificing any.</li>
+    <li><b>R6 verdict alignment.</b> "Tier LOW is enough" — A ships on CSS + canvas 2D + Framer Motion; B requires inline interactive widgets; C requires WebGL.</li>
+    <li><b>R7 palette alignment.</b> Warm Huly is dark-only by intent. A works natively with dark-throughout; Rhythm A's light-band requirement is obviated.</li>
+    <li><b>R5 winning techniques reused.</b> A still steals the best of R5: bracket/slash section headings, numeric proof strip, one-sentence poster-adjacent H1 — without the gating and scroll-scrubbing that drag implementation out.</li>
+    <li><b>Narrative arc.</b> Hero → marquee → work → method → about → contact is the Aristotelian three-act compressed into web grammar. Trust compounds; nothing is wasted.</li>
+  </ul>
+
+  <div class="final">
+    <b>ship plan</b>
+    Proposal A this phase · hold Emil-style inline widgets (from Proposal B) for v2 · hold scroll-scrubbed artifact (from Proposal C) for v3 once positioning is validated.
+    Round 8 thus resolves to: <b>warm dark long-scroll, manifesto H1 (Pattern B, paradox), Client marquee + live-data strip, inline-expanding cases, SVG-drawn method diagram, 15-year vertical timeline, inline testimonials, warm CTA glow at contact.</b>
+  </div>
+</section>
+
+<footer>
+  <span>C:\dev\dr-cv\docs\references\visual-universe\round-08\index.html</span>
+  <span>round 08 / 10 · layout + narrative synthesis · 2026-05-08</span>
+  <span>verdict · Proposal A (Restrained Huly)</span>
+</footer>
+
+</div>
+</body>
+</html>

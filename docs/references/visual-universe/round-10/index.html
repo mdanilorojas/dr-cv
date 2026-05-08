@@ -1,0 +1,1121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Round 10 · Final 3 · convergence · dr-cv visual universe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07080d;
+    --bg-2:#0b0d15;
+    --bg-card:#10131c;
+    --bg-deep:#05060a;
+    --line:#1d2030;
+    --line-soft:#161927;
+    --ink:#e7e9f0;
+    --ink-dim:#9aa0b4;
+    --mute:#5d6378;
+    --accent:#FF8964;
+    --accent-dim:#7a3f2d;
+    --accent-soft:rgba(255,137,100,.12);
+    --accent-ring:rgba(255,137,100,.38);
+    --ok:#7ed9a1;
+    --warn:#f2c472;
+    --bad:#e47a7a;
+    --cool:#9b8cff;
+    --cream:#F2EADF;
+    --terra:#CC785C;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    font-size:14.5px;line-height:1.55;letter-spacing:-.003em;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1200px 500px at 90% -10%, rgba(255,137,100,.06), transparent 62%),
+      radial-gradient(900px 500px at -10% 30%, rgba(155,140,255,.04), transparent 60%);
+  }
+  code,.mono{font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:-.01em}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px dotted rgba(255,137,100,.35)}
+  a:hover{color:#fff;border-bottom-color:#fff}
+
+  .wrap{max-width:1280px;margin:0 auto;padding:56px 32px 140px}
+
+  /* ==================== HEADER ==================== */
+  header.top{border-bottom:1px solid var(--line);padding-bottom:40px;margin-bottom:64px}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1.page{
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(36px,5.6vw,60px);line-height:1.02;letter-spacing:-.035em;margin:0 0 14px;font-weight:700;
+  }
+  h1.page .grad{
+    background:linear-gradient(135deg,#fff 28%,#FFD9C7 72%,var(--accent));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  h1.page .slash{color:var(--mute);font-weight:400;margin:0 10px}
+  .sub{color:var(--ink-dim);max-width:900px;margin:0;font-size:16.5px}
+  .meta-row{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--mute)}
+  .meta-row b{color:var(--ink-dim);font-weight:500}
+
+  h2.section{
+    font-size:28px;font-weight:600;letter-spacing:-.02em;
+    margin:104px 0 12px;padding-bottom:14px;border-bottom:1px solid var(--line);
+    display:flex;align-items:baseline;gap:14px;
+  }
+  h2.section .n{color:var(--mute);font-weight:400;font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.06em}
+  h2.section .tail{margin-left:auto;color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:.08em}
+  .section-intro{color:var(--ink-dim);margin:16px 0 36px;max-width:880px;font-size:15.5px}
+
+  /* ==================== FINAL CARD ==================== */
+  .final{
+    border:1px solid var(--line);border-radius:20px;overflow:hidden;
+    background:linear-gradient(180deg,var(--bg-card),var(--bg-2));
+    margin-bottom:56px;position:relative;
+  }
+  .final.f1{border-top:4px solid var(--accent)}
+  .final.f2{border-top:4px solid var(--ok)}
+  .final.f3{border-top:4px solid var(--terra)}
+
+  .final-head{padding:30px 38px 26px;border-bottom:1px solid var(--line-soft);display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center}
+  .final-head .rank{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:6px}
+  .final-head h3.name{font-size:30px;font-weight:700;letter-spacing:-.025em;margin:0;line-height:1.05}
+  .final-head .thesis{color:var(--ink-dim);font-size:14.5px;margin-top:8px;max-width:720px;line-height:1.55}
+  .final-head .verdict-badge{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;
+    padding:7px 14px;border-radius:999px;border:1px solid var(--line);
+  }
+  .final.f1 .verdict-badge{color:var(--accent);border-color:var(--accent-dim);background:var(--accent-soft)}
+  .final.f2 .verdict-badge{color:var(--ok);border-color:rgba(126,217,161,.3);background:rgba(126,217,161,.08)}
+  .final.f3 .verdict-badge{color:var(--terra);border-color:#7a3820;background:rgba(204,120,92,.08)}
+
+  .pitch{padding:22px 38px;border-bottom:1px solid var(--line-soft);color:var(--ink);font-size:15px;line-height:1.7;max-width:980px}
+  .pitch b{color:#fff}
+
+  /* ---------- HERO MOCKUP (live) ---------- */
+  .hero-mock{
+    position:relative;overflow:hidden;
+    min-height:620px;
+    padding:70px 60px 80px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  /* F1 Warm-Huly hero */
+  .f1 .hero-mock{background:#090A0C}
+  .f1 .hero-mock::before{
+    content:"";position:absolute;right:-180px;top:-180px;width:560px;height:560px;
+    background:radial-gradient(circle at 50% 50%,rgba(255,137,100,.22),transparent 65%);
+    filter:blur(50px);pointer-events:none;
+  }
+  .f1 .hero-mock::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.4;
+    background:
+      linear-gradient(transparent 98%, rgba(255,137,100,.08) 100%) 0 0/100% 44px,
+      linear-gradient(90deg, transparent 98%, rgba(255,137,100,.06) 100%) 0 0/44px 100%;
+    mask:linear-gradient(180deg,#000 20%,transparent 90%);
+  }
+  .f1 .hero-mock > *{position:relative;z-index:1}
+  .f1 .hero-mock .chrome{display:flex;gap:12px;align-items:center;margin-bottom:28px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--mute);letter-spacing:.08em}
+  .f1 .hero-mock .chrome .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(255,137,100,.12),0 0 10px var(--accent);animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{50%{box-shadow:0 0 0 7px rgba(255,137,100,.04),0 0 16px var(--accent)}}
+  .f1 .hero-mock h4.h1-big{
+    font-family:'JetBrains Mono',monospace;font-weight:700;
+    font-size:clamp(40px,6.8vw,78px);line-height:0.96;letter-spacing:-.045em;
+    margin:0 0 28px;color:#fff;max-width:980px;
+  }
+  .f1 .hero-mock h4.h1-big .grad{
+    background:linear-gradient(115deg,#fff 30%,#FFE1D1 68%,var(--accent));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .f1 .hero-mock h4.h1-big .acc{color:var(--accent)}
+  .f1 .hero-mock p.sub-big{color:rgba(255,255,255,.64);font-size:17.5px;max-width:640px;margin:0 0 30px;line-height:1.55}
+  .f1 .hero-mock .cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:38px}
+  .f1 .hero-mock .btn{font-family:'JetBrains Mono',monospace;font-size:13px;padding:11px 20px;border-radius:999px;letter-spacing:.04em;border:1px solid var(--accent-dim);background:var(--accent-soft);color:var(--accent);position:relative;overflow:hidden}
+  .f1 .hero-mock .btn.primary{background:var(--accent);color:#2a0f04;border-color:var(--accent);box-shadow:0 0 0 1px rgba(255,137,100,.4),0 14px 40px rgba(255,137,100,.28)}
+  .f1 .hero-mock .btn.ghost{color:var(--ink-dim);background:transparent;border-color:var(--line)}
+  .f1 .hero-mock .livestrip{
+    display:flex;gap:28px;flex-wrap:wrap;
+    padding:14px 18px;background:rgba(255,137,100,.04);
+    border:1px solid rgba(255,137,100,.12);border-radius:10px;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-dim);
+    max-width:760px;
+  }
+  .f1 .hero-mock .livestrip .item{display:flex;align-items:center;gap:8px}
+  .f1 .hero-mock .livestrip .item .v{color:#fff;font-weight:500}
+  .f1 .hero-mock .livestrip .item .g{color:var(--accent)}
+  .f1 .hero-mock .livestrip .bar{flex:1;max-width:90px;height:4px;background:#181820;border-radius:2px;position:relative;overflow:hidden}
+  .f1 .hero-mock .livestrip .bar i{position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--accent),transparent);width:38%;animation:slide 2.6s linear infinite}
+  @keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(260%)}}
+
+  /* F2 AI Product-Tour hero */
+  .f2 .hero-mock{background:#070a08;padding:56px 60px 70px}
+  .f2 .hero-mock::before{
+    content:"";position:absolute;right:0;top:0;width:50%;height:100%;
+    background:radial-gradient(circle at 30% 40%,rgba(126,217,161,.10),transparent 60%);pointer-events:none;
+  }
+  .f2 .hero-mock > *{position:relative;z-index:1}
+  .f2 .hero-mock .split{display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:center}
+  .f2 .hero-mock .eye{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ok);letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px;display:flex;gap:10px;align-items:center}
+  .f2 .hero-mock .eye .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);animation:pulse 2.1s ease-in-out infinite}
+  .f2 .hero-mock h4.h1-big{
+    font-family:'Inter',sans-serif;font-weight:700;
+    font-size:clamp(38px,5.8vw,64px);line-height:1.01;letter-spacing:-.035em;
+    margin:0 0 22px;color:#fff;
+  }
+  .f2 .hero-mock h4.h1-big em{font-style:normal;color:var(--ok)}
+  .f2 .hero-mock h4.h1-big .accent-word{color:var(--accent)}
+  .f2 .hero-mock p.sub-big{color:rgba(255,255,255,.66);font-size:17px;max-width:560px;margin:0 0 28px;line-height:1.55}
+  .f2 .hero-mock .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+  .f2 .hero-mock .btn{font-family:'JetBrains Mono',monospace;font-size:13px;padding:11px 20px;border-radius:999px;letter-spacing:.04em;border:1px solid rgba(126,217,161,.35);background:rgba(126,217,161,.1);color:var(--ok)}
+  .f2 .hero-mock .btn.primary{background:var(--accent);color:#2a0f04;border-color:var(--accent);box-shadow:0 0 0 1px rgba(255,137,100,.4),0 14px 40px rgba(255,137,100,.28)}
+  .f2 .hero-mock .artifact-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
+  .f2 .hero-mock .artifact-grid .ch{font-family:'JetBrains Mono',monospace;font-size:9.5px;padding:5px 7px;border:1px solid rgba(126,217,161,.25);border-radius:4px;color:var(--ok);letter-spacing:.05em;background:rgba(126,217,161,.04);text-align:center}
+  .f2 .hero-mock .pdf-stack{
+    position:relative;perspective:1400px;height:520px;width:100%;
+  }
+  .f2 .hero-mock .pdf{
+    position:absolute;inset:0;
+    border-radius:12px;overflow:hidden;
+    background:#fefdf8;
+    box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 0 1px #1a1b22;
+    transform:perspective(1200px) rotateY(-12deg) rotateX(3deg) translateX(20px);
+    padding:26px 24px;font-family:'Inter',sans-serif;
+  }
+  .f2 .hero-mock .pdf.p2{transform:perspective(1200px) rotateY(-12deg) rotateX(3deg) translate(-14px,24px);filter:brightness(.88);z-index:1}
+  .f2 .hero-mock .pdf.p3{transform:perspective(1200px) rotateY(-12deg) rotateX(3deg) translate(-48px,48px);filter:brightness(.72);z-index:0}
+  .f2 .hero-mock .pdf.p1{z-index:3}
+  .f2 .hero-mock .pdf .tag{font-family:'JetBrains Mono',monospace;font-size:9px;color:#888;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  .f2 .hero-mock .pdf .n-big{font-size:26px;font-weight:800;color:#090A0C;letter-spacing:-.02em;line-height:1}
+  .f2 .hero-mock .pdf .role{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);margin-top:4px;letter-spacing:.04em;text-transform:uppercase}
+  .f2 .hero-mock .pdf .rule{height:2px;background:var(--accent);width:48%;margin:14px 0}
+  .f2 .hero-mock .pdf .chk{font-size:10px;color:#555;line-height:1.4;margin-bottom:10px}
+  .f2 .hero-mock .pdf .chk b{color:#090A0C}
+  .f2 .hero-mock .pdf .chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--accent);border:1px solid var(--accent);padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0;letter-spacing:.02em}
+  .f2 .hero-mock .pdf .dl-btn{
+    position:absolute;right:16px;bottom:16px;
+    font-family:'JetBrains Mono',monospace;font-size:10px;color:#fff;
+    padding:5px 10px;border-radius:4px;background:var(--accent);letter-spacing:.05em;
+  }
+
+  /* F3 Editorial Craft hero */
+  .f3 .hero-mock{background:#0B0906;padding:80px 64px}
+  .f3 .hero-mock::before{
+    content:"";position:absolute;left:-60px;bottom:-30%;width:640px;height:640px;
+    background:radial-gradient(circle,rgba(204,120,92,.16),transparent 62%);filter:blur(60px);pointer-events:none;
+  }
+  .f3 .hero-mock::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;
+    background-image:radial-gradient(#fff 0.5px,transparent 0.5px);background-size:3px 3px;
+    mix-blend-mode:overlay;
+  }
+  .f3 .hero-mock > *{position:relative;z-index:1}
+  .f3 .hero-mock .eye{font-family:'Fraunces',serif;font-size:13.5px;font-style:italic;color:var(--terra);margin-bottom:22px;letter-spacing:.01em}
+  .f3 .hero-mock h4.h1-big{
+    font-family:'Fraunces','Instrument Serif',Georgia,serif;font-weight:500;
+    font-size:clamp(48px,8.2vw,96px);line-height:0.98;letter-spacing:-.022em;
+    margin:0 0 6px;color:var(--cream);font-variation-settings:"opsz" 144,"SOFT" 30;max-width:1040px;
+  }
+  .f3 .hero-mock h4.h1-big em{font-style:italic;color:var(--terra);font-weight:400}
+  .f3 .hero-mock .rule{width:52px;height:1px;background:var(--terra);margin:32px 0 22px;opacity:.7}
+  .f3 .hero-mock p.sub-big{
+    color:rgba(242,234,223,.72);font-family:'Inter',sans-serif;font-weight:300;font-size:18px;
+    max-width:620px;margin:0 0 34px;line-height:1.55;
+  }
+  .f3 .hero-mock .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:0;font-family:'Fraunces',serif;font-size:15px}
+  .f3 .hero-mock .btn{font-family:'Fraunces',serif;font-size:14.5px;font-style:italic;padding:10px 22px;border-radius:999px;border:1px solid rgba(204,120,92,.4);background:rgba(204,120,92,.08);color:var(--terra)}
+  .f3 .hero-mock .btn.primary{background:var(--terra);color:#1A0C06;border-color:var(--terra);font-style:normal;font-weight:500}
+  .f3 .hero-mock .pageno{position:absolute;right:60px;top:36px;font-family:'Fraunces',serif;font-style:italic;color:rgba(242,234,223,.32);font-size:14px}
+
+  /* ---------- PALETTE + TYPE ---------- */
+  .spec-row{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--line-soft)}
+  .spec-row > .cell{padding:24px 30px;border-right:1px solid var(--line-soft)}
+  .spec-row > .cell:last-child{border-right:none}
+  .spec-row .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;display:block}
+  .final.f2 .spec-row .k{color:var(--ok)}
+  .final.f3 .spec-row .k{color:var(--terra)}
+  .swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+  .swatches .sw{aspect-ratio:1;border-radius:6px;display:flex;align-items:flex-end;padding:6px 7px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.02em;border:1px solid rgba(255,255,255,.06)}
+  .swatches .sw .lbl{opacity:.7;display:block;font-size:8px;letter-spacing:.08em;text-transform:uppercase}
+  pre.codeblock{
+    background:var(--bg-deep);border:1px solid var(--line-soft);border-radius:8px;
+    padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6;
+    color:#d5d6dd;overflow-x:auto;margin:0;
+  }
+  pre.codeblock .c{color:var(--mute)}
+  pre.codeblock .p{color:var(--accent)}
+  pre.codeblock .v{color:#fff}
+  .final.f2 pre.codeblock .p{color:var(--ok)}
+  .final.f3 pre.codeblock .p{color:var(--terra)}
+
+  /* ---------- STRUCTURE / MOTION / SIGNATURE ---------- */
+  .attrs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-bottom:1px solid var(--line-soft)}
+  .attrs-grid > .cell{padding:22px 28px;border-right:1px solid var(--line-soft)}
+  .attrs-grid > .cell:last-child{border-right:none}
+  .attrs-grid .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;display:block}
+  .final.f2 .attrs-grid .k{color:var(--ok)}
+  .final.f3 .attrs-grid .k{color:var(--terra)}
+  .scroll-map{display:flex;flex-direction:column;gap:4px;margin-top:4px}
+  .scroll-map .seg{
+    display:flex;justify-content:space-between;align-items:center;gap:8px;
+    padding:7px 10px;border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:11px;
+    background:var(--bg-deep);border:1px solid var(--line-soft);color:var(--ink-dim);
+  }
+  .scroll-map .seg .name{color:var(--ink)}
+  .scroll-map .seg .vh{color:var(--mute);font-size:10px}
+  .motion-list{margin:0;padding:0;list-style:none}
+  .motion-list li{font-size:12.5px;color:var(--ink-dim);margin-bottom:6px;padding-left:18px;position:relative;line-height:1.5}
+  .motion-list li::before{content:"▸";position:absolute;left:0;top:0;color:var(--accent)}
+  .final.f2 .motion-list li::before{color:var(--ok)}
+  .final.f3 .motion-list li::before{color:var(--terra)}
+  .motion-list li b{color:#fff;font-weight:500}
+  .motion-list li .tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.04em;margin-left:4px}
+  .tier-pill{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;letter-spacing:.06em;margin-top:4px;background:rgba(126,217,161,.1);color:var(--ok);border:1px solid rgba(126,217,161,.3)}
+  .tier-pill.med{background:rgba(242,196,114,.1);color:var(--warn);border:1px solid rgba(242,196,114,.3)}
+  .sig-box{
+    padding:22px 30px;border-bottom:1px solid var(--line-soft);
+    background:linear-gradient(165deg,rgba(255,137,100,.04),transparent 60%);
+  }
+  .final.f2 .sig-box{background:linear-gradient(165deg,rgba(126,217,161,.04),transparent 60%)}
+  .final.f3 .sig-box{background:linear-gradient(165deg,rgba(204,120,92,.05),transparent 60%)}
+  .sig-box .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;display:block;color:var(--accent)}
+  .final.f2 .sig-box .k{color:var(--ok)}
+  .final.f3 .sig-box .k{color:var(--terra)}
+  .sig-box h4{margin:0 0 10px;font-size:18px;font-weight:600;letter-spacing:-.015em;color:#fff}
+  .sig-box p{color:var(--ink);font-size:13.5px;line-height:1.7;margin:0 0 10px}
+  .sig-box code{background:var(--bg-deep);border:1px solid var(--line-soft);padding:2px 6px;border-radius:4px;font-size:11.5px;color:var(--accent)}
+
+  /* ---------- COPY / PRODUCTION ---------- */
+  .copy-prod{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--line-soft)}
+  .copy-prod > .cell{padding:24px 30px;border-right:1px solid var(--line-soft)}
+  .copy-prod > .cell:last-child{border-right:none}
+  .copy-prod .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;display:block}
+  .final.f2 .copy-prod .k{color:var(--ok)}
+  .final.f3 .copy-prod .k{color:var(--terra)}
+  .copy-block{display:flex;flex-direction:column;gap:10px}
+  .copy-block .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mute);letter-spacing:.1em;text-transform:uppercase}
+  .copy-block .h1{font-family:'Inter',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.02em;line-height:1.18;color:#fff}
+  .final.f1 .copy-block .h1{font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:-.03em}
+  .final.f3 .copy-block .h1{font-family:'Fraunces',serif;font-weight:500;font-size:20px;letter-spacing:-.01em;color:var(--cream)}
+  .final.f3 .copy-block .h1 em{font-style:italic;color:var(--terra)}
+  .copy-block .h1 em{font-style:normal;color:var(--accent)}
+  .final.f2 .copy-block .h1 em{color:var(--ok)}
+  .copy-block .sub{color:var(--ink-dim);font-size:13px;line-height:1.5}
+  .copy-block .ctas{display:flex;gap:8px;flex-wrap:wrap}
+  .copy-block .ctas .p{font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:4px 10px;border-radius:999px;color:var(--accent);border:1px solid var(--accent-dim);background:var(--accent-soft);letter-spacing:.04em}
+  .copy-block .ctas .p.ghost{color:var(--ink-dim);background:transparent;border-color:var(--line)}
+  .h2-list{margin:8px 0 0;padding-left:20px;color:var(--ink-dim);font-size:12.5px;line-height:1.75}
+  .h2-list li b{color:#fff;font-weight:500;font-family:'Inter',sans-serif}
+  .final.f3 .h2-list li b{font-family:'Fraunces',serif;font-style:italic;color:var(--cream);font-weight:400}
+
+  .tasks{margin:0;padding:0;list-style:none;counter-reset:t}
+  .tasks li{counter-increment:t;padding:10px 0 10px 44px;border-bottom:1px dashed var(--line-soft);position:relative;font-size:13px;color:var(--ink-dim);line-height:1.55}
+  .tasks li:last-child{border-bottom:none}
+  .tasks li::before{
+    content:counter(t,decimal-leading-zero);position:absolute;left:0;top:10px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:.04em;
+    background:var(--accent-soft);padding:3px 8px;border-radius:4px;border:1px solid var(--accent-dim);
+  }
+  .final.f2 .tasks li::before{color:var(--ok);background:rgba(126,217,161,.08);border-color:rgba(126,217,161,.3)}
+  .final.f3 .tasks li::before{color:var(--terra);background:rgba(204,120,92,.08);border-color:#7a3820}
+  .tasks li b{color:#fff;font-weight:500}
+  .tasks li .est{float:right;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--mute);letter-spacing:.04em}
+
+  .budget-row{padding:22px 30px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;font-family:'JetBrains Mono',monospace;font-size:12px}
+  .budget-row .item{background:var(--bg-deep);border:1px solid var(--line-soft);border-radius:8px;padding:12px 14px}
+  .budget-row .item .k{font-size:10px;color:var(--mute);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;display:block}
+  .budget-row .item .v{color:#fff;font-size:14.5px;font-weight:500;letter-spacing:-.01em}
+  .budget-row .item .v b{color:var(--accent);font-weight:500}
+  .final.f2 .budget-row .item .v b{color:var(--ok)}
+  .final.f3 .budget-row .item .v b{color:var(--terra)}
+
+  /* ==================== DECISION ==================== */
+  .q-box{
+    margin-top:40px;padding:36px 40px;
+    background:linear-gradient(165deg,#140f0c,#0a0c14 70%);
+    border:1px solid var(--accent-ring);border-radius:16px;
+  }
+  .q-box .eyebrow{margin-bottom:12px}
+  .q-box h3{margin:0 0 18px;font-family:'JetBrains Mono',monospace;font-size:clamp(24px,3.2vw,32px);font-weight:700;letter-spacing:-.025em;line-height:1.18}
+  .q-box h3 em{font-style:normal;color:var(--accent)}
+  .q-box p.intro{color:var(--ink);font-size:16px;line-height:1.68;margin:0 0 12px}
+  .q-box p.intro b{color:#fff}
+  .q-box .frame{margin-top:20px;padding:18px 22px;background:var(--bg-deep);border:1px solid var(--line-soft);border-radius:10px;color:var(--ink-dim);font-size:13.5px;line-height:1.6}
+  .q-box .frame b{color:var(--accent)}
+
+  /* matrix */
+  .matrix-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--bg-2);margin-top:24px}
+  table.mx{border-collapse:collapse;width:100%;min-width:1000px;font-size:12.5px}
+  table.mx th, table.mx td{padding:14px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft)}
+  table.mx th{background:#0a0c14;color:var(--ink-dim);font-family:'JetBrains Mono',monospace;font-weight:500;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em}
+  table.mx td:first-child, table.mx th:first-child{position:sticky;left:0;background:#0a0c14;z-index:1;min-width:180px;color:#fff;font-weight:600}
+  table.mx td.dcell .num{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:11px;display:block;letter-spacing:.08em;margin-bottom:4px}
+  .fit-5{display:inline-flex;gap:3px}
+  .fit-5 i{width:10px;height:14px;border-radius:2px;background:var(--line);display:inline-block}
+  .fit-5 i.on{background:var(--accent)}
+  .fit-5.f2 i.on{background:var(--ok)}
+  .fit-5.f3 i.on{background:var(--terra)}
+
+  /* pick box */
+  .pick-box{
+    margin-top:40px;padding:40px 44px;
+    background:linear-gradient(165deg,#130e0b 0%,#0a0c14 60%);
+    border:1px solid var(--accent);border-radius:18px;
+    box-shadow:0 0 0 1px rgba(255,137,100,.1),0 40px 80px rgba(0,0,0,.35);
+    position:relative;overflow:hidden;
+  }
+  .pick-box::before{
+    content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;
+    background:radial-gradient(circle,rgba(255,137,100,.18),transparent 65%);filter:blur(40px);pointer-events:none;
+  }
+  .pick-box > *{position:relative;z-index:1}
+  .pick-box .eyebrow{color:var(--accent);margin-bottom:10px}
+  .pick-box h3{margin:0 0 14px;font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:700;letter-spacing:-.025em;line-height:1.12;color:#fff}
+  .pick-box h3 em{font-style:normal;color:var(--accent)}
+  .pick-box p{color:var(--ink);font-size:15.5px;line-height:1.72;margin:0 0 14px}
+  .pick-box p b{color:#fff;font-weight:500}
+  .pick-box p .k{color:var(--accent)}
+  .pick-box ul{margin:14px 0 0;padding-left:22px;color:var(--ink-dim);font-size:13.5px;line-height:1.7}
+  .pick-box ul li b{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em}
+  .pick-box .final-ship{margin-top:22px;padding-top:20px;border-top:1px dashed var(--accent-dim);color:#fff;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7}
+  .pick-box .final-ship b{color:var(--accent);display:block;font-size:10.5px;letter-spacing:.12em;margin-bottom:6px}
+
+  footer{
+    margin-top:88px;padding-top:22px;border-top:1px solid var(--line);
+    color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+
+  @media (max-width:1000px){
+    .spec-row, .attrs-grid, .copy-prod, .budget-row{grid-template-columns:1fr}
+    .spec-row > .cell, .attrs-grid > .cell, .copy-prod > .cell{border-right:none;border-bottom:1px solid var(--line-soft)}
+    .final-head{grid-template-columns:1fr}
+    .f2 .hero-mock .split{grid-template-columns:1fr}
+    .f2 .hero-mock .pdf-stack{height:380px;margin-top:24px}
+    h1.page{font-size:32px}
+    .wrap{padding:32px 18px 80px}
+    .hero-mock{padding:40px 26px 48px;min-height:auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- =============== HEADER =============== -->
+<header class="top">
+  <div class="eyebrow">dr-cv · visual universe · round 10 / 10 · final</div>
+  <h1 class="page"><span class="grad">Final 3 directions</span><span class="slash">·</span>convergence</h1>
+  <p class="sub">
+    Ten rounds of research funnel into three shippable specifications. Each direction below is resolved to palette hex, font stacks with full scale,
+    ordered section list, explicit motion recipes, one signature move, real draft copy from Danilo's data, an ordered production plan with hours,
+    and a bundle budget. The three finalists are not a menu — they are the three internally-coherent ways to answer the one strategic question posed in §04.
+  </p>
+  <div class="meta-row">
+    <span><b>date</b> 2026-05-08</span>
+    <span><b>accent</b> <code>#FF8964</code></span>
+    <span><b>decision</b> one strategic question · §04</span>
+    <span><b>winner</b> <code>Final-1 · Warm Huly Refined</code></span>
+  </div>
+</header>
+
+
+<!-- =============== FINAL 1: WARM HULY REFINED =============== -->
+<h2 class="section"><span class="n">01</span>Final-1 · Warm Huly Refined <span class="tail">safest · ship this weekend</span></h2>
+
+<article class="final f1">
+  <div class="final-head">
+    <div>
+      <span class="rank">Final 01 · WINNER · tier LOW</span>
+      <h3 class="name">Warm Huly Refined</h3>
+      <p class="thesis">The warmest, calmest AI-native personal brand in the category. Huly design grammar, extended with Danilo's voice and live dogfooding — mono display, apricot accent, no gimmicks.</p>
+    </div>
+    <span class="verdict-badge">ship · week 1</span>
+  </div>
+  <div class="pitch">
+    Danilo's landing page reads like a refined version of the tool-company landings he already ships against
+    (Huly, Linear, Vercel, Cursor) — but warmer, quieter, and honest about the leverage. The hero is a manifesto H1 set in
+    JetBrains Mono at 78px with a warm apricot bg-clip gradient, paired with a <b>live-data strip</b> pulled from the real GitHub
+    repo (commits/40d, last deploy, agent activity). The rest of the page is a seven-section long-scroll — Proposal A verbatim from R8 —
+    in near-black with apricot accents. <b>Every decision the research made already points at this direction.</b>
+  </div>
+
+  <!-- HERO MOCKUP -->
+  <div class="hero-mock">
+    <div class="chrome"><span class="dot"></span><span>danilorojas.design · live</span></div>
+    <h4 class="h1-big">
+      <span class="grad">Danilo Rojas</span> — <span class="acc">Agentic Designer</span><br>
+      shipping real products.
+    </h4>
+    <p class="sub-big">I keep the craft; agents give me the leverage. Fifteen years of delivery · active at Booz Allen Hamilton · SaaS live in production.</p>
+    <div class="cta-row">
+      <span class="btn primary">See the work ↓</span>
+      <span class="btn">Download skills sheet (PDF)</span>
+      <span class="btn ghost">danilorojas@hotmail.com</span>
+    </div>
+    <div class="livestrip">
+      <div class="item"><span class="g">●</span> <span>commits / 40d</span> <b class="v">346</b></div>
+      <div class="item"><span>last deploy</span><span class="bar"><i></i></span><b class="v">2h ago</b></div>
+      <div class="item"><span class="g">agent</span> <span>edit-component-tokens</span> <b class="v">running</b></div>
+    </div>
+  </div>
+
+  <!-- PALETTE + TYPE -->
+  <div class="spec-row">
+    <div class="cell">
+      <span class="k">Palette (exact · 8 tokens)</span>
+      <div class="swatches">
+        <div class="sw" style="background:#090A0C;color:#777"><span class="lbl">--bg-primary</span>#090A0C</div>
+        <div class="sw" style="background:#14151A;color:#888"><span class="lbl">--bg-alt</span>#14151A</div>
+        <div class="sw" style="background:#F3F3F5;color:#333"><span class="lbl">--text</span>#F3F3F5</div>
+        <div class="sw" style="background:#9AA0B4;color:#111"><span class="lbl">--text-muted</span>#9AA0B4</div>
+        <div class="sw" style="background:#C8CBD6;color:#111"><span class="lbl">--text-body</span>#C8CBD6</div>
+        <div class="sw" style="background:#FF8964;color:#3a1a0a"><span class="lbl">--accent</span>#FF8964</div>
+        <div class="sw" style="background:rgba(255,137,100,.12);color:#FF8964;border:1px solid rgba(255,137,100,.3)"><span class="lbl">--accent-soft</span>rgba 12%</div>
+        <div class="sw" style="background:rgba(255,137,100,.38);color:#2a0f04;border:1px solid var(--accent)"><span class="lbl">--accent-ring</span>rgba 38%</div>
+      </div>
+<pre class="codeblock"><span class="c">/* dr-cv · palette · final-1 */</span>
+:root{
+  <span class="p">--bg-primary</span>: <span class="v">#090A0C</span>;  <span class="c">/* near-black warm */</span>
+  <span class="p">--bg-alt</span>:     <span class="v">#14151A</span>;  <span class="c">/* section band */</span>
+  <span class="p">--text</span>:        <span class="v">#F3F3F5</span>;
+  <span class="p">--text-muted</span>: <span class="v">#9AA0B4</span>;
+  <span class="p">--text-body</span>:  <span class="v">#C8CBD6</span>;
+  <span class="p">--accent</span>:      <span class="v">#FF8964</span>;  <span class="c">/* warm apricot */</span>
+  <span class="p">--accent-soft</span>: <span class="v">rgba(255,137,100,.12)</span>;
+  <span class="p">--accent-ring</span>: <span class="v">rgba(255,137,100,.38)</span>;
+}</pre>
+    </div>
+    <div class="cell">
+      <span class="k">Typography (exact · 3 stacks + scale)</span>
+<pre class="codeblock"><span class="c">/* fonts */</span>
+<span class="p">--ff-display</span>: <span class="v">'JetBrains Mono'</span>, ui-monospace, monospace;
+<span class="p">--ff-body</span>:    <span class="v">'Inter'</span>, -apple-system, system-ui, sans-serif;
+<span class="p">--ff-mono</span>:    <span class="v">'JetBrains Mono'</span>, ui-monospace, monospace;
+
+<span class="c">/* scale */</span>
+<span class="p">--fs-h1</span>:    <span class="v">clamp(40px, 6.8vw, 78px)</span>;  <span class="c">/* display 700 */</span>
+<span class="p">--fs-h2</span>:    <span class="v">clamp(28px, 3.6vw, 44px)</span>;  <span class="c">/* display 700 */</span>
+<span class="p">--fs-body</span>:  <span class="v">16.5px</span>;                   <span class="c">/* inter 400 */</span>
+<span class="p">--fs-micro</span>: <span class="v">11.5px</span>;                   <span class="c">/* mono 500 UPPER */</span>
+
+<span class="p">--lh-h1</span>:    <span class="v">0.96</span>;
+<span class="p">--lh-body</span>:  <span class="v">1.55</span>;
+<span class="p">--ls-h1</span>:    <span class="v">-0.045em</span>;
+<span class="p">--ls-micro</span>: <span class="v">0.12em</span>;       <span class="c">/* UPPER eyebrows */</span></pre>
+    </div>
+  </div>
+
+  <!-- STRUCTURE / MOTION / TIER -->
+  <div class="attrs-grid">
+    <div class="cell">
+      <span class="k">Structure · 7 sections</span>
+      <div class="scroll-map">
+        <div class="seg"><span class="name">01 · Hero · manifesto H1 + livestrip</span><span class="vh">100vh</span></div>
+        <div class="seg"><span class="name">02 · Client marquee (typographic)</span><span class="vh">18vh</span></div>
+        <div class="seg"><span class="name">03 · Work · 4 inline-expanding cases</span><span class="vh">≈280vh</span></div>
+        <div class="seg"><span class="name">04 · Method · SVG agent-flow diagram</span><span class="vh">90vh</span></div>
+        <div class="seg"><span class="name">05 · About · 15-yr vertical timeline</span><span class="vh">110vh</span></div>
+        <div class="seg"><span class="name">06 · Testimonials · Jennifer + Alexander</span><span class="vh">60vh</span></div>
+        <div class="seg"><span class="name">07 · Contact · warm CTA aura</span><span class="vh">50vh</span></div>
+      </div>
+    </div>
+    <div class="cell">
+      <span class="k">Motion spec · tier LOW</span>
+      <span class="tier-pill">LOW · CSS + canvas 2D</span>
+      <ul class="motion-list" style="margin-top:10px">
+        <li><b>Live-dot pulse</b> · 2.4s ease-in-out infinite<span class="tag">· CSS</span></li>
+        <li><b>H1 bg-clip gradient</b> · static<span class="tag">· CSS</span></li>
+        <li><b>Livestrip bar slide</b> · 2.6s linear infinite<span class="tag">· CSS</span></li>
+        <li><b>Client marquee</b> · 38s linear infinite, paused on reduced-motion<span class="tag">· CSS translateX</span></li>
+        <li><b>Inline case expand</b> · Framer Motion layout · 320ms cubic-bezier<span class="tag">· FM</span></li>
+        <li><b>SVG method-flow draw</b> · path stroke-dasharray on intersection<span class="tag">· CSS + IO</span></li>
+        <li><b>Timeline spy-scroll</b> · IntersectionObserver · 12% rootMargin<span class="tag">· JS</span></li>
+        <li><b>CTA radial aura</b> · conic-gradient, cursor-follow radial<span class="tag">· CSS vars + JS</span></li>
+        <li><b>Section fade-in</b> · IO 12%, 16px y-translate, 400ms<span class="tag">· CSS + IO</span></li>
+      </ul>
+    </div>
+    <div class="cell">
+      <span class="k">Bundle budget</span>
+      <ul class="motion-list" style="margin-top:10px">
+        <li><b>HTML + inlined CSS</b> · <span style="color:#fff">~48 KB / lang</span></li>
+        <li><b>Fonts</b> · self-hosted subset, 2 weights JetBrains Mono + Inter · <span style="color:#fff">~36 KB woff2 total</span></li>
+        <li><b>JS gzipped</b> · Framer Motion chunk-split + IO polyfill · <span style="color:#fff">~88 KB gz</span></li>
+        <li><b>Total per-language</b> · <span style="color:var(--accent);font-weight:500">≈ 172 KB gz</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SIGNATURE MOVE -->
+  <div class="sig-box">
+    <span class="k">Signature move · one technique known for it</span>
+    <h4>Warm apricot bg-clip gradient in the H1, echoed ONLY in a canvas-2D light-beam behind the live-dot.</h4>
+    <p>
+      One color decision, surgically placed twice. The H1 type uses <code>-webkit-background-clip:text</code> with a 115deg linear gradient from <code>#fff</code> through <code>#FFE1D1</code> to <code>#FF8964</code>.
+      Directly below the live-dot in the hero strip, a canvas-2D scene renders a slow-pulsing soft radial (~1.3 KB gz, refs <code>huly-shader-research.md</code> effect #1) that paints the same gradient family as a glow.
+      The rest of the page is monochrome dark. No other surface introduces the gradient; the restraint is the brand.
+    </p>
+    <p><b style="color:var(--accent)">Implementation sketch</b> · Pure CSS for the type; 40-line canvas 2D for the glow (no three.js, no WebGL). The glow auto-disables on <code>prefers-reduced-motion</code>.</p>
+  </div>
+
+  <!-- COPY + PRODUCTION -->
+  <div class="copy-prod">
+    <div class="cell">
+      <span class="k">Copy draft · Danilo's data</span>
+      <div class="copy-block">
+        <span class="lbl">H1</span>
+        <div class="h1">Danilo Rojas — <em>Agentic Designer</em> shipping real products.</div>
+        <span class="lbl" style="margin-top:8px">Subhead</span>
+        <div class="sub">I keep the craft; agents give me the leverage. Fifteen years of delivery · active at Booz Allen Hamilton · SaaS live in production.</div>
+        <span class="lbl" style="margin-top:8px">CTA primary / secondary</span>
+        <div class="ctas">
+          <span class="p">See the work ↓</span>
+          <span class="p ghost">Download skills sheet (PDF)</span>
+        </div>
+        <span class="lbl" style="margin-top:8px">Section headings (H2)</span>
+        <ul class="h2-list">
+          <li><b>Work</b> — Four things I shipped in the last 24 months.</li>
+          <li><b>Method</b> — Profile + agentic AI = combination.</li>
+          <li><b>About</b> — Fifteen years, one long-scroll.</li>
+          <li><b>Contact</b> — Write me. Remote global.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cell">
+      <span class="k">Production plan · ordered</span>
+      <ol class="tasks">
+        <li><b>Fork <code>generators/templates/huly-landing/</code></b> into a new <code>warm-huly-refined/</code> variant; copy existing token system. <span class="est">2 h</span></li>
+        <li><b>Wire the 8 palette tokens + typography scale</b> into <code>design-system/tokens-huly.css</code>; subset self-host JetBrains Mono + Inter. <span class="est">3 h</span></li>
+        <li><b>Rewrite the hero template</b> with the H1 bg-clip gradient + live-dot + CTA row. Add canvas-2D glow as an enhancement module. <span class="est">5 h</span></li>
+        <li><b>Build the live-data strip</b> pulling commits/40d + last deploy via GitHub API edge function (Supabase or Vercel edge). Cache 5 min. <span class="est">4 h</span></li>
+        <li><b>Implement Section 03 (Work)</b> with inline Framer Motion layout expand for the 4 cases; mount from <code>data/cases/*.md</code>. <span class="est">8 h</span></li>
+        <li><b>Implement Section 04 (Method)</b> SVG agent-flow with stroke-dasharray draw on IntersectionObserver. <span class="est">4 h</span></li>
+        <li><b>Implement Sections 05–07</b> (timeline spy-scroll, testimonials, contact aura) from existing data yamls. <span class="est">6 h</span></li>
+        <li><b>QA pass</b> · a11y audit, prefers-reduced-motion, Lighthouse &gt; 95, bundle budget check, EN/ES toggle. <span class="est">4 h</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="budget-row">
+    <div class="item"><span class="k">TOTAL</span><span class="v"><b>~36 h</b> · 4–5 days</span></div>
+    <div class="item"><span class="k">BUNDLE</span><span class="v"><b>~172 KB</b> / lang gz</span></div>
+    <div class="item"><span class="k">TIER</span><span class="v"><b>LOW</b> motion</span></div>
+    <div class="item"><span class="k">COMPAT</span><span class="v"><b>100%</b> evolves huly-landing</span></div>
+  </div>
+</article>
+
+
+<!-- =============== FINAL 2: AI PRODUCT-TOUR =============== -->
+<h2 class="section"><span class="n">02</span>Final-2 · AI Product-Tour <span class="tail">meta · artifact as product</span></h2>
+
+<article class="final f2">
+  <div class="final-head">
+    <div>
+      <span class="rank">Final 02 · RUNNER-UP · tier LOW</span>
+      <h3 class="name">AI Product-Tour</h3>
+      <p class="thesis">The landing IS the product demo. Cursor/Linear/Replicate hero pattern, but the "product" shipped is Danilo's own 5 PDFs + skills sheet. The page sells the artifacts it emits.</p>
+    </div>
+    <span class="verdict-badge">ship · week 2</span>
+  </div>
+  <div class="pitch">
+    Instead of <i>describing</i> what Danilo ships, the landing <i>ships</i>. The hero is a split-layout: declarative H1 left, tilted 3D-stack of the 5 real CV PDFs + skills sheet right. Each artifact in the stack is clickable and downloads the real file generated by Phase 2.
+    The page's second section is a gallery of all 5 outputs with version tags and "How this was generated" colophon. The thesis — "I ship real products, agents give me the leverage" — is <b>proved by direct evidence</b>, not described.
+    Green "live/running" accent signals state; apricot reserved for the artifacts themselves.
+  </div>
+
+  <!-- HERO MOCKUP -->
+  <div class="hero-mock">
+    <div class="split">
+      <div>
+        <div class="eye"><span class="dot"></span><span>// shipped by dr-cv · 5 PDFs · live</span></div>
+        <h4 class="h1-big">
+          Run a CV like<br>
+          you run a <em>product</em>.<br>
+          <span class="accent-word" style="font-size:.7em;font-weight:500;color:#9AA0B4;letter-spacing:-.02em">— this page generated 5.</span>
+        </h4>
+        <p class="sub-big">The page you're reading emitted five PDFs, one skills sheet, and this landing. I ship real products; agents give me the leverage. Click any artifact to download.</p>
+        <div class="cta-row">
+          <span class="btn primary">Generate my CV ▸</span>
+          <span class="btn">See all 5 outputs</span>
+        </div>
+        <div class="artifact-grid">
+          <div class="ch">warm · EN</div>
+          <div class="ch">warm · ES</div>
+          <div class="ch">serious · EN</div>
+          <div class="ch">serious · ES</div>
+          <div class="ch">bairesdev · EN</div>
+        </div>
+      </div>
+      <div class="pdf-stack">
+        <div class="pdf p3"></div>
+        <div class="pdf p2"></div>
+        <div class="pdf p1">
+          <div class="tag">cv · warm · en · page 1/1</div>
+          <div class="n-big">Danilo Rojas</div>
+          <div class="role">Agentic Designer · Product Engineer</div>
+          <div class="rule"></div>
+          <div class="chk"><b>TE Skin · Booz Allen</b><br>Agent-consumable DS skill. 95.6 DS migration score.</div>
+          <div class="chk"><b>EnRegla</b><br>0→1.0 SaaS. 346 commits / 40 days. Paying pilots.</div>
+          <div class="chk"><b>Life Update Mobile</b><br>Gemini at runtime. Shipped.</div>
+          <div style="margin-top:8px">
+            <span class="chip">React 19</span><span class="chip">TS</span><span class="chip">Next 16</span><span class="chip">MCP</span><span class="chip">R3F</span>
+          </div>
+          <div class="dl-btn">▼ download</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PALETTE + TYPE -->
+  <div class="spec-row">
+    <div class="cell">
+      <span class="k">Palette (exact · 8 tokens)</span>
+      <div class="swatches">
+        <div class="sw" style="background:#070A08;color:#888"><span class="lbl">--bg-primary</span>#070A08</div>
+        <div class="sw" style="background:#0D1410;color:#888"><span class="lbl">--bg-alt</span>#0D1410</div>
+        <div class="sw" style="background:#F3F3F5;color:#333"><span class="lbl">--text</span>#F3F3F5</div>
+        <div class="sw" style="background:#9AA0B4;color:#111"><span class="lbl">--text-muted</span>#9AA0B4</div>
+        <div class="sw" style="background:#C4CAD1;color:#111"><span class="lbl">--text-body</span>#C4CAD1</div>
+        <div class="sw" style="background:#7ED9A1;color:#032;border:1px solid #4e9970"><span class="lbl">--accent (ok/live)</span>#7ED9A1</div>
+        <div class="sw" style="background:#FF8964;color:#3a1a0a"><span class="lbl">--accent-soft (cta)</span>#FF8964</div>
+        <div class="sw" style="background:rgba(126,217,161,.28);color:#7ED9A1;border:1px solid rgba(126,217,161,.4)"><span class="lbl">--accent-ring</span>rgba 28%</div>
+      </div>
+<pre class="codeblock"><span class="c">/* dr-cv · palette · final-2 · dual accent */</span>
+:root{
+  <span class="p">--bg-primary</span>: <span class="v">#070A08</span>;  <span class="c">/* near-black w/ green tint */</span>
+  <span class="p">--bg-alt</span>:     <span class="v">#0D1410</span>;
+  <span class="p">--text</span>:        <span class="v">#F3F3F5</span>;
+  <span class="p">--text-muted</span>: <span class="v">#9AA0B4</span>;
+  <span class="p">--text-body</span>:  <span class="v">#C4CAD1</span>;
+  <span class="p">--accent</span>:      <span class="v">#7ED9A1</span>;  <span class="c">/* live/running */</span>
+  <span class="p">--accent-soft</span>: <span class="v">#FF8964</span>;  <span class="c">/* apricot on artifacts/CTA */</span>
+  <span class="p">--accent-ring</span>: <span class="v">rgba(126,217,161,.28)</span>;
+}</pre>
+    </div>
+    <div class="cell">
+      <span class="k">Typography (exact · 3 stacks + scale)</span>
+<pre class="codeblock"><span class="c">/* fonts */</span>
+<span class="p">--ff-display</span>: <span class="v">'Inter'</span>, -apple-system, system-ui, sans-serif;
+<span class="p">--ff-body</span>:    <span class="v">'Inter'</span>, -apple-system, system-ui, sans-serif;
+<span class="p">--ff-mono</span>:    <span class="v">'JetBrains Mono'</span>, ui-monospace, monospace;
+
+<span class="c">/* scale · SaaS-native register */</span>
+<span class="p">--fs-h1</span>:    <span class="v">clamp(38px, 5.8vw, 64px)</span>;  <span class="c">/* inter 700 */</span>
+<span class="p">--fs-h2</span>:    <span class="v">clamp(26px, 3.2vw, 40px)</span>;  <span class="c">/* inter 700 */</span>
+<span class="p">--fs-body</span>:  <span class="v">17px</span>;                     <span class="c">/* inter 400 */</span>
+<span class="p">--fs-micro</span>: <span class="v">11.5px</span>;                   <span class="c">/* mono 500 UPPER */</span>
+
+<span class="p">--lh-h1</span>:    <span class="v">1.02</span>;
+<span class="p">--lh-body</span>:  <span class="v">1.55</span>;
+<span class="p">--ls-h1</span>:    <span class="v">-0.035em</span>;
+<span class="p">--ls-micro</span>: <span class="v">0.1em</span>;</pre>
+    </div>
+  </div>
+
+  <!-- STRUCTURE / MOTION -->
+  <div class="attrs-grid">
+    <div class="cell">
+      <span class="k">Structure · 6 sections</span>
+      <div class="scroll-map">
+        <div class="seg"><span class="name">01 · Hero · H1 + PDF-stack tilt</span><span class="vh">100vh</span></div>
+        <div class="seg"><span class="name">02 · 5 artifacts gallery (download)</span><span class="vh">80vh</span></div>
+        <div class="seg"><span class="name">03 · Method · "how agents ship this"</span><span class="vh">90vh</span></div>
+        <div class="seg"><span class="name">04 · 4 case chips (abbreviated)</span><span class="vh">110vh</span></div>
+        <div class="seg"><span class="name">05 · About · 15-yr timeline</span><span class="vh">80vh</span></div>
+        <div class="seg"><span class="name">06 · Contact + ship-log colophon</span><span class="vh">60vh</span></div>
+      </div>
+    </div>
+    <div class="cell">
+      <span class="k">Motion spec · tier LOW</span>
+      <span class="tier-pill">LOW · CSS + IO</span>
+      <ul class="motion-list" style="margin-top:10px">
+        <li><b>Live-dot pulse (green)</b> · 2.1s ease-in-out infinite<span class="tag">· CSS</span></li>
+        <li><b>PDF stack tilt</b> · perspective 1200px on cursor-hover, spring<span class="tag">· CSS + JS</span></li>
+        <li><b>PDF click → download</b> · instant, toast confirmation<span class="tag">· JS fetch</span></li>
+        <li><b>Typewriter subhead</b> · mount only, 28ms/char<span class="tag">· JS</span></li>
+        <li><b>Artifact version tag pulse</b> · on intersection, one-shot<span class="tag">· CSS + IO</span></li>
+        <li><b>Method "agent walking" SVG</b> · scroll-linked stroke-draw<span class="tag">· CSS</span></li>
+        <li><b>Number count-up</b> · IO triggers 0→346 at 1.2s<span class="tag">· JS</span></li>
+        <li><b>Section fade-in</b> · IO 12%<span class="tag">· CSS + IO</span></li>
+      </ul>
+    </div>
+    <div class="cell">
+      <span class="k">Bundle budget</span>
+      <ul class="motion-list" style="margin-top:10px">
+        <li><b>HTML + inlined CSS</b> · <span style="color:#fff">~52 KB / lang</span></li>
+        <li><b>Fonts</b> · Inter 400/500/700 + JetBrains Mono 500 subset · <span style="color:#fff">~40 KB woff2</span></li>
+        <li><b>JS gzipped</b> · IO + typewriter + count-up helpers · <span style="color:#fff">~42 KB gz</span></li>
+        <li><b>Total per-language</b> · <span style="color:var(--ok);font-weight:500">≈ 134 KB gz</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sig-box">
+    <span class="k">Signature move · one technique known for it</span>
+    <h4>Every visible artifact is live, versioned, and downloadable. The landing is a distribution surface.</h4>
+    <p>
+      The five PDFs, the skills sheet, and this landing itself are all rendered as first-class artifacts on the page with version tags (<code>v1.2.0</code>),
+      ship dates, and a <code>▼ download</code> button that fetches the <b>real file</b> already emitted by the <code>generators/cv.ts</code> orchestrator.
+      The hero's tilted 3D stack is pure CSS <code>perspective()</code> + <code>rotateY()</code> — no three.js. The colophon section reads "how this was made"
+      and links back to the generators that produced what you just downloaded. <b>Docs-as-product-demo, applied to a CV.</b>
+    </p>
+    <p><b style="color:var(--ok)">Implementation sketch</b> · Serve PDFs from <code>/dist/cv/*.pdf</code> statically. Landing mounts artifact cards from a generated <code>artifacts.json</code> manifest. Click handlers are standard <code>&lt;a download&gt;</code> tags — zero custom JS needed for download.</p>
+  </div>
+
+  <div class="copy-prod">
+    <div class="cell">
+      <span class="k">Copy draft · Danilo's data</span>
+      <div class="copy-block">
+        <span class="lbl">H1</span>
+        <div class="h1">Run a CV like you run a <em>product</em>.</div>
+        <span class="lbl" style="margin-top:8px">Subhead</span>
+        <div class="sub">The page you're reading generated five PDFs, one skills sheet, and this landing. I ship real products; agents give me the leverage.</div>
+        <span class="lbl" style="margin-top:8px">CTA primary / secondary</span>
+        <div class="ctas">
+          <span class="p">Generate my CV ▸</span>
+          <span class="p ghost">See all 5 outputs</span>
+        </div>
+        <span class="lbl" style="margin-top:8px">Section headings (H2)</span>
+        <ul class="h2-list">
+          <li><b>Artifacts</b> — Five PDFs, one skills sheet, one landing.</li>
+          <li><b>Method</b> — How the agents ship this.</li>
+          <li><b>Cases</b> — Four things behind the PDFs.</li>
+          <li><b>About</b> — Fifteen years, one manifest.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cell">
+      <span class="k">Production plan · ordered</span>
+      <ol class="tasks">
+        <li><b>Fork <code>huly-landing/</code></b> into <code>product-tour/</code>; green-accent token swap. <span class="est">2 h</span></li>
+        <li><b>Wire Phase 2 output into an <code>artifacts.json</code></b> manifest with per-PDF metadata (lang, variant, sha, size). <span class="est">3 h</span></li>
+        <li><b>Build the hero PDF-stack</b> · CSS perspective + 3 stacked cards, the front card renders real CV excerpt. <span class="est">6 h</span></li>
+        <li><b>Artifacts gallery section</b> · 5-card grid with download, size, version chip. <span class="est">4 h</span></li>
+        <li><b>Method "how agents ship this"</b> section with scroll-linked SVG walk. <span class="est">5 h</span></li>
+        <li><b>Case chips + about + contact</b> (abbreviated vs F1 · cases stay short). <span class="est">6 h</span></li>
+        <li><b>Wire download events to posthog</b> (optional); ensure static <code>&lt;a download&gt;</code> works offline. <span class="est">2 h</span></li>
+        <li><b>QA · a11y, reduced-motion, Lighthouse, EN/ES.</b> <span class="est">4 h</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="budget-row">
+    <div class="item"><span class="k">TOTAL</span><span class="v"><b>~32 h</b> · 4 days</span></div>
+    <div class="item"><span class="k">BUNDLE</span><span class="v"><b>~134 KB</b> / lang gz</span></div>
+    <div class="item"><span class="k">TIER</span><span class="v"><b>LOW</b> motion</span></div>
+    <div class="item"><span class="k">COMPAT</span><span class="v"><b>~85%</b> reuses data pipeline</span></div>
+  </div>
+</article>
+
+
+<!-- =============== FINAL 3: EDITORIAL CRAFT =============== -->
+<h2 class="section"><span class="n">03</span>Final-3 · Editorial Craft <span class="tail">warmest · hardcover register</span></h2>
+
+<article class="final f3">
+  <div class="final-head">
+    <div>
+      <span class="rank">Final 03 · DARK HORSE · tier LOW</span>
+      <h3 class="name">Editorial Craft</h3>
+      <p class="thesis">Danilo as a design practitioner who writes. Anthropic terracotta meets rauno.me meets a hardcover book cover — serif display, cream on warm brown-black, cases-as-chapters.</p>
+    </div>
+    <span class="verdict-badge">ship · week 3</span>
+  </div>
+  <div class="pitch">
+    The landing is a long-form document, set like a literary monograph. Fraunces 500 at 96px carries a poster-sentence H1;
+    italic cuts accent the words that matter. The page is cream on warm brown-black, with Anthropic's terracotta standing in
+    for apricot so the palette has gravitas. Each case is a <b>chapter</b> — prose, inline year chips, one working mini-widget (Emil
+    Kowalski's pattern) per case — not a card. Jennifer's and Alexander's testimonials land where the claims live, mid-section,
+    not in a separate band. The 15-year timeline is interleaved into the about chapter as running prose.
+  </div>
+
+  <!-- HERO MOCKUP -->
+  <div class="hero-mock">
+    <div class="pageno">— I · of IV</div>
+    <div class="eye">Danilo Rojas — field notes, 2011 → 2026</div>
+    <h4 class="h1-big">
+      Agentic Designer<br>
+      shipping <em>real</em><br>
+      products.
+    </h4>
+    <div class="rule"></div>
+    <p class="sub-big">
+      Fifteen years of delivery — enterprise clients, production SaaS, active consulting at Booz Allen Hamilton.
+      I keep the craft. Agents give me the leverage.
+    </p>
+    <div class="cta-row">
+      <span class="btn primary">Read the cases →</span>
+      <span class="btn">danilorojas@hotmail.com</span>
+    </div>
+  </div>
+
+  <!-- PALETTE + TYPE -->
+  <div class="spec-row">
+    <div class="cell">
+      <span class="k">Palette (exact · 8 tokens)</span>
+      <div class="swatches">
+        <div class="sw" style="background:#0B0906;color:#aaa"><span class="lbl">--bg-primary</span>#0B0906</div>
+        <div class="sw" style="background:#1A1410;color:#ccc"><span class="lbl">--bg-alt</span>#1A1410</div>
+        <div class="sw" style="background:#F2EADF;color:#3a2018"><span class="lbl">--text</span>#F2EADF</div>
+        <div class="sw" style="background:#A89788;color:#1b1814"><span class="lbl">--text-muted</span>#A89788</div>
+        <div class="sw" style="background:#D4C8B8;color:#1b1814"><span class="lbl">--text-body</span>#D4C8B8</div>
+        <div class="sw" style="background:#CC785C;color:#1A0C06"><span class="lbl">--accent</span>#CC785C</div>
+        <div class="sw" style="background:rgba(204,120,92,.1);color:#CC785C;border:1px solid rgba(204,120,92,.3)"><span class="lbl">--accent-soft</span>rgba 10%</div>
+        <div class="sw" style="background:rgba(204,120,92,.4);color:#1A0C06;border:1px solid #CC785C"><span class="lbl">--accent-ring</span>rgba 40%</div>
+      </div>
+<pre class="codeblock"><span class="c">/* dr-cv · palette · final-3 · anthropic-adjacent */</span>
+:root{
+  <span class="p">--bg-primary</span>: <span class="v">#0B0906</span>;  <span class="c">/* warm near-black */</span>
+  <span class="p">--bg-alt</span>:     <span class="v">#1A1410</span>;
+  <span class="p">--text</span>:        <span class="v">#F2EADF</span>;  <span class="c">/* cream */</span>
+  <span class="p">--text-muted</span>: <span class="v">#A89788</span>;
+  <span class="p">--text-body</span>:  <span class="v">#D4C8B8</span>;
+  <span class="p">--accent</span>:      <span class="v">#CC785C</span>;  <span class="c">/* terracotta */</span>
+  <span class="p">--accent-soft</span>: <span class="v">rgba(204,120,92,.1)</span>;
+  <span class="p">--accent-ring</span>: <span class="v">rgba(204,120,92,.4)</span>;
+}</pre>
+    </div>
+    <div class="cell">
+      <span class="k">Typography (exact · 3 stacks + scale)</span>
+<pre class="codeblock"><span class="c">/* fonts */</span>
+<span class="p">--ff-display</span>: <span class="v">'Fraunces'</span>, 'Instrument Serif', Georgia, serif;
+<span class="p">--ff-body</span>:    <span class="v">'Inter'</span>, -apple-system, system-ui, sans-serif;
+<span class="p">--ff-mono</span>:    <span class="v">'JetBrains Mono'</span>, ui-monospace, monospace;
+
+<span class="c">/* scale · editorial register */</span>
+<span class="p">--fs-h1</span>:    <span class="v">clamp(48px, 8.2vw, 96px)</span>;  <span class="c">/* fraunces 500 opsz 144 */</span>
+<span class="p">--fs-h2</span>:    <span class="v">clamp(32px, 4.8vw, 56px)</span>;  <span class="c">/* fraunces 500 italic accent */</span>
+<span class="p">--fs-body</span>:  <span class="v">18px</span>;                     <span class="c">/* inter 300 */</span>
+<span class="p">--fs-micro</span>: <span class="v">12.5px</span>;                   <span class="c">/* mono 500 metadata */</span>
+
+<span class="p">--lh-h1</span>:    <span class="v">0.98</span>;
+<span class="p">--lh-body</span>:  <span class="v">1.62</span>;  <span class="c">/* looser · long-form reading */</span>
+<span class="p">--ls-h1</span>:    <span class="v">-0.022em</span>;
+<span class="p">--ls-micro</span>: <span class="v">0.06em</span>;
+<span class="p">--font-variation-settings</span>: <span class="v">"opsz" 144, "SOFT" 30</span>;</pre>
+    </div>
+  </div>
+
+  <!-- STRUCTURE / MOTION -->
+  <div class="attrs-grid">
+    <div class="cell">
+      <span class="k">Structure · 8 chapters</span>
+      <div class="scroll-map">
+        <div class="seg"><span class="name">I · Intro · poster-sentence H1</span><span class="vh">100vh</span></div>
+        <div class="seg"><span class="name">II · About · interleaved 15-yr timeline</span><span class="vh">120vh</span></div>
+        <div class="seg"><span class="name">III · Case 01 · /te-skin (chapter + widget)</span><span class="vh">140vh</span></div>
+        <div class="seg"><span class="name">IV · Case 02 · /te-black (token diff widget)</span><span class="vh">130vh</span></div>
+        <div class="seg"><span class="name">V · Case 03 · EnRegla (live repo chart)</span><span class="vh">130vh</span></div>
+        <div class="seg"><span class="name">VI · Case 04 · Life Update (phone frame)</span><span class="vh">120vh</span></div>
+        <div class="seg"><span class="name">VII · Method colophon</span><span class="vh">80vh</span></div>
+        <div class="seg"><span class="name">VIII · Contact · mailto</span><span class="vh">40vh</span></div>
+      </div>
+    </div>
+    <div class="cell">
+      <span class="k">Motion spec · tier LOW</span>
+      <span class="tier-pill">LOW · CSS + IO</span>
+      <ul class="motion-list" style="margin-top:10px">
+        <li><b>Text-mask reveal on scroll</b> · clip-path inset 0 100% 0 0 → 0<span class="tag">· CSS + IO</span></li>
+        <li><b>Italic accent underline draw</b> · SVG stroke, 600ms<span class="tag">· CSS</span></li>
+        <li><b>Page ornament (— I · of IV)</b> · static in top-right<span class="tag">· CSS</span></li>
+        <li><b>Ambient grain overlay</b> · 0.04 opacity SVG noise<span class="tag">· CSS</span></li>
+        <li><b>Inline widget mount</b> · fade-in + slide 8px on IO 20%<span class="tag">· IO</span></li>
+        <li><b>Token diff slider (case II)</b> · range input, live hex swap<span class="tag">· JS</span></li>
+        <li><b>Repo number count-up</b> · IO triggers<span class="tag">· JS</span></li>
+        <li><b>Copy-to-clipboard chip feedback</b> · 1.6s revert<span class="tag">· CSS anim</span></li>
+      </ul>
+    </div>
+    <div class="cell">
+      <span class="k">Bundle budget</span>
+      <ul class="motion-list" style="margin-top:10px">
+        <li><b>HTML + inlined CSS</b> · <span style="color:#fff">~58 KB / lang</span> (long prose)</li>
+        <li><b>Fonts</b> · Fraunces 500 var (opsz) + Inter 300/400 + JB Mono 500 · <span style="color:#fff">~92 KB woff2</span></li>
+        <li><b>JS gzipped</b> · 4 inline widgets + IO + count-up · <span style="color:#fff">~58 KB gz</span></li>
+        <li><b>Total per-language</b> · <span style="color:var(--terra);font-weight:500">≈ 208 KB gz</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sig-box">
+    <span class="k">Signature move · one technique known for it</span>
+    <h4>Every case chapter embeds ONE working widget that <em>proves</em> the claim. Emil Kowalski's inline-demo pattern.</h4>
+    <p>
+      Case II (/te-black) ships with a live token-diff slider — drag to see the actual before/after hex values of the a11y-audited DS swap.
+      Case III (EnRegla) embeds a real-time chart pulling commit counts from the GitHub API. Case IV (Life Update Mobile) renders inside a
+      CSS phone frame with a real Gemini-proxy demo response. The widgets are 40–80 lines each; no framework beyond what's already bundled.
+      The essay IS the case study, the widget IS the proof — so the reader never has to trust the claim.
+    </p>
+    <p><b style="color:var(--terra)">Implementation sketch</b> · Each widget is a small <code>&lt;custom-element&gt;</code> or native JS module, lazily mounted via IntersectionObserver. 4 widgets × ~4 h avg = 16 h, the bulk of this direction's extra cost over F1.</p>
+  </div>
+
+  <div class="copy-prod">
+    <div class="cell">
+      <span class="k">Copy draft · Danilo's data</span>
+      <div class="copy-block">
+        <span class="lbl">H1 (poster-sentence · serif)</span>
+        <div class="h1">Agentic Designer shipping <em>real</em> products.</div>
+        <span class="lbl" style="margin-top:8px">Subhead</span>
+        <div class="sub">Fifteen years of delivery — enterprise clients, production SaaS, active consulting at Booz Allen Hamilton. I keep the craft. Agents give me the leverage.</div>
+        <span class="lbl" style="margin-top:8px">CTA primary / secondary</span>
+        <div class="ctas">
+          <span class="p">Read the cases →</span>
+          <span class="p ghost">danilorojas@hotmail.com</span>
+        </div>
+        <span class="lbl" style="margin-top:8px">Chapter headings (H2, italic serif)</span>
+        <ul class="h2-list">
+          <li><b>II · About</b> — Fifteen years, told forward.</li>
+          <li><b>III · /te-skin</b> — The skill that made a design system agent-consumable.</li>
+          <li><b>V · EnRegla</b> — Zero to one-point-oh in forty days.</li>
+          <li><b>VII · Colophon</b> — How this was made, down to the agent log.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cell">
+      <span class="k">Production plan · ordered</span>
+      <ol class="tasks">
+        <li><b>Fork <code>huly-landing/</code></b> into <code>editorial-craft/</code>; swap palette + font stacks. <span class="est">3 h</span></li>
+        <li><b>Typeset chapter grammar</b> · ornaments, pageno markers, rules, figure/caption CSS. <span class="est">4 h</span></li>
+        <li><b>Rewrite 4 case MD files</b> from bullets to chapter prose (this is the real work — 3–4 h per case). <span class="est">14 h</span></li>
+        <li><b>Inline widget 1 · /te-black token diff slider.</b> <span class="est">5 h</span></li>
+        <li><b>Inline widget 2 · EnRegla live repo chart.</b> <span class="est">4 h</span></li>
+        <li><b>Inline widget 3 · Life Update phone-frame Gemini demo.</b> <span class="est">5 h</span></li>
+        <li><b>Inline widget 4 · /te-skin token-to-skill converter demo.</b> <span class="est">5 h</span></li>
+        <li><b>Re-typeset Phase 2 PDF composers</b> to match (knock-on cost). <span class="est">10 h</span></li>
+        <li><b>QA · reading a11y, long-form body rhythm, EN/ES parity.</b> <span class="est">5 h</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="budget-row">
+    <div class="item"><span class="k">TOTAL</span><span class="v"><b>~55 h</b> · 7–8 days</span></div>
+    <div class="item"><span class="k">BUNDLE</span><span class="v"><b>~208 KB</b> / lang gz</span></div>
+    <div class="item"><span class="k">TIER</span><span class="v"><b>LOW</b> motion</span></div>
+    <div class="item"><span class="k">COMPAT</span><span class="v"><b>~60%</b> needs PDF re-type</span></div>
+  </div>
+</article>
+
+
+<!-- =============== SECTION 04 · THE ONE QUESTION =============== -->
+<h2 class="section"><span class="n">04</span>The one-question pick <span class="tail">a single framing question</span></h2>
+
+<div class="q-box">
+  <div class="eyebrow">one question · decides which Final ships</div>
+  <h3>On first visit, do prospects need to <em>download the artifact</em>,<br>or <em>understand the practitioner</em> behind it?</h3>
+  <p class="intro">
+    This is not "which looks nicest." It's the strategic question that divides the three finalists cleanly by what they ask of the reader on the first 30 seconds.
+    Every other trade-off (cost, distinctiveness, bundle, motion tier) is downstream of this answer.
+  </p>
+
+  <div class="frame"><b>If the answer is "download"</b> → Final-2 <b>AI Product-Tour</b> ships the tightest funnel. The prospect lands, sees the tilted PDF stack,
+  clicks download, reads the CV on the train. Conversion is measurable on day one. The brand feels like a SaaS. Risk: sells a tool, not a person.</div>
+
+  <div class="frame"><b>If the answer is "understand the practitioner"</b> → Final-3 <b>Editorial Craft</b> is the durable pick. The prospect becomes a reader;
+  cases read as essays; trust compounds. Long funnel, high conversion on the few who finish — perfect for tier-1 consulting clients who read closely. Risk: alienates recruiters skimming in 30s.</div>
+
+  <div class="frame"><b>If the answer is "both — with a bias toward understand"</b> → Final-1 <b>Warm Huly Refined</b> is the honest compromise.
+  Hero gives enough signal to download immediately; the scroll rewards readers who want the full argument; the live-data strip proves dogfooding without
+  demanding attention. The landing carries all of Danilo's content density — 4 cases, 2 testimonials, 15-year arc, method, proof numbers — without compromising any of them.
+  This is where R8 converged. This is where R9 ranked D1 as safest. This is where the shipping calendar is.</div>
+</div>
+
+
+<!-- =============== SECTION 05 · DECISION MATRIX =============== -->
+<h2 class="section"><span class="n">05</span>Decision matrix <span class="tail">5 dimensions × 3 finalists</span></h2>
+<p class="section-intro">
+  The same five dimensions Round 9 used, re-scored for Round 10 with production-level confidence. Values are 1–5 pips; higher = better for that row/column.
+</p>
+
+<div class="matrix-wrap">
+<table class="mx">
+  <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th>Positioning fit</th>
+      <th>Ship-this-weekend feasibility</th>
+      <th>Distinctiveness in 2026</th>
+      <th>Compat. with landing-huly codebase</th>
+      <th>Scalability (blog · agent · v2)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="dcell"><span class="num">Final-1</span>Warm Huly Refined</td>
+      <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · serio+cálido · dev-literate but designer-first</td>
+      <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · ~36 h · evolves current landing</td>
+      <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span> 3 · huly-adjacent but warmer + livestrip is rare</td>
+      <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · direct evolution of generators/templates/huly-landing/</td>
+      <td><span class="fit-5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · room for writing section + agent panel later</td>
+    </tr>
+    <tr>
+      <td class="dcell"><span class="num">Final-2</span>AI Product-Tour</td>
+      <td><span class="fit-5 f2"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4 · proves "agentic" via evidence · risks "tool-selling" read</td>
+      <td><span class="fit-5 f2"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · ~32 h · Phase 2 already emits the artifacts</td>
+      <td><span class="fit-5 f2"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4 · "landing is the product" is genuinely rare for a portfolio</td>
+      <td><span class="fit-5 f2"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4 · shares tokens + data pipeline, new hero template</td>
+      <td><span class="fit-5 f2"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span> 3 · expansion path narrow · frame is tool-shaped</td>
+    </tr>
+    <tr>
+      <td class="dcell"><span class="num">Final-3</span>Editorial Craft</td>
+      <td><span class="fit-5 f3"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4 · warmest · strongest craft register · reads "writer"</td>
+      <td><span class="fit-5 f3"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2 · ~55 h + PDF re-type · 7–8 days</td>
+      <td><span class="fit-5 f3"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · no one else in the category reads as a monograph</td>
+      <td><span class="fit-5 f3"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2 · requires Fraunces + palette swap + PDF composers</td>
+      <td><span class="fit-5 f3"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5 · natural home for blog / writing / long-form</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<!-- =============== SECTION 06 · THE PICK =============== -->
+<h2 class="section"><span class="n">06</span>Your pick + defense <span class="tail">opinionated</span></h2>
+
+<section class="pick-box">
+  <div class="eyebrow">round 10 verdict · no hedging</div>
+  <h3>Ship <em>Final-1 · Warm Huly Refined</em> this week. Treat Final-3 as v2.</h3>
+  <p>
+    <b>Final-1 is the only direction that answers every question the research surfaced with a simultaneous yes.</b>
+    R6 said tier LOW is enough; F1 uses CSS + canvas 2D. R7 said Warm Huly palette; F1 is Warm Huly by name. R8 said Proposal A;
+    F1 is Proposal A verbatim. R9 said D1 was the safest with a 4/5 fit score; F1 is D1 with production hours attached. When four
+    rounds independently converge on the same answer, the correct move is to <span class="k">ship what the research already proved</span>,
+    not to override it with taste.
+  </p>
+  <p>
+    The case against F1 — "too safe, reads as huly.io-adjacent" — is the weakest objection to take seriously at Phase 3, when Danilo
+    has zero public landing live. <b>Distinctiveness is a second-order problem; existence is first-order.</b> An on-brief landing
+    shipped in 4–5 days beats a distinctive landing shipped in 8 days and a visionary landing shipped in 6 weeks, especially when the
+    cases and testimonials inside it are themselves what will distinguish Danilo — not the shader behind the hero.
+  </p>
+  <p>
+    Final-2's "landing is the product" framing is tempting and clever, but it subtly mis-sells. The prospect Danilo actually wants
+    (design-eng lead at a tier-1 client) is not hunting for a CV-generator tool; they are evaluating a practitioner who can be embedded
+    into a team. F2 reframes Danilo as a tool-builder when his positioning is "profile + agentic AI = combination." Keep the artifact-download
+    affordances from F2 — they should sit <b>inside</b> F1's hero as a secondary CTA, not replace the hero's thesis.
+  </p>
+  <p>
+    Final-3 is the most beautiful direction and the wrong bet <b>for this week</b>. The +19 hours vs F1, the PDF re-type knock-on cost, and the
+    Fraunces load are all absorbable — but only once the cases are public, traffic exists, and Danilo has real conversion data to defend
+    the editorial register against. <b>Ship F1 in May, hold F3 as a v2 evolution for August once there's something to optimize.</b>
+  </p>
+  <ul>
+    <li><b>R6 alignment</b> · F1 is the only finalist at tier LOW throughout, no exceptions.</li>
+    <li><b>R7 alignment</b> · F1 IS Warm Huly by construction — zero palette mismatch.</li>
+    <li><b>R8 alignment</b> · F1 is Proposal A implemented — absorbs all 4 cases, 2 testimonials, 15-year arc, method, proof numbers without flattening any.</li>
+    <li><b>R9 alignment</b> · F1 scored 4/5 fit; F2 scored 5/5 but with the tool-shaped risk; F3 scored 4/5 but with 3–5 week cost. F1 is the highest fit × lowest cost product.</li>
+    <li><b>Codebase alignment</b> · F1 evolves <code>generators/templates/huly-landing/</code> directly. F2 shares ~85%. F3 requires a ~60% rewrite plus PDF composers.</li>
+  </ul>
+  <div class="final-ship">
+    <b>ship plan · week 1</b>
+    Fork <code>generators/templates/huly-landing/</code> → <code>warm-huly-refined/</code>. Wire 8 palette tokens + typography scale (3 h). Rewrite hero with bg-clip gradient + canvas-2D glow + live-data strip (5+4 h). Implement Sections 03–07 from existing data yamls (18 h). QA pass (4 h). ETA ~36 h / 4–5 working days. Hold F2's "artifact download" CTA inside F1's hero as secondary action. Hold F3 for v2 once F1 has two weeks of traffic data.
+  </div>
+</section>
+
+
+<footer>
+  <span>C:\dev\dr-cv\docs\references\visual-universe\round-10\index.html</span>
+  <span>round 10 / 10 · final convergence · 2026-05-08</span>
+  <span>winner · Final-1 · Warm Huly Refined</span>
+</footer>
+
+</div>
+</body>
+</html>

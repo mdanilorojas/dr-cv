@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Round 1 · Wide scan · 30 reference sites</title>
+<style>
+  :root{
+    --bg:#07080d; --panel:#0d0f17; --panel-2:#11131d; --line:#1c1f2c;
+    --ink:#e6e8ef; --ink-dim:#9aa0b4; --ink-mute:#6a7088;
+    --ai:#9b8cff; --portfolio:#ffd27a; --studio:#7ad1ff; --awwwards:#ff8a9a;
+    --accent:#b9ff66;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+  .mono,code,kbd{font-family:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:12.5px}
+  a{color:inherit}
+  a.ext{color:var(--accent);text-decoration:none;border-bottom:1px dashed rgba(185,255,102,.35)}
+  a.ext:hover{border-bottom-color:var(--accent)}
+  header{padding:48px 40px 24px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0a0b12 0%,#07080d 100%)}
+  h1{margin:0 0 8px;font-size:28px;letter-spacing:-.01em;font-weight:600}
+  header .sub{color:var(--ink-dim);font-size:13px}
+  header .meta{margin-top:14px;color:var(--ink-mute);font-size:12px}
+  nav.toc{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0 0}
+  nav.toc a{display:flex;flex-direction:column;gap:2px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:8px;text-decoration:none}
+  nav.toc a .k{color:var(--ink-mute);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+  nav.toc a .v{font-size:15px;font-weight:500}
+  nav.toc a[data-cat="ai"] .dot{background:var(--ai)}
+  nav.toc a[data-cat="portfolio"] .dot{background:var(--portfolio)}
+  nav.toc a[data-cat="studio"] .dot{background:var(--studio)}
+  nav.toc a[data-cat="awwwards"] .dot{background:var(--awwwards)}
+  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:middle}
+  main{padding:32px 40px 60px;max-width:1400px;margin:0 auto}
+  section.cat{margin:28px 0 8px}
+  section.cat h2{font-size:13px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.14em;margin:0 0 14px;padding-top:16px;border-top:1px solid var(--line)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 16px 14px;position:relative;overflow:hidden}
+  .card .tag{position:absolute;top:14px;right:14px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.08em;color:var(--ink-mute);text-transform:uppercase}
+  .card h3{margin:0 0 10px;font-size:15px;font-weight:600;letter-spacing:-.005em}
+  .card h3 a{text-decoration:none;color:var(--ink);border-bottom:1px solid transparent}
+  .card h3 a:hover{border-bottom-color:var(--accent);color:var(--accent)}
+  .card dl{margin:0;display:grid;grid-template-columns:78px 1fr;gap:4px 10px}
+  .card dt{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10.5px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.06em;padding-top:2px}
+  .card dd{margin:0;font-size:13px;color:var(--ink);line-height:1.45}
+  .card dd .h1q{color:var(--ink-dim);font-style:italic}
+  .swatch{display:inline-flex;gap:4px;margin-right:6px;vertical-align:middle}
+  .swatch span{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid rgba(255,255,255,.08)}
+  .card[data-cat="ai"]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ai)}
+  .card[data-cat="portfolio"]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--portfolio)}
+  .card[data-cat="studio"]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--studio)}
+  .card[data-cat="awwwards"]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--awwwards)}
+  .card.unreachable{opacity:.62}
+  .why{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--ink-dim)}
+  .why b{color:var(--accent);font-weight:600}
+  footer{margin:48px 40px 40px;padding-top:24px;border-top:1px solid var(--line);color:var(--ink-mute);font-size:12.5px}
+  footer .cols{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  details{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-top:28px}
+  details summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--accent);letter-spacing:.01em}
+  details ol{padding-left:22px;margin:14px 0 2px}
+  details li{margin:10px 0;font-size:13.5px;color:var(--ink)}
+  details li b{color:var(--accent)}
+  details li .rat{color:var(--ink-dim);display:block;margin-top:3px;font-size:12.5px}
+  @media (max-width:860px){nav.toc{grid-template-columns:repeat(2,1fr)}header,main,footer{padding-left:20px;padding-right:20px}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Round 1 &middot; Wide scan &middot; 30 reference sites</h1>
+  <div class="sub">Visual-universe research for <span class="mono">dr-cv</span> &mdash; Danilo Rojas, Agentic Designer &middot; Product Engineer.</div>
+  <div class="meta mono">2026-05-08 &nbsp;|&nbsp; 30 targets &nbsp;|&nbsp; 28 reachable &nbsp;|&nbsp; 2 unreachable (403) &nbsp;|&nbsp; baseline: huly.io</div>
+  <nav class="toc">
+    <a href="#ai" data-cat="ai"><span class="k"><span class="dot"></span>AI / Agentic</span><span class="v">7 sites</span></a>
+    <a href="#portfolio" data-cat="portfolio"><span class="k"><span class="dot"></span>Designer portfolios</span><span class="v">8 sites</span></a>
+    <a href="#studio" data-cat="studio"><span class="k"><span class="dot"></span>Agencies / studios</span><span class="v">8 sites</span></a>
+    <a href="#awwwards" data-cat="awwwards"><span class="k"><span class="dot"></span>Awwwards SOTY 24&ndash;26</span><span class="v">7 sites</span></a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ================= AI ================= -->
+<section class="cat" id="ai">
+  <h2>AI / agentic tier-1</h2>
+  <div class="grid">
+
+    <article class="card" data-cat="ai">
+      <span class="tag">AI · 01</span>
+      <h3><a class="ext" href="https://cursor.com" target="_blank" rel="noopener">cursor.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Aspirational productivity; AI as collaborative partner</dd>
+        <dt>Technique</dt><dd>Floating task cards (In Progress / Ready for Review) that animate into a grid over subtle gradient hero</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#000000"></span><span style="background:#0066ff"></span></span> #FFFFFF &middot; #000000 &middot; #0066FF</dd>
+        <dt>Type</dt><dd>Modern geometric sans + monospace for code blocks</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Built to make you extraordinarily productive, Cursor is the best way to code with AI.&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> the &ldquo;status-card grid&rdquo; is a perfect metaphor for agent-delegated work in hero.</div>
+    </article>
+
+    <article class="card" data-cat="ai">
+      <span class="tag">AI · 02</span>
+      <h3><a class="ext" href="https://v0.app" target="_blank" rel="noopener">v0.app</a> <span class="mono" style="color:var(--ink-mute);font-size:10px">(v0.dev &rarr;)</span></h3>
+      <dl>
+        <dt>Mood</dt><dd>Innovative efficiency, AI-powered rapid creation</dd>
+        <dt>Technique</dt><dd>Looping integration carousel cycling 12+ tool logos &mdash; infinite ecosystem</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#000000"></span><span style="background:#0070f3"></span></span> #FFFFFF &middot; #000000 &middot; #0070F3 (Vercel blue)</dd>
+        <dt>Type</dt><dd>Inter-like geometric sans</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;What do you want to create?&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> prompt-as-hero pattern &mdash; a typing input that hints at what the site can do for the visitor.</div>
+    </article>
+
+    <article class="card" data-cat="ai">
+      <span class="tag">AI · 03</span>
+      <h3><a class="ext" href="https://linear.app" target="_blank" rel="noopener">linear.app</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Forward-thinking efficiency + AI-native confidence</dd>
+        <dt>Technique</dt><dd>Live agent activity feeds with terminal-style output and thinking states layered into UI mockups</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#000000"></span><span style="background:#ffffff"></span><span style="background:#6366f1"></span></span> #000000 &middot; #FFFFFF &middot; #6366F1</dd>
+        <dt>Type</dt><dd>Inter Display (system fallback stack)</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;The product development system for teams and agents.&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> the &ldquo;teams and agents&rdquo; framing &mdash; mirrors our &ldquo;profile + agentic AI = combination&rdquo; positioning.</div>
+    </article>
+
+    <article class="card" data-cat="ai">
+      <span class="tag">AI · 04</span>
+      <h3><a class="ext" href="https://raycast.com" target="_blank" rel="noopener">raycast.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Energetic efficiency; productivity without friction</dd>
+        <dt>Technique</dt><dd>Keyboard visualization that lights up keys as user scrolls; glassmorphism over indigo gradient</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#000000"></span><span style="background:#6366f1"></span><span style="background:#ffffff"></span></span> #000000 &middot; #6366F1 &middot; #FFFFFF</dd>
+        <dt>Type</dt><dd>SF Pro / -apple-system native stack</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Your shortcut to everything.&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> one-line value prop + keyboard micro-interaction suits the &ldquo;command-palette&rdquo; aesthetic we already referenced.</div>
+    </article>
+
+    <article class="card" data-cat="ai">
+      <span class="tag">AI · 05</span>
+      <h3><a class="ext" href="https://replicate.com" target="_blank" rel="noopener">replicate.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Accessible innovation; democratizing deployment</dd>
+        <dt>Technique</dt><dd>Side-by-side &ldquo;code &rarr; result&rdquo; cards with syntax highlighting next to image output</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#000000"></span><span style="background:#0066cc"></span></span> #FFFFFF &middot; #000000 &middot; #0066CC</dd>
+        <dt>Type</dt><dd>Inter + JetBrains Mono (code)</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Run AI with an API.&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> proven pattern for &ldquo;input &rarr; output&rdquo; case-study cards; might reuse for project outcomes.</div>
+    </article>
+
+    <article class="card" data-cat="ai">
+      <span class="tag">AI · 06</span>
+      <h3><a class="ext" href="https://www.anthropic.com" target="_blank" rel="noopener">anthropic.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Forward-thinking safety focus &mdash; warm editorial</dd>
+        <dt>Technique</dt><dd>Gradient overlays on hero imagery with generous whitespace; editorial pacing</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#f5f5f5"></span><span style="background:#000000"></span></span> #FFFFFF &middot; #F5F5F5 &middot; #000000 (warm beige accents)</dd>
+        <dt>Type</dt><dd>Styrene B / custom serif-sans pairing</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;AI research and products that put safety at the frontier.&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> warm editorial tone is compatible with our &ldquo;serio + c&aacute;lido&rdquo; brand &mdash; study the calm pacing.</div>
+    </article>
+
+    <article class="card unreachable" data-cat="ai">
+      <span class="tag">AI · 07 · 403</span>
+      <h3><a class="ext" href="https://openai.com" target="_blank" rel="noopener">openai.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Unreachable via WebFetch (403 on both openai.com and chatgpt.com). Known baseline: clinical, nearly-all-white with subtle off-black</dd>
+        <dt>Technique</dt><dd>Editorial grid, plain type, iconic product cards (ChatGPT, Sora, API) with slight gradient accents</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#0d0d0d"></span><span style="background:#10a37f"></span></span> #FFFFFF &middot; #0D0D0D &middot; #10A37F (brand teal)</dd>
+        <dt>Type</dt><dd>Soehne (OpenAI custom) + S&ouml;hne Mono</dd>
+        <dt>H1</dt><dd class="h1q">(unreachable; usually rotates around product-launch copy)</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> useful as a restraint reference &mdash; note how much is <em>not</em> on the page. Skip for deep-dive.</div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ================= PORTFOLIOS ================= -->
+<section class="cat" id="portfolio">
+  <h2>Designer portfolios</h2>
+  <div class="grid">
+
+    <article class="card" data-cat="portfolio">
+      <span class="tag">PF · 01</span>
+      <h3><a class="ext" href="https://www.robin-noguier.com" target="_blank" rel="noopener">robin-noguier.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Confident minimalism with self-aware humor</dd>
+        <dt>Technique</dt><dd>Sparse layout; strategic typographic contrast between micro-labels and display</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#000000"></span><span style="background:#f0eee8"></span></span> #FFFFFF &middot; #000000 &middot; #F0EEE8 (off-cream)</dd>
+        <dt>Type</dt><dd>Grotesk display + mono meta-labels</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;ROBIN NOGUIER&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> a name-first hero &mdash; prove that identity before product works for a personal brand.</div>
+    </article>
+
+    <article class="card" data-cat="portfolio">
+      <span class="tag">PF · 02</span>
+      <h3><a class="ext" href="https://bruno-simon.com" target="_blank" rel="noopener">bruno-simon.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Playful exploration; technical flex through interaction</dd>
+        <dt>Technique</dt><dd>WebGL 3D car physics via Three.js; drive around to discover projects</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ff0000"></span><span style="background:#000000"></span><span style="background:#ffffff"></span></span> #FF0000 &middot; #000000 &middot; #FFFFFF</dd>
+        <dt>Type</dt><dd>Amatic SC (display) + Nunito (body)</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Bruno&rsquo;s Home&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> extreme end &mdash; useful as a counter-reference of &ldquo;too much&rdquo;; we want signal, not a playground.</div>
+    </article>
+
+    <article class="card" data-cat="portfolio">
+      <span class="tag">PF · 03</span>
+      <h3><a class="ext" href="https://www.olivierlarose.com" target="_blank" rel="noopener">olivierlarose.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Modern minimalism with creative sophistication</dd>
+        <dt>Technique</dt><dd>Infinite-scroll masonry with reveal animations; tight component-based pages</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#000000"></span><span style="background:#ffd700"></span></span> #FFFFFF &middot; #000000 &middot; #FFD700</dd>
+        <dt>Type</dt><dd>Inter (Next.js/Tailwind default stack)</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Olivier Larose&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> smoothing + reveal choreography is close to what we want for the case-study scroll.</div>
+    </article>
+
+    <article class="card" data-cat="portfolio">
+      <span class="tag">PF · 04</span>
+      <h3><a class="ext" href="https://brittanychiang.com" target="_blank" rel="noopener">brittanychiang.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Minimalist professionalism with creative warmth</dd>
+        <dt>Technique</dt><dd>Dark theme + selective accent; cursor spotlight follows pointer over hero</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#0a192f"></span><span style="background:#64ffda"></span><span style="background:#ccd6f6"></span></span> #0A192F &middot; #64FFDA &middot; #CCD6F6</dd>
+        <dt>Type</dt><dd>Inter + SF Mono</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Brittany Chiang&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> the gold standard for dev-designer personal sites; calm palette, tight copy, cursor spotlight.</div>
+    </article>
+
+    <article class="card" data-cat="portfolio">
+      <span class="tag">PF · 05</span>
+      <h3><a class="ext" href="https://paco.me" target="_blank" rel="noopener">paco.me</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Minimalist craftsmanship with understated ambition</dd>
+        <dt>Technique</dt><dd>Sparse typographic layout; command-palette (&#8984;K) for keyboard-driven nav</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#000000"></span><span style="background:#666666"></span></span> #FFFFFF &middot; #000000 &middot; #666666</dd>
+        <dt>Type</dt><dd>Inter / serif mix; big leading</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Paco Coursey&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> command-palette is a viable &ldquo;nav&rdquo; pattern that signals technical fluency without being showy.</div>
+    </article>
+
+    <article class="card" data-cat="portfolio">
+      <span class="tag">PF · 06</span>
+      <h3><a class="ext" href="https://rauno.me" target="_blank" rel="noopener">rauno.me</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Minimalist sophistication with purposeful restraint</dd>
+        <dt>Technique</dt><dd>Monochrome typographic hierarchy; tactile copy-to-clipboard feedback chips</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#000000"></span><span style="background:#f5f5f5"></span></span> #FFFFFF &middot; #000000 &middot; #F5F5F5</dd>
+        <dt>Type</dt><dd>System sans; fine letter-spacing on meta labels</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Rauno Freiberg&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> benchmark for &ldquo;quiet density&rdquo; &mdash; a lot of content without looking busy.</div>
+    </article>
+
+    <article class="card" data-cat="portfolio">
+      <span class="tag">PF · 07</span>
+      <h3><a class="ext" href="https://ped.ro" target="_blank" rel="noopener">ped.ro</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Casual confidence with substantive expertise</dd>
+        <dt>Technique</dt><dd>Minimal nav; social-protocol icons as utility, not decoration</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#000000"></span><span style="background:#0a84ff"></span></span> #FFFFFF &middot; #000000 &middot; #0A84FF</dd>
+        <dt>Type</dt><dd>-apple-system stack</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;R0/0&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> shows how a minimal Radix-era designer site feels; reference for restraint, less directly useful.</div>
+    </article>
+
+    <article class="card" data-cat="portfolio">
+      <span class="tag">PF · 08</span>
+      <h3><a class="ext" href="https://emilkowal.ski" target="_blank" rel="noopener">emilkowal.ski</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Purposeful minimalism with engineering precision</dd>
+        <dt>Technique</dt><dd>Clip-path transitions and framer-motion physics; live animated mini-demos inline</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#000000"></span><span style="background:#ffffff"></span><span style="background:#6366f1"></span></span> #000000 &middot; #FFFFFF &middot; #6366F1</dd>
+        <dt>Type</dt><dd>Inter + JetBrains Mono</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Emil Kowalski&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> strongest pattern for &ldquo;animation as demo&rdquo; &mdash; each section argues via motion, not copy.</div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ================= STUDIOS ================= -->
+<section class="cat" id="studio">
+  <h2>Agencies / studios</h2>
+  <div class="grid">
+
+    <article class="card unreachable" data-cat="studio">
+      <span class="tag">ST · 01 · thin</span>
+      <h3><a class="ext" href="https://activetheory.net" target="_blank" rel="noopener">activetheory.net</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Cinematic sci-fi sophistication; WebGL flex</dd>
+        <dt>Technique</dt><dd>Full-bleed WebGL hero with per-section scene swaps; scroll-driven camera</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#1a1a1a"></span><span style="background:#ffffff"></span><span style="background:#0066ff"></span></span> #1A1A1A &middot; #FFFFFF &middot; #0066FF (approx)</dd>
+        <dt>Type</dt><dd>Geometric sans (Montserrat-like)</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Creative Digital Experiences&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> too heavy for a CV site, but scene-swap-per-section is a stealable structure.</div>
+    </article>
+
+    <article class="card" data-cat="studio">
+      <span class="tag">ST · 02</span>
+      <h3><a class="ext" href="https://resn.co.nz" target="_blank" rel="noopener">resn.co.nz</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Professional minimalism with nostalgic undertones</dd>
+        <dt>Technique</dt><dd>Legacy browser window as design metaphor; chrome-as-content</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#000000"></span><span style="background:#f5f5f5"></span></span> #FFFFFF &middot; #000000 &middot; #F5F5F5</dd>
+        <dt>Type</dt><dd>System sans</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Resn &mdash; Creative Digital Agency | Ideation, Design, and Development&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> mildly interesting; not a top candidate for deep dive.</div>
+    </article>
+
+    <article class="card unreachable" data-cat="studio">
+      <span class="tag">ST · 03 · 403</span>
+      <h3><a class="ext" href="https://ueno.co" target="_blank" rel="noopener">ueno.co</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Unreachable via WebFetch (403). Known baseline: editorial-meets-bold, kinetic headlines, playful voice</dd>
+        <dt>Technique</dt><dd>Oversized kinetic typography + full-viewport accent colors per section</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ff5c28"></span><span style="background:#ffffff"></span><span style="background:#111111"></span></span> #FF5C28 &middot; #FFFFFF &middot; #111111 (brand recall)</dd>
+        <dt>Type</dt><dd>GT Walsheim / custom display</dd>
+        <dt>H1</dt><dd class="h1q">(unreachable)</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> kinetic type is a tool, not a style &mdash; worth studying for section-hero typography only.</div>
+    </article>
+
+    <article class="card" data-cat="studio">
+      <span class="tag">ST · 04</span>
+      <h3><a class="ext" href="https://basement.studio" target="_blank" rel="noopener">basement.studio</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Bold, high-performance creativity; startup swagger</dd>
+        <dt>Technique</dt><dd>Full-bleed hero imagery with minimal overlays; smooth smooth-scroll + keyboard affordances</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#000000"></span><span style="background:#ffffff"></span><span style="background:#1a1a1a"></span></span> #000000 &middot; #FFFFFF &middot; #1A1A1A</dd>
+        <dt>Type</dt><dd>Inter / geometric sans</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;A digital studio &amp; branding powerhouse making cool shit that performs.&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> proof that voice + motion beats decoration; a near-baseline mood for us.</div>
+    </article>
+
+    <article class="card" data-cat="studio">
+      <span class="tag">ST · 05</span>
+      <h3><a class="ext" href="https://huncwot.com" target="_blank" rel="noopener">huncwot.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Aspirational innovation meets understated confidence</dd>
+        <dt>Technique</dt><dd>Evolving cinematic frames + AI-enhanced interactivity for project reveals</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#000000"></span><span style="background:#ffffff"></span><span style="background:#d4ff3a"></span></span> #000000 &middot; #FFFFFF &middot; bold accent per project</dd>
+        <dt>Type</dt><dd>Modern sans; custom in places</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Huncwot&rdquo; &middot; tagline &ldquo;Crafting digital products that AI can only dream of&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> that tagline is nearly a provocation for our positioning &mdash; study their copy hierarchy.</div>
+    </article>
+
+    <article class="card" data-cat="studio">
+      <span class="tag">ST · 06</span>
+      <h3><a class="ext" href="https://unseen.studio" target="_blank" rel="noopener">unseen.studio</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Audacious minimalism with dynamic energy</dd>
+        <dt>Technique</dt><dd>Spaced letterforms (U-N-S-E-E-N); drag-to-explore; &ldquo;click &amp; hold&rdquo; sound toggle</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#000000"></span><span style="background:#ffffff"></span><span style="background:#1a1a1a"></span></span> #000000 &middot; #FFFFFF &middot; #1A1A1A</dd>
+        <dt>Type</dt><dd>Custom display; grotesk</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Unseen Studio&reg;&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> letter-spacing animation as a name-reveal is a light trick that fits our name-first hero.</div>
+    </article>
+
+    <article class="card" data-cat="studio">
+      <span class="tag">ST · 07</span>
+      <h3><a class="ext" href="https://lusion.co" target="_blank" rel="noopener">lusion.co</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Visually striking, immersive innovation</dd>
+        <dt>Technique</dt><dd>3D/WebGL storytelling; scroll-triggered camera moves between scenes</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#000000"></span><span style="background:#ffffff"></span><span style="background:#ff6b35"></span></span> #000000 &middot; #FFFFFF &middot; #FF6B35</dd>
+        <dt>Type</dt><dd>Sans-serif display</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;We create 3D visual storytelling and interactive web experiences that help brands stand out.&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> aspirational ceiling for 3D integration; we&rsquo;d downsample this to a single scroll scene.</div>
+    </article>
+
+    <article class="card" data-cat="studio">
+      <span class="tag">ST · 08</span>
+      <h3><a class="ext" href="https://www.immersive-g.com" target="_blank" rel="noopener">immersive-g.com</a> <span class="mono" style="color:var(--ink-mute);font-size:10px">(ig.com.pt &rarr; ECONNREFUSED)</span></h3>
+      <dl>
+        <dt>Mood</dt><dd>Aspirational luxury meets cutting-edge innovation</dd>
+        <dt>Technique</dt><dd>3D immersive storytelling with Web3 integration; On/Off scroll toggle affordance</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#000000"></span><span style="background:#ffffff"></span><span style="background:#c0a080"></span></span> #000000 &middot; #FFFFFF &middot; #C0A080</dd>
+        <dt>Type</dt><dd>Geometric sans</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Transcend anything seen or felt before by crafting unparalleled experiences for ambitious brands.&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> copy tone too lofty for our warmth; palette &ldquo;black + warm gold&rdquo; is a contender.</div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ================= AWWWARDS ================= -->
+<section class="cat" id="awwwards">
+  <h2>Awwwards SOTY / SOTD 2024&ndash;26</h2>
+  <div class="grid">
+
+    <article class="card" data-cat="awwwards">
+      <span class="tag">AW · 01</span>
+      <h3><a class="ext" href="https://landonorris.com" target="_blank" rel="noopener">landonorris.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Aspirational performance + contemporary lifestyle swagger</dd>
+        <dt>Technique</dt><dd>Full-bleed trackside imagery + helmet gallery with hover-swap design variations</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#b3ff00"></span><span style="background:#1a1a1a"></span><span style="background:#ffffff"></span></span> #B3FF00 &middot; #1A1A1A &middot; #FFFFFF</dd>
+        <dt>Type</dt><dd>Custom geometric sans</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Lando Norris&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> the neon-lime-on-near-black combo is a serious contender for our accent palette.</div>
+    </article>
+
+    <article class="card" data-cat="awwwards">
+      <span class="tag">AW · 02</span>
+      <h3><a class="ext" href="https://igloo.inc" target="_blank" rel="noopener">igloo.inc</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Thin content returned; known aesthetic: glacial, crystalline, icy pastel WebGL</dd>
+        <dt>Technique</dt><dd>Frosted-glass 3D shards with parallax; scroll-driven ice-crack reveals (per SOTY gallery)</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#dbe9f4"></span><span style="background:#0b1a2b"></span><span style="background:#ffffff"></span></span> #DBE9F4 &middot; #0B1A2B &middot; #FFFFFF (approx)</dd>
+        <dt>Type</dt><dd>Display grotesk</dd>
+        <dt>H1</dt><dd class="h1q">(page-gated)</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> useful as a shader/material reference only &mdash; palette doesn&rsquo;t fit our warmth.</div>
+    </article>
+
+    <article class="card" data-cat="awwwards">
+      <span class="tag">AW · 03</span>
+      <h3><a class="ext" href="https://noomoagency.com" target="_blank" rel="noopener">noomoagency.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Sophisticated innovation meets collaborative partnership</dd>
+        <dt>Technique</dt><dd>Real-time WebGL scenes between case studies; heart-emoji toggle that animates logos</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#000000"></span><span style="background:#ffffff"></span><span style="background:#ff69b4"></span></span> #000000 &middot; #FFFFFF &middot; #FF69B4</dd>
+        <dt>Type</dt><dd>Modern sans</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;At Noomo, we create 3D storytelling websites and immersive digital experiences where craft and narrative become one.&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> cute but overbuilt for us; one micro-interaction per section is the takeaway.</div>
+    </article>
+
+    <article class="card" data-cat="awwwards">
+      <span class="tag">AW · 04</span>
+      <h3><a class="ext" href="https://manayerbamate.com" target="_blank" rel="noopener">manayerbamate.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Playful energy, casual authenticity</dd>
+        <dt>Technique</dt><dd>Layered parallax with illustrated organic shapes on gradient ground</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#00c853"></span><span style="background:#ffe082"></span><span style="background:#ffffff"></span></span> #00C853 &middot; #FFE082 &middot; #FFFFFF</dd>
+        <dt>Type</dt><dd>Contemporary geometric sans</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;Mana &mdash; Th&eacute; &agrave; boire&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> not our register &mdash; too consumer-beverage. Skip for deep dive.</div>
+    </article>
+
+    <article class="card" data-cat="awwwards">
+      <span class="tag">AW · 05</span>
+      <h3><a class="ext" href="https://opalcamera.com/opal-tadpole" target="_blank" rel="noopener">opalcamera.com/opal-tadpole</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Premium minimalism meets playful innovation</dd>
+        <dt>Technique</dt><dd>Product-centric macro photography + lifestyle context; scale comparison shots</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#000000"></span><span style="background:#4a90e2"></span></span> #FFFFFF &middot; #000000 &middot; #4A90E2</dd>
+        <dt>Type</dt><dd>Modern sans system stack</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;A new species of webcam.&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> Apple-adjacent product marketing aesthetic; H1 style worth borrowing (one noun, one claim).</div>
+    </article>
+
+    <article class="card" data-cat="awwwards">
+      <span class="tag">AW · 06</span>
+      <h3><a class="ext" href="https://dontboardme.com" target="_blank" rel="noopener">dontboardme.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Playful, trustworthy, pet-centric warmth</dd>
+        <dt>Technique</dt><dd>Gamified entrance (bounce a ball to enter); numbered carousel of care scenarios</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#ffffff"></span><span style="background:#000000"></span><span style="background:#ffd700"></span></span> #FFFFFF &middot; #000000 &middot; #FFD700</dd>
+        <dt>Type</dt><dd>Geometric sans</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;A tired dog is a happy dog!&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> tonally off; keep only as a reminder that SOTY rewards personality over polish.</div>
+    </article>
+
+    <article class="card" data-cat="awwwards">
+      <span class="tag">AW · 07</span>
+      <h3><a class="ext" href="https://kprverse.com" target="_blank" rel="noopener">kprverse.com</a></h3>
+      <dl>
+        <dt>Mood</dt><dd>Mysterious sci-fi infiltration</dd>
+        <dt>Technique</dt><dd>Terminal/console chrome as interface; encrypted-protocol loading states; type-reveal</dd>
+        <dt>Palette</dt><dd><span class="swatch"><span style="background:#000000"></span><span style="background:#ffffff"></span><span style="background:#ff0000"></span></span> #000000 &middot; #FFFFFF &middot; #FF0000</dd>
+        <dt>Type</dt><dd>Monospace (courier-family)</dd>
+        <dt>H1</dt><dd class="h1q">&ldquo;KPR | Story&rdquo; &middot; &ldquo;activate console for access&hellip;&rdquo;</dd>
+      </dl>
+      <div class="why"><b>For dr-cv:</b> terminal aesthetic is adjacent to our agentic register &mdash; one of the more interesting steals.</div>
+    </article>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="cols">
+    <div>
+      <strong style="color:var(--ink)">Unreachable / thin</strong><br>
+      <span class="mono">openai.com</span> &middot; 403 Forbidden (also chatgpt.com)<br>
+      <span class="mono">ueno.co</span> &middot; 403 Forbidden (also /about)<br>
+      <span class="mono">ig.com.pt</span> &middot; ECONNREFUSED (used immersive-g.com instead)<br>
+      <span class="mono">activetheory.net</span> &middot; thin markup returned; filled from general knowledge<br>
+      <span class="mono">igloo.inc</span> &middot; thin markup returned; filled from SOTY notes
+    </div>
+    <div>
+      <strong style="color:var(--ink)">Round 1 metadata</strong><br>
+      <span class="mono">generated</span> 2026-05-08<br>
+      <span class="mono">baseline</span> huly.io (docs/references/huly-design-system.md)<br>
+      <span class="mono">categories</span> ai=7, portfolio=8, studio=8, awwwards=7<br>
+      <span class="mono">next</span> round-02/ &mdash; deep-dive 8 shortlisted sites
+    </div>
+  </div>
+
+  <details open>
+    <summary>Top 8 shortlist for Round 2 deep dive</summary>
+    <ol>
+      <li><b>linear.app</b> <span class="rat">Directly in our register: &ldquo;teams and agents&rdquo; framing mirrors &ldquo;profile + agentic AI&rdquo;. Study their agent-activity mockups, spacing, and how they balance dark palette with a single indigo accent.</span></li>
+      <li><b>cursor.com</b> <span class="rat">Status-card grid (&ldquo;In Progress&rdquo;, &ldquo;Ready for Review&rdquo;) is a direct steal for &ldquo;agents doing work on my behalf&rdquo;. Extract hero composition, card motion, and gradient treatment.</span></li>
+      <li><b>emilkowal.ski</b> <span class="rat">Gold standard for &ldquo;animation as proof&rdquo;. Every section is a live mini-demo, not a screenshot. We want that pattern for our skills sections.</span></li>
+      <li><b>brittanychiang.com</b> <span class="rat">Calmest benchmark for a personal dev-designer site: cursor spotlight, dark navy palette, tight content. Useful floor to compare our ambitions against.</span></li>
+      <li><b>rauno.me</b> <span class="rat">Masterclass in &ldquo;quiet density&rdquo; &mdash; lots of content, no visual noise. Study type hierarchy, labels, and how work is indexed without screenshots.</span></li>
+      <li><b>huncwot.com</b> <span class="rat">Their tagline (&ldquo;crafting digital products that AI can only dream of&rdquo;) is the provocation we&rsquo;re answering. Study copy hierarchy, case-study pacing, and their aggressive accent color choices.</span></li>
+      <li><b>anthropic.com</b> <span class="rat">Warm editorial tone is the closest match for our &ldquo;serio + c&aacute;lido&rdquo; brand. Study spacing rhythm, muted palette, and how they avoid the cold-clinical AI trap.</span></li>
+      <li><b>landonorris.com</b> <span class="rat">Neon-lime on near-black is the boldest accent option on our list. Test whether that kind of saturated accent coexists with editorial warmth, or forces us to choose.</span></li>
+    </ol>
+  </details>
+</footer>
+
+</body>
+</html>

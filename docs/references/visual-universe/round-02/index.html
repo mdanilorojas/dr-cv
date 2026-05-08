@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Round 2 · AI/agentic tier-1 · deep dive (9 sites)</title>
+<style>
+  :root{
+    --bg:#07080d;
+    --bg-alt:#0d0f17;
+    --bg-card:#11131c;
+    --border:#1f2230;
+    --border-soft:#181a26;
+    --text:#e8eaf0;
+    --text-muted:#8a8fa3;
+    --text-dim:#5a5f72;
+    --accent:#FF8964;
+    --accent-dim:#7a3f2d;
+    --ok:#7ee0a8;
+    --warn:#ffd37a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;line-height:1.55}
+  code,pre,.mono{font-family:'JetBrains Mono','Fira Code',Consolas,monospace}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1440px;margin:0 auto;padding:48px 32px 120px}
+  header.page{border-bottom:1px solid var(--border);padding-bottom:32px;margin-bottom:48px}
+  .eyebrow{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;margin-bottom:12px}
+  h1{font-size:42px;line-height:1.08;letter-spacing:-0.02em;margin:0 0 12px;font-weight:700}
+  h2{font-size:24px;letter-spacing:-0.01em;margin:0 0 16px;font-weight:600}
+  h3{font-size:16px;margin:0 0 8px;font-weight:600;color:var(--text)}
+  .sub{color:var(--text-muted);font-size:16px;max-width:780px;margin:0}
+  .meta{color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:11px;margin-top:18px;display:flex;gap:24px;flex-wrap:wrap}
+  .meta span b{color:var(--text-muted);font-weight:500}
+
+  /* Matrix table */
+  section.matrix{margin-bottom:80px}
+  .matrix-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;background:var(--bg-alt)}
+  table.matrix-tbl{border-collapse:collapse;width:100%;min-width:1600px;font-size:11.5px}
+  table.matrix-tbl th, table.matrix-tbl td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border-soft);border-right:1px solid var(--border-soft);min-width:140px}
+  table.matrix-tbl th{background:#0a0c14;color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;position:sticky;top:0}
+  table.matrix-tbl th:first-child, table.matrix-tbl td:first-child{position:sticky;left:0;background:#0a0c14;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;min-width:130px;z-index:2}
+  table.matrix-tbl tr:hover td{background:#0f1119}
+  .swatch{display:inline-block;width:10px;height:10px;border-radius:2px;border:1px solid var(--border);vertical-align:middle;margin-right:4px}
+
+  /* Site cards */
+  .site{border:1px solid var(--border);background:var(--bg-alt);border-radius:14px;padding:32px;margin-bottom:32px}
+  .site-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border-soft);flex-wrap:wrap;gap:12px}
+  .site-head .t{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .site-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim)}
+  .site-name{font-size:26px;font-weight:700;letter-spacing:-0.015em}
+  .site-url{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted)}
+  .tag{display:inline-block;padding:3px 8px;border:1px solid var(--border);border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-left:6px}
+  .tag.dark{color:var(--warn);border-color:#433a1f}
+  .tag.light{color:#a7b4e0;border-color:#2a3350}
+  .tag.accent{color:var(--accent);border-color:var(--accent-dim)}
+
+  .grid-6{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  .cat{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:8px;padding:18px}
+  .cat .label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px}
+  .cat h4{margin:0 0 12px;font-size:15px;font-weight:600}
+  .cat ul{margin:0;padding-left:16px;color:var(--text-muted)}
+  .cat ul li{margin-bottom:5px;font-size:12.5px;line-height:1.5}
+  .cat ul li b, .cat p b{color:var(--text);font-weight:500}
+  .cat p{margin:0 0 8px;color:var(--text-muted);font-size:12.5px}
+  .palette-row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;background:#0a0c14;border:1px solid var(--border-soft);border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-muted)}
+  .chip .sw{width:12px;height:12px;border-radius:2px;border:1px solid #2a2e40}
+  .quote{padding:10px 14px;border-left:2px solid var(--accent);background:#0a0c14;color:var(--text);font-style:italic;font-size:13px;margin:6px 0;border-radius:0 4px 4px 0}
+  .slack-note{padding:14px 16px;background:linear-gradient(180deg,#120e0a,#0a0c14);border:1px solid var(--accent-dim);border-radius:8px;color:var(--text);font-size:13px;line-height:1.6}
+  .slack-note::before{content:'# hero-vibe';font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);display:block;margin-bottom:6px;letter-spacing:0.08em}
+
+  /* Insights */
+  section.insights{margin-top:80px;background:linear-gradient(160deg,#120e0a 0%,#0a0c14 60%);border:1px solid var(--accent-dim);border-radius:14px;padding:40px 44px}
+  section.insights h2{color:var(--accent);font-size:22px;margin-bottom:8px;letter-spacing:-0.01em}
+  section.insights .sub{color:var(--text);margin-bottom:24px}
+  section.insights ol{padding-left:22px;margin:0;counter-reset:i}
+  section.insights ol li{margin-bottom:14px;color:var(--text);font-size:14.5px;line-height:1.6;padding-left:6px}
+  section.insights ol li b{color:var(--accent);font-weight:600}
+  section.insights ol li .mono-inline{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);background:#0a0c14;padding:1px 6px;border-radius:3px;border:1px solid var(--border-soft)}
+
+  footer.page{margin-top:64px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media (max-width:800px){
+    .grid-6{grid-template-columns:1fr}
+    h1{font-size:30px}
+    .wrap{padding:24px 16px 60px}
+    .site{padding:20px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="page">
+  <div class="eyebrow">Visual universe · round 02 of 10</div>
+  <h1>AI / agentic tier-1 landings — deep dive</h1>
+  <p class="sub">Nine references that shape the visual language Danilo will be compared to on the "Agentic Designer" landing. Each site is extracted across six categories (palette, type, motion, copy, layout, hero vibe) to isolate the moves that read as "2026 AI-native" vs generic SaaS.</p>
+  <div class="meta">
+    <span><b>date</b> 2026-05-08</span>
+    <span><b>sites</b> cursor · v0 · vercel · linear · raycast · anthropic · replicate · inkeep · langchain</span>
+    <span><b>method</b> WebFetch + rendered-copy inspection</span>
+    <span><b>next</b> round 03 (designer portfolios)</span>
+  </div>
+</header>
+
+<!-- ================== SHARED PATTERNS MATRIX ================== -->
+<section class="matrix">
+  <h2>Shared patterns matrix</h2>
+  <p class="sub" style="margin-bottom:22px">Rows = extraction category. Columns = site. Cells kept deliberately short so trends pop visually.</p>
+  <div class="matrix-wrap">
+  <table class="matrix-tbl">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Cursor</th>
+        <th>v0.app</th>
+        <th>Vercel</th>
+        <th>Linear</th>
+        <th>Raycast</th>
+        <th>Anthropic</th>
+        <th>Replicate</th>
+        <th>Inkeep</th>
+        <th>LangChain</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Base theme</td>
+        <td>Light</td>
+        <td>Light</td>
+        <td>Dark</td>
+        <td>Dark</td>
+        <td>Light</td>
+        <td>Light / cream</td>
+        <td>Light</td>
+        <td>Light</td>
+        <td>Light w/ dark bands</td>
+      </tr>
+      <tr>
+        <td>BG primary</td>
+        <td><span class="swatch" style="background:#ffffff"></span>#ffffff</td>
+        <td><span class="swatch" style="background:#ffffff"></span>#ffffff</td>
+        <td><span class="swatch" style="background:#000000"></span>~#000</td>
+        <td><span class="swatch" style="background:#0a0a0c"></span>~#0a0a0c</td>
+        <td><span class="swatch" style="background:#ffffff"></span>#ffffff</td>
+        <td><span class="swatch" style="background:#f5f1ec"></span>cream</td>
+        <td><span class="swatch" style="background:#ffffff"></span>#ffffff</td>
+        <td><span class="swatch" style="background:#ffffff"></span>#ffffff</td>
+        <td><span class="swatch" style="background:#ffffff"></span>#ffffff</td>
+      </tr>
+      <tr>
+        <td>Accent 1</td>
+        <td><span class="swatch" style="background:#0ea5e9"></span>sky</td>
+        <td><span class="swatch" style="background:#0070F3"></span>Vercel blue</td>
+        <td><span class="swatch" style="background:#00e0ff"></span>cyan</td>
+        <td><span class="swatch" style="background:#5e6ad2"></span>indigo</td>
+        <td><span class="swatch" style="background:#007AFF"></span>iOS blue</td>
+        <td><span class="swatch" style="background:#cc785c"></span>terracotta</td>
+        <td><span class="swatch" style="background:#0ea5e9"></span>cyan</td>
+        <td><span class="swatch" style="background:#0066FF"></span>royal blue</td>
+        <td><span class="swatch" style="background:#0066CC"></span>blue</td>
+      </tr>
+      <tr>
+        <td>Accent 2</td>
+        <td>indigo #6366f1</td>
+        <td>magenta #FF0080</td>
+        <td>purple (hover)</td>
+        <td>— (mono)</td>
+        <td>purple 3D cube</td>
+        <td>deep plum</td>
+        <td>warm orange</td>
+        <td>charcoal</td>
+        <td>cyan #00D9FF</td>
+      </tr>
+      <tr>
+        <td>Body typeface</td>
+        <td>system-ui</td>
+        <td>system-ui</td>
+        <td>Geist</td>
+        <td>Inter Variable</td>
+        <td>system-ui (Apple)</td>
+        <td>Styrene / serif mix</td>
+        <td>Inter-ish</td>
+        <td>system-ui</td>
+        <td>system-ui / Geist</td>
+      </tr>
+      <tr>
+        <td>Mono usage</td>
+        <td>heavy (code demos)</td>
+        <td>none seen</td>
+        <td>CLI blocks</td>
+        <td>IDE mock</td>
+        <td>keyboard keys</td>
+        <td>minimal</td>
+        <td>code snippets</td>
+        <td>none</td>
+        <td>code snippets</td>
+      </tr>
+      <tr>
+        <td>H1 hero</td>
+        <td>"extraordinarily productive"</td>
+        <td>"What do you want to create?"</td>
+        <td>"Build and deploy on the AI Cloud."</td>
+        <td>"product development system for teams and agents"</td>
+        <td>"Your shortcut to everything."</td>
+        <td>"safety at the frontier"</td>
+        <td>"Run AI with an API."</td>
+        <td>"Add AI Teammates"</td>
+        <td>"Ship agents that work wow"</td>
+      </tr>
+      <tr>
+        <td>H1 size (~)</td>
+        <td>56–64px</td>
+        <td>56–64px</td>
+        <td>48–64px</td>
+        <td>56px</td>
+        <td>48–56px</td>
+        <td>64px+</td>
+        <td>48–60px</td>
+        <td>48–56px</td>
+        <td>48–56px</td>
+      </tr>
+      <tr>
+        <td>Primary CTA</td>
+        <td>Download for macOS</td>
+        <td>Get Started</td>
+        <td>Start Deploying</td>
+        <td>Get started</td>
+        <td>Download for Mac</td>
+        <td>Try Claude</td>
+        <td>Get started for free</td>
+        <td>Get a demo</td>
+        <td>Start building</td>
+      </tr>
+      <tr>
+        <td>Secondary CTA</td>
+        <td>Try mobile agent →</td>
+        <td>Browse all</td>
+        <td>Get a Demo</td>
+        <td>Contact sales</td>
+        <td>Download for Windows</td>
+        <td>Read announcement</td>
+        <td>Explore models</td>
+        <td>Learn More</td>
+        <td>Get a demo</td>
+      </tr>
+      <tr>
+        <td>Motion tech</td>
+        <td>Framer Motion / video</td>
+        <td>scroll-fade, icon-loop</td>
+        <td>CSS only / static</td>
+        <td>Cloudflare img, static</td>
+        <td>Three.js cube + parallax</td>
+        <td>static editorial</td>
+        <td>static galleries</td>
+        <td>SVG curves, static</td>
+        <td>SVG hero</td>
+      </tr>
+      <tr>
+        <td>Hero device</td>
+        <td>IDE screen-recording</td>
+        <td>prompt input field</td>
+        <td>dashboard screenshot</td>
+        <td>issue-tracker mock</td>
+        <td>animated 3D cube</td>
+        <td>editorial headline only</td>
+        <td>model gallery grid</td>
+        <td>illustration + logos</td>
+        <td>illustrative SVG</td>
+      </tr>
+      <tr>
+        <td>Long-scroll</td>
+        <td>yes</td>
+        <td>yes</td>
+        <td>yes</td>
+        <td>yes</td>
+        <td>yes</td>
+        <td>yes</td>
+        <td>yes</td>
+        <td>yes</td>
+        <td>yes</td>
+      </tr>
+      <tr>
+        <td>Pricing on page</td>
+        <td>no (link)</td>
+        <td>no (link)</td>
+        <td>no (link)</td>
+        <td>no</td>
+        <td>no (link)</td>
+        <td>no</td>
+        <td>yes (table)</td>
+        <td>no</td>
+        <td>no</td>
+      </tr>
+      <tr>
+        <td>"Agent" word in H1</td>
+        <td><b style="color:var(--accent)">✓</b></td>
+        <td>—</td>
+        <td>— (AI Cloud)</td>
+        <td><b style="color:var(--accent)">✓</b></td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td><b style="color:var(--accent)">✓</b> (Teammates)</td>
+        <td><b style="color:var(--accent)">✓</b></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ================== SITE DEEP DIVES ================== -->
+
+<!-- 01 Cursor -->
+<section class="site">
+  <div class="site-head">
+    <div class="t"><span class="site-num">01</span><span class="site-name">Cursor</span><span class="tag light">light</span><span class="tag">code editor</span></div>
+    <span class="site-url">cursor.com</span>
+  </div>
+
+  <div class="grid-6">
+    <div class="cat">
+      <div class="label">A · palette</div>
+      <div class="palette-row">
+        <span class="chip"><span class="sw" style="background:#ffffff"></span>#ffffff bg</span>
+        <span class="chip"><span class="sw" style="background:#f8f8f8"></span>#f8f8f8 alt</span>
+        <span class="chip"><span class="sw" style="background:#000"></span>#000 text</span>
+        <span class="chip"><span class="sw" style="background:#666"></span>#666 muted</span>
+        <span class="chip"><span class="sw" style="background:#0ea5e9"></span>#0ea5e9 CTA</span>
+        <span class="chip"><span class="sw" style="background:#6366f1"></span>#6366f1 states</span>
+      </div>
+      <ul>
+        <li>Nearly achromatic surfaces — color carries meaning only on interactive elements.</li>
+        <li>Sky blue owns download CTAs, indigo owns link states and focus.</li>
+      </ul>
+    </div>
+
+    <div class="cat">
+      <div class="label">B · typography</div>
+      <ul>
+        <li><b>Body:</b> system stack (-apple, BlinkMac, Segoe UI)</li>
+        <li><b>Display:</b> same, weight 700–800</li>
+        <li><b>Mono:</b> Monaco / Courier for IDE demos — central to the aesthetic</li>
+        <li><b>H1:</b> ~56–64px fluid · tracking normal · leading 1.2</li>
+      </ul>
+    </div>
+
+    <div class="cat">
+      <div class="label">C · motion / shader tech</div>
+      <p>No WebGL/Three/Rive. Spring-based layout animation (Framer Motion style) + pre-rendered screen recordings as hero assets. "Shared element transitions" between IDE states.</p>
+    </div>
+
+    <div class="cat">
+      <div class="label">D · copy</div>
+      <div class="quote">"Built to make you extraordinarily productive, Cursor is the best way to code with AI."</div>
+      <ul>
+        <li><b>Subhead:</b> "Agents turn ideas into code"</li>
+        <li><b>CTA:</b> Download for macOS ⤓ / Try mobile agent →</li>
+        <li><b>H2 in order:</b> Agents turn ideas into code · Works autonomously, runs in parallel · In every tool, at every step</li>
+      </ul>
+    </div>
+
+    <div class="cat">
+      <div class="label">E · layout rhythm</div>
+      <ul>
+        <li>Light-dominant; section alternation is subtle (#fff ↔ #f8f8f8)</li>
+        <li>Multi-column grids for testimonials + feature cards</li>
+        <li>Long-scroll with sticky top nav · pricing linked, not inline</li>
+      </ul>
+    </div>
+
+    <div class="cat">
+      <div class="label">F · hero (slack note)</div>
+      <div class="slack-note">Bright near-white IDE canvas with a full-bleed screen recording of Cursor doing agentic edits on <code>Dashboard.tsx</code>. Copy is declarative, almost Apple-like — "extraordinarily productive". Sky-blue download pill pops against the grayscale stage.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 v0 -->
+<section class="site">
+  <div class="site-head">
+    <div class="t"><span class="site-num">02</span><span class="site-name">v0.app</span><span class="tag light">light</span><span class="tag">generative UI</span></div>
+    <span class="site-url">v0.app (ex-v0.dev)</span>
+  </div>
+  <div class="grid-6">
+    <div class="cat">
+      <div class="label">A · palette</div>
+      <div class="palette-row">
+        <span class="chip"><span class="sw" style="background:#fff"></span>#fff bg</span>
+        <span class="chip"><span class="sw" style="background:#f3f4f6"></span>#f3f4f6 alt</span>
+        <span class="chip"><span class="sw" style="background:#1f2937"></span>#1f2937 text</span>
+        <span class="chip"><span class="sw" style="background:#6b7280"></span>#6b7280 muted</span>
+        <span class="chip"><span class="sw" style="background:#0070F3"></span>#0070F3 Vercel blue</span>
+        <span class="chip"><span class="sw" style="background:#FF0080"></span>#FF0080 magenta</span>
+      </div>
+      <ul><li>Vercel's canonical blue + magenta, applied to template thumbnails and accents.</li></ul>
+    </div>
+    <div class="cat">
+      <div class="label">B · typography</div>
+      <ul>
+        <li><b>Body/Display:</b> system sans, bold 600–700</li>
+        <li><b>H1:</b> ~3.5–4rem · tight tracking</li>
+        <li>Leading ~1.5–1.6 for body, product-style</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">C · motion / shader tech</div>
+      <p>No WebGL/Three. Scroll-triggered fade + stagger on template gallery. Subtle parallax on the integration-icon ticker. Hover states on cards (not detectable from static markup).</p>
+    </div>
+    <div class="cat">
+      <div class="label">D · copy</div>
+      <div class="quote">"What do you want to create?"</div>
+      <ul>
+        <li><b>Subhead:</b> "v0 Max"</li>
+        <li><b>CTA:</b> Get Started / Browse all</li>
+        <li><b>H2 in order:</b> Start with a template · Prompt. Build. Publish. · Sync with a repo</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">E · layout rhythm</div>
+      <ul>
+        <li>Light-only, no dark toggle on landing</li>
+        <li>Multi-column (4-up templates on desktop), single-column intent above fold</li>
+        <li>Long-scroll with fixed header · pricing linked only</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">F · hero (slack note)</div>
+      <div class="slack-note">A giant prompt input field is the hero — no screenshot, no illustration. The whole first screen reads like a search engine for software: question headline, input, and a rail of starter templates below. Feels very ChatGPT-homepage crossed with a Vercel dashboard.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 Vercel -->
+<section class="site">
+  <div class="site-head">
+    <div class="t"><span class="site-num">03</span><span class="site-name">Vercel</span><span class="tag dark">dark</span><span class="tag">AI cloud</span></div>
+    <span class="site-url">vercel.com</span>
+  </div>
+  <div class="grid-6">
+    <div class="cat">
+      <div class="label">A · palette</div>
+      <div class="palette-row">
+        <span class="chip"><span class="sw" style="background:#000"></span>#000 bg</span>
+        <span class="chip"><span class="sw" style="background:#111"></span>~#111 alt</span>
+        <span class="chip"><span class="sw" style="background:#fff"></span>#fff text</span>
+        <span class="chip"><span class="sw" style="background:#888"></span>~#888 muted</span>
+        <span class="chip"><span class="sw" style="background:#00e0ff"></span>electric cyan</span>
+        <span class="chip"><span class="sw" style="background:#7c3aed"></span>purple hover</span>
+      </div>
+      <ul><li>Pure OLED black with bright CTA as single color hit. Logo wall uses white-on-black.</li></ul>
+    </div>
+    <div class="cat">
+      <div class="label">B · typography</div>
+      <ul>
+        <li><b>Body:</b> Geist / system fallback</li>
+        <li><b>Display:</b> Geist bold, very tight tracking on H1</li>
+        <li><b>Mono:</b> code + CLI sections</li>
+        <li>H1 ~48–64px</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">C · motion / shader tech</div>
+      <p>No WebGL in the source we inspected — mostly static product shots + CSS transitions. Known from past versions: they reserve motion for animated gradient beams behind the hero "AI Cloud" wordmark.</p>
+    </div>
+    <div class="cat">
+      <div class="label">D · copy</div>
+      <div class="quote">"Build and deploy on the AI Cloud."</div>
+      <ul>
+        <li><b>Subhead:</b> "Vercel provides the developer tools and cloud infrastructure to build, scale, and secure a faster, more personalized web."</li>
+        <li><b>CTA:</b> Start Deploying / Get a Demo</li>
+        <li><b>H2:</b> Develop with your favorite tools · Launch globally, instantly · Keep pushing</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">E · layout rhythm</div>
+      <ul>
+        <li>Dark all the way; contrast comes from product screenshots</li>
+        <li>Multi-column feature grid + logo bar</li>
+        <li>Long-scroll, sticky nav, pricing linked</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">F · hero (slack note)</div>
+      <div class="slack-note">OLED-black canvas. Huge white headline "Build and deploy on the AI Cloud." Cyan Start-Deploying pill. Behind the type, a restrained atmospheric gradient that suggests infrastructure — no characters, no mascots. Pure utility-forward.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 Linear -->
+<section class="site">
+  <div class="site-head">
+    <div class="t"><span class="site-num">04</span><span class="site-name">Linear</span><span class="tag dark">dark</span><span class="tag accent">agents in H1</span></div>
+    <span class="site-url">linear.app</span>
+  </div>
+  <div class="grid-6">
+    <div class="cat">
+      <div class="label">A · palette</div>
+      <div class="palette-row">
+        <span class="chip"><span class="sw" style="background:#0a0a0c"></span>~#0a0a0c bg</span>
+        <span class="chip"><span class="sw" style="background:#16161a"></span>~#16161a alt</span>
+        <span class="chip"><span class="sw" style="background:#fff"></span>#fff text</span>
+        <span class="chip"><span class="sw" style="background:#8a8f98"></span>#8a8f98 muted</span>
+        <span class="chip"><span class="sw" style="background:#5e6ad2"></span>#5e6ad2 indigo</span>
+      </div>
+      <ul><li>Famous Linear indigo is almost the only hue — product screenshots carry subtle teal/green for statuses.</li></ul>
+    </div>
+    <div class="cat">
+      <div class="label">B · typography</div>
+      <ul>
+        <li><b>Body/Display:</b> Inter Variable (known from Linear brand)</li>
+        <li>Tight -0.02em tracking on H1, leading ~1.1</li>
+        <li>Mono visible in IDE/issue mocks only</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">C · motion / shader tech</div>
+      <p>Static imagery in current version — no WebGL in page source. Previously-famous for subtle gradient meshes behind hero; current iteration leans into product screenshots delivered by Cloudflare Images.</p>
+    </div>
+    <div class="cat">
+      <div class="label">D · copy</div>
+      <div class="quote">"The product development system for teams and agents"</div>
+      <ul>
+        <li><b>Subhead:</b> "Purpose-built for planning and building products. Designed for the AI era."</li>
+        <li><b>CTA:</b> Get started / Contact sales</li>
+        <li><b>H2:</b> Make product operations self-driving · Define the product direction · Move work forward across teams and agents</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">E · layout rhythm</div>
+      <ul>
+        <li>Dark throughout, extremely consistent</li>
+        <li>Multi-column grids; sidebar nav in product shots</li>
+        <li>Long-scroll; no pricing inline</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">F · hero (slack note)</div>
+      <div class="slack-note">Near-black stage, razor-precise Inter, and a product screenshot of Linear showing <em>agents</em> doing work alongside humans. The word "agents" lives in the H1 — this is the clearest signal Linear is rebranding from "issue tracker" to "agent ops".</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Raycast -->
+<section class="site">
+  <div class="site-head">
+    <div class="t"><span class="site-num">05</span><span class="site-name">Raycast</span><span class="tag light">light</span><span class="tag">3D cube hero</span></div>
+    <span class="site-url">raycast.com</span>
+  </div>
+  <div class="grid-6">
+    <div class="cat">
+      <div class="label">A · palette</div>
+      <div class="palette-row">
+        <span class="chip"><span class="sw" style="background:#fff"></span>#fff</span>
+        <span class="chip"><span class="sw" style="background:#f5f5f5"></span>#f5f5f5</span>
+        <span class="chip"><span class="sw" style="background:#1a1a1a"></span>#1a1a1a</span>
+        <span class="chip"><span class="sw" style="background:#666"></span>#666</span>
+        <span class="chip"><span class="sw" style="background:#007AFF"></span>#007AFF CTA</span>
+        <span class="chip"><span class="sw" style="background:#6366f1"></span>indigo cube</span>
+      </div>
+      <ul><li>Purple gradient only lives inside the 3D cube — the surrounding UI stays grayscale so the cube steals the show.</li></ul>
+    </div>
+    <div class="cat">
+      <div class="label">B · typography</div>
+      <ul>
+        <li><b>Body/Display:</b> Apple system stack, 600–700 for headings</li>
+        <li><b>Mono:</b> keyboard-key styling (⌘, ⇧) — part of the brand</li>
+        <li>H1 ~48–56px · leading 1.2</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">C · motion / shader tech</div>
+      <p>Three.js or Babylon.js-style 3D cube that rotates/floats, likely mouse-parallax responsive. Scroll-triggered reveals on extension cards. No Lottie/Rive detected.</p>
+    </div>
+    <div class="cat">
+      <div class="label">D · copy</div>
+      <div class="quote">"Your shortcut to everything."</div>
+      <ul>
+        <li><b>Subhead:</b> "A collection of powerful productivity tools all within an extendable…"</li>
+        <li><b>CTA:</b> Download for Mac / Download for Windows (beta)</li>
+        <li><b>H2:</b> It's not about saving time. · There's an extension for that. · Your Mac just got smarter.</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">E · layout rhythm</div>
+      <ul>
+        <li>Single light theme — no dark toggle on marketing page</li>
+        <li>Multi-column extension grid; single-column narrative hero</li>
+        <li>Long-scroll · pricing in nav only</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">F · hero (slack note)</div>
+      <div class="slack-note">White stage + a floating glass-morphic 3D cube sitting next to the headline. Feels like Apple's marketing page met a Figma ad. The cube is the entire brand — everything else is deliberately quiet so it shines.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 Anthropic -->
+<section class="site">
+  <div class="site-head">
+    <div class="t"><span class="site-num">06</span><span class="site-name">Anthropic</span><span class="tag light">cream</span><span class="tag">editorial</span></div>
+    <span class="site-url">anthropic.com</span>
+  </div>
+  <div class="grid-6">
+    <div class="cat">
+      <div class="label">A · palette</div>
+      <div class="palette-row">
+        <span class="chip"><span class="sw" style="background:#f5f1ec"></span>cream bg</span>
+        <span class="chip"><span class="sw" style="background:#fff"></span>#fff alt</span>
+        <span class="chip"><span class="sw" style="background:#2b2b2b"></span>charcoal text</span>
+        <span class="chip"><span class="sw" style="background:#7a7a7a"></span>gray muted</span>
+        <span class="chip"><span class="sw" style="background:#cc785c"></span>#cc785c terracotta</span>
+      </div>
+      <ul><li>Paper-like cream + terracotta is unmistakably Anthropic — feels more book publisher than SaaS.</li></ul>
+    </div>
+    <div class="cat">
+      <div class="label">B · typography</div>
+      <ul>
+        <li><b>Body:</b> Styrene B (sans) + Tiempos-like serif for editorial moments</li>
+        <li>Headlines very large (64px+), generous leading</li>
+        <li>Letter-spacing neutral, almost magazine</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">C · motion / shader tech</div>
+      <p>Effectively none on the homepage — static editorial imagery and announcement cards. Motion is reserved for deep product pages (Claude Artifacts, etc.).</p>
+    </div>
+    <div class="cat">
+      <div class="label">D · copy</div>
+      <div class="quote">"AI research and products that put safety at the frontier"</div>
+      <ul>
+        <li><b>Subhead:</b> "AI will have a vast impact on the world. Anthropic is a public benefit corporation dedicated to securing its benefits and mitigating its risks."</li>
+        <li><b>CTA:</b> Try Claude / Read announcement</li>
+        <li><b>H2:</b> Project Glasswing · Latest releases · At Anthropic, we build AI to serve humanity's long-term well-being</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">E · layout rhythm</div>
+      <ul>
+        <li>Single-column, alternating content blocks</li>
+        <li>Cream base with occasional white cards</li>
+        <li>Long-scroll editorial · no pricing</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">F · hero (slack note)</div>
+      <div class="slack-note">Warm cream background, oversized serif-adjacent H1 about safety, two buttons (Try Claude + Read announcement). No screenshots, no illustrations — the hero is pure typographic authority. Looks like a think-tank report cover more than a product landing.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 Replicate -->
+<section class="site">
+  <div class="site-head">
+    <div class="t"><span class="site-num">07</span><span class="site-name">Replicate</span><span class="tag light">light</span><span class="tag">pricing-forward</span></div>
+    <span class="site-url">replicate.com</span>
+  </div>
+  <div class="grid-6">
+    <div class="cat">
+      <div class="label">A · palette</div>
+      <div class="palette-row">
+        <span class="chip"><span class="sw" style="background:#fff"></span>#fff</span>
+        <span class="chip"><span class="sw" style="background:#f5f5f5"></span>#f5f5f5</span>
+        <span class="chip"><span class="sw" style="background:#1a1a1a"></span>#1a1a1a</span>
+        <span class="chip"><span class="sw" style="background:#666"></span>#666</span>
+        <span class="chip"><span class="sw" style="background:#0ea5e9"></span>cyan CTA</span>
+        <span class="chip"><span class="sw" style="background:#ff7a3d"></span>warm orange</span>
+      </div>
+      <ul><li>Model-showcase cards use saturated model thumbnails as the color — chrome stays neutral.</li></ul>
+    </div>
+    <div class="cat">
+      <div class="label">B · typography</div>
+      <ul>
+        <li><b>Body:</b> system or Inter-ish</li>
+        <li><b>Display:</b> same, bold, ~48–60px H1</li>
+        <li><b>Mono:</b> critical — every card has a one-liner code sample</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">C · motion / shader tech</div>
+      <p>No WebGL. Hero is a static grid of generated outputs — image/video stills that do the motion-advertising <em>for</em> the page without a shader. Long-scroll, no parallax.</p>
+    </div>
+    <div class="cat">
+      <div class="label">D · copy</div>
+      <div class="quote">"Run AI with an API."</div>
+      <ul>
+        <li><b>Subhead:</b> "Run and fine-tune models. Deploy custom models. All with one line of code."</li>
+        <li><b>CTA:</b> Get started for free / Explore models</li>
+        <li><b>H2:</b> How it works · Run models · Fine-tune models with your own data</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">E · layout rhythm</div>
+      <ul>
+        <li>Single-column narrative → multi-column model gallery</li>
+        <li>Pricing table <b>is</b> on the page — rare among peers</li>
+        <li>Long-scroll, no tab SPA</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">F · hero (slack note)</div>
+      <div class="slack-note">A no-frills white page whose hero is one tight sentence + a one-line curl snippet + a gallery of AI-generated outputs. The outputs themselves (portraits, video stills) are the color. Feels like GitHub's marketing ethos applied to AI inference.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 Inkeep -->
+<section class="site">
+  <div class="site-head">
+    <div class="t"><span class="site-num">08</span><span class="site-name">Inkeep</span><span class="tag light">light</span><span class="tag accent">"teammates"</span></div>
+    <span class="site-url">inkeep.com</span>
+  </div>
+  <div class="grid-6">
+    <div class="cat">
+      <div class="label">A · palette</div>
+      <div class="palette-row">
+        <span class="chip"><span class="sw" style="background:#fff"></span>#fff</span>
+        <span class="chip"><span class="sw" style="background:#eaf1ff"></span>blue gradient</span>
+        <span class="chip"><span class="sw" style="background:#000"></span>#000 text</span>
+        <span class="chip"><span class="sw" style="background:#707070"></span>gray muted</span>
+        <span class="chip"><span class="sw" style="background:#0066FF"></span>#0066FF</span>
+      </div>
+      <ul><li>Only royal blue + check-mark iconography — feels enterprise, not playful.</li></ul>
+    </div>
+    <div class="cat">
+      <div class="label">B · typography</div>
+      <ul>
+        <li><b>Body/Display:</b> system sans (Inter-ish)</li>
+        <li>H1 ~48–56px · multi-line</li>
+        <li>No mono on the page</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">C · motion / shader tech</div>
+      <p>Zero WebGL/Canvas/Rive/Lottie. Decorative SVG curves as static accent. Next.js image pipeline with lazy-load. No scroll-triggered wow.</p>
+    </div>
+    <div class="cat">
+      <div class="label">D · copy</div>
+      <div class="quote">"Add AI Teammates to your customer experience team"</div>
+      <ul>
+        <li><b>Subhead:</b> "Deploy AI teammates that understand your data, product, knowledge, and tools."</li>
+        <li><b>CTA:</b> Get a demo / Learn More</li>
+        <li><b>H2:</b> Answer complex customer questions · Give your CX teams a personal assistant · Keep your knowledge base always up to date</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">E · layout rhythm</div>
+      <ul>
+        <li>Light, multi-column 3-up feature blocks</li>
+        <li>Anchor-section long-scroll</li>
+        <li>No pricing inline (demo-gated)</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">F · hero (slack note)</div>
+      <div class="slack-note">Bright white enterprise landing. "AI Teammates" framing is the move — positions agents as headcount, not tools. Visual tension is thin; the wordmark logos (Anthropic, Postman) carry the authority.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 LangChain -->
+<section class="site">
+  <div class="site-head">
+    <div class="t"><span class="site-num">09</span><span class="site-name">LangChain</span><span class="tag light">light</span><span class="tag accent">agents in H1</span></div>
+    <span class="site-url">langchain.com</span>
+  </div>
+  <div class="grid-6">
+    <div class="cat">
+      <div class="label">A · palette</div>
+      <div class="palette-row">
+        <span class="chip"><span class="sw" style="background:#fff"></span>#fff</span>
+        <span class="chip"><span class="sw" style="background:#f5f5f5"></span>#f5f5f5</span>
+        <span class="chip"><span class="sw" style="background:#1a1a1a"></span>#1a1a1a</span>
+        <span class="chip"><span class="sw" style="background:#666"></span>#666</span>
+        <span class="chip"><span class="sw" style="background:#0066CC"></span>#0066CC</span>
+        <span class="chip"><span class="sw" style="background:#00D9FF"></span>#00D9FF</span>
+      </div>
+      <ul><li>Classic dev-tool blues, no brand drama; cyan used as highlight accent.</li></ul>
+    </div>
+    <div class="cat">
+      <div class="label">B · typography</div>
+      <ul>
+        <li><b>Body:</b> system stack → Geist-adjacent</li>
+        <li>Generous 0.02em tracking on headlines, leading 1.3</li>
+        <li>Mono in code blocks (LangSmith examples)</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">C · motion / shader tech</div>
+      <p>No WebGL/Rive/Lottie. Hero is an SVG illustration (<code>Langchain-Hero.svg</code>). Section-reveal scroll animations likely but not confirmed in static HTML.</p>
+    </div>
+    <div class="cat">
+      <div class="label">D · copy</div>
+      <div class="quote">"Ship agents that work wow"</div>
+      <ul>
+        <li><b>Subhead:</b> "Observe, evaluate, and deploy agents with LangSmith, the agent engineering platform."</li>
+        <li><b>CTA:</b> Start building / Get a demo</li>
+        <li><b>H2:</b> LangSmith powers top AI teams, from startups to global enterprises · LangSmith Agent Engineering Platform · Understand exactly what your agent is doing</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">E · layout rhythm</div>
+      <ul>
+        <li>Light base, alternates with light-gray bands per section</li>
+        <li>Single-column long-scroll, vertical storytelling</li>
+        <li>No pricing inline</li>
+      </ul>
+    </div>
+    <div class="cat">
+      <div class="label">F · hero (slack note)</div>
+      <div class="slack-note">Utility-first white page. An SVG diagram of the observe→evaluate→deploy loop sits beside the headline. Copy is the flex — "Ship agents that work wow" — a dev-humor H1 that signals "engineers, not enterprise buyers, are the target."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== INSIGHTS ================== -->
+<section class="insights">
+  <div class="eyebrow" style="color:var(--accent)">cross-cutting insights for dr-cv</div>
+  <h2>What AI-landings are ALL doing right now</h2>
+  <p class="sub">Patterns that appear across 5+ of the 9 sites. Treat as the current "ante" — doing less than this will read as pre-2024.</p>
+  <ol>
+    <li><b>The word "agent(s)" has moved into the H1.</b> Linear, LangChain, Inkeep ("teammates"), Cursor (subhead) all use it. <span class="mono-inline">dr-cv take:</span> "Agentic Designer" in the H1 — but pair it with an outcome verb, not a noun claim.</li>
+    <li><b>Single restrained accent color, zero gradient soup.</b> Each site has one dominant hue (cyan, indigo, blue, terracotta) and treats it like a signature. Orange (#FF8964) for dr-cv reads fresh because nobody in the agentic space owns orange — Anthropic's terracotta is the closest neighbor.</li>
+    <li><b>Product screenshot / IDE mock is the hero's protagonist.</b> Cursor, Linear, v0, Replicate all put a real interface in the hero. Editorial-only heroes (Anthropic, LangChain) are the exception, not the rule. <span class="mono-inline">dr-cv take:</span> put a real skills-sheet PDF or a real CV composer output in the hero frame.</li>
+    <li><b>Mono typeface earns its keep.</b> Where mono appears (Cursor IDE demos, Replicate code snippets, Raycast ⌘-keys, Vercel CLI) it signals "real engineering happens here." JetBrains Mono for dr-cv section labels + code-fragment testimonial metadata is on-trend.</li>
+    <li><b>Long-scroll + sticky header is universal.</b> 9/9 sites. No tab-SPAs, no horizontal-scroll gimmicks. Pricing is link-only (only Replicate has an inline table).</li>
+    <li><b>Motion is scarce and surgical.</b> Only Raycast has a true WebGL/Three.js hero (the cube). Everyone else uses Framer-Motion-style layout transitions, pre-rendered screen recordings, or static SVG. <span class="mono-inline">dr-cv take:</span> one animated motif (dotted grid or type-in terminal) is enough — don't over-index on shader theater.</li>
+    <li><b>"Generated with / powered by / teammates" framing.</b> Inkeep ("AI Teammates"), Linear ("teams and agents"), v0 ("Prompt. Build. Publish."). The narrative is <em>leverage and collaboration</em>, not "AI replaces you." <span class="mono-inline">dr-cv take:</span> "profile + agentic AI = combination" wording Danilo already uses is aligned with the category.</li>
+    <li><b>Primary CTA is short + imperative.</b> Download · Get started · Start deploying · Start building · Try Claude. Two or three words, action verb first. Never "Learn more as primary."</li>
+    <li><b>Dark-theme is <em>not</em> automatic for AI.</b> 6 of 9 lead with light. Dark is Linear and Vercel — both have established brand equity to ground it. For a new personal brand, light + one accent is the safer signal of seriousness.</li>
+    <li><b>Editorial H1 vs utility H1 is a real fork.</b> Anthropic ("safety at the frontier") and Replicate ("Run AI with an API.") are the poles. Danilo's positioning sits closer to Anthropic's editorial register — but the page needs Replicate-style proof (real artifacts, real numbers) below the fold.</li>
+  </ol>
+</section>
+
+<footer class="page">
+  <span>C:\dev\dr-cv\docs\references\visual-universe\round-02\index.html</span>
+  <span>round 02 / 10 · AI+agentic deep dive</span>
+</footer>
+
+</div>
+</body>
+</html>
