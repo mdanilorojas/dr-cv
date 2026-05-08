@@ -3,6 +3,7 @@ import { renderTabNav } from "../generators/templates/landing/components/tab-nav
 import { renderHeroBlock } from "../generators/templates/landing/components/hero-block.js";
 import { renderProofNumbers } from "../generators/templates/landing/components/proof-numbers.js";
 import { renderCaseExpander } from "../generators/templates/landing/components/case-expander.js";
+import { renderMethodDiagram } from "../generators/templates/landing/components/method-diagram.js";
 import type { Landing, Identity, Positioning, Case } from "../generators/lib/types.js";
 
 const identityFixture: Identity = {
@@ -212,6 +213,31 @@ describe("renderCaseExpander", () => {
   it("uses data-action=toggle-case for runtime JS hook", () => {
     const html = renderCaseExpander(caseFixture, "en");
     expect(html).toContain('data-action="toggle-case"');
+  });
+});
+
+describe("renderMethodDiagram", () => {
+  it("renders an SVG with all 5 node labels in EN", () => {
+    const html = renderMethodDiagram("en");
+    expect(html).toContain("<svg");
+    expect(html).toContain("Profile");
+    expect(html).toContain("Claude Code");
+    expect(html).toContain("MCP servers");
+    expect(html).toContain("Subagents");
+    expect(html).toContain("Shipped work");
+  });
+
+  it("renders the ES labels when lang=es", () => {
+    const html = renderMethodDiagram("es");
+    expect(html).toContain("Perfil");
+    expect(html).toContain("Subagentes");
+    expect(html).toContain("Trabajo entregado");
+  });
+
+  it("has an aria-label describing the diagram", () => {
+    const html = renderMethodDiagram("en");
+    expect(html).toContain('role="img"');
+    expect(html).toMatch(/aria-label="[^"]+"/);
   });
 });
 
