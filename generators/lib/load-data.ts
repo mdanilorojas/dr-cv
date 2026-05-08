@@ -13,6 +13,11 @@ import type {
   Education,
   AttributedTestimonial,
   CvData,
+  Landing,
+  LandingTab,
+  LandingTabId,
+  LandingVisualKind,
+  LandingData,
 } from "./types.js";
 
 export class DataLoadError extends Error {
@@ -349,4 +354,74 @@ export function loadCvData(dataDir: string): CvData {
     path.join(dataDir, "testimonials", "attributed.yaml"),
   );
   return { ...base, cases, education, attributedTestimonials };
+}
+
+// ============= LANDING VALIDATION =============
+const VALID_TAB_IDS: readonly LandingTabId[] = [
+  "overview",
+  "work",
+  "method",
+  "about",
+  "contact",
+];
+const VALID_VISUAL_KINDS: readonly LandingVisualKind[] = [
+  "particles",
+  "grid",
+  "flow",
+  "timeline",
+  "signature",
+];
+
+function validateLanding(raw: unknown): Landing {
+  const o = requireObject(raw, "landing");
+  const tabs = requireArray(o.tabs, "landing.tabs", (t, i): LandingTab => {
+    const to = requireObject(t, `landing.tabs[${i}]`);
+    const id = requireString(to.id, `landing.tabs[${i}].id`);
+    if (!VALID_TAB_IDS.includes(id as LandingTabId)) {
+      throw new Error(
+        `landing.tabs[${i}].id must be one of ${VALID_TAB_IDS.join("|")}, got '${id}'`,
+      );
+    }
+    const visual = requireString(to.visual, `landing.tabs[${i}].visual`);
+    if (!VALID_VISUAL_KINDS.includes(visual as LandingVisualKind)) {
+      throw new Error(
+        `landing.tabs[${i}].visual must be one of ${VALID_VISUAL_KINDS.join("|")}, got '${visual}'`,
+      );
+    }
+    return {
+      id: id as LandingTabId,
+      labelEn: requireString(to.labelEn, `landing.tabs[${i}].labelEn`),
+      labelEs: requireString(to.labelEs, `landing.tabs[${i}].labelEs`),
+      visual: visual as LandingVisualKind,
+      default: typeof to.default === "boolean" ? to.default : undefined,
+    };
+  });
+  if (tabs.filter((t) => t.default === true).length !== 1) {
+    throw new Error("landing.tabs must have exactly one entry with default: true");
+  }
+  const cta = requireObject(o.cta, "landing.cta");
+  const seo = requireObject(o.seo, "landing.seo");
+  return {
+    tabs,
+    cta: {
+      en: requireString(cta.en, "landing.cta.en"),
+      es: requireString(cta.es, "landing.cta.es"),
+    },
+    seo: {
+      titleEn: requireString(seo.titleEn, "landing.seo.titleEn"),
+      titleEs: requireString(seo.titleEs, "landing.seo.titleEs"),
+      descriptionEn: requireString(seo.descriptionEn, "landing.seo.descriptionEn"),
+      descriptionEs: requireString(seo.descriptionEs, "landing.seo.descriptionEs"),
+    },
+  };
+}
+
+export function loadLanding(filePath: string): Landing {
+  return loadYaml(filePath, validateLanding);
+}
+
+export function loadLandingData(dataDir: string): LandingData {
+  const cv = loadCvData(dataDir);
+  const landing = loadLanding(path.join(dataDir, "landing.yaml"));
+  return { ...cv, landing };
 }

@@ -7,6 +7,8 @@ import {
   loadEducation,
   loadAttributedTestimonials,
   loadCvData,
+  loadLanding,
+  loadLandingData,
   DataLoadError,
 } from "../generators/lib/load-data.js";
 import path from "node:path";
@@ -156,5 +158,74 @@ describe("loadCvData", () => {
     expect(cv.attributedTestimonials.length).toBe(3);
     expect(cv.experience.past).toBeDefined();
     expect(cv.experience.past?.length ?? 0).toBeGreaterThan(0);
+  });
+});
+
+describe("loadLanding", () => {
+  it("loads real /data/landing.yaml with 5 tabs", () => {
+    const landing = loadLanding(path.join(dataDir, "landing.yaml"));
+    expect(landing.tabs).toHaveLength(5);
+    const ids = landing.tabs.map((t) => t.id).sort();
+    expect(ids).toEqual(["about", "contact", "method", "overview", "work"]);
+  });
+
+  it("has exactly one default tab", () => {
+    const landing = loadLanding(path.join(dataDir, "landing.yaml"));
+    const defaults = landing.tabs.filter((t) => t.default === true);
+    expect(defaults).toHaveLength(1);
+    expect(defaults[0].id).toBe("overview");
+  });
+
+  it("has CTA in both EN and ES", () => {
+    const landing = loadLanding(path.join(dataDir, "landing.yaml"));
+    expect(landing.cta.en.length).toBeGreaterThan(0);
+    expect(landing.cta.es.length).toBeGreaterThan(0);
+    expect(landing.cta.en).toContain("Let");
+    expect(landing.cta.es).toContain("Trabajemos");
+  });
+
+  it("has SEO in both languages", () => {
+    const landing = loadLanding(path.join(dataDir, "landing.yaml"));
+    expect(landing.seo.titleEn).toContain("Danilo");
+    expect(landing.seo.titleEs).toContain("Danilo");
+    expect(landing.seo.descriptionEn.length).toBeGreaterThan(10);
+    expect(landing.seo.descriptionEs.length).toBeGreaterThan(10);
+  });
+
+  it("rejects a file with zero default tabs", () => {
+    mkdirSync(fixtureBadDir, { recursive: true });
+    const tmpPath = path.join(fixtureBadDir, "no-default.yaml");
+    writeFileSync(
+      tmpPath,
+      `tabs:
+  - id: overview
+    labelEn: X
+    labelEs: X
+    visual: particles
+cta:
+  en: X
+  es: X
+seo:
+  titleEn: X
+  titleEs: X
+  descriptionEn: X
+  descriptionEs: X
+`,
+    );
+    try {
+      expect(() => loadLanding(tmpPath)).toThrow(DataLoadError);
+    } finally {
+      unlinkSync(tmpPath);
+    }
+  });
+});
+
+describe("loadLandingData", () => {
+  it("combines CvData and landing config", () => {
+    const ld = loadLandingData(dataDir);
+    expect(ld.identity.name).toBe("Danilo Rojas");
+    expect(ld.cases.length).toBe(4);
+    expect(ld.landing.tabs).toHaveLength(5);
+    expect(ld.landing.cta.en).toContain("Let");
   });
 });

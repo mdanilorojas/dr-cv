@@ -148,3 +148,30 @@ export interface CvData extends SkillsSheetData {
   cases: Case[];
   attributedTestimonials: AttributedTestimonial[];
 }
+
+// ============= LANDING =============
+export type LandingTabId = "overview" | "work" | "method" | "about" | "contact";
+export type LandingVisualKind = "particles" | "grid" | "flow" | "timeline" | "signature";
+
+export interface LandingTab {
+  id: LandingTabId;
+  labelEn: string;
+  labelEs: string;
+  visual: LandingVisualKind;
+  default?: boolean;
+}
+
+export interface Landing {
+  tabs: LandingTab[];
+  cta: { en: string; es: string };
+  seo: {
+    titleEn: string;
+    titleEs: string;
+    descriptionEn: string;
+    descriptionEs: string;
+  };
+}
+
+export interface LandingData extends CvData {
+  landing: Landing;
+}
