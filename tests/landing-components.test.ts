@@ -6,6 +6,9 @@ import { renderCaseExpander } from "../generators/templates/landing/components/c
 import { renderMethodDiagram } from "../generators/templates/landing/components/method-diagram.js";
 import { renderTimeline } from "../generators/templates/landing/components/timeline.js";
 import { renderTestimonialFeatured } from "../generators/templates/landing/components/testimonial-featured.js";
+import { renderContactBlock } from "../generators/templates/landing/components/contact-block.js";
+import { renderSectionVisual } from "../generators/templates/landing/components/section-visual.js";
+import { renderMeAgentDock } from "../generators/templates/landing/components/me-agent-dock.js";
 import type { Landing, Identity, Positioning, Case, Experience, Testimonial } from "../generators/lib/types.js";
 
 const identityFixture: Identity = {
@@ -319,6 +322,54 @@ describe("renderTestimonialFeatured", () => {
   it("renders 'Verificado' badge in ES", () => {
     const html = renderTestimonialFeatured(verified, "es");
     expect(html).toContain("Verificado");
+  });
+});
+
+describe("renderContactBlock", () => {
+  it("renders mailto with the identity email", () => {
+    const html = renderContactBlock(identityFixture, landingFixture, "en");
+    expect(html).toContain('href="mailto:hi@example.com"');
+  });
+
+  it("renders a copy-email button with data-action", () => {
+    const html = renderContactBlock(identityFixture, landingFixture, "en");
+    expect(html).toContain('data-action="copy-email"');
+    expect(html).toContain('data-email="hi@example.com"');
+  });
+
+  it("renders social links with external target + rel=noopener", () => {
+    const html = renderContactBlock(identityFixture, landingFixture, "en");
+    expect(html).toContain("LinkedIn");
+    expect(html).toContain("GitHub");
+    expect(html).toContain('rel="noopener"');
+    expect(html).toContain('target="_blank"');
+  });
+
+  it("uses ES labels when lang=es", () => {
+    const html = renderContactBlock(identityFixture, landingFixture, "es");
+    expect(html).toContain("Trabajemos juntos");
+    expect(html).toContain("Copiar email");
+  });
+});
+
+describe("renderSectionVisual", () => {
+  it("renders a variant-specific class and aria-hidden wrapper", () => {
+    expect(renderSectionVisual("particles")).toContain("lp-visual--particles");
+    expect(renderSectionVisual("grid")).toContain("lp-visual--grid");
+    expect(renderSectionVisual("flow")).toContain("lp-visual--flow");
+    expect(renderSectionVisual("timeline")).toContain("lp-visual--timeline");
+    expect(renderSectionVisual("signature")).toContain("lp-visual--signature");
+    expect(renderSectionVisual("particles")).toContain('aria-hidden="true"');
+  });
+});
+
+describe("renderMeAgentDock", () => {
+  it("is hidden by default (Phase 4+ placeholder)", () => {
+    const html = renderMeAgentDock();
+    expect(html).toContain('id="me-agent-dock"');
+    expect(html).toContain("hidden");
+    expect(html).toContain('aria-hidden="true"');
+    expect(html).toContain('data-phase="reserved"');
   });
 });
 
