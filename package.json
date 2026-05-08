@@ -10,7 +10,8 @@
   "scripts": {
     "build:skills-sheet": "tsx generators/skills-sheet.ts",
     "build:cvs": "tsx generators/cv.ts",
-    "build:all": "npm run build:skills-sheet && npm run build:cvs",
+    "build:landing": "tsx generators/landing.ts",
+    "build:all": "npm run build:skills-sheet && npm run build:cvs && npm run build:landing",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
