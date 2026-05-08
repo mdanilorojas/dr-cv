@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Phase 3 · Landing Page Implementation Plan</title>
+<style>
+  :root {
+    --ink:#0a0a0f; --ink-body:#2b2b2b; --ink-muted:#6b6b6b; --ink-inverse:#f4f4f5;
+    --bg:#f7f5f1; --bg-card:#ffffff; --bg-dark:#0a0a0f;
+    --line:#e5e2da; --line-soft:#efece4;
+    --accent:#FF8964; --accent-deep:#e0674a;
+    --font-body:"Inter","Helvetica Neue",Arial,sans-serif;
+    --font-mono:"JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:var(--font-body);background:var(--bg);color:var(--ink-body);line-height:1.55;font-size:15px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:48px 32px 120px}
+  header.lead{border-bottom:1px solid var(--line);padding-bottom:32px;margin-bottom:40px}
+  .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
+  .eyebrow::before{content:"// ";color:var(--ink-muted)}
+  h1{font-family:var(--font-body);font-size:36px;letter-spacing:-0.025em;line-height:1.1;color:var(--ink);margin:12px 0 8px;font-weight:600}
+  h2{font-family:var(--font-body);font-size:22px;letter-spacing:-0.015em;color:var(--ink);margin:48px 0 16px;font-weight:600;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  h3{font-family:var(--font-body);font-size:17px;color:var(--ink);margin:24px 0 12px;font-weight:600}
+  p{margin:0 0 14px}
+  code{font-family:var(--font-mono);font-size:13px;background:var(--line-soft);padding:1px 6px;border-radius:3px;color:var(--ink)}
+  pre{background:var(--ink);color:var(--ink-inverse);padding:16px 20px;border-radius:6px;overflow-x:auto;font-family:var(--font-mono);font-size:12.5px;line-height:1.5}
+  pre code{background:transparent;color:inherit;padding:0}
+  ul{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:4px}
+  strong{color:var(--ink);font-weight:600}
+  .meta{font-family:var(--font-mono);font-size:12px;color:var(--ink-muted);display:flex;gap:16px;flex-wrap:wrap;margin-top:16px}
+  /* task cards */
+  .task {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin: 16px 0;
+    position: relative;
+  }
+  .task__num {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .task__title {
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 8px;
+    padding-right: 100px;
+  }
+  .task__context {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+  .task__steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .task__steps li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 13.5px;
+    color: var(--ink-body);
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+  .task__steps li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+    background: var(--bg);
+  }
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--font-mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-muted);font-weight:500;background:var(--line-soft)}
+  /* callout */
+  .callout{background:var(--bg-dark);color:var(--ink-inverse);border-radius:8px;padding:20px 24px;margin:24px 0;border-left:3px solid var(--accent)}
+  .callout .eyebrow{color:var(--accent)}
+  .callout p:last-child{margin-bottom:0}
+  .pill{display:inline-block;font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:99px;border:1px solid var(--accent);color:var(--accent);background:rgba(255,137,100,.08)}
+  /* progress map */
+  .map {
+    background: var(--bg-dark);
+    color: var(--ink-inverse);
+    border-radius: 10px;
+    padding: 32px;
+    margin: 24px 0;
+  }
+  .map__row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .map__step {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    color: #c9cbcf;
+  }
+  .map__step--key {
+    background: rgba(255,137,100,.12);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .map__arrow {
+    color: #6b6b6b;
+    font-family: var(--font-mono);
+  }
+  .map__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: #8f8f95;
+    text-transform: uppercase;
+    width: 110px;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="lead">
+  <div class="eyebrow">Phase 3 · Implementation Plan</div>
+  <h1>Landing Page — build:landing</h1>
+  <p style="font-size:16px;color:var(--ink);margin-top:4px;">
+    14 tasks. Test-first, commit-per-task. Reuses <code>/data/*</code>. Emits <code>dist/landing/{index.html, es/index.html}</code>.
+  </p>
+  <div class="meta">
+    <span>Date · 2026-05-08</span>
+    <span>Spec · <code>2026-05-08-phase3-landing-design.md</code></span>
+    <span>Status · <span class="pill">ready to execute</span></span>
+  </div>
+</header>
+
+<section>
+  <h2>Execution map</h2>
+  <div class="map">
+    <div class="map__row"><span class="map__label">SCAFFOLD</span>
+      <span class="map__step map__step--key">T1 · data + loader</span>
+      <span class="map__arrow">›</span>
+      <span class="map__step">T2 · tokens + fonts</span>
+    </div>
+    <div class="map__row"><span class="map__label">COMPONENTS</span>
+      <span class="map__step">T3 · tab-nav</span>
+      <span class="map__arrow">›</span>
+      <span class="map__step">T4 · hero + proof</span>
+      <span class="map__arrow">›</span>
+      <span class="map__step">T5 · case-expander</span>
+      <span class="map__arrow">›</span>
+      <span class="map__step">T6 · 5 smaller</span>
+    </div>
+    <div class="map__row"><span class="map__label">RUNTIME</span>
+      <span class="map__step">T7 · styles</span>
+      <span class="map__arrow">›</span>
+      <span class="map__step">T8 · script</span>
+      <span class="map__arrow">›</span>
+      <span class="map__step map__step--key">T9 · composer</span>
+    </div>
+    <div class="map__row"><span class="map__label">BUILD</span>
+      <span class="map__step map__step--key">T10 · orchestrator</span>
+      <span class="map__arrow">›</span>
+      <span class="map__step">T11 · integration tests</span>
+      <span class="map__arrow">›</span>
+      <span class="map__step">T12 · smoke</span>
+    </div>
+    <div class="map__row"><span class="map__label">SHIP</span>
+      <span class="map__step">T13 · a11y + scrub</span>
+      <span class="map__arrow">›</span>
+      <span class="map__step map__step--key">T14 · docs + push</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Goal &amp; success criteria</h2>
+  <div class="callout">
+    <div class="eyebrow">Phase 3 is done when</div>
+    <p style="margin-top:8px;">
+      <code>npm run build:landing</code> emits both HTML files from <code>/data/*</code>,
+      both render cleanly at 375 / 768 / 1280 px,
+      tab switching works (click · keyboard · hash),
+      language toggle preserves hash,
+      Lighthouse ≥ 90 perf / ≥ 95 a11y,
+      all tests green (97 existing + ~25 new),
+      deployable via <code>npx http-server dist/landing</code>,
+      BAH scrub list respected.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>File structure</h2>
+<pre><code>dr-cv/
+├── package.json                                       # MODIFY: add build:landing
+├── data/
+│   └── landing.yaml                                   # NEW
+├── design-system/
+│   ├── tokens.css                                     # untouched
+│   └── tokens-landing.css                             # NEW (dark-dominant)
+├── assets/fonts/                                      # NEW (woff2 subset)
+├── generators/
+│   ├── lib/
+│   │   ├── types.ts                                   # MODIFY: Landing, LandingData
+│   │   └── load-data.ts                               # MODIFY: loadLanding, loadLandingData
+│   ├── templates/landing/
+│   │   ├── components/
+│   │   │   ├── tab-nav.ts · hero-block.ts · proof-numbers.ts
+│   │   │   ├── case-expander.ts · method-diagram.ts · timeline.ts
+│   │   │   ├── testimonial-featured.ts · section-visual.ts
+│   │   │   ├── contact-block.ts · me-agent-dock.ts
+│   │   ├── landing-styles.ts · landing-script.ts · index.ts
+│   └── landing.ts                                     # NEW orchestrator
+├── tests/
+│   ├── landing-components.test.ts · landing-integration.test.ts
+│   └── landing-smoke.test.ts                          # NEW (opt-in via env)
+└── dist/landing/
+    ├── index.html · es/index.html
+    └── assets/fonts/</code></pre>
+</section>
+
+<section>
+  <h2>Tasks</h2>
+
+  <div class="task">
+    <div class="task__num">Task 01</div>
+    <div class="task__title">Data schema + loader extension</div>
+    <div class="task__context">Add <code>data/landing.yaml</code>, <code>Landing</code> + <code>LandingData</code> types, <code>loadLanding</code> + <code>loadLandingData</code>. TDD.</div>
+    <ul class="task__steps">
+      <li>Create <code>data/landing.yaml</code> with 5 tabs, cta, seo.</li>
+      <li>Extend <code>generators/lib/types.ts</code>.</li>
+      <li>Extend <code>load-data.ts</code> with loader functions.</li>
+      <li>Write unit tests in <code>tests/load-data.test.ts</code>.</li>
+      <li>Commit: <code>feat(phase-3): landing data schema + loader</code>.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 02</div>
+    <div class="task__title">Dark-dominant token set + self-hosted fonts</div>
+    <div class="task__context">Fork <code>tokens.css</code> into <code>tokens-landing.css</code>. Download Inter + JetBrains Mono woff2 Latin-1 subsets.</div>
+    <ul class="task__steps">
+      <li>Create <code>design-system/tokens-landing.css</code>.</li>
+      <li>Add <code>assets/fonts/*.woff2</code> + <code>README.md</code> with license attribution.</li>
+      <li>Commit: <code>feat(phase-3): dark-dominant tokens + self-hosted fonts</code>.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 03</div>
+    <div class="task__title">tab-nav component (TDD-first)</div>
+    <div class="task__context">Sticky nav, 5 tabs, lang toggle, WAI-ARIA tabs pattern markup. Runtime in Task 8.</div>
+    <ul class="task__steps">
+      <li>Failing tests: labels, <code>role="tablist"</code>, <code>aria-controls</code>, lang toggle href, active state.</li>
+      <li>Implement <code>tab-nav.ts</code>.</li>
+      <li>Commit: <code>feat(phase-3): tab-nav component</code>.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 04</div>
+    <div class="task__title">hero-block + proof-numbers</div>
+    <div class="task__context">Overview hero + 4-number proof strip. Reuses <code>splitName</code> from CV identity-block.</div>
+    <ul class="task__steps">
+      <li>Failing tests for both (EN + ES, live-dot, CTA text).</li>
+      <li>Implement both components.</li>
+      <li>Commit: <code>feat(phase-3): hero-block + proof-numbers</code>.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 05</div>
+    <div class="task__title">case-expander</div>
+    <div class="task__context">Inline expansion (no modal). <code>aria-expanded</code> + <code>aria-controls</code> pattern. Runtime in Task 8.</div>
+    <ul class="task__steps">
+      <li>Failing tests: title/client/hook/bullets, button pattern, hidden body.</li>
+      <li>Implement <code>case-expander.ts</code>.</li>
+      <li>Commit: <code>feat(phase-3): case-expander component</code>.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 06</div>
+    <div class="task__title">method-diagram · timeline · testimonial-featured · contact-block · section-visual · me-agent-dock</div>
+    <div class="task__context">Batch of 6 smaller components, one commit each.</div>
+    <ul class="task__steps">
+      <li><code>method-diagram</code>: pure SVG 4-node flow.</li>
+      <li><code>timeline</code>: vertical 2010–2026.</li>
+      <li><code>testimonial-featured</code>: large-format with verified/attributed badge.</li>
+      <li><code>section-visual</code>: CSS-only variants per tab.</li>
+      <li><code>contact-block</code>: mailto, socials, copy-email button.</li>
+      <li><code>me-agent-dock</code>: empty placeholder for Phase 4.</li>
+      <li>Tests per component; 6 small commits.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 07</div>
+    <div class="task__title">landing-styles.ts (inline CSS blob)</div>
+    <div class="task__context">Single exported <code>LANDING_STYLES</code> string. Mobile-first, reduced-motion handled.</div>
+    <ul class="task__steps">
+      <li>Reset · page layout · nav · panels · all components · media queries.</li>
+      <li>Commit: <code>feat(phase-3): landing inline styles</code>.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 08</div>
+    <div class="task__title">landing-script.ts (vanilla runtime)</div>
+    <div class="task__context">~80 lines. Tab switch + hash sync + keyboard nav + case toggle + copy-email.</div>
+    <ul class="task__steps">
+      <li>On load: hash → active tab (or default).</li>
+      <li>Click + keyboard on tablist.</li>
+      <li><code>popstate</code> listener.</li>
+      <li><code>data-action="copy-email"</code> with prompt fallback.</li>
+      <li><code>data-action="toggle-case"</code>.</li>
+      <li>Commit: <code>feat(phase-3): landing runtime script (vanilla)</code>.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 09</div>
+    <div class="task__title">index.ts full-page composer</div>
+    <div class="task__context"><code>renderLanding(data, lang) =&gt; string</code>. Full HTML doc with inline CSS + JS + SEO meta + <code>hreflang</code>.</div>
+    <ul class="task__steps">
+      <li>Compose all components into 5 tabpanels.</li>
+      <li>Include me-agent-dock hidden slot.</li>
+      <li>Commit: <code>feat(phase-3): landing full-page composer</code>.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 10</div>
+    <div class="task__title">Orchestrator + <code>build:landing</code> script</div>
+    <div class="task__context">Emits 2 HTML files. Copies fonts. Fails if either file > 400 KB uncompressed.</div>
+    <ul class="task__steps">
+      <li>Implement <code>generators/landing.ts</code>.</li>
+      <li>Add <code>build:landing</code> + update <code>build:all</code>.</li>
+      <li>Run and verify outputs.</li>
+      <li>Commit: <code>feat(phase-3): landing orchestrator + build:landing script</code>.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 11</div>
+    <div class="task__title">Integration tests</div>
+    <div class="task__context">Asserts on <code>renderLanding</code> output — tabpanel count, case presence, CTA text per lang, testimonial presence, scrub list, HTML size, hreflang, live-dot.</div>
+    <ul class="task__steps">
+      <li>Commit: <code>test(phase-3): landing integration tests</code>.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 12</div>
+    <div class="task__title">Smoke test (puppeteer + optional lighthouse)</div>
+    <div class="task__context">Opt-in via <code>LANDING_SMOKE=1</code>. DOM checks, viewport tests, optional Lighthouse.</div>
+    <ul class="task__steps">
+      <li>If lighthouse is heavy, document manual Chrome audit as acceptable fallback.</li>
+      <li>Commit: <code>test(phase-3): landing smoke test (opt-in via LANDING_SMOKE env)</code>.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 13</div>
+    <div class="task__title">A11y + BAH scrub + reduced-motion pass</div>
+    <div class="task__context">Final polish round.</div>
+    <ul class="task__steps">
+      <li>Manual Chrome Lighthouse audit (record scores).</li>
+      <li>Grep emitted HTML for scrub tokens; zero hits.</li>
+      <li>Reduced-motion test in DevTools.</li>
+      <li>Keyboard-only nav test.</li>
+      <li>Commit: <code>chore(phase-3): a11y + scrub audit pass</code>.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <div class="task__num">Task 14</div>
+    <div class="task__title">Docs + memory + push</div>
+    <div class="task__context">Close Phase 3 publicly.</div>
+    <ul class="task__steps">
+      <li>Update <code>README.md</code> with new build script + outputs.</li>
+      <li>Memory note: Phase 3 shipped.</li>
+      <li><code>git push origin main</code>.</li>
+      <li>Commit: <code>docs(phase-3): README + shipped</code>.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Risk checkpoints</h2>
+  <table>
+    <thead><tr><th>Checkpoint</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td>Fonts push bundle > 250 KB gzip</td><td>Drop JetBrains Mono; use Inter for both display and mono slots.</td></tr>
+      <tr><td>Puppeteer Lighthouse too heavy</td><td>Skip automated; manual Chrome audit acceptable.</td></tr>
+      <tr><td>Copy-email fails on iOS WebKit</td><td><code>window.prompt</code> fallback.</td></tr>
+      <tr><td>Hash conflicts with back button</td><td><code>replaceState</code> initial, <code>pushState</code> subsequent.</td></tr>
+      <tr><td>Case expansion janky on mobile</td><td>Drop animation; instant <code>hidden</code> toggle.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>End-of-phase verification</h2>
+  <ul>
+    <li><code>npm test</code> → 97 existing + ~25 new = ~122 tests, all green.</li>
+    <li><code>npm run build:all</code> → skills-sheet + 5 CVs + 2 landing HTMLs.</li>
+    <li>Manual Lighthouse on dist/landing/index.html (perf ≥ 90, a11y ≥ 95).</li>
+    <li>Manual cross-browser check at 375 / 768 / 1280.</li>
+    <li>Git log shows ~14 feature commits.</li>
+    <li>Memory update: Phase 3 shipped.</li>
+  </ul>
+</section>
+
+</div>
+</body>
+</html>
