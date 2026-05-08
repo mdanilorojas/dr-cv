@@ -1,4 +1,5 @@
 import type { CvData } from "../../lib/types.js";
+import { escapeHtml } from "../skills-sheet-page-1.js";
 import { renderIdentityBlock } from "./components/identity-block.js";
 import { renderSummaryBlock } from "./components/summary-block.js";
 import { renderSkillsSidebar } from "./components/skills-sidebar.js";
@@ -175,7 +176,7 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; font-family: va
 
 export function renderBairesdevCv(data: CvData): string {
   const lang = "en" as const;
-  const title = `${data.identity.name} — CV`;
+  const title = escapeHtml(`${data.identity.name} — CV`);
 
   // Only 2 cases for BairesDev: featured if present + top 1 other
   const featured = data.cases.find((c) => c.featured);

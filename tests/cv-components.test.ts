@@ -313,9 +313,32 @@ describe("renderSkillsSidebar", () => {
     expect(section).toContain("cv-skill--learning");
   });
 
-  it("uses key/value grid layout for bairesdev variant", () => {
+  it("adds cv-skills--bairesdev class modifier when variant is bairesdev", () => {
     const html = renderSkillsSidebar(skillsFixture, { variant: "bairesdev", lang: "en" });
     expect(html).toContain("cv-skills--bairesdev");
+  });
+
+  it("renders ONLY byLayer axis (byOutcome is reserved for the skills sheet)", () => {
+    // Lock the decision: the narrow 62mm CV sidebar cannot fit both axes.
+    // byLayer groups like Strategy / Design / Engineering / Agents go on the CV.
+    // byOutcome groups like Discovery / Build / Ship / Scale stay on the skills sheet.
+    const bothAxesFixture: Skills = {
+      byLayer: {
+        name: "Visual A",
+        axis: "layer",
+        groups: [{ title: "LayerGroup", skills: [{ name: "LayerSkill", level: "mastered" }] }],
+      },
+      byOutcome: {
+        name: "Visual B",
+        axis: "outcome",
+        groups: [{ title: "OutcomeGroup", skills: [{ name: "OutcomeSkill", level: "mastered" }] }],
+      },
+    };
+    const html = renderSkillsSidebar(bothAxesFixture, { variant: "warm", lang: "en" });
+    expect(html).toContain("LayerGroup");
+    expect(html).toContain("LayerSkill");
+    expect(html).not.toContain("OutcomeGroup");
+    expect(html).not.toContain("OutcomeSkill");
   });
 });
 

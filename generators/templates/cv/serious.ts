@@ -1,5 +1,5 @@
 import type { CvData } from "../../lib/types.js";
-import type { Lang } from "../skills-sheet-page-1.js";
+import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 import { renderIdentityBlock } from "./components/identity-block.js";
 import { renderSummaryBlock } from "./components/summary-block.js";
 import { renderSkillsSidebar } from "./components/skills-sidebar.js";
@@ -19,9 +19,7 @@ function pickCases(cv: CvData) {
 }
 
 export function renderSeriousCv(data: CvData, lang: Lang, tokensCss: string): string {
-  const title = lang === "en"
-    ? `${data.identity.name} · Curriculum Vitae`
-    : `${data.identity.name} · Curriculum Vitae`;
+  const title = escapeHtml(`${data.identity.name} · Curriculum Vitae`);
 
   const cases = pickCases(data);
   const casesHtml = cases

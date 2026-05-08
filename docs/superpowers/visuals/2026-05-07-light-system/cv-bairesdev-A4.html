@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Danilo Rojas — CV</title>
+<style>
+  /* ===== ultra-plain corporate-safe CV for BairesDev placement ===== */
+  :root {
+    --ink:        #1a1a1a;
+    --ink-body:   #333333;
+    --ink-mute:   #6b6b6b;
+    --ink-subtle: #8e8e8e;
+    --line:       #d8d8d8;
+    --line-soft:  #ececec;
+    --bg:         #ffffff;
+    --a4-w: 210mm;
+    --a4-h: 297mm;
+    --pad:  16mm;
+    --font: "Inter", "Helvetica Neue", Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: var(--font);
+    font-size: 10pt;
+    line-height: 1.45;
+    color: var(--ink-body);
+    background: #e8e8e8;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    width: var(--a4-w);
+    min-height: var(--a4-h);
+    margin: 24px auto;
+    background: var(--bg);
+    padding: var(--pad);
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    page-break-after: always;
+  }
+  .page:last-of-type { page-break-after: auto; }
+  @media print {
+    body { background: var(--bg); }
+    .page { margin: 0; box-shadow: none; }
+    @page { size: A4; margin: 0; }
+  }
+
+  /* ---- typography ---- */
+  h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
+  h1 { font-size: 22pt; letter-spacing: -0.02em; line-height: 1.1; }
+  h2 { font-size: 11pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); padding-bottom: 3mm; border-bottom: 1px solid var(--ink); margin-bottom: 4mm; }
+  h3 { font-size: 10.5pt; letter-spacing: -0.01em; font-weight: 600; }
+  p  { margin: 0; }
+
+  /* ---- header ---- */
+  header.cv-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10mm;
+    align-items: flex-end;
+    padding-bottom: 6mm;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 8mm;
+  }
+  header.cv-head h1 { margin-bottom: 2mm; }
+  header.cv-head .role {
+    font-size: 10pt;
+    color: var(--ink);
+    font-weight: 500;
+    margin-bottom: 2mm;
+  }
+  header.cv-head .tagline {
+    font-size: 9pt;
+    color: var(--ink-mute);
+    max-width: 95mm;
+  }
+  header.cv-head .contact {
+    font-size: 8.5pt;
+    color: var(--ink-body);
+    text-align: right;
+    line-height: 1.55;
+  }
+  header.cv-head .contact a { color: var(--ink-body); text-decoration: none; }
+  header.cv-head .contact .k {
+    color: var(--ink-subtle);
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 4px;
+  }
+
+  /* ---- section layout ---- */
+  section { margin-bottom: 8mm; }
+  section:last-child { margin-bottom: 0; }
+
+  /* ---- summary ---- */
+  .summary p {
+    font-size: 10pt;
+    line-height: 1.55;
+    color: var(--ink-body);
+  }
+
+  /* ---- skills ---- */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 10mm;
+    row-gap: 4mm;
+    font-size: 9.5pt;
+  }
+  .skills-grid .k {
+    font-weight: 600;
+    color: var(--ink);
+    min-width: 30mm;
+  }
+  .skills-grid .v { color: var(--ink-body); }
+
+  /* ---- experience ---- */
+  .xp {
+    padding: 4mm 0;
+    border-top: 1px solid var(--line-soft);
+  }
+  .xp:first-child { border-top: 0; padding-top: 0; }
+  .xp .xp-top {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8mm;
+    align-items: baseline;
+    margin-bottom: 2mm;
+  }
+  .xp .xp-top .company { font-size: 11pt; font-weight: 600; color: var(--ink); }
+  .xp .xp-top .dates { font-size: 9pt; color: var(--ink-mute); white-space: nowrap; }
+  .xp .role-line {
+    font-size: 9.5pt;
+    color: var(--ink);
+    font-weight: 500;
+    margin-bottom: 2mm;
+  }
+  .xp p.desc {
+    font-size: 9.5pt;
+    line-height: 1.5;
+    color: var(--ink-body);
+    margin: 0 0 2mm 0;
+  }
+  .xp ul {
+    margin: 2mm 0 0 0;
+    padding-left: 16px;
+    font-size: 9.5pt;
+    line-height: 1.5;
+    color: var(--ink-body);
+  }
+  .xp ul li { margin-bottom: 1.5mm; }
+
+  /* ---- education ---- */
+  .ed {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 8mm;
+    font-size: 9.5pt;
+    padding: 2mm 0;
+    border-top: 1px solid var(--line-soft);
+  }
+  .ed:first-child { border-top: 0; }
+  .ed .year { color: var(--ink-mute); min-width: 20mm; }
+  .ed .name { color: var(--ink); font-weight: 500; }
+  .ed .inst { color: var(--ink-mute); }
+
+  /* ---- footer ---- */
+  footer.cv-foot {
+    margin-top: 8mm;
+    padding-top: 4mm;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-size: 8pt;
+    color: var(--ink-subtle);
+  }
+</style>
+</head>
+<body>
+
+<article class="page">
+
+  <!-- ========= HEADER ========= -->
+  <header class="cv-head">
+    <div>
+      <h1>Danilo Rojas</h1>
+      <div class="role">Product Designer &amp; Engineer · 15+ years</div>
+      <div class="tagline">Product design and engineering with modern frontend, backend and AI-assisted workflows. Enterprise and SaaS experience across healthcare, finance, logistics, CPG and telecom.</div>
+    </div>
+    <div class="contact">
+      <div><span class="k">Email</span>danilorojas@hotmail.com</div>
+      <div><span class="k">Phone</span>+593 987 655 379</div>
+      <div><span class="k">Location</span>Quito, Ecuador</div>
+      <div><span class="k">LinkedIn</span>linkedin.com/in/mdanilorojas</div>
+      <div><span class="k">GitHub</span>github.com/mdanilorojas</div>
+      <div><span class="k">Behance</span>behance.net/mariodanilo</div>
+    </div>
+  </header>
+
+  <!-- ========= SUMMARY ========= -->
+  <section class="summary">
+    <h2>Professional Summary</h2>
+    <p>Systems engineer and product designer with fifteen years of experience conceptualizing, designing and shipping technology products for enterprise clients including Merck &amp; Co., Mondelēz International, Banco Pichincha, Quifatex and Moderna Corp. Strong foundation in product strategy, UX/UI, design systems and modern frontend/backend engineering (TypeScript, React, Next.js, Supabase). Proficient in AI-assisted development workflows (Claude Code, MCP, subagents) for accelerated delivery without sacrificing quality. Bilingual English/Spanish. Available for remote engagements.</p>
+  </section>
+
+  <!-- ========= SKILLS ========= -->
+  <section>
+    <h2>Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="k">Product &amp; Strategy</div>
+      <div class="v">Product vision, roadmapping, RICE prioritization, GTM planning, multi-persona design, cross-functional facilitation</div>
+
+      <div class="k">Design</div>
+      <div class="v">UX research, wireframing, prototyping (Figma, Framer), design systems, W3C design tokens, Style Dictionary, Atlassian DS, shadcn/ui, accessibility (WCAG 2.1/2.2)</div>
+
+      <div class="k">Frontend</div>
+      <div class="v">TypeScript, React 19, Next.js 16, Vite, Tailwind, Radix UI, framer-motion, HTML/CSS (Houdini, backdrop-filter, canvas, responsive)</div>
+
+      <div class="k">Backend &amp; Data</div>
+      <div class="v">Node.js, Supabase (Postgres, Auth, Storage, Edge Functions), Prisma, NextAuth, SQL migrations, RLS policies, pg_cron</div>
+
+      <div class="k">AI / Agentic Workflows</div>
+      <div class="v">Claude Code (power user), MCP servers, subagent orchestration, reproducible skills via lock files, prompt engineering, Gemini API (runtime integration)</div>
+
+      <div class="k">DevOps &amp; Tooling</div>
+      <div class="v">GitHub, GitHub Actions CI, Vercel, Linux/NGINX, conventional commits, changelog discipline</div>
+
+      <div class="k">Languages</div>
+      <div class="v">Spanish (native), English (professional)</div>
+    </div>
+  </section>
+
+  <!-- ========= EXPERIENCE ========= -->
+  <section>
+    <h2>Professional Experience</h2>
+
+    <div class="xp">
+      <div class="xp-top">
+        <div class="company">BairesDev</div>
+        <div class="dates">2024 — Present</div>
+      </div>
+      <div class="role-line">Product Designer / Design Engineer (placed at Booz Allen Hamilton)</div>
+      <p class="desc">Placed at Booz Allen Hamilton on the Trusted Environments program, supporting the Developer Portal product and the program's web presence. Collaborated closely with senior engineering and product leadership to translate requirements into production-ready interfaces and components.</p>
+      <ul>
+        <li>Authored two complementary design systems for the Trusted Environments product — one light/corporate packaged as a reusable component library with W3C design tokens, and one dark enterprise system with documented per-token WCAG contrast ratios.</li>
+        <li>Built a SharePoint-deployable single-file landing SPA with scoped CSS isolation, IIFE JavaScript and hardware-accelerated animations for SharePoint-chrome compatibility.</li>
+        <li>Worked cross-team with product groups serving US Army and Department of Defense clients.</li>
+        <li>Negotiated accessibility standards with senior engineering (WCAG 2.1 / 2.2) and documented the decisions inline in design tokens.</li>
+      </ul>
+    </div>
+
+    <div class="xp">
+      <div class="xp-top">
+        <div class="company">Xentinels DesignOps</div>
+        <div class="dates">2016 — Present</div>
+      </div>
+      <div class="role-line">Product Manager / UX-UI Designer</div>
+      <p class="desc">Formalized and led a team within Central Design delivering a distributed-yet-centralized design system. Defined the roadmap, roles, responsibilities and ways of working. Built a contribution culture to scale. Delivered a unified set of guidelines, tokens and accessible components for enterprise clients.</p>
+      <ul>
+        <li>Clients served: Merck &amp; Co., Mondelēz International, Banco Pichincha, Quifatex, Grupo Superior, Moderna Corp., Azzorti, Flamingo Colombia.</li>
+        <li>Industries: healthcare, banking, logistics, CPG, retail, pharmaceuticals, telecommunications.</li>
+        <li>Projects included streaming platforms (React/Django), event platforms, credit-rating applications, ERP redesigns and multiple design-system migrations.</li>
+      </ul>
+    </div>
+
+    <div class="xp">
+      <div class="xp-top">
+        <div class="company">Arpatel Cia. Ltda.</div>
+        <div class="dates">2014 — 2017</div>
+      </div>
+      <div class="role-line">Co-Founder / Product Manager</div>
+      <p class="desc">Created a strategic long-term vision for Arpatel's products. Developed the web presence, CRM templates and order-management flows. Provided design support for a Retail POS experience (alpha and beta) and prototyped search and scan interaction patterns.</p>
+    </div>
+
+    <div class="xp">
+      <div class="xp-top">
+        <div class="company">Tecniequipos S.A.</div>
+        <div class="dates">2013 — 2015</div>
+      </div>
+      <div class="role-line">Senior Visual Designer / Developer</div>
+      <p class="desc">Developed a proprietary event platform. Managed e-commerce, reports and business-system administration. Delivered specific requirements in PHP, JavaScript, HTML, CSS and MariaDB.</p>
+    </div>
+
+    <div class="xp">
+      <div class="xp-top">
+        <div class="company">Canadian Bank Note</div>
+        <div class="dates">2011 — 2013</div>
+      </div>
+      <div class="role-line">Project Administrator</div>
+      <p class="desc">Administered an electrical-network project at the regional level. Supervised network installation and inventory management. Designed project-execution strategies based on relevant historical data.</p>
+    </div>
+  </section>
+
+</article>
+
+<article class="page">
+
+  <!-- ========= HIGHLIGHTS ========= -->
+  <section>
+    <h2>Selected Project Highlights</h2>
+
+    <div class="xp">
+      <div class="xp-top">
+        <div class="company">Trusted Environments — Developer Portal (Booz Allen Hamilton, via BairesDev)</div>
+        <div class="dates">2024 — Present</div>
+      </div>
+      <p class="desc">Design-engineering across the Trusted Environments umbrella, including the Developer Portal product and the program's public-facing landing. Authored a reusable component library packaged for consumption by both human engineers and AI agents, plus a parallel enterprise design system. Work spanned product management collaboration, prototyping in HTML/CSS/JS with realistic data, and handoff to senior engineering teams serving US Army and Department of Defense clients.</p>
+      <ul>
+        <li>17-component reusable library with HTML + CSS + metadata triplets and a machine-readable component index.</li>
+        <li>W3C-format design tokens alongside CSS custom properties for cross-tool interoperability.</li>
+        <li>Single-file SharePoint-deployable landing with IIFE scope isolation, CSS Houdini @property animations, canvas-based background, and reduced-motion support.</li>
+      </ul>
+    </div>
+
+    <div class="xp">
+      <div class="xp-top">
+        <div class="company">EnRegla — Compliance SaaS (personal project)</div>
+        <div class="dates">2026</div>
+      </div>
+      <p class="desc">Multi-site compliance SaaS for Latin American SMBs. Architected and shipped a full product from zero to a 1.0-MVP in production in 40 days, co-built with Claude Code. Currently operating with its first paying pilot customers.</p>
+      <ul>
+        <li>Stack: React 19, TypeScript, Vite, Tailwind, Supabase (Postgres + RLS + Edge Functions + Storage + pg_cron), Vercel, GitHub Actions CI.</li>
+        <li>346 commits · 21 SQL migrations · 31 custom UI components · 1 email alerts edge function with cron scheduling.</li>
+        <li>Recursive design-system migration executed in 17 parts and 5 polish rounds with numeric scoring (78 → 96).</li>
+      </ul>
+    </div>
+
+    <div class="xp">
+      <div class="xp-top">
+        <div class="company">Design Systems Leadership (Xentinels DesignOps clients)</div>
+        <div class="dates">2016 — Present</div>
+      </div>
+      <p class="desc">Led design-system initiatives for multiple enterprise clients, establishing distributed-yet-centralized governance, contribution culture, and accessible component libraries. Defined roadmaps, roles, responsibilities and working models. Delivered token pipelines spanning Figma, Style Dictionary and Specify.</p>
+    </div>
+
+  </section>
+
+  <!-- ========= EDUCATION ========= -->
+  <section>
+    <h2>Education &amp; Certifications</h2>
+    <div class="ed">
+      <div class="year">2015</div>
+      <div class="name">B.Sc. in Systems Engineering</div>
+      <div class="inst">Escuela Politécnica Nacional (EPN), Quito</div>
+    </div>
+    <div class="ed">
+      <div class="year">2021</div>
+      <div class="name">Google UX Design Certificate</div>
+      <div class="inst">Coursera</div>
+    </div>
+    <div class="ed">
+      <div class="year">2020</div>
+      <div class="name">Design Thinking</div>
+      <div class="inst">IBM</div>
+    </div>
+    <div class="ed">
+      <div class="year">—</div>
+      <div class="name">UX &amp; UI Fundamental Patterns</div>
+      <div class="inst">Independent study</div>
+    </div>
+  </section>
+
+  <!-- ========= REFERENCES ========= -->
+  <section>
+    <h2>References</h2>
+    <p style="font-size:9.5pt; line-height:1.55; color:var(--ink-body);">Senior references available on request from Booz Allen Hamilton (Product Lead and Design Lead, Trusted Environments / Developer Portal), Banco Pichincha, Mondelēz Latin America and Xentinels DesignOps.</p>
+  </section>
+
+  <footer class="cv-foot">
+    <span>Danilo Rojas — Curriculum Vitae</span>
+    <span>Page 2 of 2</span>
+  </footer>
+
+</article>
+
+</body>
+</html>

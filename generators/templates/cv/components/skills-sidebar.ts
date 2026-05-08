@@ -22,6 +22,9 @@ function renderGroup(group: SkillGroup): string {
 }
 
 export function renderSkillsSidebar(skills: Skills, options: SkillsSidebarOptions): string {
+  // CVs intentionally render only `byLayer` (Strategy / Design / Engineering / Agents).
+  // `byOutcome` (Discovery / Build / Ship / Scale) is the alternate view used by the
+  // skills sheet; including both in the 62mm CV sidebar would overflow A4.
   const groups = skills.byLayer.groups.map(renderGroup).join("\n");
   const heading = options.lang === "en" ? "Skills" : "Habilidades";
   return `

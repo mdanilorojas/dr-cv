@@ -1,0 +1,4 @@
+# Private audits - do not commit
+*
+!.gitignore
+!2026-05-07-github-audit.md
