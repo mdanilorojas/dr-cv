@@ -198,6 +198,89 @@ function validateTestimonials(raw: unknown): Testimonials {
   });
 }
 
+// ============= validators for new types =============
+function validateCase(raw: unknown, path: string): import("./types.js").Case {
+  const o = requireObject(raw, `case front matter in ${path}`);
+  const yEnd = o.yearEnd;
+  let yearEnd: number | "present";
+  if (yEnd === "present") {
+    yearEnd = "present";
+  } else if (typeof yEnd === "number") {
+    yearEnd = yEnd;
+  } else {
+    throw new Error(`case ${path}: yearEnd must be number or "present"`);
+  }
+  return {
+    slug: requireString(o.slug, `case ${path}: slug`),
+    titleEn: requireString(o.titleEn, `case ${path}: titleEn`),
+    titleEs: requireString(o.titleEs, `case ${path}: titleEs`),
+    clientEn: requireString(o.clientEn, `case ${path}: clientEn`),
+    clientEs: requireString(o.clientEs, `case ${path}: clientEs`),
+    yearStart: typeof o.yearStart === "number"
+      ? o.yearStart
+      : (() => { throw new Error(`case ${path}: yearStart must be number`); })(),
+    yearEnd,
+    hookEn: requireString(o.hookEn, `case ${path}: hookEn`),
+    hookEs: requireString(o.hookEs, `case ${path}: hookEs`),
+    bulletsEn: requireArray(o.bulletsEn, `case ${path}: bulletsEn`, (b) => requireString(b, "bullet")),
+    bulletsEs: requireArray(o.bulletsEs, `case ${path}: bulletsEs`, (b) => requireString(b, "bullet")),
+    stack: requireArray(o.stack, `case ${path}: stack`, (s) => requireString(s, "stack item")),
+    featured: typeof o.featured === "boolean"
+      ? o.featured
+      : (() => { throw new Error(`case ${path}: featured must be boolean`); })(),
+  };
+}
+
+function validateEducation(raw: unknown): import("./types.js").Education {
+  return requireArray(raw, "education", (item, i) => {
+    const o = requireObject(item, `education[${i}]`);
+    const y = o.year;
+    let year: number | null;
+    if (y === null || y === undefined) {
+      year = null;
+    } else if (typeof y === "number") {
+      year = y;
+    } else {
+      throw new Error(`education[${i}].year must be number or null`);
+    }
+    return {
+      year,
+      name: requireString(o.name, `education[${i}].name`),
+      institution: requireString(o.institution, `education[${i}].institution`),
+      location: typeof o.location === "string" ? o.location : undefined,
+    };
+  });
+}
+
+function validateAttributedTestimonials(raw: unknown): import("./types.js").AttributedTestimonial[] {
+  return requireArray(raw, "attributedTestimonials", (t, i) => {
+    const o = requireObject(t, `attributedTestimonials[${i}]`);
+    const source = requireString(o.source, `attributedTestimonials[${i}].source`);
+    if (source !== "attributed") {
+      throw new Error(`attributedTestimonials[${i}].source must be 'attributed', got '${source}'`);
+    }
+    return {
+      quote: requireString(o.quote, `attributedTestimonials[${i}].quote`),
+      quoteEs: typeof o.quoteEs === "string" ? o.quoteEs : undefined,
+      author: requireString(o.author, `attributedTestimonials[${i}].author`),
+      role: requireString(o.role, `attributedTestimonials[${i}].role`),
+      company: typeof o.company === "string" ? o.company : undefined,
+      source: "attributed" as const,
+    };
+  });
+}
+
+// ============= markdown front matter parser =============
+const FRONT_MATTER_RE = /^---\n([\s\S]*?)\n---/;
+
+function parseFrontMatter(markdown: string): unknown {
+  const match = FRONT_MATTER_RE.exec(markdown);
+  if (!match) {
+    throw new Error("missing YAML front matter delimiters (---)");
+  }
+  return yaml.load(match[1]);
+}
+
 // ---------- public API ----------
 export function loadSkills(filePath: string): Skills {
   return loadYaml(filePath, validateSkills);
@@ -212,4 +295,56 @@ export function loadAllData(dataDir: string): SkillsSheetData {
     clients: loadYaml(path.join(dataDir, "clients.yaml"), validateClients),
     testimonials: loadYaml(path.join(dataDir, "testimonials", "verified.yaml"), validateTestimonials),
   };
+}
+
+// ---------- new public API ----------
+import { readdirSync } from "node:fs";
+import type { Case, Education, AttributedTestimonial, CvData } from "./types.js";
+
+export function loadCase(filePath: string): Case {
+  if (!existsSync(filePath)) {
+    throw new DataLoadError(`Case file not found: ${filePath}`, filePath);
+  }
+  let raw: unknown;
+  try {
+    const content = readFileSync(filePath, "utf8");
+    raw = parseFrontMatter(content);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    throw new DataLoadError(`Front matter error in ${filePath}: ${msg}`, filePath);
+  }
+  try {
+    return validateCase(raw, filePath);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    throw new DataLoadError(`Case schema error in ${filePath}: ${msg}`, filePath);
+  }
+}
+
+export function loadCases(dirPath: string): Case[] {
+  if (!existsSync(dirPath)) {
+    throw new DataLoadError(`Cases dir not found: ${dirPath}`, dirPath);
+  }
+  const files = readdirSync(dirPath).filter((f) => f.endsWith(".md"));
+  return files
+    .map((f) => loadCase(path.join(dirPath, f)))
+    .sort((a, b) => a.slug.localeCompare(b.slug));
+}
+
+export function loadEducation(filePath: string): Education {
+  return loadYaml(filePath, validateEducation);
+}
+
+export function loadAttributedTestimonials(filePath: string): AttributedTestimonial[] {
+  return loadYaml(filePath, validateAttributedTestimonials);
+}
+
+export function loadCvData(dataDir: string): CvData {
+  const base = loadAllData(dataDir);
+  const cases = loadCases(path.join(dataDir, "cases"));
+  const education = loadEducation(path.join(dataDir, "education.yaml"));
+  const attributedTestimonials = loadAttributedTestimonials(
+    path.join(dataDir, "testimonials", "attributed.yaml"),
+  );
+  return { ...base, cases, education, attributedTestimonials };
 }
