@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>V11 · Hiring Universe · Master · 10 rounds → The Notebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+Pro:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+  :root {
+    --bg: #07080d;
+    --bg-alt: #0c0e16;
+    --bg-3: #12141d;
+    --panel: #111320;
+    --panel-2: #181b27;
+    --line: #1d2030;
+    --line-hi: #272b3d;
+    --ink: #eceef5;
+    --ink-2: #a8aebd;
+    --ink-3: #6d7484;
+    --ink-4: #4a4f5d;
+    --accent: #FF8964;
+    --accent-dim: #a3543e;
+    --accent-soft: rgba(255, 137, 100, 0.08);
+    --ok: #6fd08c;
+    --info: #7fb3ff;
+    --warn: #f2c66d;
+    --bad: #e37a7a;
+    --violet: #b49dff;
+    --teal: #64e0c8;
+    --mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --serif: "Source Serif Pro", "Iowan Old Style", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent-dim); }
+  a:hover { color: #ffa184; }
+  code, .mono { font-family: var(--mono); font-size: 12.5px; }
+  code { background: var(--bg-3); color: var(--accent); padding: 1px 6px; border-radius: 3px; border: 1px solid var(--line); }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 64px 0; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 60px 28px 160px; }
+
+  /* ---------- masthead ---------- */
+  header.masthead { border-bottom: 1px solid var(--line); padding-bottom: 44px; margin-bottom: 56px; position: relative; overflow: hidden; }
+  header.masthead::before { content: ""; position: absolute; top: 0; right: 0; width: 500px; height: 240px; background: radial-gradient(circle at 80% 20%, rgba(255, 137, 100, 0.06), transparent 60%); pointer-events: none; }
+  .brand-tag { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--accent); text-transform: uppercase; padding: 4px 12px; border: 1px solid var(--accent-dim); border-radius: 3px; margin-bottom: 22px; background: var(--accent-soft); position: relative; }
+  .brand-tag::before { content: ""; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 8px var(--accent); }
+  h1.title { font-size: 56px; line-height: 1.02; font-weight: 650; letter-spacing: -0.028em; margin: 0 0 18px; max-width: 24ch; position: relative; }
+  h1.title em { font-style: italic; color: var(--accent); }
+  .thesis-line { font-family: var(--serif); font-size: 22px; font-style: italic; color: #d8dae4; line-height: 1.45; max-width: 74ch; margin: 10px 0 0; position: relative; }
+  .thesis-line .accent { color: var(--accent); }
+  .masthead-meta { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-top: 28px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.14em; position: relative; }
+  .masthead-meta span b { color: var(--ink); font-weight: 500; }
+
+  /* ---------- sections ---------- */
+  h2.sec-title { font-size: 28px; letter-spacing: -0.018em; margin: 80px 0 18px; border-left: 3px solid var(--accent); padding-left: 16px; font-weight: 700; }
+  h2.sec-title .n { color: var(--ink-3); font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em; margin-right: 10px; font-weight: 500; }
+  p.sec-lede { color: var(--ink-2); font-size: 15.5px; max-width: 82ch; margin: 0 0 24px; line-height: 1.62; }
+
+  /* ---------- exec summary ---------- */
+  .exec { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 28px 34px; margin: 24px 0; }
+  .exec p { font-family: var(--serif); font-size: 16px; color: var(--ink); line-height: 1.72; max-width: 80ch; margin: 0 0 14px; }
+  .exec p:last-child { margin-bottom: 0; }
+  .exec p strong { color: #fff; font-weight: 600; }
+  .exec p em { color: var(--accent); font-style: italic; }
+
+  /* ---------- round tiles ---------- */
+  .rounds-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 20px 0; }
+  @media (max-width: 1080px) { .rounds-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 720px) { .rounds-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .rounds-grid { grid-template-columns: 1fr; } }
+  .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px 20px; text-decoration: none; border-bottom: none; display: flex; flex-direction: column; gap: 6px; position: relative; overflow: hidden; transition: border-color 0.2s, transform 0.2s; min-height: 180px; }
+  .tile:hover { border-color: var(--accent-dim); transform: translateY(-2px); }
+  .tile::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; background: var(--line-hi); transition: background 0.2s; }
+  .tile:hover::before { background: var(--accent); }
+  .tile.final::before { background: var(--accent); }
+  .tile .rn { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; color: var(--ink-3); text-transform: uppercase; }
+  .tile.final .rn { color: var(--accent); }
+  .tile h3 { font-family: var(--sans); font-size: 15.5px; color: #fff; margin: 4px 0 0; letter-spacing: -0.005em; font-weight: 600; line-height: 1.25; }
+  .tile .desc { font-size: 12.5px; color: var(--ink-2); line-height: 1.45; margin: 4px 0 0; flex: 1; }
+  .tile .find { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.06em; margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); }
+  .tile .find b { color: var(--accent); }
+  .tile.final h3 { color: var(--accent); }
+  .tile.final .desc { color: var(--ink); }
+  .tile .badge { position: absolute; top: 10px; right: 10px; font-family: var(--mono); font-size: 9px; color: var(--accent); letter-spacing: 0.12em; padding: 2px 6px; border: 1px solid var(--accent-dim); border-radius: 3px; background: var(--accent-soft); text-transform: uppercase; }
+
+  /* ---------- timeline ---------- */
+  .timeline { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 34px 40px; margin: 24px 0; position: relative; overflow: hidden; }
+  .timeline-rail { position: relative; padding-left: 22px; }
+  .timeline-rail::before { content: ""; position: absolute; left: 5px; top: 10px; bottom: 10px; width: 2px; background: linear-gradient(180deg, var(--accent-dim), transparent); }
+  .t-node { position: relative; padding: 0 0 18px 0; }
+  .t-node:last-child { padding-bottom: 0; }
+  .t-node::before { content: ""; position: absolute; left: -22px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent-dim); }
+  .t-node.final::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 10px var(--accent); }
+  .t-node .r { font-family: var(--mono); font-size: 10.5px; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; }
+  .t-node h4 { font-size: 15px; color: #fff; margin: 2px 0 4px; font-weight: 600; letter-spacing: -0.005em; }
+  .t-node p { color: var(--ink-2); font-size: 13.5px; margin: 0; line-height: 1.55; max-width: 78ch; }
+  .t-node p em { color: var(--accent); font-style: italic; }
+
+  /* ---------- final direction card ---------- */
+  .final-card { background: linear-gradient(180deg, #14110d 0%, var(--panel) 70%); border: 1px solid var(--accent-dim); border-radius: 14px; padding: 40px 44px; margin: 28px 0; position: relative; overflow: hidden; }
+  .final-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--accent), transparent 70%); }
+  .final-card .tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; color: var(--accent); text-transform: uppercase; margin-bottom: 14px; padding: 3px 10px; border: 1px solid var(--accent-dim); border-radius: 3px; }
+  .final-card h3 { font-size: 36px; color: #fff; font-weight: 700; letter-spacing: -0.024em; margin: 0 0 12px; line-height: 1.1; max-width: 22ch; }
+  .final-card h3 em { color: var(--accent); font-style: italic; }
+  .final-card .thesis-sentence { font-family: var(--serif); font-size: 20px; font-style: italic; color: var(--ink); line-height: 1.45; max-width: 72ch; margin: 6px 0 24px; }
+
+  /* Hero mockup (embedded) */
+  .hero-mock { margin: 24px 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--line-hi); }
+  .browser-bar { background: #0a0b12; padding: 9px 14px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-4); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: #222; }
+  .url-bar { flex: 1; background: #0f1017; border: 1px solid #191a22; border-radius: 4px; padding: 3px 10px; margin-left: 10px; color: var(--ink-3); }
+  .mock-nb { background: #07070a; color: #eeeae4; padding: 56px 56px; font-family: var(--sans); min-height: 560px; position: relative; }
+  .mock-nb::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 85% 8%, rgba(255, 137, 100, 0.045), transparent 55%); pointer-events: none; }
+  .mock-nb .chrome { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--mono); font-size: 11px; color: #6b6760; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 52px; position: relative; }
+  .mock-nb .chrome b { color: #eeeae4; font-weight: 500; }
+  .mock-nb .chrome .pill { border: 1px solid #35302a; padding: 3px 10px; border-radius: 999px; color: #bfb7ad; display: inline-flex; align-items: center; gap: 7px; }
+  .mock-nb .chrome .pill::before { content: ""; width: 6px; height: 6px; background: var(--ok); border-radius: 50%; box-shadow: 0 0 6px rgba(111, 208, 140, 0.6); }
+  .mock-nb .eyebrow { font-family: var(--serif); font-style: italic; font-size: 13.5px; color: var(--accent); margin-bottom: 16px; position: relative; }
+  .mock-nb .eyebrow::before { content: "— "; color: #6b6760; }
+  .mock-nb .hero-h1 { font-size: 54px; line-height: 1.02; letter-spacing: -0.028em; font-weight: 550; color: #f7f3ec; max-width: 18ch; margin: 0 0 22px; position: relative; }
+  .mock-nb .hero-h1 em { font-style: italic; color: #8a8279; font-weight: 400; }
+  .mock-nb .hero-h1 em.accent { color: var(--accent); }
+  .mock-nb .hero-sub { font-family: var(--serif); font-style: italic; color: #a59b8e; font-size: 15.5px; line-height: 1.5; max-width: 54ch; margin-bottom: 28px; position: relative; }
+  .mock-nb .hero-meta { display: flex; gap: 22px; font-family: var(--mono); font-size: 10.5px; color: #72695f; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; position: relative; flex-wrap: wrap; }
+  .mock-nb .hero-meta span b { color: #cfc5b6; font-weight: 500; }
+  .mock-nb .body-2col { column-count: 2; column-gap: 44px; color: #bfb6a8; font-size: 13.5px; line-height: 1.72; max-width: 860px; font-family: var(--serif); position: relative; }
+  .mock-nb .body-2col p { margin: 0 0 12px; }
+  .mock-nb .body-2col p:first-of-type::first-letter { font-family: var(--serif); font-size: 42px; float: left; line-height: 0.9; margin: 4px 8px 0 0; color: var(--accent); font-weight: 400; }
+  .mock-nb .body-2col b { color: #f7f3ec; font-weight: 500; }
+  .mock-nb .proof-below { margin-top: 40px; border-top: 1px solid #1f1d1a; padding-top: 16px; font-family: var(--mono); font-size: 11px; color: #6b6760; letter-spacing: 0.06em; position: relative; text-transform: uppercase; }
+  .mock-nb .proof-below b { color: #cfc5b6; font-weight: 500; }
+  .mock-nb .proof-below .sep { color: var(--accent); margin: 0 6px; }
+
+  /* ---------- decision defense ---------- */
+  .defense { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 26px 32px; margin: 28px 0; }
+  .defense p { font-family: var(--serif); font-size: 16px; color: var(--ink); line-height: 1.68; margin: 0; max-width: 82ch; }
+  .defense p strong { color: var(--accent); font-weight: 600; }
+  .defense p em { color: #fff; font-style: italic; }
+
+  /* ---------- ship instruction ---------- */
+  .ship-card { background: linear-gradient(180deg, var(--bg-alt), var(--panel)); border: 1px solid var(--line-hi); border-radius: 12px; padding: 32px 38px; margin: 28px 0; }
+  .ship-card .hd { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.16em; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; }
+  .ship-card h3 { font-size: 22px; color: #fff; margin: 0 0 10px; font-weight: 700; letter-spacing: -0.012em; }
+  .ship-card .command { background: #0a0b12; border: 1px solid var(--line-hi); border-radius: 6px; padding: 16px 20px; font-family: var(--mono); font-size: 14px; color: var(--accent); letter-spacing: 0.02em; margin: 14px 0 12px; }
+  .ship-card .command b { color: #fff; font-weight: 500; }
+  .ship-card p { color: var(--ink-2); font-size: 14px; line-height: 1.6; margin: 0; max-width: 80ch; }
+  .ship-card p b { color: #fff; font-weight: 500; }
+
+  /* ---------- evidence index ---------- */
+  .evidence { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 26px 32px; margin: 20px 0; }
+  .evidence h4 { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin: 18px 0 8px; font-weight: 600; }
+  .evidence h4:first-child { margin-top: 0; }
+  .evidence ul { margin: 4px 0 0; padding-left: 18px; color: var(--ink-2); font-size: 13.5px; }
+  .evidence ul li { margin: 4px 0; line-height: 1.55; }
+  .evidence ul li a { border: 0; color: var(--ink); }
+  .evidence ul li a:hover { color: var(--accent); }
+  .evidence ul li code { font-size: 11.5px; }
+  .evidence ul li em { color: var(--ink-3); font-style: italic; font-size: 12px; margin-left: 6px; }
+
+  /* ---------- stat callout ---------- */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 24px 0; }
+  @media (max-width: 780px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; }
+  .stat .v { font-family: var(--sans); font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.02em; line-height: 1; }
+  .stat .v span { color: var(--accent); }
+  .stat .l { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; color: var(--ink-3); text-transform: uppercase; margin-top: 6px; }
+  .stat .s { font-size: 12px; color: var(--ink-2); margin-top: 4px; line-height: 1.4; }
+
+  .foot { margin-top: 100px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-4); font-size: 11.5px; font-family: var(--mono); letter-spacing: 0.06em; }
+  .foot a { color: var(--ink-3); border: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= HEADER ================= -->
+<header class="masthead">
+  <div class="brand-tag">V11 · Hiring Universe · Master</div>
+  <h1 class="title">Ten rounds of research, one direction: <em>The Notebook</em>.</h1>
+  <p class="thesis-line">Most teams are still designing <span class="accent">for</span> AI. I design <span class="accent">with</span> it — and I've shipped four products that prove the reframe holds under real constraints.</p>
+  <div class="masthead-meta">
+    <span>Rounds · <b>10</b></span>
+    <span>Target role · <b>AI Product Designer / Agentic UX Lead</b></span>
+    <span>Target tier · <b>above Booz Allen Hamilton</b></span>
+    <span>Final direction · <b>R9 D1 + D3 proof-strip graft</b></span>
+    <span>Voice · <b>R5 Draft C · Taste-first critic</b></span>
+    <span>Ship window · <b>10–14 days</b></span>
+    <span>Generated · <b>2026-05-08</b></span>
+  </div>
+</header>
+
+<!-- ================= EXECUTIVE SUMMARY ================= -->
+<section>
+  <h2 class="sec-title"><span class="n">§ 01</span>Executive summary</h2>
+  <p class="sec-lede">The arc of 10 rounds, the final pick, why.</p>
+
+  <div class="exec">
+    <p>
+      V11 began with a market-level question — <em>what does the tier above Booz Allen Hamilton actually filter on in 2026?</em> — and ended with a direction that refuses a hero image, refuses a CTA button, and leads with 2,000 words. <strong>R1</strong> surveyed 17 target employers (Anthropic, OpenAI, Stripe, Figma, Linear, Cursor, Vercel, Perplexity, Replit, Cohere, Mistral, Airbnb, Runway, Notion, IDEO, Pentagram, Work & Co) and extracted <em>twelve shared filters</em>, five of which Danilo's landing must emit — craft + taste claim, writing as first-class artifact, agent-native proof, live interactive element, and profile-plus-agents framing. <strong>R2</strong> read 14 portfolios of people already inside those rooms and found that 9 of 14 run the Essayist shape, not the case grid — the Chiang template is the median, not the differentiator.
+    </p>
+    <p>
+      <strong>R3</strong> catalogued the 2026 agentic-UX vocabulary (artifact · thinking · skill · plan · diff · project) so the landing would demonstrate fluency rather than buzzword-stuff. <strong>R4</strong> dissected 12 case studies and named Narrative Ship as the right shape — Context → Problem → Approach → Ship → Outcome → What-I'd-do-differently → Craft Floor. <strong>R5</strong> tested three voice registers on Danilo's actual positioning and landed on Draft C (taste-first critic): <em>"Most teams are still designing for AI. I design with it."</em> <strong>R6</strong> audited Danilo's proof surface against the median-hire baseline from R2 and found two axes where he can eclipse it — agentic-specific (column B) and writing (column C, currently empty).
+    </p>
+    <p>
+      <strong>R7</strong> ran craft-floor audits on the existing <code>landing-huly</code> output and found 12 must-fixes (Google Fonts CDN, no skip link, invalid <code>role="marquee"</code>, no OG image, no LICENSE, no CI). <strong>R8</strong> catalogued ~80 anti-patterns across 8 categories and distilled the top 10 — led by <em>"Do not ship the Huly-clone warm-radial-glow pill CTA"</em> and <em>"Do not claim 'agentic' without a running agent artifact."</em> <strong>R9</strong> shortlisted three directions with complete specs and recommended convergence on Direction 1 ("The Notebook") with Direction 3's proof strip grafted below the fold. <strong>R10</strong> is the full build spec: copy verbatim in EN + ES, palette + typography + motion spec, 8-task production plan merge-safe from the existing <code>huly-landing</code> template, explicit refusals of all 10 R8 anti-patterns, and a 4-week rollout tying R6's five high-leverage proofs to the ship date <code>2026-06-05</code>.
+    </p>
+    <p>
+      The bet is <em>simple and contrarian</em>: the Chiang template is 2026's baseline, the Huly-clone is 2026's tell, and long-form writing is the single under-used axis where a Latin American designer can visibly clear the bar without competing on demo-reel production value. <strong>The essay IS the landing.</strong> The cases become footnotes. Proof strip sits quietly below. Testimonials embed where they earn their weight. Every craft floor from R7 cleared; every anti-pattern from R8 explicitly refused.
+    </p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="v">17</div><div class="l">target employers (R1)</div><div class="s">From Anthropic to Pentagram — all above BAH on prestige, comp, ceiling, or agentic maturity.</div></div>
+    <div class="stat"><div class="v">14</div><div class="l">portfolios (R2)</div><div class="s">9 Essayist · 3 Live-Demo · 2 Curated Grid. Template dictates conversion.</div></div>
+    <div class="stat"><div class="v">~80</div><div class="l">anti-patterns (R8)</div><div class="s">10 top risks distilled into the V11 refusal checklist.</div></div>
+    <div class="stat"><div class="v"><span>5</span></div><div class="l">must-emit signals (R1)</div><div class="s">Craft · Writing · Agent-native · Live artifact · Profile+agents.</div></div>
+  </div>
+</section>
+
+<!-- ================= 10 ROUND TILES ================= -->
+<section>
+  <h2 class="sec-title"><span class="n">§ 02</span>Ten rounds · navigable tiles</h2>
+  <p class="sec-lede">Each tile links to the full round. Numbered R01–R10 + final.</p>
+
+  <div class="rounds-grid">
+    <a href="round-01/" class="tile">
+      <span class="rn">Round 01 · Signals</span>
+      <h3>17 target employers × 12 filters</h3>
+      <p class="desc">What the 2026 hiring market filters on — craft, writing, agent-native, evidence-over-credentials, low-ego collaboration.</p>
+      <p class="find"><b>→</b> 5 must-emit signals identified</p>
+    </a>
+
+    <a href="round-02/" class="tile">
+      <span class="rn">Round 02 · Portfolios</span>
+      <h3>14 people already hired</h3>
+      <p class="desc">Portfolios of Vercel, Linear, Raycast, Klaviyo, Framer ICs. Three archetypes: Essayist-Builder, Live-Demo, Curated Grid.</p>
+      <p class="find"><b>→</b> 9/14 run the Essayist shape</p>
+    </a>
+
+    <a href="round-03/" class="tile">
+      <span class="rn">Round 03 · Vocabulary</span>
+      <h3>10 agentic UX patterns</h3>
+      <p class="desc">Artifact panel, Visible Thinking, Plan-before-Build, Diff-Review, Named Skills — the 2026 vocabulary every top product speaks.</p>
+      <p class="find"><b>→</b> Named vocab &gt; buzzwords</p>
+    </a>
+
+    <a href="round-04/" class="tile">
+      <span class="rn">Round 04 · Case format</span>
+      <h3>12 case studies dissected</h3>
+      <p class="desc">Narrative Ship format wins: Context → Problem → Approach → Ship → Outcome → Differently → Craft Floor.</p>
+      <p class="find"><b>→</b> "What I'd do differently" = senior tell</p>
+    </a>
+
+    <a href="round-05/" class="tile">
+      <span class="rn">Round 05 · Voice</span>
+      <h3>3 registers, 3 drafts</h3>
+      <p class="desc">Quiet Craftsman, Evangelist Builder, Taste-First Critic. Ten-phrase anti-voice filter. Draft C recommended.</p>
+      <p class="find"><b>→</b> Draft C · Taste-first critic</p>
+    </a>
+
+    <a href="round-06/" class="tile">
+      <span class="rn">Round 06 · Proof</span>
+      <h3>12×6 median-hire matrix</h3>
+      <p class="desc">Danilo's baseline vs the median: two axes to eclipse (agentic-specific, writing). Five high-leverage proofs identified.</p>
+      <p class="find"><b>→</b> Ship 5 proofs by 2026-06-05</p>
+    </a>
+
+    <a href="round-07/" class="tile">
+      <span class="rn">Round 07 · Craft floor</span>
+      <h3>28-point scorecard</h3>
+      <p class="desc">Self-host fonts, OG image, skip link, LICENSE + CI, hreflang. 12 must-fixes in the current landing-huly output.</p>
+      <p class="find"><b>→</b> Landing IS the work sample</p>
+    </a>
+
+    <a href="round-08/" class="tile">
+      <span class="rn">Round 08 · Anti-patterns</span>
+      <h3>~80 tells to avoid</h3>
+      <p class="desc">Huly-clone CTA, GPT-copy, lone-genius framing, CDN fonts, stale portfolio — the top 10 V11 must refuse.</p>
+      <p class="find"><b>→</b> 10 explicit refusals checklisted</p>
+    </a>
+
+    <a href="round-09/" class="tile">
+      <span class="rn">Round 09 · Shortlist</span>
+      <h3>3 directions, fully specced</h3>
+      <p class="desc">D1 Notebook (POV-led) · D2 Workshop (demo-led) · D3 Shipping Log (track-record-led). Recommendation: D1 + D3 proof strip.</p>
+      <p class="find"><b>→</b> Convergence recommended</p>
+    </a>
+
+    <a href="round-10/" class="tile final">
+      <span class="badge">★ FINAL</span>
+      <span class="rn">Round 10 · Final spec</span>
+      <h3>The Notebook — converged build spec</h3>
+      <p class="desc">Copy (EN + ES), palette, typography, motion, accessibility, performance, 8-task production plan evolving from huly-landing.</p>
+      <p class="find"><b>→</b> Ship 10–14 days</p>
+    </a>
+  </div>
+</section>
+
+<!-- ================= FINDINGS TIMELINE ================= -->
+<section>
+  <h2 class="sec-title"><span class="n">§ 03</span>Findings timeline · how conclusions evolved</h2>
+  <p class="sec-lede">The research didn't land on The Notebook in round 1. It triangulated across 9 rounds before R10 wrote the build spec.</p>
+
+  <div class="timeline">
+    <div class="timeline-rail">
+      <div class="t-node">
+        <div class="r">R01 · signal extraction</div>
+        <h4>The market is filtering on craft, writing, and agent-native — not on AI buzzwords.</h4>
+        <p>17 target employers surveyed. Every one filters on the word <em>craft</em>. Anthropic explicitly asks for blog posts at the top of the résumé. Stripe is hiring <em>"Senior Staff Product Designer, Agentic Commerce"</em> by name. 5 must-emit signals distilled.</p>
+      </div>
+      <div class="t-node">
+        <div class="r">R02 · shape discovery</div>
+        <h4>The median portfolio at tier-1 is the Essayist, not the Curated Grid.</h4>
+        <p>14 portfolios of hired ICs. 9 Essayist-Builder (Paco, Rauno, Pedro, Shu, Rasmus, Lee Robinson). Only 2 Curated Grid (Chiang, Kraft). Writing outperforms case studies at senior tier — <em>which changes the whole landing shape.</em></p>
+      </div>
+      <div class="t-node">
+        <div class="r">R03 · vocabulary audit</div>
+        <h4>2026 has a specific agentic-UX vocabulary. Fluency is table-stakes.</h4>
+        <p>10 patterns across 14 shipped products. Artifact, Thinking, Skill, Plan, Diff-review, Checkpoint. The landing demonstrates command of this vocabulary in every case study and in the essay — <em>named vocabulary beats buzzword soup.</em></p>
+      </div>
+      <div class="t-node">
+        <div class="r">R04 · case-study format</div>
+        <h4>Narrative Ship is the senior-vs-mid discriminator.</h4>
+        <p>Of 12 case studies reviewed, the ones that read senior end with <em>"What I'd Do Differently"</em> and a craft floor strip. Bootcamp redesigns and Dribbble concept shots are disqualifying.</p>
+      </div>
+      <div class="t-node">
+        <div class="r">R05 · voice register</div>
+        <h4>Danilo should sound like a taste-first critic, not an evangelist.</h4>
+        <p>Three register drafts tested. Draft B (Evangelist) puts him in a crowded room with every Vercel-adjacent dev. Draft C (Taste-first critic) is the voice that sells a POV — and Danilo's differentiator <em>is</em> a POV.</p>
+      </div>
+      <div class="t-node">
+        <div class="r">R06 · proof audit</div>
+        <h4>Writing is Danilo's most under-used axis. The essay is the lever.</h4>
+        <p>12×6 matrix against median-hire baseline. Two columns where Danilo can eclipse: agentic-specific (col B) and writing (col C, currently empty). 5 highest-leverage proofs — domain, LinkedIn recs, essay, public skill, Loom.</p>
+      </div>
+      <div class="t-node">
+        <div class="r">R07 · craft floor</div>
+        <h4>The landing-huly output has 12 must-fixes before it can ship as V11.</h4>
+        <p>Self-host fonts (#1), remove <code>role="marquee"</code>, add skip link, OG image, LICENSE, CI, absolute hreflang. The landing IS the work sample — every leak is evaluated as taste failure.</p>
+      </div>
+      <div class="t-node">
+        <div class="r">R08 · anti-patterns</div>
+        <h4>The current landing silhouette IS the Huly-clone. That has to change.</h4>
+        <p>~80 anti-patterns catalogued. Top 10 distilled. #1 is "Don't ship the warm-radial-glow pill CTA." The existing dr-cv landing is that exact silhouette — recruiters recognize it in 0.5s as template.</p>
+      </div>
+      <div class="t-node">
+        <div class="r">R09 · shortlist</div>
+        <h4>Three internally-coherent bets. Recommendation: D1 with D3 proof strip.</h4>
+        <p>D1 Notebook (essay-anchored, highest ceiling, 10–14 days) · D2 Workshop (live demo, 12–18 days, infra-heavy) · D3 Shipping Log (Chiang template, safest baseline but same as everyone). Convergence: D1 + D3's proof strip <em>grafted below the fold</em>.</p>
+      </div>
+      <div class="t-node final">
+        <div class="r">R10 · FINAL · build spec</div>
+        <h4>The Notebook — full verbatim copy, palette, motion, 8-task production plan.</h4>
+        <p>Essay in EN + ES parallel-drafted. 4 cases in Narrative Ship format. Proof strip grafted. Two testimonials placed where they earn their weight. Evolves <code>generators/templates/huly-landing/</code> in 8 merge-safe tasks. <em>Ship window: 10–14 days.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL DIRECTION ================= -->
+<section>
+  <h2 class="sec-title"><span class="n">§ 04</span>The final direction · The Notebook</h2>
+  <p class="sec-lede">R10's hero mockup, embedded. The copy is final; the visual is production-fidelity; the argument is the page.</p>
+
+  <div class="final-card">
+    <span class="tag">★ Pick for V11 · R9 D1 + D3 proof-strip graft</span>
+    <h3>The Notebook — an essay-anchored hiring landing, with receipts underneath.</h3>
+    <p class="thesis-sentence">Danilo is a designer who writes. The essay is the front door; the cases are footnotes; the proof strip sits quietly below the fold; the hire happens because a human at Anthropic, Linear or Stripe read something a copycat can't fake.</p>
+
+    <div class="hero-mock">
+      <div class="browser-bar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="url-bar">danilorojas.design — the notebook</span>
+      </div>
+      <div class="mock-nb">
+        <div class="chrome">
+          <div><b>Danilo Rojas</b> · Quito → remote · EN / ES</div>
+          <div class="pill">Open to Agentic UX Lead · remote-global</div>
+        </div>
+        <div class="eyebrow">The Notebook · thesis no. 01, still moving</div>
+        <h1 class="hero-h1">Most teams are still designing <em>for</em> AI.<br>I design <em class="accent">with</em> it.</h1>
+        <p class="hero-sub">A working notebook on agentic product design — four shipped cases, fifteen years of making software before any of this was called agentic, and a thesis that is still moving because the medium still is.</p>
+        <div class="hero-meta">
+          <span>Essay · <b>14 min</b> read</span>
+          <span>4 cases · <b>EN / ES</b></span>
+          <span>Last revised <b>2026-05-08</b></span>
+        </div>
+        <div class="body-2col">
+          <p>There is a sentence I keep deleting and rewriting, and it is this: the phrase "AI designer" is a category error. It implies a designer whose object of study is artificial intelligence — the way a typography designer's object is letterforms. That is not what most of us are actually doing. What most of us are doing, whether we name it or not, is designing <b>the relationship</b> between a human maker, the model they are working with, and the artifact the two co-author together.</p>
+          <p>I have spent the last year testing that reframe in four projects that all shipped. One runs paying pilots for a compliance startup in Quito. One is a design system that a Claude sub-agent can read, invoke, and render — it is, in the literal sense, an <b>agent-consumable skill</b>. One is a dark-first DS whose accessibility rules live inside the tokens themselves. And one is a consumer app with Gemini as the runtime primitive — not a chatbot bolted on.</p>
+        </div>
+        <div class="proof-below">
+          <b>fifteen years</b><span class="sep">·</span><b>346 commits</b> in 40 days<span class="sep">·</span><b>78.4 → 95.6</b> on the a11y audit<span class="sep">·</span><b>1 SaaS</b> in production<span class="sep">·</span><b>2 verified BAH references</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DECISION DEFENSE ================= -->
+<section>
+  <h2 class="sec-title"><span class="n">§ 05</span>Decision defense</h2>
+
+  <div class="defense">
+    <p>
+      The Chiang-template (Direction 3) is 2026's median — a safe yield but not a differentiator, because <em>every competent senior already ships it.</em> The Workshop (Direction 2) is the most exciting demo but 14 days of infrastructure work that has nothing to do with design judgment and drags a risk of dead-demo on the day a recruiter opens the tab. The Notebook (Direction 1) bets on the one axis Danilo can own unreplicated — a first-person thesis on agentic design that <strong>no copycat can reproduce and no agent can fake</strong> — while D3's proof-strip graft closes the "all talk, where's the work" risk by putting 5 click-to-verify numbers one scroll below the essay. R5 explicit: <em>"Pick Draft C, borrow Draft A's restraint for the rest of the landing."</em> R9 explicit: <em>"Converge on Direction 1 with Direction 3's proof strip."</em> R10 is that convergence, written to ship.
+    </p>
+  </div>
+</section>
+
+<!-- ================= HOW TO SHIP ================= -->
+<section>
+  <h2 class="sec-title"><span class="n">§ 06</span>How to ship</h2>
+
+  <div class="ship-card">
+    <div class="hd">★ Trigger for implementation</div>
+    <h3>Tell me <code>ship V11</code> and I evolve <code>generators/templates/huly-landing/</code> into The Notebook.</h3>
+    <div class="command"><b>→</b> <span>ship V11</span></div>
+    <p>V11 is implemented as a <b>new template sibling</b> to <code>generators/templates/huly-landing/</code>, not a rewrite. The existing <code>landing-huly</code> output keeps building throughout the 8-task production plan in R10 §10. Only at Task 8 does the orchestrator's default flip from <code>huly</code> to <code>notebook</code>. Old output preserved behind <code>--variant=huly-archive</code> flag for regression comparison. Total: <b>~55 hours · 10–14 calendar days</b>. Critical path is the 7-day essay editorial window (Task 3), which runs in parallel with scaffolding (Tasks 1, 2, 4).</p>
+  </div>
+</section>
+
+<!-- ================= EVIDENCE INDEX ================= -->
+<section>
+  <h2 class="sec-title"><span class="n">§ 07</span>Evidence index</h2>
+  <p class="sec-lede">Every source consulted, every artifact produced, every data file that feeds the Notebook.</p>
+
+  <div class="evidence">
+    <h4>10 rounds of research</h4>
+    <ul>
+      <li><a href="round-01/">Round 01 · Hiring signals · 17 target employers</a> <em>— 12 market filters + 5 must-emit signals</em></li>
+      <li><a href="round-02/">Round 02 · Portfolios of people already inside the rooms</a> <em>— 3 archetypes, 14 hires dissected</em></li>
+      <li><a href="round-03/">Round 03 · Agentic UX patterns · shipped vocabulary</a> <em>— 10 patterns, 14 products, 9 vocab concepts</em></li>
+      <li><a href="round-04/">Round 04 · Case-study formats that convert</a> <em>— Narrative Ship template, 12 teardowns</em></li>
+      <li><a href="round-05/">Round 05 · Senior-IC voice &amp; positioning</a> <em>— 3 registers, 3 drafts, 10 anti-phrases</em></li>
+      <li><a href="round-06/">Round 06 · Proof surface · audit + gap analysis</a> <em>— 12×6 matrix, 5 high-leverage proofs</em></li>
+      <li><a href="round-07/">Round 07 · Craft floors · landing IS the work sample</a> <em>— 28-point scorecard, 12 must-fixes</em></li>
+      <li><a href="round-08/">Round 08 · Anti-patterns · 60-second filter</a> <em>— ~80 anti-patterns, top 10 refusals</em></li>
+      <li><a href="round-09/">Round 09 · 3 directions · converged specs</a> <em>— D1 / D2 / D3 shortlist, convergence recommended</em></li>
+      <li><a href="round-10/"><strong>Round 10 · FINAL converged build spec · The Notebook</strong></a> <em>— copy verbatim, palette, motion, 8-task production plan</em></li>
+    </ul>
+
+    <h4>Danilo's data files</h4>
+    <ul>
+      <li><code>data/identity.yaml</code> — name, role, contact, languages, availability</li>
+      <li><code>data/positioning.yaml</code> — thesis (EN + ES), tagline, 5 proof numbers</li>
+      <li><code>data/skills.yaml</code> — two axes (by-layer + by-outcome), mastered vs learning split</li>
+      <li><code>data/experience.yaml</code> — BAH current · EnRegla · Xentinels · Arpatel · Tecniequipos · Canadian Bank Note</li>
+      <li><code>data/clients.yaml</code> — Merck · Mondelēz · Banco Pichincha · Quifatex · Grupo Superior · Moderna · Azzorti · Flamingo CO</li>
+      <li><code>data/education.yaml</code> — EPN BSc Systems Engineering 2015 · Google UX 2021 · IBM Design Thinking 2020</li>
+      <li><code>data/testimonials/verified.yaml</code> — <strong>Sheppard</strong> (Product Lead) + <strong>Giraldez</strong> (Design Lead) · both with verbal use-freely permission</li>
+      <li><code>data/cases/enregla.md</code> — paying pilots · 346 commits · 40 days · DS migration 78.4 → 95.6</li>
+      <li><code>data/cases/te-skin.md</code> — agent-consumable DS · 17 components · <code>COMPONENT-INDEX.json</code> · featured</li>
+      <li><code>data/cases/te-black.md</code> — dark-first DS · WCAG in tokens · Houdini @property</li>
+      <li><code>data/cases/life-update-mobile.md</code> — Gemini API as runtime primitive · hybrid data model · 0 → prod in 1 day</li>
+    </ul>
+
+    <h4>Existing codebase to evolve</h4>
+    <ul>
+      <li><code>generators/templates/huly-landing/index.ts</code> — current landing orchestrator · fork signature preserved in <code>notebook-landing/</code></li>
+      <li><code>generators/templates/huly-landing/huly-styles.ts</code> — palette + typography tokens · rebuild as <code>notebook-styles.ts</code></li>
+      <li><code>generators/templates/huly-landing/huly-script.ts</code> — particle canvas + cursor glow · <em>to delete;</em> replaced by 4 KB reveal + lang-toggle script</li>
+      <li><code>dist/landing-huly/index.html</code> — current output · preserved at Task 8 via <code>--variant=huly-archive</code> flag</li>
+      <li><code>lib/types.ts</code> — <code>Landing</code>, <code>Identity</code>, <code>Case</code>, <code>Testimonial</code> types · reused unchanged</li>
+    </ul>
+
+    <h4>Related V11 artifacts</h4>
+    <ul>
+      <li>R9 comparison matrix · 12 criteria × 3 directions (inside <a href="round-09/">round-09/</a>)</li>
+      <li>R6 4-week proof plan · 5 proofs, weeks 1–4, target <code>2026-06-05</code></li>
+      <li>R7 craft-floor scorecard · 28 items, 12 must-fixes</li>
+      <li>R8 top-10 anti-pattern refusal list · checklisted in R10 §11</li>
+      <li>R5 three voice drafts · A quiet / B evangelist / <strong>C taste-first critic (pick)</strong></li>
+    </ul>
+  </div>
+</section>
+
+<div class="foot">
+  V11 · Hiring Universe · master · generated 2026-05-08 · 10 rounds · final direction: <strong>The Notebook</strong> · R9 D1 + D3 proof-strip graft · voice: R5 Draft C · ship: 10–14 days · target: hire at <a href="https://anthropic.com">Anthropic</a> / <a href="https://linear.app">Linear</a> / <a href="https://stripe.com">Stripe</a> / <a href="https://figma.com">Figma</a> / <a href="https://vercel.com">Vercel</a> / <a href="https://cursor.com">Cursor</a> — tier above Booz Allen Hamilton. Trigger implementation with <code>ship V11</code>.
+</div>
+
+</div>
+</body>
+</html>

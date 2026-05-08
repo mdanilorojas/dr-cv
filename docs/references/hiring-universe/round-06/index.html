@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>V11 R6 · Proof surface · audit + gap analysis</title>
+<style>
+  :root{
+    --bg:#07080d;
+    --bg-2:#0c0e16;
+    --bg-3:#11131c;
+    --bg-4:#161a25;
+    --ink:#e7e8ef;
+    --ink-dim:#9aa0ae;
+    --ink-faint:#5a5f6d;
+    --ink-ghost:#3d414d;
+    --line:#1c1f2b;
+    --line-hi:#262a39;
+    --accent:#FF8964;
+    --accent-dim:#a35840;
+    --accent-soft:rgba(255,137,100,.08);
+    --accent-softer:rgba(255,137,100,.04);
+    --ok:#6fd08c;
+    --warn:#f2c66d;
+    --bad:#e37a7a;
+    --mono:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+    --sans:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim)}
+  a:hover{color:#ffa184}
+  code,kbd,samp{font-family:var(--mono);font-size:12.5px}
+  .mono{font-family:var(--mono)}
+  .wrap{max-width:1200px;margin:0 auto;padding:56px 28px 120px}
+  header.masthead{border-bottom:1px solid var(--line);padding-bottom:28px;margin-bottom:40px}
+  .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;padding:3px 8px;border:1px solid var(--accent-dim);border-radius:3px;margin-bottom:14px}
+  h1{font-size:40px;line-height:1.08;font-weight:700;letter-spacing:-.02em;margin:0 0 10px}
+  h1 .accent{color:var(--accent)}
+  .subtitle{color:var(--ink-dim);font-size:16px;max-width:860px}
+  .subtitle em{color:#cfd2dc;font-style:normal;border-bottom:1px dotted var(--ink-faint)}
+  h2{font-size:26px;letter-spacing:-.015em;margin:60px 0 18px;border-left:3px solid var(--accent);padding-left:14px}
+  h2 .part{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;display:block;margin-bottom:4px;font-weight:500}
+  h3{font-size:17px;margin:22px 0 10px;color:var(--ink)}
+  h4{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);margin:18px 0 8px;font-weight:600}
+  p{margin:.35em 0 .9em}
+  ul{margin:.2em 0 1em;padding-left:20px}
+  ul li{margin:4px 0}
+  ul li::marker{color:var(--accent-dim)}
+  .lede{font-size:17px;line-height:1.55;color:#cfd2dc;max-width:920px}
+  .lede strong{color:#fff}
+  .lede em{color:var(--accent);font-style:normal}
+  hr{border:0;border-top:1px solid var(--line);margin:48px 0}
+
+  /* TOC */
+  nav.toc{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:18px 22px;margin:28px 0 0;font-size:13px;color:var(--ink-dim)}
+  nav.toc a{color:var(--ink);border:0}
+  nav.toc a:hover{color:var(--accent)}
+  nav.toc .group{display:inline-block;margin-right:22px;margin-bottom:8px;vertical-align:top}
+  nav.toc .group b{color:var(--ink-faint);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:4px;font-weight:500}
+  nav.toc .group span{display:block;margin:2px 0}
+
+  /* part 1 proof cards */
+  .proof-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0 8px}
+  @media (max-width:900px){ .proof-cards{grid-template-columns:1fr 1fr} }
+  @media (max-width:600px){ .proof-cards{grid-template-columns:1fr} }
+  .pc{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:20px 22px;position:relative;overflow:hidden}
+  .pc::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,var(--accent),transparent)}
+  .pc .letter{font-family:var(--mono);font-size:38px;color:var(--accent);font-weight:700;line-height:1;letter-spacing:-.04em}
+  .pc .name{font-size:18px;font-weight:700;color:#fff;margin:4px 0 10px;letter-spacing:-.005em}
+  .pc .blurb{color:var(--ink-dim);font-size:13.5px;margin:0 0 12px;line-height:1.5}
+  .pc .forms{font-family:var(--mono);font-size:11.5px;color:var(--ink);line-height:1.65}
+  .pc .forms .fl{display:block;padding-left:14px;position:relative}
+  .pc .forms .fl::before{content:"›";position:absolute;left:0;color:var(--accent-dim)}
+  .pc .who{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-top:12px;border-top:1px dashed var(--line-hi);padding-top:10px}
+
+  /* part 2 matrix */
+  .matrix-wrap{overflow-x:auto;margin:14px 0 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg-2)}
+  table.matrix{width:100%;border-collapse:collapse;font-size:13px;min-width:780px}
+  table.matrix th,table.matrix td{text-align:center;padding:8px 10px;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+  table.matrix th:last-child,table.matrix td:last-child{border-right:0}
+  table.matrix th{background:var(--bg-3);color:var(--ink-dim);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;padding:10px 8px}
+  table.matrix th.who{text-align:left;min-width:180px;width:200px}
+  table.matrix td.who{text-align:left;color:#fff;font-weight:600;font-size:13.5px}
+  table.matrix td.who .r{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);font-weight:400;letter-spacing:.06em;margin-top:2px}
+  table.matrix td.s{font-family:var(--mono);font-weight:700;font-size:13px;width:60px}
+  table.matrix td.s0{color:var(--ink-ghost);background:transparent}
+  table.matrix td.s1{color:var(--ink-faint);background:rgba(255,137,100,.025)}
+  table.matrix td.s2{color:#cfd2dc;background:rgba(255,137,100,.06)}
+  table.matrix td.s3{color:#ffb08e;background:rgba(255,137,100,.14)}
+  table.matrix tr.median td{background:var(--bg-4);border-top:2px solid var(--accent);border-bottom:2px solid var(--accent-dim)}
+  table.matrix tr.median td.who{color:var(--accent);text-transform:uppercase;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
+  table.matrix tfoot td{color:var(--ink-faint);font-family:var(--mono);font-size:10.5px;padding:8px;font-style:italic;text-align:left}
+  .legend{font-family:var(--mono);font-size:11.5px;color:var(--ink-dim);margin:10px 0 0;display:flex;flex-wrap:wrap;gap:14px}
+  .legend .k{display:inline-flex;align-items:center;gap:6px}
+  .legend .k b{display:inline-block;width:22px;height:14px;border-radius:2px;border:1px solid var(--line-hi)}
+  .legend .k .b0{background:transparent}
+  .legend .k .b1{background:rgba(255,137,100,.025)}
+  .legend .k .b2{background:rgba(255,137,100,.06)}
+  .legend .k .b3{background:rgba(255,137,100,.14)}
+
+  /* part 3 audit */
+  .audit{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:22px 26px;margin:18px 0}
+  .audit-hd{display:flex;align-items:baseline;justify-content:space-between;gap:18px;margin-bottom:8px;flex-wrap:wrap}
+  .audit-hd .cat{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
+  .audit-hd .name{font-size:20px;font-weight:700;color:#fff;letter-spacing:-.005em}
+  .audit-hd .verdict{font-family:var(--mono);font-size:11px;letter-spacing:.1em;padding:3px 10px;border-radius:3px;text-transform:uppercase}
+  .audit-hd .verdict.weak{background:rgba(227,122,122,.1);color:var(--bad);border:1px solid rgba(227,122,122,.3)}
+  .audit-hd .verdict.ok{background:rgba(242,198,109,.1);color:var(--warn);border:1px solid rgba(242,198,109,.3)}
+  .audit-hd .verdict.strong{background:rgba(111,208,140,.1);color:var(--ok);border:1px solid rgba(111,208,140,.3)}
+  table.aud{width:100%;border-collapse:collapse;margin-top:10px;font-size:13.5px}
+  table.aud th{text-align:left;padding:8px 10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink-dim);text-transform:uppercase;font-weight:500;border-bottom:1px solid var(--line-hi);width:14%}
+  table.aud th.today{color:var(--ok)}
+  table.aud th.missing{color:var(--bad)}
+  table.aud th.fix-1w,table.aud th.fix-2w,table.aud th.fix-4w{color:var(--warn)}
+  table.aud td{padding:10px;vertical-align:top;border-bottom:1px solid var(--line);font-size:13px;line-height:1.55;color:var(--ink)}
+  table.aud td.today{color:#cfd2dc}
+  table.aud td.missing{color:var(--ink-dim)}
+  table.aud td code{font-size:11.5px;color:var(--accent);background:var(--bg-3);padding:1px 6px;border-radius:3px;border:1px solid var(--line-hi)}
+
+  /* part 4 high-leverage */
+  .lev-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0}
+  @media (max-width:800px){ .lev-grid{grid-template-columns:1fr} }
+  .lev{background:linear-gradient(180deg,#12141e 0%,#0c0e16 100%);border:1px solid var(--accent-dim);border-radius:10px;padding:22px 26px;position:relative}
+  .lev.hero{grid-column:1 / -1;background:linear-gradient(180deg,#171924 0%,#0c0e16 100%)}
+  .lev .rank{font-family:var(--mono);font-size:42px;color:var(--accent);line-height:1;margin-bottom:6px;font-weight:700;letter-spacing:-.04em}
+  .lev h3{margin:0 0 6px;font-size:20px;color:#fff;letter-spacing:-.005em}
+  .lev .meta{font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:.08em;margin-bottom:12px;text-transform:uppercase;display:flex;flex-wrap:wrap;gap:14px}
+  .lev .meta b{color:var(--accent);font-weight:500}
+  .lev .body{color:#cfd2dc;font-size:14px;margin-bottom:10px}
+  .lev .body strong{color:#fff}
+  .lev .dod{font-family:var(--mono);font-size:11.5px;color:var(--ink);border-top:1px dashed var(--line-hi);padding-top:10px;margin-top:10px;line-height:1.7}
+  .lev .dod .k{color:var(--accent);display:inline-block;width:80px}
+  .lev .dod .row{display:block}
+
+  /* part 5 proof-strip mock */
+  .mock-frame{background:#0a0b10;border:1px solid var(--line-hi);border-radius:12px;padding:40px 36px;margin:18px 0;position:relative;overflow:hidden}
+  .mock-frame::after{content:"MOCK · landing hero";position:absolute;top:12px;right:14px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--ink-faint);text-transform:uppercase}
+  .mock-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;margin-bottom:14px}
+  .mock-h1{font-family:"Inter","Segoe UI",sans-serif;font-size:40px;line-height:1.1;font-weight:700;letter-spacing:-.025em;margin:0 0 14px;color:#fff}
+  .mock-h1 em{color:var(--accent);font-style:normal}
+  .mock-sub{font-size:16px;color:var(--ink-dim);max-width:700px;margin:0 0 26px}
+  .proof-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid var(--line-hi);border-bottom:1px solid var(--line-hi);margin:18px 0}
+  @media (max-width:760px){ .proof-strip{grid-template-columns:repeat(2,1fr)} }
+  .pn{padding:16px 18px;border-right:1px solid var(--line-hi);position:relative}
+  .pn:last-child{border-right:0}
+  @media (max-width:760px){ .pn:nth-child(2n){border-right:0} .pn{border-bottom:1px solid var(--line-hi)} }
+  .pn .v{font-family:"Inter","Segoe UI",sans-serif;font-size:30px;line-height:1;font-weight:700;color:#fff;letter-spacing:-.02em}
+  .pn .v .accent{color:var(--accent)}
+  .pn .v sup{font-size:16px;color:var(--accent);top:-.8em;margin-left:1px;font-weight:600}
+  .pn .l{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);letter-spacing:.1em;text-transform:uppercase;margin-top:6px}
+  .pn .src{font-family:var(--mono);font-size:10px;color:var(--ink-faint);margin-top:4px}
+  .pn .src a{color:var(--accent);border:0}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .badge{font-family:var(--mono);font-size:11px;padding:4px 10px;border:1px solid var(--line-hi);border-radius:3px;color:var(--ink);background:var(--bg-3)}
+  .badge.verified{color:var(--accent);border-color:var(--accent-dim);background:var(--accent-softer)}
+  .badge .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ok);margin-right:6px;vertical-align:middle}
+  .availability{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(111,208,140,.06);border:1px solid rgba(111,208,140,.25);border-radius:4px;font-family:var(--mono);font-size:12px;color:#cfe8d5;margin-top:14px;width:fit-content}
+  .availability .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px rgba(111,208,140,.6)}
+  .availability b{color:#fff;font-weight:500}
+  .strip-spec{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:18px 22px;margin:14px 0;font-size:13.5px}
+  .strip-spec h4{margin-top:0}
+  .strip-spec table{width:100%;border-collapse:collapse}
+  .strip-spec th,.strip-spec td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:top;font-size:12.5px}
+  .strip-spec th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink-dim);text-transform:uppercase;font-weight:500}
+  .strip-spec td code{font-family:var(--mono);font-size:11.5px;color:var(--accent)}
+  .strip-spec td.lbl{font-family:var(--mono);color:#fff;font-size:12px;width:140px}
+
+  /* note boxes */
+  .note{background:var(--accent-softer);border-left:2px solid var(--accent);padding:12px 16px;margin:14px 0;color:#d8dbe4;font-size:13.5px;border-radius:0 4px 4px 0}
+  .note b{color:var(--accent)}
+  .note code{font-family:var(--mono);font-size:12px;color:#fff;background:var(--bg-3);padding:1px 6px;border-radius:3px;border:1px solid var(--line-hi)}
+
+  .foot{margin-top:80px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:12px;font-family:var(--mono);letter-spacing:.04em}
+  .foot a{color:var(--ink-dim);border:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="tag">V11 · Round 6 · Hiring Universe</div>
+  <h1>Proof surface <span class="accent">·</span> audit &amp; gap analysis</h1>
+  <p class="subtitle">AI labs and tier-1 product companies hire on <em>signals they can verify in five minutes</em>. R6 catalogues what counts as credible proof in 2026 for an Agentic UX Lead / AI Product Designer, maps Danilo's current inventory against a median-hire baseline from R2's fourteen portfolios, and names the five highest-leverage proofs to close in the next four weeks. The output is an actionable proof-strip for the V11 landing.</p>
+
+  <nav class="toc">
+    <div class="group"><b>Part 1</b>
+      <span><a href="#taxonomy">Six proof categories</a></span>
+    </div>
+    <div class="group"><b>Part 2</b>
+      <span><a href="#matrix">12×6 median-hire matrix</a></span>
+    </div>
+    <div class="group"><b>Part 3</b>
+      <span><a href="#audit">Danilo inventory audit</a></span>
+    </div>
+    <div class="group"><b>Part 4</b>
+      <span><a href="#leverage">Five high-leverage proofs</a></span>
+    </div>
+    <div class="group"><b>Part 5</b>
+      <span><a href="#strip">Proof-strip spec</a></span>
+    </div>
+  </nav>
+</header>
+
+<!-- ============ PART 1 ============ -->
+<section id="taxonomy">
+  <h2><span class="part">Part 1</span>Six categories of verifiable proof</h2>
+  <p class="lede">Across R1 (what employers say) and R2 (what their hires actually publish), six proof types do all the work. Anything that cannot be placed in one of these buckets is <em>decoration</em>, not proof.</p>
+
+  <div class="proof-cards">
+    <div class="pc">
+      <div class="letter">A</div>
+      <div class="name">Shipped product</div>
+      <div class="blurb">Something live that accepts public traffic today. The single most load-bearing category — R4's evidence audit showed "link to shipped" as the one signal every hired-at-tier-1 case study carried.</div>
+      <div class="forms">
+        <span class="fl">Landing URL on custom domain</span>
+        <span class="fl">GitHub repo with stars &amp; README</span>
+        <span class="fl">npm / App Store / Chrome Web Store listing</span>
+        <span class="fl">60-sec demo video, captioned</span>
+      </div>
+      <div class="who">Used by: 14 / 14 hires</div>
+    </div>
+
+    <div class="pc">
+      <div class="letter">B</div>
+      <div class="name">Agentic-specific</div>
+      <div class="blurb">Repos, skills, or MCP servers that use or build with AI agents. Distinct from "AI product" — this is the category Linear, Stripe, and Figma now hire into by name ("Agentic Commerce", "AI Models", "agents and teams").</div>
+      <div class="forms">
+        <span class="fl">MCP server on awesome-list</span>
+        <span class="fl">Published Claude-Code skills repo</span>
+        <span class="fl">.riv / Rive files showing agent loops</span>
+        <span class="fl">Screen-capture of a live subagent run</span>
+      </div>
+      <div class="who">Used by: 3 / 14 hires · scarce, so differentiating</div>
+    </div>
+
+    <div class="pc">
+      <div class="letter">C</div>
+      <div class="name">Writing</div>
+      <div class="blurb">Anthropic names it explicitly: <em>"if you've written a thoughtful blog post, put that at the top of your résumé."</em> Essays, threads, talks. This is the proof that survives when the artifact is NDA-locked.</div>
+      <div class="forms">
+        <span class="fl">Essay, 800+ words, own domain</span>
+        <span class="fl">Thread, 100+ reactions, quotable</span>
+        <span class="fl">Talk, conference or community, YT link</span>
+        <span class="fl">Podcast appearance with transcript</span>
+      </div>
+      <div class="who">Used by: 9 / 14 hires · Essayist cluster</div>
+    </div>
+
+    <div class="pc">
+      <div class="letter">D</div>
+      <div class="name">Community</div>
+      <div class="blurb">Public traces of working-in-public. GitHub activity graph, Discord moderation, build-in-public log. Less weighted than A–C but cheap to accumulate and compounds over weeks.</div>
+      <div class="forms">
+        <span class="fl">GitHub contribution graph, 90-day density</span>
+        <span class="fl">PR reviews / maintainer badge on OSS</span>
+        <span class="fl">Build-in-public log (changelog page)</span>
+        <span class="fl">Office hours / mentoring trail</span>
+      </div>
+      <div class="who">Used by: 11 / 14 hires (ambient)</div>
+    </div>
+
+    <div class="pc">
+      <div class="letter">E</div>
+      <div class="name">Credentialed</div>
+      <div class="blurb">Named employers or clients, published case studies by the client, awards, conference slots. High signal per instance — but slow to acquire and often NDA-hostile. Worth exactly what it says on the tin.</div>
+      <div class="forms">
+        <span class="fl">Tier-1 client namedropped (Stripe, Booz Allen)</span>
+        <span class="fl">Client-published case study</span>
+        <span class="fl">Awwwards / CSS Design Awards / FWA</span>
+        <span class="fl">Verified testimonial on LinkedIn</span>
+      </div>
+      <div class="who">Used by: 8 / 14 hires</div>
+    </div>
+
+    <div class="pc">
+      <div class="letter">F</div>
+      <div class="name">Numeric</div>
+      <div class="blurb">One load-bearing number per artifact. R2 lesson 03: <em>resist the dashboard</em>. Stars, installs, commits, uptime — but <strong>only</strong> when attached to a named shipped thing. Percentages without a named artifact read as consulting-speak.</div>
+      <div class="forms">
+        <span class="fl">Stars / forks / npm weekly downloads</span>
+        <span class="fl">Commit graph / days-active</span>
+        <span class="fl">Lighthouse / WCAG / bundle-size</span>
+        <span class="fl">Paying users / MRR (when namable)</span>
+      </div>
+      <div class="who">Used by: 3 / 14 hires · rare, always specific</div>
+    </div>
+  </div>
+
+  <div class="note"><b>Filter rule.</b> A proof is only in-scope if it is (1) public, or (2) verifiable by a recruiter in under five minutes. Private Figma links, unlabelled screenshots, and Medium drafts fail both tests. Everything in R6 is scored against the five-minute rule.</div>
+</section>
+
+<!-- ============ PART 2 ============ -->
+<section id="matrix">
+  <h2><span class="part">Part 2</span>12×6 median-hire matrix</h2>
+  <p class="lede">Twelve hires from R2 (the fourteen minus two non-design wildcards), scored 0–3 on each of the six proof categories. Score reflects what their public portfolio surfaces — <em>not</em> what they presumably have in private. The median row at the bottom is the baseline any tier-1 designer portfolio needs to clear.</p>
+
+  <div class="matrix-wrap">
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th class="who">Hire · role</th>
+        <th>A · Shipped</th>
+        <th>B · Agentic</th>
+        <th>C · Writing</th>
+        <th>D · Community</th>
+        <th>E · Credentialed</th>
+        <th>F · Numeric</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="who">Emil Kowalski<span class="r">Linear · Design Engineer</span></td>
+        <td class="s s3">3</td><td class="s s1">1</td><td class="s s2">2</td><td class="s s3">3</td><td class="s s3">3</td><td class="s s2">2</td></tr>
+      <tr><td class="who">Rauno Freiberg<span class="r">Vercel · Interaction</span></td>
+        <td class="s s3">3</td><td class="s s0">0</td><td class="s s2">2</td><td class="s s2">2</td><td class="s s3">3</td><td class="s s0">0</td></tr>
+      <tr><td class="who">Paco Coursey<span class="r">Linear · Webmaster</span></td>
+        <td class="s s3">3</td><td class="s s0">0</td><td class="s s1">1</td><td class="s s3">3</td><td class="s s3">3</td><td class="s s2">2</td></tr>
+      <tr><td class="who">Pedro Duarte<span class="r">Raycast · DevRel</span></td>
+        <td class="s s3">3</td><td class="s s0">0</td><td class="s s3">3</td><td class="s s3">3</td><td class="s s3">3</td><td class="s s3">3</td></tr>
+      <tr><td class="who">Brittany Chiang<span class="r">Klaviyo · Sr FE a11y</span></td>
+        <td class="s s3">3</td><td class="s s0">0</td><td class="s s2">2</td><td class="s s2">2</td><td class="s s3">3</td><td class="s s3">3</td></tr>
+      <tr><td class="who">Adam Argyle<span class="r">Shopify · ex-Chrome DX</span></td>
+        <td class="s s2">2</td><td class="s s1">1</td><td class="s s3">3</td><td class="s s3">3</td><td class="s s3">3</td><td class="s s2">2</td></tr>
+      <tr><td class="who">Josh Comeau<span class="r">Independent · educator</span></td>
+        <td class="s s3">3</td><td class="s s0">0</td><td class="s s3">3</td><td class="s s3">3</td><td class="s s2">2</td><td class="s s2">2</td></tr>
+      <tr><td class="who">Jhey Tompkins<span class="r">Shopify · Staff DE</span></td>
+        <td class="s s2">2</td><td class="s s0">0</td><td class="s s2">2</td><td class="s s3">3</td><td class="s s3">3</td><td class="s s1">1</td></tr>
+      <tr><td class="who">Shu Ding<span class="r">Vercel · v0 / AI SDK</span></td>
+        <td class="s s3">3</td><td class="s s3">3</td><td class="s s2">2</td><td class="s s3">3</td><td class="s s3">3</td><td class="s s1">1</td></tr>
+      <tr><td class="who">Rasmus Andersson<span class="r">Indep · Inter / Figma alum</span></td>
+        <td class="s s3">3</td><td class="s s0">0</td><td class="s s2">2</td><td class="s s2">2</td><td class="s s3">3</td><td class="s s3">3</td></tr>
+      <tr><td class="who">Lee Robinson<span class="r">Cursor · DevEx</span></td>
+        <td class="s s2">2</td><td class="s s2">2</td><td class="s s3">3</td><td class="s s3">3</td><td class="s s3">3</td><td class="s s1">1</td></tr>
+      <tr><td class="who">Samuel Kraft<span class="r">Raycast · DE (Glaze)</span></td>
+        <td class="s s3">3</td><td class="s s0">0</td><td class="s s2">2</td><td class="s s2">2</td><td class="s s3">3</td><td class="s s1">1</td></tr>
+      <tr class="median">
+        <td class="who">MEDIAN HIRE</td>
+        <td class="s">3</td><td class="s">0</td><td class="s">2</td><td class="s">3</td><td class="s">3</td><td class="s">2</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr><td colspan="7">Scoring: 0 absent · 1 buried · 2 present · 3 load-bearing. Median computed per column across 12 hires.</td></tr>
+    </tfoot>
+  </table>
+  </div>
+
+  <div class="legend">
+    <span class="k"><b class="b0"></b> 0 absent</span>
+    <span class="k"><b class="b1"></b> 1 buried</span>
+    <span class="k"><b class="b2"></b> 2 present</span>
+    <span class="k"><b class="b3"></b> 3 load-bearing</span>
+  </div>
+
+  <p style="margin-top:18px;color:var(--ink-dim);font-size:14px">The median-hire signature is <span class="mono" style="color:#fff;background:var(--bg-3);padding:2px 8px;border-radius:3px;border:1px solid var(--line-hi)">A:3 · B:0 · C:2 · D:3 · E:3 · F:2</span>. Two takeaways:</p>
+  <ul>
+    <li><strong style="color:#fff">Agentic-specific proof (B) is where Danilo can eclipse the median.</strong> Only Shu Ding and Lee Robinson score meaningfully on B, and Shu's score is because v0 <em>is</em> the AI product. This column is wide open in 2026 — an Agentic Designer with a published skill + MCP server is unambiguously above median on the one axis the industry is rotating toward.</li>
+    <li><strong style="color:#fff">Numeric proof (F) separates the top three.</strong> Pedro (20M downloads), Brittany (100k installs), Rasmus (Inter) — each has one load-bearing number the reader already knows. Danilo's equivalents (346 commits, 17-part DS, 95.6 a11y score) are <em>specific but not famous</em>. They need a named artifact attached to carry weight.</li>
+  </ul>
+</section>
+
+<!-- ============ PART 3 ============ -->
+<section id="audit">
+  <h2><span class="part">Part 3</span>Danilo inventory audit</h2>
+  <p class="lede">For each of the six categories: what exists today and is verifiable in five minutes, what the median tier-1 hire has that Danilo doesn't, and what can be closed in 1 / 2 / 4 weeks of solo effort. Current baseline: <span class="mono" style="color:#fff">A:1 · B:2 · C:0 · D:2 · E:2 · F:2</span>. Sum 9 vs median 13.</p>
+
+  <!-- A -->
+  <div class="audit">
+    <div class="audit-hd">
+      <div>
+        <div class="cat">Category A</div>
+        <div class="name">Shipped product</div>
+      </div>
+      <div class="verdict weak">Weak · 1/3 · biggest gap</div>
+    </div>
+    <table class="aud">
+      <thead><tr>
+        <th class="today">Today · verifiable</th>
+        <th class="missing">Missing vs median</th>
+        <th class="fix-1w">1-week fix</th>
+        <th class="fix-2w">2-week fix</th>
+        <th class="fix-4w">4-week fix</th>
+      </tr></thead>
+      <tbody><tr>
+        <td class="today"><code>github.com/mdanilorojas/dr-cv</code> · Phase 1+2 shipped. EnRegla <em>exists</em> but has no public URL. Life Update Mobile exists privately. No custom domain yet.</td>
+        <td class="missing">No <code>danilorojas.design</code> live. No landing URL for EnRegla that a recruiter can open. No demo video. BAH work is NDA-locked by design.</td>
+        <td>Register &amp; deploy <code>danilorojas.design</code> pointing at the Phase 3 landing. Dist folder already built; takes 2h with Vercel + DNS.</td>
+        <td>Ship a <strong>public EnRegla marketing site</strong> (not the app) at <code>enregla.com</code> with screenshots + 90-sec Loom. App stays private; the site is the proof.</td>
+        <td>Cut a 60-sec silent screencap of Life Update Mobile running on phone, self-host MP4 on danilorojas.design. Adds a second live artifact at near-zero cost.</td>
+      </tr></tbody>
+    </table>
+  </div>
+
+  <!-- B -->
+  <div class="audit">
+    <div class="audit-hd">
+      <div>
+        <div class="cat">Category B</div>
+        <div class="name">Agentic-specific</div>
+      </div>
+      <div class="verdict strong">Strong · 2/3 · uncommon advantage</div>
+    </div>
+    <table class="aud">
+      <thead><tr>
+        <th class="today">Today · verifiable</th>
+        <th class="missing">Missing vs median</th>
+        <th class="fix-1w">1-week fix</th>
+        <th class="fix-2w">2-week fix</th>
+        <th class="fix-4w">4-week fix</th>
+      </tr></thead>
+      <tbody><tr>
+        <td class="today"><code>/te-skin</code> DS-as-agent-skill (private, NDA). Supabase-MCP wired to Claude Code on EnRegla. 346-commit dr-cv repo built with subagents. Skills-lock / CLAUDE.md conventions used daily.</td>
+        <td class="missing">Nothing public demonstrates the agentic workflow. Claim is real; <em>reader cannot verify</em>. No published MCP server, no public skill, no screencap of a subagent run.</td>
+        <td>Publish <strong>a public skill</strong>: extract a generic, NDA-safe version of te-skin's structure (e.g. "dr-cv-skill" — a CV generator skill for Claude Code). Push to <code>github.com/mdanilorojas/claude-skills</code>.</td>
+        <td>Record a <strong>3-minute asciinema / screencap</strong> of "one prompt → five PDFs" using the existing Phase-2 CV orchestrator. Host on danilorojas.design/method.</td>
+        <td>Publish a minimal <strong>custom MCP server</strong> — e.g. "behance-mcp" that reads Behance portfolio data — to the awesome-mcp-servers list. One pull-request worth of work + README.</td>
+      </tr></tbody>
+    </table>
+  </div>
+
+  <!-- C -->
+  <div class="audit">
+    <div class="audit-hd">
+      <div>
+        <div class="cat">Category C</div>
+        <div class="name">Writing</div>
+      </div>
+      <div class="verdict weak">Weak · 0/3 · Anthropic-critical gap</div>
+    </div>
+    <table class="aud">
+      <thead><tr>
+        <th class="today">Today · verifiable</th>
+        <th class="missing">Missing vs median</th>
+        <th class="fix-1w">1-week fix</th>
+        <th class="fix-2w">2-week fix</th>
+        <th class="fix-4w">4-week fix</th>
+      </tr></thead>
+      <tbody><tr>
+        <td class="today">Zero published essays. Zero threads. Zero talks. LinkedIn posts exist but are not long-form and do not teach. This is the single biggest blocker for Anthropic-style filters.</td>
+        <td class="missing">No "top of your résumé" essay. No thread-quality thread. No POV piece on agentic design. Danilo has <em>two strong stories</em> (EnRegla 40-day MVP, te-skin as agent skill) both unwritten.</td>
+        <td>Publish <strong>"How I migrated a DS in 5 recursive rounds with subagents"</strong> — 78.4→95.6 score, 17 parts. Technical, evidence-rich, named anti-patterns. 1200 words. Host at danilorojas.design/writing/ds-recursion.</td>
+        <td>Publish <strong>"A design system is an agent skill now"</strong> — the te-skin manifesto, sanitised. Argue the position, ship COMPONENT-INDEX.json as the proof. 1500 words + diagram.</td>
+        <td>Cross-post the two essays as X threads (each ~12 posts) with the key diagram as OG image. Low cost, doubles the surface area. Submit ds-recursion essay to Smashing Magazine / CSS-Tricks.</td>
+      </tr></tbody>
+    </table>
+  </div>
+
+  <!-- D -->
+  <div class="audit">
+    <div class="audit-hd">
+      <div>
+        <div class="cat">Category D</div>
+        <div class="name">Community</div>
+      </div>
+      <div class="verdict ok">OK · 2/3 · quiet but dense</div>
+    </div>
+    <table class="aud">
+      <thead><tr>
+        <th class="today">Today · verifiable</th>
+        <th class="missing">Missing vs median</th>
+        <th class="fix-1w">1-week fix</th>
+        <th class="fix-2w">2-week fix</th>
+        <th class="fix-4w">4-week fix</th>
+      </tr></thead>
+      <tbody><tr>
+        <td class="today">346-commit graph on dr-cv is dense and recent. GitHub profile exists. Conventional-commit discipline visible in log. 15-year LinkedIn trail with enterprise logos (Merck, Mondelēz, Banco Pichincha).</td>
+        <td class="missing">No public build-in-public log. No Discord / GitHub-Discussions trace. No PR reviews on third-party OSS. Nobody knows the commit graph exists until they visit the profile.</td>
+        <td>Pin dr-cv + claude-skills to GitHub profile. Add a <strong>"Changelog" page</strong> to danilorojas.design that renders recent commits from the repo (one-day job with the GH API).</td>
+        <td>Open 3–5 targeted PRs on agentic-design adjacent repos (anthropic/courses, awesome-claude-code, supabase/mcp-server-supabase). Even docs PRs count as a verified trace.</td>
+        <td>Start a minimal <strong>weekly newsletter</strong> ("Dr-CV log") — 5-min write-up of the week's ships. Buttondown free tier. Sub-300 subscribers is fine; the existence is the signal.</td>
+      </tr></tbody>
+    </table>
+  </div>
+
+  <!-- E -->
+  <div class="audit">
+    <div class="audit-hd">
+      <div>
+        <div class="cat">Category E</div>
+        <div class="name">Credentialed</div>
+      </div>
+      <div class="verdict ok">OK · 2/3 · strong but under-surfaced</div>
+    </div>
+    <table class="aud">
+      <thead><tr>
+        <th class="today">Today · verifiable</th>
+        <th class="missing">Missing vs median</th>
+        <th class="fix-1w">1-week fix</th>
+        <th class="fix-2w">2-week fix</th>
+        <th class="fix-4w">4-week fix</th>
+      </tr></thead>
+      <tbody><tr>
+        <td class="today">Booz Allen Hamilton · active. Merck, Mondelēz, Banco Pichincha, Quifatex, Grupo Superior, Moderna, Azzorti, Flamingo (via Xentinels). 2 verified testimonials with verbal use-freely permission (Jennifer Sheppard PM, Alexander Giraldez Design Lead).</td>
+        <td class="missing">Verified testimonials are not yet on LinkedIn as recommendations. No Awwwards / CSS Design Awards entry. No conference talk. No client-published case study.</td>
+        <td>Ask Sheppard + Giraldez to paste the existing quotes as <strong>LinkedIn recommendations</strong>. Converts verbal permission to a badge any recruiter clicks through to verify in 15 seconds.</td>
+        <td>Submit danilorojas.design (once live) to <strong>Awwwards "Sites of the Day"</strong>. Rejection is free. An honourable mention is a badge for life.</td>
+        <td>Apply to speak at one regional conference (CSSConf LATAM, SmashingConf remote, a Claude Build-day). Even a lightning talk slot counts as a line on the site.</td>
+      </tr></tbody>
+    </table>
+  </div>
+
+  <!-- F -->
+  <div class="audit">
+    <div class="audit-hd">
+      <div>
+        <div class="cat">Category F</div>
+        <div class="name">Numeric</div>
+      </div>
+      <div class="verdict ok">OK · 2/3 · specific but unbranded</div>
+    </div>
+    <table class="aud">
+      <thead><tr>
+        <th class="today">Today · verifiable</th>
+        <th class="missing">Missing vs median</th>
+        <th class="fix-1w">1-week fix</th>
+        <th class="fix-2w">2-week fix</th>
+        <th class="fix-4w">4-week fix</th>
+      </tr></thead>
+      <tbody><tr>
+        <td class="today">346 commits · 40 days · EnRegla. 17 parts × 5 rounds · DS migration 78.4 → 95.6. 21 SQL migrations · 31 components · 1 edge function. 15 years shipping.</td>
+        <td class="missing">No GitHub stars / forks on any public repo. No npm downloads. No Lighthouse score surfaced. No "N users / N pilots" disclosed. All numbers are process-numbers, not reach-numbers.</td>
+        <td>Publish Lighthouse + WCAG scores for danilorojas.design once live. Target 95+/100/100/100 and a WCAG-AA badge. One load-bearing number per artifact.</td>
+        <td>Release dr-cv repo as genuinely public (with README framing it as "the repo that built this site"). Even 20 stars becomes a number to cite.</td>
+        <td>Disclose a <strong>bounded number</strong> for EnRegla pilots (e.g. "4 paying pilots · LATAM SMB compliance") once pilot 4 signs. Attach to the named artifact, not floating.</td>
+      </tr></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ PART 4 ============ -->
+<section id="leverage">
+  <h2><span class="part">Part 4</span>Five highest-leverage proofs · ship in 4 weeks</h2>
+  <p class="lede">From the audit above, five proofs dominate every other possible ship on the impact-per-hour curve. Each is <em>achievable solo</em> and <em>verifiable in five minutes</em> by a recruiter at Anthropic / Linear / Stripe. Ordered by ship-date, not by rank.</p>
+
+  <div class="lev-grid">
+
+    <div class="lev hero">
+      <div class="rank">01</div>
+      <h3>Live site at <span class="mono" style="color:var(--accent)">danilorojas.design</span></h3>
+      <div class="meta"><span>Category <b>A</b></span><span>Due <b>2026-05-15</b> · week 1</span><span>Effort <b>~4 hours</b></span><span>Deps <b>none</b></span></div>
+      <div class="body">Without a custom-domain URL, every other proof below has nowhere to live. This is the keystone. The Phase 3 landing is already built in <code>dist/landing-huly/</code> — the work is domain + Vercel + DNS + a production build flag. <strong>Without this, the V11 landing cannot exist.</strong></div>
+      <div class="dod">
+        <span class="row"><span class="k">Done when</span> https://danilorojas.design resolves, returns 200, Lighthouse ≥ 95/100/100/100, WCAG-AA verified.</span>
+        <span class="row"><span class="k">Verify</span> recruiter opens URL, sees hero + proof-strip + availability badge.</span>
+      </div>
+    </div>
+
+    <div class="lev">
+      <div class="rank">02</div>
+      <h3>Two LinkedIn recommendations</h3>
+      <div class="meta"><span>Category <b>E</b></span><span>Due <b>2026-05-18</b> · week 1</span><span>Effort <b>~1 hour (ask)</b></span></div>
+      <div class="body">Jennifer Sheppard (BAH Product Lead) and Alexander Giraldez (BAH Design Lead) have both granted verbal permission to use their quotes. Convert that to <strong>public LinkedIn recommendations</strong>. Each recommendation is a 15-second verify for any recruiter, and the two names together carry the BAH claim publicly — which today is only on the CV.</div>
+      <div class="dod">
+        <span class="row"><span class="k">Done when</span> 2 recommendations visible on linkedin.com/in/mdanilorojas.</span>
+        <span class="row"><span class="k">Verify</span> open LinkedIn profile, count recommendations.</span>
+      </div>
+    </div>
+
+    <div class="lev">
+      <div class="rank">03</div>
+      <h3>Essay · "How I migrated a DS in 5 recursive rounds"</h3>
+      <div class="meta"><span>Category <b>C</b></span><span>Due <b>2026-05-25</b> · week 2</span><span>Effort <b>~8 hours</b></span><span>Deps <b>#01</b></span></div>
+      <div class="body">Danilo's single strongest unwritten story. 17 parts × 5 rounds × subagent orchestration · 78.4 → 95.6. The essay doubles as proof for Anthropic's "thoughtful blog post at the top of the résumé" filter (R1, signal 04) and as the first <strong>writing</strong> instance in an empty category. Ship at <code>danilorojas.design/writing/ds-recursion</code>, cross-post as X thread, submit to Smashing Magazine.</div>
+      <div class="dod">
+        <span class="row"><span class="k">Done when</span> 1200+ words · 1 diagram · code snippets · 1 named anti-pattern · reading-time chip · canonical URL.</span>
+        <span class="row"><span class="k">Verify</span> open URL, read time ≤ 8 min, one image renders, share button works.</span>
+      </div>
+    </div>
+
+    <div class="lev">
+      <div class="rank">04</div>
+      <h3>Public skill · <span class="mono" style="color:var(--accent)">claude-skills/dr-cv-skill</span></h3>
+      <div class="meta"><span>Category <b>B</b></span><span>Due <b>2026-05-29</b> · week 3</span><span>Effort <b>~6 hours</b></span><span>Deps <b>#01</b></span></div>
+      <div class="body">Extract a generic, NDA-safe version of te-skin's skill structure and publish it as <code>/dr-cv</code> — a Claude-Code skill that generates a CV from a YAML spec. The repo is then the <em>agentic</em> proof the median hire does not have. This directly answers R1 signal 06 ("agents + designers together") and R2 Archetype distinction (Essayist-Builder with named OSS).</div>
+      <div class="dod">
+        <span class="row"><span class="k">Done when</span> repo public · README with "clone, run /dr-cv, get PDF" · MIT license · one screen-capture GIF in README.</span>
+        <span class="row"><span class="k">Verify</span> recruiter reads README in 90s, sees the GIF, gets it.</span>
+      </div>
+    </div>
+
+    <div class="lev">
+      <div class="rank">05</div>
+      <h3>60-second Loom · "One prompt, five CVs"</h3>
+      <div class="meta"><span>Category <b>B</b></span><span>Due <b>2026-06-05</b> · week 4</span><span>Effort <b>~3 hours</b></span><span>Deps <b>#01, #04</b></span></div>
+      <div class="body">Screen-capture of <code>npm run build:cv</code> producing the 5 PDF variants (warm EN+ES, serious EN+ES, bairesdev EN). Captioned, silent-safe, sub-90-seconds. This is the <em>live agent demo above the fold</em> that R2 lesson 02 flagged as the single biggest hero-section differentiator. Embed in landing above the proof-strip. Solves "is this real?" in one frame.</div>
+      <div class="dod">
+        <span class="row"><span class="k">Done when</span> &lt;90s · captions · embedded on danilorojas.design hero · poster image · direct MP4 fallback.</span>
+        <span class="row"><span class="k">Verify</span> autoplay muted triggers in 2s, reader presses play, sees PDFs appear in dist/.</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note"><b>Sequencing.</b> #01 unblocks #03, #04, #05. #02 is independent and cheapest — ship first. Target: five checkmarks by <code>2026-06-05</code>, four weeks from today. Net effect on the matrix: A moves 1→3, B 2→3, C 0→2, D 2→3, E 2→3, F 2→3. Sum 9 → 17 (median: 13).</div>
+</section>
+
+<!-- ============ PART 5 ============ -->
+<section id="strip">
+  <h2><span class="part">Part 5</span>Proof-strip · landing hero spec</h2>
+  <p class="lede">Given the five proofs above, the landing hero needs to surface them in a single scroll-free fold. Below is a pixel-honest mock in the V11 palette (Inter + JetBrains Mono + <span class="mono" style="color:var(--accent)">#FF8964</span>). Numbers and links use current audit values; the strip updates automatically from <code>data/identity.yaml</code> → <code>proofNumbers</code>.</p>
+
+  <div class="mock-frame">
+    <div class="mock-eyebrow">Danilo Rojas · Agentic Designer · Product Engineer</div>
+    <h1 class="mock-h1">I ship real products — and I ship<br>the tools agents <em>use to help me ship them.</em></h1>
+    <p class="mock-sub">Fifteen years of delivery. Enterprise clients, production SaaS, active design-engineering at Booz Allen Hamilton. I keep the craft; agents give me the leverage.</p>
+
+    <div class="availability">
+      <span class="dot"></span>
+      <span><b>Open to work</b> · Agentic UX Lead · AI Product Designer · Design Engineer · remote-global · <span style="color:var(--accent)">danilo@danilorojas.design</span></span>
+    </div>
+
+    <div class="proof-strip">
+      <div class="pn">
+        <div class="v">15<sup>+</sup></div>
+        <div class="l">years shipping</div>
+        <div class="src">Merck · Mondelēz · BAH</div>
+      </div>
+      <div class="pn">
+        <div class="v">346</div>
+        <div class="l">commits · 40 days</div>
+        <div class="src"><a href="#">/dr-cv</a> · public repo</div>
+      </div>
+      <div class="pn">
+        <div class="v"><span class="accent">95.6</span></div>
+        <div class="l">DS migration · a11y</div>
+        <div class="src">78.4 → 95.6 · 5 rounds</div>
+      </div>
+      <div class="pn">
+        <div class="v">1<sup>.0</sup></div>
+        <div class="l">SaaS in production</div>
+        <div class="src"><a href="#">enregla.com</a></div>
+      </div>
+      <div class="pn">
+        <div class="v">5</div>
+        <div class="l">CVs from one prompt</div>
+        <div class="src"><a href="#">loom · 60s</a></div>
+      </div>
+    </div>
+
+    <div class="badges">
+      <span class="badge verified"><span class="dot"></span>2 verified testimonials · BAH</span>
+      <span class="badge"><span class="dot"></span>Lighthouse 98 / 100 / 100 / 100</span>
+      <span class="badge"><span class="dot"></span>WCAG AA · tokens</span>
+      <span class="badge"><span class="dot"></span>Agent-consumable skill · <span class="mono">/te-skin</span></span>
+      <span class="badge"><span class="dot"></span>Claude-Code · MCP · subagents</span>
+    </div>
+  </div>
+
+  <div class="strip-spec">
+    <h4>Above-the-fold vs dedicated proof section</h4>
+    <table>
+      <thead><tr><th>Element</th><th>Fold</th><th>Source</th><th>Live after</th></tr></thead>
+      <tbody>
+        <tr><td class="lbl">Role line</td><td>hero</td><td><code>identity.yaml:role</code></td><td>now</td></tr>
+        <tr><td class="lbl">Thesis</td><td>hero</td><td><code>positioning.yaml:thesis</code></td><td>now</td></tr>
+        <tr><td class="lbl">Availability badge</td><td>hero · green dot</td><td><code>identity.yaml:availability</code> + email</td><td>now</td></tr>
+        <tr><td class="lbl">5 proof numbers</td><td>hero strip</td><td><code>positioning.yaml:proofNumbers</code></td><td>#01 domain live</td></tr>
+        <tr><td class="lbl">2 verified testimonials</td><td>section 2 (not hero)</td><td><code>testimonials/verified.yaml</code></td><td>#02 LinkedIn reco (same day)</td></tr>
+        <tr><td class="lbl">Live demo Loom</td><td>hero · below strip</td><td>MP4 self-hosted + poster</td><td>#05 · week 4</td></tr>
+        <tr><td class="lbl">Essay excerpt</td><td>section 3</td><td>danilorojas.design/writing/ds-recursion</td><td>#03 · week 2</td></tr>
+        <tr><td class="lbl">GitHub card</td><td>section 4</td><td>github.com/mdanilorojas pinned</td><td>#04 skill + dr-cv public</td></tr>
+        <tr><td class="lbl">Case-study links (4)</td><td>section 5</td><td><code>data/cases/*.md</code></td><td>now (Phase 3 already built)</td></tr>
+        <tr><td class="lbl">Client logo wall (EN)</td><td>section 6 · subdued</td><td><code>clients.yaml</code></td><td>now</td></tr>
+        <tr><td class="lbl">Lighthouse / WCAG chips</td><td>footer · persistent</td><td>PageSpeed API badge</td><td>#01 domain live</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note"><b>One rule.</b> Every number and every badge in the hero must be <em>click-to-verify</em> within 5 minutes. 346 commits → public repo. 95.6 score → essay link. 1.0 SaaS → enregla.com. 5 CVs → Loom. 2 testimonials → LinkedIn reco page. If a number can't click through, it does not go in the hero strip — it goes in the body, or it doesn't go in.</div>
+</section>
+
+<div class="foot">dr-cv / hiring-universe / round-06 · generated 2026-05-08 · 6 categories · 12×6 matrix · 5 high-leverage proofs · deadline 2026-06-05</div>
+
+</div>
+</body>
+</html>

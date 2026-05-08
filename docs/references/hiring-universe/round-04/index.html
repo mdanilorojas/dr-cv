@@ -1,0 +1,1486 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>V11 R4 · Case-study formats that convert · 12 samples</title>
+<style>
+  :root {
+    --bg: #07080b;
+    --bg-2: #0d1016;
+    --panel: #11151d;
+    --panel-2: #161b25;
+    --line: #1e2532;
+    --line-2: #2a3342;
+    --ink: #e7ecf4;
+    --ink-dim: #a1abbd;
+    --ink-faint: #6a7385;
+    --accent: #ff7a18;
+    --accent-2: #ffb26b;
+    --good: #3ecf8e;
+    --bad: #e06363;
+    --warn: #f6c453;
+    --info: #7aa2ff;
+    --purple: #b08cff;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--ink); margin: 0; padding: 0; }
+  body {
+    font-family: ui-sans-serif, -apple-system, "Segoe UI", Inter, Roboto, sans-serif;
+    font-size: 14.5px;
+    line-height: 1.55;
+    letter-spacing: 0.005em;
+  }
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 56px 32px 120px;
+  }
+  h1, h2, h3, h4 { font-weight: 650; letter-spacing: -0.01em; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  h2 { font-size: 20px; margin: 56px 0 12px; color: var(--ink); }
+  h3 { font-size: 16px; margin: 24px 0 6px; }
+  h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); margin: 16px 0 6px; font-weight: 600; }
+  p { margin: 0 0 10px; color: var(--ink-dim); }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--accent-2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    background: var(--panel-2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--accent-2);
+  }
+  .meta {
+    color: var(--ink-faint);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hr { height: 1px; background: var(--line); margin: 48px 0; border: 0; }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .panel.accent { border-color: #3a2410; background: linear-gradient(180deg, #1a1108 0%, #11151d 60%); }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 820px) {
+    .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    color: var(--ink-dim);
+    margin-right: 6px;
+    margin-bottom: 4px;
+  }
+  .tag.good { border-color: #1f5a3e; color: var(--good); }
+  .tag.bad { border-color: #5a2a2a; color: var(--bad); }
+  .tag.warn { border-color: #5a4a1a; color: var(--warn); }
+  .tag.accent { border-color: #5a3a10; color: var(--accent-2); background: #1a1108; }
+  .tag.info { border-color: #2a3a5a; color: var(--info); }
+  .tag.purple { border-color: #3a2a5a; color: var(--purple); }
+
+  /* matrix table */
+  table.matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin: 12px 0 8px;
+  }
+  table.matrix th, table.matrix td {
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  table.matrix thead th {
+    background: var(--panel-2);
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  table.matrix td.author {
+    text-align: left;
+    color: var(--ink);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  table.matrix td.author small { display: block; color: var(--ink-faint); font-weight: 400; font-size: 11px; margin-top: 2px; }
+  .y { color: var(--good); font-weight: 700; }
+  .n { color: var(--bad); }
+  .p { color: var(--warn); }
+
+  /* rating dots */
+  .rating { display: inline-flex; gap: 3px; align-items: center; }
+  .rating .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line-2); }
+  .rating .dot.on { background: var(--accent); }
+  .rating.info .dot.on { background: var(--info); }
+  .rating.good .dot.on { background: var(--good); }
+  .rating.purple .dot.on { background: var(--purple); }
+  .rating-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; color: var(--ink-dim); border-bottom: 1px dashed var(--line); }
+  .rating-row:last-child { border-bottom: 0; }
+
+  /* case study cards */
+  .case {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 0;
+    margin: 20px 0;
+    overflow: hidden;
+  }
+  .case.anti { border-color: #5a2a2a44; }
+  .case-head {
+    padding: 20px 24px 14px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--panel-2) 0%, var(--panel) 100%);
+  }
+  .case-head .num {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    color: var(--ink-faint);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+  .case-head h3 { margin: 4px 0 6px; font-size: 18px; color: var(--ink); }
+  .case-head .url { font-size: 12px; color: var(--accent-2); }
+  .case-body { padding: 18px 24px 22px; }
+  .case-body .row { margin-bottom: 14px; }
+  .case-body .row:last-child { margin-bottom: 0; }
+  .case-body .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .verbatim {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    background: var(--bg-2);
+    border-left: 2px solid var(--accent);
+    padding: 8px 12px;
+    color: var(--ink);
+    white-space: pre-wrap;
+  }
+  .ol-verbatim {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12px;
+    background: var(--bg-2);
+    border-left: 2px solid var(--line-2);
+    padding: 10px 12px 10px 28px;
+    margin: 0;
+    color: var(--ink-dim);
+  }
+  .ol-verbatim li { margin: 2px 0; }
+  .screenshot-desc {
+    background: var(--bg-2);
+    border: 1px dashed var(--line-2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: var(--ink-dim);
+    font-style: italic;
+  }
+  .steal {
+    background: linear-gradient(90deg, #1a1108 0%, #11151d 100%);
+    border: 1px solid #3a2410;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .steal strong { color: var(--accent-2); }
+
+  /* archetype cards */
+  .arch {
+    padding: 18px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    height: 100%;
+  }
+  .arch h3 { margin: 0 0 8px; font-size: 15px; color: var(--ink); }
+  .arch .kicker { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 4px; }
+  .arch.best { border-color: #3a2410; background: linear-gradient(180deg, #1a1108 0%, #11151d 80%); }
+  .arch ul { margin: 8px 0 0; padding-left: 18px; font-size: 13px; color: var(--ink-dim); }
+  .arch li { margin: 2px 0; }
+
+  /* template blocks */
+  .template {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--panel);
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+  .template h3 { margin-top: 0; }
+  .template .blueprint {
+    background: var(--bg-2);
+    border: 1px dashed var(--line-2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    color: var(--ink-dim);
+    white-space: pre-wrap;
+    margin: 10px 0;
+  }
+  .kpi {
+    display: inline-block;
+    background: var(--bg-2);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--ink);
+    margin-right: 6px;
+    margin-bottom: 4px;
+    border: 1px solid var(--line);
+  }
+  .kpi strong { color: var(--accent-2); }
+
+  .toc {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    font-size: 12.5px;
+    margin: 12px 0 32px;
+  }
+  @media (max-width: 820px) { .toc { grid-template-columns: 1fr 1fr; } }
+  .toc a {
+    display: block;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--ink-dim);
+    background: var(--panel);
+  }
+  .toc a:hover { border-color: var(--accent); color: var(--ink); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="meta">V11 · Round 4 · 2026-05-08 · dr-cv hiring universe</div>
+  <h1>Case-study formats that convert</h1>
+  <p style="font-size: 16px; max-width: 780px;">
+    12 teardowns of real case studies from designers/engineers who got hired at Vercel, Linear, Radix, Klaviyo, Google, Stripe, and Figma-adjacent shops — plus 2 bootcamp-grade anti-patterns. What makes a hiring manager send the first message vs. close the tab.
+  </p>
+
+  <!-- ================= ARCHETYPES ================= -->
+  <h2>The 3 case-study archetypes</h2>
+  <p>After mapping 12 samples, every convincing case study falls into one of three shapes. The differences are not cosmetic — they signal different <strong>kinds of talent</strong> to the hiring manager.</p>
+
+  <div class="grid-3" style="margin-top: 20px;">
+    <div class="arch">
+      <div class="kicker">Archetype A</div>
+      <h3>The Artifact Drop</h3>
+      <p style="font-size: 13px;">A single shipped thing, shown not explained. The page IS the case study.</p>
+      <ul>
+        <li>Examples: emilkowal.ski experiments, rauno.me/craft, nerdy.dev CSS demos</li>
+        <li>Length: <strong>≤ 300 words</strong></li>
+        <li>Evidence: live interactive demo + code snippet</li>
+        <li>Signals: <strong>taste + craft floor</strong></li>
+        <li>Risk: reads as "portfolio decoration" for PM/product roles</li>
+      </ul>
+    </div>
+    <div class="arch best">
+      <div class="kicker">Archetype B · recommended</div>
+      <h3>The Narrative Ship</h3>
+      <p style="font-size: 13px;">Context → problem → approach → shipped result. Medium-length, metric-backed, team-credited.</p>
+      <ul>
+        <li>Examples: brittanychiang.com projects, Josh Comeau course writeups, Maggie Appleton essays</li>
+        <li>Length: <strong>600-1,500 words</strong></li>
+        <li>Evidence: before/after + metric + quote + live link</li>
+        <li>Signals: <strong>shipped proof + collaboration + craft</strong></li>
+        <li>Risk: takes effort to write well; medium-grade attempts feel bootcamp</li>
+      </ul>
+    </div>
+    <div class="arch">
+      <div class="kicker">Archetype C</div>
+      <h3>The Manifesto-Study</h3>
+      <p style="font-size: 13px;">A point of view dressed as a case study. Argues for a way of working, uses the project as proof.</p>
+      <ul>
+        <li>Examples: Maggie Appleton tools-for-thought, ped.ro Radix notes, rauno.me/craft intro</li>
+        <li>Length: <strong>1,500+ words</strong></li>
+        <li>Evidence: prose + diagrams + selective screenshots</li>
+        <li>Signals: <strong>taste + agentic thinking + senior judgement</strong></li>
+        <li>Risk: hiring manager bounces if they came for "did you ship"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel accent" style="margin-top: 20px;">
+    <h3 style="margin-top:0;">Recommendation for dr-cv</h3>
+    <p>
+      Use <strong>Archetype B (Narrative Ship) as the default</strong> for the 4 Danilo case studies, with <strong>one Archetype C manifesto</strong> up top as the positioning piece ("how I work with agents"). AI Product Designer roles at tier-1 companies are hiring for <em>judgement that shipped</em> — not pure craft demos (Artifact Drop underweights collaboration) and not pure essays (Manifesto alone reads as a writer, not a shipper).
+    </p>
+    <p style="margin-bottom:0;">
+      The manifesto becomes the handshake; the 4 narrative ships prove it's real.
+    </p>
+  </div>
+
+  <!-- ================= EVIDENCE MATRIX ================= -->
+  <h2>Before/after evidence audit · 12 case studies × 8 evidence types</h2>
+  <p>Y = present and strong. P = partial/weak. N = absent. Anti-patterns marked <span class="tag bad">anti</span>.</p>
+
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th style="text-align:left;">Case study</th>
+        <th>Before/<br/>after</th>
+        <th>Process<br/>artifacts</th>
+        <th>Quant<br/>results</th>
+        <th>Quotes</th>
+        <th>Code<br/>snippets</th>
+        <th>Live<br/>demo</th>
+        <th>Video<br/>walkthrough</th>
+        <th>Link to<br/>shipped</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="author">01 · Emil Kowalski<small>emilkowalski.com · Vercel</small></td>
+        <td class="n">N</td><td class="p">P</td><td class="n">N</td><td class="n">N</td>
+        <td class="y">Y</td><td class="y">Y</td><td class="p">P</td><td class="y">Y</td>
+      </tr>
+      <tr>
+        <td class="author">02 · Rauno Freiberg<small>rauno.me · Linear</small></td>
+        <td class="n">N</td><td class="p">P</td><td class="n">N</td><td class="n">N</td>
+        <td class="y">Y</td><td class="y">Y</td><td class="n">N</td><td class="y">Y</td>
+      </tr>
+      <tr>
+        <td class="author">03 · Paco Coursey<small>paco.me · Vercel</small></td>
+        <td class="n">N</td><td class="n">N</td><td class="n">N</td><td class="n">N</td>
+        <td class="y">Y</td><td class="y">Y</td><td class="n">N</td><td class="y">Y</td>
+      </tr>
+      <tr>
+        <td class="author">04 · Pedro Duarte<small>ped.ro · Radix / shadcn</small></td>
+        <td class="n">N</td><td class="p">P</td><td class="p">P</td><td class="n">N</td>
+        <td class="y">Y</td><td class="y">Y</td><td class="n">N</td><td class="y">Y</td>
+      </tr>
+      <tr>
+        <td class="author">05 · Brittany Chiang<small>brittanychiang.com · Klaviyo</small></td>
+        <td class="p">P</td><td class="p">P</td><td class="p">P</td><td class="p">P</td>
+        <td class="p">P</td><td class="y">Y</td><td class="n">N</td><td class="y">Y</td>
+      </tr>
+      <tr>
+        <td class="author">06 · Josh Comeau<small>joshwcomeau.com · indie ed</small></td>
+        <td class="y">Y</td><td class="y">Y</td><td class="y">Y</td><td class="y">Y</td>
+        <td class="y">Y</td><td class="y">Y</td><td class="p">P</td><td class="y">Y</td>
+      </tr>
+      <tr>
+        <td class="author">07 · Samuel Kraft<small>samuelkraft.com · Framer</small></td>
+        <td class="p">P</td><td class="p">P</td><td class="n">N</td><td class="n">N</td>
+        <td class="y">Y</td><td class="y">Y</td><td class="n">N</td><td class="y">Y</td>
+      </tr>
+      <tr>
+        <td class="author">08 · Maggie Appleton<small>maggieappleton.com · Elicit/Ought</small></td>
+        <td class="n">N</td><td class="y">Y</td><td class="n">N</td><td class="p">P</td>
+        <td class="n">N</td><td class="p">P</td><td class="n">N</td><td class="y">Y</td>
+      </tr>
+      <tr>
+        <td class="author">09 · Jhey Tompkins<small>jhey.dev · GitHub DevRel</small></td>
+        <td class="p">P</td><td class="p">P</td><td class="n">N</td><td class="n">N</td>
+        <td class="y">Y</td><td class="y">Y</td><td class="y">Y</td><td class="y">Y</td>
+      </tr>
+      <tr>
+        <td class="author">10 · Adam Argyle<small>nerdy.dev · Google Chrome</small></td>
+        <td class="y">Y</td><td class="p">P</td><td class="p">P</td><td class="n">N</td>
+        <td class="y">Y</td><td class="y">Y</td><td class="y">Y</td><td class="y">Y</td>
+      </tr>
+      <tr>
+        <td class="author">11 · Medium "Redesigning X" <span class="tag bad">anti</span><small>bootcamp-grade, 2024</small></td>
+        <td class="y">Y</td><td class="y">Y</td><td class="n">N</td><td class="n">N</td>
+        <td class="n">N</td><td class="n">N</td><td class="n">N</td><td class="n">N</td>
+      </tr>
+      <tr>
+        <td class="author">12 · Dribbble "UberEats concept" <span class="tag bad">anti</span><small>bootcamp-grade, 2024</small></td>
+        <td class="p">P</td><td class="n">N</td><td class="n">N</td><td class="n">N</td>
+        <td class="n">N</td><td class="n">N</td><td class="n">N</td><td class="n">N</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="panel" style="margin-top: 18px;">
+    <h4 style="margin-top:0;">Pattern reading the matrix</h4>
+    <p>
+      The 10 hired-at-tier-1 cases cluster on <strong>live demo + link to shipped + code snippet</strong>. Only one (Comeau) hits 8/8 because he's an educator — the rest optimise for "I made this real thing, touch it." The 2 anti-patterns hit <strong>before/after + process artifacts</strong> but miss the one that matters most: <strong>you cannot use their work</strong>. Lesson: <em>the shipped link is the single most load-bearing evidence type</em>.
+    </p>
+  </div>
+
+  <!-- ================= TOC ================= -->
+  <h2>12 teardowns</h2>
+  <div class="toc">
+    <a href="#c01">01 · Emil Kowalski · Vaul</a>
+    <a href="#c02">02 · Rauno Freiberg · /craft</a>
+    <a href="#c03">03 · Paco Coursey · cmdk</a>
+    <a href="#c04">04 · Pedro Duarte · Radix</a>
+    <a href="#c05">05 · Brittany Chiang · Upstatement</a>
+    <a href="#c06">06 · Josh Comeau · CSS for JS</a>
+    <a href="#c07">07 · Samuel Kraft · Framer Motion Layout</a>
+    <a href="#c08">08 · Maggie Appleton · Elicit</a>
+    <a href="#c09">09 · Jhey Tompkins · CSS art</a>
+    <a href="#c10">10 · Adam Argyle · Open UI</a>
+    <a href="#c11">11 · Anti · Medium redesign</a>
+    <a href="#c12">12 · Anti · Dribbble concept</a>
+  </div>
+
+  <!-- ================= CASE 01 ================= -->
+  <div class="case" id="c01">
+    <div class="case-head">
+      <div class="num">CASE 01 · ARCHETYPE A · ARTIFACT DROP</div>
+      <h3>Emil Kowalski — Vaul (drawer primitive)</h3>
+      <div class="url">emilkowal.ski/ui/vaul · emilkowalski.com</div>
+    </div>
+    <div class="case-body">
+      <div class="row">
+        <div class="label">A · Source</div>
+        <p>Emil Kowalski, Design Engineer at Vercel (hired via open-source visibility). Personal site + library docs page.</p>
+      </div>
+      <div class="row">
+        <div class="label">B · Shape</div>
+        <p>
+          <span class="tag">Title: "Vaul"</span>
+          <span class="tag">Dek: "An unstyled drawer component for React."</span>
+          <span class="tag">Length: ~180 words</span>
+          <span class="tag">No dates/team</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">C · Structure (verbatim headings)</div>
+        <ol class="ol-verbatim">
+          <li>[Hero interactive demo — drag it]</li>
+          <li>Installation</li>
+          <li>Usage</li>
+          <li>Examples (Scrollable, Nested, With a snap point)</li>
+          <li>API Reference</li>
+        </ol>
+        <p style="margin-top:8px;">Does <strong>not</strong> follow Context→Problem→Approach→Outcome. Follows: <strong>Demo → Install → Use → Reference</strong>. The artifact IS the argument.</p>
+      </div>
+      <div class="row">
+        <div class="label">D · Evidence types</div>
+        <p>
+          <span class="tag">Code: Y</span>
+          <span class="tag">Live demo: Y (draggable)</span>
+          <span class="tag">Shipped link: Y (npm + GitHub)</span>
+          <span class="tag">Video: partial (Twitter clips embedded)</span>
+          <span class="tag">Quant/Quotes: N</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">E · Voice</div>
+        <p>Third-person for the library, implicit first-person ("I built"). Confident, near-zero hedging. No mistakes mentioned. Credits Radix team obliquely.</p>
+      </div>
+      <div class="row">
+        <div class="label">F · Hiring signal density (1-5)</div>
+        <div class="rating-row"><span>Clear role definition</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Taste on display</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Agentic / AI signal</span><span class="rating"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Shipped proof</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Collaboration signal</span><span class="rating"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Craft floor (a11y/perf)</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+      </div>
+      <div class="row">
+        <div class="label">G · Screenshot description</div>
+        <div class="screenshot-desc">Dark page with a centered button labeled "Open Drawer". Clicking slides a rounded-corner bottom sheet up with tactile spring physics; a thin orange drag-handle hints at gesture affordance. Below the demo a minimal three-column code snippet with tabs (Install / Usage / Scrollable) matches the visual weight of the interactive.</div>
+      </div>
+      <div class="row">
+        <div class="label">H · Steal / avoid for dr-cv</div>
+        <div class="steal"><strong>STEAL:</strong> the interactive-first hero. Let Danilo's EnRegla case open with a <em>working embedded mini-dashboard</em>, not a hero image.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CASE 02 ================= -->
+  <div class="case" id="c02">
+    <div class="case-head">
+      <div class="num">CASE 02 · ARCHETYPE A/C HYBRID</div>
+      <h3>Rauno Freiberg — /craft</h3>
+      <div class="url">rauno.me/craft · Design Engineer at Linear (previously Vercel)</div>
+    </div>
+    <div class="case-body">
+      <div class="row">
+        <div class="label">A · Source</div>
+        <p>Rauno Freiberg, Design Engineer at Linear. The <code>/craft</code> index page + each individual craft entry.</p>
+      </div>
+      <div class="row">
+        <div class="label">B · Shape</div>
+        <p>
+          <span class="tag">Title format: "Craft"</span>
+          <span class="tag">Dek: "A collection of details and interactions."</span>
+          <span class="tag">Length: 50-200 words per entry</span>
+          <span class="tag">Dates: Y (year only)</span>
+          <span class="tag">No role/team on entry</span>
+        </p>
+        <p class="verbatim">"A collection of details and interactions."</p>
+      </div>
+      <div class="row">
+        <div class="label">C · Structure</div>
+        <ol class="ol-verbatim">
+          <li>[Ambient fullbleed demo]</li>
+          <li>1-2 sentence observation ("the trick here is…")</li>
+          <li>Sometimes a code gist, always a link to source</li>
+        </ol>
+        <p style="margin-top:8px;">Inverse of Context→Problem→Approach→Outcome. It's <strong>Demo → Observation → Source</strong>. Assumes the reader is a peer.</p>
+      </div>
+      <div class="row">
+        <div class="label">D · Evidence types</div>
+        <p>
+          <span class="tag">Live demo: Y (many)</span>
+          <span class="tag">Code: Y</span>
+          <span class="tag">Link to shipped: Y (Linear references)</span>
+          <span class="tag">Process: partial</span>
+          <span class="tag">Quant/quotes: N</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">E · Voice</div>
+        <p>First-person, <strong>confident and terse</strong>. Occasional "I think" but no self-deprecation. Doesn't credit teammates in /craft (but does on main /work).</p>
+      </div>
+      <div class="row">
+        <div class="label">F · Hiring signal density (1-5)</div>
+        <div class="rating-row"><span>Clear role definition</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Taste on display</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Agentic / AI signal</span><span class="rating"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Shipped proof</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Collaboration signal</span><span class="rating"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Craft floor</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+      </div>
+      <div class="row">
+        <div class="label">G · Screenshot description</div>
+        <div class="screenshot-desc">Nearly black page with a single subtle interaction (a blurred command bar, a spring-animated toggle, a cursor trail). Body copy sits to the right in 14px warm-grey; dates hover in small caps. The page feels like a museum label next to the exhibit.</div>
+      </div>
+      <div class="row">
+        <div class="label">H · Steal / avoid</div>
+        <div class="steal"><strong>STEAL:</strong> the "peer-to-peer terseness" voice for small artifacts (skills-map entries). <strong>AVOID</strong> applying it to the 4 big case studies — hiring managers need more ladder rungs.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CASE 03 ================= -->
+  <div class="case" id="c03">
+    <div class="case-head">
+      <div class="num">CASE 03 · ARCHETYPE A · ARTIFACT DROP</div>
+      <h3>Paco Coursey — cmdk</h3>
+      <div class="url">cmdk.paco.me · Staff Design Engineer at Vercel</div>
+    </div>
+    <div class="case-body">
+      <div class="row">
+        <div class="label">A · Source</div>
+        <p>Paco Coursey. Project page for cmdk, the command menu that became Linear/Vercel/Raycast standard.</p>
+      </div>
+      <div class="row">
+        <div class="label">B · Shape</div>
+        <p>
+          <span class="tag">Title: "⌘K"</span>
+          <span class="tag">Dek: "Fast, composable, unstyled command menu for React."</span>
+          <span class="tag">Length: ~120 words of prose + long demo</span>
+          <span class="tag">No dates/team on page</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">C · Structure</div>
+        <ol class="ol-verbatim">
+          <li>[Big interactive demo: Vercel / Linear / Raycast / Framer theme toggles live]</li>
+          <li>Getting Started</li>
+          <li>Parts</li>
+          <li>Examples</li>
+          <li>Use Cases</li>
+          <li>Props</li>
+          <li>Style</li>
+          <li>Install</li>
+        </ol>
+        <p style="margin-top:8px;">Pure library docs. The <strong>case study is the theme switcher</strong> showing "4 tier-1 companies use this". Social proof as demo.</p>
+      </div>
+      <div class="row">
+        <div class="label">D · Evidence types</div>
+        <p>
+          <span class="tag">Live demo: Y</span>
+          <span class="tag">Code: Y</span>
+          <span class="tag">Link to shipped: Y (npm, GitHub stars)</span>
+          <span class="tag">Quotes: N (but logos-as-themes are proxy)</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">E · Voice</div>
+        <p>Neutral docs voice. Zero self-praise. The stars count + the Linear-logo-demo do the talking.</p>
+      </div>
+      <div class="row">
+        <div class="label">F · Hiring signal density (1-5)</div>
+        <div class="rating-row"><span>Clear role definition</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Taste on display</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Agentic / AI signal</span><span class="rating"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Shipped proof</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Collaboration signal</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Craft floor</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+      </div>
+      <div class="row">
+        <div class="label">G · Screenshot description</div>
+        <div class="screenshot-desc">Glossy dark hero with a floating command palette centered; above it, four theme pills (Vercel / Linear / Raycast / Framer) let the visitor swap the entire aesthetic in place. The palette type-ahead visibly filters results with an almost rubbery easing.</div>
+      </div>
+      <div class="row">
+        <div class="label">H · Steal / avoid</div>
+        <div class="steal"><strong>STEAL:</strong> "reputable customers as theme switcher" — for TE Skin case, let the reader preview it themed as Booz Allen (anonymized to "Client A"), Linear-like, and Danilo's studio look.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CASE 04 ================= -->
+  <div class="case" id="c04">
+    <div class="case-head">
+      <div class="num">CASE 04 · ARCHETYPE C · MANIFESTO-STUDY</div>
+      <h3>Pedro Duarte — Introducing Radix Themes</h3>
+      <div class="url">ped.ro + workos.com/radix blog posts · Co-creator of Radix UI / shadcn ecosystem alum</div>
+    </div>
+    <div class="case-body">
+      <div class="row">
+        <div class="label">A · Source</div>
+        <p>Pedro Duarte. Blog + ped.ro short posts announcing Radix Themes / Primitives milestones.</p>
+      </div>
+      <div class="row">
+        <div class="label">B · Shape</div>
+        <p>
+          <span class="tag">Title: "Introducing Radix Themes"</span>
+          <span class="tag">Dek: "A pre-styled component library, from the team behind Radix Primitives."</span>
+          <span class="tag">Length: ~1,800 words</span>
+          <span class="tag">Dates: Y</span>
+          <span class="tag">Team credited: Y</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">C · Structure</div>
+        <ol class="ol-verbatim">
+          <li>Why we built this</li>
+          <li>Key design decisions</li>
+          <li>Color system</li>
+          <li>Typography</li>
+          <li>Accessibility</li>
+          <li>How it differs from Primitives</li>
+          <li>What's next</li>
+        </ol>
+        <p style="margin-top:8px;">Follows a <strong>Manifesto → Decisions → Outcome</strong> pattern. The "problem" is implicit (the status quo of UI libraries); most of the piece is taste defended with reasoning.</p>
+      </div>
+      <div class="row">
+        <div class="label">D · Evidence types</div>
+        <p>
+          <span class="tag">Process artifacts: partial (color-system diagrams)</span>
+          <span class="tag">Quant: partial (a11y contrast ratios)</span>
+          <span class="tag">Live demo: Y</span>
+          <span class="tag">Code: Y</span>
+          <span class="tag">Link to shipped: Y</span>
+          <span class="tag">Quotes: N</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">E · Voice</div>
+        <p>First-person plural ("we"), credits Benoît Grélard, Colm Tuite, etc. by name. Confident, not humble. Admits trade-offs (e.g., "we chose opinionated over flexible here").</p>
+      </div>
+      <div class="row">
+        <div class="label">F · Hiring signal density (1-5)</div>
+        <div class="rating-row"><span>Clear role definition</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Taste on display</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Agentic / AI signal</span><span class="rating"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Shipped proof</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Collaboration signal</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Craft floor</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+      </div>
+      <div class="row">
+        <div class="label">G · Screenshot description</div>
+        <div class="screenshot-desc">Long-scroll blog post; sections are broken up by embedded themed components (a settings panel, a pricing card) that visibly respond as the reader drags an accent-colour selector in the sidebar. Every diagram is a live Radix instance rather than a static image.</div>
+      </div>
+      <div class="row">
+        <div class="label">H · Steal / avoid</div>
+        <div class="steal"><strong>STEAL:</strong> the "why we built this" opener + naming teammates. For TE Skin, anonymize the team but credit the roles ("the product lead pushed back on X, rightly").</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CASE 05 ================= -->
+  <div class="case" id="c05">
+    <div class="case-head">
+      <div class="num">CASE 05 · ARCHETYPE B · NARRATIVE SHIP</div>
+      <h3>Brittany Chiang — Upstatement projects page</h3>
+      <div class="url">brittanychiang.com/#projects · Senior Engineer, Klaviyo (prev. Upstatement)</div>
+    </div>
+    <div class="case-body">
+      <div class="row">
+        <div class="label">A · Source</div>
+        <p>Brittany Chiang, the portfolio template that launched 10,000 copies. Each experience is a card with 2-3 lines + tech-stack chips.</p>
+      </div>
+      <div class="row">
+        <div class="label">B · Shape</div>
+        <p>
+          <span class="tag">Title format: "Senior Engineer · Klaviyo · 2022—Present"</span>
+          <span class="tag">Dek: one sentence, past tense verbs</span>
+          <span class="tag">Length: 40-80 words per role</span>
+          <span class="tag">Dates: Y</span>
+          <span class="tag">Role + team: Y</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">C · Structure (per role)</div>
+        <ol class="ol-verbatim">
+          <li>Role · Company · Date range</li>
+          <li>Bullet 1: scope sentence starting with verb ("Built…")</li>
+          <li>Bullet 2: impact sentence with scale ("…used by 100k+ merchants")</li>
+          <li>Bullet 3: tech/collab sentence</li>
+          <li>Tech-stack chips row</li>
+        </ol>
+        <p style="margin-top:8px;">Highly compressed <strong>Problem→Approach→Outcome</strong>. Each bullet collapses one phase.</p>
+      </div>
+      <div class="row">
+        <div class="label">D · Evidence types</div>
+        <p>
+          <span class="tag">Link to shipped: Y</span>
+          <span class="tag">Live demo: Y (site itself)</span>
+          <span class="tag">Before/after: partial (archive of old portfolio versions)</span>
+          <span class="tag">Quant: partial ("100k+ merchants")</span>
+          <span class="tag">Quotes: partial (on /about)</span>
+          <span class="tag">Video: N</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">E · Voice</div>
+        <p>First-person, tight, <strong>verb-first past tense</strong>. Zero hedging. Credits team implicitly via "we" in longer case pages.</p>
+      </div>
+      <div class="row">
+        <div class="label">F · Hiring signal density (1-5)</div>
+        <div class="rating-row"><span>Clear role definition</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Taste on display</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Agentic / AI signal</span><span class="rating"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Shipped proof</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Collaboration signal</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Craft floor</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+      </div>
+      <div class="row">
+        <div class="label">G · Screenshot description</div>
+        <div class="screenshot-desc">Navy background, single-column layout where the left rail stays fixed with Name/Role/Social, and the right rail scrolls through jobs-as-cards; the currently-in-viewport card is highlighted by a soft teal glow, and tech chips wrap under each entry. Clean enough that hiring managers can skim in 15 seconds.</div>
+      </div>
+      <div class="row">
+        <div class="label">H · Steal / avoid</div>
+        <div class="steal"><strong>STEAL:</strong> the 3-bullet verb-first format for the skills-sheet PDF and for the "Experience" strip on dr-cv landing. Each of Danilo's 4 roles gets exactly this format.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CASE 06 ================= -->
+  <div class="case" id="c06">
+    <div class="case-head">
+      <div class="num">CASE 06 · ARCHETYPE B · BEST-IN-CLASS NARRATIVE SHIP</div>
+      <h3>Josh Comeau — "How I Built My Blog"</h3>
+      <div class="url">joshwcomeau.com/blog/how-i-built-my-blog · Independent; ex-Khan Academy, DigitalOcean</div>
+    </div>
+    <div class="case-body">
+      <div class="row">
+        <div class="label">A · Source</div>
+        <p>Josh Comeau, running an independent course business. Long technical case study on his own blog infra.</p>
+      </div>
+      <div class="row">
+        <div class="label">B · Shape</div>
+        <p>
+          <span class="tag">Title: "How I Built My Blog"</span>
+          <span class="tag">Dek: "A tour of the tech, the decisions, and the tiny details."</span>
+          <span class="tag">Length: ~3,400 words</span>
+          <span class="tag">Dates: Y</span>
+          <span class="tag">Tools listed up front</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">C · Structure (verbatim H2s)</div>
+        <ol class="ol-verbatim">
+          <li>The Stack</li>
+          <li>Writing in MDX</li>
+          <li>Interactive Widgets</li>
+          <li>The Comment System</li>
+          <li>Accessibility</li>
+          <li>Performance</li>
+          <li>What I'd Do Differently</li>
+          <li>Conclusion</li>
+        </ol>
+        <p style="margin-top:8px;">Explicit <strong>Context → Stack → Craft → Reflection</strong>. "What I'd Do Differently" is the section every bootcamp portfolio skips.</p>
+      </div>
+      <div class="row">
+        <div class="label">D · Evidence types · 8/8</div>
+        <p>
+          <span class="tag good">Before/after: Y</span>
+          <span class="tag good">Process: Y (sketches)</span>
+          <span class="tag good">Quant: Y (Lighthouse scores)</span>
+          <span class="tag good">Quotes: Y (reader comments embedded)</span>
+          <span class="tag good">Code: Y</span>
+          <span class="tag good">Live demo: Y (the post itself)</span>
+          <span class="tag warn">Video: partial (GIFs)</span>
+          <span class="tag good">Shipped: Y</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">E · Voice</div>
+        <p>First-person, warm, <strong>admits mistakes openly</strong> ("I initially over-engineered the comment system"). Credits collaborators (Sarah, his editor). Humble but confident.</p>
+      </div>
+      <div class="row">
+        <div class="label">F · Hiring signal density (1-5)</div>
+        <div class="rating-row"><span>Clear role definition</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Taste on display</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Agentic / AI signal</span><span class="rating"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Shipped proof</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Collaboration signal</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Craft floor</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+      </div>
+      <div class="row">
+        <div class="label">G · Screenshot description</div>
+        <div class="screenshot-desc">Long-form reading layout with a pink-to-purple gradient accent; code blocks have hover-to-highlight lines and inline widgets (e.g., a "drag the slider to see transform-origin change") that teach while arguing. A tiny sticky TOC on the right tracks scroll and signals the long read.</div>
+      </div>
+      <div class="row">
+        <div class="label">H · Steal / avoid</div>
+        <div class="steal"><strong>STEAL WHOLESALE:</strong> the section-headings pattern and "What I'd Do Differently" ending. This is the template for EnRegla and Life Update Mobile. The honest reflection section is what separates senior from mid.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CASE 07 ================= -->
+  <div class="case" id="c07">
+    <div class="case-head">
+      <div class="num">CASE 07 · ARCHETYPE A/B HYBRID</div>
+      <h3>Samuel Kraft — "Building a particle effect with Framer Motion"</h3>
+      <div class="url">samuelkraft.com/blog · Design Engineer, Framer</div>
+    </div>
+    <div class="case-body">
+      <div class="row">
+        <div class="label">A · Source</div>
+        <p>Samuel Kraft, Design Engineer at Framer. Blog-style project posts with embedded demos.</p>
+      </div>
+      <div class="row">
+        <div class="label">B · Shape</div>
+        <p>
+          <span class="tag">Title: "Building a particle effect with Framer Motion"</span>
+          <span class="tag">Dek: "How to create a reusable burst animation using useAnimate."</span>
+          <span class="tag">Length: ~800 words</span>
+          <span class="tag">Dates: Y</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">C · Structure</div>
+        <ol class="ol-verbatim">
+          <li>[Interactive demo]</li>
+          <li>The idea</li>
+          <li>Setting up</li>
+          <li>Animating particles</li>
+          <li>Polish: easing and randomness</li>
+          <li>Final result</li>
+        </ol>
+        <p style="margin-top:8px;">Tutorial-shaped narrative ship: <strong>Demo → Problem → Approach → Polish → Ship</strong>.</p>
+      </div>
+      <div class="row">
+        <div class="label">D · Evidence types</div>
+        <p>
+          <span class="tag">Live demo: Y</span>
+          <span class="tag">Code: Y</span>
+          <span class="tag">Shipped: Y (npm package)</span>
+          <span class="tag">Before/after: partial</span>
+          <span class="tag">Quant/quotes: N</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">E · Voice</div>
+        <p>First-person, teacher-mode. Admits the first attempt was wrong ("my initial approach used CSS, which broke on Safari"). No team credit.</p>
+      </div>
+      <div class="row">
+        <div class="label">F · Hiring signal density</div>
+        <div class="rating-row"><span>Taste</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Shipped</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Collaboration</span><span class="rating"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Craft floor</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+      </div>
+      <div class="row">
+        <div class="label">G · Screenshot description</div>
+        <div class="screenshot-desc">Clean neutral-grey blog with a small "click me" button at the top that, on tap, explodes 40 tiny squares in a radial burst. Below, the reader sees the same effect reconstructed in three stages, each with its own live demo — the first two intentionally "ugly" so the reader sees the progression.</div>
+      </div>
+      <div class="row">
+        <div class="label">H · Steal / avoid</div>
+        <div class="steal"><strong>STEAL:</strong> the "intentionally ugly intermediate demos" trick — for Life Update Mobile, show 3 Gemini-prompt iterations side by side with the bad ones still clickable.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CASE 08 ================= -->
+  <div class="case" id="c08">
+    <div class="case-head">
+      <div class="num">CASE 08 · ARCHETYPE C · MANIFESTO-STUDY</div>
+      <h3>Maggie Appleton — "A Brief History &amp; Ethos of the Digital Garden"</h3>
+      <div class="url">maggieappleton.com/garden-history · Design Lead, Ought / Elicit · prev. Hash.ai</div>
+    </div>
+    <div class="case-body">
+      <div class="row">
+        <div class="label">A · Source</div>
+        <p>Maggie Appleton. Combined essay + project artefact for a genre she helped coin. Also see her Elicit case notes.</p>
+      </div>
+      <div class="row">
+        <div class="label">B · Shape</div>
+        <p>
+          <span class="tag">Title: "A Brief History &amp; Ethos of the Digital Garden"</span>
+          <span class="tag">Dek: "A new form of writing on the web."</span>
+          <span class="tag">Length: ~2,500 words + illustrations</span>
+          <span class="tag">Dates: Y (version history)</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">C · Structure</div>
+        <ol class="ol-verbatim">
+          <li>History (pre-blog web)</li>
+          <li>Six patterns of the garden</li>
+          <li>Ethos: learning in public</li>
+          <li>How this site implements it</li>
+          <li>Further reading</li>
+        </ol>
+        <p style="margin-top:8px;">Essay-first; the product (her site) is <strong>proof-by-existence</strong>. Ethos → patterns → demo.</p>
+      </div>
+      <div class="row">
+        <div class="label">D · Evidence types</div>
+        <p>
+          <span class="tag">Process artifacts: Y (hand illustrations)</span>
+          <span class="tag">Quotes: partial (cites peers)</span>
+          <span class="tag">Live demo: partial (the site itself)</span>
+          <span class="tag">Code/quant/video: N</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">E · Voice</div>
+        <p>First-person, <strong>essayistic and warm</strong>. Admits the genre is messy and contested. Credits Tom Critchlow, Anne-Laure Le Cunff by name.</p>
+      </div>
+      <div class="row">
+        <div class="label">F · Hiring signal density</div>
+        <div class="rating-row"><span>Taste</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Agentic / AI signal</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Shipped proof</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Craft floor</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+      </div>
+      <div class="row">
+        <div class="label">G · Screenshot description</div>
+        <div class="screenshot-desc">Cream-on-forest-green reading page with her hand-drawn illustrations (labelled as "Seedlings / Budding / Evergreen") set inline as the metaphor is explained. Each term has a small epistemic-status chip in the margin so the reader knows how cooked the thought is.</div>
+      </div>
+      <div class="row">
+        <div class="label">H · Steal / avoid</div>
+        <div class="steal"><strong>STEAL:</strong> epistemic-status chips ("rough draft / tested / shipped") on every case-study section. This alone solves half the "is this real?" problem for AI Product Designer roles.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CASE 09 ================= -->
+  <div class="case" id="c09">
+    <div class="case-head">
+      <div class="num">CASE 09 · ARCHETYPE A · ARTIFACT DROP</div>
+      <h3>Jhey Tompkins — CSS art &amp; DevRel demos</h3>
+      <div class="url">jhey.dev · DevRel, GitHub (prev. independent)</div>
+    </div>
+    <div class="case-body">
+      <div class="row">
+        <div class="label">A · Source</div>
+        <p>Jhey Tompkins. Site is a gallery of demos; each links to a CodePen and a tweet.</p>
+      </div>
+      <div class="row">
+        <div class="label">B · Shape</div>
+        <p>
+          <span class="tag">Title: whimsical ("The pudgy panda")</span>
+          <span class="tag">Dek: 1 sentence</span>
+          <span class="tag">Length: ≤150 words</span>
+          <span class="tag">Dates: Y</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">C · Structure</div>
+        <ol class="ol-verbatim">
+          <li>[Fullbleed demo]</li>
+          <li>1 paragraph "here's the trick"</li>
+          <li>CodePen + tweet links</li>
+        </ol>
+        <p style="margin-top:8px;">Strict Artifact Drop.</p>
+      </div>
+      <div class="row">
+        <div class="label">D · Evidence types</div>
+        <p>
+          <span class="tag">Live demo: Y</span>
+          <span class="tag">Code: Y</span>
+          <span class="tag">Video: Y (twitter loops)</span>
+          <span class="tag">Shipped: Y (CodePen)</span>
+          <span class="tag">Before/after: partial (WIP tweets)</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">E · Voice</div>
+        <p>Playful first-person, lots of emoji, clear "this was fun" energy. Doesn't claim scale.</p>
+      </div>
+      <div class="row">
+        <div class="label">F · Hiring signal</div>
+        <div class="rating-row"><span>Taste</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Craft floor</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Shipped proof</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Agentic / AI signal</span><span class="rating"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+      </div>
+      <div class="row">
+        <div class="label">G · Screenshot description</div>
+        <div class="screenshot-desc">Bright pastel grid of 20+ demos — a rubber-duck head rotating on scroll, a CSS-only Mario, a 3D card flip. Each thumbnail autoplays a short loop on hover, creating an arcade-cabinet first impression.</div>
+      </div>
+      <div class="row">
+        <div class="label">H · Steal / avoid</div>
+        <div class="steal"><strong>AVOID for dr-cv's main case studies</strong> (too junior for AI Product Designer), but <strong>STEAL the hover-to-autoplay thumbnail grid</strong> for the skills-map "artifacts" row at the bottom of the landing.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CASE 10 ================= -->
+  <div class="case" id="c10">
+    <div class="case-head">
+      <div class="num">CASE 10 · ARCHETYPE B/C HYBRID</div>
+      <h3>Adam Argyle — "Building a colorful Open UI demo"</h3>
+      <div class="url">nerdy.dev + web.dev/blog · CSS Developer Advocate, Google Chrome</div>
+    </div>
+    <div class="case-body">
+      <div class="row">
+        <div class="label">A · Source</div>
+        <p>Adam Argyle. Cross-posts between nerdy.dev and web.dev — a hybrid personal + official case-study form.</p>
+      </div>
+      <div class="row">
+        <div class="label">B · Shape</div>
+        <p>
+          <span class="tag">Title: "Building a colorful accessible slider"</span>
+          <span class="tag">Dek: "Fully styleable, two-thumb, a11y-complete, 80 lines."</span>
+          <span class="tag">Length: ~1,200 words</span>
+          <span class="tag">Dates: Y</span>
+          <span class="tag">Browser-support matrix up front</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">C · Structure</div>
+        <ol class="ol-verbatim">
+          <li>Overview</li>
+          <li>Markup</li>
+          <li>Styles</li>
+          <li>Accessibility</li>
+          <li>Keyboard</li>
+          <li>Reduced motion</li>
+          <li>Browser support</li>
+          <li>Conclusion + Codepen</li>
+        </ol>
+        <p style="margin-top:8px;">Tutorial with strong <strong>craft-floor framing</strong>: every section names an axis (a11y, motion, keyboard).</p>
+      </div>
+      <div class="row">
+        <div class="label">D · Evidence types</div>
+        <p>
+          <span class="tag good">Before/after: Y</span>
+          <span class="tag">Process: partial</span>
+          <span class="tag">Quant: partial (browser %)</span>
+          <span class="tag good">Video: Y (embedded Reduced Motion toggle)</span>
+          <span class="tag good">Code: Y</span>
+          <span class="tag good">Live demo: Y</span>
+          <span class="tag good">Shipped: Y</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">E · Voice</div>
+        <p>First-person, high-energy, <strong>didactic</strong>. Names collaborators (Una Kravets etc.). Admits limitations honestly ("this doesn't work in Safari 15 yet").</p>
+      </div>
+      <div class="row">
+        <div class="label">F · Hiring signal</div>
+        <div class="rating-row"><span>Taste</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Shipped</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+        <div class="rating-row"><span>Collaboration</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Craft floor</span><span class="rating"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></span></div>
+      </div>
+      <div class="row">
+        <div class="label">G · Screenshot description</div>
+        <div class="screenshot-desc">Highly saturated page with a vertical stepper on the left labeled "Markup / Styles / A11y / Keyboard / Motion". Each section has a live slider that the reader can drag; toggles above let you enable "Reduced Motion" and "High Contrast" to see the same slider adapt in real time.</div>
+      </div>
+      <div class="row">
+        <div class="label">H · Steal / avoid</div>
+        <div class="steal"><strong>STEAL:</strong> the "craft-floor stepper" (a11y / keyboard / motion / support) as a <em>standard footer</em> on every Danilo case study. Signals senior craft without needing prose.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CASE 11 — ANTI ================= -->
+  <div class="case anti" id="c11">
+    <div class="case-head">
+      <div class="num">CASE 11 · ANTI-PATTERN · BOOTCAMP "REDESIGN"</div>
+      <h3>"Redesigning the Bank of America App — a UX Case Study"</h3>
+      <div class="url">Medium, 2024 · composite of dozens of near-identical posts · author: bootcamp grad, not hired at BofA</div>
+    </div>
+    <div class="case-body">
+      <div class="row">
+        <div class="label">A · Source</div>
+        <p>Representative bootcamp output — hundreds of near-identical Medium posts. Author has no relationship with the target company, no user research access, no shipped outcome.</p>
+      </div>
+      <div class="row">
+        <div class="label">B · Shape</div>
+        <p>
+          <span class="tag bad">Title: "Redesigning [BigBrand] — A UX Case Study"</span>
+          <span class="tag bad">Dek: 2 sentences about "pain points"</span>
+          <span class="tag">Length: ~1,800 words</span>
+          <span class="tag bad">No dates, no client, no team</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">C · Structure</div>
+        <ol class="ol-verbatim">
+          <li>Introduction / My Role (always "UX Designer", solo)</li>
+          <li>Problem</li>
+          <li>User Research (5 interviews, unverified)</li>
+          <li>Personas (2 fictional)</li>
+          <li>Journey Map</li>
+          <li>Wireframes</li>
+          <li>Hi-Fi Mockups</li>
+          <li>Final Screens</li>
+          <li>Learnings</li>
+        </ol>
+        <p style="margin-top:8px;"><strong>Follows the template too literally.</strong> Has every section, ships nothing.</p>
+      </div>
+      <div class="row">
+        <div class="label">D · Evidence types</div>
+        <p>
+          <span class="tag good">Before/after: Y</span>
+          <span class="tag good">Process: Y (personas, wireframes)</span>
+          <span class="tag bad">Quant: N</span>
+          <span class="tag bad">Quotes: N (fictional)</span>
+          <span class="tag bad">Code: N</span>
+          <span class="tag bad">Live demo: N</span>
+          <span class="tag bad">Video: N</span>
+          <span class="tag bad">Shipped link: N</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">E · Voice</div>
+        <p>First-person singular, template-speak. Never admits the project is speculative. Claims "improved usability" without measurement.</p>
+      </div>
+      <div class="row">
+        <div class="label">F · Hiring signal density</div>
+        <div class="rating-row"><span>Shipped proof</span><span class="rating"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Collaboration signal</span><span class="rating"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Craft floor</span><span class="rating"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+        <div class="rating-row"><span>Agentic / AI signal</span><span class="rating"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+      </div>
+      <div class="row">
+        <div class="label">G · Screenshot description</div>
+        <div class="screenshot-desc">Clean white Medium page with a Figma-exported cover showing "Before" on the left (real BofA screenshot) and "After" on the right (a glossy redesign with rounded corners and purple gradients). Below, stock-photo personas with names like "Sarah, 28, Marketing Manager" fill a grid.</div>
+      </div>
+      <div class="row">
+        <div class="label">H · Steal / avoid</div>
+        <div class="steal"><strong>AVOID:</strong> speculative redesigns, stock personas, "my role: UX Designer" solo framing, the by-the-book 9-section template. Every hiring manager has seen 500 of these and they are now a <em>negative</em> signal.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CASE 12 — ANTI ================= -->
+  <div class="case anti" id="c12">
+    <div class="case-head">
+      <div class="num">CASE 12 · ANTI-PATTERN · DRIBBBLE CONCEPT SHOT</div>
+      <h3>"UberEats Redesign Concept ✨"</h3>
+      <div class="url">dribbble.com · composite of many similar posts, 2024</div>
+    </div>
+    <div class="case-body">
+      <div class="row">
+        <div class="label">A · Source</div>
+        <p>Anonymous designer on Dribbble/Behance. 4 frames. Not shipped. Not commissioned. Tagged with 20 hashtags.</p>
+      </div>
+      <div class="row">
+        <div class="label">B · Shape</div>
+        <p>
+          <span class="tag bad">Title: "UberEats Redesign Concept ✨"</span>
+          <span class="tag bad">No dek</span>
+          <span class="tag">Length: ~20 words of caption</span>
+          <span class="tag bad">No dates, no client, no role</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">C · Structure</div>
+        <ol class="ol-verbatim">
+          <li>4 glossy screens on an iPhone 15 mockup</li>
+          <li>Caption: "Made this for fun, let me know what you think! 🚀"</li>
+          <li>Hashtags</li>
+        </ol>
+        <p style="margin-top:8px;">No narrative at all — <strong>pure surface</strong>.</p>
+      </div>
+      <div class="row">
+        <div class="label">D · Evidence types</div>
+        <p>
+          <span class="tag">Before/after: partial</span>
+          <span class="tag bad">Process: N</span>
+          <span class="tag bad">Quant: N</span>
+          <span class="tag bad">Quotes: N</span>
+          <span class="tag bad">Code: N</span>
+          <span class="tag bad">Live demo: N</span>
+          <span class="tag bad">Shipped: N</span>
+        </p>
+      </div>
+      <div class="row">
+        <div class="label">E · Voice</div>
+        <p>Caption-only, hashtag-driven. Reads as "please like this".</p>
+      </div>
+      <div class="row">
+        <div class="label">G · Screenshot description</div>
+        <div class="screenshot-desc">Four mocked-up iPhones floating at a slight 3D tilt on a pink gradient, showing an entirely fictional order flow with food photography. Every screen looks the same as 300 other Dribbble posts.</div>
+      </div>
+      <div class="row">
+        <div class="label">H · Steal / avoid</div>
+        <div class="steal"><strong>AVOID entirely.</strong> AI Product Designer hiring managers treat Dribbble-style concept shots as disqualifying for senior roles — it proves surface, not judgement.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hr" />
+
+  <!-- ================= TEMPLATES ================= -->
+  <h2>Template for dr-cv case studies</h2>
+  <p>
+    Based on the findings above, here is the canonical shape for each of Danilo's four case studies. All four use <strong>Archetype B (Narrative Ship)</strong> with one concession to Archetype C: each opens with a 2-sentence positioning line ("how I work with agents on [x]") that accumulates into dr-cv's overall manifesto.
+  </p>
+
+  <div class="panel" style="margin-top: 20px;">
+    <h3 style="margin-top:0;">Shared scaffold (all 4 cases)</h3>
+    <div class="blueprint">TITLE        · [Role verb] + [artifact] for [client, anonymized if needed]
+DEK          · 1 sentence. Names the outcome and the agentic leverage.
+META STRIP   · Date range · Role · Team size · Stack · Link to shipped
+HERO         · Live interactive OR 3-second looping video (not a static image)
+
+1. CONTEXT            (~120 words)  Why this existed. Business stakes.
+2. PROBLEM            (~150 words)  What was broken. Quote a stakeholder.
+3. APPROACH           (~250 words)  How the agent + Danilo pair worked.
+                                     Show 1 process artifact.
+4. SHIPPED WORK       (~300 words)  Before / after. Live link. Code if public.
+5. OUTCOME            (~150 words)  Metric + quote + what the client did next.
+6. WHAT I'D DO DIFFERENTLY (~100 words) — non-negotiable. Signals senior.
+7. CRAFT FLOOR STRIP  a11y / perf / motion / keyboard — checklist style.
+
+Evidence target:  Y on 6/8 types. Must hit: Live demo, Shipped link,
+                  Quote, Quant, Before/after, Process artifact.
+Length target:    900-1,300 words.
+Voice:            first-person singular; "we" when credit is due;
+                  one admitted mistake; one sentence on the agent's role.</div>
+  </div>
+
+  <!-- EnRegla -->
+  <div class="template">
+    <h3>1 · EnRegla — compliance platform with paying pilots</h3>
+    <p style="color: var(--ink-dim);">Danilo's flagship product-judgement case. Leads with business outcome because "paying pilots" is the strongest signal.</p>
+
+    <h4>Suggested verbatim title &amp; dek</h4>
+    <div class="verbatim">Title: "EnRegla — shipping a compliance platform with one designer and three agents"
+Dek:   "Paying pilots in Ecuador's regulated industries, built by pairing me with Claude, Codex and a custom spec-lint agent."</div>
+
+    <h4>Meta strip</h4>
+    <p>
+      <span class="kpi">2025—present</span>
+      <span class="kpi"><strong>Founder · Design + Product</strong></span>
+      <span class="kpi">Team: 1 human + 3 agents</span>
+      <span class="kpi">Next · Supabase · TypeScript</span>
+      <span class="kpi"><strong>Live:</strong> enregla.com</span>
+    </p>
+
+    <h4>Section checklist (EnRegla-specific)</h4>
+    <div class="blueprint">1. CONTEXT     The Ecuadorian compliance market + why SMBs can't afford BigCo tools.
+2. PROBLEM     Regulators change rules quarterly; spreadsheets fail. Stakeholder quote.
+3. APPROACH    How Danilo + agents split work: I do taste + judgement, agents do ship
+               velocity. Show the spec-lint agent loop as a diagram.
+4. SHIPPED     Before/after: the paper-form baseline vs the live dashboard.
+               Embed the actual dashboard (read-only demo account).
+5. OUTCOME     "Paying pilots" (no count, per NDA).
+               Pilot quote if you can get one; else your own observation + numbers
+               you CAN share (time-to-audit reduced from X days to Y).
+6. DIFFERENTLY Overbuilt the admin panel in week 2; agents defaulted to feature-rich.
+               Had to reassert the 80/20 cut.
+7. CRAFT       WCAG AA · <2s TTI on 3G · keyboard-first forms · offline pilot mode.</div>
+
+    <h4>Evidence targets</h4>
+    <p>
+      <span class="tag good">Live demo (read-only)</span>
+      <span class="tag good">Shipped link</span>
+      <span class="tag good">Before/after (paper vs dashboard)</span>
+      <span class="tag good">Quote (pilot)</span>
+      <span class="tag good">Quant (time-to-audit)</span>
+      <span class="tag good">Process artifact (spec-lint loop diagram)</span>
+      <span class="tag">Code snippet (optional)</span>
+      <span class="tag">Video walkthrough (optional)</span>
+    </p>
+
+    <h4>Length</h4>
+    <p><strong>1,200-1,400 words.</strong> Flagship case — permission to be longest.</p>
+  </div>
+
+  <!-- TE Skin -->
+  <div class="template">
+    <h3>2 · TE Skin — agent-consumable design system (NDA-anonymized)</h3>
+    <p style="color: var(--ink-dim);">Most strategic case for AI Product Designer roles: it <em>is</em> the agentic UX story. Must be NDA-safe.</p>
+
+    <h4>Suggested verbatim title &amp; dek</h4>
+    <div class="verbatim">Title: "A design system agents can actually consume — at a tier-1 US consulting client"
+Dek:   "Turning a dark-first component library into a Skill package that Claude and Codex install, query, and compose without human re-explanation."</div>
+
+    <h4>Meta strip (NDA-safe)</h4>
+    <p>
+      <span class="kpi">2024—2026</span>
+      <span class="kpi"><strong>Design Engineering Bridge</strong></span>
+      <span class="kpi">Client · Tier-1 US consulting firm</span>
+      <span class="kpi">Team: Product Lead, Design Lead, Eng Lead + Danilo</span>
+      <span class="kpi">Under NDA · public artifact: agent-consumable primitives</span>
+    </p>
+
+    <h4>Section checklist (TE Skin-specific)</h4>
+    <div class="blueprint">1. CONTEXT     Why a tier-1 consulting client needed agents to help build client
+               pitches faster — and why generic DS libraries don't fit agent consumers.
+2. PROBLEM     Agents hallucinate component usage when the library is human-documented.
+               Quote from (anonymized) Product Lead: "Claude keeps inventing variants."
+3. APPROACH    The Skill-package shape: tokens + usage contracts + machine-checkable
+               examples. Diagram of the agent → Skill → renderer loop. Credit Product
+               Lead and Design Lead by role (not name) for the call to go skill-first.
+4. SHIPPED     Before/after: agents spitting invented props vs agents producing
+               pitch-ready screens on first shot. Anonymized screens only.
+5. OUTCOME     Pitch cycle reduced from X to Y. Two verbal testimonials available
+               on request (Product Lead, Design Lead — identities held until
+               reference-check).
+6. DIFFERENTLY First draft of the Skill was too prose-heavy; agents still hallucinated.
+               Had to re-cut as structured data + tiny runnable snippets.
+7. CRAFT       Tokens include a11y-audit metadata · contrast ratios baked in ·
+               keyboard semantics per primitive.</div>
+
+    <h4>Evidence targets (NDA-constrained)</h4>
+    <p>
+      <span class="tag good">Process artifact (agent-loop diagram, drawn by Danilo, safe to publish)</span>
+      <span class="tag good">Quote (paraphrased, attributed to role not name)</span>
+      <span class="tag good">Quant (cycle-time delta)</span>
+      <span class="tag good">Before/after (anonymized agent outputs)</span>
+      <span class="tag warn">Live demo: a generic Skill-package demo on Danilo's own tokens, not client tokens</span>
+      <span class="tag warn">Shipped link: "available under NDA on request"</span>
+      <span class="tag bad">Code snippet of client: N (NDA)</span>
+      <span class="tag">Video: optional, screen-recorded on Danilo's own renderer</span>
+    </p>
+
+    <h4>Length</h4>
+    <p><strong>900-1,100 words.</strong> Shorter than EnRegla because NDA limits evidence depth; compensate with a strong diagram.</p>
+  </div>
+
+  <!-- TE Black -->
+  <div class="template">
+    <h3>3 · TE Black — dark-first design system with a11y baked into tokens</h3>
+    <p style="color: var(--ink-dim);">The craft-floor case study. Proves Danilo cares about accessibility at the <em>token</em> level, not as afterthought.</p>
+
+    <h4>Suggested verbatim title &amp; dek</h4>
+    <div class="verbatim">Title: "TE Black — a dark-first DS where a11y lives inside the tokens"
+Dek:   "Contrast ratios, motion-reduced variants and focus-ring semantics defined as data, not documentation."</div>
+
+    <h4>Meta strip</h4>
+    <p>
+      <span class="kpi">2024—2026</span>
+      <span class="kpi"><strong>Design Engineering Bridge</strong></span>
+      <span class="kpi">Client · Tier-1 US consulting firm</span>
+      <span class="kpi">Under NDA · generalized learnings public</span>
+    </p>
+
+    <h4>Section checklist</h4>
+    <div class="blueprint">1. CONTEXT     Client ship target was dark-first — most DS a11y tooling assumes light.
+2. PROBLEM     Contrast audits happened post-hoc, agents/humans both shipped
+               inaccessible combos. Stakeholder quote (anonymized).
+3. APPROACH    Moved a11y from "review step" into token definition: every token
+               carries its contrast pair and WCAG level. Show the token shape.
+4. SHIPPED     Before/after: token JSON before (color only) vs after (color +
+               a11y metadata). Live demo of a token inspector.
+5. OUTCOME     Axe violations in agent output dropped N→M. Design reviews shortened.
+6. DIFFERENTLY First cut over-indexed on WCAG AAA, which killed contrast for
+               low-vision users who need less glare. Walked it back to AA + tested.
+7. CRAFT       WCAG AA baked · prefers-reduced-motion handled at token level ·
+               focus-ring semantics typed, not commented.</div>
+
+    <h4>Evidence targets</h4>
+    <p>
+      <span class="tag good">Before/after (token JSON diff)</span>
+      <span class="tag good">Live demo (token inspector — safe to publish, Danilo's own tokens)</span>
+      <span class="tag good">Code snippet (the token shape itself)</span>
+      <span class="tag good">Quant (Axe delta)</span>
+      <span class="tag good">Process artifact (decision tree)</span>
+      <span class="tag warn">Quote (paraphrased)</span>
+    </p>
+
+    <h4>Length</h4>
+    <p><strong>800-1,000 words.</strong> This is the most technical case; lean on code and tokens, not prose.</p>
+  </div>
+
+  <!-- Life Update Mobile -->
+  <div class="template">
+    <h3>4 · Life Update Mobile — runtime LLM in a consumer app (Gemini)</h3>
+    <p style="color: var(--ink-dim);">Proves Danilo designs for LLMs as a <em>runtime primitive</em>, not a content-generation gimmick. The AI-product-designer signal flare.</p>
+
+    <h4>Suggested verbatim title &amp; dek</h4>
+    <div class="verbatim">Title: "Life Update Mobile — designing a consumer app where Gemini is a runtime primitive"
+Dek:   "What changes in the UX when the model sees the user's data every time the screen renders."</div>
+
+    <h4>Meta strip</h4>
+    <p>
+      <span class="kpi">2025—present</span>
+      <span class="kpi"><strong>Founder · Design + Product</strong></span>
+      <span class="kpi">Team: 1 human + agents</span>
+      <span class="kpi">React Native · Gemini · Supabase</span>
+      <span class="kpi"><strong>Live (TestFlight):</strong> lifeupdate.app</span>
+    </p>
+
+    <h4>Section checklist</h4>
+    <div class="blueprint">1. CONTEXT     Why personal life-tracking collapses without a model-in-the-loop:
+               users abandon apps that only store, not interpret.
+2. PROBLEM     Traditional UX ("empty state → form → list") fails when the
+               system has opinions. How do you design for a collaborator?
+3. APPROACH    Three UX inventions: (a) Model-aware empty states, (b) Contestable
+               summaries, (c) The "show me your work" drawer. Sketches for each.
+4. SHIPPED     Before/after: 3 iterations of the daily summary screen, all clickable.
+               Link to TestFlight build.
+5. OUTCOME     N testers, retention week-2 = M%. One user quote about the
+               contestable-summary pattern.
+6. DIFFERENTLY Trusted Gemini too much early on — had to add the "show me your
+               work" drawer after users said they felt gaslit.
+7. CRAFT       Offline-first · on-device inference fallback · accessibility for
+               screen readers on generated content · reduced-motion on animations.</div>
+
+    <h4>Evidence targets</h4>
+    <p>
+      <span class="tag good">Before/after (3 iterations of daily summary)</span>
+      <span class="tag good">Process artifact (sketches of 3 UX inventions)</span>
+      <span class="tag good">Live demo (TestFlight link + embedded video)</span>
+      <span class="tag good">Video walkthrough</span>
+      <span class="tag good">Quote (tester)</span>
+      <span class="tag good">Quant (retention / week-2)</span>
+      <span class="tag good">Shipped link (App Store or TestFlight)</span>
+      <span class="tag">Code snippet (Gemini prompt shape, optional)</span>
+    </p>
+
+    <h4>Length</h4>
+    <p><strong>1,100-1,300 words.</strong> Second-longest after EnRegla because the agentic-UX content is the most differentiating for target roles.</p>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <hr class="hr" />
+  <div class="panel">
+    <h3 style="margin-top:0;">Round 4 takeaways for V11</h3>
+    <ul style="color: var(--ink-dim);">
+      <li><strong>Archetype B (Narrative Ship)</strong> is the default for all 4 dr-cv case studies. Aim for <strong>900-1,400 words</strong> each.</li>
+      <li>The single most load-bearing evidence type is <strong>"link to shipped"</strong>. If you can't link it, embed a read-only demo.</li>
+      <li>Every case must include <strong>"What I'd Do Differently"</strong> (Comeau rule) — this is the senior-vs-mid discriminator.</li>
+      <li>Every case must include a <strong>craft-floor strip</strong> (Argyle rule): a11y / perf / motion / keyboard, checklist-style.</li>
+      <li>Credit collaborators <strong>by role, not name</strong> under NDA (Duarte rule, adapted).</li>
+      <li>Add <strong>epistemic-status chips</strong> (Appleton rule) on any section where the outcome is partial or pilot-stage.</li>
+      <li>Anti-patterns to refuse: speculative "Redesigning X" posts, Dribbble concept shots, solo "UX Designer" framing, by-the-book 9-section bootcamp templates.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

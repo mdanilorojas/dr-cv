@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>V11 R2 . Portfolios of people at target companies</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --bg:        #0b0d10;
+    --bg-2:      #11151a;
+    --bg-3:      #161b22;
+    --ink:       #e6edf3;
+    --ink-2:     #9ba7b3;
+    --ink-3:     #6a7581;
+    --accent:    #ff7a1a;
+    --accent-2:  #ffd27a;
+    --good:      #58d6a0;
+    --rule:      #232a33;
+    --rule-2:    #2d3742;
+    --code-bg:   #0f1418;
+    --mono: ui-monospace, "JetBrains Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --serif: "Iowan Old Style", "Source Serif Pro", "Georgia", serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  body { font-size: 15px; line-height: 1.55; }
+  a { color: var(--accent-2); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  code, .mono { font-family: var(--mono); }
+
+  /* layout */
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 48px 32px 120px; }
+  header.masthead {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 28px;
+    margin-bottom: 48px;
+  }
+  .kicker { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
+  h1 { font-family: var(--serif); font-weight: 500; font-size: 46px; line-height: 1.12; margin: 8px 0 12px; letter-spacing: -.01em; }
+  h1 em { font-style: italic; color: var(--accent-2); }
+  .sub { color: var(--ink-2); max-width: 76ch; font-size: 16px; }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 18px 28px;
+    margin-top: 22px; font-family: var(--mono); font-size: 11px;
+    color: var(--ink-3); text-transform: uppercase; letter-spacing: .14em;
+  }
+  .meta-row span b { color: var(--ink); font-weight: 500; }
+
+  h2 { font-family: var(--serif); font-weight: 500; font-size: 30px; line-height: 1.18; letter-spacing: -.005em; margin: 72px 0 18px; }
+  h2 .num { color: var(--accent); font-family: var(--mono); font-size: 14px; vertical-align: super; margin-right: 10px; letter-spacing: 0; }
+  h3 { font-family: var(--sans); font-weight: 600; font-size: 17px; margin: 0 0 6px; color: var(--ink); }
+  h4 { font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); margin: 18px 0 6px; }
+
+  /* archetypes */
+  .archetypes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 24px;
+  }
+  .arch {
+    background: linear-gradient(180deg, var(--bg-2), var(--bg-3));
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 22px 22px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .arch::before {
+    content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  }
+  .arch .tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+  .arch h3 { margin: 10px 0 8px; font-size: 19px; font-family: var(--serif); font-weight: 500; letter-spacing: -.005em; }
+  .arch p { color: var(--ink-2); margin: 0 0 12px; font-size: 14px; }
+  .arch ul { padding-left: 18px; margin: 10px 0 0; color: var(--ink-2); font-size: 13.5px; }
+  .arch ul li { margin-bottom: 4px; }
+  .arch .members { margin-top: 14px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); border-top: 1px dashed var(--rule); padding-top: 10px; }
+  .arch .members b { color: var(--ink); font-weight: 500; }
+
+  /* portfolio cards */
+  .port-grid { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 20px; }
+  .port {
+    border-top: 1px solid var(--rule);
+    padding: 28px 0 30px;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 28px;
+  }
+  .port:last-child { border-bottom: 1px solid var(--rule); }
+  .port-id .num-big {
+    font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: .18em;
+  }
+  .port-id h3 { font-family: var(--serif); font-size: 22px; font-weight: 500; margin: 4px 0 4px; letter-spacing: -.005em; }
+  .port-id .role { color: var(--ink-2); font-size: 13.5px; }
+  .port-id .url { margin-top: 10px; font-family: var(--mono); font-size: 12px; }
+  .port-id .url a { word-break: break-all; }
+  .port-id .quote {
+    margin-top: 14px;
+    padding: 10px 12px;
+    background: var(--bg-2);
+    border-left: 2px solid var(--accent);
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--ink);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  .port-body { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px 22px; }
+  .cell h4 { margin: 0 0 4px; }
+  .cell p { margin: 0; color: var(--ink-2); font-size: 13.5px; }
+  .cell .swatches { display: flex; gap: 4px; margin-top: 4px; }
+  .cell .swatch {
+    width: 22px; height: 14px; border-radius: 2px;
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  .pill {
+    display: inline-block; padding: 2px 8px;
+    border: 1px solid var(--rule-2); border-radius: 99px;
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink);
+    letter-spacing: .1em; text-transform: uppercase;
+  }
+  .pill.low    { color: var(--ink-2); }
+  .pill.med    { color: var(--accent-2); border-color: #4a3a1f; }
+  .pill.high   { color: var(--accent); border-color: #4a2510; }
+  .pill.yes    { color: var(--good); border-color: #1f4638; }
+  .pill.no     { color: var(--ink-3); }
+
+  .teaches {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+    padding: 12px 14px;
+    background: linear-gradient(90deg, rgba(255,122,26,.09), rgba(255,122,26,0));
+    border-left: 2px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    font-family: var(--serif);
+    font-size: 14.5px;
+    color: var(--ink);
+  }
+  .teaches b { font-family: var(--mono); font-style: normal; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+
+  /* lessons */
+  .lessons { margin-top: 24px; display: grid; gap: 16px; }
+  .lesson {
+    border: 1px solid var(--rule);
+    background: var(--bg-2);
+    border-radius: 10px;
+    padding: 22px 24px;
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 18px;
+  }
+  .lesson .n {
+    font-family: var(--serif);
+    font-size: 38px; line-height: 1;
+    color: var(--accent);
+    font-style: italic;
+  }
+  .lesson h3 { font-family: var(--serif); font-size: 22px; font-weight: 500; margin: 0 0 8px; letter-spacing: -.005em; }
+  .lesson p { margin: 0 0 12px; color: var(--ink-2); }
+  .lesson .ev {
+    margin-top: 10px; padding: 10px 12px;
+    background: var(--bg-3); border-radius: 6px;
+    font-family: var(--mono); font-size: 12px; color: var(--ink-2);
+    border-left: 2px solid var(--rule-2);
+  }
+  .lesson .ev b { color: var(--ink); font-weight: 500; }
+  .lesson .ev em { font-style: italic; color: var(--accent-2); }
+
+  /* footer */
+  footer { margin-top: 90px; padding-top: 24px; border-top: 1px solid var(--rule); color: var(--ink-3); font-family: var(--mono); font-size: 11px; letter-spacing: .08em; }
+
+  @media (max-width: 860px) {
+    .archetypes { grid-template-columns: 1fr; }
+    .port { grid-template-columns: 1fr; }
+    .port-body { grid-template-columns: 1fr 1fr; }
+    .lesson { grid-template-columns: 1fr; }
+    h1 { font-size: 34px; }
+  }
+  @media (max-width: 560px) {
+    .port-body { grid-template-columns: 1fr; }
+    .wrap { padding: 28px 18px 80px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="kicker">dr-cv / hiring universe / round 02</div>
+  <h1>Portfolios of people <em>already inside</em> the rooms Danilo wants in.</h1>
+  <p class="sub">
+    Fourteen portfolios from designers and design engineers currently at Vercel, Linear, Cursor, Raycast, Shopify, Klaviyo, Google Chrome DX, Radix/shadcn-adjacent, and independents who moonlight as tool-shapers. The goal is not to copy their aesthetic. It is to reverse-engineer the <em>signal structure</em> that gets a person hired into these rooms and translate it into a dr-cv that reads as peer, not petitioner.
+  </p>
+  <div class="meta-row">
+    <span><b>14</b> portfolios surveyed</span>
+    <span><b>3</b> archetypes identified</span>
+    <span><b>5</b> concrete lessons</span>
+    <span>target role . <b>AI Product Designer / Agentic UX Lead</b></span>
+  </div>
+</header>
+
+<!-- =========================================================
+     ARCHETYPES
+     ========================================================= -->
+<section>
+  <h2><span class="num">01</span>The three portfolio archetypes among hires</h2>
+  <p class="sub">Across all fourteen, three clean patterns emerge. Nobody who got hired at these companies is running a full-bleed agency-style case-grid. The template is always one of these three.</p>
+
+  <div class="archetypes">
+
+    <div class="arch">
+      <div class="tag">Archetype A</div>
+      <h3>The Essayist-Builder</h3>
+      <p>Extremely restrained layout. Almost no case studies. The signal is <em>a body of writing</em> plus <em>shipped OSS</em>. Hero is a single sentence of taste.</p>
+      <ul>
+        <li>Long blog archive, sometimes hundreds of posts</li>
+        <li>GitHub-first, npm download counts as proof</li>
+        <li>Contact = email + X, no form, no CTA button</li>
+      </ul>
+      <div class="members">
+        <b>Members:</b> Paco Coursey, Pedro Duarte, Rauno Freiberg, Shu Ding, Rasmus Andersson, John Otander, Max Stoiber, Lee Robinson
+      </div>
+    </div>
+
+    <div class="arch">
+      <div class="tag">Archetype B</div>
+      <h3>The Live-Demo Showcase</h3>
+      <p>The portfolio <em>is</em> the work. Motion tier high. Every scroll unlocks an interactive piece the visitor can play with. Case studies are optional; the demo is the case study.</p>
+      <ul>
+        <li>Embedded components, not screenshots</li>
+        <li>CodePen / Sonner / Vaul / demos as primary inventory</li>
+        <li>Availability signaled by cadence, not copy</li>
+      </ul>
+      <div class="members">
+        <b>Members:</b> Emil Kowalski, Adam Argyle (nerdy.dev), Jhey Tompkins, Josh Comeau, Tim Holman
+      </div>
+    </div>
+
+    <div class="arch">
+      <div class="tag">Archetype C</div>
+      <h3>The Curated Case Grid</h3>
+      <p>The most recognizable "portfolio" shape, but rare among hires. Named projects with numeric proof, a visible resume, and an availability target. Heavily disciplined to avoid agency bloat.</p>
+      <ul>
+        <li>3-9 projects, not 20</li>
+        <li>Concrete metrics ("100k+ installs", "6k stars")</li>
+        <li>"View Full Resume" link is present and obvious</li>
+      </ul>
+      <div class="members">
+        <b>Members:</b> Brittany Chiang, Samuel Kraft
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     PORTFOLIOS
+     ========================================================= -->
+<section>
+  <h2><span class="num">02</span>The fourteen portfolios</h2>
+
+  <div class="port-grid">
+
+    <!-- 01 Emil Kowalski -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">01 . Live-Demo</div>
+        <h3>Emil Kowalski</h3>
+        <div class="role">Design Engineer . Linear (ex-Vercel)</div>
+        <div class="url"><a href="https://emilkowal.ski">emilkowal.ski</a></div>
+        <div class="quote">&ldquo;I like to build things for designers and developers, think deeply about the user interface, how it looks, feels, behaves.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Mono dark, white on near-black, no accent.</p><div class="swatches"><span class="swatch" style="background:#0a0a0a"></span><span class="swatch" style="background:#1a1a1a"></span><span class="swatch" style="background:#ededed"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Single sans, oversized display line at ~48px, body ~15px.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill high">High</span> Hero components are live animations.</p></div>
+        <div class="cell"><h4>Hero look</h4><p>Black page, name top-left, one line of prose, followed by a running list of shipped OSS (Sonner, Vaul) with inline interactive previews.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>~5 component-level writeups. Conceptual, not bullet-listed.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill no">No</span> Proof comes from brand recognition of Sonner/Vaul.</p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill yes">Yes</span> Animations course "8 hours left" — live ship signal.</p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>Blog with 14 posts. GitHub prominent. No talks surfaced.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p>Newsletter + X link. No CTA, no role target stated.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> The hero does not describe you. The hero is <em>one thing you made, running live</em>. Put an agent demo above the fold.</div>
+      </div>
+    </article>
+
+    <!-- 02 Rauno Freiberg -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">02 . Essayist</div>
+        <h3>Rauno Freiberg</h3>
+        <div class="role">Interaction Designer . Vercel + Devouring Details</div>
+        <div class="url"><a href="https://rauno.me">rauno.me</a></div>
+        <div class="quote">&ldquo;Make it fast. Make it beautiful. Make it consistent. Make it carefully. Make it timeless. Make it soulful. Make it.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Pure black, off-white text, one thin orange rule.</p><div class="swatches"><span class="swatch" style="background:#000"></span><span class="swatch" style="background:#f5f3ef"></span><span class="swatch" style="background:#ff5f0f"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Editorial serif display, mono labels. Manifesto-tier.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill low">Low</span> Structural; micro-interactions only.</p></div>
+        <div class="cell"><h4>Hero look</h4><p>The six-line manifesto centered. That is the entire fold.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>None in the traditional sense. "Field Notes" stands in.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill no">No</span> Proof is taste alone.</p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill no">No</span> Curated.</p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>Notes section. GitHub linked. X linked.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p>Email with a copy button. No role target.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> A manifesto-length hero can outperform a paragraph of credentials. Taste is a hireable signal at tier-1.</div>
+      </div>
+    </article>
+
+    <!-- 03 Paco -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">03 . Essayist</div>
+        <h3>Paco Coursey</h3>
+        <div class="role">Webmaster . Linear (ex-Vercel)</div>
+        <div class="url"><a href="https://paco.me">paco.me</a></div>
+        <div class="quote">&ldquo;Crafting interfaces. Building polished software and web experiences. Experimenting with magical details in user interfaces.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Mono, dark-first. No accent.</p><div class="swatches"><span class="swatch" style="background:#0a0a0a"></span><span class="swatch" style="background:#1a1a1a"></span><span class="swatch" style="background:#ededed"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Understated sans, tight hierarchy.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill med">Medium</span> "Magical details" microinteractions.</p></div>
+        <div class="cell"><h4>Hero look</h4><p>One sentence, then a list: recently shipped work, selected writing, selected projects. That is the whole site.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>Zero. Proof is the OSS list: cmdk, Next Themes.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill no">No</span></p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill no">No</span></p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>"Infrequent thoughts" blog. Named OSS projects. No talks surfaced.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p>Email + X. No CTA, no target role.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> Ship-level OSS names <em>replace</em> case studies. If cmdk is on the list, you do not need to explain yourself.</div>
+      </div>
+    </article>
+
+    <!-- 04 Pedro Duarte -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">04 . Essayist</div>
+        <h3>Pedro Duarte</h3>
+        <div class="role">Developer Advocate . Raycast (ex-Radix / shadcn orbit)</div>
+        <div class="url"><a href="https://ped.ro">ped.ro</a></div>
+        <div class="quote">&ldquo;Not sure how to intro myself anymore.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Light, minimal, one red accent.</p><div class="swatches"><span class="swatch" style="background:#ffffff"></span><span class="swatch" style="background:#111111"></span><span class="swatch" style="background:#e5484d"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Sans-serif, long-form bio as hero.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill low">Low</span></p></div>
+        <div class="cell"><h4>Hero look</h4><p>A self-deprecating first line, then a long reflective paragraph about career shifts. Nav: Writing, Speaking, Work.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>Zero. Radix (20M+ monthly downloads) sits in the bio sentence.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill yes">Yes</span> Download counts cited inline.</p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill no">No</span></p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>Writing + dedicated Speaking section. OSS flagship = Radix.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p>X handle, no CTA, no resume.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> Honesty as a hero line outperforms polish. A "not sure how to intro myself" voice reads as senior.</div>
+      </div>
+    </article>
+
+    <!-- 05 Brittany Chiang -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">05 . Curated Grid</div>
+        <h3>Brittany Chiang</h3>
+        <div class="role">Senior Frontend Engineer, Accessibility . Klaviyo</div>
+        <div class="url"><a href="https://brittanychiang.com">brittanychiang.com</a></div>
+        <div class="quote">&ldquo;I build accessible, pixel-perfect experiences for the web.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Dark navy, one teal accent, white text.</p><div class="swatches"><span class="swatch" style="background:#0a192f"></span><span class="swatch" style="background:#112240"></span><span class="swatch" style="background:#64ffda"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Inter throughout. Strong scale discipline.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill low">Low</span> Functional only.</p></div>
+        <div class="cell"><h4>Hero look</h4><p>Left rail: name, current role, role-target, social. Right rail: scrolling experience timeline + selected projects.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>~6 project cards with concise context.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill yes">Yes</span> "100k+ installs", "6k stars 3k forks".</p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill no">No</span></p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>4 articles (Medium + Klaviyo Tech). GitHub + CodePen linked. No talks.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p><span class="pill yes">Resume</span> "View Full Resume" button present. Role target ("accessibility") explicit.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> Put the target role, the current role, and numeric proof on the same fold. This is the single template Danilo should most closely study.</div>
+      </div>
+    </article>
+
+    <!-- 06 Adam Argyle -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">06 . Live-Demo</div>
+        <h3>Adam Argyle</h3>
+        <div class="role">Design Engineer . Shopify (ex-Google Chrome DX)</div>
+        <div class="url"><a href="https://nerdy.dev">nerdy.dev</a></div>
+        <div class="quote">&ldquo;New CSS you feel like you could use today.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Hot pink + magenta on deep dark, high contrast.</p><div class="swatches"><span class="swatch" style="background:#ff0e80"></span><span class="swatch" style="background:#ff3ea5"></span><span class="swatch" style="background:#0c0c14"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Sans-serif with aggressive code blocks.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill high">High</span> Scroll-driven anims, view transitions, live demos everywhere.</p></div>
+        <div class="cell"><h4>Hero look</h4><p>Skull mascot, cartoon-y, notebook-framing. "346 notes, 88 blog posts" visible as counters.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>10-15 deep-dives (gradient.style, color-input, Switch recreation).</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill med">Mixed</span> Engagement metrics, not business KPIs.</p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill yes">Yes</span> RFC posts, experiments behind flags.</p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>41 talks, 138 podcast appearances, permanent podcast host. Open Props, VisBug.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p>Active announcement ("joining Shopify"). No resume download; cadence is the signal.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> A visible counter ("N demos, N posts, N talks") is a zero-copy credibility punch. Consider a dr-cv live counter of agents shipped / hours saved.</div>
+      </div>
+    </article>
+
+    <!-- 07 Josh Comeau -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">07 . Live-Demo</div>
+        <h3>Josh Comeau</h3>
+        <div class="role">Independent educator (ex-Gatsby, ex-DigitalOcean)</div>
+        <div class="url"><a href="https://joshwcomeau.com">joshwcomeau.com</a></div>
+        <div class="quote">&ldquo;Dynamic, composable CSS keyframe animations. Delightful tutorials on the modern web.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Bright purple/pink gradient in light, deep plum in dark.</p><div class="swatches"><span class="swatch" style="background:#673ab7"></span><span class="swatch" style="background:#e91e63"></span><span class="swatch" style="background:#11071f"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Custom-feel sans, huge article typography.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill high">High</span> The hero and every article are animated.</p></div>
+        <div class="cell"><h4>Hero look</h4><p>Animated header illustration. Below: category cards (CSS, React, animation, SVG) each opening a tutorial deck.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>Zero. Articles are the case studies.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill no">No</span> Proof is course sales + audience size.</p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill no">No</span></p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>Extensive blog across 8 categories. GitHub, BlueSky. No talks listed.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p>Newsletter CTA. No resume. No role target - he is the product.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> If you teach, the tutorial <em>is</em> the portfolio. A dr-cv section called "Build with me" (agent walkthrough) beats a "Services" section.</div>
+      </div>
+    </article>
+
+    <!-- 08 Jhey Tompkins -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">08 . Live-Demo</div>
+        <h3>Jhey Tompkins</h3>
+        <div class="role">Staff Design Engineer . Shopify (ex-Netlify DX)</div>
+        <div class="url"><a href="https://jhey.dev">jhey.dev</a></div>
+        <div class="quote">&ldquo;I craft UI demos that explore the power of the web and help others sharpen their skills.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Electric greens + yellows on deep dark.</p><div class="swatches"><span class="swatch" style="background:#0f1014"></span><span class="swatch" style="background:#ff2d55"></span><span class="swatch" style="background:#ffe600"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Chunky display sans, playful cursor pointers.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill high">High</span> CodePen-native thinking.</p></div>
+        <div class="cell"><h4>Hero look</h4><p>Cartoon portrait, oversized name, immediately a tile grid of demos.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>Zero. CodePen demos.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill no">No</span></p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill yes">Yes</span> CodePen as ongoing exploration.</p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>CodePen, X prominent. No talks surfaced.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p>Social links only. No resume, no target.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> "Help others sharpen their skills" is a powerful frame. dr-cv can position agents as <em>teachable</em>, not just demoable.</div>
+      </div>
+    </article>
+
+    <!-- 09 Tim Holman -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">09 . Live-Demo</div>
+        <h3>Tim Holman</h3>
+        <div class="role">SVP UI/UX . Goldman Sachs (long independent tail)</div>
+        <div class="url"><a href="https://tholman.com">tholman.com</a></div>
+        <div class="quote">&ldquo;I am a veteran front-end engineer who thrives on getting shit done.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Paper-white, black text, single navy accent.</p><div class="swatches"><span class="swatch" style="background:#f7f5ef"></span><span class="swatch" style="background:#0a0a0a"></span><span class="swatch" style="background:#1540b0"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Serif display, mono details. Personal-site energy.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill high">High</span> Every project is interactive on hover.</p></div>
+        <div class="cell"><h4>Hero look</h4><p>One sentence. Then a dense scrollable list of ~50 projects with emoji and year. "Power Moves", "ASCII Morph", "Elevator.js".</p></div>
+        <div class="cell"><h4>Case studies</h4><p>Zero formal. The project list is self-documenting.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill no">No</span></p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill no">No</span></p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>GitHub heavy. 8+ speaking engagements. Single blog post.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p>Top-right email link. No resume. Role target implicit.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> Volume can be a signal. 50 weird little things beats 3 perfect case studies for proving "ships constantly".</div>
+      </div>
+    </article>
+
+    <!-- 10 Shu Ding -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">10 . Essayist</div>
+        <h3>Shu Ding</h3>
+        <div class="role">Designer + Developer . Vercel (v0, AI SDK)</div>
+        <div class="url"><a href="https://shud.in">shud.in</a></div>
+        <div class="quote">&ldquo;I am a designer and developer at Vercel.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Pure light mode, mono grays, tiny accent.</p><div class="swatches"><span class="swatch" style="background:#ffffff"></span><span class="swatch" style="background:#111"></span><span class="swatch" style="background:#888"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Single serif for body, one sans for nav. Quiet.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill low">Low</span></p></div>
+        <div class="cell"><h4>Hero look</h4><p>One-line bio, then a timeline of prior jobs, then "Thoughts" archive.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>None. Work history is the case study.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill no">No</span> Named products (Next.js, AI SDK, v0) are the proof.</p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill no">No</span></p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>"Thoughts" blog. GitHub prominent.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p>X handle. No CTA, no resume.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> When the company you work on is legible, the site can be a single page of links. dr-cv should surface EnRegla + Trusted Environments + Aura at the top like a shipping manifest.</div>
+      </div>
+    </article>
+
+    <!-- 11 Rasmus Andersson -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">11 . Essayist</div>
+        <h3>Rasmus Andersson (rsms)</h3>
+        <div class="role">Independent . Figma alum, creator of Inter</div>
+        <div class="url"><a href="https://rsms.me">rsms.me</a></div>
+        <div class="quote">&ldquo;Software is the medium through which I express myself.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Near-white, near-black. One orange dot.</p><div class="swatches"><span class="swatch" style="background:#f6f6f6"></span><span class="swatch" style="background:#111"></span><span class="swatch" style="background:#ff5a1f"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Inter (he designed it). Hero-scale labels in all caps.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill low">Low</span></p></div>
+        <div class="cell"><h4>Hero look</h4><p>A single sentence manifesto. Below: 74 projects as a flat archive.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>Zero formal, but project descriptions can be paragraphs.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill no">No</span> Inter ships on every OS — that is the proof.</p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill yes">Yes</span> Ongoing restoration projects, visible drafts.</p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>512 archived articles (2013-present). One keynote.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p>Almost none. No CTA, no resume, no target role.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> Archive <em>depth</em> is itself a signal. A 2026-only site reads as new; a 2013-today archive reads as durable.</div>
+      </div>
+    </article>
+
+    <!-- 12 Lee Robinson -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">12 . Essayist</div>
+        <h3>Lee Robinson</h3>
+        <div class="role">Developer Experience . Cursor (ex-VP DevRel, Vercel)</div>
+        <div class="url"><a href="https://leerob.com">leerob.com</a></div>
+        <div class="quote">&ldquo;My life's work is to make technology easy to understand and interesting to learn about.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Warm cream + black, no accents.</p><div class="swatches"><span class="swatch" style="background:#fafaf7"></span><span class="swatch" style="background:#111"></span><span class="swatch" style="background:#e5e4df"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Serif body, sans nav. Newsletter-style.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill low">Low</span></p></div>
+        <div class="cell"><h4>Hero look</h4><p>Single paragraph mission statement. Family detail included. Nav: Writing, About, Newsletter.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>Zero. Articles are the portfolio.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill no">No</span> (Hidden in newsletter subscriber count.)</p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill no">No</span></p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>Curated writing on AI, agents, developer marketing. GitHub.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p><span class="pill yes">Yes</span> "Reach out if interested, lee@leerob.com" — the rare direct signal.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> A one-line mission ("my life's work is to...") is a conversion unit. dr-cv needs a Danilo-version of that sentence in the hero.</div>
+      </div>
+    </article>
+
+    <!-- 13 Samuel Kraft -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">13 . Curated Grid</div>
+        <h3>Samuel Kraft</h3>
+        <div class="role">Design Engineer . Raycast (Glaze)</div>
+        <div class="url"><a href="https://samuelkraft.com">samuelkraft.com</a></div>
+        <div class="quote">&ldquo;Excited by delightful interfaces and building products that feel fast and human.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Warm off-white, black, one orange.</p><div class="swatches"><span class="swatch" style="background:#faf7f2"></span><span class="swatch" style="background:#0a0a0a"></span><span class="swatch" style="background:#ff6a00"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Editorial scale, display sans, serif for quotes.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill high">High</span> Component api obsession visible.</p></div>
+        <div class="cell"><h4>Hero look</h4><p>Photo + one sentence + "Currently building Glaze" + project grid.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>9 projects, mixed depth — Bitrefill + Tracklib detailed, Raycast pages brief.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill no">No</span></p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill yes">Yes</span> Glaze is the "currently" header.</p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>5 recent posts + archive. GitHub + X.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p>Email available. No resume. Role target = "Design Engineer".</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> A single "Currently" line under the hero ("Currently: EnRegla pilots + Trusted Environments") is worth more than a full About page.</div>
+      </div>
+    </article>
+
+    <!-- 14 John Otander -->
+    <article class="port">
+      <div class="port-id">
+        <div class="num-big">14 . Essayist</div>
+        <h3>John Otander</h3>
+        <div class="role">Independent (creator of MDX, Tachyons alum)</div>
+        <div class="url"><a href="https://johno.com">johno.com</a></div>
+        <div class="quote">&ldquo;Web developer and designer that builds things.&rdquo;</div>
+      </div>
+      <div class="port-body">
+        <div class="cell"><h4>Palette</h4><p>Paper white, deep black, no accent.</p><div class="swatches"><span class="swatch" style="background:#ffffff"></span><span class="swatch" style="background:#111"></span><span class="swatch" style="background:#888"></span></div></div>
+        <div class="cell"><h4>Typography</h4><p>Classic monospace leanings. Stripped to essentials.</p></div>
+        <div class="cell"><h4>Motion</h4><p><span class="pill low">Low</span></p></div>
+        <div class="cell"><h4>Hero look</h4><p>One sentence. Below: named OSS (MDX, Blocks, Tachyons, CSS Stats). Nav: writing, resume.</p></div>
+        <div class="cell"><h4>Case studies</h4><p>Zero.</p></div>
+        <div class="cell"><h4>Numeric proof</h4><p><span class="pill no">No</span> MDX name carries it.</p></div>
+        <div class="cell"><h4>Work-in-progress</h4><p><span class="pill no">No</span></p></div>
+        <div class="cell"><h4>Writing / OSS / talks</h4><p>/writing. Course ("Compilers for Humans"). X linked.</p></div>
+        <div class="cell"><h4>Contact / availability</h4><p><span class="pill no">Negative</span> "Not currently looking for new opportunities" — the honest inverse signal.</p></div>
+        <div class="teaches"><b>Teaches dr-cv:</b> Explicit availability state (open / closed / selective) is rare and magnetic. Add it to dr-cv.</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     LESSONS
+     ========================================================= -->
+<section>
+  <h2><span class="num">03</span>Five concrete lessons for dr-cv</h2>
+
+  <div class="lessons">
+
+    <div class="lesson">
+      <div class="n">1</div>
+      <div>
+        <h3>Kill the case-study grid. Ship a running manifesto + a named-OSS list.</h3>
+        <p>Nine of fourteen portfolios (the whole Essayist cluster) have <b>zero case studies</b> and still got their authors hired at Vercel, Linear, Raycast, Cursor, Shopify. The mechanism that replaces case studies is always the same: a voice-forward hero sentence plus a short list of <em>named</em> artifacts the reader already recognizes.</p>
+        <div class="ev"><b>Evidence:</b> <a href="https://rauno.me">rauno.me</a> — six-line manifesto, zero case studies. <a href="https://paco.me">paco.me</a> — one sentence + "cmdk, Next Themes, Writer" and nothing else. <a href="https://johno.com">johno.com</a> — one sentence + "MDX, Blocks, Tachyons, CSS Stats". <em>For dr-cv: replace "Selected case studies" with "Selected shipped systems: EnRegla, Trusted Environments Skin, TE Black DS, Aura"</em>.</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="n">2</div>
+      <div>
+        <h3>A live agent demo belongs above the fold, not behind a CTA.</h3>
+        <p>The entire Live-Demo archetype treats the hero as an interactive artifact: Emil's Sonner runs in the page, Argyle's view-transition CSS fires on scroll, Jhey's CodePens embed directly. None of them write "Request a demo." They <em>are</em> the demo. For an Agentic UX target role, a static hero would be a costume failure.</p>
+        <div class="ev"><b>Evidence:</b> <a href="https://emilkowal.ski">emilkowal.ski</a> hero includes live Sonner + Vaul previews. <a href="https://nerdy.dev">nerdy.dev</a> — "<em>scroll-driven animations, view transitions, and interactive demos throughout site</em>". <a href="https://joshwcomeau.com">joshwcomeau.com</a> — animated keyframes on the hero illustration. <em>For dr-cv: the first visible block must be a runnable agent conversation, not a photo.</em></div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="n">3</div>
+      <div>
+        <h3>Use counters and named metrics the way senior hires do — sparingly and specific.</h3>
+        <p>Only three portfolios show numeric proof, and in every case it is one load-bearing number attached to a named artifact, not a dashboard of KPIs. Brittany's "100k+ installs" on Halcyon. Pedro's "Radix: 20M+ monthly downloads". Argyle's "346 notes, 88 blog posts, 41 talks, 138 podcast appearances" as running counters. No percentages, no "increased engagement by 37%" consulting-speak.</p>
+        <div class="ev"><b>Evidence:</b> <a href="https://brittanychiang.com">brittanychiang.com</a> — "<em>Halcyon Theme reports 100k+ Installs; portfolio v4 notes 6k+ stars and 3k+ forks</em>". <a href="https://ped.ro">ped.ro</a> — "<em>Radix (20M+ monthly downloads)</em> sits in the bio sentence". <em>For dr-cv: one counter per artifact. "EnRegla: 4 paying pilots." "TE Black DS: N components, a11y-audited." Resist the dashboard.</em></div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="n">4</div>
+      <div>
+        <h3>State availability explicitly. Open, closed, or selective — pick one and put it in the chrome.</h3>
+        <p>Most portfolios leave availability implicit and <em>that is a weakness we can exploit</em>. Only two state it clearly — and both stand out because of it. Lee Robinson's "Reach out if interested, lee@leerob.com" is warm and explicit. John Otander's "not currently looking for new opportunities" is the inverse and reads as status. Either state is magnetic. The middle — a Contact form with nothing above it — is the worst.</p>
+        <div class="ev"><b>Evidence:</b> <a href="https://leerob.com">leerob.com</a> — "<em>Reach out if interested, lee@leerob.com</em>". <a href="https://johno.com">johno.com</a> — "<em>not currently looking for new opportunities</em>". <em>For dr-cv: a persistent status pill in the header. "Open to AI Product Designer / Agentic UX Lead roles. Reply to hello@..."</em></div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="n">5</div>
+      <div>
+        <h3>The target role goes on the site, not in the subject line of a cold email.</h3>
+        <p>Brittany Chiang's site says "accessibility" before you scroll. Samuel Kraft's says "Design Engineer". Pedro Duarte's says "product-focused". The hires advertise the <em>category of next role</em> right where the employer's recruiter lands. None of them say "UX/UI Designer" — they say the specific specialty they want next. This is the single biggest delta between portfolios that get offers and portfolios that get "looks nice" replies.</p>
+        <div class="ev"><b>Evidence:</b> <a href="https://brittanychiang.com">brittanychiang.com</a> — "<em>Role target visible: Yes — accessibility and component library leadership emphasized</em>". <a href="https://samuelkraft.com">samuelkraft.com</a> — "<em>Design Engineer positioning clear</em>". <em>For dr-cv: the hero must literally say "AI Product Designer / Agentic UX Lead" in a place the eye cannot miss. Not in the About page. In the header rule.</em></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  dr-cv / hiring-universe / round-02 . generated 2026-05-08 . 14 portfolios . 3 archetypes . 5 lessons
+</footer>
+
+</div>
+</body>
+</html>

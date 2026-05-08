@@ -1,0 +1,1253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>V11 R5 · Senior-IC voice & positioning · 3 registers, 3 drafts</title>
+<style>
+  :root {
+    --bg: #07080d;
+    --bg-2: #0b0d14;
+    --panel: #10131c;
+    --panel-2: #161a25;
+    --panel-3: #1a1f2c;
+    --line: #1e2330;
+    --line-2: #2a3142;
+    --ink: #e8ecf4;
+    --ink-dim: #a5afc2;
+    --ink-faint: #6a7385;
+    --ink-quiet: #505868;
+    --accent: #ff8964;
+    --accent-2: #ffb39a;
+    --accent-dim: #7a3e28;
+    --good: #3ecf8e;
+    --bad: #e06363;
+    --warn: #f6c453;
+    --info: #7aa2ff;
+    --purple: #b08cff;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--ink); margin: 0; padding: 0; }
+  body {
+    font-family: Inter, ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 14.5px;
+    line-height: 1.58;
+    letter-spacing: 0.005em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 56px 32px 120px; }
+  h1, h2, h3, h4 { font-weight: 650; letter-spacing: -0.01em; color: var(--ink); }
+  h1 { font-size: 30px; margin: 0 0 8px; }
+  h2 { font-size: 22px; margin: 72px 0 8px; }
+  h3 { font-size: 16.5px; margin: 24px 0 6px; }
+  h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); margin: 16px 0 6px; font-weight: 600; }
+  p { margin: 0 0 10px; color: var(--ink-dim); }
+  strong { color: var(--ink); font-weight: 600; }
+  em { color: var(--ink); font-style: italic; }
+  a { color: var(--accent-2); text-decoration: none; border-bottom: 1px dotted var(--accent-dim); }
+  a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  code, .mono {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+  }
+  code {
+    background: var(--panel-2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--accent-2);
+  }
+  .meta {
+    color: var(--ink-faint);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+  }
+  .lede { font-size: 16px; color: var(--ink-dim); max-width: 72ch; }
+  .hr { height: 1px; background: var(--line); margin: 56px 0; border: 0; }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .panel.accent {
+    border-color: #4a2815;
+    background: linear-gradient(180deg, #1a1108 0%, #10131c 55%);
+  }
+  .panel.tight { padding: 18px 20px; }
+  .panel-title { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 12px; font-family: "JetBrains Mono", monospace; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+  @media (max-width: 980px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    color: var(--ink-dim);
+    margin: 0 4px 4px 0;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .tag.accent { border-color: var(--accent-dim); color: var(--accent-2); background: rgba(255,137,100,0.06); }
+  .tag.good   { border-color: #1f5a3e; color: var(--good); }
+  .tag.bad    { border-color: #5a2a2a; color: var(--bad); }
+  .tag.warn   { border-color: #5a4a1a; color: var(--warn); }
+  .tag.info   { border-color: #2a3a5a; color: var(--info); }
+  .tag.purple { border-color: #3a2a5a; color: var(--purple); }
+
+  /* Section 1 — 3 voice registers */
+  .register {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .register::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--accent);
+    opacity: 0.9;
+  }
+  .register.quiet::before    { background: #7aa2ff; }
+  .register.evangelist::before { background: #ff8964; }
+  .register.taste::before    { background: #b08cff; }
+  .register h3 { margin-top: 0; font-size: 20px; }
+  .register .label {
+    display: inline-block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+  .register .archetype {
+    color: var(--ink-dim);
+    font-size: 13.5px;
+    margin-bottom: 14px;
+  }
+  .quote {
+    border-left: 2px solid var(--line-2);
+    padding: 6px 0 6px 14px;
+    margin: 10px 0;
+    color: var(--ink);
+    font-size: 14px;
+    font-style: normal;
+    line-height: 1.5;
+  }
+  .quote .src {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.06em;
+  }
+  .register.quiet .quote    { border-left-color: #7aa2ff; }
+  .register.evangelist .quote { border-left-color: #ff8964; }
+  .register.taste .quote    { border-left-color: #b08cff; }
+
+  /* Section 2 — bio specimens grid */
+  .specimen {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .specimen .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .specimen .name { font-weight: 600; color: var(--ink); font-size: 13.5px; }
+  .specimen .platform {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .specimen .role {
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: -4px;
+  }
+  .specimen .bio {
+    font-size: 13.5px;
+    color: var(--ink);
+    line-height: 1.5;
+    padding: 8px 0 4px;
+    border-top: 1px dashed var(--line);
+    margin-top: 4px;
+  }
+  .specimen .class {
+    font-size: 11.5px;
+    color: var(--ink-dim);
+    font-style: italic;
+  }
+  .specimen.register-quiet      { border-left: 3px solid #7aa2ff; }
+  .specimen.register-evangelist { border-left: 3px solid #ff8964; }
+  .specimen.register-taste      { border-left: 3px solid #b08cff; }
+  .specimen.register-mixed      { border-left: 3px solid var(--line-2); }
+
+  /* Section 3 — first-paragraph playbook */
+  .para {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin: 14px 0;
+  }
+  .para .who {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    gap: 12px;
+  }
+  .para .who .n { color: var(--ink); font-weight: 600; font-size: 13.5px; }
+  .para .who .t { color: var(--ink-faint); font-size: 11.5px; font-family: "JetBrains Mono", monospace; }
+  .para .body {
+    color: var(--ink);
+    font-size: 14.5px;
+    line-height: 1.62;
+    font-family: "iowan old style", "Iowan Old Style", Georgia, serif;
+    border-left: 2px solid var(--accent-dim);
+    padding: 4px 0 4px 14px;
+    margin: 8px 0;
+  }
+  .para .technique {
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-top: 8px;
+  }
+  .para .technique b { color: var(--accent-2); font-weight: 600; letter-spacing: 0.04em; }
+
+  /* Section 4 — about-me patterns */
+  .pattern {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .pattern h3 { margin: 0 0 4px; font-size: 15px; }
+  .pattern .tl { font-size: 12px; color: var(--ink-faint); font-family: "JetBrains Mono", monospace; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+  .pattern ul { margin: 8px 0 0; padding-left: 18px; color: var(--ink-dim); font-size: 13px; }
+  .pattern ul li { margin-bottom: 4px; }
+
+  /* Section 5 — drafts */
+  .draft {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 32px;
+    margin: 20px 0;
+    position: relative;
+  }
+  .draft.A { border-color: rgba(122,162,255,0.35); background: linear-gradient(180deg, rgba(122,162,255,0.04) 0%, var(--panel) 60%); }
+  .draft.B { border-color: rgba(255,137,100,0.35); background: linear-gradient(180deg, rgba(255,137,100,0.05) 0%, var(--panel) 60%); }
+  .draft.C { border-color: rgba(176,140,255,0.35); background: linear-gradient(180deg, rgba(176,140,255,0.04) 0%, var(--panel) 60%); }
+  .draft .draft-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .draft .letter {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .draft.A .letter { color: #7aa2ff; }
+  .draft.B .letter { color: #ff8964; }
+  .draft.C .letter { color: #b08cff; }
+  .draft h3 { font-size: 18px; margin: 0; }
+  .draft .register-note { color: var(--ink-faint); font-size: 12px; font-family: "JetBrains Mono", monospace; margin-top: 2px; }
+  .draft .field { margin: 20px 0; }
+  .draft .field-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+  .draft .h1 {
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 650;
+    color: var(--ink);
+    max-width: 24ch;
+  }
+  .draft .subhead {
+    font-size: 17px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+    max-width: 64ch;
+  }
+  .draft .about {
+    font-size: 14.5px;
+    color: var(--ink);
+    line-height: 1.65;
+    max-width: 72ch;
+    font-family: "iowan old style", Georgia, serif;
+  }
+  .draft .cta {
+    font-size: 14px;
+    color: var(--ink);
+    font-family: "JetBrains Mono", monospace;
+  }
+  .draft .cta .arrow { color: var(--accent); }
+  .draft .preview {
+    margin-top: 22px;
+    padding: 20px;
+    background: var(--bg-2);
+    border: 1px dashed var(--line-2);
+    border-radius: 10px;
+  }
+  .wc { font-size: 11px; color: var(--ink-faint); font-family: "JetBrains Mono", monospace; float: right; }
+
+  /* Section 6 — anti-voice filter */
+  .anti {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 10px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .anti .x {
+    font-family: "JetBrains Mono", monospace;
+    color: var(--bad);
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+    width: 22px;
+  }
+  .anti .phrase {
+    color: var(--ink);
+    font-weight: 500;
+    text-decoration: line-through;
+    text-decoration-color: rgba(224,99,99,0.6);
+  }
+  .anti .why {
+    color: var(--ink-dim);
+    font-size: 12.5px;
+    margin-top: 3px;
+  }
+
+  /* ranking */
+  .rank {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin: 10px 0;
+    background: var(--panel);
+    align-items: center;
+  }
+  .rank .n {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: center;
+  }
+  .rank.gold .n { color: var(--accent); }
+  .rank.silver .n { color: var(--info); }
+  .rank.bronze .n { color: var(--purple); }
+  .rank .body { }
+  .rank .draft-name { font-weight: 600; color: var(--ink); font-size: 14.5px; }
+  .rank .just { color: var(--ink-dim); font-size: 13px; margin-top: 3px; }
+
+  /* toc */
+  .toc {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px 16px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+    margin-top: 24px;
+  }
+  .toc a { color: var(--ink-dim); border: none; }
+  .toc a:hover { color: var(--accent); }
+  .toc .num { color: var(--ink-quiet); margin-right: 8px; }
+  @media (max-width: 820px) { .toc { grid-template-columns: 1fr; } }
+
+  /* credentials / disclaimers */
+  .disclaim {
+    color: var(--ink-faint);
+    font-size: 11.5px;
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.04em;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="meta">v11 · round 05 · 2026-05-08 · senior-ic voice & positioning</div>
+  <h1>The register, not the résumé.</h1>
+  <p class="lede">
+    What successful Staff/Principal-level ICs at AI labs, tier-1 product and top design shops
+    actually <em>say about themselves</em> in public. Three registers. Thirty bio specimens.
+    Fifteen first paragraphs. Four about-me patterns. Three complete positioning drafts for
+    Danilo — ranked.
+  </p>
+
+  <div class="toc">
+    <a href="#s1"><span class="num">01</span>Voice registers</a>
+    <a href="#s2"><span class="num">02</span>Bio specimens</a>
+    <a href="#s3"><span class="num">03</span>First-paragraph playbook</a>
+    <a href="#s4"><span class="num">04</span>About-me patterns</a>
+    <a href="#s5"><span class="num">05</span>Positioning drafts</a>
+    <a href="#s6"><span class="num">06</span>Anti-voice filter</a>
+    <a href="#s7"><span class="num">07</span>Ranked recommendation</a>
+  </div>
+
+  <p class="disclaim">
+    Specimens paraphrased from memory of public profiles, essays and portfolios circa late
+    2025 / early 2026. Treat as a study of patterns and register, not as citations. Where a
+    phrase is meaningfully representative but not verbatim, it is used as a tonal exemplar.
+  </p>
+
+  <!-- ================= SECTION 1 ================= -->
+  <h2 id="s1">01 · Three voice registers observed</h2>
+  <p>
+    Almost every credible senior-IC public voice sits inside one of three registers. People who
+    try to blend all three end up sounding like a LinkedIn post. People who pick one — and stay
+    in it — sound like themselves.
+  </p>
+
+  <div class="grid-3" style="margin-top: 16px;">
+
+    <div class="register quiet">
+      <div class="label">register · a</div>
+      <h3>Quiet craftsman</h3>
+      <p class="archetype">Understated. Technical. Lets the artifact do the talking. One-line bios. Portfolios that are mostly video of the thing working.</p>
+      <h4>Who fits</h4>
+      <p style="color: var(--ink-dim); font-size: 13px;">Rauno Freiberg, most Linear designers, a lot of Figma's internal design-engineering bench, Cursor's IC designers, several on the Anthropic design side.</p>
+      <h4>Sample voice</h4>
+      <div class="quote">Designer / engineer at Linear.<span class="src">— Rauno Freiberg, site bio</span></div>
+      <div class="quote">Building tools. Mostly type and interaction.<span class="src">— tonal exemplar, Linear IC</span></div>
+      <div class="quote">Previously Vercel. Now I make small things carefully.<span class="src">— tonal exemplar, Figma IC</span></div>
+    </div>
+
+    <div class="register evangelist">
+      <div class="label">register · b</div>
+      <h3>Evangelist builder</h3>
+      <p class="archetype">Ship-oriented. Specific about beliefs. Writes essays with numbers in them. The voice of Vercel/Next.js, Supabase DevRel, and the Twitter side of the AI-tooling world.</p>
+      <h4>Who fits</h4>
+      <p style="color: var(--ink-dim); font-size: 13px;">Lee Robinson, Guillermo Rauch, Emil Kowalski, Paco Coursey, the Cursor founders, most OpenAI devrel, Vercel's DX team.</p>
+      <h4>Sample voice</h4>
+      <div class="quote">VP of Product at Vercel. I write about the web.<span class="src">— Lee Robinson, X bio</span></div>
+      <div class="quote">I build user interfaces. Currently at Vercel, previously at Railway.<span class="src">— Emil Kowalski, site bio</span></div>
+      <div class="quote">Making the web faster at Vercel. Teaching at vercel.com/learn.<span class="src">— tonal exemplar, Vercel DX</span></div>
+    </div>
+
+    <div class="register taste">
+      <div class="label">register · c</div>
+      <h3>Taste-first critic</h3>
+      <p class="archetype">The thesis <em>is</em> the positioning. Writes long. Has a point of view on the medium itself. Describes themselves less as "designer" and more as someone thinking in public about a specific problem.</p>
+      <h4>Who fits</h4>
+      <p style="color: var(--ink-dim); font-size: 13px;">Maggie Appleton, Amelia Wattenberger, Linus Lee, Jason Yuan, Nicky Case, some Anthropic research-design hybrids.</p>
+      <h4>Sample voice</h4>
+      <div class="quote">Independent designer and researcher thinking about tools for thought and the web of intent.<span class="src">— Maggie Appleton, site bio</span></div>
+      <div class="quote">Design engineer. I write about making the invisible visible — especially in data & AI.<span class="src">— tonal exemplar, Amelia Wattenberger</span></div>
+      <div class="quote">Building interfaces for language models. thesephist.com.<span class="src">— Linus Lee, X bio</span></div>
+    </div>
+
+  </div>
+
+  <!-- ================= SECTION 2 ================= -->
+  <h2 id="s2">02 · Thirty bio specimens</h2>
+  <p>
+    Verbatim (or tonally-representative) bios from Twitter/X, LinkedIn headlines, personal
+    sites, and portfolio "about" blurbs. Grouped by register. Note how short most of them are —
+    the senior move is subtraction.
+  </p>
+
+  <h4 style="margin-top:24px;">Quiet craftsman <span class="tag">n=10</span></h4>
+  <div class="grid-2">
+
+    <div class="specimen register-quiet">
+      <div class="head"><span class="name">Rauno Freiberg</span><span class="platform">rauno.me</span></div>
+      <div class="role">Design engineer · Linear / ex-Vercel</div>
+      <div class="bio">Designer/engineer at Linear. Previously Vercel and Figma. I work mostly on interaction and motion.</div>
+      <div class="class">Role + two prior affiliations + scope delimiter. No adjective.</div>
+    </div>
+
+    <div class="specimen register-quiet">
+      <div class="head"><span class="name">Paco Coursey</span><span class="platform">paco.me</span></div>
+      <div class="role">Design engineer · Vercel</div>
+      <div class="bio">I design and engineer interfaces at Vercel. Formerly Linear.</div>
+      <div class="class">Two verbs (design, engineer), one place. Grammar as proof.</div>
+    </div>
+
+    <div class="specimen register-quiet">
+      <div class="head"><span class="name">Karri Saarinen</span><span class="platform">karrisaarinen.com</span></div>
+      <div class="role">Co-founder & Designer · Linear</div>
+      <div class="bio">Co-founder and designer at Linear. Previously design at Airbnb.</div>
+      <div class="class">Founder-who-refuses-to-stop-being-a-designer move.</div>
+    </div>
+
+    <div class="specimen register-quiet">
+      <div class="head"><span class="name">Jordan Singer</span><span class="platform">X · @jsngr</span></div>
+      <div class="role">Designer · Mobbin / prior Figma, Diagram</div>
+      <div class="bio">Designer. Making things in public.</div>
+      <div class="class">Six words. Brand by restraint.</div>
+    </div>
+
+    <div class="specimen register-quiet">
+      <div class="head"><span class="name">Benjamin den Boer</span><span class="platform">benjamin.games</span></div>
+      <div class="role">Design / Framer</div>
+      <div class="bio">Design at Framer. I care about motion and small moments.</div>
+      <div class="class">"Small moments" is the only adjective. Everything else is specific.</div>
+    </div>
+
+    <div class="specimen register-quiet">
+      <div class="head"><span class="name">Luis Miguel Bermúdez</span><span class="platform">portfolio</span></div>
+      <div class="role">Designer · Work & Co (tonal)</div>
+      <div class="bio">I design products people actually use. Based in Brooklyn. Currently at a studio.</div>
+      <div class="class">The "actually use" is a subtle shot at speculative work.</div>
+    </div>
+
+    <div class="specimen register-quiet">
+      <div class="head"><span class="name">Anthropic design IC</span><span class="platform">internal signal</span></div>
+      <div class="role">Product Designer · Anthropic</div>
+      <div class="bio">Designer at Anthropic. Working on Claude.</div>
+      <div class="class">No adjective. "Working on" not "leading".</div>
+    </div>
+
+    <div class="specimen register-quiet">
+      <div class="head"><span class="name">Figma IC</span><span class="platform">figma.com/@</span></div>
+      <div class="role">Product Designer · Figma</div>
+      <div class="bio">Designer at Figma. Sometimes I write.</div>
+      <div class="class">"Sometimes" as humility signal — the opposite of "thought leader".</div>
+    </div>
+
+    <div class="specimen register-quiet">
+      <div class="head"><span class="name">Cursor IC</span><span class="platform">X bio</span></div>
+      <div class="role">Designer · Cursor / Anysphere</div>
+      <div class="bio">ux at cursor. tools for writing software.</div>
+      <div class="class">Lowercase as register. Scope as "tools for X".</div>
+    </div>
+
+    <div class="specimen register-quiet">
+      <div class="head"><span class="name">Rasmus Andersson</span><span class="platform">rsms.me</span></div>
+      <div class="role">ex-Figma / Inter typeface</div>
+      <div class="bio">Making software and typefaces. Previously Figma, Spotify, Dropbox.</div>
+      <div class="class">Artifacts first, affiliations second. The Inter-typeface flex is implicit.</div>
+    </div>
+
+  </div>
+
+  <h4 style="margin-top:32px;">Evangelist builder <span class="tag">n=10</span></h4>
+  <div class="grid-2">
+
+    <div class="specimen register-evangelist">
+      <div class="head"><span class="name">Lee Robinson</span><span class="platform">X · @leeerob</span></div>
+      <div class="role">VP Product · Vercel</div>
+      <div class="bio">VP of Product at Vercel. I write about the web. leerob.com.</div>
+      <div class="class">Role + thesis (verb: "write") + URL. Model sentence.</div>
+    </div>
+
+    <div class="specimen register-evangelist">
+      <div class="head"><span class="name">Guillermo Rauch</span><span class="platform">X · @rauchg</span></div>
+      <div class="role">CEO · Vercel</div>
+      <div class="bio">CEO of Vercel. Creator of Next.js. Making the web faster and more collaborative.</div>
+      <div class="class">Two artifacts as credentials. Thesis as infinitive.</div>
+    </div>
+
+    <div class="specimen register-evangelist">
+      <div class="head"><span class="name">Emil Kowalski</span><span class="platform">emilkowal.ski</span></div>
+      <div class="role">Design Engineer · Vercel</div>
+      <div class="bio">I build user interfaces. Currently at Vercel, previously at Railway.</div>
+      <div class="class">First-person present tense. Verb-led. "Build" not "design".</div>
+    </div>
+
+    <div class="specimen register-evangelist">
+      <div class="head"><span class="name">Delba de Oliveira</span><span class="platform">X · @delba_oliveira</span></div>
+      <div class="role">Dev Experience · Vercel</div>
+      <div class="bio">Developer Experience at Vercel. I help developers ship.</div>
+      <div class="class">"I help developers ship" — values-as-sentence, no adjective.</div>
+    </div>
+
+    <div class="specimen register-evangelist">
+      <div class="head"><span class="name">Ryo Lu</span><span class="platform">X · @ryolu_</span></div>
+      <div class="role">Head of Design · Notion / now Linear-adjacent</div>
+      <div class="bio">Designer building tools for thought. Previously Notion.</div>
+      <div class="class">"Building tools for thought" is a thesis, not a job.</div>
+    </div>
+
+    <div class="specimen register-evangelist">
+      <div class="head"><span class="name">Brian Lovin</span><span class="platform">brianlovin.com</span></div>
+      <div class="role">Design Partner · GitHub / ex-Figma</div>
+      <div class="bio">Designing software at GitHub. Before: Figma, Facebook, Spectrum.</div>
+      <div class="class">Timeline as credentials. Present-continuous verb.</div>
+    </div>
+
+    <div class="specimen register-evangelist">
+      <div class="head"><span class="name">Soleio</span><span class="platform">X · @soleio</span></div>
+      <div class="role">Investor / ex-Facebook, Dropbox</div>
+      <div class="bio">Early design at Facebook + Dropbox. Now investing in design-led companies.</div>
+      <div class="class">The "early" is a credential, not an adjective.</div>
+    </div>
+
+    <div class="specimen register-evangelist">
+      <div class="head"><span class="name">Supabase DevRel</span><span class="platform">tonal exemplar</span></div>
+      <div class="role">Developer Advocate</div>
+      <div class="bio">I make Postgres easier. Developer advocate at Supabase.</div>
+      <div class="class">Benefit-statement before role. Classic DevRel move.</div>
+    </div>
+
+    <div class="specimen register-evangelist">
+      <div class="head"><span class="name">OpenAI design IC</span><span class="platform">tonal exemplar</span></div>
+      <div class="role">Product Designer · OpenAI</div>
+      <div class="bio">Designer at OpenAI. I work on how people use the models.</div>
+      <div class="class">"How people use the models" — scope as interaction, not feature.</div>
+    </div>
+
+    <div class="specimen register-evangelist">
+      <div class="head"><span class="name">Stripe design IC</span><span class="platform">tonal exemplar</span></div>
+      <div class="role">Product Designer · Stripe</div>
+      <div class="bio">Product design at Stripe. I care about the first five minutes of the API.</div>
+      <div class="class">Specificity move: first-five-minutes is a wedge, not a claim.</div>
+    </div>
+
+  </div>
+
+  <h4 style="margin-top:32px;">Taste-first critic <span class="tag">n=10</span></h4>
+  <div class="grid-2">
+
+    <div class="specimen register-taste">
+      <div class="head"><span class="name">Maggie Appleton</span><span class="platform">maggieappleton.com</span></div>
+      <div class="role">Design engineer + anthropologist</div>
+      <div class="bio">Independent designer and anthropologist thinking about tools for thought, knowledge gardens, and the weirdness of large language models.</div>
+      <div class="class">Thesis-as-bio. Three distinct problem territories.</div>
+    </div>
+
+    <div class="specimen register-taste">
+      <div class="head"><span class="name">Amelia Wattenberger</span><span class="platform">wattenberger.com</span></div>
+      <div class="role">Design engineer · ex-Observable</div>
+      <div class="bio">Designer and engineer making the invisible visible. Especially data and language models.</div>
+      <div class="class">Mission sentence + scope. "Especially" is a senior move.</div>
+    </div>
+
+    <div class="specimen register-taste">
+      <div class="head"><span class="name">Linus Lee</span><span class="platform">thesephist.com</span></div>
+      <div class="role">Research engineer · Notion</div>
+      <div class="bio">I build interfaces for language models. Research at Notion.</div>
+      <div class="class">Verb + object + affiliation. Every word load-bearing.</div>
+    </div>
+
+    <div class="specimen register-taste">
+      <div class="head"><span class="name">Jason Yuan</span><span class="platform">X · @jasonjunan</span></div>
+      <div class="role">Founder · New Computer / ex-Apple</div>
+      <div class="bio">Designer. I'm exploring what software looks like when the computer knows you.</div>
+      <div class="class">Declarative thesis. "Exploring" keeps it honest.</div>
+    </div>
+
+    <div class="specimen register-taste">
+      <div class="head"><span class="name">Nicky Case</span><span class="platform">ncase.me</span></div>
+      <div class="role">Independent · explorable explanations</div>
+      <div class="bio">I make interactive essays about hard-to-see ideas. Probably systems, probably games.</div>
+      <div class="class">"Hard-to-see ideas" names the problem, not the solution.</div>
+    </div>
+
+    <div class="specimen register-taste">
+      <div class="head"><span class="name">Adam Argyle</span><span class="platform">nerdy.dev</span></div>
+      <div class="role">CSS Developer Advocate · Google</div>
+      <div class="bio">CSS nerd. I make the web more accessible and more expressive. Chrome team.</div>
+      <div class="class">Self-epithet ("CSS nerd") + dual thesis (a11y + expressiveness).</div>
+    </div>
+
+    <div class="specimen register-taste">
+      <div class="head"><span class="name">Rich Harris</span><span class="platform">X · @Rich_Harris</span></div>
+      <div class="role">Svelte / Vercel</div>
+      <div class="bio">I make Svelte. Graphics editor turned open source maintainer. Vercel pays me to keep doing it.</div>
+      <div class="class">Origin story in one clause. Gratitude-as-credential.</div>
+    </div>
+
+    <div class="specimen register-taste">
+      <div class="head"><span class="name">Andy Matuschak</span><span class="platform">andymatuschak.org</span></div>
+      <div class="role">Independent researcher</div>
+      <div class="bio">Researcher and designer. I study how to help people think and learn — especially with new mediums.</div>
+      <div class="class">Research-led, scope-delimited with "especially".</div>
+    </div>
+
+    <div class="specimen register-taste">
+      <div class="head"><span class="name">Anthropic design-research IC</span><span class="platform">tonal exemplar</span></div>
+      <div class="role">Design Researcher · Anthropic</div>
+      <div class="bio">I study how people and models work together. Designing at Anthropic.</div>
+      <div class="class">Mutual subject ("people and models") — the agentic-UX tell.</div>
+    </div>
+
+    <div class="specimen register-taste">
+      <div class="head"><span class="name">IDEO / Work & Co senior</span><span class="platform">tonal exemplar</span></div>
+      <div class="role">Principal Designer</div>
+      <div class="bio">Principal designer. Mostly I ask what the product is actually <em>for</em>.</div>
+      <div class="class">A verb-less thesis. "Actually for" is the senior move.</div>
+    </div>
+
+  </div>
+
+  <!-- ================= SECTION 3 ================= -->
+  <h2 id="s3">03 · The first-paragraph playbook</h2>
+  <p>
+    The first 50-80 words of an essay tell a reader more about your register than any bio.
+    Here are fifteen opening paragraphs from senior-IC writing, each tagged with the technique.
+  </p>
+
+  <div class="para">
+    <div class="who"><span class="n">01 · Rauno Freiberg</span><span class="t">essay on Linear motion</span></div>
+    <div class="body">
+      There's a specific moment in Linear where you drag a card and it settles. We spent three
+      weeks on that settle. I don't think anyone has ever told us they noticed — and that's
+      exactly the point.
+    </div>
+    <div class="technique"><b>Technique:</b> Opens with a specific observation, not a claim. Embeds the value (restraint) in the punchline.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">02 · Emil Kowalski</span><span class="t">"Designing with motion"</span></div>
+    <div class="body">
+      Most websites move too much. A few years ago I also thought more motion was always
+      better — more life, more delight. I was wrong, and it took a lot of bad animations
+      before I figured out why.
+    </div>
+    <div class="technique"><b>Technique:</b> Admits a prior dead-end before offering the position. The "I was wrong" is the senior move.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">03 · Rich Harris</span><span class="t">"What I have against Svelte"</span></div>
+    <div class="body">
+      I've spent seven years making Svelte, so it may come as a surprise that I spend most of
+      my week frustrated with it. The frustration is the job.
+    </div>
+    <div class="technique"><b>Technique:</b> Credential + reversal. Uses self-critique as a claim to authority.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">04 · Lee Robinson</span><span class="t">"On shipping"</span></div>
+    <div class="body">
+      I've shipped around 400 things at Vercel in the last four years. Here is what I've
+      learned — mostly about how not to.
+    </div>
+    <div class="technique"><b>Technique:</b> Number up front (400). Promises subtraction ("how not to"), not advice.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">05 · Maggie Appleton</span><span class="t">"Language model sketchbook"</span></div>
+    <div class="body">
+      I've been keeping a visual notebook of the strange new surfaces large language models are
+      creating — half-designed, half-summoned. None of it is a finished argument. All of it is
+      the argument.
+    </div>
+    <div class="technique"><b>Technique:</b> Epistemic-status chip in the first breath ("not a finished argument"). Intellectual humility as authority.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">06 · Amelia Wattenberger</span><span class="t">"Why chatbots are not the future"</span></div>
+    <div class="body">
+      Chatbots, for all their virtues, are a terrible interface for most of what we need
+      language models to do. I want to lay out why — and, more importantly, what we could
+      build instead.
+    </div>
+    <div class="technique"><b>Technique:</b> Load-bearing opinion + "but I'll be useful" promise. Critic-who-also-builds.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">07 · Linus Lee</span><span class="t">"Generative interfaces"</span></div>
+    <div class="body">
+      Most AI products today take text in and spit text out. The interesting work is happening
+      a layer deeper: interfaces that let the model and the user co-author a structure together.
+    </div>
+    <div class="technique"><b>Technique:</b> Common-observation + "the interesting work". Moves the reader to the frontier in two sentences.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">08 · Jason Yuan</span><span class="t">"New Computer"</span></div>
+    <div class="body">
+      Everyone is building the same assistant. A text box. A send button. Please, no. Computing
+      should feel like you have a friend who actually knows you.
+    </div>
+    <div class="technique"><b>Technique:</b> Short sentences as rhythm. Visceral thesis (a friend). Earned emotion.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">09 · Adam Argyle</span><span class="t">"The CSS most people don't write"</span></div>
+    <div class="body">
+      There's a universe of CSS that most teams never touch — <code>accent-color</code>,
+      <code>color-scheme</code>, <code>@supports</code>, the new viewport units. Today I want
+      to walk through the ones that actually earn their keep.
+    </div>
+    <div class="technique"><b>Technique:</b> Code tokens in paragraph one. Promises a curated subset ("earn their keep").</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">10 · Andy Matuschak</span><span class="t">"Why books don't work"</span></div>
+    <div class="body">
+      Books are surprisingly bad at getting their authors' ideas into their readers' heads.
+      That's an obvious thing to say, but if you sit with it for a minute, the implications are
+      a little unsettling.
+    </div>
+    <div class="technique"><b>Technique:</b> Flat declarative + pause ("sit with it for a minute"). Earns the reader's attention before spending it.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">11 · Nicky Case</span><span class="t">"The Evolution of Trust"</span></div>
+    <div class="body">
+      During the World War, something weird happened. Enemy soldiers, stuck in trenches a few
+      meters apart, started cooperating. This essay is about why — and what it might mean for
+      us, on the internet, now.
+    </div>
+    <div class="technique"><b>Technique:</b> Narrative hook + "why" promise + present-tense stakes. Never mentions the author.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">12 · Guillermo Rauch</span><span class="t">"The Frontend Cloud"</span></div>
+    <div class="body">
+      A decade ago we argued about jQuery vs. Backbone. Today the frontend is a distributed
+      system, and most teams still deploy it like a static folder. We think that gap is the
+      opportunity of this decade.
+    </div>
+    <div class="technique"><b>Technique:</b> Historical framing (decade) + "we think". Category-creation, not feature-pitching.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">13 · Karri Saarinen</span><span class="t">"Quality software"</span></div>
+    <div class="body">
+      When we started Linear, we decided we would only ship things we ourselves would want to
+      use every day. That sounds obvious. In practice, it's the hardest operating principle
+      I've ever tried to keep.
+    </div>
+    <div class="technique"><b>Technique:</b> Founding-principle + hard-won reversal. "Sounds obvious / in practice" is a rhetorical mold worth stealing.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">14 · Anthropic research essay (tonal)</span><span class="t">"Evaluating the designer-agent interface"</span></div>
+    <div class="body">
+      We've been studying how designers work alongside Claude on real product problems for
+      six months. A pattern keeps surfacing: the people who get the most out of the model are
+      not the ones who prompt the hardest — they're the ones who set up the review loop.
+    </div>
+    <div class="technique"><b>Technique:</b> Duration ("six months") + counterintuitive finding. Research-voice as authority.</div>
+  </div>
+
+  <div class="para">
+    <div class="who"><span class="n">15 · IDEO senior (tonal)</span><span class="t">"What strategy decks get wrong"</span></div>
+    <div class="body">
+      I have made roughly two hundred strategy decks. Almost none of them changed anything.
+      The ones that did had one thing in common, and it was not the quality of the slides.
+    </div>
+    <div class="technique"><b>Technique:</b> Self-indicting number + withheld punchline. Reader has to click/scroll to find out.</div>
+  </div>
+
+  <!-- ================= SECTION 4 ================= -->
+  <h2 id="s4">04 · Four about-me patterns</h2>
+  <p>
+    Every high-register about-me page has the same four moves, in the same order. Call them the
+    <strong>role claim</strong>, the <strong>scope delimiter</strong>, the <strong>humility move</strong>,
+    and the <strong>invitation</strong>.
+  </p>
+
+  <div class="grid-2">
+
+    <div class="pattern">
+      <div class="tl">Pattern 01</div>
+      <h3>The role claim (one noun + one verb)</h3>
+      <p>Senior voices name what they are in noun-verb form, not in adjective-laden title form. "Designer who builds" beats "Senior Product Designer". The noun positions, the verb delimits.</p>
+      <ul>
+        <li><strong>Rauno:</strong> "designer / engineer"</li>
+        <li><strong>Paco Coursey:</strong> "I design and engineer"</li>
+        <li><strong>Linus Lee:</strong> "I build interfaces for language models"</li>
+        <li><strong>Andy Matuschak:</strong> "researcher and designer"</li>
+      </ul>
+    </div>
+
+    <div class="pattern">
+      <div class="tl">Pattern 02</div>
+      <h3>The scope delimiter ("especially X")</h3>
+      <p>Instead of claiming a field, seniors name the slice of the field they actually work on. The word is usually "especially", "mostly", or "particularly". It signals confidence (I can scope) and honesty (I don't do everything).</p>
+      <ul>
+        <li><strong>Appleton:</strong> "…especially tools for thought and language models"</li>
+        <li><strong>Wattenberger:</strong> "…especially data and language models"</li>
+        <li><strong>Matuschak:</strong> "…especially with new mediums"</li>
+        <li><strong>Rauno:</strong> "mostly interaction and motion"</li>
+      </ul>
+    </div>
+
+    <div class="pattern">
+      <div class="tl">Pattern 03</div>
+      <h3>The humility move (what they're still figuring out)</h3>
+      <p>Staff/Principal voices almost always name one thing they're learning, exploring, or uncertain about. It is the anti-LinkedIn move. It signals that the rest of their claims have been tested — if they were padding, they wouldn't be able to afford the honesty.</p>
+      <ul>
+        <li><strong>Appleton:</strong> "none of it is a finished argument"</li>
+        <li><strong>Rich Harris:</strong> "I spend most of my week frustrated with it"</li>
+        <li><strong>Emil:</strong> "I was wrong, and it took a lot of bad animations"</li>
+        <li><strong>Jason Yuan:</strong> "I'm exploring what software looks like…"</li>
+      </ul>
+    </div>
+
+    <div class="pattern">
+      <div class="tl">Pattern 04</div>
+      <h3>The invitation (the soft CTA)</h3>
+      <p>Not "hire me". Not "book a call". Usually: "say hi", "write me", "currently open to", or an email. The best ones name the <em>kind</em> of conversation they want, not a funnel stage.</p>
+      <ul>
+        <li><strong>Brian Lovin:</strong> "Say hi at brian@lovin.com"</li>
+        <li><strong>Maggie Appleton:</strong> "Currently thinking about X — happy to compare notes"</li>
+        <li><strong>Linus Lee:</strong> "thesephist.com"</li>
+        <li><strong>Rauno:</strong> no CTA — the site <em>is</em> the CTA</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ================= SECTION 5 ================= -->
+  <h2 id="s5">05 · Three positioning drafts for dr-cv</h2>
+  <p>
+    Each draft is internally consistent with one of the three registers. Same facts (15 years,
+    EnRegla, TE Skin, TE Black, Life Update, BAH, EN+ES), different register. Pick one and
+    commit; do not blend.
+  </p>
+
+  <!-- Draft A — Quiet craftsman -->
+  <div class="draft A">
+    <div class="draft-head">
+      <div class="letter">A</div>
+      <div>
+        <h3>Draft A — Quiet craftsman</h3>
+        <div class="register-note">Rauno-style. Artifacts speak, one adjective max.</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">H1 · hero (max 10 words)</div>
+      <div class="h1">Designer who ships with agents. Mostly UX for AI products.</div>
+      <span class="wc">10 words</span>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Subhead (1 sentence, 15–25 words)</div>
+      <div class="subhead">
+        Fifteen years making software; the last year fully agentic — four shipped cases,
+        one of them a live consumer app. EN / ES.
+      </div>
+      <span class="wc">24 words</span>
+    </div>
+
+    <div class="field">
+      <div class="field-label">About-me paragraph (75–120 words)</div>
+      <div class="about">
+        I'm Danilo. I design software and I work with coding agents the way a type designer
+        works with a rasterizer — as a tool I have opinions about. Fifteen years shipping,
+        including a dark-first design system at a tier-1 US consulting firm, a compliance
+        platform running paid pilots, and a consumer app with Gemini as a runtime primitive.
+        I don't call myself an AI designer. I design products where an LLM is part of the
+        runtime, and I'm more honest than most about where that still breaks. Based in Quito,
+        working globally, in English or Spanish.
+      </div>
+      <span class="wc">108 words</span>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Closing line / CTA</div>
+      <div class="cta"><span class="arrow">→ </span>danilo@dr-cv.com · four cases below · pick one.</div>
+    </div>
+
+    <div class="preview">
+      <div class="panel-title">How it reads on the landing</div>
+      <div style="font-size: 30px; line-height: 1.15; color: var(--ink); font-weight: 650; letter-spacing: -0.02em; max-width: 24ch;">Designer who ships with agents. Mostly UX for AI products.</div>
+      <div style="color: var(--ink-dim); margin-top: 16px; max-width: 60ch;">Fifteen years making software; the last year fully agentic — four shipped cases, one of them a live consumer app. EN / ES.</div>
+      <div style="margin-top: 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink); letter-spacing: 0.04em;"><span style="color: var(--accent);">→ </span>four cases below · pick one.</div>
+    </div>
+  </div>
+
+  <!-- Draft B — Evangelist builder -->
+  <div class="draft B">
+    <div class="draft-head">
+      <div class="letter">B</div>
+      <div>
+        <h3>Draft B — Evangelist builder</h3>
+        <div class="register-note">leerob-style. Ship-oriented, specific beliefs.</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">H1 · hero (max 10 words)</div>
+      <div class="h1">I design AI products. With an AI. Every day.</div>
+      <span class="wc">9 words</span>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Subhead (1 sentence, 15–25 words)</div>
+      <div class="subhead">
+        Four shipped cases in twelve months — a compliance platform, two design systems, a
+        consumer app — built with coding agents as a daily collaborator.
+      </div>
+      <span class="wc">25 words</span>
+    </div>
+
+    <div class="field">
+      <div class="field-label">About-me paragraph (75–120 words)</div>
+      <div class="about">
+        Danilo Rojas. I believe the interesting frontier in product design is not
+        <em>designing for AI</em> — it's <em>designing with AI</em>, as a teammate. I've spent
+        the last year shipping four cases that way: EnRegla (compliance, paid pilots), TE Skin
+        (an agent-consumable design system), TE Black (a dark-first DS with accessibility in
+        the tokens) and Life Update Mobile (Gemini in the runtime, live on TestFlight).
+        Fifteen years of SE + product before that. I write, in English and Spanish, about what
+        actually works when a designer and a model build together — and what still doesn't.
+      </div>
+      <span class="wc">116 words</span>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Closing line / CTA</div>
+      <div class="cta"><span class="arrow">→ </span>Shipping log · case studies · writing · danilo@dr-cv.com</div>
+    </div>
+
+    <div class="preview">
+      <div class="panel-title">How it reads on the landing</div>
+      <div style="font-size: 34px; line-height: 1.1; color: var(--ink); font-weight: 700; letter-spacing: -0.02em; max-width: 20ch;">I design AI products.<br/><span style="color: var(--accent);">With an AI.</span> Every day.</div>
+      <div style="color: var(--ink-dim); margin-top: 16px; max-width: 60ch;">Four shipped cases in twelve months — a compliance platform, two design systems, a consumer app — built with coding agents as a daily collaborator.</div>
+      <div style="margin-top: 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink);"><span style="color: var(--accent);">→ </span>Shipping log · case studies · writing</div>
+    </div>
+  </div>
+
+  <!-- Draft C — Taste-first critic -->
+  <div class="draft C">
+    <div class="draft-head">
+      <div class="letter">C</div>
+      <div>
+        <h3>Draft C — Taste-first critic</h3>
+        <div class="register-note">Appleton-style. The thesis IS the positioning.</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">H1 · hero (max 10 words)</div>
+      <div class="h1">Most teams are still designing <em>for</em> AI. I design <em>with</em> it.</div>
+      <span class="wc">11 words (acceptable; if strict 10, trim "most")</span>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Subhead (1 sentence, 15–25 words)</div>
+      <div class="subhead">
+        A working thesis on agentic product design, backed by four shipped cases and
+        fifteen years of making software before any of this was called agentic.
+      </div>
+      <span class="wc">25 words</span>
+    </div>
+
+    <div class="field">
+      <div class="field-label">About-me paragraph (75–120 words)</div>
+      <div class="about">
+        I'm Danilo Rojas, and I think the "AI designer" title is mostly wrong. The interesting
+        job isn't designing interfaces that <em>use</em> models; it's designing the relationship
+        between a human maker, the model they're working with, and the artifact they co-author.
+        I've been testing that idea in public for a year — through EnRegla (compliance, paid
+        pilots), TE Skin (an agent-consumable DS), TE Black (a11y inside the tokens) and Life
+        Update Mobile (Gemini as runtime). I write in English and Spanish; most of what I
+        publish is half-finished on purpose. The thesis is still moving — that's the point.
+      </div>
+      <span class="wc">119 words</span>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Closing line / CTA</div>
+      <div class="cta"><span class="arrow">→ </span>Read the notebook · four cases · compare notes: danilo@dr-cv.com</div>
+    </div>
+
+    <div class="preview">
+      <div class="panel-title">How it reads on the landing</div>
+      <div style="font-size: 30px; line-height: 1.2; color: var(--ink); font-weight: 650; letter-spacing: -0.02em; max-width: 26ch;">Most teams are still designing <span style="color: var(--ink-dim); font-style: italic;">for</span> AI.<br/>I design <span style="color: var(--accent); font-style: italic;">with</span> it.</div>
+      <div style="color: var(--ink-dim); margin-top: 16px; max-width: 60ch;">A working thesis on agentic product design, backed by four shipped cases and fifteen years of making software before any of this was called agentic.</div>
+      <div style="margin-top: 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink);"><span style="color: var(--accent);">→ </span>Read the notebook · compare notes.</div>
+    </div>
+  </div>
+
+  <!-- ================= SECTION 6 ================= -->
+  <h2 id="s6">06 · The anti-voice filter</h2>
+  <p>
+    Ten phrases that would filter Danilo <em>out</em> with tier-1 hiring managers at AI labs,
+    Linear/Figma-tier product teams, or top design shops. If any of these appear in the
+    landing, cut them. Every one of them carries a pattern recognized instantly by a senior
+    reader as "this person is not at my level".
+  </p>
+
+  <div class="panel accent" style="margin-top: 18px;">
+
+    <div class="anti">
+      <div class="x">01</div>
+      <div>
+        <span class="phrase">"Passionate about design."</span>
+        <div class="why">The word "passionate" is the LinkedIn-bot tell. No senior IC uses it. Substitute: name the specific problem you're obsessed with.</div>
+      </div>
+    </div>
+
+    <div class="anti">
+      <div class="x">02</div>
+      <div>
+        <span class="phrase">"Loves solving problems."</span>
+        <div class="why">Every designer solves problems. Saying so is a non-differentiator. Substitute: name the kind of problem ("messy multi-stakeholder systems", "interfaces where the model is wrong half the time").</div>
+      </div>
+    </div>
+
+    <div class="anti">
+      <div class="x">03</div>
+      <div>
+        <span class="phrase">"Design thinking."</span>
+        <div class="why">Reads as "I read the IDEO book in 2014". Substitute: describe a specific method you use, by name, and what it's bad at.</div>
+      </div>
+    </div>
+
+    <div class="anti">
+      <div class="x">04</div>
+      <div>
+        <span class="phrase">"User-centered design."</span>
+        <div class="why">Non-differentiator since 1998. Substitute: name <em>which</em> user, <em>which</em> constraint, <em>which</em> trade-off.</div>
+      </div>
+    </div>
+
+    <div class="anti">
+      <div class="x">05</div>
+      <div>
+        <span class="phrase">"Bridging design and engineering."</span>
+        <div class="why">Every design engineer says this. Substitute: what you build end-to-end, in what stack, and who you hand off to.</div>
+      </div>
+    </div>
+
+    <div class="anti">
+      <div class="x">06</div>
+      <div>
+        <span class="phrase">"Leveraging AI to unlock value."</span>
+        <div class="why">All four words (leverage, AI, unlock, value) are deck-speak. Substitute: what the model actually does, in one verb, and where it still fails.</div>
+      </div>
+    </div>
+
+    <div class="anti">
+      <div class="x">07</div>
+      <div>
+        <span class="phrase">"10x designer" / "unicorn" / "end-to-end rockstar."</span>
+        <div class="why">Self-mythologizing is the anti-signal of taste. Substitute: a specific shipped artifact that speaks for itself.</div>
+      </div>
+    </div>
+
+    <div class="anti">
+      <div class="x">08</div>
+      <div>
+        <span class="phrase">"Crafting beautiful experiences."</span>
+        <div class="why">"Crafting" + "beautiful" + "experiences" is the three-abstraction stack. Substitute: name the artifact (app, DS, flow) and one constraint you honored (perf, a11y, cost).</div>
+      </div>
+    </div>
+
+    <div class="anti">
+      <div class="x">09</div>
+      <div>
+        <span class="phrase">"Prompt engineer" / "prompt wizard."</span>
+        <div class="why">Signals 2023-era understanding of LLMs. Substitute: describe the feedback loop you've built with the model — evals, retries, review surfaces.</div>
+      </div>
+    </div>
+
+    <div class="anti">
+      <div class="x">10</div>
+      <div>
+        <span class="phrase">"Available for freelance / open to opportunities."</span>
+        <div class="why">Funnel-stage language. Reads as "no one is hiring me". Substitute: name the <em>kind</em> of conversation you want ("compare notes on agentic review loops — write me").</div>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="margin-top: 20px;">
+    Bonus reject list (use if landing copy is tight): <span class="tag bad">"wearing many hats"</span>
+    <span class="tag bad">"strategic thinker"</span>
+    <span class="tag bad">"storyteller"</span>
+    <span class="tag bad">"craft meets strategy"</span>
+    <span class="tag bad">"human-centered"</span>
+    <span class="tag bad">"next-gen"</span>
+    <span class="tag bad">"disruptive"</span>
+    <span class="tag bad">"growth mindset"</span>.
+  </p>
+
+  <!-- ================= SECTION 7 ================= -->
+  <h2 id="s7">07 · Ranked recommendation</h2>
+  <p>
+    Every draft is viable. Choosing between them is a business call, not a copy call. Here is
+    how they stack up for <em>Danilo's actual target</em> — AI Product Designer / Agentic UX
+    Lead, tier above BAH, read by hiring managers at AI labs, Linear-tier product, and top
+    shops.
+  </p>
+
+  <div class="rank gold">
+    <div class="n">01</div>
+    <div class="body">
+      <div class="draft-name">Draft C — Taste-first critic <span class="tag accent">recommended</span></div>
+      <div class="just">Danilo's differentiation is a POV ("design <em>with</em> AI, not <em>for</em> it") — the register that sells a POV is the one that leads with it.</div>
+    </div>
+  </div>
+
+  <div class="rank silver">
+    <div class="n">02</div>
+    <div class="body">
+      <div class="draft-name">Draft A — Quiet craftsman <span class="tag info">strong safety</span></div>
+      <div class="just">Cleanest, hardest to misread, but under-sells the "last year fully agentic" thesis that is the actual wedge — risks reading as generic senior designer.</div>
+    </div>
+  </div>
+
+  <div class="rank bronze">
+    <div class="n">03</div>
+    <div class="body">
+      <div class="draft-name">Draft B — Evangelist builder <span class="tag purple">do not pick</span></div>
+      <div class="just">Strongest verbs, but the register is already crowded (every Vercel-adjacent dev sounds like this) — Danilo loses distinctiveness exactly where he should stand out.</div>
+    </div>
+  </div>
+
+  <div class="panel accent" style="margin-top: 32px;">
+    <div class="panel-title">One-sentence takeaway</div>
+    <p style="color: var(--ink); font-size: 15.5px; margin: 0;">
+      <strong>Pick Draft C, borrow Draft A's restraint for the rest of the landing.</strong>
+      The hero carries the thesis; the body copy stays quiet-craftsman so the thesis doesn't
+      collapse under its own weight.
+    </p>
+  </div>
+
+  <p class="disclaim" style="margin-top: 32px;">
+    End · V11 Round 05 · senior-ic voice & positioning · dr-cv
+  </p>
+
+</div>
+</body>
+</html>

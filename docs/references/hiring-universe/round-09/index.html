@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>V11 R9 · 3 hiring directions · converged specs</title>
+<style>
+  :root{
+    --bg:         #07080d;
+    --bg-1:       #0b0d14;
+    --bg-2:       #10131c;
+    --bg-3:       #161a25;
+    --line:       #1d212e;
+    --line-2:     #262b3a;
+    --ink:        #eceef5;
+    --ink-2:      #a8aebd;
+    --ink-3:      #6d7384;
+    --ink-4:      #4a4f5d;
+    --accent:     #FF8964;
+    --accent-dim: #a3543e;
+    --accent-soft:rgba(255,137,100,.07);
+    --ok:         #6fd08c;
+    --info:       #7fb3ff;
+    --warn:       #f2c66d;
+    --bad:        #e37a7a;
+    --violet:     #b49dff;
+    --teal:       #64e0c8;
+
+    --mono:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+    --sans:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+    --serif:"Iowan Old Style","Source Serif Pro","Georgia",serif;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim)}
+  a:hover{color:#ffa184}
+  code,.mono{font-family:var(--mono);font-size:12.5px}
+  hr{border:0;border-top:1px solid var(--line);margin:56px 0}
+
+  .wrap{max-width:1280px;margin:0 auto;padding:56px 28px 160px}
+
+  /* ------------ masthead ------------ */
+  header.masthead{border-bottom:1px solid var(--line);padding-bottom:32px;margin-bottom:48px}
+  .kicker{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;padding:3px 9px;border:1px solid var(--accent-dim);border-radius:3px;margin-bottom:16px}
+  h1.title{font-size:40px;line-height:1.08;font-weight:700;letter-spacing:-.022em;margin:0 0 10px;max-width:22ch}
+  h1.title em{font-style:normal;color:var(--accent)}
+  .lede{color:var(--ink-2);font-size:16.5px;line-height:1.55;max-width:86ch}
+  .meta-row{display:flex;flex-wrap:wrap;gap:14px 22px;margin-top:22px;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.14em}
+  .meta-row span b{color:var(--ink);font-weight:500}
+
+  /* ------------ section headings ------------ */
+  h2.sec-title{font-size:24px;letter-spacing:-.015em;margin:56px 0 14px;border-left:3px solid var(--accent);padding-left:14px;font-weight:700}
+  h2.sec-title .n{color:var(--ink-3);font-family:var(--mono);font-size:12px;letter-spacing:.14em;margin-right:10px;font-weight:500}
+  p.section-lede{color:var(--ink-2);font-size:14.5px;max-width:86ch;margin:6px 0 20px}
+
+  /* ------------ strategic bet table ------------ */
+  .bet-table{width:100%;border-collapse:collapse;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:13.5px;margin-bottom:24px}
+  .bet-table th,.bet-table td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  .bet-table tr:last-child td{border-bottom:0}
+  .bet-table th{background:var(--bg-3);color:var(--ink-3);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+  .bet-table td.dir{width:210px;color:#fff;font-weight:600}
+  .bet-table td.dir small{display:block;color:var(--ink-3);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;margin-top:4px;text-transform:uppercase;font-weight:500}
+  .bet-table td.dir.d1 small{color:var(--info)}
+  .bet-table td.dir.d2 small{color:var(--violet)}
+  .bet-table td.dir.d3 small{color:var(--teal)}
+  .bet-table td .y{color:var(--ok)}
+  .bet-table td .n{color:var(--bad)}
+
+  /* ------------ direction card ------------ */
+  .direction{margin-top:68px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,var(--bg-1) 0%,var(--bg) 90%);overflow:hidden}
+  .direction .head{padding:28px 32px 22px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;position:relative}
+  .direction .head::after{content:"";position:absolute;left:0;right:0;top:0;height:3px}
+  .direction.d1 .head::after{background:linear-gradient(90deg,var(--info),transparent)}
+  .direction.d2 .head::after{background:linear-gradient(90deg,var(--violet),transparent)}
+  .direction.d3 .head::after{background:linear-gradient(90deg,var(--teal),transparent)}
+  .direction .dir-tag{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+  .direction.d1 .dir-tag{color:var(--info)}
+  .direction.d2 .dir-tag{color:var(--violet)}
+  .direction.d3 .dir-tag{color:var(--teal)}
+  .direction h3.name{font-size:32px;font-weight:700;letter-spacing:-.022em;margin:0;color:#fff;line-height:1.1}
+  .direction .thesis{color:var(--ink-2);font-size:15px;margin-top:10px;max-width:68ch;font-style:italic}
+  .direction .strat-bet{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);text-align:right;max-width:32ch;line-height:1.5}
+  .direction .strat-bet b{color:#fff;display:block;letter-spacing:.12em;text-transform:uppercase;font-size:10.5px;margin-bottom:4px;font-weight:500}
+
+  .direction .body{padding:28px 32px 32px}
+
+  /* grid inside direction */
+  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;margin-top:8px}
+  .spec-grid.three{grid-template-columns:1fr 1fr 1fr}
+  @media (max-width:900px){ .spec-grid,.spec-grid.three{grid-template-columns:1fr} }
+  .spec-block{border:1px solid var(--line);border-radius:10px;background:var(--bg-2);padding:16px 18px;font-size:13.5px;color:var(--ink-2)}
+  .spec-block h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin:0 0 10px;font-weight:600}
+  .direction.d1 .spec-block h4{color:var(--info)}
+  .direction.d2 .spec-block h4{color:var(--violet)}
+  .direction.d3 .spec-block h4{color:var(--teal)}
+  .spec-block p{margin:0 0 8px}
+  .spec-block p:last-child{margin-bottom:0}
+  .spec-block strong{color:#fff;font-weight:600}
+  .spec-block ul{margin:4px 0 0;padding-left:16px}
+  .spec-block ul li{margin:3px 0}
+  .spec-block ul li::marker{color:var(--ink-4)}
+
+  /* ------------ h1 specimen ------------ */
+  .h1-specimen{margin:26px 0 6px;padding:32px 32px 28px;border:1px dashed var(--line-2);border-radius:10px;background:var(--bg-1);position:relative}
+  .h1-specimen .label{position:absolute;top:10px;left:16px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-4);text-transform:uppercase}
+  .h1-d1{font-family:var(--sans);font-size:clamp(42px,5.6vw,78px);line-height:1.02;letter-spacing:-.03em;font-weight:550;color:#fff;max-width:20ch}
+  .h1-d1 em{font-style:italic;color:var(--ink-2);font-weight:400}
+  .h1-d2{font-family:var(--sans);font-size:clamp(46px,6vw,84px);line-height:1.02;letter-spacing:-.028em;font-weight:700;color:#fff;max-width:18ch}
+  .h1-d2 em{font-style:normal;color:var(--accent)}
+  .h1-d3{font-family:var(--sans);font-size:clamp(40px,5.2vw,72px);line-height:1.04;letter-spacing:-.022em;font-weight:650;color:#fff;max-width:22ch}
+
+  /* ------------ subhead ------------ */
+  .subhead-spec{color:var(--ink-2);font-size:17px;line-height:1.5;max-width:68ch;margin-top:12px}
+
+  /* ------------ hero mockup frames ------------ */
+  .hero-mock{margin:30px 0 8px;border-radius:12px;overflow:hidden;border:1px solid var(--line-2);position:relative}
+  .hero-mock .browser-bar{background:#0a0b11;border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--ink-4)}
+  .hero-mock .dot{width:9px;height:9px;border-radius:50%;background:#222;display:inline-block}
+  .hero-mock .url-bar{flex:1;background:#0f1016;border:1px solid #191a22;border-radius:4px;padding:3px 10px;margin-left:10px;color:var(--ink-3)}
+
+  /* ------------ DIRECTION 1 MOCKUP — essay anchored ------------ */
+  .mock-d1{background:#070709;color:#eeeae4;padding:70px 64px 70px;font-family:var(--sans);min-height:680px;position:relative}
+  .mock-d1::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 10%,rgba(255,137,100,.05),transparent 55%);pointer-events:none}
+  .mock-d1 .chrome{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11.5px;color:#6b6760;letter-spacing:.1em;text-transform:uppercase;margin-bottom:72px;position:relative}
+  .mock-d1 .chrome b{color:#eeeae4;font-weight:500}
+  .mock-d1 .chrome .pill{border:1px solid #35302a;padding:3px 10px;border-radius:999px;color:#bfb7ad}
+  .mock-d1 .chrome .pill .d{display:inline-block;width:6px;height:6px;background:var(--ok);border-radius:50%;margin-right:6px;vertical-align:middle}
+  .mock-d1 .eyebrow{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--accent);letter-spacing:.02em;margin-bottom:16px;position:relative}
+  .mock-d1 .eyebrow::before{content:"— ";color:#6b6760}
+  .mock-d1 .essay-h1{font-family:var(--sans);font-size:64px;line-height:1.02;letter-spacing:-.03em;font-weight:550;color:#f7f3ec;max-width:18ch;margin:0 0 26px;position:relative}
+  .mock-d1 .essay-h1 em{font-style:italic;color:#8a8279;font-weight:400}
+  .mock-d1 .essay-sub{color:#a59b8e;font-size:17px;line-height:1.55;max-width:56ch;margin-bottom:38px;position:relative}
+  .mock-d1 .essay-meta{display:flex;gap:24px;font-family:var(--mono);font-size:11px;color:#72695f;letter-spacing:.1em;text-transform:uppercase;margin-bottom:52px;position:relative}
+  .mock-d1 .essay-meta span b{color:#cfc5b6;font-weight:500}
+  .mock-d1 .essay-body{column-count:2;column-gap:54px;color:#bfb6a8;font-size:14.5px;line-height:1.72;max-width:920px;font-family:var(--serif);position:relative}
+  .mock-d1 .essay-body p{margin:0 0 14px;text-indent:0}
+  .mock-d1 .essay-body p:first-of-type::first-letter{font-family:var(--serif);font-size:48px;float:left;line-height:.9;margin:5px 8px 0 0;color:var(--accent);font-weight:400}
+  .mock-d1 .essay-body b{color:#f7f3ec;font-weight:500}
+  .mock-d1 .footlinks{margin-top:46px;border-top:1px solid #1f1d1a;padding-top:18px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:#6b6760;letter-spacing:.1em;text-transform:uppercase;position:relative}
+  .mock-d1 .footlinks a{color:#eeeae4;border:0}
+
+  /* ------------ DIRECTION 2 MOCKUP — live artifact ------------ */
+  .mock-d2{background:#08080e;color:#e7e9f2;padding:28px 28px 28px;font-family:var(--sans);min-height:680px;display:grid;grid-template-columns:1fr 1.25fr;gap:20px;position:relative}
+  .mock-d2 .pane{background:#0d0f17;border:1px solid #1a1d2a;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+  .mock-d2 .pane-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #1a1d2a;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase}
+  .mock-d2 .pane-head .live{display:inline-flex;align-items:center;gap:6px;color:var(--ok)}
+  .mock-d2 .pane-head .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+  .mock-d2 .conv{padding:16px 16px 10px;flex:1;font-size:13.5px;overflow:hidden}
+  .mock-d2 .msg{margin-bottom:14px}
+  .mock-d2 .msg .who{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase;margin-bottom:4px}
+  .mock-d2 .msg.u .who{color:var(--accent)}
+  .mock-d2 .msg.u .bubble{background:var(--accent-soft);border:1px solid #3a241c;color:#f4d4c4;padding:10px 13px;border-radius:8px;font-size:13.5px}
+  .mock-d2 .msg.a .bubble{background:#101521;border:1px solid #1c2233;color:var(--ink);padding:10px 13px;border-radius:8px;font-size:13.5px}
+  .mock-d2 .thinking{background:#0c0f18;border:1px solid #1a1d2a;border-radius:6px;padding:8px 12px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:8px;display:flex;gap:8px;align-items:center}
+  .mock-d2 .thinking::before{content:"▸";color:var(--accent)}
+  .mock-d2 .toolcall{font-family:var(--mono);font-size:11px;color:var(--ink-2);background:#0b0e16;border:1px solid #181b27;border-radius:6px;padding:8px 12px;margin-top:8px}
+  .mock-d2 .toolcall b{color:var(--accent);font-weight:500}
+  .mock-d2 .toolcall span{color:var(--ok);margin-left:10px}
+  .mock-d2 .input{border-top:1px solid #1a1d2a;padding:12px 14px;display:flex;gap:8px;align-items:center;background:#0b0d14}
+  .mock-d2 .input .box{flex:1;background:#101321;border:1px solid #1c2031;border-radius:6px;padding:8px 12px;font-size:12px;color:var(--ink-3)}
+  .mock-d2 .input .btn{background:var(--accent);color:#1a0d07;border:0;padding:8px 14px;border-radius:6px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+
+  .mock-d2 .artifact{padding:18px 20px;flex:1;overflow:hidden}
+  .mock-d2 .art-tabs{display:flex;gap:4px;margin-bottom:14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
+  .mock-d2 .art-tabs .t{padding:4px 10px;border-radius:4px;color:var(--ink-3);border:1px solid transparent}
+  .mock-d2 .art-tabs .t.on{color:var(--accent);border-color:var(--accent-dim);background:var(--accent-soft)}
+  .mock-d2 .preview-cv{background:#1a1611;border:1px solid #3a2d1e;border-radius:8px;padding:22px 26px;color:#e8dcc6;font-family:var(--serif);font-size:10.5px;line-height:1.45}
+  .mock-d2 .preview-cv h5{font-family:var(--sans);color:#fff;font-size:18px;font-weight:700;margin:0 0 3px}
+  .mock-d2 .preview-cv .role{color:var(--accent);font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px}
+  .mock-d2 .preview-cv .sec{margin:12px 0 0}
+  .mock-d2 .preview-cv .sec b{display:block;color:#b89879;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
+  .mock-d2 .thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}
+  .mock-d2 .thumbs .th{aspect-ratio:.7;background:#1a1611;border:1px solid #2a2318;border-radius:3px;font-family:var(--mono);font-size:8px;color:#8c7a5d;padding:4px;text-align:center;display:flex;align-items:flex-end;justify-content:center;letter-spacing:.05em;text-transform:uppercase}
+  .mock-d2 .thumbs .th.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .mock-d2 .hero-top{grid-column:1 / -1;display:flex;justify-content:space-between;align-items:baseline;padding:0 6px 6px}
+  .mock-d2 .hero-h1{font-size:28px;font-weight:700;letter-spacing:-.022em;color:#fff;margin:0;line-height:1.05}
+  .mock-d2 .hero-h1 em{font-style:normal;color:var(--accent)}
+  .mock-d2 .hero-sub{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.12em;text-transform:uppercase}
+  .mock-d2 .hero-sub b{color:var(--ink)}
+
+  /* ------------ DIRECTION 3 MOCKUP — curated ship ------------ */
+  .mock-d3{background:#090b10;color:#e7eaf1;padding:72px 64px 60px;font-family:var(--sans);min-height:680px;display:grid;grid-template-columns:340px 1fr;gap:76px;position:relative}
+  .mock-d3 .left{position:sticky;top:72px;align-self:start}
+  .mock-d3 .who{font-family:var(--mono);font-size:11px;color:#5e6472;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+  .mock-d3 .who b{color:#fff;font-weight:500}
+  .mock-d3 .d3-h1{font-size:48px;line-height:1.06;letter-spacing:-.024em;font-weight:650;color:#fff;margin:0 0 20px;max-width:10ch}
+  .mock-d3 .d3-sub{color:#9ba3b5;font-size:15px;line-height:1.5;max-width:36ch;margin-bottom:32px}
+  .mock-d3 .availability{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid #1f2937;border-radius:999px;background:#0d1019;font-family:var(--mono);font-size:11px;color:#d6dae5;letter-spacing:.08em;margin-bottom:28px}
+  .mock-d3 .availability::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 6px var(--ok)}
+  .mock-d3 .role-line{font-size:12px;font-family:var(--mono);color:var(--accent);letter-spacing:.1em;margin-bottom:28px;text-transform:uppercase}
+  .mock-d3 .d3-socials{display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:12px;color:#9ba3b5;margin-top:40px;padding-top:24px;border-top:1px solid #1a1e2a}
+  .mock-d3 .d3-socials a{color:#d6dae5;border:0}
+
+  .mock-d3 .right h4{font-family:var(--mono);font-size:11px;color:#5e6472;letter-spacing:.18em;text-transform:uppercase;margin:0 0 14px;font-weight:500}
+  .mock-d3 .right h4:not(:first-child){margin-top:40px}
+  .mock-d3 .proof-strip{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid #1a1e2a;border-bottom:1px solid #1a1e2a;margin-bottom:32px}
+  .mock-d3 .proof-strip .p{padding:16px 12px;border-right:1px solid #1a1e2a;font-family:var(--mono);font-size:10.5px;color:#6d7484;letter-spacing:.08em;text-transform:uppercase}
+  .mock-d3 .proof-strip .p:last-child{border-right:0}
+  .mock-d3 .proof-strip .v{display:block;font-family:var(--sans);font-size:28px;font-weight:700;color:#fff;letter-spacing:-.02em;margin-bottom:2px;text-transform:none}
+  .mock-d3 .proof-strip .v span{color:var(--accent)}
+  .mock-d3 .cases{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .mock-d3 .case-tile{background:#0e1119;border:1px solid #1a1e2a;border-radius:10px;padding:18px 20px 20px;transition:all .15s}
+  .mock-d3 .case-tile.feat{grid-column:1 / -1;background:linear-gradient(180deg,#121520 0%,#0c0f16 100%);border-color:#2a2f40}
+  .mock-d3 .case-tile h5{font-size:16px;font-weight:600;color:#fff;margin:0 0 4px;letter-spacing:-.01em}
+  .mock-d3 .case-tile .tagline{font-family:var(--mono);font-size:10.5px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+  .mock-d3 .case-tile p{color:#9ba3b5;font-size:13px;line-height:1.5;margin:0 0 12px}
+  .mock-d3 .case-tile .metrics{font-family:var(--mono);font-size:11px;color:#6d7484;letter-spacing:.08em}
+  .mock-d3 .case-tile .metrics b{color:#d6dae5}
+  .mock-d3 .case-tile.feat h5{font-size:22px}
+
+  /* ------------ comparison matrix ------------ */
+  table.matrix{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:18px}
+  table.matrix th,table.matrix td{padding:11px 13px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;line-height:1.45}
+  table.matrix tr:last-child td{border-bottom:0}
+  table.matrix thead th{background:var(--bg-3);color:var(--ink-3);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+  table.matrix th.crit{width:180px;color:var(--ink-2)}
+  table.matrix td.crit{width:180px;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;font-weight:500;border-right:1px solid var(--line);background:var(--bg-3)}
+  table.matrix td.d{color:var(--ink-2)}
+  table.matrix td.d b{color:#fff;font-weight:500}
+  table.matrix th.d1{border-bottom:2px solid var(--info)}
+  table.matrix th.d2{border-bottom:2px solid var(--violet)}
+  table.matrix th.d3{border-bottom:2px solid var(--teal)}
+
+  /* ------------ decision block ------------ */
+  .decision{margin-top:56px;padding:36px 40px;border:1px solid var(--accent-dim);border-radius:14px;background:linear-gradient(180deg,#14110d 0%,var(--bg-1) 100%)}
+  .decision .tag{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px}
+  .decision h3{font-size:30px;font-weight:650;letter-spacing:-.02em;color:#fff;margin:0 0 14px;line-height:1.15;max-width:24ch}
+  .decision h3 em{font-style:italic;color:var(--accent)}
+  .decision .answers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:18px}
+  @media (max-width:820px){ .decision .answers{grid-template-columns:1fr} }
+  .decision .ans{border:1px solid var(--line);background:var(--bg-2);border-radius:10px;padding:16px 18px}
+  .decision .ans h5{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 8px;font-weight:500}
+  .decision .ans.d1 h5{color:var(--info)}
+  .decision .ans.d2 h5{color:var(--violet)}
+  .decision .ans.d3 h5{color:var(--teal)}
+  .decision .ans p{color:var(--ink-2);font-size:13.5px;margin:0;line-height:1.5}
+  .decision .ans p b{color:#fff;font-weight:500}
+
+  /* ------------ recommendation ------------ */
+  .recommend{margin-top:56px;padding:40px 44px 44px;border:1px solid var(--line-2);border-radius:14px;background:var(--bg-1);position:relative;overflow:hidden}
+  .recommend::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--accent) 0%,var(--teal) 100%)}
+  .recommend .badge{display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border:1px solid var(--accent-dim);border-radius:4px;font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+  .recommend h3{font-size:34px;font-weight:700;letter-spacing:-.024em;color:#fff;margin:0 0 14px;line-height:1.1;max-width:22ch}
+  .recommend h3 em{font-style:italic;color:var(--accent)}
+  .recommend p{color:var(--ink-2);font-size:15px;line-height:1.65;max-width:82ch;margin:0 0 10px}
+  .recommend p b{color:#fff;font-weight:600}
+  .recommend .rank-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0 8px}
+  .recommend .rank-slot{border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:var(--bg-2)}
+  .recommend .rank-slot .r{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+  .recommend .rank-slot h5{color:#fff;margin:0 0 4px;font-size:15px;font-weight:600}
+  .recommend .rank-slot p{font-size:12.5px;color:var(--ink-3);margin:0;line-height:1.45}
+  .recommend .rank-slot.silver .r{color:var(--ink-2)}
+  .recommend .rank-slot.bronze .r{color:var(--ink-3)}
+
+  /* palette swatches */
+  .swatches{display:flex;gap:4px;margin:6px 0 4px}
+  .swatches .sw{width:24px;height:16px;border-radius:3px;border:1px solid rgba(255,255,255,.07)}
+  .palette-label{font-family:var(--mono);font-size:10px;color:var(--ink-4);letter-spacing:.1em}
+
+  /* footer */
+  .foot{margin-top:96px;padding-top:22px;border-top:1px solid var(--line);color:var(--ink-4);font-size:11.5px;font-family:var(--mono);letter-spacing:.08em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="kicker">V11 · Round 09 · Hiring Universe · SHORTLIST</div>
+  <h1 class="title">Three hiring directions, fully specced — <em>pick one</em>, ship R10.</h1>
+  <p class="lede">
+    Eight rounds of research collapse here into three internally-coherent bets on what gets Danilo hired into a company above Booz Allen Hamilton. Each direction is a complete answer: voice, visual, proof surface, case format, craft floor, and bilingual plan — all agreeing. They differ <em>strategically</em>, not aesthetically. The next round (R10) picks one and writes the build spec.
+  </p>
+  <div class="meta-row">
+    <span><b>3</b> directions</span>
+    <span><b>12</b> criteria per direction</span>
+    <span><b>1</b> strategic decision question</span>
+    <span>Target role · <b>AI Product Designer / Agentic UX Lead</b></span>
+    <span>Target tier · <b>above BAH</b></span>
+  </div>
+</header>
+
+<!-- ============================================================
+     SECTION 1 — STRATEGIC BET TABLE
+     ============================================================ -->
+<section>
+  <h2 class="sec-title"><span class="n">01</span>Strategic bet · three distinct wagers on the hiring market</h2>
+  <p class="section-lede">The 17 target employers (R1) are not a single audience. They split into clusters with different reading patterns. Each direction below is a bet on which cluster reads deepest. You will lose some clusters. Pick on purpose.</p>
+
+  <table class="bet-table">
+    <thead>
+      <tr>
+        <th>Direction</th>
+        <th>The bet</th>
+        <th>Who it converts</th>
+        <th>Who it filters out</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="dir d1">The Essay-Anchored Portfolio<small>Direction 1 · POV-led</small></td>
+        <td>A 2 000-word thesis on agentic design is Danilo's one-shot differentiator. Hiring managers at Anthropic, Linear, Cursor, Stripe, IDEO read before they skim. Writing is the single most underused axis (R1 signal 02, R6 category C).</td>
+        <td><b>Anthropic</b> ("thoughtful blog post at the top of the résumé"). <b>Linear</b> (craft + writing side-by-side in the Method). <b>Cursor</b> (design engineers via Twitter). <b>IDEO</b> / <b>Pentagram</b> (narrative pedigree).</td>
+        <td><b>Vercel</b> / <b>Work &amp; Co</b> (want live code proof). <b>Perplexity</b> / <b>Replit</b> (ship-daily cadence). A recruiter in a 15-second scroll who does not read past the fold.</td>
+      </tr>
+      <tr>
+        <td class="dir d2">The Live Artifact Portfolio<small>Direction 2 · Demo-led</small></td>
+        <td>Showing beats telling. The hero itself runs the dr-cv agent in the browser — one prompt, five CVs render live. Cases become footnotes to the demo. R2 lesson 02 verbatim: "the first visible block must be a runnable agent conversation, not a photo."</td>
+        <td><b>Vercel</b> / <b>Cursor</b> (Design Engineer first-class). <b>Stripe</b> (Design Engineer, Presence). <b>Figma</b> (Product Designer, AI Models). <b>Perplexity</b> / <b>Replit</b> (ship-daily). <b>Work &amp; Co</b> (prototype-as-spec).</td>
+        <td><b>Anthropic</b> (reads for rigor-in-prose). <b>IDEO</b> / <b>Pentagram</b> (expect narrative craft). <b>Airbnb</b> (storytelling-led PMs). A recruiter who cannot wait for JS to hydrate.</td>
+      </tr>
+      <tr>
+        <td class="dir d3">The Curated Shipped-Work Portfolio<small>Direction 3 · Track-record-led</small></td>
+        <td>Brittany Chiang's template extended for the agentic era. Target role + 4 cases as Narrative Ships + load-bearing proof strip + availability badge + ES toggle. Essay listed, not headlined. Lower-risk baseline that works at every single target company.</td>
+        <td>Almost everyone on some axis. Particularly strong for <b>Stripe</b> (multi-vertical design org), <b>Airbnb</b> (narrative case-studies expected), <b>Figma</b> (craft + shipping), <b>Linear</b> (craft without performance), <b>Notion</b>, <b>Cohere</b>, <b>Work &amp; Co</b>.</td>
+        <td>Nobody outright — but loses the <em>"this person has taste"</em> top-decile read at Anthropic / Cursor / IDEO. Reads as competent senior, not visionary.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============================================================
+     DIRECTION 1 — ESSAY-ANCHORED
+     ============================================================ -->
+<article class="direction d1" id="d1">
+  <div class="head">
+    <div>
+      <div class="dir-tag">Direction 01 · Essay-Anchored · POV-led</div>
+      <h3 class="name">The Notebook</h3>
+      <p class="thesis">Danilo is a designer who writes. The essay is the front door; the cases are the footnotes. Proof by thinking aloud.</p>
+    </div>
+    <div class="strat-bet">
+      <b>Strategic bet</b>
+      At tier-1 AI labs in 2026, long-form writing is the highest-leverage filter. A published thesis outperforms four case studies because it cannot be faked by an agent.
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- H1 specimen -->
+    <div class="h1-specimen">
+      <span class="label">H1 · at actual size · Direction 01</span>
+      <div class="h1-d1">Most teams are still designing <em>for</em> AI. I design <em>with</em> it.</div>
+      <div class="subhead-spec">A working notebook on agentic product design — four shipped cases, fifteen years of making software before any of this was called agentic, and a thesis that is still moving on purpose.</div>
+    </div>
+
+    <!-- Content layer -->
+    <div class="spec-grid three">
+      <div class="spec-block">
+        <h4>Primary / Secondary CTA</h4>
+        <p><strong>Primary:</strong> "Read the notebook →" (anchors to the essay). Not "Get in touch."</p>
+        <p><strong>Secondary:</strong> "Compare notes: danilo@…" (R5's taste-first-critic closing line). Availability pill persistent in header.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Section order</h4>
+        <p>1 · Hero thesis sentence<br>2 · Essay full-bleed (the feature, 2 000 words)<br>3 · "Four tests of the thesis" (4 cases as evidence, 450 words each, NOT full Narrative Ships)<br>4 · Proof strip (subdued, below the fold)<br>5 · Testimonials (1 quote only)<br>6 · Notes archive + short bio<br>7 · Contact + colophon</p>
+      </div>
+      <div class="spec-block">
+        <h4>Essay placement + topic</h4>
+        <p><strong>Above the fold, the whole page IS the essay.</strong></p>
+        <p>Topic: <em>"Designing with agents, not for them: a working thesis"</em>. 2 000 words. R6 proof #03 pulled forward: "How I migrated a DS in 5 recursive rounds" becomes the opening case inside the essay, not a separate link.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Case placement + count</h4>
+        <p><strong>Four cases, 450 words each</strong> — shorter than R4's recommended Narrative Ship because they are serving the essay.</p>
+        <p><strong>Top billing:</strong> TE Skin (R1 must-emit #03, agent-consumable DS is the essay's thesis incarnate). Order: TE Skin → DS Recursion → EnRegla → Life Update Mobile.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Proof strip placement</h4>
+        <p>Below fold, after the essay, as a typographic footnote-strip. One line, no boxes: <em>"Fifteen years. 346 commits in 40 days. 78.4 → 95.6 on the a11y audit. One shipped SaaS. Two verified BAH references."</em></p>
+        <p>Deliberately undersold — the essay carries the weight.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Testimonial placement</h4>
+        <p>One quote, serif, pull-quote style, embedded <em>inside</em> the essay where it supports the relevant argument. Sheppard's method-and-leverage quote (per R1 Must-05).</p>
+        <p>Giraldez's quote moved to case-study footer on TE Skin.</p>
+      </div>
+      <div class="spec-block">
+        <h4>About-me paragraph</h4>
+        <p style="font-style:italic;color:#d8d2c7;line-height:1.6">I'm Danilo Rojas, and I think the "AI designer" title is mostly wrong. The interesting job isn't designing interfaces that <em>use</em> models; it's designing the relationship between a human maker, the model they're working with, and the artifact they co-author. I've been testing that idea in public for a year — through EnRegla (compliance, paid pilots), TE Skin (agent-consumable DS), TE Black (a11y inside the tokens) and Life Update Mobile (Gemini as runtime). I write in English and Spanish; most of what I publish is half-finished on purpose. The thesis is still moving — that's the point.</p>
+        <p class="mono" style="color:var(--ink-4);font-size:10.5px;margin-top:6px">119 words · R5 Draft C verbatim</p>
+      </div>
+      <div class="spec-block">
+        <h4>Contact / hire-signal</h4>
+        <p>Explicit. Top-right of chrome: <em>"Open to AI Product Designer / Agentic UX Lead · remote-global"</em> + green dot. Bottom of essay: <em>"Compare notes: danilo@…"</em>. No form, no calendar link. One-click email.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Bilingual plan (EN+ES)</h4>
+        <p><strong>Full EN + full ES essay.</strong> The essay is the product. Bilingual voice IS the thesis (Danilo writes the way he thinks; ES is not a translation, it is a parallel draft). Case footnotes translated. UI chrome bilingual.</p>
+        <p>Publish as two URLs: <code>/notebook</code> (EN) + <code>/cuaderno</code> (ES).</p>
+      </div>
+    </div>
+
+    <!-- visual layer -->
+    <div class="spec-grid">
+      <div class="spec-block">
+        <h4>Palette — warm-paper on deep ink</h4>
+        <div class="swatches">
+          <span class="sw" style="background:#070709" title="bg"></span>
+          <span class="sw" style="background:#0e0d0b" title="bg-alt"></span>
+          <span class="sw" style="background:#eeeae4" title="text"></span>
+          <span class="sw" style="background:#8a8279" title="muted"></span>
+          <span class="sw" style="background:#FF8964" title="accent"></span>
+        </div>
+        <p class="palette-label">#070709 · #0e0d0b · #eeeae4 · #8a8279 · #FF8964</p>
+        <p>Accent used only in pull-quotes, drop caps, link underlines. No radial glow. No gradient mesh. Rauno.me restraint.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Typography</h4>
+        <p><strong>Display + chrome:</strong> Inter var (self-hosted woff2) 400/550 weights only.<br>
+        <strong>Body:</strong> Source Serif Pro (self-hosted) 400/500/italic. <em>Serif is the differentiator</em> — it signals "read me, don't skim me."<br>
+        <strong>Mono:</strong> JetBrains Mono (self-hosted) for meta, code, availability pill.</p>
+      </div>
+      <div class="spec-block">
+        <h4>H1 spec</h4>
+        <p><code>font: Inter 550</code> · <code>size: clamp(42px, 5.6vw, 78px)</code> · <code>line-height: 1.02</code> · <code>letter-spacing: -0.03em</code> · <code>max-width: 20ch</code>. <em>"for"</em> and <em>"with"</em> set in italic; "with" in accent.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Motion tier</h4>
+        <p><strong>LOW.</strong> Only: underline-draw on in-text link hover, subtle serif drop-cap colour shift, essay reveal on scroll (fade-in, 300ms). <code>@media (prefers-reduced-motion: reduce) { all: none }</code>. Rationale: the reader who reads essays hates motion.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Hero visual</h4>
+        <p><strong>The essay IS the hero.</strong> No image. No illustration. No diagram above the fold. The first 60 lines of 2 000-word argument are the hero visual. Drop cap in accent carries the rhythm. See rendered mockup below.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Chrome + availability</h4>
+        <p>Single line, top of page, mono 11px: <em>"Danilo Rojas · Quito → remote · open to Agentic UX Lead · EN / ES"</em> + green dot. No nav bar on first screen. TOC drawer below.</p>
+      </div>
+    </div>
+
+    <!-- HERO MOCKUP D1 -->
+    <div class="hero-mock">
+      <div class="browser-bar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="url-bar">danilorojas.design · the notebook</span>
+      </div>
+      <div class="mock-d1">
+        <div class="chrome">
+          <div><b>Danilo Rojas</b> · Quito → remote · EN / ES</div>
+          <div class="pill"><span class="d"></span>Open to Agentic UX Lead</div>
+        </div>
+        <div class="eyebrow">The Notebook / thesis no. 01, still moving</div>
+        <h1 class="essay-h1">Most teams are still designing <em>for</em> AI.<br>I design <em>with</em> it.</h1>
+        <p class="essay-sub">A working notebook on agentic product design — four shipped cases, fifteen years of making software before any of this was called agentic, and a thesis that is still moving on purpose.</p>
+        <div class="essay-meta">
+          <span>Essay · <b>14 min</b> read</span>
+          <span>4 cases · <b>EN / ES</b></span>
+          <span>Last revised <b>2026-05-08</b></span>
+        </div>
+        <div class="essay-body">
+          <p>There is a sentence I keep deleting and rewriting, and it is this: the word "AI designer" is a category error. It implies a designer whose object of study is artificial intelligence — the way a typography designer's object is letterforms. That is not what most of us are actually doing. What most of us are doing, whether we name it or not, is designing <b>the relationship</b> between a human maker, the model they are working with, and the artifact the two co-author together.</p>
+          <p>I have spent the last year testing that reframe in four projects that all shipped. One of them runs paying pilots for a compliance startup in Quito. One of them is a design system that a Claude sub-agent can read, invoke, and render — it is, in the literal sense, an <b>agent-consumable skill</b>. One is a dark-first DS whose accessibility rules live in the tokens themselves, so any agent that touches the tokens cannot emit an inaccessible interface. And one is a consumer app with Gemini as the runtime…</p>
+        </div>
+        <div class="footlinks">
+          <span>↓ Continue reading · 11 min remaining</span>
+          <a href="#">Jump to the four cases →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- signal layer + risk layer -->
+    <div class="spec-grid">
+      <div class="spec-block">
+        <h4>Signal layer (R1 must-emit coverage)</h4>
+        <ul>
+          <li><strong>S1 Craft+Taste:</strong> the hero <em>is</em> a taste statement. Serif body is the craft signal itself.</li>
+          <li><strong>S2 Writing first-class:</strong> maximally served. The essay IS the landing.</li>
+          <li><strong>S3 Agent-native proof:</strong> served inside the prose (TE Skin is argued, not tiled).</li>
+          <li><strong>S4 Live interactive artifact:</strong> <em>weakest coverage.</em> Mitigated by embedding a Claude-artifact preview ~halfway through the essay.</li>
+          <li><strong>S5 Profile+agents framing:</strong> the thesis statement itself is the anti-solo-genius line.</li>
+        </ul>
+      </div>
+      <div class="spec-block">
+        <h4>Proof dependencies (R6)</h4>
+        <ul>
+          <li>#01 Live domain — <strong>must-have</strong></li>
+          <li>#03 DS-recursion essay — <strong>must-have (IS the page)</strong></li>
+          <li>#02 LinkedIn recommendations — nice-to-have</li>
+          <li>#04 Public /dr-cv skill — nice-to-have</li>
+          <li>#05 60-sec Loom — <strong>cut</strong> (tone mismatch)</li>
+        </ul>
+      </div>
+      <div class="spec-block">
+        <h4>Risk layer — who it filters out</h4>
+        <p>Loses <b>Vercel, Work &amp; Co, Perplexity, Replit, Runway</b> — all cultures that read for shipping cadence over prose. Loses the recruiter in a 15-second mobile scroll. High-variance: either reads as senior-IC thesis or reads as "all talk, where's the work."</p>
+      </div>
+      <div class="spec-block">
+        <h4>What breaks if execution falters</h4>
+        <p>If the essay is under 1 500 words, mediocre, or reads like GPT (R8 anti-pattern D-05) — the entire direction collapses. The 2 000-word piece is load-bearing; it must be edited for seven days minimum. No safety net.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Production estimate</h4>
+        <p><strong>10-14 days</strong> to V11 ship. 6-8 days writing + editing (essay and ES version). 3-4 days layout + self-hosted fonts + a11y. 1-2 days case abbreviation to 450 words each.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Top anti-pattern watch (R8)</h4>
+        <ul>
+          <li><strong>#10 Hidden writing:</strong> inverted — writing is the page. Safe.</li>
+          <li><strong>#02 Claims "agentic" without running artifact:</strong> highest risk here. Mitigation: embed one live Claude artifact preview mid-essay.</li>
+          <li><strong>#05 GPT-sounding prose:</strong> existential risk. Ban-list enforced pre-ship.</li>
+          <li><strong>#04 Font CDN:</strong> must self-host serif too.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+<!-- ============================================================
+     DIRECTION 2 — LIVE ARTIFACT
+     ============================================================ -->
+<article class="direction d2" id="d2">
+  <div class="head">
+    <div>
+      <div class="dir-tag">Direction 02 · Live Artifact · Demo-led</div>
+      <h3 class="name">The Workshop</h3>
+      <p class="thesis">Danilo is a designer who ships. The hero runs an agent live; the CV composes in front of the reader. Proof by doing, on their screen.</p>
+    </div>
+    <div class="strat-bet">
+      <b>Strategic bet</b>
+      Design Engineer is now a default role. A runnable artifact above the fold is the one piece of 2026 craft most portfolios lack. Showing beats telling.
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- H1 specimen -->
+    <div class="h1-specimen">
+      <span class="label">H1 · at actual size · Direction 02</span>
+      <div class="h1-d2">I design AI products. <em>With an AI.</em> Every day.</div>
+      <div class="subhead-spec">Four shipped cases in twelve months — a compliance platform, two design systems, a consumer app — built with coding agents as a daily collaborator. Below: run the agent yourself.</div>
+    </div>
+
+    <div class="spec-grid three">
+      <div class="spec-block">
+        <h4>Primary / Secondary CTA</h4>
+        <p><strong>Primary:</strong> "Run the composer →" (scrolls to live artifact panel).</p>
+        <p><strong>Secondary:</strong> "See the shipping log" (GitHub pinned). No email CTA above fold — demo is the CTA.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Section order</h4>
+        <p>1 · Hero with <strong>split-pane: chat + artifact</strong> (Claude Artifact pattern, R3 P01)<br>2 · Proof strip + availability pill<br>3 · "What you just saw" — 200-word demo explainer<br>4 · Four cases (Narrative Ship, full)<br>5 · Testimonials (both, side-by-side)<br>6 · Writing index (essays listed but not featured)<br>7 · Contact + repo links</p>
+      </div>
+      <div class="spec-block">
+        <h4>Essay placement + topic</h4>
+        <p>Linked from nav, not headlined. "Writing" tab in main nav. DS-recursion essay lives at <code>/writing/ds-recursion</code>. Subordinate to the demo. Reader who wants to read, reads; reader who wants to play, plays.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Case placement + count</h4>
+        <p><strong>Four cases, full Narrative Ship (900-1 400 words each)</strong> per R4 recommendation. Top billing: <strong>EnRegla</strong> — because it's the one with paying users and it maps cleanly to the live composer demo (both are agentic workflows with diff-review).</p>
+        <p>Order: EnRegla → TE Skin → Life Update → TE Black.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Proof strip placement</h4>
+        <p>Immediately below the live artifact, full-width, 5 numbers with click-through (R6 spec): <em>15+ years · 346 commits/40 days · 95.6 a11y · 1 SaaS in production · 5 CVs from one prompt</em>. Every number links to its artifact.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Testimonial placement</h4>
+        <p>Two quotes, side-by-side, on the "4 cases" divider. Sheppard + Giraldez, both "method+leverage" framing. Serif pull-quotes. Real photos, real titles, linked to LinkedIn profiles (once recommendations ship).</p>
+      </div>
+      <div class="spec-block">
+        <h4>About-me paragraph</h4>
+        <p style="font-style:italic;color:#d8d8e5;line-height:1.6">Danilo Rojas. I believe the interesting frontier in product design is not <em>designing for AI</em> — it's <em>designing with AI</em>, as a teammate. I've spent the last year shipping four cases that way: EnRegla (compliance, paid pilots), TE Skin (an agent-consumable design system), TE Black (a dark-first DS with accessibility in the tokens) and Life Update Mobile (Gemini in the runtime, live on TestFlight). Fifteen years of SE + product before that. I write, in English and Spanish, about what actually works when a designer and a model build together — and what still doesn't.</p>
+        <p class="mono" style="color:var(--ink-4);font-size:10.5px;margin-top:6px">116 words · R5 Draft B verbatim</p>
+      </div>
+      <div class="spec-block">
+        <h4>Contact / hire-signal</h4>
+        <p>Availability badge in chrome (green dot + role line). Contact section below cases: three explicit lines — <em>email</em>, <em>LinkedIn</em>, <em>X/GitHub</em>. No form. "Reach out if interested" leerob-verbatim.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Bilingual plan (EN+ES)</h4>
+        <p>EN primary. ES toggle in chrome swaps all copy. The <strong>live artifact is EN-only</strong> (because the CV composer outputs 5 variants already including ES — the demo itself proves bilingual). Case bodies in both languages.</p>
+      </div>
+    </div>
+
+    <!-- visual -->
+    <div class="spec-grid">
+      <div class="spec-block">
+        <h4>Palette — technical dark</h4>
+        <div class="swatches">
+          <span class="sw" style="background:#08080e" title="bg"></span>
+          <span class="sw" style="background:#0d0f17" title="bg-alt"></span>
+          <span class="sw" style="background:#e7e9f2" title="text"></span>
+          <span class="sw" style="background:#6d7384" title="muted"></span>
+          <span class="sw" style="background:#FF8964" title="accent"></span>
+        </div>
+        <p class="palette-label">#08080e · #0d0f17 · #e7e9f2 · #6d7384 · #FF8964</p>
+        <p>Accent only on: user-message bubbles, selected case tab, live-status dot. No radial glow. Flat panels with 1px hairlines (Cursor / Claude Code aesthetic).</p>
+      </div>
+      <div class="spec-block">
+        <h4>Typography</h4>
+        <p><strong>All Inter</strong> var 400/500/700 self-hosted. JetBrains Mono for: pane headers, tool-call rows, proof-strip labels, availability pill. No serif. Serif reads as "essay" — this page is an app, not a read.</p>
+      </div>
+      <div class="spec-block">
+        <h4>H1 spec</h4>
+        <p><code>font: Inter 700</code> · <code>size: clamp(46px, 6vw, 84px)</code> · <code>line-height: 1.02</code> · <code>letter-spacing: -0.028em</code> · <code>max-width: 18ch</code>. H1 sits to the <em>left</em> of the artifact panel, not above. "<em>With an AI.</em>" in accent.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Motion tier</h4>
+        <p><strong>MEDIUM</strong> — but tied entirely to the live artifact. Token-streaming cursor, thinking dots, diff-highlight fade (R3 P02 Visible Thinking spec). Rest of page static. <code>prefers-reduced-motion</code>: agent still runs, but streaming collapses to instant.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Hero visual</h4>
+        <p><strong>Split-pane Artifact Panel.</strong> Left: headline + chat input pre-populated with <em>"Generate my CV for BairesDev, EN, serious tone."</em> Right: live-streaming PDF artifact with 5-thumbnail version picker (R3 P01). See mockup.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Chrome + availability</h4>
+        <p>Top bar: logo · nav (Cases · Writing · Repos) · availability pill · EN/ES toggle. Pill copy: <em>"Open · Agentic UX Lead"</em>. Sticky on scroll.</p>
+      </div>
+    </div>
+
+    <!-- HERO MOCKUP D2 -->
+    <div class="hero-mock">
+      <div class="browser-bar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="url-bar">danilorojas.design · /workshop</span>
+      </div>
+      <div class="mock-d2">
+        <div class="hero-top">
+          <h2 class="hero-h1">I design AI products.<br><em>With an AI.</em> Every day.</h2>
+          <div class="hero-sub">Live demo · dr-cv agent · <b>running now</b></div>
+        </div>
+
+        <!-- chat pane -->
+        <div class="pane">
+          <div class="pane-head">
+            <span>dr-cv composer · chat</span>
+            <span class="live">running</span>
+          </div>
+          <div class="conv">
+            <div class="msg u">
+              <div class="who">Danilo</div>
+              <div class="bubble">Generate my CV for BairesDev — English, serious tone, grayscale, no testimonials.</div>
+            </div>
+            <div class="msg a">
+              <div class="who">Claude-sonnet · /dr-cv</div>
+              <div class="bubble">Planning: I'll emit 5 PDFs from <code>data/cv.yaml</code>. BairesDev variant exclusion set: <code>orange, testimonials, byOutcome</code>. Proceeding.</div>
+              <div class="thinking">Thinking · evaluating skill manifest · 12 components</div>
+              <div class="toolcall"><b>bash</b> npm run build:cv --variant=bairesdev <span>✓ 5 PDFs · 1.2s</span></div>
+              <div class="toolcall"><b>read_artifact</b> dist/cv-bairesdev-en.pdf <span>✓ 4 pages</span></div>
+            </div>
+          </div>
+          <div class="input">
+            <div class="box">Ask the composer to try another variant…</div>
+            <button class="btn">Run</button>
+          </div>
+        </div>
+
+        <!-- artifact pane -->
+        <div class="pane">
+          <div class="pane-head">
+            <span>Artifact · cv-bairesdev-en.pdf</span>
+            <span>v5 · 4 pages</span>
+          </div>
+          <div class="artifact">
+            <div class="art-tabs">
+              <span class="t on">bairesdev-en</span>
+              <span class="t">warm-en</span>
+              <span class="t">warm-es</span>
+              <span class="t">serious-en</span>
+              <span class="t">serious-es</span>
+            </div>
+            <div class="preview-cv">
+              <h5>Danilo Rojas</h5>
+              <div class="role">Senior Product Designer · Agentic UX</div>
+              <div class="sec"><b>Summary</b>Fifteen years shipping software — last year fully agentic. Design-Engineering at Booz Allen Hamilton / Trusted Environments. EnRegla paying pilots.</div>
+              <div class="sec"><b>Recent shipped systems</b>TE Skin · TE Black · Life Update Mobile · EnRegla Compliance</div>
+              <div class="sec"><b>Skills · mastered</b>Figma · TypeScript · React · design tokens · WCAG AA<br><b>Skills · learning</b>Claude Agent SDK · MCP servers · subagent orchestration</div>
+            </div>
+            <div class="thumbs">
+              <div class="th on">bairesdev</div>
+              <div class="th">warm-en</div>
+              <div class="th">warm-es</div>
+              <div class="th">serious-en</div>
+              <div class="th">serious-es</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-block">
+        <h4>Signal layer (R1 must-emit)</h4>
+        <ul>
+          <li><strong>S1 Craft+Taste:</strong> served via artifact polish (fonts, layout of the streamed PDF).</li>
+          <li><strong>S2 Writing:</strong> <em>weakest.</em> Writing linked but not headlined. Mitigation: essay counter in chrome ("3 essays").</li>
+          <li><strong>S3 Agent-native proof:</strong> maximum coverage. The page literally runs the agent.</li>
+          <li><strong>S4 Live interactive artifact:</strong> this direction's defining claim.</li>
+          <li><strong>S5 Profile+agents framing:</strong> the chat transcript itself models leverage ("<em>I planned; Claude executed; I reviewed</em>").</li>
+        </ul>
+      </div>
+      <div class="spec-block">
+        <h4>Proof dependencies (R6)</h4>
+        <ul>
+          <li>#01 Live domain — <strong>must-have</strong></li>
+          <li>#04 Public /dr-cv skill — <strong>must-have (IS the demo)</strong></li>
+          <li>#05 60-sec Loom fallback — <strong>must-have</strong> (for crawlers / no-JS)</li>
+          <li>#02 LinkedIn recs — must-have (hydrates testimonials)</li>
+          <li>#03 DS-recursion essay — nice-to-have</li>
+        </ul>
+      </div>
+      <div class="spec-block">
+        <h4>Risk layer — who it filters out</h4>
+        <p>Loses <b>IDEO, Pentagram, Airbnb</b> — narrative-led cultures. Loses the reader on a slow connection (demo depends on JS + API reachability). Loses the LinkedIn-mobile scroller if Loom fallback isn't obvious.</p>
+      </div>
+      <div class="spec-block">
+        <h4>What breaks if execution falters</h4>
+        <p>If the live composer flakes, has &gt; 3s latency, or throws errors in demo — instant disqualification. "Claims agentic without running artifact" becomes the exact anti-pattern R8 #02 flags. Requires serverless endpoint, rate-limiting, and mandatory Loom fallback.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Production estimate</h4>
+        <p><strong>12-18 days</strong> to V11 ship. 4-5 days hardening /dr-cv to public-facing state. 3-4 days serverless API + rate-limit + abuse prevention. 2-3 days split-pane UI. 3-4 days cases written. 1-2 days fallback Loom polish.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Top anti-pattern watch (R8)</h4>
+        <ul>
+          <li><strong>#08 Mobile breakage / LCP &gt; 1.5s:</strong> highest risk. Artifact must defer, not block, LCP.</li>
+          <li><strong>#02 "Agentic" without running artifact:</strong> inverted — safe <em>if demo runs</em>.</li>
+          <li><strong>#10 Hide writing:</strong> risk. Mitigation: writing tab prominent in nav.</li>
+          <li><strong>#07 Lone-genius framing:</strong> the transcript must show <em>Danilo steering</em>, not "watch AI do my job."</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</article>
+
+
+<!-- ============================================================
+     DIRECTION 3 — CURATED SHIPPED WORK
+     ============================================================ -->
+<article class="direction d3" id="d3">
+  <div class="head">
+    <div>
+      <div class="dir-tag">Direction 03 · Curated Shipped Work · Track-record-led</div>
+      <h3 class="name">The Shipping Log</h3>
+      <p class="thesis">Danilo is a designer who has shipped four agentic products in one year and is open to a role. Proof by receipts.</p>
+    </div>
+    <div class="strat-bet">
+      <b>Strategic bet</b>
+      The Brittany Chiang template wins at Stripe, Airbnb, Linear, Figma, Cohere, Work &amp; Co, Notion. Lower ceiling, lower floor — the safest conversion rate across the most target companies.
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- H1 specimen -->
+    <div class="h1-specimen">
+      <span class="label">H1 · at actual size · Direction 03</span>
+      <div class="h1-d3">Designer who ships with agents. Mostly UX for AI products.</div>
+      <div class="subhead-spec">Fifteen years making software; the last year fully agentic — four shipped cases, one of them a live consumer app with a runtime LLM. EN / ES.</div>
+    </div>
+
+    <div class="spec-grid three">
+      <div class="spec-block">
+        <h4>Primary / Secondary CTA</h4>
+        <p><strong>Primary:</strong> "See the four cases ↓" (scrolls).</p>
+        <p><strong>Secondary:</strong> "Get in touch →" (email, direct).</p>
+        <p>Availability pill persistent left-rail (Brittany pattern).</p>
+      </div>
+      <div class="spec-block">
+        <h4>Section order</h4>
+        <p>1 · Hero — name, H1, subhead, availability, role target, Currently pill, social<br>2 · Proof strip (5 numbers, click-to-verify)<br>3 · Four cases (Narrative Ship, full, featured hero)<br>4 · About (75-word bio, "mastered" + "learning" split)<br>5 · Testimonials (both)<br>6 · Writing (3-post list)<br>7 · Contact<br>8 · Colophon (self-reported Lighthouse + WCAG)</p>
+      </div>
+      <div class="spec-block">
+        <h4>Essay placement + topic</h4>
+        <p>Section 6, listed as <em>"Writing"</em> with 3 dated entries. DS-recursion essay is entry #1 but not featured with preview. "Load-bearing, but not the headline."</p>
+      </div>
+      <div class="spec-block">
+        <h4>Case placement + count</h4>
+        <p><strong>Four cases, full Narrative Ship per R4, 900-1 400 words each.</strong> One <em>featured</em> case spans full width (R8 A-05: "one featured"). <strong>Top billing: TE Skin</strong> — the agent-consumable DS is R1 Must-03's strongest asset.</p>
+        <p>Order: TE Skin (featured) → EnRegla → TE Black → Life Update Mobile.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Proof strip placement</h4>
+        <p>Immediately below hero, full-width, 5 numbers (R6 spec verbatim): <em>15+ years · 346 commits/40 days · 95.6 a11y · 1 SaaS in production · 5 CVs/one prompt</em>. Each number click-to-verify within 5 min.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Testimonial placement</h4>
+        <p>Dedicated section after cases, both quotes (Sheppard + Giraldez), photo + title + LinkedIn link. Method-and-leverage framing enforced (R1 Must-05).</p>
+      </div>
+      <div class="spec-block">
+        <h4>About-me paragraph</h4>
+        <p style="font-style:italic;color:#d6dae5;line-height:1.6">I'm Danilo. I design software and I work with coding agents the way a type designer works with a rasterizer — as a tool I have opinions about. Fifteen years shipping, including a dark-first design system at a tier-1 US consulting firm, a compliance platform running paid pilots, and a consumer app with Gemini as a runtime primitive. I don't call myself an AI designer. I design products where an LLM is part of the runtime, and I'm more honest than most about where that still breaks. Based in Quito, working globally, in English or Spanish.</p>
+        <p class="mono" style="color:var(--ink-4);font-size:10.5px;margin-top:6px">108 words · R5 Draft A verbatim</p>
+      </div>
+      <div class="spec-block">
+        <h4>Contact / hire-signal</h4>
+        <p>Explicit left-rail: <em>"Open to AI Product Designer / Agentic UX Lead · remote-global"</em> + green dot. Role target visible on first paint, per R2 lesson 05. Contact block at section 7 with 3 links (email, LinkedIn, GitHub).</p>
+      </div>
+      <div class="spec-block">
+        <h4>Bilingual plan (EN+ES)</h4>
+        <p>EN primary, ES toggle in chrome swaps hero, section titles, About, case abstracts. Case bodies: EN only for V11 (ES deferred). Writing: EN only for V11 (one essay, bilingual-deferred). Lowest-risk bilingual commitment.</p>
+      </div>
+    </div>
+
+    <!-- visual -->
+    <div class="spec-grid">
+      <div class="spec-block">
+        <h4>Palette — quiet ink</h4>
+        <div class="swatches">
+          <span class="sw" style="background:#090b10" title="bg"></span>
+          <span class="sw" style="background:#0e1119" title="bg-alt"></span>
+          <span class="sw" style="background:#e7eaf1" title="text"></span>
+          <span class="sw" style="background:#9ba3b5" title="muted"></span>
+          <span class="sw" style="background:#FF8964" title="accent"></span>
+        </div>
+        <p class="palette-label">#090b10 · #0e1119 · #e7eaf1 · #9ba3b5 · #FF8964</p>
+        <p>Accent only in: role line, metric highlight spans, link underlines, dot in availability pill. No glow. No gradient. Chiang / Kraft aesthetic.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Typography</h4>
+        <p><strong>Inter</strong> var 400/500/650/700 self-hosted across body + display. JetBrains Mono self-hosted for: chrome, metrics, labels, proof strip, availability. No serif — this is a working portfolio, not a magazine.</p>
+      </div>
+      <div class="spec-block">
+        <h4>H1 spec</h4>
+        <p><code>font: Inter 650</code> · <code>size: clamp(40px, 5.2vw, 72px)</code> · <code>line-height: 1.04</code> · <code>letter-spacing: -0.022em</code> · <code>max-width: 22ch</code>. No accent tokens in H1 — H1 is restrained, role line in accent carries identity.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Motion tier</h4>
+        <p><strong>LOW.</strong> Only: in-view case-tile fade-up (300ms, reduced-motion safe), focus ring on keyboard nav, link underline draw. No scroll-jack, no particle canvas, no hero video. Rauno-level restraint.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Hero visual</h4>
+        <p><strong>Left rail sticky (Chiang pattern): name · H1 · subhead · role line · availability · social.</strong> Right rail scrollable: proof strip, then cases. No hero image. Featured case tile is the visual anchor, not the top of the page. See mockup.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Chrome + availability</h4>
+        <p>Availability pill baked into left rail (always visible during case-scroll on desktop). Mobile: sticky top-bar replaces it. Role-target tag line in accent, always first after the H1.</p>
+      </div>
+    </div>
+
+    <!-- HERO MOCKUP D3 -->
+    <div class="hero-mock">
+      <div class="browser-bar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="url-bar">danilorojas.design</span>
+      </div>
+      <div class="mock-d3">
+        <div class="left">
+          <div class="who">Danilo Rojas · <b>Designer</b></div>
+          <h2 class="d3-h1">Designer who ships with agents.</h2>
+          <p class="d3-sub">Fifteen years making software; the last year fully agentic — four shipped cases, one of them a live consumer app with a runtime LLM.</p>
+          <div class="availability">Open · remote-global</div>
+          <div class="role-line">→ AI Product Designer · Agentic UX Lead</div>
+          <div class="d3-socials">
+            <a href="#">linkedin.com/in/mdanilorojas</a>
+            <a href="#">github.com/mdanilorojas</a>
+            <a href="#">danilo@danilorojas.design</a>
+          </div>
+        </div>
+        <div class="right">
+          <h4>Receipts</h4>
+          <div class="proof-strip">
+            <div class="p"><span class="v">15<span>+</span></span>years shipping</div>
+            <div class="p"><span class="v">346</span>commits · 40d</div>
+            <div class="p"><span class="v">95.6</span>a11y · DS audit</div>
+            <div class="p"><span class="v">1</span>SaaS in prod</div>
+            <div class="p"><span class="v">5</span>CVs · 1 prompt</div>
+          </div>
+          <h4>Selected shipped systems</h4>
+          <div class="cases">
+            <div class="case-tile feat">
+              <div class="tagline">Featured · 2026 · agent-consumable DS</div>
+              <h5>TE Skin — a Design System an agent can call</h5>
+              <p>A design system rewritten as a Claude skill: 17 components, tokenised a11y rules, agent-rendered artifacts. Built inside Trusted Environments (Booz Allen Hamilton) with two verified references.</p>
+              <div class="metrics">17 components · <b>78.4 → 95.6</b> a11y · 5 recursive rounds · agent-consumable</div>
+            </div>
+            <div class="case-tile">
+              <div class="tagline">2026 · paying pilots</div>
+              <h5>EnRegla — Plan → Review → Apply</h5>
+              <p>Compliance platform where regulators review agentic diffs, not black-box automations. Active pilots.</p>
+              <div class="metrics">Paying pilots · diff-review UX · <b>P05</b></div>
+            </div>
+            <div class="case-tile">
+              <div class="tagline">2026 · a11y-in-tokens</div>
+              <h5>TE Black — accessibility as a skill</h5>
+              <p>Dark-first DS where contrast rules live in tokens. Every agent that touches a token cannot emit inaccessible output.</p>
+              <div class="metrics">Tokens · a11y policy · <b>R3 P10</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-block">
+        <h4>Signal layer (R1 must-emit)</h4>
+        <ul>
+          <li><strong>S1 Craft+Taste:</strong> served via restraint — no decoration, everything load-bearing.</li>
+          <li><strong>S2 Writing:</strong> served but quiet. One entry listed, counter visible.</li>
+          <li><strong>S3 Agent-native proof:</strong> served via featured TE Skin case + proof-strip numbers.</li>
+          <li><strong>S4 Live interactive artifact:</strong> <em>weakest.</em> Mitigation: Loom embed inside TE Skin case.</li>
+          <li><strong>S5 Profile+agents framing:</strong> explicit in About + testimonials both frame leverage.</li>
+        </ul>
+      </div>
+      <div class="spec-block">
+        <h4>Proof dependencies (R6)</h4>
+        <ul>
+          <li>#01 Live domain — <strong>must-have</strong></li>
+          <li>#02 LinkedIn recs — <strong>must-have</strong> (testimonials are load-bearing)</li>
+          <li>#05 60-sec Loom — must-have (serves S4)</li>
+          <li>#04 /dr-cv skill — must-have (proof-strip #5 links here)</li>
+          <li>#03 DS-recursion essay — nice-to-have (listed, not headlined)</li>
+        </ul>
+      </div>
+      <div class="spec-block">
+        <h4>Risk layer — who it filters out</h4>
+        <p>Nobody outright — loses the <em>top decile</em> signal at <b>Anthropic, Cursor, IDEO</b> where "has a POV" and "ships like a DevRel" beat "has a portfolio." Reads as strong senior IC, not visionary hire. Safer ceiling is lower.</p>
+      </div>
+      <div class="spec-block">
+        <h4>What breaks if execution falters</h4>
+        <p>If any one case is under-polished, the whole grid under-delivers. Fewer dependencies than D1/D2, but <em>all four cases must be tight.</em> Weakest-link liability. Mitigation: R4's Narrative Ship template enforced for all 4.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Production estimate</h4>
+        <p><strong>7-10 days</strong> to V11 ship. Fastest of the three. 3-4 days case polish (Phase 3 landing already exists). 1-2 days re-skin (kill Huly pill, flatten). 1-2 days a11y pass. 1 day bilingual toggle. 1 day Loom + testimonials.</p>
+      </div>
+      <div class="spec-block">
+        <h4>Top anti-pattern watch (R8)</h4>
+        <ul>
+          <li><strong>#01 Huly-clone CTA:</strong> highest risk — current landing IS this silhouette. Must flatten.</li>
+          <li><strong>#06 Metrics without baseline:</strong> must enforce baseline+window on every proof-strip number.</li>
+          <li><strong>#09 Stale:</strong> Currently pill mandatory.</li>
+          <li><strong>#03 No target role:</strong> pre-mitigated by Chiang pattern.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</article>
+
+
+<!-- ============================================================
+     SECTION 2 — COMPARISON MATRIX
+     ============================================================ -->
+<section>
+  <h2 class="sec-title"><span class="n">02</span>Comparison matrix · 12 criteria × 3 directions</h2>
+  <p class="section-lede">Every layer above, distilled to one line per cell. Read <em>down</em> each column to see the direction whole. Read <em>across</em> each row to see the trade.</p>
+
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th class="crit">Criterion</th>
+        <th class="d1">D1 · The Notebook</th>
+        <th class="d2">D2 · The Workshop</th>
+        <th class="d3">D3 · Shipping Log</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="crit">Voice register (R5)</td>
+        <td class="d"><b>Draft C · Taste-first critic.</b> "Most teams are still designing for AI. I design with it."</td>
+        <td class="d"><b>Draft B · Evangelist builder.</b> "I design AI products. With an AI. Every day."</td>
+        <td class="d"><b>Draft A · Quiet craftsman.</b> "Designer who ships with agents. Mostly UX for AI products."</td>
+      </tr>
+      <tr>
+        <td class="crit">Hero is…</td>
+        <td class="d">A 2 000-word essay, drop-capped. No image. Serif body.</td>
+        <td class="d">Split-pane Artifact Panel (R3 P01): chat left, live CV right.</td>
+        <td class="d">Left rail name + H1 + role + availability. Right rail scrollable cases.</td>
+      </tr>
+      <tr>
+        <td class="crit">Case format (R4)</td>
+        <td class="d">4 × 450 words, evidence footnotes to the essay.</td>
+        <td class="d">4 × full Narrative Ship (900-1 400 words).</td>
+        <td class="d">4 × full Narrative Ship, one featured at 2× tile width.</td>
+      </tr>
+      <tr>
+        <td class="crit">Top-billed case</td>
+        <td class="d">TE Skin (DS-recursion essay absorbs it).</td>
+        <td class="d">EnRegla (maps to live composer: plan → review → apply).</td>
+        <td class="d">TE Skin (agent-consumable DS, featured).</td>
+      </tr>
+      <tr>
+        <td class="crit">Essay placement</td>
+        <td class="d">Is the page.</td>
+        <td class="d">Nav link only.</td>
+        <td class="d">Listed section, 3 entries, no preview.</td>
+      </tr>
+      <tr>
+        <td class="crit">Proof strip</td>
+        <td class="d">Typographic footnote, undersold.</td>
+        <td class="d">Full-width below artifact, 5 click-to-verify numbers.</td>
+        <td class="d">Full-width below hero, 5 click-to-verify numbers.</td>
+      </tr>
+      <tr>
+        <td class="crit">Testimonials</td>
+        <td class="d">One quote, embedded mid-essay.</td>
+        <td class="d">Both, side-by-side, on case-divider.</td>
+        <td class="d">Both, dedicated section, photos + titles.</td>
+      </tr>
+      <tr>
+        <td class="crit">Motion tier (R7)</td>
+        <td class="d">LOW · fade-in only.</td>
+        <td class="d">MEDIUM · scoped to artifact streaming.</td>
+        <td class="d">LOW · in-view fade-up only.</td>
+      </tr>
+      <tr>
+        <td class="crit">Must-have proofs (R6)</td>
+        <td class="d">#01 domain · <b>#03 essay</b></td>
+        <td class="d">#01 domain · <b>#04 skill</b> · #05 Loom · #02 recs</td>
+        <td class="d">#01 domain · #02 recs · #05 Loom · #04 skill</td>
+      </tr>
+      <tr>
+        <td class="crit">Bilingual commitment</td>
+        <td class="d">Full EN + full ES essay. Heaviest.</td>
+        <td class="d">Chrome + cases bilingual. Demo EN-only.</td>
+        <td class="d">Chrome + hero + abstracts ES. Case bodies EN only. Lightest.</td>
+      </tr>
+      <tr>
+        <td class="crit">Production estimate</td>
+        <td class="d">10-14 days.</td>
+        <td class="d">12-18 days.</td>
+        <td class="d"><b>7-10 days.</b></td>
+      </tr>
+      <tr>
+        <td class="crit">Highest-risk anti-pattern (R8)</td>
+        <td class="d">#05 GPT-prose · #02 no running artifact.</td>
+        <td class="d">#08 mobile/LCP · #07 lone-genius transcript read.</td>
+        <td class="d">#01 Huly-clone silhouette · #06 metric without baseline.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+<!-- ============================================================
+     SECTION 3 — DECISION QUESTION
+     ============================================================ -->
+<section>
+  <h2 class="sec-title"><span class="n">03</span>The decision question</h2>
+  <p class="section-lede">If you can answer this single question honestly, R10 writes itself.</p>
+
+  <div class="decision">
+    <div class="tag">The strategic question for R10</div>
+    <h3>Is Danilo's strongest hireable asset his <em>POV</em>, his <em>demo</em>, or his <em>track record</em>?</h3>
+    <p style="color:var(--ink-2);font-size:15.5px;line-height:1.55;max-width:72ch;margin-top:14px">
+      The three directions map 1:1 to these three answers. The question is not which asset is <em>strongest in absolute terms</em> — all three are real. It is which asset, <em>when placed first</em>, best differentiates Danilo from the median tier-1 candidate in May 2026. The median candidate has a track record. Fewer have a demo. Very few have a published POV.
+    </p>
+
+    <div class="answers">
+      <div class="ans d1">
+        <h5>If the answer is POV</h5>
+        <p><b>Direction 1 · The Notebook.</b> You are betting that Danilo can produce a 2 000-word essay that Karri Saarinen or Kevin Ball would read to the end. If yes: highest ceiling on this list.</p>
+      </div>
+      <div class="ans d2">
+        <h5>If the answer is Demo</h5>
+        <p><b>Direction 2 · The Workshop.</b> You are betting that <code>/dr-cv</code> is ready for strangers in 14 days, including abuse-resistance, latency, and no-JS fallback. If yes: widest "wow" effect.</p>
+      </div>
+      <div class="ans d3">
+        <h5>If the answer is Track Record</h5>
+        <p><b>Direction 3 · The Shipping Log.</b> You are betting that receipts + craft floor + availability will out-convert cleverness across the most target companies. Safest yield, lowest ceiling.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 4 — RECOMMENDED CONVERGENCE
+     ============================================================ -->
+<section>
+  <h2 class="sec-title"><span class="n">04</span>Recommended convergence into R10</h2>
+
+  <div class="recommend">
+    <div class="badge">★ Pick for R10</div>
+    <h3>Converge on <em>Direction 1 · The Notebook</em>, with Direction 3's proof strip grafted below the fold.</h3>
+    <p>
+      Direction 3 is the safest yield but it is also <b>where the median tier-1 candidate already is</b>. Chiang-template portfolios are the baseline in 2026, not the differentiator; R2's data is unambiguous. Direction 2 is the most exciting demo but carries the highest execution risk and 14 days of infra work that has nothing to do with design judgment. Direction 1 is the one bet that plays to Danilo's <b>single unreplicated asset</b>: a first-person thesis on agentic design that cannot be reproduced by a copycat landing or by an agent. R1 flags writing as the "most under-used differentiator for a Latin American designer competing with US ICs." R6's highest-leverage shipped proof (#03, the DS-recursion essay) is already scheduled; the page becomes a natural home for it rather than an afterthought. And R5 is explicit: <b>"Pick Draft C, borrow Draft A's restraint for the rest of the landing."</b> That is exactly this convergence — Notebook voice above the fold, Shipping Log proof-strip below. The Workshop demo becomes a single embedded artifact in the middle of the essay, not the whole page, which removes the infra blocker.
+    </p>
+
+    <div class="rank-row">
+      <div class="rank-slot">
+        <div class="r">★ 1st · Pick</div>
+        <h5>Direction 1 · The Notebook</h5>
+        <p>Highest ceiling. Taste-first critic voice. Writing IS the landing. Serve S2+S5 maximally; borrow D3's proof strip to cover S1+S3.</p>
+      </div>
+      <div class="rank-slot silver">
+        <div class="r">2nd · Safe fallback</div>
+        <h5>Direction 3 · Shipping Log</h5>
+        <p>If the essay cannot clear editorial bar by 2026-05-22, pivot here. 7-10 day ship. Guaranteed competent-senior read at every target company.</p>
+      </div>
+      <div class="rank-slot bronze">
+        <div class="r">3rd · Park</div>
+        <h5>Direction 2 · The Workshop</h5>
+        <p>Best long-term asset but wrong first move. Park the full split-pane demo for V12. Ship the Loom stub inside Direction 1 or 3 for now.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="foot">
+  V11 · Round 09 · Hiring Universe · SHORTLIST · generated 2026-05-08 · sources: R1-R8 in this folder · 3 directions · 12 criteria · decision question · convergence to D1 recommended for R10 build spec
+</div>
+
+</div>
+</body>
+</html>

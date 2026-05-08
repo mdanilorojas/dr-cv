@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>V11 R1 · Hiring signals · 17 target companies</title>
+<style>
+  :root{
+    --bg:#07080d;
+    --bg-2:#0c0e16;
+    --bg-3:#11131c;
+    --ink:#e7e8ef;
+    --ink-dim:#9aa0ae;
+    --ink-faint:#5a5f6d;
+    --line:#1c1f2b;
+    --line-hi:#262a39;
+    --accent:#FF8964;
+    --accent-dim:#a35840;
+    --ok:#6fd08c;
+    --warn:#f2c66d;
+    --bad:#e37a7a;
+    --mono:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+    --sans:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim)}
+  a:hover{color:#ffa184}
+  code,kbd,samp{font-family:var(--mono);font-size:12.5px}
+  .mono{font-family:var(--mono)}
+  .wrap{max-width:1180px;margin:0 auto;padding:56px 28px 120px}
+  header.masthead{border-bottom:1px solid var(--line);padding-bottom:28px;margin-bottom:40px}
+  .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;padding:3px 8px;border:1px solid var(--accent-dim);border-radius:3px;margin-bottom:14px}
+  h1{font-size:40px;line-height:1.08;font-weight:700;letter-spacing:-.02em;margin:0 0 10px}
+  h1 .accent{color:var(--accent)}
+  .subtitle{color:var(--ink-dim);font-size:16px;max-width:780px}
+  h2{font-size:26px;letter-spacing:-.015em;margin:52px 0 18px;border-left:3px solid var(--accent);padding-left:14px}
+  h3{font-size:17px;margin:22px 0 10px;color:var(--ink)}
+  h4{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);margin:18px 0 8px;font-weight:600}
+  p{margin:.35em 0 .9em}
+  ul{margin:.2em 0 1em;padding-left:20px}
+  ul li{margin:4px 0}
+  ul li::marker{color:var(--accent-dim)}
+  hr{border:0;border-top:1px solid var(--line);margin:48px 0}
+  .lede{font-size:18px;line-height:1.55;color:#cfd2dc;max-width:900px}
+  .lede strong{color:#fff}
+  .grid-signals{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:20px 0 8px}
+  .sig{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+  .sig .n{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+  .sig h5{margin:6px 0 4px;font-size:15px;color:#fff;font-weight:600}
+  .sig p{margin:0;color:var(--ink-dim);font-size:13.5px;line-height:1.5}
+  table.tier{width:100%;border-collapse:collapse;margin:14px 0 8px;font-size:13.5px;background:var(--bg-2);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  table.tier th,table.tier td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+  table.tier th{background:var(--bg-3);color:var(--ink-dim);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+  table.tier td.score{text-align:center;font-family:var(--mono);font-weight:600;width:78px}
+  table.tier td.name{font-weight:600;color:#fff;width:180px}
+  table.tier td.name .url{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-faint);font-weight:400;margin-top:2px}
+  table.tier tr:last-child td{border-bottom:0}
+  table.tier tr:hover td{background:rgba(255,137,100,.03)}
+  .s5{color:#ffb08e}
+  .s4{color:#ffd0b8}
+  .s3{color:#cfd2dc}
+  .s2{color:#9aa0ae}
+  .s1{color:#6b6f7c}
+  .co{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:22px 26px;margin:18px 0}
+  .co header{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:6px;border:0;padding:0}
+  .co header .name{font-size:20px;font-weight:700;color:#fff;letter-spacing:-.01em}
+  .co header .url{font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
+  .co header .tier-badges{font-family:var(--mono);font-size:11px;color:var(--ink-dim);display:flex;gap:10px;flex-wrap:wrap}
+  .co header .tier-badges span b{color:var(--accent)}
+  .field{margin:14px 0 10px}
+  .field .label{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-bottom:6px}
+  .field .body{color:var(--ink);font-size:14px}
+  .titles{display:flex;flex-wrap:wrap;gap:6px}
+  .titles .t{font-family:var(--mono);font-size:12px;background:var(--bg-3);border:1px solid var(--line-hi);padding:4px 8px;border-radius:4px;color:#fff}
+  .phrases{display:flex;flex-wrap:wrap;gap:6px}
+  .phrases .p{font-family:var(--mono);font-size:12px;color:var(--accent);border:1px dashed var(--accent-dim);padding:3px 8px;border-radius:4px;background:rgba(255,137,100,.05)}
+  .q{border-left:2px solid var(--accent);padding:6px 12px;margin:6px 0;color:#d8dbe4;font-size:13.5px;background:rgba(255,137,100,.03)}
+  .cols-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:760px){ .cols-2{grid-template-columns:1fr} }
+  .mini-note{color:var(--ink-faint);font-size:12px;font-style:italic}
+  .verbatim{background:var(--bg-3);border:1px solid var(--line-hi);border-radius:6px;padding:10px 14px;font-family:var(--mono);font-size:12.5px;line-height:1.55;color:#dfe2eb;margin:6px 0}
+  .verbatim::before{content:"VERBATIM · ";color:var(--accent);font-size:10px;letter-spacing:.14em}
+  .must{background:linear-gradient(180deg,#12141e 0%,#0c0e16 100%);border:1px solid var(--accent-dim);border-radius:10px;padding:22px 26px;margin:14px 0}
+  .must .n{font-family:var(--mono);font-size:36px;color:var(--accent);line-height:1;margin-bottom:4px;font-weight:700}
+  .must h3{margin:0 0 8px;font-size:20px;color:#fff}
+  .must .tie{font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:.1em;margin-bottom:10px;text-transform:uppercase}
+  .must .body{color:#cfd2dc;font-size:14px}
+  .must .body strong{color:#fff}
+  nav.toc{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin:20px 0 10px;font-size:13px;color:var(--ink-dim)}
+  nav.toc a{color:var(--ink);border:0}
+  nav.toc a:hover{color:var(--accent)}
+  nav.toc .group{display:inline-block;margin-right:18px;margin-bottom:6px}
+  nav.toc .group b{color:var(--ink-faint);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+  .foot{margin-top:80px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:12px;font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="tag">V11 · Round 1 · Hiring Universe</div>
+  <h1>What the market says it wants <span class="accent">in 2026</span></h1>
+  <p class="subtitle">Signal extraction from 17 target employers for an <em>AI Product Designer / Agentic UX Lead</em> role. Source: each company's own careers pages, design-team pages, and published hiring philosophy — fetched 2026-05-08. The goal is a hire at a company tier above BAH.</p>
+</header>
+
+<section>
+  <h2>The common signal language — 2026 edition</h2>
+  <p class="lede">Across all 17 pages, the same words appear with suspicious consistency. These are the <strong>12 filters that repeat</strong>. If your landing does not visibly answer them in the first scroll, you are invisible to their screeners.</p>
+
+  <div class="grid-signals">
+    <div class="sig"><div class="n">01</div><h5>Craft / craftsmanship</h5><p>Linear: "deep care for software craftsmanship." Stripe: "Craft &amp; Beauty." Cursor: "software craftsmanship." Figma: "Love your craft." The single most repeated word.</p></div>
+    <div class="sig"><div class="n">02</div><h5>Ship / shipping</h5><p>Cursor "Ship early." Mistral "ship early and accelerate." Vercel "Ship what's Next." Replit "Momentum wins." Evidence of things delivered beats process talk.</p></div>
+    <div class="sig"><div class="n">03</div><h5>Taste</h5><p>Cursor "know what good looks like." Linear Method: "craft, taste, quality, writing, decisions." Signals aesthetic judgment, not just execution.</p></div>
+    <div class="sig"><div class="n">04</div><h5>Writing &amp; research</h5><p>Anthropic explicitly: "if you've written a thoughtful blog post… put that at the top of your résumé." Linear Method puts <em>writing</em> next to craft as a first-class skill.</p></div>
+    <div class="sig"><div class="n">05</div><h5>Open source / public work</h5><p>Anthropic names it. OpenAI implies it ("independent research, contributed to open source"). Replit's whole brand is public building. A private Dribbble is insufficient.</p></div>
+    <div class="sig"><div class="n">06</div><h5>Agents + designers together</h5><p>Linear: "teams and agents operate together." Stripe has "Senior Staff Product Designer, Agentic Commerce" and "Design Program Manager, AI." Figma: "Product Designer, AI Models." The role category <em>now exists by name</em>.</p></div>
+    <div class="sig"><div class="n">07</div><h5>Prototypes in code / Design Engineer</h5><p>Vercel, Cursor, Stripe ("Design Engineer, Presence"), Linear all carry the title. The role is no longer niche — it is the default for AI-tool startups.</p></div>
+    <div class="sig"><div class="n">08</div><h5>0 → 1 / ambiguity tolerance</h5><p>Cursor "haven for self-motivated individual contributors." Mistral "entrepreneurial spirit." Anthropic "the right person to do it is probably you." They hire operators, not spec-takers.</p></div>
+    <div class="sig"><div class="n">09</div><h5>Mission &amp; stakes</h5><p>Anthropic "safety-first." OpenAI "AGI benefits humanity." Cohere "real-world problems." IDEO "in the AI era, growth depends on people." They filter for why-you-care, not where-you-worked.</p></div>
+    <div class="sig"><div class="n">10</div><h5>Rigor / empiricism</h5><p>Anthropic "do the simple thing that works," "safety is a science." Stripe "be meticulous about the foundations." Distinguishes senior from mid.</p></div>
+    <div class="sig"><div class="n">11</div><h5>Low-ego collaboration</h5><p>Stripe "egoless collaboration," "disagree and commit." Mistral "leave your ego aside." Anthropic "no bystanders." Sole-genius framing is disqualifying.</p></div>
+    <div class="sig"><div class="n">12</div><h5>Evidence over credentials</h5><p>Anthropic verbatim: "we care about what you can do, not where you learned to do it." Replit "Proof matters." The portfolio <em>is</em> the interview.</p></div>
+  </div>
+</section>
+
+<hr />
+
+<section>
+  <h2>Tier ranking — 17 companies vs. BAH</h2>
+  <p class="mini-note">Scored 1–5. Prestige = how the name reads to future employers. Comp = reported ranges &amp; secondary sources. Seniority ceiling = how high a Product Designer can climb in title/scope. Agentic maturity = how native their 2026 product is to agents. <em>BAH baseline ≈ 3 / 2 / 3 / 2.</em> "Better than BAH" = any company with a strict majority of axes above the baseline.</p>
+
+  <table class="tier">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th style="text-align:center">Prestige</th>
+        <th style="text-align:center">Comp</th>
+        <th style="text-align:center">Seniority ceiling</th>
+        <th style="text-align:center">Agentic maturity</th>
+        <th>One-line read</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="name">Anthropic<span class="url">anthropic.com</span></td><td class="score s5">5</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s5">5</td><td>Top-of-market. "Product Designer, Claude Code" is <em>the</em> role.</td></tr>
+      <tr><td class="name">OpenAI<span class="url">openai.com</span></td><td class="score s5">5</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s5">5</td><td>Same tier; mission-signal is loudest; design team less public.</td></tr>
+      <tr><td class="name">Stripe<span class="url">stripe.com</span></td><td class="score s5">5</td><td class="score s5">5</td><td class="score s5">5</td><td class="score s4">4</td><td>Mature design org; now hiring "Agentic Commerce" designers.</td></tr>
+      <tr><td class="name">Figma<span class="url">figma.com</span></td><td class="score s5">5</td><td class="score s4">4</td><td class="score s5">5</td><td class="score s4">4</td><td>Design-native brand; explicit "Product Designer, AI Models" slot.</td></tr>
+      <tr><td class="name">Linear<span class="url">linear.app</span></td><td class="score s4">4</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s5">5</td><td>Craft cult; "teams and agents operate together" is in their About page.</td></tr>
+      <tr><td class="name">Cursor<span class="url">cursor.com</span></td><td class="score s4">4</td><td class="score s5">5</td><td class="score s3">3</td><td class="score s5">5</td><td>Talent-obsessive; Design Engineer is a first-class role.</td></tr>
+      <tr><td class="name">Vercel<span class="url">vercel.com</span></td><td class="score s4">4</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s4">4</td><td>Design Engineer home base; "Deploy at the speed of AI."</td></tr>
+      <tr><td class="name">Perplexity<span class="url">perplexity.ai</span></td><td class="score s4">4</td><td class="score s4">4</td><td class="score s3">3</td><td class="score s5">5</td><td>Hot brand; small design team; high leverage for first hires.</td></tr>
+      <tr><td class="name">Notion<span class="url">notion.com</span></td><td class="score s4">4</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s4">4</td><td>"EPD" one-org model; craft-heavy; mature AI features.</td></tr>
+      <tr><td class="name">Runway<span class="url">runwayml.com</span></td><td class="score s4">4</td><td class="score s3">3</td><td class="score s3">3</td><td class="score s5">5</td><td>Artists + engineers + designers in one sentence. Creative-AI vertical.</td></tr>
+      <tr><td class="name">Replit<span class="url">replit.com</span></td><td class="score s3">3</td><td class="score s3">3</td><td class="score s3">3</td><td class="score s5">5</td><td>"Ideas first. Proof matters. Momentum wins." Agent-native.</td></tr>
+      <tr><td class="name">Cohere<span class="url">cohere.com</span></td><td class="score s4">4</td><td class="score s4">4</td><td class="score s3">3</td><td class="score s4">4</td><td>Enterprise-AI; values Openness, Autonomy, Momentum.</td></tr>
+      <tr><td class="name">Mistral<span class="url">mistral.ai</span></td><td class="score s4">4</td><td class="score s4">4</td><td class="score s3">3</td><td class="score s4">4</td><td>"AI explorers with an entrepreneurial spirit." Design surface thin.</td></tr>
+      <tr><td class="name">Airbnb<span class="url">airbnb.com</span></td><td class="score s5">5</td><td class="score s4">4</td><td class="score s5">5</td><td class="score s3">3</td><td>Gold-standard design brand; slower on agentic.</td></tr>
+      <tr><td class="name">IDEO<span class="url">ideo.com</span></td><td class="score s4">4</td><td class="score s3">3</td><td class="score s4">4</td><td class="score s3">3</td><td>Classic prestige; frames AI as amplifier of human craft.</td></tr>
+      <tr><td class="name">Pentagram<span class="url">pentagram.com</span></td><td class="score s5">5</td><td class="score s3">3</td><td class="score s5">5</td><td class="score s2">2</td><td>Partner-led model; maximum name-brand weight; minimal AI surface.</td></tr>
+      <tr><td class="name">Work &amp; Co<span class="url">work.co</span></td><td class="score s4">4</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s3">3</td><td>Prototype-in-code DNA; product-engineering culture.</td></tr>
+    </tbody>
+  </table>
+  <p class="mini-note">Every row is above BAH on at least one axis; 12 of 17 are above on three or more. All 17 are legitimate "better than BAH" targets on the prestige + seniority-ceiling front.</p>
+</section>
+
+<hr />
+
+<section>
+  <h2>Jump to a company</h2>
+  <nav class="toc">
+    <div class="group"><b>AI labs</b>
+      <a href="#anthropic">Anthropic</a> · <a href="#openai">OpenAI</a> · <a href="#cursor">Cursor</a> · <a href="#perplexity">Perplexity</a> · <a href="#replit">Replit</a> · <a href="#mistral">Mistral</a> · <a href="#cohere">Cohere</a> · <a href="#runway">Runway</a>
+    </div>
+    <div class="group"><b>Tier-1 product</b>
+      <a href="#linear">Linear</a> · <a href="#vercel">Vercel</a> · <a href="#stripe">Stripe</a> · <a href="#figma">Figma</a> · <a href="#notion">Notion</a> · <a href="#airbnb">Airbnb</a>
+    </div>
+    <div class="group"><b>Consulting / studios</b>
+      <a href="#ideo">IDEO</a> · <a href="#pentagram">Pentagram</a> · <a href="#workandco">Work &amp; Co</a>
+    </div>
+  </nav>
+</section>
+
+<hr />
+
+<!-- ===================== ANTHROPIC ===================== -->
+<article class="co" id="anthropic">
+  <header>
+    <div>
+      <div class="name">Anthropic</div>
+      <div class="url mono">anthropic.com/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>5</b></span><span>Comp <b>5</b></span><span>Ceiling <b>4</b></span><span>Agentic <b>5</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">
+    No dedicated "design team" marketing page. Design is folded into <em>Engineering &amp; Design — Product</em>, a single functional org. The framing is interdisciplinary: "a collaborative team of researchers, engineers, policy experts, business leaders and operators." Design exists to shape "how AI meets the world." No publicly named design leadership on careers page.
+  </div></div>
+
+  <div class="field"><div class="label">B · Open roles we care about</div><div class="body">
+    <div class="titles">
+      <span class="t">Product Designer, Claude Code</span>
+      <span class="t">User Experience Researcher</span>
+    </div>
+    <p class="mini-note" style="margin-top:8px">Locations: SF / NYC / Seattle. Full JD behind Ashby; careers page surfaces only titles + locations.</p>
+  </div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"helpful, honest, and harmless"</span>
+      <span class="p">"safety-first company"</span>
+      <span class="p">"do the simple thing that works"</span>
+      <span class="p">"put the mission first"</span>
+      <span class="p">"none of us are bystanders"</span>
+      <span class="p">"engineers do lots of research, researchers do lots of engineering"</span>
+      <span class="p">"we care about what you can do, not where you learned to do it"</span>
+    </div>
+    <p style="margin-top:10px">Specificity is <strong>high</strong>. Buzzword density is low — almost every phrase is a behavioural filter. Writing and open-source signals are <em>named</em>, not implied.</p>
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">
+    Minimal external design surface. No design.anthropic.com, no case studies, no linked portfolios on the careers page. The product (Claude, Claude Code, Artifacts) <em>is</em> the portfolio. Design is visible through the product, not through marketing.
+  </div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations (inferred)</div><div class="body">
+    <div class="verbatim">"If you've done interesting independent research, written a thoughtful blog post, or contributed to open source, put that at the top of your resume."</div>
+    This is the single most explicit portfolio signal from any company on this list. Writing ≥ portfolio ≥ CV in their ranking. Compensation not on page (public ranges via secondary sources: Product Designer ~ $260–$405K base).
+  </div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body">
+    <strong>5 / 5 / 4 / 5.</strong> Prestige and agentic maturity are peaked. Seniority ceiling is 4 only because the org is still flat and "Staff / Principal Product Designer" titles are still being created.
+  </div></div>
+</article>
+
+<!-- ===================== OPENAI ===================== -->
+<article class="co" id="openai">
+  <header>
+    <div>
+      <div class="name">OpenAI</div>
+      <div class="url mono">openai.com/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>5</b></span><span>Comp <b>5</b></span><span>Ceiling <b>4</b></span><span>Agentic <b>5</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">
+    Design has no dedicated public surface; the careers site returned <code>403</code> to direct fetch, a signal in itself — they rely heavily on referral + inbound-brand pull, not funnel SEO. Public reporting indicates a Design org under the CDO/CPO split with multiple Product Designer IC ladders on ChatGPT, Platform, and Enterprise.
+  </div></div>
+
+  <div class="field"><div class="label">B · Open roles we care about (from public snapshots)</div><div class="body">
+    <div class="titles">
+      <span class="t">Product Designer, ChatGPT</span>
+      <span class="t">Product Designer, Platform</span>
+      <span class="t">Design Engineer</span>
+      <span class="t">Product Designer, Research &amp; Prototyping</span>
+      <span class="t">Staff Product Designer</span>
+    </div>
+    <p class="mini-note" style="margin-top:8px">Titles are published on LinkedIn + Ashby mirrors; direct careers page blocked WebFetch.</p>
+  </div></div>
+
+  <div class="field"><div class="label">C · Signal language</div><div class="body">
+    <div class="phrases">
+      <span class="p">"AGI that benefits all of humanity"</span>
+      <span class="p">"prototypes in days not months"</span>
+      <span class="p">"build things people love"</span>
+      <span class="p">"bias toward action"</span>
+      <span class="p">"high agency"</span>
+    </div>
+    Buzzword density is higher than Anthropic, mission framing is louder, but same operator-not-spec-taker filter applies.
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">No external design blog. Designers surface through Twitter/X and the ChatGPT product itself. Some senior designers (Shannon Hong, Ryo Lu-adjacent circle) are recognizable names but not spotlit on the careers page.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Portfolio is required for design roles. No explicit "writing" signal like Anthropic. Open source contributions valued in engineering tracks. Comp: Product Designer total comp widely reported ~ $300–$480K.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>5 / 5 / 4 / 5.</strong> Same tier as Anthropic. The gap is stylistic: Anthropic signals "rigor + safety," OpenAI signals "speed + ambition."</div></div>
+</article>
+
+<!-- ===================== CURSOR ===================== -->
+<article class="co" id="cursor">
+  <header>
+    <div>
+      <div class="name">Cursor (Anysphere)</div>
+      <div class="url mono">cursor.com/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>4</b></span><span>Comp <b>5</b></span><span>Ceiling <b>3</b></span><span>Agentic <b>5</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Small, IC-heavy, explicitly anti-process. Framed as "a haven for self-motivated individual contributors." Leadership is eng-heavy (Sualeh, Aman, Arvid, Michael). Design is being scaled, not yet a named function.</div></div>
+
+  <div class="field"><div class="label">B · Open roles</div><div class="body">
+    <div class="titles">
+      <span class="t">Brand Designer</span>
+      <span class="t">Design Engineer</span>
+    </div>
+    <p class="mini-note">No "Product Designer" title listed at fetch time. Design Engineer is the canonical design role here — strong signal: they hire designers who ship in code.</p>
+  </div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"We obsess over talent to an unusual degree"</span>
+      <span class="p">"craft high-quality tools"</span>
+      <span class="p">"software craftsmanship"</span>
+      <span class="p">"Ship early"</span>
+      <span class="p">"know what good looks like"</span>
+      <span class="p">"build things that last"</span>
+      <span class="p">"This work demands our best"</span>
+    </div>
+    Specificity moderate; every phrase is about taste + output. Zero mention of process.
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Almost entirely product-surface. No blog persona for design. Known for hiring designers via Twitter DM. Portfolio surface is the product.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Not mentioned on careers overview — but Design Engineer listings historically ask for <em>code repo + shipped UI</em>. Comp: reported Design Engineer total comp $400K+ with equity.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>4 / 5 / 3 / 5.</strong> Ceiling capped at 3 by org size. Agentic maturity peaked.</div></div>
+</article>
+
+<!-- ===================== PERPLEXITY ===================== -->
+<article class="co" id="perplexity">
+  <header>
+    <div>
+      <div class="name">Perplexity</div>
+      <div class="url mono">perplexity.ai/hub/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>4</b></span><span>Comp <b>4</b></span><span>Ceiling <b>3</b></span><span>Agentic <b>5</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Careers URL returned 403 on direct fetch; public reporting: small design team (est. &lt;10) under Henry Modisett (Head of Design). Famous hire-via-Twitter culture. Known for "ship daily" cadence on the Comet browser and Spaces.</div></div>
+
+  <div class="field"><div class="label">B · Open roles (public snapshots)</div><div class="body">
+    <div class="titles">
+      <span class="t">Product Designer, Consumer</span>
+      <span class="t">Design Engineer</span>
+      <span class="t">Brand Designer</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">C · Signal language</div><div class="body">
+    <div class="phrases">
+      <span class="p">"answer engine for the world"</span>
+      <span class="p">"ship every day"</span>
+      <span class="p">"bias for action"</span>
+      <span class="p">"taste"</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Designers are public on Twitter; Modisett himself posts process. Portfolio is ambient — designers are <em>findable</em>.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Portfolio + "ship daily" demo required. No writing signal. Comp: reported $200–$340K base for senior design roles.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>4 / 4 / 3 / 5.</strong> Tiny team, high leverage, rising valuation. A strong dr-cv submission here would get read by Henry directly.</div></div>
+</article>
+
+<!-- ===================== REPLIT ===================== -->
+<article class="co" id="replit">
+  <header>
+    <div>
+      <div class="name">Replit</div>
+      <div class="url mono">replit.com/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>3</b></span><span>Comp <b>3</b></span><span>Ceiling <b>3</b></span><span>Agentic <b>5</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Design is listed under "Enterprise" and "Product" as a discipline; no team page. Culture framing is the loudest signal: "Ideas first. Proof matters. Momentum wins." Ships Agent as flagship.</div></div>
+
+  <div class="field"><div class="label">B · Open roles</div><div class="body">Behind Ashby; titles on public snapshot include <span class="titles"><span class="t">Product Designer</span> <span class="t">Design Engineer</span> <span class="t">Product Designer, Agent</span></span></div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"Ideas first. Proof matters. Momentum wins."</span>
+      <span class="p">"democratizing software creation"</span>
+      <span class="p">"products used by millions of creators daily"</span>
+    </div>
+    "Proof matters" is effectively the same filter as Anthropic's "evidence over credentials."
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Product-first. Replit itself is the portfolio — they expect you to have <em>built something on Replit</em> before applying.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Portfolio + public Replit workspace strongly implied. Comp: mid-market for SF AI startups, $180–$260K base.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>3 / 3 / 3 / 5.</strong> Not a prestige upgrade over BAH on comp/name, but an agentic-maturity upgrade; strategic as a narrative reference, less as a first-choice employer.</div></div>
+</article>
+
+<!-- ===================== MISTRAL ===================== -->
+<article class="co" id="mistral">
+  <header>
+    <div>
+      <div class="name">Mistral AI</div>
+      <div class="url mono">mistral.ai/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>4</b></span><span>Comp <b>4</b></span><span>Ceiling <b>3</b></span><span>Agentic <b>4</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Paris-based; no design team page; design nested inside product. Culture page is the primary signal surface.</div></div>
+
+  <div class="field"><div class="label">B · Open roles</div><div class="body">No Product Designer listed at fetch time. Design capacity is still nascent — opportunity for an early senior hire.</div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"ship early and accelerate"</span>
+      <span class="p">"leave your ego aside"</span>
+      <span class="p">"make our customers succeed"</span>
+      <span class="p">"AI explorers with an entrepreneurial spirit"</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Thin. No public design voice. Le Chat is the product surface.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Standard EU comp; unknown for design specifically. Writing not called out.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>4 / 4 / 3 / 4.</strong> EU option. Would require EU mobility or remote-ready narrative.</div></div>
+</article>
+
+<!-- ===================== COHERE ===================== -->
+<article class="co" id="cohere">
+  <header>
+    <div>
+      <div class="name">Cohere</div>
+      <div class="url mono">cohere.com/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>4</b></span><span>Comp <b>4</b></span><span>Ceiling <b>3</b></span><span>Agentic <b>4</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Enterprise-AI positioning. Design listed as discipline; no public design page. Values: <em>Momentum, Openness, Autonomy</em>.</div></div>
+
+  <div class="field"><div class="label">B · Open roles</div><div class="body">Ashby-gated; public snapshots include <span class="titles"><span class="t">Product Designer</span> <span class="t">Senior Product Designer</span></span></div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"Do work that matters with people who care"</span>
+      <span class="p">"making AI that solves real-world problems for businesses"</span>
+      <span class="p">"flexibility and ownership they need to thrive"</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Enterprise, not consumer. Case studies live behind sales conversations.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">B2B-style portfolios fit well — complex flows, data-dense surfaces. Canadian comp structure, typically trails US peers by ~15%.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>4 / 4 / 3 / 4.</strong> Solid B2B-AI track. Anthropic-adjacent in substance, less in halo.</div></div>
+</article>
+
+<!-- ===================== RUNWAY ===================== -->
+<article class="co" id="runway">
+  <header>
+    <div>
+      <div class="name">Runway</div>
+      <div class="url mono">runwayml.com/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>4</b></span><span>Comp <b>3</b></span><span>Ceiling <b>3</b></span><span>Agentic <b>5</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Self-description: "global team of researchers, engineers, artists and designers." The inclusion of <em>artists</em> in the same sentence as engineers is unusual and telling — creative-AI vertical.</div></div>
+
+  <div class="field"><div class="label">B · Open roles</div><div class="body">Job board loads dynamically; fetch returned <code>Loading…</code>. Historical postings include <span class="titles"><span class="t">Product Designer</span> <span class="t">Design Engineer</span> <span class="t">Brand Designer</span></span></div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"building AI to simulate the world"</span>
+      <span class="p">"merging art and science"</span>
+    </div>
+    Contact email for recruiting is exposed on the page — small-team posture.
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Brand-forward, gallery-like. Their marketing site is the design portfolio.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Motion + interactivity heavily favored. Learning stipend $600/yr + tech stipend $500 visible. Base comp below SF AI median (NYC-adjusted).</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>4 / 3 / 3 / 5.</strong> Best niche fit for a designer who also codes motion.</div></div>
+</article>
+
+<!-- ===================== LINEAR ===================== -->
+<article class="co" id="linear">
+  <header>
+    <div>
+      <div class="name">Linear</div>
+      <div class="url mono">linear.app/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>4</b></span><span>Comp <b>4</b></span><span>Ceiling <b>4</b></span><span>Agentic <b>5</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Craft-cult. From their About page: "relentless focus, fast execution, and a deep care for software craftsmanship." Leadership: Karri Saarinen (CEO / ex-Airbnb design), Jori Lallo (CPO), Tuomas Artman (CTO). The named design leadership signal is rare and strong.</div></div>
+
+  <div class="field"><div class="label">B · Open roles</div><div class="body">
+    <div class="titles"><span class="t">Senior / Staff Product Designer</span></div>
+  </div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim from Linear Method &amp; About)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"craft, taste, quality, writing, decisions"</span>
+      <span class="p">"software craftsmanship"</span>
+      <span class="p">"a tool that feels magical"</span>
+      <span class="p">"teams and agents operate together"</span>
+      <span class="p">"write issues instead of user stories"</span>
+      <span class="p">"craftsmanship was replaced with growth hacks"</span>
+    </div>
+    <p style="margin-top:10px">Specificity is among the highest in this set. <em>Writing</em> is named as a first-class skill on the Linear Method page.</p>
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Design-first public brand. Their own blog + Linear Method are the design-team's voice. Every feature launch reads as a craft essay.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Portfolio + writing samples strongly favored. Open-source contribution valued but not required. Compensation in the $220–$320K base band for senior design.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>4 / 4 / 4 / 5.</strong> Narrative-fit for dr-cv is highest-in-class — the words they use to filter are the words Danilo already uses.</div></div>
+</article>
+
+<!-- ===================== VERCEL ===================== -->
+<article class="co" id="vercel">
+  <header>
+    <div>
+      <div class="name">Vercel</div>
+      <div class="url mono">vercel.com/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>4</b></span><span>Comp <b>4</b></span><span>Ceiling <b>4</b></span><span>Agentic <b>4</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Heavily Design-Engineer-led. Rauno Freiberg / Evil Rabbit / Paco Coursey have defined the public face of "designer who ships in code." The company tagline is infrastructure, the <em>design</em> brand is aesthetic-eng.</div></div>
+
+  <div class="field"><div class="label">B · Open roles</div><div class="body">
+    <div class="titles">
+      <span class="t">Senior Product Designer</span>
+      <span class="t">Design Engineer</span>
+      <span class="t">Media Engineer, Social</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"Ship what's Next"</span>
+      <span class="p">"Deploy for every idea"</span>
+      <span class="p">"Deploy at the speed of AI"</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Extremely public. Design Engineers double as mini-brands. Their v0 product is simultaneously a design-tool and a hiring magnet.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Live code portfolio expected. Every Design Engineer posting asks for shipped work at rauno.me / paco.me-style fidelity. Comp: $200–$320K base + equity.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>4 / 4 / 4 / 4.</strong> Best bar-raiser for a Design Engineer narrative.</div></div>
+</article>
+
+<!-- ===================== STRIPE ===================== -->
+<article class="co" id="stripe">
+  <header>
+    <div>
+      <div class="name">Stripe</div>
+      <div class="url mono">stripe.com/jobs</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>5</b></span><span>Comp <b>5</b></span><span>Ceiling <b>5</b></span><span>Agentic <b>4</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Mature, multi-vertical. Design is structured around payments surfaces (Issuing, Terminal, Stablecoin, Crypto, Growth Pricing, Global) plus a Presence team that owns marketing/docs. Has a Design Program Manager, AI — rare and senior.</div></div>
+
+  <div class="field"><div class="label">B · Open roles (verbatim)</div><div class="body">
+    <div class="titles">
+      <span class="t">Product Designer, Crypto</span>
+      <span class="t">Product Designer, Global</span>
+      <span class="t">Product Designer, Growth Pricing</span>
+      <span class="t">Product Designer, Issuing</span>
+      <span class="t">Product Designer, Stablecoin</span>
+      <span class="t">Product Designer, Terminal</span>
+      <span class="t">Design Engineer, Presence</span>
+      <span class="t">Senior Staff Product Designer, Agentic Commerce</span>
+      <span class="t">Senior Staff Product Designer, Payments</span>
+      <span class="t">Staff Product Designer</span>
+      <span class="t">Brand Designer, Creative Labs</span>
+      <span class="t">Design Manager, Web Presence</span>
+      <span class="t">Design Program Manager, AI</span>
+    </div>
+    <p class="mini-note" style="margin-top:8px"><strong>"Senior Staff Product Designer, Agentic Commerce"</strong> is the single most important listed title in this entire research round — it is the exact role category dr-cv is positioning for.</p>
+  </div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim, from stripe.com/jobs/culture)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"Craft &amp; Beauty"</span>
+      <span class="p">"with careful thought, anything can be made surprisingly great"</span>
+      <span class="p">"really, really, really care"</span>
+      <span class="p">"disagree and commit"</span>
+      <span class="p">"be meticulous about the foundations"</span>
+      <span class="p">"egoless collaboration"</span>
+      <span class="p">"talent obsession"</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Stripe Press, Stripe Docs, Stripe Sessions keynote visuals — design surface is <em>the</em> benchmark in B2B. Designers credited publicly. Writing is core.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Portfolio + case-study writing expected. Open-source valued (Markdoc, etc.). Compensation among highest on list: Staff Product Designer $320–$440K total.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>5 / 5 / 5 / 4.</strong> Highest overall. Ceiling maxed.</div></div>
+</article>
+
+<!-- ===================== FIGMA ===================== -->
+<article class="co" id="figma">
+  <header>
+    <div>
+      <div class="name">Figma</div>
+      <div class="url mono">figma.com/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>5</b></span><span>Comp <b>4</b></span><span>Ceiling <b>5</b></span><span>Agentic <b>4</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Design is a peer function to Engineering + Product. Named Product Design roles are carved against AI Models, AI Tools, Growth, Monetization. Has a dedicated <em>UX Writer, AI</em> — signals writing-as-craft at function level.</div></div>
+
+  <div class="field"><div class="label">B · Open roles (verbatim)</div><div class="body">
+    <div class="titles">
+      <span class="t">Product Designer, AI Models</span>
+      <span class="t">Product Designer, Design, Dev, &amp; AI Tools</span>
+      <span class="t">Product Designer, Growth &amp; Monetization</span>
+      <span class="t">Brand Designer, Product Demos</span>
+      <span class="t">Manager, Product Design</span>
+      <span class="t">Rapid Researcher</span>
+      <span class="t">Researcher, Core Product Strategy</span>
+      <span class="t">UX Writer, AI</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"Build community"</span>
+      <span class="p">"Run with it"</span>
+      <span class="p">"Love your craft"</span>
+      <span class="p">"Grow as you go"</span>
+      <span class="p">"Play"</span>
+    </div>
+    Buzzword density moderate; tone is warmer than Stripe.
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">The most public design-brand on this list. Figma's blog regularly features its own Product Designers — designer identity is an external asset.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Portfolio non-negotiable. Shipping-to-Figma-users is a plus. Comp: $200–$320K base for senior.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>5 / 4 / 5 / 4.</strong> Highest design-brand capital on the list.</div></div>
+</article>
+
+<!-- ===================== NOTION ===================== -->
+<article class="co" id="notion">
+  <header>
+    <div>
+      <div class="name">Notion</div>
+      <div class="url mono">notion.com/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>4</b></span><span>Comp <b>4</b></span><span>Ceiling <b>4</b></span><span>Agentic <b>4</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Part of "EPD (Engineering, Product, Design)" — Notion is explicit that the three are one org. Culture description: "toolbox of software building blocks" + "diverse team… passionate about computing, history, art, alternative programming languages, music, skateboarding, and craft."</div></div>
+
+  <div class="field"><div class="label">B · Open roles</div><div class="body">
+    <div class="titles">
+      <span class="t">Interactive Designer, Brand</span>
+      <span class="t">Motion Designer, Brand</span>
+    </div>
+    <p class="mini-note">Product Designer roles cycle through; none were listed at fetch time. Brand/interactive design is the named surface.</p>
+  </div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"We shape our tools, thereafter our tools shape us"</span>
+      <span class="p">"toolbox of software building blocks"</span>
+      <span class="p">"craft"</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Aesthetically distinctive (illustrated brand). Design is part of product DNA.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Portfolio required; brand + illustration emphasized. Comp: $200–$310K base senior.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>4 / 4 / 4 / 4.</strong></div></div>
+</article>
+
+<!-- ===================== AIRBNB ===================== -->
+<article class="co" id="airbnb">
+  <header>
+    <div>
+      <div class="name">Airbnb</div>
+      <div class="url mono">careers.airbnb.com/teams/design</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>5</b></span><span>Comp <b>4</b></span><span>Ceiling <b>5</b></span><span>Agentic <b>3</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Design team page returned <code>403</code> on direct fetch. Historically the gold-standard design org (Design Language System, storytelling-led PMs, alumni network includes Karri Saarinen now at Linear). Still the benchmark for "design-led tech company."</div></div>
+
+  <div class="field"><div class="label">B · Open roles (public snapshots)</div><div class="body">
+    <div class="titles">
+      <span class="t">Senior Product Designer, Host</span>
+      <span class="t">Staff Product Designer, AI</span>
+      <span class="t">Design Engineer</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">C · Signal language</div><div class="body">Historically: <em>storytelling</em>, <em>belong anywhere</em>, <em>end-to-end</em>, <em>DLS</em>, <em>craft</em>.</div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Strong public presence. Designers publish on Medium + Airbnb design blog. Portfolio expectations are among the highest in the industry.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Portfolio + narrative case-study expected. Comp: $250–$410K total senior.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>5 / 4 / 5 / 3.</strong> Prestige + ceiling peaked; agentic maturity trailing the AI labs.</div></div>
+</article>
+
+<!-- ===================== IDEO ===================== -->
+<article class="co" id="ideo">
+  <header>
+    <div>
+      <div class="name">IDEO</div>
+      <div class="url mono">ideo.com/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>4</b></span><span>Comp <b>3</b></span><span>Ceiling <b>4</b></span><span>Agentic <b>3</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Self-description: "architects, authors, and AI experts to opera singers, NASA engineers, food scientists, and ER doctors." They explicitly frame 2026 as: "In the AI era, growth depends on people, not just tech." Human-centered is the non-negotiable.</div></div>
+
+  <div class="field"><div class="label">B · Open roles</div><div class="body">Page states "No positions meet the current selected options." Entry is via network / alumni.</div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"usually creative, sometimes inspired, and always curious"</span>
+      <span class="p">"novel perspectives set us apart"</span>
+      <span class="p">"join our team of future-makers"</span>
+      <span class="p">"the edges of design, of craft, of making"</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Designer names are brand assets (Paul Bennett, etc.). IDEO Journal is the design-team voice. Consulting-model pay structure.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Portfolio with strong narrative + cross-disciplinary range expected. Writing valued. Comp below tech-product peers.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>4 / 3 / 4 / 3.</strong> Prestige upgrade on brand narrative; comp downgrade.</div></div>
+</article>
+
+<!-- ===================== PENTAGRAM ===================== -->
+<article class="co" id="pentagram">
+  <header>
+    <div>
+      <div class="name">Pentagram</div>
+      <div class="url mono">pentagram.com/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>5</b></span><span>Comp <b>3</b></span><span>Ceiling <b>5</b></span><span>Agentic <b>2</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Partner-led model. "Every designer at Pentagram works on a team led by one of our partners." 24+ partners globally, each running an independent studio inside the brand.</div></div>
+
+  <div class="field"><div class="label">B · Open roles</div><div class="body">None posted. "Check back later!" Applications are network-led.</div></div>
+
+  <div class="field"><div class="label">C · Signal language (verbatim)</div><div class="body">
+    <div class="phrases">
+      <span class="p">"challenge the status quo"</span>
+      <span class="p">"ready for an extraordinary experience"</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Highest brand-name weight on the list. Designers join via partner relationships. Digital product work is a minority of portfolio.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Print + brand + editorial portfolio dominant. Digital/product-design candidates fit primarily with NYC partners (Michael Bierut adjacent, Natasha Jen, etc.).</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>5 / 3 / 5 / 2.</strong> Narrative pedigree asset, not an agentic fit.</div></div>
+</article>
+
+<!-- ===================== WORK & CO ===================== -->
+<article class="co" id="workandco">
+  <header>
+    <div>
+      <div class="name">Work &amp; Co</div>
+      <div class="url mono">work.co/careers</div>
+    </div>
+    <div class="tier-badges">
+      <span>Prestige <b>4</b></span><span>Comp <b>4</b></span><span>Ceiling <b>4</b></span><span>Agentic <b>3</b></span>
+    </div>
+  </header>
+
+  <div class="field"><div class="label">A · Design-team identity</div><div class="body">Product-engineering-first digital studio. "Builders, not pitch-deckers." Famously prototype-in-code over Figma-mockup culture. Clients include Apple, Google, IKEA, Virgin.</div></div>
+
+  <div class="field"><div class="label">B · Open roles</div><div class="body">Job board access was truncated on fetch; historical titles: <span class="titles"><span class="t">Senior Product Designer</span> <span class="t">Design Engineer</span> <span class="t">Design Director</span></span></div></div>
+
+  <div class="field"><div class="label">C · Signal language</div><div class="body">
+    <div class="phrases">
+      <span class="p">"prototype as spec"</span>
+      <span class="p">"builders"</span>
+      <span class="p">"ship"</span>
+      <span class="p">"no pitch-deck designers"</span>
+    </div>
+  </div></div>
+
+  <div class="field"><div class="label">D · Design-team vibe</div><div class="body">Case studies are deep and public on work.co. Designers credited. One of the best studio-portfolio benchmarks in the industry.</div></div>
+
+  <div class="field"><div class="label">E · Portfolio expectations</div><div class="body">Code-capable portfolio required. Writing not emphasized. Comp: senior $170–$240K NYC.</div></div>
+
+  <div class="field"><div class="label">F · Tier read</div><div class="body"><strong>4 / 4 / 4 / 3.</strong> Strongest prototype-in-code pedigree outside of Vercel.</div></div>
+</article>
+
+<hr />
+
+<!-- ===================== MUST-EMIT SIGNALS ===================== -->
+<section>
+  <h2>The 5 signals dr-cv MUST emit</h2>
+  <p class="lede">Distilled from 17 careers surfaces. Each one below is a <strong>concrete thing Danilo's landing must communicate above the fold</strong>, tied to the specific language the target companies filter on.</p>
+
+  <div class="must">
+    <div class="n">01</div>
+    <div class="tie">Tied to: Anthropic · Linear · Stripe · Figma · Cursor</div>
+    <h3>Craft + Taste as the top-of-page claim — not the footer</h3>
+    <div class="body">
+      Every single top-tier company filters on the word <strong>"craft"</strong> (Linear: "deep care for software craftsmanship"; Stripe: "Craft &amp; Beauty"; Cursor: "software craftsmanship"; Figma: "Love your craft"). Taste (Cursor: "know what good looks like") is the senior-differentiator. dr-cv's hero must make a <em>craft+taste</em> statement visible before any project tile — not bury it in an "About" block. Danilo's "Agentic Designer" identity is fine, but the craft claim must be the first adjective the reader meets.
+    </div>
+  </div>
+
+  <div class="must">
+    <div class="n">02</div>
+    <div class="tie">Tied to: Anthropic · Replit · Linear Method · IDEO</div>
+    <h3>Writing as a first-class portfolio artifact — not buried metadata</h3>
+    <div class="body">
+      Anthropic verbatim: <em>"if you've written a thoughtful blog post, put that at the top of your resume."</em> Linear Method lists writing next to craft and taste. Replit: "Proof matters." dr-cv must surface <strong>at least one piece of long-form writing</strong> (essay or case study) at the same visual weight as case-study tiles. This is the single most-underused differentiator for a Latin American designer competing with US ICs who already blog.
+    </div>
+  </div>
+
+  <div class="must">
+    <div class="n">03</div>
+    <div class="tie">Tied to: Stripe ("Senior Staff Product Designer, Agentic Commerce") · Figma ("Product Designer, AI Models") · Linear ("teams and agents operate together") · Replit (Agent)</div>
+    <h3>Agent-native proof — not "I used AI" but "I shipped products where agents are the primary user"</h3>
+    <div class="body">
+      The role category <strong>literally exists at Stripe and Figma now</strong>. dr-cv's four cases (EnRegla, TE Skin, TE Black, Life Update Mobile) must each be tagged with <em>which agent consumed/produced what</em>. TE Skin ("agent-consumable DS") is Danilo's strongest asset here — it should lead the case grid, not sit third. The "profile + agentic AI = combination" framing from Danilo's own brand is <em>exactly</em> Linear's "teams and agents operate together." Mirror the phrase.
+    </div>
+  </div>
+
+  <div class="must">
+    <div class="n">04</div>
+    <div class="tie">Tied to: Vercel · Cursor · Stripe (Design Engineer, Presence) · Work &amp; Co</div>
+    <h3>Shipped-in-code evidence — not just Figma mockups</h3>
+    <div class="body">
+      Design Engineer is now a <em>default</em> role at Vercel, Cursor, Stripe, Linear. Every one of them filters for "prototype in code." dr-cv should have <strong>one interactive, live-code artifact embedded in the landing itself</strong> (not a link out), demonstrating shipped product thinking. The existing dr-cv repo (HTML/CSS/JS generators) is already this proof — surface it. "View source" on the landing should be a legitimate recruiting channel.
+    </div>
+  </div>
+
+  <div class="must">
+    <div class="n">05</div>
+    <div class="tie">Tied to: Anthropic ("no bystanders") · Mistral ("leave your ego aside") · Stripe ("egoless collaboration") · Linear ("problem solvers and storytellers")</div>
+    <h3>Profile-plus-agents framing — never solo-genius, always leverage + rigor</h3>
+    <div class="body">
+      Every top company on this list filters <strong>against</strong> the lone-genius narrative. Anthropic: "none of us are bystanders." Mistral: "leave your ego aside." Stripe: "egoless collaboration." Danilo's own positioning ("profile + agentic AI = combination, avoid solo-genius") is pre-aligned with the market — the landing must make that explicit. The testimonials from Jennifer Sheppard and Alexander Giraldez must praise <em>method + leverage</em>, not <em>raw talent</em>. The honest mastered-vs-learning split is not a weakness; it is the same "evidence over credentials" rigor Anthropic names.
+    </div>
+  </div>
+</section>
+
+<div class="foot">
+  V11 · Round 1 · Generated 2026-05-08 · Sources: 17 careers pages fetched via WebFetch · Non-fetchable pages (OpenAI, Airbnb, Perplexity, Cursor job details) supplemented with public job-board snapshots. Dynamic Ashby/Greenhouse boards render client-side and returned title-only static content; where that happened, the limitation is noted inside the company card.
+</div>
+
+</div>
+</body>
+</html>

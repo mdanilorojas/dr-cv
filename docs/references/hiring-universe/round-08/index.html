@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>V11 R8 · Anti-patterns · the 60-second filter</title>
+<style>
+  :root{
+    --bg:#07070a;
+    --bg-2:#0c0d12;
+    --bg-3:#12131a;
+    --panel:#10111a;
+    --panel-2:#161823;
+    --line:#1e2030;
+    --line-2:#2a2d40;
+    --ink:#e9eaf0;
+    --ink-dim:#a0a4b4;
+    --ink-faint:#5c6078;
+    --red:#e37a7a;
+    --red-deep:#7a2828;
+    --amber:#f2c66d;
+    --amber-deep:#6a4d18;
+    --green:#6fd08c;
+    --green-deep:#244a32;
+    --accent:#ff7a3a;
+    --accent-dim:#a8441d;
+    --mono:"JetBrains Mono","SFMono-Regular",Consolas,Menlo,monospace;
+    --sans:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim)}
+  a:hover{color:#ffa780}
+  code,kbd,samp{font-family:var(--mono);font-size:12.5px;background:var(--bg-3);padding:1px 6px;border-radius:3px;color:#ffcfb4}
+  .mono{font-family:var(--mono)}
+  .wrap{max-width:1240px;margin:0 auto;padding:52px 28px 120px}
+  header.masthead{border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:44px}
+  .kicker{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);padding:3px 9px;border:1px solid var(--red-deep);border-radius:3px;margin-bottom:14px;background:rgba(227,122,122,.05)}
+  h1{font-size:42px;line-height:1.08;font-weight:700;letter-spacing:-.02em;margin:0 0 12px}
+  h1 .neg{color:var(--red)}
+  .lede{color:var(--ink-dim);font-size:16px;max-width:820px;margin:0}
+  .lede strong{color:var(--ink)}
+  .meta-row{display:flex;flex-wrap:wrap;gap:14px 26px;margin-top:18px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase}
+  .meta-row span b{color:var(--ink);font-weight:500}
+  h2{font-size:24px;letter-spacing:-.015em;margin:60px 0 8px;padding-left:14px;border-left:3px solid var(--red);color:#fff}
+  h2 .cat{font-family:var(--mono);font-size:12px;color:var(--red);letter-spacing:.18em;display:block;margin-bottom:4px;text-transform:uppercase}
+  h3{font-size:16px;margin:0 0 6px;color:var(--ink)}
+  .section-lede{color:var(--ink-dim);font-size:14px;margin:0 0 22px;max-width:920px}
+  hr.sep{border:0;border-top:1px solid var(--line);margin:52px 0 0}
+
+  /* anti-pattern list */
+  .aplist{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;margin:16px 0}
+  @media (max-width:900px){.aplist{grid-template-columns:1fr}}
+  .ap{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px 16px;position:relative;display:flex;flex-direction:column;gap:6px;border-left:2px solid var(--red-deep)}
+  .ap .n{font-family:var(--mono);font-size:10.5px;color:var(--red);letter-spacing:.14em;text-transform:uppercase}
+  .ap h4{margin:0;font-size:14.5px;color:#fff;font-weight:600;letter-spacing:-.005em}
+  .ap .why{font-size:13px;color:var(--ink-dim);margin:0}
+  .ap .why b{color:var(--ink);font-weight:500}
+  .ap .fix{margin-top:4px;padding:8px 10px;background:var(--bg-3);border-left:2px solid var(--green-deep);border-radius:0 4px 4px 0;font-size:12.5px;color:#cfd4df}
+  .ap .fix b{color:var(--green);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;margin-right:8px}
+
+  /* audit block */
+  .audit-wrap{background:linear-gradient(180deg,#12131a 0%,#0a0b10 100%);border:1px solid var(--accent-dim);border-radius:12px;padding:28px 30px;margin:44px 0 14px}
+  .audit-wrap h2{border-left-color:var(--accent);margin-top:0}
+  .audit-wrap h2 .cat{color:var(--accent)}
+  .audit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+  @media (max-width:900px){.audit-grid{grid-template-columns:1fr}}
+  .audit-row{background:var(--panel-2);border:1px solid var(--line-2);border-radius:8px;padding:14px 16px;font-size:13.5px}
+  .audit-row .hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+  .audit-row .hd h4{margin:0;font-size:14px;color:#fff}
+  .audit-row .verdict{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:2px 8px;border-radius:3px;white-space:nowrap}
+  .verdict.yes{color:var(--red);border:1px solid var(--red-deep);background:rgba(227,122,122,.08)}
+  .verdict.mid{color:var(--amber);border:1px solid var(--amber-deep);background:rgba(242,198,109,.06)}
+  .verdict.no{color:var(--green);border:1px solid var(--green-deep);background:rgba(111,208,140,.06)}
+  .audit-row p{margin:0;color:var(--ink-dim);font-size:12.5px}
+  .audit-row p b{color:var(--ink)}
+  .audit-row .mustfix{margin-top:8px;padding:8px 10px;background:var(--bg-3);border-left:2px solid var(--accent-dim);font-family:var(--mono);font-size:11.5px;color:#ffd0b4;letter-spacing:.01em;border-radius:0 4px 4px 0}
+  .audit-row .mustfix b{color:var(--accent);letter-spacing:.14em;text-transform:uppercase;font-size:10.5px;margin-right:8px}
+
+  /* top 10 block */
+  .top10-wrap{background:linear-gradient(180deg,#1a0e0a 0%,#0a0b10 100%);border:1px solid var(--red-deep);border-radius:12px;padding:28px 30px;margin:44px 0 14px}
+  .top10-wrap h2{border-left-color:var(--red);margin-top:0}
+  .top10-lede{color:var(--ink-dim);font-size:14px;margin:0 0 20px;max-width:800px}
+  .top10-lede strong{color:#fff}
+  .top10{display:grid;grid-template-columns:1fr;gap:10px}
+  .ten{display:grid;grid-template-columns:60px 1fr;gap:18px;align-items:flex-start;padding:14px 16px;background:var(--bg-2);border:1px solid var(--red-deep);border-radius:8px}
+  .ten .rank{font-family:var(--mono);font-size:30px;color:var(--red);line-height:1;font-weight:700;text-align:right;padding-top:4px}
+  .ten h4{margin:0 0 4px;font-size:16px;color:#fff;font-weight:600}
+  .ten p{margin:0;color:var(--ink-dim);font-size:13px}
+  .ten p code{color:#ffb894}
+
+  .toc{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin:18px 0 24px;font-size:13px;color:var(--ink-dim);display:grid;grid-template-columns:repeat(2,1fr);gap:6px 18px}
+  @media (max-width:720px){.toc{grid-template-columns:1fr}}
+  .toc a{color:var(--ink);border:0;font-family:var(--mono);font-size:12px;letter-spacing:.04em}
+  .toc a:hover{color:var(--accent)}
+  .toc a b{color:var(--red);font-weight:600;margin-right:10px}
+
+  .stamp{display:inline-block;background:rgba(227,122,122,.08);border:1px dashed var(--red-deep);padding:6px 12px;border-radius:4px;font-family:var(--mono);font-size:11px;color:var(--red);letter-spacing:.1em;text-transform:uppercase;margin-top:8px}
+
+  .foot{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:11.5px;font-family:var(--mono);letter-spacing:.06em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="kicker">V11 · Round 8 · Hiring Universe · Anti-patterns</div>
+  <h1>What makes a recruiter <span class="neg">close the tab</span> in 60 seconds.</h1>
+  <p class="lede">Rounds 1&ndash;7 said what to <em>do</em>. This round says what to <strong>avoid</strong>. Eight categories, 8&ndash;12 anti-patterns each, pulled from design-hiring discourse, engineering-portfolio red flags, 2026 AI-wave signals, visual-fatigue calls from design twitter, and structural/meta filters that trigger silent rejection at Anthropic, OpenAI, Linear, Stripe, Figma, Vercel, Cursor, Airbnb and IDEO. Finishes with a red-flag audit of dr-cv's current state and the <strong>10 anti-patterns to absolutely avoid in V11</strong>.</p>
+  <div class="meta-row">
+    <span><b>8</b> categories</span>
+    <span><b>~80</b> anti-patterns</span>
+    <span><b>1</b> red-flag audit</span>
+    <span><b>Top 10</b> for V11</span>
+    <span>fetched &middot; <b>2026-05-08</b></span>
+  </div>
+  <div class="stamp">Filter-out checklist · not filter-in</div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#a"><b>A.</b> Design-portfolio anti-patterns</a>
+  <a href="#b"><b>B.</b> Engineering-portfolio anti-patterns</a>
+  <a href="#c"><b>C.</b> AI-specific anti-patterns (2025&ndash;2026)</a>
+  <a href="#d"><b>D.</b> Tone anti-patterns</a>
+  <a href="#e"><b>E.</b> Visual anti-patterns (2026)</a>
+  <a href="#f"><b>F.</b> Structural anti-patterns</a>
+  <a href="#g"><b>G.</b> The bootcamp-portfolio tell</a>
+  <a href="#h"><b>H.</b> Meta anti-patterns</a>
+  <a href="#audit"><b>★</b> Dr-cv red-flag audit</a>
+  <a href="#top10"><b>★</b> Top 10 to avoid in V11</a>
+</nav>
+
+<!-- ===================== A · DESIGN PORTFOLIO ===================== -->
+<section id="a">
+  <h2><span class="cat">Category A · 10 patterns</span>Design-portfolio anti-patterns</h2>
+  <p class="section-lede">Compiled from public hiring-manager posts by Jehad Affoneh (VP Design, Splunk), Ridd (Planetscale), Jared Erondu (Lyft/Stripe), Julie Zhuo (ex-Facebook Design), bestfolios.com "worst of" archetypes, and 2024&ndash;2026 Design Twitter threads on portfolio first-impressions.</p>
+
+  <div class="aplist">
+    <div class="ap"><div class="n">A-01</div>
+      <h4>Process-theatre case studies</h4>
+      <p class="why">Every case opens with "Research &rarr; Synthesis &rarr; Ideation &rarr; Testing". Recruiter reads: <b>this person confuses methodology with work.</b> Dead giveaway the designer never owned the outcome.</p>
+      <div class="fix"><b>Avoid</b> Lead with the shipped artifact and the decision you made. Method surfaces only when it changed the decision.</div>
+    </div>
+    <div class="ap"><div class="n">A-02</div>
+      <h4>Persona slides with invented photos</h4>
+      <p class="why">"Meet Sarah, 34, busy mom of two." Recruiter reads: <b>bootcamp.</b> Real product designers at IDEO/Figma quote research participants, not stock photos.</p>
+      <div class="fix"><b>Avoid</b> Use real quotes or skip the persona. Named pilot customer beats invented avatar.</div>
+    </div>
+    <div class="ap"><div class="n">A-03</div>
+      <h4>Final-screen hero, no context</h4>
+      <p class="why">Tile grid of polished mockups with zero text. Recruiter reads: <b>doesn't know why it looks like this.</b> Craft without explanation reads junior at senior tiers.</p>
+      <div class="fix"><b>Avoid</b> Every hero tile needs one load-bearing sentence about the constraint that produced it.</div>
+    </div>
+    <div class="ap"><div class="n">A-04</div>
+      <h4>"Redesigned [Airbnb / Spotify / Uber]" concept project</h4>
+      <p class="why">Unsolicited redesign of a Fortune-500 product. Recruiter reads: <b>never worked inside real constraints.</b> Airbnb's own designers have said this is an instant rejection signal.</p>
+      <div class="fix"><b>Avoid</b> If it shipped to zero users, it is a sketch. Label it that. Lead with work that has a URL an employer can visit.</div>
+    </div>
+    <div class="ap"><div class="n">A-05</div>
+      <h4>Twelve case studies of equal weight</h4>
+      <p class="why">No hierarchy signals no taste. Recruiter reads: <b>can't edit own work.</b> Senior is defined by what you chose to cut.</p>
+      <div class="fix"><b>Avoid</b> 3&ndash;6 cases max, with <em>one</em> featured. Treat case count as a curatorial decision.</div>
+    </div>
+    <div class="ap"><div class="n">A-06</div>
+      <h4>Every project credited to "I"</h4>
+      <p class="why">Contradicts the low-ego filter R1 found at Stripe/Mistral/Anthropic. Recruiter reads: <b>can't name a teammate.</b> Tier-1 hires name collaborators by the second paragraph.</p>
+      <div class="fix"><b>Avoid</b> Explicit role + team-size + what you specifically owned. "With [name] I owned X; they owned Y."</div>
+    </div>
+    <div class="ap"><div class="n">A-07</div>
+      <h4>Dribbble-shot screenshots with no live link</h4>
+      <p class="why">Mockup in Figma space, no product URL. Recruiter reads: <b>never shipped.</b> At Linear/Vercel/Cursor this is disqualifying on its own.</p>
+      <div class="fix"><b>Avoid</b> Every case shows the shipped URL (even if internal/behind SSO, say so).</div>
+    </div>
+    <div class="ap"><div class="n">A-08</div>
+      <h4>NDA as an excuse for a hollow case</h4>
+      <p class="why">"I can't show the work due to NDA." Recruiter reads: <b>hasn't figured out how to talk about client work ethically.</b> Senior designers anonymize and still ship insight.</p>
+      <div class="fix"><b>Avoid</b> Anonymize the client, describe the decision, quote the measurable outcome. BAH posture shows exactly how to do this (private not classified).</div>
+    </div>
+    <div class="ap"><div class="n">A-09</div>
+      <h4>Manifesto-only home with zero artifacts</h4>
+      <p class="why">All vibe, no ship. Recruiter reads: <b>thinker not doer.</b> The Essayist archetype only works because there is named OSS below the fold.</p>
+      <div class="fix"><b>Avoid</b> Manifesto <em>plus</em> a named-artifact list (EnRegla, TE Skin, TE Black, Life Update, Aura). Not either-or.</div>
+    </div>
+    <div class="ap"><div class="n">A-10</div>
+      <h4>Moodboards as portfolio items</h4>
+      <p class="why">Pinterest-grade aesthetic collages filed next to actual projects. Recruiter reads: <b>dilutes the serious work around them.</b></p>
+      <div class="fix"><b>Avoid</b> Moodboards belong inside a case study as evidence, never as standalone tiles.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep" />
+
+<!-- ===================== B · ENGINEERING ===================== -->
+<section id="b">
+  <h2><span class="cat">Category B · 10 patterns</span>Engineering-portfolio anti-patterns</h2>
+  <p class="section-lede">What staff engineers at Stripe, Vercel, Planetscale, Linear, and Cursor scan when a candidate claims "design engineer" in 2026. Pulled from leerob's hiring notes, Cassidy Williams on hiring, Mitchell Hashimoto's portfolio-review threads, and 2024&ndash;2026 Hacker News comment-threads on "what gets you hired".</p>
+
+  <div class="aplist">
+    <div class="ap"><div class="n">B-01</div>
+      <h4>GitHub profile with an empty contribution graph</h4>
+      <p class="why">Claims "ship in code" but the green squares are a desert. Recruiter reads: <b>performance art, not practice.</b></p>
+      <div class="fix"><b>Avoid</b> Link to the repo that <em>is</em> the portfolio (mdanilorojas/dr-cv, EnRegla). Make the activity obvious.</div>
+    </div>
+    <div class="ap"><div class="n">B-02</div>
+      <h4>Only toy-project repos, no shipped app</h4>
+      <p class="why">Twelve tutorials forks, no production code. Recruiter reads: <b>learner not builder.</b> Cursor/Vercel filter on <em>deployed URLs</em>.</p>
+      <div class="fix"><b>Avoid</b> Pin 4&ndash;6 repos that map 1:1 to named cases. Tutorials live in a clearly-labelled sandbox.</div>
+    </div>
+    <div class="ap"><div class="n">B-03</div>
+      <h4>No README on pinned repos</h4>
+      <p class="why">Recruiter clicks, lands on a raw file tree. <b>Instant close.</b> A README is a writing sample.</p>
+      <div class="fix"><b>Avoid</b> Every pinned repo has a README with: what it is, a 90-second demo link, the decision it documents.</div>
+    </div>
+    <div class="ap"><div class="n">B-04</div>
+      <h4>"Used React" as a claim in the bio</h4>
+      <p class="why">Naming the framework is 2014 energy. Recruiter reads: <b>thinks tools are differentiators.</b> At Vercel the framework is table-stakes.</p>
+      <div class="fix"><b>Avoid</b> Name the <em>problem</em> the code solved, not the framework. Stack belongs in a footnote chip, not the hero.</div>
+    </div>
+    <div class="ap"><div class="n">B-05</div>
+      <h4>Portfolio site that fails Lighthouse</h4>
+      <p class="why">Your site is the one piece of code the recruiter will actually evaluate. A 40-performance score is a self-inflicted wound.</p>
+      <div class="fix"><b>Avoid</b> Ship the landing with LCP &lt; 1.5s, CLS &lt; 0.05, and self-host all fonts. Embed a Lighthouse badge if proud.</div>
+    </div>
+    <div class="ap"><div class="n">B-06</div>
+      <h4>Package-dependency theatre</h4>
+      <p class="why">A simple landing that imports 40 npm packages. Staff engineer reads: <b>can't taste simplicity.</b> Anthropic's "do the simple thing that works" is the counter-filter.</p>
+      <div class="fix"><b>Avoid</b> Show the bundle size. Prefer vanilla HTML/CSS for the landing itself.</div>
+    </div>
+    <div class="ap"><div class="n">B-07</div>
+      <h4>No commit history on the portfolio repo</h4>
+      <p class="why">One "initial commit, Next.js starter" then nothing. Reads: <b>copied a template.</b></p>
+      <div class="fix"><b>Avoid</b> Commit the site the way you commit a product. Meaningful messages, incremental diffs.</div>
+    </div>
+    <div class="ap"><div class="n">B-08</div>
+      <h4>view-source is broken / minified mush</h4>
+      <p class="why">In 2026 "view source" is a recruiting channel (R1/R2). If it is a single 900KB line of minified output, you just closed it.</p>
+      <div class="fix"><b>Avoid</b> Ship readable, commented, self-hosted HTML. Comments in source are a hireable signal.</div>
+    </div>
+    <div class="ap"><div class="n">B-09</div>
+      <h4>Listing GPT-generated code as OSS</h4>
+      <p class="why">Repos with suspiciously-uniform commit cadence + no issues + no collaborators. Staff eng can smell it.</p>
+      <div class="fix"><b>Avoid</b> Be honest about what the agent wrote vs. what you designed. The "profile + agentic AI = combination" framing covers this cleanly.</div>
+    </div>
+    <div class="ap"><div class="n">B-10</div>
+      <h4>Mismatch between claim and repo language</h4>
+      <p class="why">Bio says "Rust systems engineer"; every repo is a Next.js starter. <b>Credibility wipeout.</b></p>
+      <div class="fix"><b>Avoid</b> Every skill claim must point at one public repo in that language. If it can't, downgrade the claim from "mastered" to "learning".</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep" />
+
+<!-- ===================== C · AI 2025-2026 ===================== -->
+<section id="c">
+  <h2><span class="cat">Category C · 12 patterns</span>AI-specific anti-patterns, 2025&ndash;2026</h2>
+  <p class="section-lede">The single noisiest category. Every portfolio in 2026 claims "AI". Most are riding the wave. Recruiters have calibrated fast &mdash; here is the short list of tells they now filter OUT.</p>
+
+  <div class="aplist">
+    <div class="ap"><div class="n">C-01</div>
+      <h4>"AI-powered" in the hero</h4>
+      <p class="why">Dead phrase in 2026. Recruiter reads: <b>last year's pitch deck.</b> Stripe's own listing says "Agentic Commerce", not "AI-Powered Commerce".</p>
+      <div class="fix"><b>Avoid</b> Use <em>Agentic</em> or name the agent (Claude, Gemini, v0). Never "AI-powered".</div>
+    </div>
+    <div class="ap"><div class="n">C-02</div>
+      <h4>Buzzword stack: "AI / ML / GenAI / LLM / Prompt Engineer"</h4>
+      <p class="why">Five overlapping terms in a row. <b>Reads as keyword stuffing for ATS.</b> Anthropic's own copy uses none of these &mdash; it names behaviours.</p>
+      <div class="fix"><b>Avoid</b> Pick one precise frame ("agentic designer") and keep it. Let behavior and artifacts carry the rest.</div>
+    </div>
+    <div class="ap"><div class="n">C-03</div>
+      <h4>"Prompt Engineer" as a title</h4>
+      <p class="why">The category collapsed in 2024. In 2026 it is a regression signal.</p>
+      <div class="fix"><b>Avoid</b> Say what you <em>ship</em> (skills, MCP servers, agent-consumable DS). Prompt-craft is an invisible substrate, not a title.</div>
+    </div>
+    <div class="ap"><div class="n">C-04</div>
+      <h4>AI-generated hero illustration</h4>
+      <p class="why">The Midjourney dreamy-nebula hero is now a recruiter punchline. It signals <b>no taste filter and no brand identity</b>.</p>
+      <div class="fix"><b>Avoid</b> Ship a custom illustration, a photo, or a functional element &mdash; never a generic GenAI dreamscape.</div>
+    </div>
+    <div class="ap"><div class="n">C-05</div>
+      <h4>Obvious GPT-generated case-study copy</h4>
+      <p class="why">"In today's fast-paced landscape&hellip;" / "I delved into&hellip;" / "leveraged synergies". Distinct LLM tells. Recruiter reads: <b>doesn't write.</b></p>
+      <div class="fix"><b>Avoid</b> Writing voice should match how the candidate talks on a call. Ban "delve", "leverage", "robust", "seamless", "elevate".</div>
+    </div>
+    <div class="ap"><div class="n">C-06</div>
+      <h4>AI claims without agent artifacts</h4>
+      <p class="why">Talks about AI for five paragraphs; nothing the recruiter can click and see an agent do. <b>All sizzle, no steak.</b></p>
+      <div class="fix"><b>Avoid</b> At least one section shows an agent actually doing something (a /skill output, an MCP call log, a runnable demo).</div>
+    </div>
+    <div class="ap"><div class="n">C-07</div>
+      <h4>Name-dropping models without context</h4>
+      <p class="why">"Used GPT-4, Claude 3.5 Sonnet, Gemini 1.5 Pro". Model names shift every 90 days. Reads as padding.</p>
+      <div class="fix"><b>Avoid</b> Name the capability (tool-use, MCP, skills, structured outputs), not the model SKU.</div>
+    </div>
+    <div class="ap"><div class="n">C-08</div>
+      <h4>Replacing design taste with AI output</h4>
+      <p class="why">Portfolio that is 80% GenAI-styled screens + 20% real UI. Recruiter reads: <b>can't tell good from generated.</b> Cursor/Linear explicitly filter on "know what good looks like".</p>
+      <div class="fix"><b>Avoid</b> Human-designed decisions at top; AI output clearly framed as <em>artifact</em>, not as taste source.</div>
+    </div>
+    <div class="ap"><div class="n">C-09</div>
+      <h4>Solo-genius framing with AI as a sidekick</h4>
+      <p class="why">"I 10x'd my output with AI". Recruiter reads: <b>ego risk.</b> Mirrors R1's disqualifier at Anthropic/Stripe/Mistral.</p>
+      <div class="fix"><b>Avoid</b> "Profile + agentic AI = combination." Leverage framing over lone-genius framing.</div>
+    </div>
+    <div class="ap"><div class="n">C-10</div>
+      <h4>Fake agentic: chatbot wrapper called "agent"</h4>
+      <p class="why">A styled GPT chat with no tools, no memory, no multi-step plan. Recruiter clicks, sees a textarea, <b>closes tab</b>.</p>
+      <div class="fix"><b>Avoid</b> If you say agent, show tool-use, a plan, a version, an artifact (R3 vocabulary). Otherwise call it a chatbot.</div>
+    </div>
+    <div class="ap"><div class="n">C-11</div>
+      <h4>2023-era AI screenshots (DALL-E 2, first GPT-4 UI)</h4>
+      <p class="why">Stale product surfaces. Recruiter reads: <b>stopped paying attention 18 months ago.</b></p>
+      <div class="fix"><b>Avoid</b> Update product screenshots quarterly. The AI surface moves fast; the portfolio has to track.</div>
+    </div>
+    <div class="ap"><div class="n">C-12</div>
+      <h4>Claiming "AI-native" with no MCP / skills / tool-use vocabulary</h4>
+      <p class="why">The 2026 fluency test (R3) is the vocabulary: artifact, thinking, skill, project, accept/reject, plan. Missing means behind.</p>
+      <div class="fix"><b>Avoid</b> Use the R3 vocabulary accurately. Name one skill, one artifact, one plan.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep" />
+
+<!-- ===================== D · TONE ===================== -->
+<section id="d">
+  <h2><span class="cat">Category D · 10 patterns</span>Tone anti-patterns</h2>
+  <p class="section-lede">Voice is a filter at the 20-second mark. Wrong register = close. Pulled from Design Twitter threads on portfolio voice, Jehad Affoneh's "portfolio tone" notes, and the Anthropic/Linear/Stripe copy-style comparison in R1.</p>
+
+  <div class="aplist">
+    <div class="ap"><div class="n">D-01</div>
+      <h4>"Just a simple designer who loves coffee"</h4>
+      <p class="why">Excessive humility at senior level reads as <b>low confidence</b>, not warmth. At Anthropic/Linear it undermines the evidence.</p>
+      <div class="fix"><b>Avoid</b> Warmth without self-deprecation. "Agentic designer shipping real products." is the calibration.</div>
+    </div>
+    <div class="ap"><div class="n">D-02</div>
+      <h4>"World-class / rockstar / guru / ninja"</h4>
+      <p class="why">All four are fired terms in 2026. Self-applied superlatives read as <b>insecure overclaim.</b></p>
+      <div class="fix"><b>Avoid</b> Let artifacts + testimonials carry the superlatives. Never self-apply.</div>
+    </div>
+    <div class="ap"><div class="n">D-03</div>
+      <h4>Inconsistent voice: manifesto home, corporate case</h4>
+      <p class="why">Hero says "soulful craft"; case says "leveraged cross-functional alignment". Reads as <b>two different writers</b>.</p>
+      <div class="fix"><b>Avoid</b> One voice, whole document. If the case copy was written by a PM, rewrite it in your register.</div>
+    </div>
+    <div class="ap"><div class="n">D-04</div>
+      <h4>Metrics without context ("10x growth")</h4>
+      <p class="why">"Grew engagement 37%". <b>Of what? Over what? From what baseline?</b> Reads as decorative, not measured.</p>
+      <div class="fix"><b>Avoid</b> Name the baseline, the delta, the window, and what it was attributable to. One good metric beats ten loose ones.</div>
+    </div>
+    <div class="ap"><div class="n">D-05</div>
+      <h4>Consultant-speak ("stakeholders", "north star", "alignment")</h4>
+      <p class="why">BAH-origin vocabulary reads as <b>process designer</b> to a product company. Linear/Cursor/Vercel filter against it.</p>
+      <div class="fix"><b>Avoid</b> Swap "stakeholders" for "the PM and the two engineers". Swap "north star" for "the decision we bet on".</div>
+    </div>
+    <div class="ap"><div class="n">D-06</div>
+      <h4>Bragging without specificity</h4>
+      <p class="why">"I delivered massive impact across multiple verticals". Recruiter reads: <b>no specific proof.</b></p>
+      <div class="fix"><b>Avoid</b> Specific &gt; superlative. "4 paying pilots on EnRegla" &gt; "massive impact in B2B SaaS".</div>
+    </div>
+    <div class="ap"><div class="n">D-07</div>
+      <h4>Apology for the current job</h4>
+      <p class="why">"Currently stuck at a consulting firm". Reads as <b>ungrateful + unprofessional</b>. BAH is a tier-1 US client; frame the leverage, not the cage.</p>
+      <div class="fix"><b>Avoid</b> Neutral description. "Design-engineering consultant at BAH via BairesDev" is the honest-proud register.</div>
+    </div>
+    <div class="ap"><div class="n">D-08</div>
+      <h4>Over-branded personal tagline</h4>
+      <p class="why">"Crafting narratives at the intersection of humanity and tomorrow". Reads as <b>agency bio, not hire.</b></p>
+      <div class="fix"><b>Avoid</b> Plain, declarative, operator voice. "Ships real products and the tools agents use to ship them."</div>
+    </div>
+    <div class="ap"><div class="n">D-09</div>
+      <h4>Emoji clutter in headings</h4>
+      <p class="why">&#x1F680;&#128293;&#x2728; on every section. Reads as <b>LinkedIn thought-leadership</b>, not senior IC.</p>
+      <div class="fix"><b>Avoid</b> Zero emoji in headings. Reserve them (if at all) for one specific playful signal.</div>
+    </div>
+    <div class="ap"><div class="n">D-10</div>
+      <h4>False modesty about the AI itself</h4>
+      <p class="why">"Of course, the AI made mistakes, and I had to hand-hold it&hellip;" as a humble-brag. Reads as <b>condescending + dated.</b></p>
+      <div class="fix"><b>Avoid</b> Respect the agent as a collaborator. Describe the capability, not its limitations.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep" />
+
+<!-- ===================== E · VISUAL ===================== -->
+<section id="e">
+  <h2><span class="cat">Category E · 12 patterns</span>Visual anti-patterns, 2026</h2>
+  <p class="section-lede">What's tired, what's suspicious, and what reads as costume. Sourced from Rauno Freiberg, Emil Kowalski, Paco Coursey, Samuel Kraft threads, and Design Twitter's 2026 "please stop doing this" roundup.</p>
+
+  <div class="aplist">
+    <div class="ap"><div class="n">E-01</div>
+      <h4>Gradient-mesh hero blob</h4>
+      <p class="why">2022 fatigue. Every AI-startup landing had one; in 2026 it reads as <b>template.</b></p>
+      <div class="fix"><b>Avoid</b> Either kill the mesh or make it functional (e.g. dataviz). No decorative blobs.</div>
+    </div>
+    <div class="ap"><div class="n">E-02</div>
+      <h4>Huly-clone warm-radial-glow pill CTA</h4>
+      <p class="why">Every AI-infra landing in 2025 shipped this pill. In 2026, recruiters who browse portfolios daily recognize it in 0.5s as <b>copy</b>.</p>
+      <div class="fix"><b>Avoid</b> If the pill stays, make the glow cooler, the easing different, or replace with a flat button. Subvert the mimicry.</div>
+    </div>
+    <div class="ap"><div class="n">E-03</div>
+      <h4>One-off decorative WebGL sphere</h4>
+      <p class="why">A spinning torus that does nothing. <b>Costs LCP, earns nothing.</b></p>
+      <div class="fix"><b>Avoid</b> WebGL only if it demonstrates a skill (dataviz, 3D DS preview). Otherwise CSS or canvas 2D.</div>
+    </div>
+    <div class="ap"><div class="n">E-04</div>
+      <h4>Chromatic aberration on everything</h4>
+      <p class="why">RGB-split on every image. <b>Noise mistaken for taste.</b></p>
+      <div class="fix"><b>Avoid</b> Zero chromatic aberration. If retained, use it on one load-bearing element.</div>
+    </div>
+    <div class="ap"><div class="n">E-05</div>
+      <h4>Scroll-jacking</h4>
+      <p class="why">Overriding native scroll. Recruiter reaches the bottom in 2x the time; half bail. <b>Measurable drop-off.</b></p>
+      <div class="fix"><b>Avoid</b> Native scroll, <code>scroll-behavior: smooth</code> is the ceiling. No pinned-cinematic sequences.</div>
+    </div>
+    <div class="ap"><div class="n">E-06</div>
+      <h4>Loading screen &gt; 2 seconds</h4>
+      <p class="why">In 2026, &gt; 1.5s LCP is failure. A "loading portfolio" animation is <b>self-reporting the problem</b>.</p>
+      <div class="fix"><b>Avoid</b> Zero loading screens. Show content immediately, lazy-load below the fold.</div>
+    </div>
+    <div class="ap"><div class="n">E-07</div>
+      <h4>Forced horizontal scroll sections</h4>
+      <p class="why">Gallery requires sideways scroll via keyboard. <b>Hostile on trackpads, impossible on mobile.</b></p>
+      <div class="fix"><b>Avoid</b> Vertical scroll is the standard. Horizontal gallery only as optional flourish, never the primary path.</div>
+    </div>
+    <div class="ap"><div class="n">E-08</div>
+      <h4>Cursor-following blobs / custom cursors</h4>
+      <p class="why">Breaks accessibility, breaks native selection. Reads as <b>2019 Awwwards submission, not 2026 hire.</b></p>
+      <div class="fix"><b>Avoid</b> Native cursor. Subtle hover states do the signaling.</div>
+    </div>
+    <div class="ap"><div class="n">E-09</div>
+      <h4>Auto-playing video hero with sound</h4>
+      <p class="why">Catastrophic on a recruiter open-desk scan. <b>Instant close.</b></p>
+      <div class="fix"><b>Avoid</b> Muted, auto-pause on tab-blur, <code>prefers-reduced-motion</code> aware, never sound.</div>
+    </div>
+    <div class="ap"><div class="n">E-10</div>
+      <h4>Excessive easter eggs / konami-code secrets</h4>
+      <p class="why">Clever to yourself, invisible to 99% of viewers. <b>Content effort displaced into novelty.</b></p>
+      <div class="fix"><b>Avoid</b> One subtle easter egg is charm. Three or more is <em>look at me</em>.</div>
+    </div>
+    <div class="ap"><div class="n">E-11</div>
+      <h4>Mobile that forgot to exist</h4>
+      <p class="why">Desktop-perfect, mobile broken. <b>60% of recruiter opens are phone-first</b> in 2026 (LinkedIn mobile &rarr; browser).</p>
+      <div class="fix"><b>Avoid</b> Test 375px width weekly. Mobile is the primary, not the fallback.</div>
+    </div>
+    <div class="ap"><div class="n">E-12</div>
+      <h4>Dark mode only, no light-mode affordance</h4>
+      <p class="why">Some recruiters screenshot into light-themed Notion. Dark-only can <b>wash out on screenshot + paste</b>.</p>
+      <div class="fix"><b>Avoid</b> Either provide a toggle, or ensure the dark design reads legibly when screenshotted and recoloured.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep" />
+
+<!-- ===================== F · STRUCTURAL ===================== -->
+<section id="f">
+  <h2><span class="cat">Category F · 10 patterns</span>Structural anti-patterns</h2>
+  <p class="section-lede">Information-architecture tells. Recruiters do not read your site &mdash; they scan it. Structure is a hireable signal.</p>
+
+  <div class="aplist">
+    <div class="ap"><div class="n">F-01</div>
+      <h4>"About me" before showing work</h4>
+      <p class="why">The biography-first portfolio reads as <b>introvert, not operator.</b> Every portfolio in R2 opens with a shipped artifact or manifesto, not a bio.</p>
+      <div class="fix"><b>Avoid</b> Hero &rarr; Work &rarr; Method &rarr; About. Bio lives at the bottom.</div>
+    </div>
+    <div class="ap"><div class="n">F-02</div>
+      <h4>Twelve case studies</h4>
+      <p class="why">More than 6 is <b>not curated</b>. Tier-1 hires showed 3&ndash;5 (R2).</p>
+      <div class="fix"><b>Avoid</b> 3&ndash;6 max. Everything else to an "archive" page.</div>
+    </div>
+    <div class="ap"><div class="n">F-03</div>
+      <h4>Two case studies</h4>
+      <p class="why">Too few is <b>no range.</b> Senior designers can show 4 different problem shapes.</p>
+      <div class="fix"><b>Avoid</b> Under 3 cases reads junior. Keep to 3&ndash;6.</div>
+    </div>
+    <div class="ap"><div class="n">F-04</div>
+      <h4>Case studies without outcome</h4>
+      <p class="why">"Here's the design" &mdash; no mention of ship, pilots, metrics, or retrospective. <b>Reads as a deck, not work.</b></p>
+      <div class="fix"><b>Avoid</b> Every case ends with an Outcome block: shipped / pilots / metric / what we learned.</div>
+    </div>
+    <div class="ap"><div class="n">F-05</div>
+      <h4>Dead links</h4>
+      <p class="why">Case link 404s. <b>Single worst signal &mdash; broken basics.</b></p>
+      <div class="fix"><b>Avoid</b> Link-check in CI. A dead project link is a rejection in 2s.</div>
+    </div>
+    <div class="ap"><div class="n">F-06</div>
+      <h4>Missing target role</h4>
+      <p class="why">Lesson 5 from R2: the target role goes on the site. Missing it means recruiter has to guess. <b>Guesses default to rejection.</b></p>
+      <div class="fix"><b>Avoid</b> State the target role explicitly in the hero or chrome: "AI Product Designer / Agentic UX Lead".</div>
+    </div>
+    <div class="ap"><div class="n">F-07</div>
+      <h4>Resume link that 404s</h4>
+      <p class="why">Portfolio says "View full resume" &rarr; 404. <b>Evidence of zero maintenance.</b></p>
+      <div class="fix"><b>Avoid</b> The CV PDF lives in-repo, versioned. Link to the latest always resolves.</div>
+    </div>
+    <div class="ap"><div class="n">F-08</div>
+      <h4>No contact affordance above the fold</h4>
+      <p class="why">Recruiter loved the work, can't find an email in 5 seconds, tabs closed.</p>
+      <div class="fix"><b>Avoid</b> Email in the nav or hero. A copy-button beside it.</div>
+    </div>
+    <div class="ap"><div class="n">F-09</div>
+      <h4>Contact form with no fallback</h4>
+      <p class="why">Form without visible email. <b>Recruiters trust email, not your form.</b></p>
+      <div class="fix"><b>Avoid</b> Email first, form optional. Always show the email address.</div>
+    </div>
+    <div class="ap"><div class="n">F-10</div>
+      <h4>No availability state</h4>
+      <p class="why">R2 Lesson 4: explicit "open / closed / selective" magnetizes. Middle is worst.</p>
+      <div class="fix"><b>Avoid</b> Persistent availability pill: <em>Open to AI Product Designer / Agentic UX Lead roles</em>.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep" />
+
+<!-- ===================== G · BOOTCAMP TELL ===================== -->
+<section id="g">
+  <h2><span class="cat">Category G · 10 tells</span>The bootcamp-portfolio tell</h2>
+  <p class="section-lede">10 cumulative giveaways. One of these is forgivable; 3+ stacked are disqualifying at senior tier. Sourced from General Assembly, Springboard, Designlab critiques and ex-bootcamp-grad confessionals, cross-referenced with Jared Erondu / Julie Zhuo hiring-screen notes.</p>
+
+  <div class="aplist">
+    <div class="ap"><div class="n">G-01</div>
+      <h4>"Hi, I'm [name] and I help brands tell their story"</h4>
+      <p class="why">Cohort-issued opener. <b>Reads as template fill-in.</b></p>
+      <div class="fix"><b>Avoid</b> Concrete claim-of-work as the opener.</div>
+    </div>
+    <div class="ap"><div class="n">G-02</div>
+      <h4>"UX/UI Designer" as the title</h4>
+      <p class="why">The slash is a bootcamp artifact. Senior designers say <em>Product Designer</em>, <em>Design Engineer</em>, <em>Interaction Designer</em>, etc.</p>
+      <div class="fix"><b>Avoid</b> Pick one specific role category. "Agentic Designer" is fine; "UX/UI Designer" is not.</div>
+    </div>
+    <div class="ap"><div class="n">G-03</div>
+      <h4>Double-diamond diagram</h4>
+      <p class="why">The most-recycled process visual in the world. Its presence is the signal.</p>
+      <div class="fix"><b>Avoid</b> If process matters, custom-draw the actual flow. No double-diamond, no DDS.</div>
+    </div>
+    <div class="ap"><div class="n">G-04</div>
+      <h4>"HMW" statements as case anchors</h4>
+      <p class="why">"How Might We" framing is IDEO-classroom syntax. Outside IDEO it reads as classroom.</p>
+      <div class="fix"><b>Avoid</b> State the actual product decision. "We chose X over Y because Z."</div>
+    </div>
+    <div class="ap"><div class="n">G-05</div>
+      <h4>A "Tools I use" section with 20 logos</h4>
+      <p class="why">Figma/Sketch/Adobe XD/Framer/InVision/Principle&hellip; <b>Tools are not differentiators.</b></p>
+      <div class="fix"><b>Avoid</b> Drop the tool-logo wall. Stack belongs in one footer line if at all.</div>
+    </div>
+    <div class="ap"><div class="n">G-06</div>
+      <h4>All projects from the same 3-month window</h4>
+      <p class="why">Cohort cadence. Recruiter sees the dates clustered, reads <b>bootcamp cohort, not career.</b></p>
+      <div class="fix"><b>Avoid</b> Spread the portfolio across years (Danilo has 15 &mdash; use them). Real career timeline beats cohort snapshot.</div>
+    </div>
+    <div class="ap"><div class="n">G-07</div>
+      <h4>Fake client logos</h4>
+      <p class="why">"Projects for" Netflix/Spotify/Uber without contract. <b>Legally dubious, reputationally fatal.</b></p>
+      <div class="fix"><b>Avoid</b> Only real clients. "Concept / spec work" if unsolicited.</div>
+    </div>
+    <div class="ap"><div class="n">G-08</div>
+      <h4>Stock photography on hero</h4>
+      <p class="why">Unsplash gradient, diverse-team-high-fiving. <b>Generic-AI aesthetic before AI even rendered it.</b></p>
+      <div class="fix"><b>Avoid</b> Custom illustration, real product screenshots, or text-only hero.</div>
+    </div>
+    <div class="ap"><div class="n">G-09</div>
+      <h4>No shipped URL on any case</h4>
+      <p class="why">All Figma prototypes, no production. Pattern <b>matches bootcamp capstone</b>.</p>
+      <div class="fix"><b>Avoid</b> At least half of cases link to a live (or internally-linked) product surface.</div>
+    </div>
+    <div class="ap"><div class="n">G-10</div>
+      <h4>Heavy use of "I learned" in every case</h4>
+      <p class="why">Senior designers ship; they don't narrate what they learned. "I learned" as a recurring refrain reads <b>junior.</b></p>
+      <div class="fix"><b>Avoid</b> One short "what this changed about how I work" line per case, not "I learned" paragraphs.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep" />
+
+<!-- ===================== H · META ===================== -->
+<section id="h">
+  <h2><span class="cat">Category H · 10 patterns</span>Meta anti-patterns</h2>
+  <p class="section-lede">Hygiene that has nothing to do with design but kills the candidacy anyway. 90% of rejections at the silent-filter stage are in this category.</p>
+
+  <div class="aplist">
+    <div class="ap"><div class="n">H-01</div>
+      <h4>Broken on mobile</h4>
+      <p class="why">Recruiter opens from LinkedIn on phone. Broken = closed.</p>
+      <div class="fix"><b>Avoid</b> 375px-first layout. Test weekly on a real phone.</div>
+    </div>
+    <div class="ap"><div class="n">H-02</div>
+      <h4>LCP &gt; 3s</h4>
+      <p class="why">In 2026, 1.5s is table-stakes. &gt;3s = <b>can't ship.</b></p>
+      <div class="fix"><b>Avoid</b> Self-host fonts, inline critical CSS, lazy-load below fold. Measure weekly.</div>
+    </div>
+    <div class="ap"><div class="n">H-03</div>
+      <h4>External-CDN font dependency that stalls</h4>
+      <p class="why">Google Fonts CDN blip =&gt; FOIT and CLS. <b>Self-inflicted.</b></p>
+      <div class="fix"><b>Avoid</b> Self-host Inter + JetBrains Mono. Use <code>font-display: swap</code> + preload.</div>
+    </div>
+    <div class="ap"><div class="n">H-04</div>
+      <h4>Stale &mdash; last case 18+ months old</h4>
+      <p class="why">Recruiter reads: <b>hasn't shipped lately.</b> Fatal in AI where 6 months is a generation.</p>
+      <div class="fix"><b>Avoid</b> "Currently" pill surfaces current work. Update monthly. Date-stamp cases.</div>
+    </div>
+    <div class="ap"><div class="n">H-05</div>
+      <h4>Missing contact methods</h4>
+      <p class="why">No email, no LinkedIn, no X. <b>Uncontactable = unhirable.</b></p>
+      <div class="fix"><b>Avoid</b> Email + LinkedIn + GitHub, all visible in contact section + footer.</div>
+    </div>
+    <div class="ap"><div class="n">H-06</div>
+      <h4>Broken image / missing-asset squares</h4>
+      <p class="why">One broken image signals <b>doesn't QA own site.</b></p>
+      <div class="fix"><b>Avoid</b> Image audit in CI. <code>onerror</code> fallback on every <code>&lt;img&gt;</code>.</div>
+    </div>
+    <div class="ap"><div class="n">H-07</div>
+      <h4>No favicon / default framework favicon</h4>
+      <p class="why">The Next.js "N" favicon tells the recruiter <b>didn't finish polishing.</b></p>
+      <div class="fix"><b>Avoid</b> Custom favicon. Brand the tab.</div>
+    </div>
+    <div class="ap"><div class="n">H-08</div>
+      <h4>Missing OG image / Twitter card</h4>
+      <p class="why">Link shared in DM / Slack shows no preview. <b>Every share is a recruiting surface.</b></p>
+      <div class="fix"><b>Avoid</b> OG image + Twitter card with title + subline. Test with metatags.io.</div>
+    </div>
+    <div class="ap"><div class="n">H-09</div>
+      <h4>No HTTPS</h4>
+      <p class="why">http:// subdomain in 2026. Browser warns. <b>Recruiter never gets past the warning.</b></p>
+      <div class="fix"><b>Avoid</b> HTTPS only, HSTS preload. Vercel/Netlify handle this for free.</div>
+    </div>
+    <div class="ap"><div class="n">H-10</div>
+      <h4>No accessibility basics</h4>
+      <p class="why">No alt text, no focus states, fails axe. At Anthropic/Figma/Airbnb a11y is a hiring filter.</p>
+      <div class="fix"><b>Avoid</b> Alt on every image, visible focus rings, skip-to-content link, axe/Lighthouse a11y &ge; 95.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep" />
+
+<!-- ===================== AUDIT ===================== -->
+<section id="audit" class="audit-wrap">
+  <h2><span class="cat">Dr-cv red-flag audit &middot; 2026-05-08</span>Does dr-cv have these anti-patterns today?</h2>
+  <p class="section-lede">Audited against: <code>dist/landing-huly/index.html</code>, <code>dist/landing/index.html</code>, <code>data/landing.yaml</code>, <code>data/testimonials/verified.yaml</code>, the four case files in <code>data/cases/</code>, and <code>README.md</code>. <b>Y</b> = present, <b>~</b> = partial/at-risk, <b>N</b> = clean. For every <b>Y</b> or <b>~</b>, a must-fix before V11 ships.</p>
+
+  <div class="audit-grid">
+
+    <div class="audit-row">
+      <div class="hd"><h4>A &middot; Design-portfolio</h4><span class="verdict no">N · clean</span></div>
+      <p>Four cases, one featured (TE Skin), no process-theatre, no invented persona, every case has a role+stack chip, no Dribbble-only tiles. Testimonials are verified and named (Sheppard, Giraldez). TE Skin leads with decision + artifact, not HMW.</p>
+      <div class="mustfix"><b>Stay vigilant</b> Do not add a double-diamond or "Research &rarr; Synthesis" block to any case. Keep role-on-team explicit in case body.</div>
+    </div>
+
+    <div class="audit-row">
+      <div class="hd"><h4>B &middot; Engineering-portfolio</h4><span class="verdict mid">~ partial</span></div>
+      <p>GitHub link is surfaced; repo <code>mdanilorojas/dr-cv</code> is legitimate ship. <b>But</b>: the landing does not yet link directly to pinned repos, README previews, or a commit graph. View-source is clean (readable HTML, commented CSS) &mdash; good. No Lighthouse badge shown.</p>
+      <div class="mustfix"><b>Must-fix</b> Add a "Built by" block in footer with <em>this repo</em> link + last-commit timestamp. Add Lighthouse + a11y badges. Surface the 4 pinned repos as an Essayist-style "Selected shipped systems" list near work section.</div>
+    </div>
+
+    <div class="audit-row">
+      <div class="hd"><h4>C &middot; AI 2025&ndash;2026</h4><span class="verdict mid">~ partial</span></div>
+      <p>"Agentic Designer" category is correctly chosen (not "AI-powered"). Named agents (Claude Code, Gemini, MCP). Method section uses R3 vocabulary (skills, MCP, subagents). <b>But</b>: no live agent artifact embedded above the fold. Marquee lists outputs but does not <em>show</em> one running. "Profile + agentic AI = combination" is stated but not demonstrated.</p>
+      <div class="mustfix"><b>Must-fix</b> Embed one runnable agent artifact in hero or just below (slash-skill output preview, MCP call log, or /te-skin component render). Must be clickable, &lt;=200KB, no network call on first paint.</div>
+    </div>
+
+    <div class="audit-row">
+      <div class="hd"><h4>D &middot; Tone</h4><span class="verdict no">N · clean</span></div>
+      <p>Hero line ("I ship real products &mdash; and I ship the tools agents use to help me ship them.") is declarative, no superlatives, no emoji clutter. Testimonials carry the praise. No "just a simple designer" humility. No "rockstar/guru". BAH framing is neutral-proud ("Design-engineering consultant"). Case copy matches hero voice.</p>
+      <div class="mustfix"><b>Stay vigilant</b> On any rewrite, ban: delve, leverage, robust, seamless, elevate, world-class, stakeholders, north star. Keep one voice through case copy.</div>
+    </div>
+
+    <div class="audit-row">
+      <div class="hd"><h4>E &middot; Visual 2026</h4><span class="verdict yes">Y · risk</span></div>
+      <p>Current <code>landing-huly</code> <b>is</b> the Huly-clone warm-radial-glow pill CTA (E-02) with ascending-particle hero canvas adjacent to gradient-mesh (E-01-adjacent). That is the exact pattern R8 flags as 2026-tired. No scroll-jacking, no custom cursor, no auto-play video, mobile tested &mdash; but the hero silhouette itself is the clone recruiters recognize.</p>
+      <div class="mustfix"><b>Must-fix</b> Subvert the Huly pill: either flatten to a solid button, swap the warm glow for cool-blue, or replace with a mono outline. Tone down the particle canvas (lower density, shorter lifespan) so hero reads as <em>custom</em>, not as Huly template.</div>
+    </div>
+
+    <div class="audit-row">
+      <div class="hd"><h4>F &middot; Structural</h4><span class="verdict mid">~ partial</span></div>
+      <p>Order is correct: Hero &rarr; Work &rarr; Method &rarr; About &rarr; Contact. 4 cases (within 3&ndash;6). Every case ends with bullets of outcome. Email is in contact + footer. <b>But</b>: the <em>target role</em> is not on the site (F-06). Nav says "Agentic Designer" but not "AI Product Designer / Agentic UX Lead" &mdash; the role the recruiter is filling. No explicit availability state beyond a green "Open to work" dot.</p>
+      <div class="mustfix"><b>Must-fix</b> Add a persistent chrome pill: "Open to AI Product Designer / Agentic UX Lead &middot; remote global &middot; reply same day." Hero eyebrow should name the role category, not just the identity.</div>
+    </div>
+
+    <div class="audit-row">
+      <div class="hd"><h4>G &middot; Bootcamp tell</h4><span class="verdict no">N · clean</span></div>
+      <p>Zero bootcamp markers. "Agentic Designer" is a specific role, not UX/UI. No double-diamond, no HMW, no 20-logo tool wall. 15-year career timeline visible, not a 3-month cluster. Real clients only. Custom visuals (SVG method diagram), not stock.</p>
+      <div class="mustfix"><b>Stay vigilant</b> Never add a "Tools I use" wall. Never add a "My design process" double-diamond. Keep the long timeline.</div>
+    </div>
+
+    <div class="audit-row">
+      <div class="hd"><h4>H &middot; Meta</h4><span class="verdict mid">~ partial</span></div>
+      <p>HTTPS &#10003;, OG title + description present, lang toggle (<code>/es/</code>) present, alt text + aria-labels present. Reduced-motion handled. <b>But</b>: fonts loaded from <code>fonts.googleapis.com</code> CDN (H-03 risk, FOIT + CLS if stalled). No Lighthouse / a11y badge surfaced. No date-stamp on cases (staleness risk per H-04). OG image not verified present.</p>
+      <div class="mustfix"><b>Must-fix</b> Self-host Inter + JetBrains Mono woff2. Date-stamp every case ("Last shipped: 2026-05-07"). Add OG image at <code>/og.png</code>. Add favicon if not present. Confirm Lighthouse perf &ge; 95 on mobile.</div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="sep" />
+
+<!-- ===================== TOP 10 ===================== -->
+<section id="top10" class="top10-wrap">
+  <h2><span class="cat">Final-final &middot; V11 build-tape</span>Top 10 anti-patterns to absolutely avoid in V11</h2>
+  <p class="top10-lede">Distilled from the full matrix. These are the <strong>10 highest-signal, highest-risk</strong> anti-patterns for a 2026 recruiter at Anthropic / Stripe / Linear / Figma / Vercel opening dr-cv for the first time. Post this as a checklist above the V11 editor.</p>
+
+  <div class="top10">
+
+    <div class="ten"><div class="rank">01</div><div>
+      <h4>Do not ship the Huly-clone warm-radial-glow pill CTA. <span style="color:var(--ink-faint);font-weight:400;font-size:12px">(E-02)</span></h4>
+      <p>In 2026 this silhouette is recognized as template in 0.5s. Flatten the pill, cool-shift the glow, or replace entirely. This is dr-cv's single highest visual risk today.</p>
+    </div></div>
+
+    <div class="ten"><div class="rank">02</div><div>
+      <h4>Do not claim "agentic" without a running agent artifact on the page. <span style="color:var(--ink-faint);font-weight:400;font-size:12px">(C-06, C-10)</span></h4>
+      <p>Saying it without showing it is the defining 2026 disqualifier. Embed a /te-skin output preview, an MCP call log, or a live component render above the fold.</p>
+    </div></div>
+
+    <div class="ten"><div class="rank">03</div><div>
+      <h4>Do not omit the target role. <span style="color:var(--ink-faint);font-weight:400;font-size:12px">(F-06, R2 L5)</span></h4>
+      <p>"Open to AI Product Designer / Agentic UX Lead" must appear in chrome, not just as a green dot. Recruiters filter on role category, not on vibe.</p>
+    </div></div>
+
+    <div class="ten"><div class="rank">04</div><div>
+      <h4>Do not load fonts from a third-party CDN. <span style="color:var(--ink-faint);font-weight:400;font-size:12px">(H-03)</span></h4>
+      <p>Google Fonts stall &rArr; FOIT + CLS &rArr; LCP fail. Self-host Inter + JetBrains Mono as woff2. The landing is the one piece of engineering work the recruiter will evaluate.</p>
+    </div></div>
+
+    <div class="ten"><div class="rank">05</div><div>
+      <h4>Do not write case-study copy that smells like GPT. <span style="color:var(--ink-faint);font-weight:400;font-size:12px">(C-05, D-05)</span></h4>
+      <p>Ban "delve", "leverage", "robust", "seamless", "elevate", "stakeholders", "north star", "alignment". Run every case through the ban-list before shipping.</p>
+    </div></div>
+
+    <div class="ten"><div class="rank">06</div><div>
+      <h4>Do not ship metrics without baseline + window + attribution. <span style="color:var(--ink-faint);font-weight:400;font-size:12px">(D-04)</span></h4>
+      <p>"4 paying pilots at EnRegla" &gt; "massive impact". Every number must answer: <em>of what, over what, from what baseline</em>. One good metric per case beats a dashboard.</p>
+    </div></div>
+
+    <div class="ten"><div class="rank">07</div><div>
+      <h4>Do not frame yourself as the lone genius leveraging AI. <span style="color:var(--ink-faint);font-weight:400;font-size:12px">(C-09, R1 Must-05)</span></h4>
+      <p>Anthropic / Stripe / Mistral filter against the sole-genius narrative. Hold the "profile + agentic AI = combination" line. Testimonials must praise method + leverage, never sole talent.</p>
+    </div></div>
+
+    <div class="ten"><div class="rank">08</div><div>
+      <h4>Do not let mobile break, and do not let LCP exceed 1.5s. <span style="color:var(--ink-faint);font-weight:400;font-size:12px">(H-01, H-02, E-11)</span></h4>
+      <p>60% of first opens are phone-first via LinkedIn. Broken mobile or slow LCP = instant close, no matter how good the desktop is. Test 375px weekly.</p>
+    </div></div>
+
+    <div class="ten"><div class="rank">09</div><div>
+      <h4>Do not ship a portfolio that is stale. <span style="color:var(--ink-faint);font-weight:400;font-size:12px">(H-04)</span></h4>
+      <p>Date-stamp every case ("Last shipped: 2026-05-07"). Surface a "Currently" pill ("Currently: EnRegla pilots + TE Developer Portal"). In AI, silence &gt; 3 months reads as exit.</p>
+    </div></div>
+
+    <div class="ten"><div class="rank">10</div><div>
+      <h4>Do not hide the writing. <span style="color:var(--ink-faint);font-weight:400;font-size:12px">(R1 Must-02, A-09)</span></h4>
+      <p>Anthropic verbatim: "put that at the top of your resume." One long-form essay (agentic-designer manifesto, EnRegla postmortem, or BAH DS methodology anonymized) surfaced at case-tile weight. Writing is the single most under-used differentiator for dr-cv competing with US ICs.</p>
+    </div></div>
+
+  </div>
+
+  <p style="margin-top:24px;color:var(--ink-dim);font-size:13px">These ten, applied, close the gap between dr-cv as it stands today and dr-cv as a tier-1 recruiter reads on 2026-05-08. Everything else in this round is supporting detail.</p>
+</section>
+
+<div class="foot">
+  V11 &middot; Round 8 &middot; Anti-patterns &middot; generated 2026-05-08 &middot; sources: R1&ndash;R7 in this folder &middot; hiring-manager public posts (Affoneh, Ridd, Erondu, Zhuo, leerob, Cassidy Williams, Hashimoto) &middot; Design Twitter threads 2024&ndash;2026 &middot; bestfolios.com archetypes &middot; Figma / Airbnb / Pentagram hiring-page public text &middot; current dr-cv state in /dist/landing-huly/ and /data/
+</div>
+
+</div>
+</body>
+</html>

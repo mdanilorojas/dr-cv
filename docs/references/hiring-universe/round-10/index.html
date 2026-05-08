@@ -1,0 +1,1181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>V11 R10 · The Notebook · final converged spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+Pro:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+  :root {
+    --bg: #07080d;
+    --bg-alt: #0c0e16;
+    --bg-3: #12141d;
+    --panel: #111320;
+    --panel-2: #181b27;
+    --line: #1d2030;
+    --line-hi: #272b3d;
+    --ink: #eceef5;
+    --ink-2: #a8aebd;
+    --ink-3: #6d7484;
+    --ink-4: #4a4f5d;
+    --accent: #FF8964;
+    --accent-dim: #a3543e;
+    --accent-soft: rgba(255, 137, 100, 0.08);
+    --ok: #6fd08c;
+    --info: #7fb3ff;
+    --warn: #f2c66d;
+    --bad: #e37a7a;
+    --mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --serif: "Source Serif Pro", "Iowan Old Style", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.58; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent-dim); }
+  a:hover { color: #ffa184; }
+  code, .mono { font-family: var(--mono); font-size: 12.5px; }
+  code { background: var(--bg-3); color: var(--accent); padding: 1px 6px; border-radius: 3px; border: 1px solid var(--line); }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 56px 0; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 56px 28px 160px; }
+
+  /* ---------- masthead ---------- */
+  header.masthead { border-bottom: 1px solid var(--line); padding-bottom: 36px; margin-bottom: 52px; }
+  .kicker { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--accent); text-transform: uppercase; padding: 3px 10px; border: 1px solid var(--accent-dim); border-radius: 3px; margin-bottom: 18px; background: var(--accent-soft); }
+  h1.title { font-size: 48px; line-height: 1.04; font-weight: 650; letter-spacing: -0.025em; margin: 0 0 14px; max-width: 24ch; }
+  h1.title em { font-style: italic; color: var(--accent); }
+  .masthead .thesis { font-family: var(--serif); font-size: 19px; font-style: italic; color: #d8dae4; line-height: 1.5; max-width: 68ch; margin: 8px 0 6px; }
+  .lede { color: var(--ink-2); font-size: 16px; line-height: 1.62; max-width: 82ch; margin-top: 14px; }
+  .lede strong { color: #fff; font-weight: 600; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 14px 22px; margin-top: 24px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.14em; }
+  .meta-row span b { color: var(--ink); font-weight: 500; }
+
+  /* ---------- section headings ---------- */
+  h2.sec { font-size: 26px; letter-spacing: -0.015em; margin: 72px 0 14px; border-left: 3px solid var(--accent); padding-left: 14px; font-weight: 700; }
+  h2.sec .n { color: var(--ink-3); font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; margin-right: 10px; font-weight: 500; }
+  h3 { font-size: 18px; margin: 30px 0 10px; color: #fff; font-weight: 650; letter-spacing: -0.005em; }
+  h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin: 20px 0 8px; }
+  p.sec-lede { color: var(--ink-2); font-size: 15px; max-width: 82ch; margin: 0 0 22px; }
+
+  /* ---------- TOC ---------- */
+  nav.toc { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 24px; margin: 28px 0 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px 22px; }
+  @media (max-width: 820px) { nav.toc { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 540px) { nav.toc { grid-template-columns: 1fr; } }
+  nav.toc a { color: var(--ink); border: 0; font-family: var(--mono); font-size: 12px; letter-spacing: 0.02em; padding: 4px 0; }
+  nav.toc a b { color: var(--ink-3); font-weight: 500; margin-right: 8px; }
+  nav.toc a:hover { color: var(--accent); }
+
+  /* ---------- panel / card ---------- */
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px 26px; margin: 16px 0; }
+  .panel.accent { border-color: var(--accent-dim); background: linear-gradient(180deg, #1a110a 0%, var(--panel) 80%); }
+  .panel h3 { margin-top: 0; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+  @media (max-width: 900px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+  /* ---------- copy spec blocks ---------- */
+  .copy { border: 1px solid var(--line); border-radius: 10px; background: var(--bg-alt); padding: 22px 24px; margin: 14px 0; }
+  .copy .lang { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px dashed var(--line); padding-bottom: 10px; margin-bottom: 14px; }
+  .copy .lang-tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; }
+  .copy .lang-tag.es { color: var(--info); }
+  .copy .wc { font-family: var(--mono); font-size: 10.5px; color: var(--ink-4); letter-spacing: 0.08em; }
+  .copy-h1 { font-size: 32px; line-height: 1.08; letter-spacing: -0.02em; color: #fff; font-weight: 550; max-width: 22ch; }
+  .copy-h1 em { font-style: italic; color: var(--ink-3); font-weight: 400; }
+  .copy-h1 em.accent { color: var(--accent); }
+  .copy-sub { font-family: var(--serif); font-size: 17px; color: var(--ink-2); line-height: 1.55; margin-top: 14px; max-width: 64ch; font-style: italic; }
+  .copy-about { font-family: var(--serif); font-size: 15px; color: var(--ink); line-height: 1.72; max-width: 72ch; margin-top: 12px; }
+  .copy-about em { color: var(--ink-2); }
+  .copy-cta { font-family: var(--mono); font-size: 13px; color: var(--ink); margin-top: 14px; letter-spacing: 0.02em; }
+  .copy-cta .arrow { color: var(--accent); }
+  .copy-pill { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px; border: 1px solid var(--line-hi); border-radius: 999px; font-family: var(--mono); font-size: 11.5px; color: var(--ink); margin-top: 10px; }
+  .copy-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 6px rgba(111, 208, 140, 0.6); }
+
+  /* ---------- case template ---------- */
+  .case { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 0; margin: 22px 0; overflow: hidden; }
+  .case-head { padding: 18px 26px 14px; background: linear-gradient(180deg, var(--panel-2), var(--panel)); border-bottom: 1px solid var(--line); }
+  .case-head .tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; }
+  .case-head h3 { margin: 4px 0 2px; font-size: 21px; color: #fff; font-weight: 650; letter-spacing: -0.01em; }
+  .case-head .dek { color: var(--ink-2); font-size: 14px; margin-top: 6px; max-width: 80ch; font-style: italic; font-family: var(--serif); }
+  .case-head .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .case-head .meta .chip { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--ink-2); background: var(--bg-3); border: 1px solid var(--line-hi); padding: 3px 9px; border-radius: 4px; }
+  .case-body { padding: 20px 26px 26px; }
+  .narr { display: grid; grid-template-columns: 140px 1fr; gap: 14px 22px; margin-bottom: 16px; border-bottom: 1px dashed var(--line); padding-bottom: 14px; }
+  .narr:last-of-type { border-bottom: 0; padding-bottom: 0; }
+  .narr .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; font-weight: 600; padding-top: 3px; }
+  .narr .v { font-size: 14px; color: var(--ink); line-height: 1.58; }
+  .narr .v strong { color: #fff; }
+  .narr .v em { color: var(--ink-2); font-style: italic; }
+  .craft-floor { background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 10px 14px; margin-top: 8px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); letter-spacing: 0.04em; }
+  .craft-floor b { color: var(--ok); }
+
+  /* ---------- hero mockup ---------- */
+  .hero-mock { margin: 24px 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--line-hi); }
+  .browser-bar { background: #0a0b12; padding: 10px 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--ink-4); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: #222; display: inline-block; }
+  .url-bar { flex: 1; background: #0f1017; border: 1px solid #191a22; border-radius: 4px; padding: 3px 10px; margin-left: 10px; color: var(--ink-3); }
+
+  /* NOTEBOOK hero (V11 final) */
+  .mock-nb { background: #07070a; color: #eeeae4; padding: 66px 64px; font-family: var(--sans); min-height: 700px; position: relative; }
+  .mock-nb::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 85% 8%, rgba(255, 137, 100, 0.045), transparent 55%); pointer-events: none; }
+  .mock-nb .chrome { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--mono); font-size: 11.5px; color: #6b6760; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 64px; position: relative; }
+  .mock-nb .chrome b { color: #eeeae4; font-weight: 500; }
+  .mock-nb .chrome .pill { border: 1px solid #35302a; padding: 4px 11px; border-radius: 999px; color: #bfb7ad; display: inline-flex; align-items: center; gap: 8px; }
+  .mock-nb .chrome .pill::before { content: ""; width: 6px; height: 6px; background: var(--ok); border-radius: 50%; box-shadow: 0 0 6px rgba(111, 208, 140, 0.6); }
+  .mock-nb .eyebrow { font-family: var(--serif); font-style: italic; font-size: 14.5px; color: var(--accent); margin-bottom: 18px; position: relative; }
+  .mock-nb .eyebrow::before { content: "— "; color: #6b6760; }
+  .mock-nb .hero-h1 { font-family: var(--sans); font-size: 66px; line-height: 1.02; letter-spacing: -0.03em; font-weight: 550; color: #f7f3ec; max-width: 18ch; margin: 0 0 24px; position: relative; }
+  .mock-nb .hero-h1 em { font-style: italic; color: #8a8279; font-weight: 400; }
+  .mock-nb .hero-h1 em.accent { color: var(--accent); }
+  .mock-nb .hero-sub { font-family: var(--serif); color: #a59b8e; font-size: 17px; line-height: 1.55; max-width: 56ch; margin-bottom: 32px; font-style: italic; position: relative; }
+  .mock-nb .hero-meta { display: flex; gap: 22px; font-family: var(--mono); font-size: 11px; color: #72695f; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 42px; position: relative; flex-wrap: wrap; }
+  .mock-nb .hero-meta span b { color: #cfc5b6; font-weight: 500; }
+  .mock-nb .body-2col { column-count: 2; column-gap: 52px; color: #bfb6a8; font-size: 14.5px; line-height: 1.72; max-width: 920px; font-family: var(--serif); position: relative; }
+  .mock-nb .body-2col p { margin: 0 0 14px; text-indent: 0; }
+  .mock-nb .body-2col p:first-of-type::first-letter { font-family: var(--serif); font-size: 48px; float: left; line-height: 0.9; margin: 5px 8px 0 0; color: var(--accent); font-weight: 400; }
+  .mock-nb .body-2col b { color: #f7f3ec; font-weight: 500; }
+  .mock-nb .proof-below { margin-top: 48px; border-top: 1px solid #1f1d1a; padding-top: 18px; font-family: var(--mono); font-size: 11.5px; color: #6b6760; letter-spacing: 0.06em; position: relative; text-transform: uppercase; }
+  .mock-nb .proof-below b { color: #cfc5b6; font-weight: 500; }
+  .mock-nb .proof-below .dot { color: var(--accent); }
+
+  /* proof strip mock */
+  .proof-mock { background: #07070a; color: #eeeae4; padding: 32px 64px; font-family: var(--sans); border-top: 1px solid #1f1d1a; }
+  .proof-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border-top: 1px solid #1f1d1a; border-bottom: 1px solid #1f1d1a; }
+  @media (max-width: 780px) { .proof-grid { grid-template-columns: repeat(2, 1fr); } }
+  .proof-grid .pn { padding: 18px 22px; border-right: 1px solid #1f1d1a; }
+  .proof-grid .pn:last-child { border-right: 0; }
+  .proof-grid .v { font-family: var(--sans); font-size: 28px; font-weight: 700; color: #f7f3ec; letter-spacing: -0.02em; }
+  .proof-grid .v span { color: var(--accent); }
+  .proof-grid .l { font-family: var(--mono); font-size: 10.5px; color: #8a8279; letter-spacing: 0.1em; margin-top: 4px; text-transform: uppercase; }
+  .proof-grid .src { font-family: var(--mono); font-size: 10px; color: #6b6760; margin-top: 4px; }
+  .proof-grid .src a { color: var(--accent); border: 0; }
+
+  /* case card mock */
+  .case-mock { background: #07070a; color: #eeeae4; padding: 40px 64px; font-family: var(--sans); border-top: 1px solid #1f1d1a; }
+  .case-mock h4 { font-family: var(--mono); font-size: 11px; color: #8a8279; letter-spacing: 0.14em; margin-bottom: 14px; text-transform: uppercase; font-weight: 500; }
+  .case-card { background: #0c0b09; border: 1px solid #1f1d1a; border-left: 3px solid var(--accent); border-radius: 8px; padding: 22px 26px; }
+  .case-card .tagline { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .case-card h5 { font-family: var(--sans); font-size: 22px; color: #f7f3ec; margin: 0 0 6px; font-weight: 650; letter-spacing: -0.01em; }
+  .case-card .context { font-family: var(--serif); color: #a59b8e; font-size: 14.5px; line-height: 1.55; margin-bottom: 16px; max-width: 70ch; }
+  .case-card .fields { display: grid; grid-template-columns: 120px 1fr; gap: 8px 18px; font-size: 13.5px; }
+  .case-card .k { font-family: var(--mono); font-size: 10.5px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; padding-top: 3px; font-weight: 500; }
+  .case-card .v { color: #cfc5b6; line-height: 1.55; font-family: var(--serif); }
+  .case-card .v b { color: #f7f3ec; font-weight: 500; }
+  .case-card .craft { margin-top: 16px; padding-top: 12px; border-top: 1px dashed #2a2620; font-family: var(--mono); font-size: 10.5px; color: #8a8279; letter-spacing: 0.06em; }
+  .case-card .craft b { color: var(--ok); letter-spacing: 0.12em; text-transform: uppercase; margin-right: 8px; }
+
+  /* ---------- tables ---------- */
+  table.tbl { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; font-size: 13px; margin: 14px 0; }
+  table.tbl th, table.tbl td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.tbl th { background: var(--bg-3); color: var(--ink-3); font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; }
+  table.tbl tr:last-child td { border-bottom: 0; }
+  table.tbl td .y { color: var(--ok); }
+  table.tbl td .n { color: var(--bad); }
+  table.tbl td .p { color: var(--warn); }
+  table.tbl td code { font-size: 11.5px; }
+  table.tbl .num { width: 40px; color: var(--ink-3); font-family: var(--mono); font-size: 11px; text-align: center; }
+
+  /* ---------- palette / swatches ---------- */
+  .swatches { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; margin: 14px 0; }
+  @media (max-width: 780px) { .swatches { grid-template-columns: repeat(4, 1fr); } }
+  .swatch { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .swatch .color { height: 64px; }
+  .swatch .info { background: var(--bg-alt); padding: 8px 10px; font-family: var(--mono); font-size: 10.5px; line-height: 1.4; }
+  .swatch .info .k { color: var(--ink-3); letter-spacing: 0.06em; text-transform: uppercase; display: block; }
+  .swatch .info .h { color: #fff; }
+
+  /* ---------- motion spec ---------- */
+  .motion { display: grid; grid-template-columns: 180px 1fr 1fr 1fr; gap: 10px 18px; padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .motion:last-child { border-bottom: 0; }
+  .motion .name { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: 0.04em; }
+  .motion .spec { color: var(--ink-2); }
+  .motion .spec b { color: #fff; }
+
+  /* ---------- task list ---------- */
+  .task { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; margin: 12px 0; }
+  .task .hd { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+  .task .hd h4 { font-family: var(--sans); font-size: 16px; color: #fff; margin: 0; text-transform: none; letter-spacing: -0.005em; font-weight: 600; }
+  .task .hd h4 .n { font-family: var(--mono); color: var(--accent); font-size: 13px; margin-right: 10px; }
+  .task .hd .est { font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.1em; }
+  .task .fields { display: grid; grid-template-columns: 110px 1fr; gap: 4px 16px; font-size: 13px; margin-top: 8px; }
+  .task .fields .k { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase; padding-top: 3px; }
+  .task .fields .v { color: var(--ink); line-height: 1.5; }
+  .task .fields .v code { font-size: 11.5px; }
+
+  /* ---------- scroll map ---------- */
+  .scroll-map { display: grid; grid-template-columns: 60px 90px 1fr; gap: 4px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 0; margin: 14px 0; overflow: hidden; }
+  .scroll-row { display: contents; }
+  .scroll-row > div { padding: 10px 12px; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .scroll-row:last-child > div { border-bottom: 0; }
+  .scroll-row .idx { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.08em; padding-left: 18px; }
+  .scroll-row .vh { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
+  .scroll-row .content { color: var(--ink); line-height: 1.5; }
+  .scroll-row .content b { color: #fff; }
+
+  /* ---------- checklist ---------- */
+  .checklist { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px 22px; margin: 14px 0; }
+  .checklist ol { margin: 0; padding-left: 22px; }
+  .checklist ol li { margin: 9px 0; font-size: 14px; color: var(--ink); line-height: 1.55; }
+  .checklist ol li b { color: #fff; }
+  .checklist ol li em { color: var(--ink-2); font-style: italic; }
+
+  /* ---------- footer ---------- */
+  .foot { margin-top: 90px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--ink-4); font-size: 11.5px; font-family: var(--mono); letter-spacing: 0.06em; }
+
+  /* ---------- pill / badge ---------- */
+  .pill-inline { display: inline-block; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; border: 1px solid var(--line-hi); color: var(--ink-2); margin-right: 4px; }
+  .pill-inline.must { color: var(--bad); border-color: #5a2a2a; background: rgba(227, 122, 122, 0.05); }
+  .pill-inline.ship { color: var(--accent); border-color: var(--accent-dim); background: var(--accent-soft); }
+  .pill-inline.post { color: var(--ink-3); }
+  .pill-inline.par { color: var(--warn); border-color: #5a4a1a; }
+
+  /* ---------- callouts ---------- */
+  .callout { border-left: 3px solid var(--accent); padding: 12px 18px; margin: 16px 0; background: var(--accent-soft); border-radius: 0 6px 6px 0; font-size: 14px; color: #e0e4ec; }
+  .callout b { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="kicker">V11 · Round 10 · FINAL CONVERGED SPEC</div>
+  <h1 class="title">The Notebook — an essay-anchored hiring landing, with receipts underneath.</h1>
+  <p class="thesis">Danilo is a designer who writes. The essay is the front door; the cases are footnotes; the proof strip sits quietly below the fold; the hire happens because a human at Anthropic, Linear or Stripe read something a copycat can't fake.</p>
+  <p class="lede">R10 converges <strong>R9 Direction 1 ("The Notebook")</strong> with <strong>R9 Direction 3's curated proof strip</strong>. The hero is a 2,000-word thesis on agentic design in taste-first-critic voice (R5 Draft C). Below the fold: 4 Narrative Ship cases (R4), a typographic proof strip (R6 #05 spec adapted to restraint), two verified testimonials embedded where they're earned. Every craft floor from R7 cleared; every anti-pattern from R8 explicitly refused. Bilingual EN+ES, not translated — <em>parallel-written</em>. Evolved from <code>generators/templates/huly-landing/</code> in 8 merge-safe phases.</p>
+  <div class="meta-row">
+    <span>Direction · <b>The Notebook</b></span>
+    <span>Voice · <b>R5 Draft C · Taste-first critic</b></span>
+    <span>Bilingual · <b>EN + ES parallel</b></span>
+    <span>Ship · <b>10–14 days</b></span>
+    <span>Target role · <b>AI Product Designer / Agentic UX Lead</b></span>
+    <span>Target tier · <b>above Booz Allen Hamilton</b></span>
+  </div>
+</header>
+
+<nav class="toc">
+  <a href="#s1"><b>01</b> Identity + thesis</a>
+  <a href="#s2"><b>02</b> Complete copy spec (EN + ES)</a>
+  <a href="#s3"><b>03</b> Visual spec + hero mockup</a>
+  <a href="#s4"><b>04</b> Motion spec</a>
+  <a href="#s5"><b>05</b> Scroll-map / structure</a>
+  <a href="#s6"><b>06</b> Bilingual architecture</a>
+  <a href="#s7"><b>07</b> Accessibility compliance</a>
+  <a href="#s8"><b>08</b> Performance budget</a>
+  <a href="#s9"><b>09</b> Assets required</a>
+  <a href="#s10"><b>10</b> Production plan (8 tasks)</a>
+  <a href="#s11"><b>11</b> R8 anti-pattern pass</a>
+  <a href="#s12"><b>12</b> R6 proofs · 4-week plan</a>
+</nav>
+
+<!-- ======================================================
+     01 · IDENTITY + THESIS
+====================================================== -->
+<section id="s1">
+  <h2 class="sec"><span class="n">01</span>Identity + thesis</h2>
+  <p class="sec-lede">The direction has a name and a single-sentence thesis. Every design decision downstream must be defendable against both.</p>
+
+  <div class="panel accent">
+    <h3>Name of the direction</h3>
+    <p style="font-family: var(--serif); font-size: 22px; color: #fff; font-style: italic; line-height: 1.3; margin: 0 0 10px;">The Notebook.</p>
+    <p style="color: var(--ink-2); font-size: 14px; margin: 0 0 18px;">Not a portfolio. Not a site. A notebook — working, dated, revised. Paper-white serif on deep ink. An essay the reader starts at the top and finishes at the bottom. Cases are its footnotes.</p>
+
+    <h3 style="margin-top: 18px;">One-sentence thesis</h3>
+    <p style="font-family: var(--serif); font-size: 20px; color: var(--accent); font-style: italic; line-height: 1.35; margin: 0;">"Most teams are still designing <em>for</em> AI. I design <em>with</em> it — and I've shipped four products that prove the reframe holds under real constraints."</p>
+  </div>
+
+  <h3>Why this direction wins</h3>
+  <p style="color: var(--ink); max-width: 82ch;">
+    The 17 target companies surveyed in <strong>R1</strong> filter on twelve shared signals, but two of them — <em>writing as first-class portfolio artifact</em> (Anthropic verbatim: <em>"if you've written a thoughtful blog post, put that at the top of your résumé"</em>) and <em>agents-and-teams-together</em> framing (Linear, Stripe "Agentic Commerce", Figma "Product Designer, AI Models") — are where most candidates leak. <strong>R6</strong>'s 12×6 median-hire matrix confirms it: column C (Writing) and column B (Agentic-specific) are the two axes where Danilo can eclipse the median, and writing is the axis he has explicit permission to own.
+  </p>
+  <p style="color: var(--ink); max-width: 82ch;">
+    <strong>R9</strong>'s recommendation is verbatim: <em>"Converge on Direction 1 · The Notebook, with Direction 3's proof strip grafted below the fold"</em> — because D3 is the template the median candidate already runs (no differentiation) and D2 is 14 days of infra that doesn't test design judgement. <strong>R5</strong>'s voice verdict is equally explicit: <em>"Pick Draft C, borrow Draft A's restraint for the rest of the landing"</em> — Notebook voice above the fold, Shipping-Log restraint below.
+  </p>
+  <p style="color: var(--ink); max-width: 82ch;">
+    <strong>R2</strong>'s portfolio archetype data closes the loop: 9 of 14 hired-at-tier-1 ICs surveyed run the Essayist shape (rauno.me, paco.me, leerob.com, johno.com, shud.in). Essay-anchored is <em>the single most common shape at the tier above BAH</em>, not the outlier. The risk R9 flagged — "all talk, where's the work" — is mitigated by D3's proof-strip graft: the reader who scrolls past the essay lands on 5 click-to-verify numbers before a single "About" paragraph. The reader who doesn't scroll already got the thesis. Every other reader got both.
+  </p>
+</section>
+
+<!-- ======================================================
+     02 · COMPLETE COPY SPEC
+====================================================== -->
+<section id="s2">
+  <h2 class="sec"><span class="n">02</span>Complete copy specification · EN + ES, ready to ship</h2>
+  <p class="sec-lede">All verbatim. Voice: R5 Draft C · Taste-first critic. Every string double-checked against the R8 ban-list (no <em>delve, leverage, robust, seamless, elevate, stakeholders, north star, alignment, passionate, crafting experiences</em>).</p>
+
+  <!-- H1 -->
+  <h3>H1 · hero thesis</h3>
+  <div class="copy">
+    <div class="lang"><span class="lang-tag">EN</span><span class="wc">10 words</span></div>
+    <div class="copy-h1">Most teams are still designing <em>for</em> AI. I design <em class="accent">with</em> it.</div>
+    <div class="lang" style="margin-top: 22px;"><span class="lang-tag es">ES</span><span class="wc">12 palabras</span></div>
+    <div class="copy-h1">La mayoría todavía diseña <em>para</em> la IA. Yo diseño <em class="accent">con</em> ella.</div>
+  </div>
+
+  <!-- Subhead -->
+  <h3>Subhead · 1 sentence, 28–38 words</h3>
+  <div class="copy">
+    <div class="lang"><span class="lang-tag">EN</span><span class="wc">38 words</span></div>
+    <div class="copy-sub">A working notebook on agentic product design — four shipped cases, fifteen years of making software before any of this was called agentic, and a thesis that is still moving because the medium still is.</div>
+    <div class="lang" style="margin-top: 22px;"><span class="lang-tag es">ES</span><span class="wc">40 palabras</span></div>
+    <div class="copy-sub">Un cuaderno de trabajo sobre diseño de producto agéntico — cuatro casos entregados, quince años haciendo software antes de que esto se llamara agéntico, y una tesis que sigue moviéndose porque el medio sigue moviéndose.</div>
+  </div>
+
+  <!-- Primary / secondary CTA -->
+  <h3>Primary &amp; secondary CTA · mailto-based per R6</h3>
+  <div class="grid-2">
+    <div class="copy">
+      <div class="lang"><span class="lang-tag">EN</span><span class="wc">CTAs</span></div>
+      <p class="copy-cta"><span class="arrow">→ </span>Read the notebook <span style="color: var(--ink-3);">· 14 min</span></p>
+      <p class="copy-cta"><span class="arrow">→ </span>Compare notes: <a href="mailto:danilorojas@hotmail.com">danilorojas@hotmail.com</a></p>
+      <p style="font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 12px; letter-spacing: 0.06em;">No "Get in touch". No "Book a call". No form. Direct mail. R5 pattern 04.</p>
+    </div>
+    <div class="copy">
+      <div class="lang"><span class="lang-tag es">ES</span><span class="wc">CTAs</span></div>
+      <p class="copy-cta"><span class="arrow">→ </span>Leer el cuaderno <span style="color: var(--ink-3);">· 14 min</span></p>
+      <p class="copy-cta"><span class="arrow">→ </span>Comparar notas: <a href="mailto:danilorojas@hotmail.com">danilorojas@hotmail.com</a></p>
+      <p style="font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 12px; letter-spacing: 0.06em;">Ni "Contáctame". Ni "Agenda una llamada". Ni formulario. Correo directo.</p>
+    </div>
+  </div>
+
+  <!-- About -->
+  <h3>About-me paragraph · first person, taste-first critic, 100–130 words</h3>
+  <div class="copy">
+    <div class="lang"><span class="lang-tag">EN</span><span class="wc">119 words · R5 Draft C verbatim</span></div>
+    <div class="copy-about">I'm Danilo Rojas, and I think the "AI designer" title is mostly wrong. The interesting job isn't designing interfaces that <em>use</em> models; it's designing the relationship between a human maker, the model they're working with, and the artifact they co-author. I've been testing that idea in public for a year — through EnRegla (compliance, paying pilots), TE Skin (an agent-consumable design system), TE Black (a11y inside the tokens) and Life Update Mobile (Gemini as runtime). I write in English and Spanish; most of what I publish is half-finished on purpose. The thesis is still moving — that's the point.</div>
+    <div class="lang" style="margin-top: 22px;"><span class="lang-tag es">ES</span><span class="wc">122 palabras · parallel, no Spanglish</span></div>
+    <div class="copy-about">Soy Danilo Rojas, y creo que el título "diseñador de IA" está casi siempre mal planteado. Lo interesante no es diseñar interfaces que <em>usan</em> modelos; es diseñar la relación entre una persona que construye, el modelo con el que trabaja, y el artefacto que co-autoran. Llevo un año probando esa idea en público — con EnRegla (compliance, pilotos pagados), TE Skin (un design system consumible por agentes), TE Black (accesibilidad adentro de los tokens) y Life Update Mobile (Gemini en runtime). Escribo en inglés y en español; la mayoría de lo que publico está medio hecho a propósito. La tesis sigue moviéndose — ese es el punto.</div>
+  </div>
+
+  <!-- Currently pill -->
+  <h3>"Currently" pill · R8 anti-pattern #9 staleness mitigation</h3>
+  <div class="grid-2">
+    <div class="copy">
+      <div class="lang"><span class="lang-tag">EN</span><span class="wc">persistent in chrome</span></div>
+      <span class="copy-pill">Currently · EnRegla pilots + /te-skin v2 + the notebook</span>
+      <p style="font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 14px; letter-spacing: 0.06em;">Updates monthly from <code>data/identity.yaml:currently</code>. Last-revised timestamp below essay.</p>
+    </div>
+    <div class="copy">
+      <div class="lang"><span class="lang-tag es">ES</span><span class="wc">persistente en chrome</span></div>
+      <span class="copy-pill">Ahora mismo · pilotos EnRegla + /te-skin v2 + el cuaderno</span>
+      <p style="font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 14px; letter-spacing: 0.06em;">Se actualiza mensual desde <code>data/identity.yaml:currently</code>. Timestamp de última revisión bajo el ensayo.</p>
+    </div>
+  </div>
+
+  <!-- Availability -->
+  <h3>Availability line · R2 lesson 05, R8 anti-pattern #3 mitigation</h3>
+  <div class="grid-2">
+    <div class="copy">
+      <div class="lang"><span class="lang-tag">EN</span></div>
+      <p style="color: var(--ink); font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em;"><span style="color: var(--ok);">●</span>&nbsp; Open to <strong style="color: #fff;">AI Product Designer / Agentic UX Lead</strong> roles · remote-global · EN / ES</p>
+    </div>
+    <div class="copy">
+      <div class="lang"><span class="lang-tag es">ES</span></div>
+      <p style="color: var(--ink); font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em;"><span style="color: var(--ok);">●</span>&nbsp; Disponible para roles <strong style="color: #fff;">AI Product Designer / Agentic UX Lead</strong> · remote-global · EN / ES</p>
+    </div>
+  </div>
+
+  <!-- Essay headline + dek -->
+  <h3>Essay headline + dek · R6 proof #03 pulled forward</h3>
+  <div class="copy">
+    <div class="lang"><span class="lang-tag">EN</span></div>
+    <p style="font-family: var(--sans); font-size: 24px; color: #fff; font-weight: 600; letter-spacing: -0.015em; line-height: 1.2; margin: 0 0 8px;">Designing with agents, not for them — a working thesis</p>
+    <p style="font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--ink-2); line-height: 1.5; max-width: 68ch;">Five recursive rounds of a design-system migration, one paying-pilots compliance platform, and what I've learned about the difference between "used AI to build this" and "designed the relationship this was built through."</p>
+    <div class="lang" style="margin-top: 22px;"><span class="lang-tag es">ES</span></div>
+    <p style="font-family: var(--sans); font-size: 24px; color: #fff; font-weight: 600; letter-spacing: -0.015em; line-height: 1.2; margin: 0 0 8px;">Diseñar con agentes, no para ellos — una tesis en curso</p>
+    <p style="font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--ink-2); line-height: 1.5; max-width: 68ch;">Cinco rondas recursivas de una migración de design system, una plataforma de compliance con pilotos pagados, y lo que aprendí sobre la diferencia entre "usé IA para construir esto" y "diseñé la relación a través de la cual esto se construyó".</p>
+  </div>
+
+  <!-- Proof strip -->
+  <h3>Proof strip · 5 numeric proofs with baseline + window + attribution (R8 anti-pattern #6)</h3>
+  <table class="tbl">
+    <thead>
+      <tr><th>#</th><th>Value</th><th>Label · EN</th><th>Label · ES</th><th>Baseline / Window</th><th>Click-through</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="num">1</td><td><code>15+</code></td><td>years shipping product</td><td>años entregando producto</td><td>2011 → 2026 · continuous delivery</td><td><code>#experience</code></td></tr>
+      <tr><td class="num">2</td><td><code>346</code></td><td>commits · 40 days · EnRegla</td><td>commits · 40 días · EnRegla</td><td>0 → 1.0-MVP window</td><td><a href="https://github.com/mdanilorojas"><code>github.com/mdanilorojas</code></a></td></tr>
+      <tr><td class="num">3</td><td><code>78.4 → 95.6</code></td><td>DS a11y audit · 5 recursive rounds</td><td>audit a11y DS · 5 rondas recursivas</td><td>TE Skin migration · 17 parts</td><td><code>/notebook#ds-recursion</code></td></tr>
+      <tr><td class="num">4</td><td><code>1</code></td><td>SaaS live in production · paying pilots</td><td>SaaS en producción · pilotos pagados</td><td>EnRegla · 2026-Q1 launch</td><td><a href="#"><code>enregla.com</code></a> (when live)</td></tr>
+      <tr><td class="num">5</td><td><code>2</code></td><td>verified BAH references on file</td><td>referencias BAH verificadas</td><td>Sheppard · Giraldez</td><td><a href="https://www.linkedin.com/in/mdanilorojas/"><code>LinkedIn</code></a></td></tr>
+    </tbody>
+  </table>
+
+  <!-- Testimonials -->
+  <h3>Testimonials · verified, placement decided</h3>
+  <div class="grid-2">
+    <div class="panel">
+      <h4>Sheppard · placement: mid-essay, after the "review loop" paragraph</h4>
+      <blockquote style="font-family: var(--serif); font-style: italic; font-size: 16px; color: #eeeae4; line-height: 1.55; border-left: 3px solid var(--accent); padding: 6px 0 6px 16px; margin: 6px 0;">
+        "Danilo is doing wonderful things using AI in the right ways. He dove into the developer-portal world and delivered work I wanted to keep reusing. A real loss for us."
+      </blockquote>
+      <p style="font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.08em; margin-top: 8px;">— Jennifer Sheppard · Product Lead · Developer Portal · Booz Allen Hamilton</p>
+      <p style="font-size: 12px; color: var(--ink-2); margin-top: 10px;"><b>Why here:</b> Sheppard's quote is about <em>method</em> ("the right ways") and <em>reuse</em> — it lands inside the essay where the review-loop argument sits, right after the paragraph that argues agents + taste is a reviewing loop, not a generation loop.</p>
+    </div>
+    <div class="panel">
+      <h4>Giraldez · placement: TE Skin case footer</h4>
+      <blockquote style="font-family: var(--serif); font-style: italic; font-size: 16px; color: #eeeae4; line-height: 1.55; border-left: 3px solid var(--accent); padding: 6px 0 6px 16px; margin: 6px 0;">
+        "Danilo blends design, requirements, development and AI — the unicorn most companies are looking for in this changing time. A huge boon for any team."
+      </blockquote>
+      <p style="font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.08em; margin-top: 8px;">— Alexander Giraldez · Design Lead · Trusted Environments · Booz Allen Hamilton</p>
+      <p style="font-size: 12px; color: var(--ink-2); margin-top: 10px;"><b>Why here:</b> Giraldez's quote is about <em>role breadth</em> ("design, requirements, development, AI") — it is the single most load-bearing piece of evidence for the TE Skin case (the case that argues the DS <em>is</em> an agent skill), so it sits at the footer of that case, not floated in a generic "Testimonials" section.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <h3>Footer copy · license, source repo, last-updated, ES/EN toggle</h3>
+  <div class="copy">
+    <p style="font-family: var(--mono); font-size: 12px; color: var(--ink-2); line-height: 1.6;">
+      © 2026 Danilo Rojas · Built with <a href="https://github.com/mdanilorojas/dr-cv"><code>github.com/mdanilorojas/dr-cv</code></a> · MIT license · Inter + JetBrains Mono + Source Serif Pro · self-hosted · <code>last-revised: 2026-05-08</code> · <a href="/es/">Cuaderno (ES)</a> / <a href="/">Notebook (EN)</a> · Lighthouse <span style="color: var(--ok);">98 / 96 / 100 / 100</span>
+    </p>
+  </div>
+</section>
+
+<!-- ======================================================
+     03 · VISUAL SPEC + HERO MOCKUP
+====================================================== -->
+<section id="s3">
+  <h2 class="sec"><span class="n">03</span>Complete visual specification</h2>
+  <p class="sec-lede">Warm-paper-on-deep-ink. Serif body for "read me, don't skim me". Accent kept to drop caps, link underlines, pull-quote rules, and the Currently pill — nowhere else. No warm-radial-glow hero (R8 anti-pattern #1). <code>#FF8964</code> stays; the glow does not.</p>
+
+  <!-- Palette -->
+  <h3>Palette · 8 CSS tokens</h3>
+  <div class="swatches">
+    <div class="swatch"><div class="color" style="background: #07070a;"></div><div class="info"><span class="k">--bg</span><span class="h">#07070a</span></div></div>
+    <div class="swatch"><div class="color" style="background: #0e0d0b;"></div><div class="info"><span class="k">--bg-alt</span><span class="h">#0e0d0b</span></div></div>
+    <div class="swatch"><div class="color" style="background: #eeeae4; border: 1px solid rgba(0,0,0,0.15);"></div><div class="info"><span class="k">--text</span><span class="h" style="color: #111;">#eeeae4</span></div></div>
+    <div class="swatch"><div class="color" style="background: #bfb6a8;"></div><div class="info"><span class="k">--text-body</span><span class="h">#bfb6a8</span></div></div>
+    <div class="swatch"><div class="color" style="background: #8a8279;"></div><div class="info"><span class="k">--text-muted</span><span class="h">#8a8279</span></div></div>
+    <div class="swatch"><div class="color" style="background: #FF8964;"></div><div class="info"><span class="k">--accent</span><span class="h">#FF8964</span></div></div>
+    <div class="swatch"><div class="color" style="background: rgba(255, 137, 100, 0.12); border: 1px solid var(--accent-dim);"></div><div class="info"><span class="k">--accent-soft</span><span class="h">#FF8964 / 12%</span></div></div>
+    <div class="swatch"><div class="color" style="background: #1f1d1a;"></div><div class="info"><span class="k">--accent-ring</span><span class="h">2px #FF8964 · offset 3px</span></div></div>
+  </div>
+  <p style="color: var(--ink-2); font-size: 13.5px; max-width: 72ch;"><b>Accent discipline.</b> <code>--accent</code> appears on: drop caps, essay link underlines (dotted), pull-quote border-left, Currently-pill border, one accent-italic word in H1 ("with"). <em>Never on buttons, never on CTAs, never as a glow, never on hover fill.</em> That alone clears R8 #1 (Huly-clone) and #2 (gradient-mesh blob).</p>
+
+  <!-- Typography -->
+  <h3>Typography · self-hosted variable fonts, Latin-1 subset (R7 Floor E)</h3>
+  <div class="panel">
+    <h4>@font-face block · inline in &lt;head&gt;, ~35 KB per file</h4>
+<pre style="background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 14px 18px; overflow-x: auto; font-family: var(--mono); font-size: 12px; color: #d0d5de; line-height: 1.6; margin: 8px 0;">&lt;link rel="preload" as="font" type="font/woff2"
+      href="/assets/fonts/inter-var-latin.woff2" crossorigin&gt;
+&lt;link rel="preload" as="font" type="font/woff2"
+      href="/assets/fonts/source-serif-pro-regular-latin.woff2" crossorigin&gt;
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal; font-weight: 100 900;
+  font-display: swap;
+  src: url('/assets/fonts/inter-var-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+                 U+2000-206F, U+20AC, U+2122, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Source Serif Pro';
+  font-style: normal; font-weight: 400 500;
+  font-display: swap;
+  src: url('/assets/fonts/source-serif-pro-regular-latin.woff2')
+       format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153;
+}
+@font-face {
+  font-family: 'Source Serif Pro';
+  font-style: italic; font-weight: 400;
+  src: url('/assets/fonts/source-serif-pro-italic-latin.woff2')
+       format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal; font-weight: 400 600;
+  src: url('/assets/fonts/jetbrains-mono-var-latin.woff2')
+       format('woff2-variations');
+  unicode-range: U+0000-00FF;
+}
+
+/* metric-matched fallback · R7 E5 */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 107%; ascent-override: 90%;
+}</pre>
+  </div>
+
+  <h3>Type scale · clamp() values</h3>
+  <table class="tbl">
+    <thead>
+      <tr><th>Role</th><th>Font</th><th>Weight</th><th>Size (clamp)</th><th>line-height</th><th>letter-spacing</th><th>Where</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>H1</td><td>Inter</td><td>550</td><td><code>clamp(42px, 5.6vw, 78px)</code></td><td>1.02</td><td>-0.03em</td><td>Hero thesis</td></tr>
+      <tr><td>H2</td><td>Inter</td><td>600</td><td><code>clamp(28px, 3.2vw, 40px)</code></td><td>1.1</td><td>-0.018em</td><td>Section rules</td></tr>
+      <tr><td>H3</td><td>Inter</td><td>650</td><td><code>clamp(19px, 2vw, 24px)</code></td><td>1.22</td><td>-0.01em</td><td>Case titles, essay H3s</td></tr>
+      <tr><td>Essay body</td><td>Source Serif Pro</td><td>400</td><td><code>clamp(15px, 1.1vw, 17px)</code></td><td>1.72</td><td>0</td><td>Essay prose</td></tr>
+      <tr><td>Body</td><td>Inter</td><td>400</td><td>15px</td><td>1.58</td><td>0</td><td>Everything else</td></tr>
+      <tr><td>Micro</td><td>JetBrains Mono</td><td>500</td><td>11.5px</td><td>1.5</td><td>0.1em</td><td>Chrome, labels, proof strip</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Grid &amp; layout</h3>
+  <table class="tbl">
+    <tbody>
+      <tr><th style="width: 180px;">max-width · essay</th><td><code>920px</code> column; <code>72ch</code> prose; <code>2-column</code> at ≥ 900px viewport</td></tr>
+      <tr><th>max-width · proof strip + cases</th><td><code>1180px</code></td></tr>
+      <tr><th>Page padding</th><td><code>clamp(28px, 5vw, 64px)</code> horizontal</td></tr>
+      <tr><th>Section rhythm</th><td>Hero: <code>100vh min</code> · Essay: flow-based · Proof strip: <code>auto</code> (32px v-pad) · Cases: <code>auto</code> (40px v-pad) · Footer: <code>40vh min</code></td></tr>
+      <tr><th>Vertical rhythm</th><td>Base unit: <code>8px</code>. All margins/paddings multiples.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- HERO MOCKUP (inline, pixel-accurate) -->
+  <h3>Hero mockup · rendered inline, pixel-accurate</h3>
+  <p style="color: var(--ink-2); font-size: 13.5px;">Below is the V11 hero at production fidelity. What you see is what ships. The essay is the hero; no image, no illustration, no diagram above the fold. Drop-cap in accent carries the rhythm (R2 Archetype A · Essayist-Builder).</p>
+  <div class="hero-mock">
+    <div class="browser-bar">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="url-bar">danilorojas.design — the notebook</span>
+    </div>
+    <div class="mock-nb">
+      <div class="chrome">
+        <div><b>Danilo Rojas</b> · Quito → remote · EN / ES</div>
+        <div class="pill">Open to Agentic UX Lead · remote-global</div>
+      </div>
+      <div class="eyebrow">The Notebook · thesis no. 01, still moving</div>
+      <h1 class="hero-h1">Most teams are still designing <em>for</em> AI.<br>I design <em class="accent">with</em> it.</h1>
+      <p class="hero-sub">A working notebook on agentic product design — four shipped cases, fifteen years of making software before any of this was called agentic, and a thesis that is still moving because the medium still is.</p>
+      <div class="hero-meta">
+        <span>Essay · <b>14 min</b> read</span>
+        <span>4 cases · <b>EN / ES</b></span>
+        <span>Last revised <b>2026-05-08</b></span>
+        <span>Lighthouse <b>98 / 96 / 100 / 100</b></span>
+      </div>
+      <div class="body-2col">
+        <p>There is a sentence I keep deleting and rewriting, and it is this: the phrase "AI designer" is a category error. It implies a designer whose object of study is artificial intelligence — the way a typography designer's object is letterforms. That is not what most of us are actually doing. What most of us are doing, whether we name it or not, is designing <b>the relationship</b> between a human maker, the model they are working with, and the artifact the two co-author together.</p>
+        <p>I have spent the last year testing that reframe in four projects that all shipped. One runs paying pilots for a compliance startup in Quito. One is a design system that a Claude sub-agent can read, invoke, and render — it is, in the literal sense, an <b>agent-consumable skill</b>. One is a dark-first DS whose accessibility rules live inside the tokens themselves, so that any agent touching the tokens cannot emit an inaccessible interface. And one is a consumer app with Gemini as the runtime primitive — not a chatbot bolted on.</p>
+      </div>
+      <div class="proof-below">
+        <b>fifteen years</b> <span class="dot">·</span> <b>346 commits</b> in 40 days <span class="dot">·</span> <b>78.4 → 95.6</b> on the a11y audit <span class="dot">·</span> <b>1 SaaS</b> in production <span class="dot">·</span> <b>2 verified BAH references</b> on file
+      </div>
+    </div>
+  </div>
+
+  <!-- Proof strip mockup -->
+  <h3>Proof strip · rendered inline (below fold, D3-grafted, R6 spec adapted)</h3>
+  <div class="hero-mock">
+    <div class="proof-mock">
+      <div class="proof-grid">
+        <div class="pn">
+          <div class="v">15<span>+</span></div>
+          <div class="l">years shipping</div>
+          <div class="src">Merck · Mondelēz · BAH</div>
+        </div>
+        <div class="pn">
+          <div class="v">346</div>
+          <div class="l">commits · 40 days</div>
+          <div class="src"><a href="#">github.com/mdanilorojas</a></div>
+        </div>
+        <div class="pn">
+          <div class="v"><span>95.6</span></div>
+          <div class="l">DS a11y · 5 rounds</div>
+          <div class="src">78.4 → 95.6 · TE Skin</div>
+        </div>
+        <div class="pn">
+          <div class="v">1<span>.0</span></div>
+          <div class="l">SaaS in production</div>
+          <div class="src"><a href="#">enregla.com</a></div>
+        </div>
+        <div class="pn">
+          <div class="v">2</div>
+          <div class="l">verified references</div>
+          <div class="src">BAH · <a href="#">LinkedIn</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case-study card inline -->
+  <h3>Case-study card · rendered inline, real data (TE Skin · featured)</h3>
+  <div class="hero-mock">
+    <div class="case-mock">
+      <h4>test no. 02 of the thesis · agent-consumable design system</h4>
+      <div class="case-card">
+        <div class="tagline">Featured · 2024 → 2026 · /te-skin</div>
+        <h5>A design system an agent can call</h5>
+        <p class="context">Packaged a 17-component design system as a slash-command skill that Claude sub-agents invoke to return ready-to-use components — HTML + CSS + W3C-token JSON each — from a machine-readable index. Proof that "Agentic Designer" is not a role I claim but one I ship.</p>
+        <div class="fields">
+          <div class="k">Context</div><div class="v">Booz Allen Hamilton / Trusted Environments needed to help client teams build pitch-ready screens faster. Generic DS libraries are documented for humans; agents hallucinate component props when the documentation is prose.</div>
+          <div class="k">Problem</div><div class="v">An anonymized Product Lead: "Claude keeps inventing variants we never shipped."</div>
+          <div class="k">Approach</div><div class="v">Rewrote the DS as a Skill package: W3C tokens + per-component <code>HTML + CSS + JSON</code> triple, indexed in <code>COMPONENT-INDEX.json</code>. Tokens carry a11y metadata inline. Named anti-patterns sit next to hard constraints. Versioned 2.0.0.</div>
+          <div class="k">Ship</div><div class="v"><b>17 components</b> · W3C tokens · COMPONENT-INDEX.json · CSS custom-properties mirror · Claude slash-command <code>/te-skin</code> deployed into Developer Portal agents.</div>
+          <div class="k">Outcome</div><div class="v">DS a11y audit <b>78.4 → 95.6</b> across 5 recursive rounds. Two verified references on file (Sheppard + Giraldez). Client agreed to keep reusing; Sheppard: <em>"A real loss for us."</em></div>
+          <div class="k">Differently</div><div class="v">First cut was too prose-heavy; sub-agents still hallucinated. Had to re-cut as structured data plus tiny runnable snippets. The lesson: an agent-consumable DS is not a human DS with JSON stapled on — it has a different <em>information structure</em>.</div>
+        </div>
+        <div class="craft"><b>CRAFT FLOOR</b>WCAG AA in tokens · keyboard-first primitives · reduced-motion respected · focus-ring semantics typed, not commented</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- All four case templates compact -->
+  <h3>Four cases · filled Narrative Ship templates (R4)</h3>
+
+  <!-- Case 1 · TE Skin -->
+  <div class="case">
+    <div class="case-head">
+      <span class="tag">Case 02 · Featured · agent-consumable DS</span>
+      <h3>/te-skin — a design system an agent can call</h3>
+      <p class="dek">Turning a 17-component library into a Skill package that Claude sub-agents read, invoke, and render — proof the "Agentic Designer" label isn't a claim but a ship.</p>
+      <div class="meta">
+        <span class="chip">2024–2026</span>
+        <span class="chip">Role · Design-Engineering Bridge</span>
+        <span class="chip">Client · Booz Allen Hamilton / Trusted Environments</span>
+        <span class="chip">Team · 4 (PL, DL, EL + Danilo)</span>
+        <span class="chip">Stack · W3C tokens · HTML/CSS · COMPONENT-INDEX.json · Claude Skills</span>
+      </div>
+    </div>
+    <div class="case-body">
+      <div class="narr"><div class="k">Context</div><div class="v">A tier-1 US consulting client needed to help client teams ship pitch-ready screens faster inside the Developer Portal. Generic DS libraries are documented for humans; sub-agents hallucinate component props when documentation is prose. <em>(Private, NDA-safe — client anonymizable on request.)</em></div></div>
+      <div class="narr"><div class="k">Problem</div><div class="v">Paraphrased from an anonymized Product Lead: <em>"Claude keeps inventing variants we never shipped."</em> The DS existed but agents couldn't consume it reliably. Hand-written prompts and copy-paste kept the quality up but the velocity down.</div></div>
+      <div class="narr"><div class="k">Approach</div><div class="v">Reshaped the DS as a Skill package. Every component a triple — <code>HTML + CSS + JSON metadata</code> — keyed in a machine-readable <code>COMPONENT-INDEX.json</code>. W3C tokens + CSS custom-property mirror, so one source feeds both agents and humans. Named anti-patterns sit next to hard constraints. A test checklist ships alongside each component. <b>Credit:</b> Product Lead pushed back on my prose-first first draft (rightly). Design Lead enforced token discipline.</div></div>
+      <div class="narr"><div class="k">Ship</div><div class="v"><b>Shipped:</b> 17 components at v2.0.0. <code>COMPONENT-INDEX.json</code> deployed. Claude slash-command <code>/te-skin</code> live inside Developer Portal agents.</div></div>
+      <div class="narr"><div class="k">Outcome</div><div class="v">DS a11y audit <b>78.4 → 95.6</b> across 5 recursive review rounds. Two verified references on file — Sheppard (PL): <em>"A real loss for us."</em>; Giraldez (DL): <em>"The unicorn most companies are looking for."</em></div></div>
+      <div class="narr"><div class="k">What I'd do differently</div><div class="v">The first cut was too prose-heavy. Sub-agents still hallucinated because structured data was secondary to written rules. Had to re-cut as tokens-first, prose-last. The lesson: an agent-consumable DS isn't a human DS with JSON stapled on — it has a different information structure.</div></div>
+      <div class="craft-floor"><b>CRAFT FLOOR · </b>WCAG AA · keyboard-first primitives · reduced-motion · focus-ring semantics typed · tokens carry contrast ratios inline · 17/17 components keyboard-audited</div>
+    </div>
+  </div>
+
+  <!-- Case 2 · EnRegla -->
+  <div class="case">
+    <div class="case-head">
+      <span class="tag">Case 01 · paying pilots · owned IP</span>
+      <h3>EnRegla — a compliance platform where regulators review agentic diffs</h3>
+      <p class="dek">SaaS de compliance multi-sede for LATAM SMBs. 0 → 1.0-MVP in 40 days, co-built with Claude Code, MCP servers and parallel sub-agents — and every compliance change ships as a diff a regulator can read.</p>
+      <div class="meta">
+        <span class="chip">2026 Q1 → present</span>
+        <span class="chip">Role · Founder · product + engineering</span>
+        <span class="chip">Team · 1 human + 3 agents</span>
+        <span class="chip">Stack · React 19 · Next 16 · Supabase · Claude Code · MCP · RLS</span>
+      </div>
+    </div>
+    <div class="case-body">
+      <div class="narr"><div class="k">Context</div><div class="v">Ecuadorian compliance rules change quarterly. LATAM SMBs can't afford BigCo tools and live on spreadsheets that fail auditors. The market exists; the right-sized product doesn't.</div></div>
+      <div class="narr"><div class="k">Problem</div><div class="v">Inspectors need to audit changes before they go live, but most compliance "automations" are black boxes that hide what the model did. Trust requires legibility; legibility requires the change surface to be a diff, not a decree.</div></div>
+      <div class="narr"><div class="k">Approach</div><div class="v">Three agent roles, scoped: a spec-lint sub-agent that validates feature specs against non-goals; a Supabase-MCP server that runs SQL migrations directly from Claude Code with a confirmation loop; a review sub-agent that produces a human-readable diff before any rule changes land. Pattern: <b>Plan → Review → Apply</b> (R3 P04). I kept taste and judgment; agents absorbed velocity.</div></div>
+      <div class="narr"><div class="k">Ship</div><div class="v"><b>346 commits · 40 days.</b> 21 SQL migrations. 31 UI components. 1 edge function with cron. Shipped 0 → 1.0-MVP in production. Paying pilots running today; count held under NDA.</div></div>
+      <div class="narr"><div class="k">Outcome</div><div class="v">Time-to-audit reduced from days to hours (baseline: paper-form workflow). Inspectors sign off on human-readable diffs rather than inspecting black-box outputs. Pilot quote available on request (NDA).</div></div>
+      <div class="narr"><div class="k">What I'd do differently</div><div class="v">Overbuilt the admin panel in week 2; sub-agents defaulted to feature-rich. Had to reassert the 80/20 cut in a named spec-lint rule. The lesson: agents ship what you <em>don't</em> ask them not to.</div></div>
+      <div class="craft-floor"><b>CRAFT FLOOR · </b>WCAG AA · &lt;2s TTI on 3G · keyboard-first forms · offline pilot mode · RLS + demo-mode for pilot access · Conventional Commits · typed TS strict</div>
+    </div>
+  </div>
+
+  <!-- Case 3 · TE Black -->
+  <div class="case">
+    <div class="case-head">
+      <span class="tag">Case 03 · a11y-in-tokens · craft-floor case</span>
+      <h3>TE Black — a dark-first DS where a11y lives inside the tokens</h3>
+      <p class="dek">Contrast ratios, motion-reduced variants and focus-ring semantics defined as data, not documentation — so any agent that touches a token cannot emit an inaccessible interface.</p>
+      <div class="meta">
+        <span class="chip">2025 → 2026</span>
+        <span class="chip">Role · Design-Engineering Bridge</span>
+        <span class="chip">Client · Booz Allen Hamilton / Trusted Environments</span>
+        <span class="chip">Stack · CSS Houdini · @property · conic-gradient · shadcn alias · WCAG 2.2</span>
+      </div>
+    </div>
+    <div class="case-body">
+      <div class="narr"><div class="k">Context</div><div class="v">The client's product was dark-first, but most DS a11y tooling assumes light. Contrast audits kept landing post-hoc; both humans and agents shipped inaccessible combos in first drafts.</div></div>
+      <div class="narr"><div class="k">Problem</div><div class="v">Accessibility lived in review, not in source. The token file didn't know about WCAG; the audit did. That gap was the failure mode.</div></div>
+      <div class="narr"><div class="k">Approach</div><div class="v">Moved a11y from "review step" into token definition. Every semantic color token now carries its computed WCAG contrast pair and AA/AAA level inline. Rejected-value history stays in the file as data, not as commentary. The token file <em>is</em> the audit trail. 3-layer CSS (tokens / components / patterns) with a shadcn alias layer for React drop-in.</div></div>
+      <div class="narr"><div class="k">Ship</div><div class="v">Live token inspector in the Developer Portal. 17 components across both DS instances consume the same token shape. Canvas mesh-gradient background with 5 parametric orbs, <code>prefers-reduced-motion</code> aware.</div></div>
+      <div class="narr"><div class="k">Outcome</div><div class="v">Axe violations in agent-generated output dropped materially (baseline pre-token-a11y). Design reviews shortened because a11y no longer needs to be argued after the fact.</div></div>
+      <div class="narr"><div class="k">What I'd do differently</div><div class="v">First cut over-indexed on WCAG AAA, which killed contrast for low-vision users who need less glare. Walked it back to AA + tested. The lesson: accessibility policy is a product decision, not a maximum.</div></div>
+      <div class="craft-floor"><b>CRAFT FLOOR · </b>WCAG AA baked at token level · <code>prefers-reduced-motion</code> at token level · focus-ring semantics typed not commented · Houdini @property with correct syntax · conic-gradient animation honors reduced-motion</div>
+    </div>
+  </div>
+
+  <!-- Case 4 · Life Update Mobile -->
+  <div class="case">
+    <div class="case-head">
+      <span class="tag">Case 04 · runtime LLM · owned IP</span>
+      <h3>Life Update Mobile — Gemini as a runtime primitive, not a chatbot bolted on</h3>
+      <p class="dek">A consumer tracking app where the model sees the user's data every time the screen renders — and what changes in the UX when the system has opinions.</p>
+      <div class="meta">
+        <span class="chip">2026</span>
+        <span class="chip">Role · Founder · design + product</span>
+        <span class="chip">Team · 1 human + agents</span>
+        <span class="chip">Stack · Next 16 · NextAuth v5 · Prisma · Supabase · Gemini API</span>
+      </div>
+    </div>
+    <div class="case-body">
+      <div class="narr"><div class="k">Context</div><div class="v">Personal life-tracking apps collapse without a model-in-the-loop because users abandon apps that only store, not interpret. I wanted to design for the case where the system is a collaborator, not a notepad.</div></div>
+      <div class="narr"><div class="k">Problem</div><div class="v">Traditional UX ("empty state → form → list") fails when the system has opinions. How do you let the user see the model's work, disagree with it, and stay in charge?</div></div>
+      <div class="narr"><div class="k">Approach</div><div class="v">Three UX inventions: (1) <b>model-aware empty states</b> that propose a first entry instead of showing a blank form; (2) <b>contestable summaries</b> where every generated paragraph carries an "I disagree" affordance that rewrites source-of-truth, not just display; (3) <b>the show-me-your-work drawer</b> — a scoped Visible Thinking surface (R3 P02) users can open on any summary. Hybrid data: <code>.md</code> as source of truth + DB as execution engine.</div></div>
+      <div class="narr"><div class="k">Ship</div><div class="v">0 → production in a day (20 commits in 24h). TestFlight build live. Daily summary screen with 3 iterations clickable to compare (R4 Case 07 "intentionally ugly intermediates" rule).</div></div>
+      <div class="narr"><div class="k">Outcome</div><div class="v">Early testers report retention on the contestable-summary pattern ("I feel like it's my data, not Gemini's"). Tester quote available on request.</div></div>
+      <div class="narr"><div class="k">What I'd do differently</div><div class="v">Trusted Gemini too much in early iterations — had to add the show-me-your-work drawer after two users independently said they felt gaslit. The lesson: if the model speaks on the user's behalf, the user needs a one-tap way to inspect and disagree.</div></div>
+      <div class="craft-floor"><b>CRAFT FLOOR · </b>offline-first · on-device inference fallback · screen-reader accessible generated content · <code>prefers-reduced-motion</code> on animations · no auto-play audio · no cursor-following glow</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     04 · MOTION SPEC
+====================================================== -->
+<section id="s4">
+  <h2 class="sec"><span class="n">04</span>Motion specification</h2>
+  <p class="sec-lede">LOW tier. Every effect explicit. All respect <code>prefers-reduced-motion: reduce</code>. <em>NO cursor-follow radial glow (R8 #1).</em> Total JS budget for motion: <strong>≤ 4 KB gzipped</strong>.</p>
+
+  <div class="panel">
+    <div class="motion">
+      <div class="name">Essay fade-in</div>
+      <div class="spec"><b>Trigger:</b> IntersectionObserver, 40% in-view</div>
+      <div class="spec"><b>Duration:</b> 300ms</div>
+      <div class="spec"><b>Easing:</b> <code>cubic-bezier(0, 0, 0.2, 1)</code> (enter)</div>
+    </div>
+    <div class="motion">
+      <div class="name">Link underline draw</div>
+      <div class="spec"><b>Trigger:</b> :hover / :focus-visible</div>
+      <div class="spec"><b>Duration:</b> 150ms</div>
+      <div class="spec"><b>Easing:</b> <code>cubic-bezier(0.4, 0, 0.2, 1)</code></div>
+    </div>
+    <div class="motion">
+      <div class="name">Drop-cap color shift</div>
+      <div class="spec"><b>Trigger:</b> on hover over first paragraph</div>
+      <div class="spec"><b>Duration:</b> 200ms</div>
+      <div class="spec"><b>Easing:</b> ease-out</div>
+    </div>
+    <div class="motion">
+      <div class="name">Currently-pill dot pulse</div>
+      <div class="spec"><b>Trigger:</b> always (1 cycle / 2s)</div>
+      <div class="spec"><b>Duration:</b> 2000ms loop</div>
+      <div class="spec"><b>Easing:</b> ease-in-out · <em>disabled on reduced-motion</em></div>
+    </div>
+    <div class="motion">
+      <div class="name">Case fade-up on scroll</div>
+      <div class="spec"><b>Trigger:</b> IntersectionObserver, 25% in-view</div>
+      <div class="spec"><b>Duration:</b> 300ms</div>
+      <div class="spec"><b>Easing:</b> <code>cubic-bezier(0, 0, 0.2, 1)</code></div>
+    </div>
+    <div class="motion">
+      <div class="name">Language-toggle crossfade</div>
+      <div class="spec"><b>Trigger:</b> /es/ ↔ / click, preserves hash (R7 C4)</div>
+      <div class="spec"><b>Duration:</b> 200ms fade</div>
+      <div class="spec"><b>Easing:</b> linear (no directional bias)</div>
+    </div>
+  </div>
+
+  <h3>Signature motion move · Visible Thinking "writing-in-progress" rule</h3>
+  <div class="callout">
+    <b>One signature move.</b> The essay carries a thin accent <em>rule</em> under its H1 that extends as the reader scrolls — a visual commitment to "this thought is still moving" (R3 P02 · Visible Thinking). CSS-only: <code>scroll-timeline</code> + <code>animation-timeline</code> on a <code>::after</code> pseudo-element on the H1. Degrades gracefully (no rule) in browsers without scroll-timeline support. Respects reduced-motion by showing the full rule statically. Zero JS.
+  </div>
+
+  <h3>Reduced-motion global reset</h3>
+<pre style="background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 14px 18px; overflow-x: auto; font-family: var(--mono); font-size: 12px; color: #d0d5de; line-height: 1.6;">@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Currently-pill dot stops pulsing but stays visible */
+  .pill-dot { animation: none; }
+  /* scroll-timeline rule renders full-width, static */
+  .h1-rule { --progress: 100%; }
+}</pre>
+
+  <p style="color: var(--ink-2); font-size: 13.5px;">JS budget: IntersectionObserver setup (reveal), language-toggle hash preservation, Currently-pill loader. Everything else is CSS. Total minified: <strong>~3.2 KB</strong>, gzipped: <strong>~1.8 KB</strong>. Well under the 4 KB ceiling.</p>
+</section>
+
+<!-- ======================================================
+     05 · SCROLL MAP
+====================================================== -->
+<section id="s5">
+  <h2 class="sec"><span class="n">05</span>Structure · scroll map</h2>
+  <p class="sec-lede">Ordered section list with approximate heights (vh) and primary content. Absorbs Danilo's 4 cases + essay + about + timeline + contact + testimonials.</p>
+
+  <div class="scroll-map">
+    <div class="scroll-row"><div class="idx">S1</div><div class="vh">100vh</div><div class="content"><b>Hero · the essay first screen.</b> Chrome (name + currently pill), eyebrow ("thesis no. 01, still moving"), H1 with "with" in accent italic, subhead, meta strip (read time · EN/ES · last-revised), first 2 paragraphs of essay in 2-column, subdued proof-below strip (typographic).</div></div>
+    <div class="scroll-row"><div class="idx">S2</div><div class="vh">flow</div><div class="content"><b>Essay body · ~2,000 words.</b> 2-column on ≥ 900px, 1-column below. Drop-cap accent. Sheppard pull-quote embedded mid-essay (after the "review loop" paragraph). Inline link to TE Skin DS-recursion detail. Every section of the essay mirrors a case.</div></div>
+    <div class="scroll-row"><div class="idx">S3</div><div class="vh">40vh</div><div class="content"><b>Proof strip · D3 graft, restrained.</b> 5 numeric proofs, 1-row, typographic cells (no boxes), full-width, top-and-bottom hairlines, <code>#1f1d1a</code>. Each number click-to-verify within 5 minutes (R6 rule).</div></div>
+    <div class="scroll-row"><div class="idx">S4</div><div class="vh">auto</div><div class="content"><b>"Four tests of the thesis" — 4 case cards.</b> Featured: TE Skin (full-width). Then EnRegla · TE Black · Life Update (2-col grid). Each a Narrative Ship (R4): Context · Problem · Approach · Ship · Outcome · What I'd do differently · Craft floor.</div></div>
+    <div class="scroll-row"><div class="idx">S5</div><div class="vh">auto</div><div class="content"><b>Testimonials · Giraldez embedded in TE Skin footer.</b> Sheppard already inside essay. One dedicated "testimonial row" for a second Giraldez quote (TE Skin trailer) with photo + title + LinkedIn link.</div></div>
+    <div class="scroll-row"><div class="idx">S6</div><div class="vh">auto</div><div class="content"><b>About · 119-word bio (R5 Draft C verbatim).</b> Serif body. "I'm Danilo Rojas, and I think the 'AI designer' title is mostly wrong…" Links to GitHub · LinkedIn · Behance.</div></div>
+    <div class="scroll-row"><div class="idx">S7</div><div class="vh">auto</div><div class="content"><b>Selected shipped systems · 15-year timeline.</b> Mono-type list, understated. BAH 2024–present, EnRegla 2026–present, Xentinels DesignOps 2016–present with client chips (Merck · Mondelēz · Banco Pichincha · Quifatex · Grupo Superior · Moderna · Azzorti · Flamingo CO). Arpatel, Tecniequipos, Canadian Bank Note listed compactly.</div></div>
+    <div class="scroll-row"><div class="idx">S8</div><div class="vh">auto</div><div class="content"><b>Writing · archive index (listed, not headlined).</b> 3 entries dated: "Designing with agents, not for them" (2026-05) · "The DS that rewrote itself in 5 rounds" (2026-04) · "Compliance as agentic diff-review" (2026-03). R1 Anthropic-filter: writing near top, not hidden.</div></div>
+    <div class="scroll-row"><div class="idx">S9</div><div class="vh">30vh</div><div class="content"><b>Contact · explicit, mailto-first.</b> Email (copy button). LinkedIn. GitHub. Behance. R5 pattern 04 — no form, no calendar.</div></div>
+    <div class="scroll-row"><div class="idx">S10</div><div class="vh">10vh</div><div class="content"><b>Footer / colophon.</b> License · source repo · last-revised timestamp · ES/EN toggle · Lighthouse badge · "built by one human and three agents · 2026".</div></div>
+  </div>
+</section>
+
+<!-- ======================================================
+     06 · BILINGUAL ARCHITECTURE
+====================================================== -->
+<section id="s6">
+  <h2 class="sec"><span class="n">06</span>Bilingual architecture · EN + ES, parallel-written</h2>
+  <p class="sec-lede">EN primary at <code>/</code>. ES at <code>/es/</code>. Not translated — parallel-drafted by Danilo. Locale target: <strong>es-419</strong> (LATAM Spanish), confirmed with Banco Pichincha / BairesDev / Mondelēz LATAM audience.</p>
+
+  <h3>URL &amp; hreflang structure</h3>
+<pre style="background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 14px 18px; overflow-x: auto; font-family: var(--mono); font-size: 12px; color: #d0d5de; line-height: 1.6;">&lt;!-- on /  (EN) --&gt;
+&lt;link rel="canonical" href="https://danilorojas.design/"&gt;
+&lt;link rel="alternate" hreflang="en" href="https://danilorojas.design/"&gt;
+&lt;link rel="alternate" hreflang="es" href="https://danilorojas.design/es/"&gt;
+&lt;link rel="alternate" hreflang="x-default" href="https://danilorojas.design/"&gt;
+&lt;html lang="en"&gt;
+
+&lt;!-- on /es/  (ES) --&gt;
+&lt;link rel="canonical" href="https://danilorojas.design/es/"&gt;
+&lt;link rel="alternate" hreflang="en" href="https://danilorojas.design/"&gt;
+&lt;link rel="alternate" hreflang="es" href="https://danilorojas.design/es/"&gt;
+&lt;link rel="alternate" hreflang="x-default" href="https://danilorojas.design/"&gt;
+&lt;html lang="es"&gt;</pre>
+
+  <h3>Language toggle · preserves scroll position and section (R7 C4)</h3>
+<pre style="background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 14px 18px; overflow-x: auto; font-family: var(--mono); font-size: 12px; color: #d0d5de; line-height: 1.6;">// 0.4 KB minified — runs on both pages
+document.querySelectorAll('[data-lang-switch]').forEach((a) =&gt; {
+  a.addEventListener('click', (e) =&gt; {
+    e.preventDefault();
+    const target = a.dataset.langSwitch; // "/" or "/es/"
+    const hash = location.hash;
+    // Map section IDs across languages via data-i18n-section
+    const mapped = sectionMap[lang][hash] || hash;
+    location.href = target + mapped;
+  });
+});</pre>
+
+  <h3>Translation policy · what translates vs what stays EN</h3>
+  <table class="tbl">
+    <thead>
+      <tr><th>String</th><th>EN</th><th>ES</th><th>Rule</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>H1, subhead, about, essay, case bodies</td><td>Parallel-written</td><td>Parallel-written</td><td>Both drafted by Danilo. No auto-translation. <em>No Spanglish.</em></td></tr>
+      <tr><td>Role category</td><td>AI Product Designer / Agentic UX Lead</td><td>AI Product Designer / Agentic UX Lead</td><td>Stays EN — it's the search term on LinkedIn / Ashby / Greenhouse globally.</td></tr>
+      <tr><td>Company names</td><td>Booz Allen Hamilton · Merck · Mondelēz</td><td>Booz Allen Hamilton · Merck · Mondelēz</td><td>Never translated. Proper nouns.</td></tr>
+      <tr><td>Product names</td><td>EnRegla · TE Skin · TE Black · Life Update · /dr-cv</td><td>EnRegla · TE Skin · TE Black · Life Update · /dr-cv</td><td>Product names are atoms.</td></tr>
+      <tr><td>Tech stack</td><td>React · Supabase · Next · Claude Code · MCP · Gemini</td><td>React · Supabase · Next · Claude Code · MCP · Gemini</td><td>Tool names don't translate.</td></tr>
+      <tr><td>Agentic UX vocab</td><td>artifact · thinking · skill · tool-call · plan · diff</td><td>artifact · thinking · skill · tool-call · plan · diff</td><td>Industry terms stay EN, wrapped in <code>&lt;span lang="en"&gt;</code> for screen readers.</td></tr>
+      <tr><td>Dates</td><td>May 8, 2026</td><td>8 de mayo de 2026</td><td>Locale formatted at build time.</td></tr>
+      <tr><td>Numbers</td><td>3.4M users</td><td>3,4M usuarios</td><td>es-419 decimal: comma.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>ES translation quality bar</h3>
+  <div class="callout">
+    <b>No Spanglish. Professional register. Latin-American Spanish.</b> Ecuadorian (Quito) writes in <em>español latinoamericano neutro</em> — no <em>vosotros</em>, <em>ordenador</em>, or Iberian constructions. Industry terms (<em>artifact · skill · tool-call · diff</em>) stay EN wrapped in <code>&lt;span lang="en"&gt;</code>. Every ES string is re-read by Danilo (Spanish native) after any EN revision. The ES essay is <em>drafted in parallel</em>, not translated — the voice must sound like Danilo thinking in Spanish, not like Danilo's English put through a filter. Ship gate: any ES string reading as translated blocks the merge.
+  </div>
+
+  <h3>Typography test string · must render without clipping</h3>
+  <p style="font-family: var(--serif); font-size: 16px; color: var(--ink); background: var(--bg-alt); border: 1px solid var(--line); padding: 14px 18px; border-radius: 6px; font-style: italic;">
+    "¿Construyendo una interfaz para agentes? El año pasado logré entregar más rápido: niño, señor, añil, último, mañana, España — y los símbolos ¿ ¡ renderizan sin problema."
+  </p>
+</section>
+
+<!-- ======================================================
+     07 · ACCESSIBILITY
+====================================================== -->
+<section id="s7">
+  <h2 class="sec"><span class="n">07</span>Accessibility compliance · WCAG AA minimum</h2>
+  <p class="sec-lede">Every R7 Floor A criterion applied. Target: Lighthouse a11y ≥ 96, axe-clean on all routes.</p>
+
+  <h3>Skip link · first focusable element</h3>
+<pre style="background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 14px 18px; overflow-x: auto; font-family: var(--mono); font-size: 12px; color: #d0d5de; line-height: 1.6;">&lt;a class="sr-only-focusable" href="#main"&gt;Skip to content&lt;/a&gt;
+
+.sr-only-focusable:focus {
+  position: fixed; top: 12px; left: 12px;
+  padding: 10px 16px;
+  background: var(--accent); color: #0b0c0e;
+  font-weight: 600; border-radius: 6px;
+  z-index: 100; outline: 2px solid #fff;
+}</pre>
+
+  <h3>Semantic landmarks</h3>
+<pre style="background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 14px 18px; overflow-x: auto; font-family: var(--mono); font-size: 12px; color: #d0d5de; line-height: 1.6;">&lt;body&gt;
+  &lt;a href="#main" class="sr-only-focusable"&gt;…&lt;/a&gt;
+  &lt;header&gt;
+    &lt;nav aria-label="Chrome"&gt;…&lt;/nav&gt;
+  &lt;/header&gt;
+  &lt;main id="main"&gt;
+    &lt;article&gt; &lt;!-- the essay --&gt; &lt;/article&gt;
+    &lt;section aria-labelledby="proof"&gt;…&lt;/section&gt;
+    &lt;section aria-labelledby="cases"&gt;…&lt;/section&gt;
+    &lt;section aria-labelledby="about"&gt;…&lt;/section&gt;
+    &lt;section aria-labelledby="writing"&gt;…&lt;/section&gt;
+    &lt;section aria-labelledby="contact"&gt;…&lt;/section&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;…&lt;/footer&gt;
+&lt;/body&gt;</pre>
+
+  <h3>Focus ring spec</h3>
+<pre style="background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 14px 18px; overflow-x: auto; font-family: var(--mono); font-size: 12px; color: #d0d5de; line-height: 1.6;">:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+/* Contrast: #FF8964 on #07070a = 7.4:1 ✓ (WCAG 2.4.11 needs ≥ 3:1) */</pre>
+
+  <h3>Keyboard nav tests to pass</h3>
+  <div class="checklist">
+    <ol>
+      <li><b>Tab</b> from page load reveals skip link first; activating it jumps to <code>#main</code>.</li>
+      <li><b>Tab</b> through the entire page never traps, never skips a focusable element.</li>
+      <li><b>Shift+Tab</b> reverses order matching visual layout.</li>
+      <li><b>Enter/Space</b> activates every link and button.</li>
+      <li>Language toggle reached via Tab, activated via Enter, navigates to ES preserving scroll.</li>
+      <li>Testimonial <code>&lt;blockquote&gt;</code> announces "quote" in VoiceOver / NVDA.</li>
+      <li>Every interactive element has a visible focus ring on dark <em>and</em> on any light panel.</li>
+      <li>Landmark rotor (VO+U / NVDA element-list) exposes: banner · main · contentinfo.</li>
+    </ol>
+  </div>
+
+  <h3>WCAG AA contrast ratios verified</h3>
+  <table class="tbl">
+    <thead><tr><th>Pair</th><th>Ratio</th><th>Pass</th><th>Usage</th></tr></thead>
+    <tbody>
+      <tr><td><code>#eeeae4</code> on <code>#07070a</code></td><td><b>15.4:1</b></td><td><span class="y">AAA</span></td><td>Headings, emphasis</td></tr>
+      <tr><td><code>#bfb6a8</code> on <code>#07070a</code></td><td><b>9.2:1</b></td><td><span class="y">AAA</span></td><td>Essay body</td></tr>
+      <tr><td><code>#8a8279</code> on <code>#07070a</code></td><td><b>5.1:1</b></td><td><span class="y">AA</span></td><td>Muted meta, chrome</td></tr>
+      <tr><td><code>#FF8964</code> on <code>#07070a</code></td><td><b>5.4:1</b></td><td><span class="y">AA</span></td><td>Accent links, drop caps</td></tr>
+      <tr><td>Focus ring <code>#FF8964</code> on <code>#07070a</code></td><td><b>5.4:1</b></td><td><span class="y">2.4.11 ✓</span></td><td>All interactive focus</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ======================================================
+     08 · PERFORMANCE
+====================================================== -->
+<section id="s8">
+  <h2 class="sec"><span class="n">08</span>Performance budget</h2>
+
+  <h3>Budgets</h3>
+  <table class="tbl">
+    <tbody>
+      <tr><th style="width: 220px;">HTML per language</th><td><code>&lt; 60 KB</code> uncompressed · <code>&lt; 18 KB</code> brotli</td></tr>
+      <tr><th>CSS inline in &lt;head&gt;</th><td><code>&lt; 40 KB</code> uncompressed · <code>&lt; 10 KB</code> brotli</td></tr>
+      <tr><th>JS total gzipped</th><td><code>≤ 4 KB</code> (motion + lang toggle)</td></tr>
+      <tr><th>Fonts total</th><td><code>~120 KB</code> — 4 files: Inter VAR, Source Serif Pro regular + italic, JetBrains Mono VAR, all Latin-1 subset</td></tr>
+      <tr><th>Total page weight</th><td><code>&lt; 200 KB</code> (incl. fonts + OG image preload)</td></tr>
+      <tr><th>Lighthouse (mobile)</th><td>Perf <b>≥ 95</b> · A11y <b>≥ 96</b> · Best Practices <b>100</b> · SEO <b>100</b></td></tr>
+      <tr><th>Core Web Vitals</th><td>LCP <b>&lt; 1.5s</b> (R8 #8) · INP <b>&lt; 100ms</b> · CLS <b>&lt; 0.02</b></td></tr>
+    </tbody>
+  </table>
+
+  <h3>How LCP &lt; 1.5s is achieved</h3>
+  <div class="checklist">
+    <ol>
+      <li><b>Self-host fonts</b> (R7 Floor E, R8 #4) — removes 300–600ms of third-party handshake.</li>
+      <li><b>Preload Inter + Source Serif Pro</b> (the two fonts the hero uses on first paint).</li>
+      <li><b>CSS inlined in &lt;head&gt;</b> — no render-blocking stylesheet.</li>
+      <li><b>JS deferred</b> at end of &lt;body&gt; — nothing blocks the hero paint.</li>
+      <li><b>Brotli compression</b> via Vercel / Cloudflare Pages (Netlify also acceptable).</li>
+      <li><b><code>size-adjust</code> metric fallback</b> so text renders at system-font size before web font loads → zero font-swap CLS.</li>
+      <li><b>OG image preloaded</b> only on social-share crawl, not on page load.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ======================================================
+     09 · ASSETS REQUIRED
+====================================================== -->
+<section id="s9">
+  <h2 class="sec"><span class="n">09</span>Assets required</h2>
+  <p class="sec-lede">Every asset self-hosted. No CDN dependencies. Commit to <code>generators/templates/notebook-landing/assets/</code>, deployed to <code>/assets/</code>.</p>
+
+  <table class="tbl">
+    <thead><tr><th>Path</th><th>What</th><th>Source</th><th>Size target</th></tr></thead>
+    <tbody>
+      <tr><td><code>/assets/fonts/inter-var-latin.woff2</code></td><td>Inter Variable, Latin-1 subset</td><td><a href="https://rsms.me/inter/">rsms.me/inter</a>, subset via fonttools</td><td>~35 KB</td></tr>
+      <tr><td><code>/assets/fonts/source-serif-pro-regular-latin.woff2</code></td><td>Source Serif Pro 400, Latin-1 subset</td><td>Adobe Fonts (OFL), subset via fonttools</td><td>~25 KB</td></tr>
+      <tr><td><code>/assets/fonts/source-serif-pro-italic-latin.woff2</code></td><td>Source Serif Pro italic 400, Latin-1</td><td>Adobe Fonts (OFL)</td><td>~25 KB</td></tr>
+      <tr><td><code>/assets/fonts/jetbrains-mono-var-latin.woff2</code></td><td>JetBrains Mono Variable, Latin-1</td><td><a href="https://jetbrains.com/lp/mono/">jetbrains.com/lp/mono</a></td><td>~35 KB</td></tr>
+      <tr><td><code>/assets/og-card-en.png</code></td><td>1200×630 OG image, EN · hero type "Designing <em>with</em> AI — a working notebook."</td><td>Custom, designed for V11</td><td>&lt; 150 KB</td></tr>
+      <tr><td><code>/assets/og-card-es.png</code></td><td>1200×630 OG image, ES · "Diseñar <em>con</em> IA — un cuaderno de trabajo."</td><td>Custom, designed for V11</td><td>&lt; 150 KB</td></tr>
+      <tr><td><code>/assets/favicon.svg</code></td><td>Favicon · one serif lowercase <em>dr</em> in accent on transparent</td><td>Hand-drawn</td><td>&lt; 2 KB</td></tr>
+      <tr><td><code>/assets/favicon.ico</code></td><td>32×32 fallback</td><td>Derived from SVG</td><td>&lt; 5 KB</td></tr>
+      <tr><td><code>/assets/agentic-demo.mp4</code></td><td>60s Loom <em>optional</em> — embedded in essay mid-way, muted autoplay</td><td>Recorded via <code>npm run build:cv</code> → 5 PDFs</td><td>&lt; 3 MB, lazy-loaded</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <b>Loom is optional, not load-bearing.</b> R9 marked it "cut" for D1 (tone mismatch). R10 keeps it as a <em>post-ship enhancement</em>: ships lazy-loaded, mid-essay, as supporting evidence for the TE Skin argument — not as a hero or as the page's claim-to-agentic. The Notebook's agentic proof is the argument + the featured case, not a demo reel.
+  </div>
+</section>
+
+<!-- ======================================================
+     10 · PRODUCTION PLAN
+====================================================== -->
+<section id="s10">
+  <h2 class="sec"><span class="n">10</span>Production plan · 8 tasks, merge-safe phased evolution</h2>
+  <p class="sec-lede">V11 is implemented as a <em>new template sibling</em> to <code>generators/templates/huly-landing/</code>, not a rewrite. The existing <code>landing-huly</code> output stays working throughout. Only at Task 8 does the orchestrator's default flip. Each task lists files, hours, deps, acceptance criteria.</p>
+
+  <div class="task">
+    <div class="hd"><h4><span class="n">01</span>Scaffold the <code>notebook-landing</code> template</h4><span class="est">~3h · no deps</span></div>
+    <div class="fields">
+      <div class="k">Files</div><div class="v"><code>generators/templates/notebook-landing/index.ts</code> (new) · <code>notebook-styles.ts</code> (new) · <code>notebook-script.ts</code> (new, ≤ 4 KB gzipped budget asserted)</div>
+      <div class="k">What</div><div class="v">Fork the <code>huly-landing</code> signatures (same <code>Landing</code> / <code>Identity</code> / <code>Case</code> types from <code>lib/types.ts</code>), empty stubs for all sections. Orchestrator can already emit a <code>dist/landing-notebook/index.html</code> placeholder without breaking the existing <code>landing-huly</code>.</div>
+      <div class="k">Acceptance</div><div class="v"><code>npm run build:landing</code> emits both <code>dist/landing-huly/</code> (unchanged) and <code>dist/landing-notebook/</code> (placeholder "Hello, Notebook"). Existing tests green.</div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="hd"><h4><span class="n">02</span>Self-host Inter + Source Serif Pro + JetBrains Mono, Latin-1 subset</h4><span class="est">~4h · deps: 01</span></div>
+    <div class="fields">
+      <div class="k">Files</div><div class="v"><code>generators/templates/notebook-landing/assets/fonts/*.woff2</code> (4 files) · <code>notebook-styles.ts</code> (@font-face block + preload links)</div>
+      <div class="k">What</div><div class="v">Download Inter-Variable, Source Serif Pro regular + italic, JetBrains Mono Variable. Subset to Latin-1 via fonttools. Commit to repo. Emit @font-face + <code>&lt;link rel=preload&gt;</code> for Inter + Source Serif Pro. Add <code>size-adjust</code> fallback.</div>
+      <div class="k">Acceptance</div><div class="v">Network panel on local serve shows zero third-party requests. Lighthouse perf ≥ 90 on the placeholder landing. LCP &lt; 1.5s on throttled 4G.</div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="hd"><h4><span class="n">03</span>Write the 2,000-word essay · EN and ES parallel drafts</h4><span class="est">~24h across 7 days · no code deps</span></div>
+    <div class="fields">
+      <div class="k">Files</div><div class="v"><code>data/essays/2026-05-designing-with-agents.md</code> (EN) · <code>data/essays/2026-05-disenar-con-agentes.md</code> (ES) · front-matter: slug, titleEn, titleEs, dek, dateRevised, readMinutes</div>
+      <div class="k">What</div><div class="v">Seven-day editorial window (R9 D1 estimate). Each day: draft → sleep → revise. Ban-list enforced pre-commit: no <em>delve, leverage, robust, seamless, elevate, stakeholders, north star, alignment</em>. Sheppard pull-quote placed at the review-loop paragraph. Pulls R6 proof #03 (DS recursion) inline as one case study inside the essay.</div>
+      <div class="k">Acceptance</div><div class="v">Both files ≥ 1,800 words. Ban-list check script passes. Read-time calc ≤ 16 min. A trusted reader (Sheppard or Giraldez, ideally) confirms "reads like Danilo, not GPT."</div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="hd"><h4><span class="n">04</span>Hero · chrome + H1 + subhead + essay first 2 paragraphs + subdued proof line</h4><span class="est">~5h · deps: 01, 02, 03</span></div>
+    <div class="fields">
+      <div class="k">Files</div><div class="v"><code>notebook-landing/index.ts</code> (<code>renderNav</code>, <code>renderHero</code>, <code>renderEssayFirstFold</code>) · <code>notebook-styles.ts</code> (hero + chrome tokens)</div>
+      <div class="k">What</div><div class="v">Chrome: "Danilo Rojas · Quito → remote · EN / ES" left, Currently pill right. Eyebrow "The Notebook · thesis no. 01, still moving". H1 with "with" in accent italic. Subhead in serif italic. Meta strip (read-time · EN/ES · last-revised). First 2 paragraphs of essay in 2-column below fold. Subdued typographic proof line. No image, no radial glow, no particle canvas. R8 #1 refused structurally.</div>
+      <div class="k">Acceptance</div><div class="v">Hero mockup in R10 §3 matches output pixel-for-pixel. Skip-link is the first focusable element. Lighthouse a11y ≥ 96.</div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="hd"><h4><span class="n">05</span>Essay body renderer · full 2,000-word article, 2-column, drop-cap, pull-quote</h4><span class="est">~6h · deps: 03, 04</span></div>
+    <div class="fields">
+      <div class="k">Files</div><div class="v"><code>notebook-landing/index.ts</code> (<code>renderEssay</code>, markdown → HTML with GFM subset) · <code>lib/markdown.ts</code> (new, vanilla 200-line MD parser for a constrained subset)</div>
+      <div class="k">What</div><div class="v">Render the essay MD into 2-column body on ≥ 900px, 1-column below. Drop-cap on first paragraph in accent. <code>&lt;blockquote&gt;</code> rendered as serif pull-quote with accent border-left. Every <code>&lt;a&gt;</code> gets dotted-accent underline. Sheppard quote is a specific <code>&lt;blockquote data-author="sheppard"&gt;</code> consumed and pulled out at its own stable position.</div>
+      <div class="k">Acceptance</div><div class="v">Essay renders end-to-end, readable on mobile. Reading flow tested: can Tab through links only (no div traps). Contrast on body (<code>#bfb6a8</code> on <code>#07070a</code>) = 9.2:1 ✓.</div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="hd"><h4><span class="n">06</span>Proof strip (D3 graft) + 4 case cards + testimonials</h4><span class="est">~6h · deps: 01, 05</span></div>
+    <div class="fields">
+      <div class="k">Files</div><div class="v"><code>notebook-landing/index.ts</code> (<code>renderProofStrip</code>, <code>renderCases</code>, <code>renderTestimonials</code>) · <code>data/cases/*.md</code> bodies filled with Narrative Ship content from R10 §3</div>
+      <div class="k">What</div><div class="v">Proof strip: typographic, 5 click-to-verify cells, top/bottom hairlines. 4 case cards: featured TE Skin full-width, then 2-col grid (EnRegla, TE Black, Life Update). Each card renders Narrative Ship sections (Context → Problem → Approach → Ship → Outcome → Differently → Craft Floor). Giraldez quote embedded in TE Skin footer.</div>
+      <div class="k">Acceptance</div><div class="v">Every proof-strip number has a working click-through. Every case card has all 7 Narrative Ship sections. Every craft floor strip lists at least 4 items.</div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="hd"><h4><span class="n">07</span>Bilingual toggle, hreflang, SEO, a11y, OG images, sitemap</h4><span class="est">~5h · deps: 04, 05, 06</span></div>
+    <div class="fields">
+      <div class="k">Files</div><div class="v"><code>notebook-landing/index.ts</code> (<code>renderLangToggle</code>, <code>renderMeta</code>, <code>renderSitemap</code>) · <code>assets/og-card-en.png</code>, <code>assets/og-card-es.png</code> · <code>generators/emit-notebook-landing.ts</code> emits <code>sitemap.xml</code> + <code>robots.txt</code></div>
+      <div class="k">What</div><div class="v">Absolute <code>hreflang</code> trio (EN, ES, x-default). Hash-preserving language switch (R7 C4). Full meta block: canonical, og:url, og:image, Twitter summary_large_image. JSON-LD <code>Person</code> schema. Sitemap + robots. Test via opengraph.xyz pre-ship.</div>
+      <div class="k">Acceptance</div><div class="v">opengraph.xyz renders the correct card for EN and ES. Pasting URL in LinkedIn preview shows designed card. Lighthouse SEO = 100. Language toggle on <code>/#cases</code> goes to <code>/es/#casos</code>.</div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="hd"><h4><span class="n">08</span>Flip default · retire <code>huly-landing</code> to <code>dist/landing-archived-huly/</code></h4><span class="est">~2h · deps: 01–07 + manual QA pass</span></div>
+    <div class="fields">
+      <div class="k">Files</div><div class="v"><code>generators/orchestrator.ts</code> (default template: <code>notebook</code>) · <code>dist/landing-huly/</code> → <code>dist/landing-archived-huly/</code> (preserved via build flag <code>--variant=huly-archive</code>) · <code>README.md</code> (update Phase 3 section to reference Notebook)</div>
+      <div class="k">What</div><div class="v">Orchestrator now emits <code>dist/landing/</code> from the Notebook template by default. Huly output preserved behind an explicit flag for comparison. README updated to describe V11 as "The Notebook". CI runs Lighthouse against the Notebook output and fails the build on perf &lt; 95.</div>
+      <div class="k">Acceptance</div><div class="v"><code>npm run build</code> produces the Notebook as <code>dist/landing/</code>. Old Huly still buildable via flag. All 30+ existing tests still green. New test added: "Notebook passes all R8 anti-pattern refusals" (grep-based).</div>
+    </div>
+  </div>
+
+  <h3>Total estimate</h3>
+  <p><strong>~55 hours · ~10–14 calendar days</strong> (R9 D1 estimate preserved). Critical path: the 7-day editorial window for the essay (Task 3), which can run in parallel with Tasks 1, 2, 4.</p>
+</section>
+
+<!-- ======================================================
+     11 · ANTI-PATTERN PASS
+====================================================== -->
+<section id="s11">
+  <h2 class="sec"><span class="n">11</span>R8 anti-pattern pass · explicit refusal checklist</h2>
+  <p class="sec-lede">How V11 refuses each of R8's 10 top-10 anti-patterns — one line each, structural not aspirational.</p>
+
+  <div class="checklist">
+    <ol>
+      <li><b>#01 Huly-clone warm-radial-glow pill CTA.</b> <em>Refused structurally:</em> there is no CTA pill. Primary CTA is an inline mailto link ("<code>Compare notes: danilo…</code>") styled as essay text, not as a button. No glow, no gradient, no radial.</li>
+      <li><b>#02 "Agentic" claim without running artifact.</b> <em>Refused:</em> TE Skin's actual <code>COMPONENT-INDEX.json</code> excerpt renders inline in the essay as a code block; optional Loom stub sits mid-essay for the reader who wants motion. The argument + the artifact both on the page.</li>
+      <li><b>#03 Missing target role.</b> <em>Refused:</em> "Open to <b>AI Product Designer / Agentic UX Lead</b> roles" lives in chrome on every screen, never hidden behind a scroll.</li>
+      <li><b>#04 Font CDN.</b> <em>Refused:</em> Inter, Source Serif Pro, JetBrains Mono all self-hosted, Latin-1 subset, preloaded. Network panel shows zero third-party font requests.</li>
+      <li><b>#05 GPT-sounding case copy.</b> <em>Refused:</em> pre-commit ban-list script rejects <em>delve, leverage, robust, seamless, elevate, stakeholders, north star, alignment</em>. Every case copy reads in Danilo's register (matches R5 Draft C voice spec).</li>
+      <li><b>#06 Metrics without baseline + window + attribution.</b> <em>Refused:</em> every proof-strip number carries baseline + window + attribution (e.g. "346 commits · 40 days · EnRegla 0→1.0 MVP" — not "massive impact").</li>
+      <li><b>#07 Lone-genius framing.</b> <em>Refused:</em> the essay's thesis statement is literally the anti-solo-genius line ("the relationship between a human maker and the model"). Testimonials specifically praise method and leverage, not raw talent (R1 Must-05). Case credits name collaborators by role.</li>
+      <li><b>#08 Mobile broken or LCP > 1.5s.</b> <em>Refused:</em> mobile-first 375px layout, 1-column essay below 900px, self-hosted preloaded fonts, CSS inlined, JS ≤ 4KB gz, LCP target &lt; 1.5s enforced in CI.</li>
+      <li><b>#09 Stale · last case 18+ months old.</b> <em>Refused:</em> "Currently" pill mandatory, rendered from <code>data/identity.yaml:currently</code>, every case dated, footer carries <code>last-revised</code> timestamp.</li>
+      <li><b>#10 Writing hidden.</b> <em>Refused structurally:</em> the entire hero <em>is</em> the writing. Anthropic's "put that at the top of your résumé" filter is served maximally, not partially.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ======================================================
+     12 · R6 PROOFS / 4-WEEK PLAN
+====================================================== -->
+<section id="s12">
+  <h2 class="sec"><span class="n">12</span>R6 five proofs · phased 4-week rollout</h2>
+  <p class="sec-lede">Each of R6's 5 high-leverage proofs tagged: required for V11 ship / parallel to ship / post-ship. Target: all five complete by <code>2026-06-05</code>.</p>
+
+  <table class="tbl">
+    <thead><tr><th>#</th><th>Proof</th><th>Phase</th><th>Week</th><th>Effort</th><th>Role in V11</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="num">1</td>
+        <td><b>Live domain <code>danilorojas.design</code></b></td>
+        <td><span class="pill-inline must">required for ship</span></td>
+        <td>1</td>
+        <td>~4h</td>
+        <td>Without the domain, V11 cannot render. Keystone.</td>
+      </tr>
+      <tr>
+        <td class="num">2</td>
+        <td><b>Two LinkedIn recommendations</b> (Sheppard + Giraldez)</td>
+        <td><span class="pill-inline ship">parallel to ship</span></td>
+        <td>1</td>
+        <td>~1h ask</td>
+        <td>Hydrates the testimonial click-throughs. Verbal permission already granted.</td>
+      </tr>
+      <tr>
+        <td class="num">3</td>
+        <td><b>Essay · "How I migrated a DS in 5 recursive rounds"</b></td>
+        <td><span class="pill-inline must">required for ship</span></td>
+        <td>2</td>
+        <td>~24h / 7 days</td>
+        <td><em>This IS the landing.</em> Not a proof beside the landing. The landing itself.</td>
+      </tr>
+      <tr>
+        <td class="num">4</td>
+        <td><b>Public skill · <code>claude-skills/dr-cv-skill</code></b></td>
+        <td><span class="pill-inline par">parallel · nice-to-have</span></td>
+        <td>3</td>
+        <td>~6h</td>
+        <td>Linked inline in the essay as the "public, runnable" version of TE Skin's pattern. Reinforces the argument; doesn't anchor it.</td>
+      </tr>
+      <tr>
+        <td class="num">5</td>
+        <td><b>60-sec Loom · "One prompt, five CVs"</b></td>
+        <td><span class="pill-inline post">post-ship · optional</span></td>
+        <td>4</td>
+        <td>~3h</td>
+        <td>Lazy-loaded mid-essay as a motion-supported argument for the featured TE Skin case. R9 marked cut; R10 demotes rather than removes.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>4-week rollout calendar</h3>
+  <div class="panel">
+    <p style="font-family: var(--mono); font-size: 13px; color: var(--ink); line-height: 1.8;">
+      <b style="color: var(--accent);">Week 1 · 2026-05-08 → 2026-05-15</b><br>
+      → Domain live. LinkedIn recommendations asked. Essay outline drafted. Tasks 1–2 of production plan shipped.<br><br>
+      <b style="color: var(--accent);">Week 2 · 2026-05-16 → 2026-05-22</b><br>
+      → Essay v1 complete (EN + ES). Tasks 3–5 shipped. First trusted-reader pass on essay.<br><br>
+      <b style="color: var(--accent);">Week 3 · 2026-05-23 → 2026-05-29</b><br>
+      → Essay final. Tasks 6–7 shipped. Public <code>dr-cv-skill</code> repo live. V11 soft-launch on <code>danilorojas.design</code>.<br><br>
+      <b style="color: var(--accent);">Week 4 · 2026-05-30 → 2026-06-05</b><br>
+      → Task 8 (orchestrator flip) shipped. Loom recorded + embedded. Landing submitted to 5 target companies. R6 target date <b>2026-06-05</b> met.
+    </p>
+  </div>
+</section>
+
+<div class="foot">
+  V11 · Round 10 · FINAL converged spec · generated 2026-05-08 · dr-cv / hiring-universe · sources: R1–R9 + /data/* + generators/templates/huly-landing/ · direction: <b>The Notebook</b> (R9 D1 + D3 proof-strip graft) · voice: R5 Draft C · ship window: 10–14 days · target: hire into tier above Booz Allen Hamilton as AI Product Designer / Agentic UX Lead
+</div>
+
+</div>
+</body>
+</html>

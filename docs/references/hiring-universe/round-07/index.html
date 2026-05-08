@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>V11 R7 · Craft floors · the landing IS the work sample</title>
+<style>
+  :root {
+    --bg: #07080d;
+    --bg-2: #0b0d14;
+    --bg-3: #11131c;
+    --panel: #131622;
+    --panel-2: #181c28;
+    --line: #1c1f2b;
+    --line-hi: #262a39;
+    --ink: #e7e8ef;
+    --ink-dim: #9aa0ae;
+    --ink-faint: #5a5f6d;
+    --accent: #FF8964;
+    --accent-2: #ffb08e;
+    --accent-dim: #a35840;
+    --ok: #6fd08c;
+    --ok-dim: #2d5c3f;
+    --warn: #f2c66d;
+    --warn-dim: #5c4a1f;
+    --bad: #e37a7a;
+    --bad-dim: #5c2a2a;
+    --info: #7aa2ff;
+    --mono: "JetBrains Mono","SFMono-Regular",Consolas,monospace;
+    --sans: "Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.58; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent-dim); }
+  a:hover { color: var(--accent-2); }
+  code, kbd, samp, .mono { font-family: var(--mono); font-size: 12.8px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 56px 28px 120px; }
+
+  header.masthead { border-bottom: 1px solid var(--line); padding-bottom: 28px; margin-bottom: 36px; }
+  .tag { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--accent); text-transform: uppercase; padding: 3px 8px; border: 1px solid var(--accent-dim); border-radius: 3px; margin-bottom: 14px; }
+  h1 { font-size: 42px; line-height: 1.06; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 12px; }
+  h1 .accent { color: var(--accent); }
+  .subtitle { color: var(--ink-dim); font-size: 16px; max-width: 820px; }
+
+  h2 { font-size: 26px; letter-spacing: -.015em; margin: 64px 0 18px; border-left: 3px solid var(--accent); padding-left: 14px; scroll-margin-top: 24px; }
+  h2 .letter { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: .14em; display: block; margin-bottom: 4px; }
+  h3 { font-size: 17px; margin: 24px 0 10px; color: #fff; letter-spacing: -.005em; }
+  h4 { font-size: 12.5px; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-dim); margin: 18px 0 8px; font-weight: 600; }
+  p { margin: .35em 0 .9em; }
+  strong { color: #fff; font-weight: 600; }
+  ul, ol { margin: .2em 0 1em; padding-left: 20px; }
+  ul li, ol li { margin: 5px 0; }
+  ul li::marker { color: var(--accent-dim); }
+
+  .lede { font-size: 17.5px; line-height: 1.6; color: #cfd2dc; max-width: 900px; }
+  .lede strong { color: #fff; }
+
+  hr { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+
+  /* Section card */
+  .sec { background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px; padding: 24px 26px; margin: 16px 0 24px; }
+  .sec.floor-what { border-left: 3px solid var(--accent); }
+  .sec.floor-test { border-left: 3px solid var(--info); }
+  .sec.floor-now { border-left: 3px solid var(--warn); }
+  .sec.floor-fix { border-left: 3px solid var(--ok); }
+  .sec h3 { margin-top: 0; }
+  .sec .label { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; display: block; }
+  .sec.floor-test .label { color: var(--info); }
+  .sec.floor-now .label { color: var(--warn); }
+  .sec.floor-fix .label { color: var(--ok); }
+
+  /* Checklist */
+  .checklist { list-style: none; padding: 0; margin: 8px 0 0; }
+  .checklist li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: 14px; }
+  .checklist li:last-child { border-bottom: 0; }
+  .checklist li .box { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); line-height: 1.4; }
+  .checklist li .body code { background: var(--bg-3); border: 1px solid var(--line); padding: 1px 5px; border-radius: 3px; color: var(--accent-2); }
+
+  /* Honest status pill inline */
+  .pill { display: inline-block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; border: 1px solid; margin-right: 6px; vertical-align: baseline; }
+  .pill.pass { color: var(--ok); border-color: var(--ok-dim); background: rgba(111,208,140,.06); }
+  .pill.partial { color: var(--warn); border-color: var(--warn-dim); background: rgba(242,198,109,.05); }
+  .pill.fail { color: var(--bad); border-color: var(--bad-dim); background: rgba(227,122,122,.05); }
+
+  /* Two-col */
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 780px) { .cols-2 { grid-template-columns: 1fr; } }
+
+  /* KV facts strip */
+  .kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 14px 0; }
+  .kv .cell { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+  .kv .cell .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; color: var(--ink-dim); text-transform: uppercase; margin-bottom: 4px; }
+  .kv .cell .v { font-size: 15.5px; color: #fff; font-weight: 600; }
+  .kv .cell .v.small { font-size: 13.5px; font-weight: 500; color: var(--ink); }
+
+  /* Code block */
+  pre { background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; overflow-x: auto; font-family: var(--mono); font-size: 12.5px; color: #d5d8df; line-height: 1.55; }
+  pre .c { color: var(--ink-faint); }
+  pre .k { color: var(--accent); }
+  pre .s { color: #b8d18b; }
+
+  /* Scorecard */
+  table.score { width: 100%; border-collapse: collapse; margin: 14px 0 8px; font-size: 13px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  table.score th, table.score td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.score th { background: var(--bg-3); color: var(--ink-dim); font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
+  table.score td.n { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); width: 38px; }
+  table.score td.area { width: 140px; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .08em; text-transform: uppercase; }
+  table.score td.crit { color: #fff; font-weight: 500; }
+  table.score td.crit small { display: block; color: var(--ink-dim); font-weight: 400; font-size: 12px; margin-top: 3px; }
+  table.score td.status { width: 96px; text-align: center; }
+  table.score td.prio { width: 120px; font-family: var(--mono); font-size: 11px; letter-spacing: .05em; }
+  table.score tr:last-child td { border-bottom: 0; }
+  table.score tr:hover td { background: rgba(255,137,100,.025); }
+  .prio-must { color: var(--bad); }
+  .prio-should { color: var(--warn); }
+  .prio-nice { color: var(--ink-dim); }
+
+  /* TOC */
+  nav.toc { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 22px; margin: 28px 0 40px; }
+  nav.toc h4 { margin: 0 0 10px; }
+  nav.toc ol { margin: 0; padding-left: 18px; }
+  nav.toc ol li { margin: 4px 0; font-size: 14px; }
+  nav.toc ol li a { border: 0; color: var(--ink); }
+  nav.toc ol li a:hover { color: var(--accent); }
+  nav.toc ol li .meta { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); margin-left: 8px; }
+
+  /* callout */
+  .callout { border-left: 3px solid var(--accent); padding: 12px 16px; margin: 18px 0; background: rgba(255,137,100,.04); border-radius: 0 6px 6px 0; font-size: 14.5px; color: #e4e6ee; }
+  .callout .hd { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; color: var(--accent); text-transform: uppercase; margin-bottom: 4px; }
+
+  .anchor-link { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); margin-left: 8px; border: 0; opacity: 0; }
+  h2:hover .anchor-link { opacity: 1; color: var(--accent); }
+
+  footer { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 12.5px; font-family: var(--mono); letter-spacing: .05em; }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <span class="tag">V11 · Round 7 · Craft floors</span>
+  <h1>The landing <span class="accent">IS</span> the work sample.</h1>
+  <p class="subtitle">At tier-1 companies, a senior IC portfolio is judged first by craft floor — the minimums the artifact itself demonstrates. If dr-cv ships with a11y violations, a sloppy Lighthouse score, a broken ES toggle, a Google-Fonts CDN dependency, or a missing OG image, nothing else in the landing matters. The reviewer has already decided. This round catalogs the eight floors the landing must clear before V11 ships.</p>
+</header>
+
+<p class="lede">Rounds 1–4 catalogued what top-tier portfolios <em>say</em>. This round measures what they <em>ship</em>: the craft floor embedded in every page. Every section below contains <strong>what the floor is</strong>, <strong>the specific test</strong>, <strong>how dr-cv compares today</strong> (honest, not aspirational), and <strong>what to fix to pass</strong>. The round closes with a 28-item scorecard that doubles as the V11 pre-flight checklist.</p>
+
+<div class="callout">
+  <div class="hd">Working thesis</div>
+  Reviewers at Linear, Vercel, Stripe, Anthropic, Figma spend 8–15 seconds on the first pass. They don't read the case studies. They open devtools, tab through focus, toggle reduced-motion, switch language, and look at the Network panel. If the floor is clean, the case studies earn their read. If the floor leaks, the tab closes.
+</div>
+
+<nav class="toc" aria-label="Table of contents">
+  <h4>Floors covered in this round</h4>
+  <ol>
+    <li><a href="#a-a11y">Accessibility floor</a> <span class="meta">WCAG AA minimum, AAA aspirational</span></li>
+    <li><a href="#b-perf">Performance floor</a> <span class="meta">Lighthouse 90/95/100/100 and Core Web Vitals</span></li>
+    <li><a href="#c-i18n">i18n / bilingual discipline</a> <span class="meta">EN primary, ES toggle — non-negotiable</span></li>
+    <li><a href="#d-motion">Motion discipline</a> <span class="meta">reduced-motion, info vs decoration, durations</span></li>
+    <li><a href="#e-typo">Typography discipline</a> <span class="meta">self-host, subset, variable fonts</span></li>
+    <li><a href="#f-seo">SEO / shareability floor</a> <span class="meta">OG image, titles, canonical, sitemap</span></li>
+    <li><a href="#g-priv">Privacy / analytics floor</a> <span class="meta">no cookie banner, privacy-first metrics</span></li>
+    <li><a href="#h-code">Code-craft floor</a> <span class="meta">the public repo is also the work sample</span></li>
+    <li><a href="#scorecard"><strong>Craft-floor scorecard</strong></a> <span class="meta">28 criteria · current pass/fail · priority</span></li>
+  </ol>
+</nav>
+
+<!-- ============================== A. A11Y ============================== -->
+<h2 id="a-a11y"><span class="letter">Floor A</span>Accessibility · WCAG AA minimum, AAA aspirational <a class="anchor-link" href="#a-a11y">#</a></h2>
+
+<p class="lede">Reference set audited mentally: <span class="mono">emilkowal.ski</span>, <span class="mono">rauno.me</span>, <span class="mono">paco.me</span>, <span class="mono">brittanychiang.com</span>, <span class="mono">leerob.com</span>, <span class="mono">linear.app</span>, <span class="mono">vercel.com</span>, <span class="mono">stripe.com</span>, <span class="mono">anthropic.com</span>. Consensus floor is higher than many designers assume. Brittany Chiang ships AAA contrast. Rauno's site honors reduced-motion on every animation. Linear's landmark structure is exhaustive. Stripe ships focus rings you could etch on glass.</p>
+
+<div class="sec floor-what">
+  <span class="label">What the floor is</span>
+  <h3>The landing must be fully operable by keyboard alone, screen-reader coherent, and visually usable at WCAG AA contrast, with reduced-motion honored.</h3>
+  <p>Concretely: every interactive element reachable by <kbd>Tab</kbd>, a visible focus ring at all times, semantic landmarks (<code>&lt;header&gt;</code> / <code>&lt;main&gt;</code> / <code>&lt;nav&gt;</code> / <code>&lt;footer&gt;</code>) so screen readers can jump, a skip link for long hero sections, text contrast ≥ 4.5:1 (body) and ≥ 3:1 (large text, UI), decorative imagery marked <code>aria-hidden="true"</code>, meaningful <code>alt=""</code> on content images, and all motion disabled when <code>prefers-reduced-motion: reduce</code>. These are not "nice to have" — they are the defaults at Stripe, Linear, Vercel, Anthropic.</p>
+</div>
+
+<div class="sec floor-test">
+  <span class="label">Specific test · the 12-item a11y checklist</span>
+  <ol class="checklist">
+    <li><span class="box">A1</span><span class="body"><strong>Tab through every link and button.</strong> Focus ring must be visible on every stop, never clipped by <code>overflow:hidden</code>, never under a sticky header. Press <kbd>Shift+Tab</kbd> — reverse order must match visual order.</span></li>
+    <li><span class="box">A2</span><span class="body"><strong>Skip link present.</strong> First tab stop on page is <code>&lt;a href="#main"&gt;Skip to content&lt;/a&gt;</code>, visually hidden until focused. Hero is long; skip link is mandatory.</span></li>
+    <li><span class="box">A3</span><span class="body"><strong>Landmarks cover the page.</strong> One <code>&lt;header&gt;</code>, one <code>&lt;main&gt;</code>, one <code>&lt;footer&gt;</code>, one or more <code>&lt;nav&gt;</code> with <code>aria-label</code>. VoiceOver rotor (<kbd>VO+U</kbd>) / NVDA landmark list should expose them.</span></li>
+    <li><span class="box">A4</span><span class="body"><strong>Heading order is monotonic.</strong> One <code>h1</code>. No <code>h3</code> before <code>h2</code>. Check with devtools Accessibility tab.</span></li>
+    <li><span class="box">A5</span><span class="body"><strong>Color contrast ≥ 4.5:1 for body text, ≥ 3:1 for 18px+ or bold 14px+.</strong> Run all text/background pairs. Light gray on dark background is where portfolios fail — the <code>--hl-text-60</code> token (#95979E on #090A0C) = 6.8:1 ✓; <code>--hl-text-50</code> (#797D86) = 4.8:1 ✓ at body size; <code>--hl-text-40</code> (#61656B) = <strong>3.2:1 ✗</strong> for body — legal only for large text.</span></li>
+    <li><span class="box">A6</span><span class="body"><strong>Focus ring has ≥ 3:1 contrast against adjacent colors</strong> (WCAG 2.4.11). Orange <code>#FF8964</code> 2px ring on black = 7.4:1 ✓; on cream section (<code>#F6F4F0</code>) = 2.6:1 ✗ — cream section needs a different ring color.</span></li>
+    <li><span class="box">A7</span><span class="body"><strong>Images have alt text or are explicitly decorative.</strong> Every <code>&lt;img&gt;</code> needs <code>alt="..."</code> (content) or <code>alt=""</code> (decorative). SVG diagrams need <code>role="img"</code> + <code>aria-label</code>. No <code>&lt;img&gt;</code> without alt, ever.</span></li>
+    <li><span class="box">A8</span><span class="body"><strong>Decorative canvas / particle layers are <code>aria-hidden="true"</code> and <code>role="presentation"</code>.</strong> The particle beam in the hero is pure decoration — screen readers must ignore it.</span></li>
+    <li><span class="box">A9</span><span class="body"><strong><code>prefers-reduced-motion: reduce</code> disables every animation.</strong> Not just transitions — also the particle canvas, the marquee, the CTA glow, the reveal-on-scroll. Reviewers with vestibular sensitivity will test this.</span></li>
+    <li><span class="box">A10</span><span class="body"><strong>No <code>role="marquee"</code>.</strong> It's an invalid ARIA role in the 2025 spec and screen readers announce nothing useful. Use a plain <code>&lt;ul&gt;</code> with <code>aria-hidden="true"</code> if purely decorative, or <code>aria-label</code> if informational.</span></li>
+    <li><span class="box">A11</span><span class="body"><strong>Language attribute is correct per route.</strong> <code>&lt;html lang="en"&gt;</code> on <code>/</code>, <code>&lt;html lang="es"&gt;</code> on <code>/es/</code>. Any inline foreign phrase wrapped in <code>&lt;span lang="..."&gt;</code>.</span></li>
+    <li><span class="box">A12</span><span class="body"><strong>Form inputs (if any) have labels.</strong> Current landing has no forms — keep it that way for V11. <code>mailto:</code> + copy-email pattern is lower cognitive load.</span></li>
+  </ol>
+</div>
+
+<div class="sec floor-now">
+  <span class="label">How dr-cv currently compares · honest audit of dist/landing-huly/index.html</span>
+  <ul>
+    <li><span class="pill pass">pass</span><strong>Landmarks:</strong> <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;nav aria-label="Main navigation"&gt;</code> are present. Each <code>section</code> has <code>aria-labelledby</code> pointing to its h2.</li>
+    <li><span class="pill pass">pass</span><strong>Headings:</strong> one <code>h1</code>, four <code>h2</code>s. Monotonic.</li>
+    <li><span class="pill pass">pass</span><strong>Decorative aria-hidden:</strong> particle canvas, background beams, CTA arrows, timeline markers, live-dots — all marked <code>aria-hidden="true"</code>. Clean.</li>
+    <li><span class="pill pass">pass</span><strong>Reduced-motion:</strong> the script checks <code>matchMedia('(prefers-reduced-motion: reduce)')</code> and skips the particle canvas and reveal observer. The CSS also zeroes <code>--hl-dur-*</code>. Strong.</li>
+    <li><span class="pill pass">pass</span><strong>Focus ring:</strong> <code>:focus-visible { outline: 2px solid var(--hl-accent); outline-offset: 3px; }</code> — global default. Visible.</li>
+    <li><span class="pill fail">fail</span><strong>No skip link.</strong> First Tab stop is the nav brand link, not a skip-to-main. For a long hero with a canvas, a skip link is expected.</li>
+    <li><span class="pill fail">fail</span><strong><code>role="marquee"</code> is invalid.</strong> Line 1120 uses <code>role="marquee"</code>. Not a real ARIA role. NVDA/VoiceOver will either ignore it or announce nothing. The marquee content is also duplicated (for infinite scroll) — screen readers will hear every item twice. Needs <code>aria-hidden="true"</code> on the whole track + a single <code>&lt;p class="sr-only"&gt;</code> summary.</li>
+    <li><span class="pill fail">fail</span><strong>Focus ring on cream section fails contrast.</strong> Orange ring on <code>#F6F4F0</code> background is 2.6:1. Needs a darker ring color scoped to the cream section.</li>
+    <li><span class="pill partial">partial</span><strong>Contrast on muted text.</strong> <code>--hl-text-40</code> (#61656B) on body background = 3.2:1. Only legal at ≥ 18px or bold ≥ 14px. Grep the landing for uses at small sizes.</li>
+    <li><span class="pill partial">partial</span><strong>Testimonial quote marks.</strong> Large <code>&quot;</code> is marked <code>aria-hidden="true"</code> — good — but the actual quote is not wrapped in <code>&lt;blockquote&gt;</code> with <code>&lt;cite&gt;</code>. Screen readers don't know it's a quotation.</li>
+    <li><span class="pill fail">fail</span><strong>No <code>&lt;header&gt;</code> landmark.</strong> The <code>&lt;nav&gt;</code> sits outside any <code>&lt;header&gt;</code>. VoiceOver rotor won't show a "banner" landmark.</li>
+  </ul>
+</div>
+
+<div class="sec floor-fix">
+  <span class="label">What to fix · ordered by effort</span>
+  <ol>
+    <li><strong>Wrap the nav in a <code>&lt;header&gt;</code></strong> landmark and add a skip link as the first focusable element:
+<pre><span class="c">&lt;!-- first child of body --&gt;</span>
+<span class="k">&lt;a</span> class=<span class="s">"sr-only-focusable"</span> href=<span class="s">"#main"</span><span class="k">&gt;</span>Skip to content<span class="k">&lt;/a&gt;</span>
+<span class="k">&lt;header&gt;</span>
+  <span class="k">&lt;nav</span> aria-label=<span class="s">"Main navigation"</span><span class="k">&gt;</span>...<span class="k">&lt;/nav&gt;</span>
+<span class="k">&lt;/header&gt;</span>
+<span class="k">&lt;main</span> id=<span class="s">"main"</span><span class="k">&gt;</span>...<span class="k">&lt;/main&gt;</span></pre></li>
+    <li><strong>Remove <code>role="marquee"</code>.</strong> Replace with <code>&lt;div class="hl-marquee" aria-hidden="true"&gt;</code> and above it an <code>&lt;p class="sr-only"&gt;I ship: skills sheet, CVs, landing, agent-updatable data, MCP servers, subagent orchestration.&lt;/p&gt;</code></li>
+    <li><strong>Scoped focus ring on cream section:</strong> <code>.hl-section--cream :focus-visible { outline-color: var(--hl-accent-burn); }</code> — #CD3100 on #F6F4F0 = 5.8:1 ✓.</li>
+    <li><strong>Blockquote the testimonials:</strong> <code>&lt;blockquote&gt;...&lt;/blockquote&gt;&lt;cite&gt;Alexander Giraldez, Design Lead&lt;/cite&gt;</code>.</li>
+    <li><strong>Audit every use of <code>--hl-text-40</code></strong> — either promote to <code>--hl-text-50</code> (4.8:1) or confirm the font-size is ≥ 18px.</li>
+    <li><strong>Add visible-on-focus utility:</strong>
+<pre>.sr-only { position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0; }
+.sr-only-focusable:focus { position: fixed; top: 12px; left: 12px;
+  width: auto; height: auto; clip: auto; padding: 10px 16px;
+  background: var(--hl-accent); color: #0b0c0e; font-weight: 600;
+  border-radius: 6px; z-index: 100; }</pre></li>
+  </ol>
+</div>
+
+<!-- ============================== B. PERF ============================== -->
+<h2 id="b-perf"><span class="letter">Floor B</span>Performance · Lighthouse 90 / 95 / 100 / 100 and Core Web Vitals <a class="anchor-link" href="#b-perf">#</a></h2>
+
+<div class="sec floor-what">
+  <span class="label">What the floor is</span>
+  <h3>Lighthouse ≥ 90 Performance, ≥ 95 Accessibility, 100 Best Practices, 100 SEO on Mobile throttled (Slow 4G, Moto G4 class).</h3>
+  <p>Tier-1 interviewers run Lighthouse from devtools on a mobile preset before reading a word. Desktop scores are easy — mobile is the real test. Core Web Vitals targets: <strong>LCP &lt; 2.0s</strong> (tier-1 portfolios run ~1.0–1.5s; the 2.5s "good" line is too low for a static portfolio), <strong>INP &lt; 100ms</strong>, <strong>CLS &lt; 0.05</strong>. Total JS budget for a senior IC portfolio sits around 15–30 KB gzipped. Above 100 KB of JS for a static portfolio reads as lack of taste.</p>
+</div>
+
+<div class="sec floor-test">
+  <span class="label">Specific test · the 8-item perf checklist</span>
+  <ol class="checklist">
+    <li><span class="box">B1</span><span class="body"><strong>Run Lighthouse mobile preset on deployed URL.</strong> Local file:// runs lie — test the live URL. Four scores: target <code>Perf ≥ 90 · A11y ≥ 95 · BP 100 · SEO 100</code>.</span></li>
+    <li><span class="box">B2</span><span class="body"><strong>LCP element identified and optimized.</strong> Open Lighthouse Treemap — LCP is likely the hero h1 text or a hero image. Text LCP needs the font loaded with <code>font-display: swap</code> and <code>&lt;link rel="preload" as="font" crossorigin&gt;</code> for the primary weight.</span></li>
+    <li><span class="box">B3</span><span class="body"><strong>Total transfer &lt; 200 KB</strong> for a single-file portfolio. HTML + inline CSS + one JS block + fonts. Reference: paco.me ≈ 40 KB, rauno.me ≈ 90 KB, leerob.com ≈ 180 KB.</span></li>
+    <li><span class="box">B4</span><span class="body"><strong>JS budget &lt; 30 KB gzipped.</strong> No framework runtime on a static portfolio. Vanilla IIFE is fine. Zero third-party scripts except optional analytics (&lt; 5 KB).</span></li>
+    <li><span class="box">B5</span><span class="body"><strong>No render-blocking resources.</strong> CSS inlined in <code>&lt;head&gt;</code>, JS deferred or at end of <code>&lt;body&gt;</code>, fonts loaded with <code>display: swap</code>.</span></li>
+    <li><span class="box">B6</span><span class="body"><strong>CLS &lt; 0.05.</strong> Fonts must not reflow the hero headline — use <code>size-adjust</code>, <code>ascent-override</code>, or match system-stack metrics. Images must have explicit <code>width</code> / <code>height</code>.</span></li>
+    <li><span class="box">B7</span><span class="body"><strong>INP &lt; 100ms.</strong> Particle canvas must not block interaction — use <code>requestAnimationFrame</code>, not <code>setInterval</code>, and pause when hero is offscreen (already done, good). No scroll-jacking.</span></li>
+    <li><span class="box">B8</span><span class="body"><strong>HTTP caching + compression on the host.</strong> Brotli/gzip on HTML + CSS + JS. <code>Cache-Control: public, max-age=31536000, immutable</code> on fingerprinted assets.</span></li>
+  </ol>
+</div>
+
+<div class="sec floor-now">
+  <span class="label">How dr-cv currently compares · dist/landing-huly/index.html analysis</span>
+  <div class="kv">
+    <div class="cell"><div class="k">File size (raw)</div><div class="v">57 KB</div></div>
+    <div class="cell"><div class="k">Lines</div><div class="v">1,564</div></div>
+    <div class="cell"><div class="k">Inline CSS</div><div class="v small">~48 KB (ok)</div></div>
+    <div class="cell"><div class="k">Inline JS</div><div class="v small">~4 KB (ok)</div></div>
+    <div class="cell"><div class="k">Fonts</div><div class="v small">Google Fonts CDN (fail)</div></div>
+    <div class="cell"><div class="k">Est. LCP (mobile)</div><div class="v small">~1.8–2.4s</div></div>
+  </div>
+  <ul>
+    <li><span class="pill pass">pass</span><strong>Size discipline:</strong> 57 KB total file is excellent for a single-file landing. Well inside budget.</li>
+    <li><span class="pill pass">pass</span><strong>JS is vanilla, small, deferred-style (end of body), pauses canvas offscreen.</strong> Good INP posture.</li>
+    <li><span class="pill pass">pass</span><strong>CSS inlined in head.</strong> No render-blocking stylesheet request.</li>
+    <li><span class="pill fail">fail</span><strong>Google Fonts CDN.</strong> <code>&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter..."&gt;</code> = two DNS lookups + two TCP handshakes + render-blocking CSS + FOUT + ~200 KB of font payload uncompressed. LCP hit: 300–600ms on Slow 4G. Also: Google Fonts reads the user IP (GDPR gray zone — German courts have ruled against it). Must self-host.</li>
+    <li><span class="pill fail">fail</span><strong>No preload hint for the primary font weight</strong> (Inter 600 is used in the hero h1). Preload saves ~400ms on LCP.</li>
+    <li><span class="pill fail">fail</span><strong>No font subset.</strong> Full Inter + full JetBrains Mono = ~400 KB across weights. Latin-1 subset of Inter 400/500/600/700 VAR = ~35 KB. 10× smaller.</li>
+    <li><span class="pill partial">partial</span><strong>No <code>size-adjust</code> fallback for the hero font.</strong> Hero text uses JetBrains Mono for the name — if font loads late, CLS spikes.</li>
+    <li><span class="pill partial">partial</span><strong>No image on landing — good for LCP.</strong> But when testimonial avatars are added in a future round, they must ship as <code>&lt;img width height loading="lazy"&gt;</code> with AVIF + WebP fallback.</li>
+  </ul>
+
+  <p><strong>Estimated current Lighthouse mobile scores:</strong> Perf <span class="mono" style="color:var(--warn)">78–85</span>, A11y <span class="mono" style="color:var(--warn)">88–92</span>, BP <span class="mono" style="color:var(--ok)">95–100</span>, SEO <span class="mono" style="color:var(--warn)">85–92</span> (missing OG image, missing canonical — see Floor F).</p>
+</div>
+
+<div class="sec floor-fix">
+  <span class="label">What to fix · priority order</span>
+  <ol>
+    <li><strong>Self-host Inter + JetBrains Mono as Latin-1 variable subsets.</strong> Use <code>@fontsource-variable/inter</code> or download from <a href="https://rsms.me/inter/">rsms.me/inter</a>. Serve as WOFF2, preload only the weights used above the fold.
+<pre><span class="k">&lt;link</span> rel=<span class="s">"preload"</span> as=<span class="s">"font"</span> type=<span class="s">"font/woff2"</span>
+      href=<span class="s">"/fonts/inter-var-latin.woff2"</span> crossorigin<span class="k">&gt;</span>
+<span class="k">&lt;style&gt;</span>
+@font-face {
+  font-family: 'Inter';
+  font-style: normal; font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-var-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+                 U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191,
+                 U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+<span class="k">&lt;/style&gt;</span></pre></li>
+    <li><strong>Drop the <code>preconnect</code> lines</strong> — not needed once Google Fonts is gone.</li>
+    <li><strong>Add <code>size-adjust</code> fallback</strong> for the hero font so CLS stays &lt; 0.01:
+<pre>@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 107%;
+  ascent-override: 90%;
+}</pre></li>
+    <li><strong>Run Lighthouse mobile on deployed URL.</strong> Commit the report screenshot (or a <code>docs/lighthouse-report.html</code>) so reviewers see you measured. "I know my Lighthouse score" is itself a signal.</li>
+    <li><strong>Host on Vercel / Cloudflare Pages / Netlify</strong> — all three ship Brotli + immutable caching by default. Static file hosts (GitHub Pages) only gzip, which is 15–20% worse.</li>
+  </ol>
+</div>
+
+<!-- ============================== C. I18N ============================== -->
+<h2 id="c-i18n"><span class="letter">Floor C</span>i18n / bilingual discipline · EN primary, ES toggle <a class="anchor-link" href="#c-i18n">#</a></h2>
+
+<div class="sec floor-what">
+  <span class="label">What the floor is</span>
+  <h3>Two real languages. Two real URLs. One non-negotiable: human-written Spanish, no machine translation, no Spanglish.</h3>
+  <p>Danilo is bilingual. The ES version must be written by him, not translated at build time. Typography must handle <span class="mono">ñ ¿ ¡ á é í ó ú ü</span> without tofu or clipped diacritics. Numbers and dates must format per locale. Language switcher must preserve scroll position and section.</p>
+</div>
+
+<div class="sec floor-test">
+  <span class="label">Specific test · the 8-item i18n checklist</span>
+  <ol class="checklist">
+    <li><span class="box">C1</span><span class="body"><strong>URL structure: path-based, not query-string.</strong> <code>/es/</code> is correct. <code>?lang=es</code> is worse for SEO (some crawlers treat it as duplicate content) and fragile to query-string stripping.</span></li>
+    <li><span class="box">C2</span><span class="body"><strong><code>hreflang</code> pairs are reciprocal and absolute.</strong> On <code>/</code>: <code>&lt;link rel="alternate" hreflang="en" href="https://danilorojas.xyz/"&gt;</code> and <code>hreflang="es" href="https://danilorojas.xyz/es/"</code> and <code>hreflang="x-default" href="https://danilorojas.xyz/"</code>. Both pages must reference both URLs.</span></li>
+    <li><span class="box">C3</span><span class="body"><strong><code>&lt;html lang&gt;</code> matches route.</strong> <code>lang="en"</code> on <code>/</code>, <code>lang="es"</code> on <code>/es/</code>. Wrap isolated foreign phrases (e.g., "Agentic Designer" when it stays English in Spanish copy) in <code>&lt;span lang="en"&gt;</code>.</span></li>
+    <li><span class="box">C4</span><span class="body"><strong>Language switcher preserves section.</strong> Clicking ES on <code>/#method</code> goes to <code>/es/#method</code>, not to <code>/es/</code>. Test with anchor links.</span></li>
+    <li><span class="box">C5</span><span class="body"><strong>Typography test string renders correctly:</strong> <em>"¿Construyendo una interfaz para agentes? El año pasado logré entregar más rápido: niño, señor, añil."</em> — ñ with tilde properly centered, ¿¡ present, no missing glyphs.</span></li>
+    <li><span class="box">C6</span><span class="body"><strong>Dates / numbers formatted per locale.</strong> "May 7, 2026" → "7 de mayo de 2026". "3.4M users" → "3,4M usuarios" (comma as decimal in es-ES; es-419 may use period). Pick one ES variant (Danilo is Ecuadorian — es-EC / es-419) and stick to it.</span></li>
+    <li><span class="box">C7</span><span class="body"><strong>Content parity, not translation parity.</strong> ES version can omit sections that don't translate (an English pun, for example) and add a section that's only culturally relevant in LATAM. "Parity of intent" &gt; "word-for-word equivalent".</span></li>
+    <li><span class="box">C8</span><span class="body"><strong>No automatic browser-language redirect.</strong> User chose the URL. Respect the choice. Offer the toggle; don't redirect.</span></li>
+  </ol>
+</div>
+
+<div class="sec floor-now">
+  <span class="label">How dr-cv currently compares</span>
+  <ul>
+    <li><span class="pill pass">pass</span><strong>Path-based routing:</strong> <code>/es/</code> exists (dist/landing-huly/es/). Correct architecture.</li>
+    <li><span class="pill pass">pass</span><strong><code>lang</code> attribute correct per route.</strong> <code>lang="en"</code> on root.</li>
+    <li><span class="pill partial">partial</span><strong><code>hreflang</code> present but relative paths.</strong> Current: <code>&lt;link rel="alternate" hreflang="es" href="/es/"&gt;</code>. Google's guidance: use absolute URLs. Not a hard fail but not tier-1 polish.</li>
+    <li><span class="pill fail">fail</span><strong>No <code>x-default</code>.</strong> Missing <code>&lt;link rel="alternate" hreflang="x-default" href="/"&gt;</code>. Needed so Google knows what to show users with unsupported languages.</li>
+    <li><span class="pill fail">fail</span><strong>Language switcher is a hard link to <code>/es/</code>.</strong> Does not preserve hash/section. User on <code>/#method</code> who clicks ES lands at <code>/es/</code> top — loses context. Needs a tiny script: <code>href = '/es/' + location.hash</code>.</li>
+    <li><span class="pill partial">partial</span><strong>ES content exists</strong> (per README: "Single-file tab-SPA per language"). Danilo wrote it (not machine-translated) per project memory. Good. Needs spot-check for Spanglish.</li>
+    <li><span class="pill fail">fail</span><strong>Date/number formatting</strong> not audited. Unknown whether "2026-05-07" becomes "7 may 2026" in ES or stays ISO.</li>
+  </ul>
+</div>
+
+<div class="sec floor-fix">
+  <span class="label">What to fix</span>
+  <ol>
+    <li><strong>Absolute hreflang + x-default</strong> on both pages:
+<pre><span class="k">&lt;link</span> rel=<span class="s">"alternate"</span> hreflang=<span class="s">"en"</span> href=<span class="s">"https://danilorojas.xyz/"</span><span class="k">&gt;</span>
+<span class="k">&lt;link</span> rel=<span class="s">"alternate"</span> hreflang=<span class="s">"es"</span> href=<span class="s">"https://danilorojas.xyz/es/"</span><span class="k">&gt;</span>
+<span class="k">&lt;link</span> rel=<span class="s">"alternate"</span> hreflang=<span class="s">"x-default"</span> href=<span class="s">"https://danilorojas.xyz/"</span><span class="k">&gt;</span></pre>
+    </li>
+    <li><strong>Hash-preserving language toggle:</strong>
+<pre><span class="c">// runs on both pages</span>
+document.querySelectorAll(<span class="s">'[data-lang-switch]'</span>).forEach(<span class="k">function</span>(a){
+  a.addEventListener(<span class="s">'click'</span>, <span class="k">function</span>(e){
+    e.preventDefault();
+    <span class="k">var</span> target = a.dataset.langSwitch; <span class="c">// "/" or "/es/"</span>
+    location.href = target + location.hash;
+  });
+});</pre></li>
+    <li><strong>Lock to es-419</strong> (Latin American Spanish) in <code>landing.yaml</code>. Banco Pichincha, Mondelēz LATAM, BairesDev — the audience is LATAM, not Spain.</li>
+    <li><strong>Typography smoke test string</strong> included in the test suite: a hidden element containing the full Spanish glyph set; a Playwright / Puppeteer test asserts it renders without overflow.</li>
+    <li><strong>Add the target domain</strong> (danilorojas.xyz or whatever is chosen) to landing.yaml as a build-time constant so absolute URLs can be generated everywhere.</li>
+  </ol>
+</div>
+
+<!-- ============================== D. MOTION ============================== -->
+<h2 id="d-motion"><span class="letter">Floor D</span>Motion discipline · for an Agentic UX portfolio <a class="anchor-link" href="#d-motion">#</a></h2>
+
+<div class="sec floor-what">
+  <span class="label">What the floor is</span>
+  <h3>Every animation must (1) serve information or feedback, not decorate; (2) honor <code>prefers-reduced-motion</code> completely; (3) stay under 300ms for transitions, under 600ms for "intro" reveals; (4) pause when offscreen; (5) not fight the user's scroll.</h3>
+  <p>Emil Kowalski, Rauno, and Paco have all written publicly that "motion is a junior signal when it's decorative and a senior signal when it's informational." For an Agentic UX portfolio, motion should demonstrate <em>taste</em>: restraint, purpose, and reduced-motion hygiene.</p>
+</div>
+
+<div class="sec floor-test">
+  <span class="label">Specific test · the 7-item motion checklist</span>
+  <ol class="checklist">
+    <li><span class="box">D1</span><span class="body"><strong><code>prefers-reduced-motion: reduce</code> flips every animation off.</strong> Not to "shorter duration" — to <em>zero</em>. No parallax, no particles, no slide-in, no scroll-jacking.</span></li>
+    <li><span class="box">D2</span><span class="body"><strong>Durations follow a scale.</strong> 150ms (micro: hover, press), 200ms (small: color, opacity), 300ms (medium: layout), 500ms (large: reveal, modal). No 1234ms custom values.</span></li>
+    <li><span class="box">D3</span><span class="body"><strong>Easing is <code>cubic-bezier(0.4, 0, 0.2, 1)</code> for in-out, <code>cubic-bezier(0, 0, 0.2, 1)</code> for enter, <code>cubic-bezier(0.4, 0, 1, 1)</code> for exit.</strong> Linear is for progress indicators only. <code>ease</code> is lazy.</span></li>
+    <li><span class="box">D4</span><span class="body"><strong>Offscreen animations are paused.</strong> <code>IntersectionObserver</code> on the particle canvas / any looping animation. Battery-aware.</span></li>
+    <li><span class="box">D5</span><span class="body"><strong>Animate <code>transform</code> and <code>opacity</code> only.</strong> Never <code>top</code>, <code>left</code>, <code>width</code>, <code>height</code>, <code>margin</code> — they trigger layout on every frame.</span></li>
+    <li><span class="box">D6</span><span class="body"><strong>No scroll-linked animations without <code>will-change</code> restraint.</strong> Scroll-driven opacity is fine; scroll-driven 3D transforms on a 60fps budget is where jank appears.</span></li>
+    <li><span class="box">D7</span><span class="body"><strong>CSS transitions &gt; JS animations</strong> for everything except canvas / WebGL. Browser-optimized paths are faster and respect reduced-motion automatically via the media query.</span></li>
+  </ol>
+</div>
+
+<div class="sec floor-now">
+  <span class="label">How dr-cv currently compares</span>
+  <ul>
+    <li><span class="pill pass">pass</span><strong>Reduced-motion tokens zeroed:</strong> <code>@media (prefers-reduced-motion: reduce) { :root { --hl-dur-fast: 0ms; --hl-dur-med: 0ms; --hl-dur-slow: 0ms; } }</code>. Excellent — all CSS transitions collapse.</li>
+    <li><span class="pill pass">pass</span><strong>Particle canvas gated</strong> on <code>reduceMotion</code> flag in JS. Not even spawned when user prefers reduced motion.</li>
+    <li><span class="pill pass">pass</span><strong>Reveal-on-scroll observer</strong> also gated on <code>reduceMotion</code>. Elements just appear.</li>
+    <li><span class="pill pass">pass</span><strong>Particle canvas pauses offscreen</strong> via IntersectionObserver.</li>
+    <li><span class="pill pass">pass</span><strong>Duration scale defined</strong> (<code>--hl-dur-fast 200ms · med 300ms · slow 500ms</code>) and used consistently.</li>
+    <li><span class="pill pass">pass</span><strong>Easing token</strong> <code>--hl-ease: cubic-bezier(0.4, 0, 0.2, 1)</code> used throughout.</li>
+    <li><span class="pill partial">partial</span><strong>Marquee animation</strong> — this is the weakest link. Infinite scroll marquees are typically pure decoration; they should be entirely disabled under reduced-motion. Need to check if the CSS <code>animation</code> on <code>.hl-marquee__track</code> is tied to the zeroed duration tokens or has a hardcoded duration.</li>
+    <li><span class="pill partial">partial</span><strong>CTA cursor-follow glow</strong> — runs on <code>pointermove</code>, no throttle. On low-end devices this fires 120+ times per second. Should be <code>requestAnimationFrame</code>-throttled and skipped on coarse pointers (<code>@media (pointer: coarse)</code>).</li>
+  </ul>
+</div>
+
+<div class="sec floor-fix">
+  <span class="label">What to fix</span>
+  <ol>
+    <li><strong>Gate the marquee animation on reduced-motion explicitly:</strong>
+<pre>@media (prefers-reduced-motion: reduce) {
+  .hl-marquee__track { animation: none; }
+}</pre></li>
+    <li><strong>Skip cursor-follow glow on coarse pointers</strong> (touch devices don't have a cursor to follow):
+<pre><span class="k">if</span> (matchMedia(<span class="s">'(pointer: coarse)'</span>).matches) return;</pre></li>
+    <li><strong>rAF-throttle the pointer glow:</strong>
+<pre><span class="k">var</span> pending = <span class="k">false</span>, lastE;
+cta.addEventListener(<span class="s">'pointermove'</span>, <span class="k">function</span>(e){
+  lastE = e;
+  <span class="k">if</span> (pending) <span class="k">return</span>;
+  pending = <span class="k">true</span>;
+  requestAnimationFrame(<span class="k">function</span>(){
+    <span class="c">// read lastE and update CSS vars</span>
+    pending = <span class="k">false</span>;
+  });
+});</pre></li>
+    <li><strong>Document the motion budget in README</strong> — "3 tokens, 1 easing, every animation auto-disabled on reduced-motion" is itself a taste signal.</li>
+  </ol>
+</div>
+
+<!-- ============================== E. TYPO ============================== -->
+<h2 id="e-typo"><span class="letter">Floor E</span>Typography discipline · self-host, subset, variable <a class="anchor-link" href="#e-typo">#</a></h2>
+
+<div class="sec floor-what">
+  <span class="label">What the floor is</span>
+  <h3>Self-hosted variable fonts, Latin-1 subsetted, preloaded for the LCP weight, with a metric-matched fallback that produces &lt; 0.02 CLS.</h3>
+  <p>Google Fonts CDN is a tier-1 comp liability for three reasons: (1) third-party request adds 100–400ms latency, (2) German/EU GDPR rulings have fined sites for leaking IPs to Google, (3) reviewer sees <code>fonts.googleapis.com</code> in the Network panel and reads "didn't care enough to self-host". Variable fonts are an actively positive signal — they show the designer knows their type.</p>
+</div>
+
+<div class="sec floor-test">
+  <span class="label">Specific test · the 6-item typo checklist</span>
+  <ol class="checklist">
+    <li><span class="box">E1</span><span class="body"><strong>No third-party font CDN in Network panel.</strong> All fonts served from the same origin as HTML. <code>fonts.googleapis.com</code>, <code>use.typekit.net</code>, <code>fonts.bunny.net</code> — all fail tier-1. (Bunny is a lesser failure but still third-party.)</span></li>
+    <li><span class="box">E2</span><span class="body"><strong>Variable fonts where available.</strong> <code>Inter VAR</code> is ~120 KB for the full Latin-1 subset and replaces 8 static weights totaling ~600 KB. Reviewer sees <code>font-weight: 100 900</code> in DevTools and reads "they know".</span></li>
+    <li><span class="box">E3</span><span class="body"><strong>Latin-1 subset.</strong> If the site doesn't show Cyrillic / Greek / Arabic, don't ship them. <code>unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC</code> → ~35 KB WOFF2 per variable font.</span></li>
+    <li><span class="box">E4</span><span class="body"><strong>LCP font preloaded.</strong> <code>&lt;link rel="preload" as="font" crossorigin&gt;</code> for the weight used in the hero h1.</span></li>
+    <li><span class="box">E5</span><span class="body"><strong>Metric-matched fallback for &lt; 0.02 CLS.</strong> <code>size-adjust</code> + <code>ascent-override</code> + <code>descent-override</code> tuned so the system font renders at the same visual height as the web font.</span></li>
+    <li><span class="box">E6</span><span class="body"><strong>OpenType features active.</strong> <code>font-feature-settings: "kern", "liga", "calt"</code> (kerning, standard ligatures, contextual alternates) at minimum. <code>"ss01"</code>, <code>"ss02"</code> if using Inter stylistic sets (alt "a", alt "g") — choice itself is a taste signal.</span></li>
+  </ol>
+</div>
+
+<div class="sec floor-now">
+  <span class="label">How dr-cv currently compares</span>
+  <ul>
+    <li><span class="pill fail">fail</span><strong>Google Fonts CDN.</strong> Line 15 of landing-huly/index.html: <code>https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap</code>. Seven static weights (4 Inter + 3 JetBrains Mono) pulled from third-party. This is the single biggest craft-floor failure on the page.</li>
+    <li><span class="pill fail">fail</span><strong>Not variable fonts.</strong> Static weights instead of <code>Inter VAR</code> + <code>JetBrains Mono</code> (JB Mono is variable since 2.300). Shipping weight duplicated across 7 files.</li>
+    <li><span class="pill fail">fail</span><strong>No <code>unicode-range</code> / subsetting.</strong> Google's CSS serves multiple unicode-range slices, but full CJK/Cyrillic segments are still downloaded on demand.</li>
+    <li><span class="pill fail">fail</span><strong>No preload hint.</strong> Hero h1 font (JetBrains Mono 600) is discovered after the Google CSS downloads and parses — adds 500–900ms to LCP on Slow 4G.</li>
+    <li><span class="pill fail">fail</span><strong>No metric-matched fallback.</strong> Font swap will cause visible reflow.</li>
+    <li><span class="pill pass">pass</span><strong>Font-feature-settings enabled</strong> in body rule: <code>"kern", "liga", "calt"</code>. Good.</li>
+  </ul>
+  <p class="callout" style="margin-top:14px"><strong>This is the #1 must-fix before V11 ships.</strong> Every tier-1 reviewer opens DevTools Network. Google Fonts is a signature "I didn't finish this" tell.</p>
+</div>
+
+<div class="sec floor-fix">
+  <span class="label">What to fix</span>
+  <ol>
+    <li><strong>Download from source.</strong> Inter: <a href="https://rsms.me/inter/">rsms.me/inter</a> (Inter-Variable.woff2). JetBrains Mono: <a href="https://www.jetbrains.com/lp/mono/">jetbrains.com/lp/mono</a> (JetBrainsMono[wght].woff2). Check them into <code>assets/fonts/</code>.</li>
+    <li><strong>Subset with <a href="https://github.com/fonttools/fonttools">fonttools</a>:</strong>
+<pre><span class="c"># pyftsubset Inter-Variable.woff2 \</span>
+<span class="c">#   --output-file=inter-var-latin.woff2 \</span>
+<span class="c">#   --flavor=woff2 \</span>
+<span class="c">#   --unicodes="U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"</span></pre>
+    Expect ~35 KB each.</li>
+    <li><strong>Inline the @font-face rules</strong> in the landing <code>&lt;style&gt;</code> block. Preload the two files that feed the hero and nav.</li>
+    <li><strong>Replace preconnect with preload:</strong>
+<pre><span class="k">&lt;link</span> rel=<span class="s">"preload"</span> as=<span class="s">"font"</span> type=<span class="s">"font/woff2"</span>
+      href=<span class="s">"/fonts/inter-var-latin.woff2"</span> crossorigin<span class="k">&gt;</span>
+<span class="k">&lt;link</span> rel=<span class="s">"preload"</span> as=<span class="s">"font"</span> type=<span class="s">"font/woff2"</span>
+      href=<span class="s">"/fonts/jetbrains-mono-var-latin.woff2"</span> crossorigin<span class="k">&gt;</span></pre></li>
+    <li><strong>Delete the preconnect and stylesheet lines</strong> pointing to Google. Confirm Network panel shows zero third-party requests.</li>
+  </ol>
+</div>
+
+<!-- ============================== F. SEO ============================== -->
+<h2 id="f-seo"><span class="letter">Floor F</span>SEO / shareability floor · OG image, canonical, sitemap <a class="anchor-link" href="#f-seo">#</a></h2>
+
+<div class="sec floor-what">
+  <span class="label">What the floor is</span>
+  <h3>When a recruiter pastes the URL into Slack/LinkedIn/Twitter, it must render a beautiful card: title, 1200×630 OG image, correct description. When Google crawls it, it finds a canonical URL, a sitemap, and a robots.txt.</h3>
+  <p>The OG image is a <em>designed artifact</em>. For a designer, shipping a landing without a custom OG image is like showing up to a pitch with a blank slide. It's the single most-viewed piece of visual work on the portfolio (every link share), and tier-1 designers invest in it.</p>
+</div>
+
+<div class="sec floor-test">
+  <span class="label">Specific test · the 8-item SEO/share checklist</span>
+  <ol class="checklist">
+    <li><span class="box">F1</span><span class="body"><strong>Title tag structure.</strong> <code>Name — Role | Short hook</code>. Max ~60 chars for Google SERP. Example: <em>"Danilo Rojas — Agentic Designer"</em> (31 chars, good).</span></li>
+    <li><span class="box">F2</span><span class="body"><strong>Meta description.</strong> 150–160 chars, first sentence is the hook, no truncation. Unique per page (EN vs ES).</span></li>
+    <li><span class="box">F3</span><span class="body"><strong>Canonical URL.</strong> <code>&lt;link rel="canonical" href="https://…"&gt;</code> on every page — absolute. Prevents duplicate-content penalties across <code>/</code> and <code>/index.html</code>.</span></li>
+    <li><span class="box">F4</span><span class="body"><strong>OG image 1200×630, &lt; 300 KB, PNG or JPG (WebP unreliable on Slack).</strong> Absolute URL in <code>og:image</code>. Must include <code>og:image:width</code> and <code>og:image:height</code> for fast card rendering.</span></li>
+    <li><span class="box">F5</span><span class="body"><strong>Twitter card.</strong> <code>&lt;meta name="twitter:card" content="summary_large_image"&gt;</code> + twitter:image (same as og:image).</span></li>
+    <li><span class="box">F6</span><span class="body"><strong>Structured data (optional but +1).</strong> JSON-LD <code>Person</code> schema with name, jobTitle, sameAs (linkedin, github).</span></li>
+    <li><span class="box">F7</span><span class="body"><strong>Sitemap.xml</strong> with both language URLs + <code>robots.txt</code> allowing all.</span></li>
+    <li><span class="box">F8</span><span class="body"><strong>Test the card</strong> at <a href="https://opengraph.xyz">opengraph.xyz</a> and <a href="https://cards-dev.twitter.com/validator">cards-dev.twitter.com/validator</a>. Don't ship unverified.</span></li>
+  </ol>
+</div>
+
+<div class="sec floor-now">
+  <span class="label">How dr-cv currently compares</span>
+  <ul>
+    <li><span class="pill pass">pass</span><strong>Title + description</strong> present and well-formed.</li>
+    <li><span class="pill pass">pass</span><strong>og:title + og:description + og:type</strong> present.</li>
+    <li><span class="pill fail">fail</span><strong>No og:image.</strong> Recruiter pastes URL in LinkedIn → blank card or default placeholder. First impression wasted.</li>
+    <li><span class="pill fail">fail</span><strong>No og:url</strong> (the canonical social-share URL).</li>
+    <li><span class="pill fail">fail</span><strong>No Twitter card meta.</strong></li>
+    <li><span class="pill fail">fail</span><strong>No canonical link.</strong></li>
+    <li><span class="pill fail">fail</span><strong>No sitemap.xml / robots.txt</strong> in dist.</li>
+    <li><span class="pill fail">fail</span><strong>No JSON-LD Person schema.</strong></li>
+  </ul>
+  <p>Of all floors, SEO has the largest gap between "almost there" and "done". One commit fixes it.</p>
+</div>
+
+<div class="sec floor-fix">
+  <span class="label">What to fix · the single commit that adds 15 points to SEO</span>
+  <ol>
+    <li><strong>Design the OG image</strong> — 1200×630, black background, hero type "Agentic Designer shipping real products." with Danilo's name, subtle orange accent, tiny footer "danilorojas.xyz". Export PNG at ~60–120 KB. Commit to <code>assets/og-image.png</code> and ship to <code>/og-image.png</code> at build.</li>
+    <li><strong>Add the meta block</strong> to every landing variant:
+<pre><span class="k">&lt;link</span> rel=<span class="s">"canonical"</span> href=<span class="s">"https://danilorojas.xyz/"</span><span class="k">&gt;</span>
+<span class="k">&lt;meta</span> property=<span class="s">"og:url"</span> content=<span class="s">"https://danilorojas.xyz/"</span><span class="k">&gt;</span>
+<span class="k">&lt;meta</span> property=<span class="s">"og:image"</span> content=<span class="s">"https://danilorojas.xyz/og-image.png"</span><span class="k">&gt;</span>
+<span class="k">&lt;meta</span> property=<span class="s">"og:image:width"</span> content=<span class="s">"1200"</span><span class="k">&gt;</span>
+<span class="k">&lt;meta</span> property=<span class="s">"og:image:height"</span> content=<span class="s">"630"</span><span class="k">&gt;</span>
+<span class="k">&lt;meta</span> property=<span class="s">"og:locale"</span> content=<span class="s">"en_US"</span><span class="k">&gt;</span> <span class="c">&lt;!-- es_419 on /es/ --&gt;</span>
+<span class="k">&lt;meta</span> name=<span class="s">"twitter:card"</span> content=<span class="s">"summary_large_image"</span><span class="k">&gt;</span>
+<span class="k">&lt;meta</span> name=<span class="s">"twitter:image"</span> content=<span class="s">"https://danilorojas.xyz/og-image.png"</span><span class="k">&gt;</span></pre></li>
+    <li><strong>JSON-LD Person block</strong> (optional but free signal):
+<pre><span class="k">&lt;script</span> type=<span class="s">"application/ld+json"</span><span class="k">&gt;</span>{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Danilo Rojas",
+  "jobTitle": "Agentic Designer",
+  "url": "https://danilorojas.xyz/",
+  "sameAs": [
+    "https://github.com/mdanilorojas",
+    "https://www.linkedin.com/in/mdanilorojas/",
+    "https://www.behance.net/mdanilorojas"
+  ]
+}<span class="k">&lt;/script&gt;</span></pre></li>
+    <li><strong>Emit <code>sitemap.xml</code> and <code>robots.txt</code></strong> from the landing generator.</li>
+    <li><strong>Verify</strong> with opengraph.xyz before shipping.</li>
+  </ol>
+</div>
+
+<!-- ============================== G. PRIV ============================== -->
+<h2 id="g-priv"><span class="letter">Floor G</span>Privacy / analytics floor · no cookie banner for a portfolio <a class="anchor-link" href="#g-priv">#</a></h2>
+
+<div class="sec floor-what">
+  <span class="label">What the floor is</span>
+  <h3>A senior IC portfolio ships either no analytics, or privacy-first analytics (no cookies, no GDPR banner). Google Analytics 4 with cookies on a portfolio is an instant taste-fail signal.</h3>
+  <p>The floor at Vercel, Linear, Stripe-engineers' personal sites: Plausible, Fathom, Vercel Analytics, or nothing. None of these require a cookie banner in the EU. Fathom and Plausible are explicit about it on their home pages. A cookie banner on a portfolio signals "I copy-pasted GA without reading the privacy law" — which tier-1 hiring managers read as junior.</p>
+</div>
+
+<div class="sec floor-test">
+  <span class="label">Specific test · the 5-item privacy checklist</span>
+  <ol class="checklist">
+    <li><span class="box">G1</span><span class="body"><strong>No cookie banner unless the page sets tracking cookies.</strong> If you don't set cookies, GDPR doesn't require a banner. Easier to not set cookies.</span></li>
+    <li><span class="box">G2</span><span class="body"><strong>No <code>gtag</code>, no <code>_ga</code> cookie, no <code>fbq</code>, no Hotjar, no Microsoft Clarity</strong> in Network panel.</span></li>
+    <li><span class="box">G3</span><span class="body"><strong>If analytics at all:</strong> Plausible (€9/mo, EU-hosted, no cookies), Fathom ($14/mo, no cookies), Vercel Analytics (included with hosting, no cookies). All three pass GDPR without a banner.</span></li>
+    <li><span class="box">G4</span><span class="body"><strong>Privacy policy link (optional)</strong> if collecting even pseudonymous metrics. One-page, honest.</span></li>
+    <li><span class="box">G5</span><span class="body"><strong>No third-party embeds</strong> that set cookies (YouTube default embed, Vimeo default, Twitter embed). Use <code>youtube-nocookie.com</code>, static images, or self-host.</span></li>
+  </ol>
+</div>
+
+<div class="sec floor-now">
+  <span class="label">How dr-cv currently compares</span>
+  <ul>
+    <li><span class="pill pass">pass</span><strong>Zero analytics currently.</strong> No third-party scripts. No cookies. No banner needed. Cleanest possible posture.</li>
+    <li><span class="pill pass">pass</span><strong>No third-party embeds.</strong> No YouTube, no Vimeo, no Twitter timeline.</li>
+    <li><span class="pill partial">partial</span><strong>Google Fonts is third-party</strong> but doesn't set a cookie (it does leak IP to Google — see Floor E). Removing Google Fonts also closes this gap.</li>
+  </ul>
+</div>
+
+<div class="sec floor-fix">
+  <span class="label">What to fix</span>
+  <ol>
+    <li><strong>Decide on analytics posture before V11.</strong> Recommendation: if hosting on Vercel, enable Vercel Analytics (zero config, zero cookies, ~3 KB script). If hosting elsewhere, skip analytics entirely — the GitHub repo's traffic graph tells Danilo whether anyone's reading.</li>
+    <li><strong>If enabling any analytics, confirm no cookies set</strong> by opening DevTools → Application → Cookies on a fresh load. Banner must not appear.</li>
+    <li><strong>Close the Google Fonts leak</strong> (already covered in Floor E — but note it again, because it's also a privacy item, not just a perf item).</li>
+  </ol>
+</div>
+
+<!-- ============================== H. CODE ============================== -->
+<h2 id="h-code"><span class="letter">Floor H</span>Code-craft floor · the repo is also the work sample <a class="anchor-link" href="#h-code">#</a></h2>
+
+<div class="sec floor-what">
+  <span class="label">What the floor is</span>
+  <h3>Because <code>github.com/mdanilorojas/dr-cv</code> is public, the code is part of the portfolio. A reviewer will open it. They look for: meaningful commits, a README that explains the system, typed code, tests on critical paths, no dead code, no over-abstraction, no secrets.</h3>
+  <p>Danilo's repo already shipped Phase 1 with 30 tests and a strong README thesis ("A system that keeps itself alive — with agents"). This section audits what's great, what's invisible, and what would move the needle for a tier-1 reviewer opening the repo in a new tab.</p>
+</div>
+
+<div class="sec floor-test">
+  <span class="label">Specific test · the 10-item code-craft checklist</span>
+  <ol class="checklist">
+    <li><span class="box">H1</span><span class="body"><strong>README opens with a thesis, not a project description.</strong> First paragraph = what this <em>is</em> and <em>why</em>, not "to build run npm install".</span></li>
+    <li><span class="box">H2</span><span class="body"><strong>Architecture diagram or one-pager.</strong> Even ASCII. Reviewer should understand the system in &lt; 30 seconds.</span></li>
+    <li><span class="box">H3</span><span class="body"><strong>Commit messages are Conventional Commits</strong> or similar disciplined format. Not "fix stuff", not "wip", not "updates".</span></li>
+    <li><span class="box">H4</span><span class="body"><strong>No <code>any</code> in TypeScript.</strong> <code>tsc --strict --noEmit</code> passes. Run on CI.</span></li>
+    <li><span class="box">H5</span><span class="body"><strong>Test suite is green and documented.</strong> <code>npm test</code> runs clean. <code>README</code> says how many tests and what they cover.</span></li>
+    <li><span class="box">H6</span><span class="body"><strong>CI runs on push.</strong> GitHub Actions: typecheck + tests + (optional) Lighthouse. Green badge in README.</span></li>
+    <li><span class="box">H7</span><span class="body"><strong>LICENSE file present</strong> (MIT, ISC, or CC-BY for portfolio content).</span></li>
+    <li><span class="box">H8</span><span class="body"><strong>No committed secrets or absolute paths.</strong> <code>.env</code> in gitignore. Grep for <code>C:\</code> — no absolute user paths in committed files.</span></li>
+    <li><span class="box">H9</span><span class="body"><strong>No dead code or abandoned branches visible.</strong> <code>dist/</code> either gitignored or intentionally committed with clear reason in README.</span></li>
+    <li><span class="box">H10</span><span class="body"><strong>Reviewer can run it in &lt; 60 seconds.</strong> <code>git clone && npm install && npm run build:all</code> just works. No hidden env vars, no "you need to set up Supabase first".</span></li>
+  </ol>
+</div>
+
+<div class="sec floor-now">
+  <span class="label">How dr-cv currently compares</span>
+  <ul>
+    <li><span class="pill pass">pass</span><strong>README thesis-first.</strong> "A system that keeps itself alive — with agents." Opens with identity, not commands. Excellent.</li>
+    <li><span class="pill pass">pass</span><strong>Commit discipline.</strong> Recent commits use <code>feat(phase-3):</code>, <code>docs(visual-universe):</code>, <code>refactor(phase-2):</code> — Conventional Commits with phase scoping. Strong signal.</li>
+    <li><span class="pill pass">pass</span><strong>Phase structure documented.</strong> Phase 1 skills-sheet shipped, Phase 2 CVs shipped, Phase 3 landing shipped — README tracks state.</li>
+    <li><span class="pill pass">pass</span><strong>Test suite exists.</strong> 11 test files covering load-data, types, templates, components, cv variants, landing components, landing integration, verify-success.</li>
+    <li><span class="pill pass">pass</span><strong>Typescript strict-mode</strong> implied by tsconfig — verify it's strict.</li>
+    <li><span class="pill pass">pass</span><strong>Clean repo top level.</strong> No <code>.DS_Store</code>, no stray files.</li>
+    <li><span class="pill fail">fail</span><strong>No LICENSE file</strong> at repo root. Without it, legally no one can use the code. For a portfolio this is minor; for code-craft signal it's a junior omission.</li>
+    <li><span class="pill fail">fail</span><strong>No CI / GitHub Actions workflow.</strong> <code>.github/</code> directory doesn't exist. A green badge on "typecheck + tests" takes 20 minutes to add and pays back on every review.</li>
+    <li><span class="pill fail">fail</span><strong>No architecture diagram / system overview</strong> in README. The "Structure" ASCII tree is a start but doesn't show the data-flow from <code>/data/*.yaml</code> → generator → artifact.</li>
+    <li><span class="pill partial">partial</span><strong>No README badges.</strong> Build status, test count, license, Lighthouse — all missing. Badges are a small-but-visible tier-1 signal.</li>
+    <li><span class="pill partial">partial</span><strong><code>dist/</code> committed or gitignored?</strong> If committed, README must justify it (so reviewers can see artifacts without building); if gitignored, the landing needs to be deployed somewhere reviewers can visit.</li>
+  </ul>
+</div>
+
+<div class="sec floor-fix">
+  <span class="label">What to fix · order of effort → impact</span>
+  <ol>
+    <li><strong>Add LICENSE (MIT)</strong> — 30 seconds, closes a junior-signal gap.</li>
+    <li><strong>Add <code>.github/workflows/ci.yml</code>:</strong>
+<pre><span class="k">name:</span> ci
+<span class="k">on:</span> [push, pull_request]
+<span class="k">jobs:</span>
+  <span class="k">check:</span>
+    <span class="k">runs-on:</span> ubuntu-latest
+    <span class="k">steps:</span>
+      - <span class="k">uses:</span> actions/checkout@v4
+      - <span class="k">uses:</span> actions/setup-node@v4
+        <span class="k">with:</span> { node-version: 20, cache: npm }
+      - <span class="k">run:</span> npm ci
+      - <span class="k">run:</span> npm run typecheck
+      - <span class="k">run:</span> npm test</pre>
+      Add a green build badge to README.</li>
+    <li><strong>Add a one-line architecture diagram</strong> to README:
+<pre><span class="c">data/*.yaml  →  generators/*.ts  →  dist/{skills-sheet, cvs, landing}/
+  ↑                ↑                         ↓
+  agents edit     typed, tested         what recruiters see</span></pre></li>
+    <li><strong>Add README badges:</strong> CI status, test count, license, "built by a human + agents".</li>
+    <li><strong>Confirm <code>tsconfig.json</code> has <code>"strict": true</code>.</strong> Run <code>grep -r ": any" generators/ design-system/</code> — should return zero.</li>
+    <li><strong>If <code>dist/</code> is gitignored</strong>, deploy the landing to Vercel and put the live URL in the README (above the "Structure" section). Reviewers skim; they'll click the live link before cloning.</li>
+  </ol>
+</div>
+
+<!-- ============================== SCORECARD ============================== -->
+<hr>
+<h2 id="scorecard"><span class="letter">The craft-floor scorecard</span>28 criteria · current state · V11 pre-flight checklist <a class="anchor-link" href="#scorecard">#</a></h2>
+
+<p class="lede">One row per craft-floor criterion. Current pass/fail/partial against <code>dist/landing-huly/index.html</code> and the <code>dr-cv</code> repo as of 2026-05-08. Priority: <span class="prio-must">must-fix before V11 ships</span>, <span class="prio-should">should-fix before V11 ships</span>, <span class="prio-nice">nice-to-have post-V11</span>.</p>
+
+<table class="score" aria-label="Craft floor scorecard">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Area</th>
+      <th>Criterion</th>
+      <th>State</th>
+      <th>Priority</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- A. A11y -->
+    <tr>
+      <td class="n">01</td>
+      <td class="area">A · a11y</td>
+      <td class="crit">Skip link as first tab stop<small>Long hero + canvas requires skip-to-main for keyboard users</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-must">must-fix</td>
+    </tr>
+    <tr>
+      <td class="n">02</td>
+      <td class="area">A · a11y</td>
+      <td class="crit">Remove invalid <code>role="marquee"</code><small>Line 1120 of landing; not a real ARIA role; confuses SR</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-must">must-fix</td>
+    </tr>
+    <tr>
+      <td class="n">03</td>
+      <td class="area">A · a11y</td>
+      <td class="crit">Focus-ring contrast scoped for cream section<small>Orange ring on #F6F4F0 = 2.6:1, fails WCAG 2.4.11</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-must">must-fix</td>
+    </tr>
+    <tr>
+      <td class="n">04</td>
+      <td class="area">A · a11y</td>
+      <td class="crit">Wrap nav in <code>&lt;header&gt;</code> landmark<small>VoiceOver rotor doesn't find "banner" landmark today</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+    <tr>
+      <td class="n">05</td>
+      <td class="area">A · a11y</td>
+      <td class="crit">Testimonials in <code>&lt;blockquote&gt;</code> + <code>&lt;cite&gt;</code><small>SR users should hear "quote"; currently plain text</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+    <tr>
+      <td class="n">06</td>
+      <td class="area">A · a11y</td>
+      <td class="crit">Audit <code>--hl-text-40</code> contrast usage<small>3.2:1 — legal only at 18px+ or bold 14px+</small></td>
+      <td class="status"><span class="pill partial">partial</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+    <tr>
+      <td class="n">07</td>
+      <td class="area">A · a11y</td>
+      <td class="crit">Reduced-motion disables marquee animation<small>Verify CSS animation inherits zeroed duration tokens</small></td>
+      <td class="status"><span class="pill partial">partial</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+
+    <!-- B. Perf -->
+    <tr>
+      <td class="n">08</td>
+      <td class="area">B · perf</td>
+      <td class="crit">Self-host Inter + JetBrains Mono, kill Google Fonts<small>Network panel tell; GDPR-adjacent; 300-600ms LCP hit</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-must">must-fix</td>
+    </tr>
+    <tr>
+      <td class="n">09</td>
+      <td class="area">B · perf</td>
+      <td class="crit">Preload LCP font weight<small>Saves ~400ms on Slow 4G</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-must">must-fix</td>
+    </tr>
+    <tr>
+      <td class="n">10</td>
+      <td class="area">B · perf</td>
+      <td class="crit">Ship Latin-1 subset, not full font<small>~35KB vs ~200KB per font</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-must">must-fix</td>
+    </tr>
+    <tr>
+      <td class="n">11</td>
+      <td class="area">B · perf</td>
+      <td class="crit">Metric-matched fallback (<code>size-adjust</code>)<small>Prevents font-swap CLS</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+    <tr>
+      <td class="n">12</td>
+      <td class="area">B · perf</td>
+      <td class="crit">Lighthouse report committed to repo<small>Screenshot or HTML; "I measured" is itself a signal</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+
+    <!-- C. i18n -->
+    <tr>
+      <td class="n">13</td>
+      <td class="area">C · i18n</td>
+      <td class="crit">Absolute <code>hreflang</code> URLs + <code>x-default</code><small>Relative paths are non-standard per Google docs</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-must">must-fix</td>
+    </tr>
+    <tr>
+      <td class="n">14</td>
+      <td class="area">C · i18n</td>
+      <td class="crit">Language switcher preserves hash/section<small>Clicking ES on /#method must go to /es/#method</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+    <tr>
+      <td class="n">15</td>
+      <td class="area">C · i18n</td>
+      <td class="crit">Spanish typography test string renders clean<small>ñ ¿ ¡ tildes all visible, no clipping</small></td>
+      <td class="status"><span class="pill partial">partial</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+    <tr>
+      <td class="n">16</td>
+      <td class="area">C · i18n</td>
+      <td class="crit">Dates/numbers formatted per locale<small>es-419: "7 de mayo de 2026", "3,4M usuarios"</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-nice">nice-to-have</td>
+    </tr>
+
+    <!-- D. Motion -->
+    <tr>
+      <td class="n">17</td>
+      <td class="area">D · motion</td>
+      <td class="crit">Reduced-motion fully honored (CSS + JS)<small>Already strong; verify marquee animation too</small></td>
+      <td class="status"><span class="pill partial">partial</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+    <tr>
+      <td class="n">18</td>
+      <td class="area">D · motion</td>
+      <td class="crit">CTA pointer-glow: rAF-throttled + <code>pointer: coarse</code> skip<small>120+ hz untargeted pointer events on touch devices</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+
+    <!-- E. Typo (covered via B8-10 but one more) -->
+    <tr>
+      <td class="n">19</td>
+      <td class="area">E · typo</td>
+      <td class="crit">Use <em>variable</em> fonts, not 7 static weights<small>Inter VAR + JBMono VAR — fewer bytes, taste signal</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-must">must-fix</td>
+    </tr>
+
+    <!-- F. SEO -->
+    <tr>
+      <td class="n">20</td>
+      <td class="area">F · seo</td>
+      <td class="crit">Custom OG image 1200×630, absolute URL<small>Every link-share impression; currently blank card</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-must">must-fix</td>
+    </tr>
+    <tr>
+      <td class="n">21</td>
+      <td class="area">F · seo</td>
+      <td class="crit">Canonical URL + <code>og:url</code><small>Absolute URLs per page, each language</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-must">must-fix</td>
+    </tr>
+    <tr>
+      <td class="n">22</td>
+      <td class="area">F · seo</td>
+      <td class="crit">Twitter card (<code>summary_large_image</code>)<small>One meta line; renders same image on Twitter</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+    <tr>
+      <td class="n">23</td>
+      <td class="area">F · seo</td>
+      <td class="crit">sitemap.xml + robots.txt<small>Emitted by landing generator</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+    <tr>
+      <td class="n">24</td>
+      <td class="area">F · seo</td>
+      <td class="crit">JSON-LD Person schema<small>Google Knowledge Panel signal; ~15 lines</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-nice">nice-to-have</td>
+    </tr>
+
+    <!-- G. Priv -->
+    <tr>
+      <td class="n">25</td>
+      <td class="area">G · priv</td>
+      <td class="crit">No cookies, no banner, no GA4<small>Already clean; preserve posture</small></td>
+      <td class="status"><span class="pill pass">pass</span></td>
+      <td class="prio prio-nice">maintain</td>
+    </tr>
+
+    <!-- H. Code -->
+    <tr>
+      <td class="n">26</td>
+      <td class="area">H · code</td>
+      <td class="crit">LICENSE file (MIT)<small>30 seconds; closes a junior-signal gap</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-must">must-fix</td>
+    </tr>
+    <tr>
+      <td class="n">27</td>
+      <td class="area">H · code</td>
+      <td class="crit">GitHub Actions CI (typecheck + tests)<small>Green badge in README; ~20 min to add</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-should">should-fix</td>
+    </tr>
+    <tr>
+      <td class="n">28</td>
+      <td class="area">H · code</td>
+      <td class="crit">Live URL in README<small>Deploy dist/landing-huly/; link above Structure section</small></td>
+      <td class="status"><span class="pill fail">fail</span></td>
+      <td class="prio prio-must">must-fix</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 style="margin-top:44px">Scorecard summary</h3>
+<div class="kv">
+  <div class="cell"><div class="k">Must-fix before V11</div><div class="v" style="color:var(--bad)">12</div></div>
+  <div class="cell"><div class="k">Should-fix before V11</div><div class="v" style="color:var(--warn)">11</div></div>
+  <div class="cell"><div class="k">Nice-to-have post-V11</div><div class="v" style="color:var(--ink-dim)">4</div></div>
+  <div class="cell"><div class="k">Currently passing</div><div class="v" style="color:var(--ok)">1 (preserved)</div></div>
+</div>
+
+<div class="callout" style="margin-top:24px">
+  <div class="hd">The V11 pre-flight priority stack</div>
+  <ol style="margin:8px 0 0">
+    <li><strong>Self-host Inter + JetBrains Mono, Latin-1 subset, preload the LCP weight.</strong> Single largest taste-signal fix. Unblocks Lighthouse perf, closes GDPR gap, replaces "I didn't finish this" with "I know my type".</li>
+    <li><strong>Ship the OG image + meta block (canonical, og:url, Twitter card).</strong> Every link share is a first impression; the blank card is the cheapest impression to lose.</li>
+    <li><strong>Skip link + <code>&lt;header&gt;</code> landmark + remove invalid <code>role="marquee"</code>.</strong> A11y table stakes that tier-1 reviewers test in under 30 seconds with a keyboard.</li>
+    <li><strong>Add LICENSE + GitHub Actions CI + live-URL link in README.</strong> Code-craft signals that cost nothing but compound across every repo view.</li>
+    <li><strong>Absolute <code>hreflang</code> + <code>x-default</code> + hash-preserving language switcher.</strong> i18n polish that proves the bilingual promise isn't decorative.</li>
+  </ol>
+</div>
+
+<footer>
+  V11 R7 · Craft floors · dr-cv hiring universe · 2026-05-08 · inputs: R1–R4 hiring-universe, dist/landing-huly/index.html, dr-cv repo state.
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>V11 R3 · Agentic UX patterns · 14 shipped products</title>
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --panel:#111114;
+    --panel-2:#16161a;
+    --line:#24242b;
+    --ink:#ebebf0;
+    --ink-2:#b6b6c0;
+    --ink-3:#7a7a86;
+    --accent:#d97706;   /* warm amber for AI-output reference */
+    --accent-2:#f59e0b;
+    --blue:#60a5fa;
+    --green:#34d399;
+    --pink:#f472b6;
+    --violet:#a78bfa;
+    --ok:#22c55e;
+    --warn:#ef4444;
+    --mono:'JetBrains Mono','SF Mono',ui-monospace,Menlo,monospace;
+    --sans:-apple-system,'Inter','Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.55}
+  body{padding:48px 32px 120px;max-width:1320px;margin:0 auto}
+  h1,h2,h3,h4{font-weight:600;letter-spacing:-.01em;margin:0}
+  h1{font-size:32px;line-height:1.15;margin-bottom:8px}
+  h2{font-size:22px;margin:56px 0 16px;padding-top:24px;border-top:1px solid var(--line)}
+  h3{font-size:17px;margin:0 0 6px}
+  h4{font-size:13px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin:16px 0 6px}
+  p{margin:0 0 10px;color:var(--ink-2)}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code,.mono{font-family:var(--mono);font-size:12.5px}
+  .sub{color:var(--ink-3);font-size:13px}
+  .wrap{max-width:1240px}
+  .kicker{display:inline-block;padding:4px 10px;border:1px solid var(--line);border-radius:999px;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.12em}
+
+  /* Header */
+  header{margin-bottom:40px}
+  header .meta{display:flex;gap:16px;flex-wrap:wrap;color:var(--ink-3);font-family:var(--mono);font-size:12px;margin-top:10px}
+  header .meta span{border:1px solid var(--line);padding:3px 8px;border-radius:4px}
+
+  /* Glossary table */
+  .glossary{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:20px}
+  .glossary table{width:100%;border-collapse:collapse;font-size:13px}
+  .glossary th,.glossary td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+  .glossary th{background:var(--panel-2);font-weight:600;color:var(--ink);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  .glossary td:first-child{width:150px;font-family:var(--mono);color:var(--accent-2);font-weight:500}
+  .glossary td:last-child{width:260px;color:var(--ink);font-weight:500}
+  .glossary tr:last-child td{border-bottom:none}
+  .glossary .winner{color:var(--green);font-family:var(--mono);font-weight:600}
+
+  /* Product cards */
+  .products{display:grid;grid-template-columns:1fr;gap:16px;margin-top:12px}
+  .product{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 24px;display:grid;grid-template-columns:260px 1fr;gap:24px}
+  .product .id{border-right:1px dashed var(--line);padding-right:20px}
+  .product .id .num{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.15em}
+  .product .id h3{font-size:19px;margin:6px 0}
+  .product .id .tagline{color:var(--ink-2);font-size:13px;margin-bottom:10px}
+  .product .id .url{font-family:var(--mono);font-size:11.5px;color:var(--blue);word-break:break-all}
+  .product .id .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .chip{font-family:var(--mono);font-size:10.5px;padding:2px 7px;border-radius:4px;border:1px solid var(--line);color:var(--ink-2);background:var(--panel-2)}
+  .chip.ai{border-color:#b45309;color:var(--accent-2)}
+  .chip.mode{border-color:#1d4ed8;color:var(--blue)}
+
+  .sections{display:grid;grid-template-columns:1fr 1fr;gap:18px 26px}
+  .sec h4{margin-top:0}
+  .sec ul{margin:0;padding-left:18px}
+  .sec li{margin-bottom:4px;color:var(--ink-2);font-size:13px}
+  .sec li b{color:var(--ink);font-weight:500}
+  .sec .kv{display:grid;grid-template-columns:120px 1fr;gap:4px 10px;font-size:12.5px}
+  .sec .kv dt{color:var(--ink-3);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+  .sec .kv dd{margin:0;color:var(--ink-2)}
+  .sec .kv dd code{color:var(--accent-2);background:var(--panel-2);padding:1px 5px;border-radius:3px}
+
+  .right.win, .right.lose{padding:14px 16px;border-radius:8px;font-size:12.5px;margin-top:10px}
+  .right.win{border:1px solid #166534;background:rgba(34,197,94,.06)}
+  .right.win h4{color:var(--ok)}
+  .right.lose{border:1px solid #7f1d1d;background:rgba(239,68,68,.05)}
+  .right.lose h4{color:var(--warn)}
+
+  /* Patterns */
+  .patterns{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .pattern{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .pattern .n{font-family:var(--mono);font-size:11px;color:var(--accent-2);letter-spacing:.14em;text-transform:uppercase}
+  .pattern h3{font-size:15px;margin:4px 0 6px}
+  .pattern p{font-size:12.5px;margin-bottom:8px}
+  .pattern .examples{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .pattern .examples b{color:var(--ink)}
+
+  /* dr-cv map */
+  .map{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .case{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;border-left:3px solid var(--accent)}
+  .case h3{font-size:17px;margin-bottom:4px}
+  .case .tag{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+  .case h4{color:var(--accent-2);margin-top:14px;font-size:11px}
+  .case ul{margin:4px 0 0;padding-left:18px;font-size:12.5px;color:var(--ink-2)}
+  .case .vocab{font-family:var(--mono);font-size:11.5px;background:var(--panel-2);padding:10px 12px;border-radius:6px;color:var(--ink);margin-top:8px;border:1px solid var(--line)}
+  .case .vocab b{color:var(--accent-2)}
+
+  /* summary */
+  .summary{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:12px;padding:24px 28px;margin:40px 0}
+  .summary h3{font-size:18px;margin-bottom:12px}
+  .summary ol{margin:0;padding-left:22px}
+  .summary li{margin-bottom:8px;color:var(--ink);font-size:14px}
+  .summary li b{color:var(--accent-2);font-family:var(--mono);font-size:12.5px;letter-spacing:.04em}
+
+  @media (max-width:900px){
+    .product{grid-template-columns:1fr}
+    .product .id{border-right:none;border-bottom:1px dashed var(--line);padding-right:0;padding-bottom:16px}
+    .sections,.patterns,.map{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">V11 · Round 3 · 2026-05-08</div>
+  <h1>Agentic UX patterns — the shipped vocabulary, May 2026</h1>
+  <p class="sub">Catalogue of how 14 shipped agentic products name, display, and orchestrate AI behavior — so dr-cv's landing demonstrates fluency, not just buzzwords.</p>
+  <div class="meta">
+    <span>Products analysed · 14</span>
+    <span>Observed patterns · 10</span>
+    <span>Glossary concepts · 9</span>
+    <span>Scope · AI-native UX surfaces shipped to users in production</span>
+  </div>
+</header>
+
+<!-- ======================= GLOSSARY ======================= -->
+<h2>The emergent vocabulary</h2>
+<p class="sub">Nine core concepts that every agentic product has to name. Column 2 is how each product spells it. Column 3 is the term the market is converging on in 2026.</p>
+
+<div class="glossary">
+  <table>
+    <thead>
+      <tr>
+        <th>Concept</th>
+        <th>How each product names it</th>
+        <th>Winning term (2026)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>The AI itself</td>
+        <td>Claude (Anthropic) · Cursor / Agent (Cursor) · v0 (Vercel) · Make (Figma) · Bolt (StackBlitz) · Replit Agent · Lovable · Perplexity · Linear Copilot · Notion AI · Raycast AI · Copilot (GitHub) · Canvas (OpenAI)</td>
+        <td class="winner">Named character &gt; "AI" · "Assistant" is dying</td>
+      </tr>
+      <tr>
+        <td>The output surface</td>
+        <td>Artifact (Claude) · Canvas (OpenAI, Figma) · Composer (Cursor) · Preview (v0, Bolt, Lovable) · Workspace (GitHub) · Block / Page (Notion) · Thread (Perplexity)</td>
+        <td class="winner">Artifact · Canvas (tied)</td>
+      </tr>
+      <tr>
+        <td>User instruction</td>
+        <td>Message (Claude, Perplexity) · Prompt (v0, Figma Make) · Task (Cursor Agent, Replit, Copilot Workspace) · Command (Raycast) · Ask (Linear, Notion)</td>
+        <td class="winner">Message for chat · Task for agent</td>
+      </tr>
+      <tr>
+        <td>Thinking state</td>
+        <td>Thinking (Claude, Perplexity Pro) · Reasoning (OpenAI, Cursor) · Planning (Copilot Workspace, Claude Code) · Researching (Perplexity) · Working on it (Lovable, Bolt)</td>
+        <td class="winner">Thinking · Planning (two-step)</td>
+      </tr>
+      <tr>
+        <td>Tool use</td>
+        <td>Tool use (Anthropic canon) · Action (Raycast, Linear) · Skill (Claude Skills) · Capability (Claude memory) · MCP call (Claude Code) · Search / Browse (Perplexity, v0)</td>
+        <td class="winner">Tool call (dev) · Skill (user-facing)</td>
+      </tr>
+      <tr>
+        <td>Memory / persistence</td>
+        <td>Projects (Claude, Anthropic) · Spaces (Perplexity) · Workspaces (Notion, Linear, GitHub) · Memory (OpenAI, Claude) · Rules / .cursorrules (Cursor)</td>
+        <td class="winner">Projects · Memory (scoped vs global)</td>
+      </tr>
+      <tr>
+        <td>Approval / permission</td>
+        <td>Approve / Reject (Cursor Agent) · Accept / Discard (Copilot) · Apply (v0, Claude Code) · Run / Skip (Replit Agent) · Always allow / Ask (Claude Code)</td>
+        <td class="winner">Accept / Reject · with "Always allow"</td>
+      </tr>
+      <tr>
+        <td>Iteration unit</td>
+        <td>Turn (chat canon) · Revision (v0, Figma Make) · Commit / Branch (GitHub, Cursor) · Version (Claude Artifacts, Canvas) · Checkpoint (Bolt, Replit)</td>
+        <td class="winner">Version · Checkpoint</td>
+      </tr>
+      <tr>
+        <td>Multi-step run</td>
+        <td>Plan (Copilot Workspace, Claude Code) · Task list (Cursor Agent, Replit) · Steps (Linear AI, Perplexity Pro) · Workflow (Notion AI)</td>
+        <td class="winner">Plan &gt; Steps</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p class="sub">Takeaway: dr-cv should use <b>"artifact"</b> for any generated deliverable, <b>"thinking"</b> for reasoning state, <b>"skill"</b> for tool/capability, and <b>"project"</b> for memory scope. These are the terms a hiring manager reading in 2026 will treat as table-stakes fluency.</p>
+
+<!-- ======================= PRODUCTS ======================= -->
+<h2>Per-product analysis</h2>
+<div class="products">
+
+<!-- 1. Claude Code / Claude.ai -->
+<article class="product">
+  <div class="id">
+    <div class="num">01</div>
+    <h3>Claude Code & Claude.ai</h3>
+    <div class="tagline">Terminal-first agent + chat surface with Artifacts, Projects, Skills.</div>
+    <div class="url">claude.ai · claude.com/code</div>
+    <div class="chips"><span class="chip ai">Anthropic</span><span class="chip mode">chat + terminal</span><span class="chip">artifacts</span><span class="chip">MCP</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>Claude</code> (never "the AI")</dd>
+        <dt>Output</dt><dd><code>Artifact</code> · <code>response</code></dd>
+        <dt>Instruction</dt><dd><code>message</code></dd>
+        <dt>Thinking</dt><dd><code>Thinking...</code> with expandable chain</dd>
+        <dt>Tool use</dt><dd><code>Tool use</code> · <code>Skill</code> · <code>MCP</code></dd>
+        <dt>Memory</dt><dd><code>Projects</code> with file context</dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> chat with artifact side-panel; Code mode = terminal loop</li>
+        <li><b>Thinking:</b> collapsible "Thinking" block, streams tokens, user can expand</li>
+        <li><b>Tool calls:</b> compact cards per call showing name + args + result preview</li>
+        <li><b>Errors:</b> inline refusal with reason; tool errors surface as red-bordered card</li>
+        <li><b>Control:</b> edit-message, regenerate, fork conversation, revert artifact version</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li><b>AI voice</b> = warm neutral (no gradient, no sparkle). Human voice = same typography.</li>
+        <li>Artifacts live in a persistent right panel — not inline bubbles.</li>
+        <li>Thinking block uses italic secondary ink; tool cards use monospace labels.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>Artifact panel separates long output from chat history — the single best pattern of 2025-26. Skills bring composable capabilities without prompt-stuffing.</div>
+      <div class="right lose"><h4>Wrong</h4>Artifact versioning is implicit — users lose track of which version they're editing unless they open the version picker.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 2. Cursor -->
+<article class="product">
+  <div class="id">
+    <div class="num">02</div>
+    <h3>Cursor</h3>
+    <div class="tagline">VSCode fork with tab-completion, Composer, and full Agent mode.</div>
+    <div class="url">cursor.com</div>
+    <div class="chips"><span class="chip ai">Anysphere</span><span class="chip mode">edit + agent</span><span class="chip">diff-first</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>Cursor</code> or <code>Agent</code></dd>
+        <dt>Output</dt><dd><code>Edit</code> / <code>diff</code> / <code>Composer</code></dd>
+        <dt>Instruction</dt><dd><code>Task</code> (agent) · <code>prompt</code> (tab)</dd>
+        <dt>Thinking</dt><dd><code>Reasoning</code> · <code>Working</code></dd>
+        <dt>Tool use</dt><dd><code>Tool call</code> · shell / search / edit</dd>
+        <dt>Memory</dt><dd><code>.cursorrules</code> · <code>Rules for AI</code></dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> tab-complete inline · Composer side-panel · Agent autonomous loop</li>
+        <li><b>Thinking:</b> streaming status text ("Searching codebase...", "Editing 3 files")</li>
+        <li><b>Tool calls:</b> expandable rows per tool, shell commands gated behind Approve</li>
+        <li><b>Errors:</b> re-prompts itself on test failure; user sees retry counter</li>
+        <li><b>Control:</b> per-file accept/reject of diffs, global Apply / Revert All</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>Monochrome dark; no AI sparkle. Diff red/green is the "AI output" color.</li>
+        <li>Agent status uses a pulsing dot + mono text, no spinners.</li>
+        <li>Checkpoints appear as a vertical timeline in the Composer.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>Diff-review as the atomic unit of trust — every AI change is a reviewable patch, nothing applies silently.</div>
+      <div class="right lose"><h4>Wrong</h4>Agent mode token costs are invisible mid-run; users only see them after the fact.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 3. Claude Artifacts & Skills -->
+<article class="product">
+  <div class="id">
+    <div class="num">03</div>
+    <h3>Claude Artifacts & Skills</h3>
+    <div class="tagline">Generated documents, apps, and skill-based tool extensions inside Claude.ai.</div>
+    <div class="url">claude.ai/artifacts · claude.ai/skills</div>
+    <div class="chips"><span class="chip ai">Anthropic</span><span class="chip mode">artifact panel</span><span class="chip">composable</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>Claude</code></dd>
+        <dt>Output</dt><dd><code>Artifact</code> (React, HTML, markdown, SVG, mermaid)</dd>
+        <dt>Instruction</dt><dd><code>message</code></dd>
+        <dt>Tool use</dt><dd><code>Skill</code> (user-facing) · <code>tool</code> (system)</dd>
+        <dt>Memory</dt><dd><code>Project</code> file context</dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> artifact opens in right panel, chat stays on left; code ⇄ preview tab</li>
+        <li><b>Thinking:</b> inline "Thinking" inside the left chat bubble</li>
+        <li><b>Tool calls:</b> skill invocation shows skill name + progress; results inlined</li>
+        <li><b>Errors:</b> artifact runtime errors surface in a red footer with re-try</li>
+        <li><b>Control:</b> Publish · Download · Fork · Version picker</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>Artifact panel is the product. Chat is the controller.</li>
+        <li>No "AI color" — artifacts are styled by the content, not branded as AI.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>Skills are shippable, versionable, shareable — the first real "app platform" on top of an LLM that isn't just a prompt pack.</div>
+      <div class="right lose"><h4>Wrong</h4>Discovery of skills is weak — there's no equivalent of a proper skill marketplace yet.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 4. v0 by Vercel -->
+<article class="product">
+  <div class="id">
+    <div class="num">04</div>
+    <h3>v0 by Vercel</h3>
+    <div class="tagline">Generative UI: prompt → React + shadcn + Tailwind preview, ships to Vercel.</div>
+    <div class="url">v0.dev · v0.app</div>
+    <div class="chips"><span class="chip ai">Vercel</span><span class="chip mode">prompt + preview</span><span class="chip">generative UI</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>v0</code></dd>
+        <dt>Output</dt><dd><code>Generation</code> · <code>Block</code> · <code>Preview</code></dd>
+        <dt>Instruction</dt><dd><code>Prompt</code></dd>
+        <dt>Thinking</dt><dd><code>Generating...</code> + tool rows</dd>
+        <dt>Tool use</dt><dd><code>Search</code> · <code>Install package</code> · <code>Read file</code></dd>
+        <dt>Memory</dt><dd><code>Project</code> + attached images</dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> prompt-box left, live preview right, code tab behind preview</li>
+        <li><b>Thinking:</b> streamed plan as bullet list, then per-file generation bar</li>
+        <li><b>Tool calls:</b> package install, shadcn add, web search — shown as chips</li>
+        <li><b>Errors:</b> TypeScript errors surface inline with auto-fix option</li>
+        <li><b>Control:</b> Fork · Revision history · Publish · Open in v0 CLI</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>Preview is hero; prompt bar is a thin strip. Code panel is secondary.</li>
+        <li>Vercel triangle appears on generations; output uses a gentle iteration counter.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>Preview-first layout teaches the user that the artifact is real — you can click, resize, test it before reading code.</div>
+      <div class="right lose"><h4>Wrong</h4>Hard to continue an iteration without accidentally forking; version lineage is clearer than Claude but still confusing.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 5. Figma Make -->
+<article class="product">
+  <div class="id">
+    <div class="num">05</div>
+    <h3>Figma Make</h3>
+    <div class="tagline">Prompt-to-code inside Figma, with design-file context and component awareness.</div>
+    <div class="url">figma.com/make</div>
+    <div class="chips"><span class="chip ai">Figma</span><span class="chip mode">design-to-code</span><span class="chip">canvas</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>Make</code></dd>
+        <dt>Output</dt><dd><code>Prototype</code> · <code>Code</code> · <code>Canvas</code></dd>
+        <dt>Instruction</dt><dd><code>Prompt</code> · <code>design reference</code></dd>
+        <dt>Thinking</dt><dd><code>Designing...</code> · <code>Writing code...</code></dd>
+        <dt>Tool use</dt><dd><code>Read frame</code> · <code>Use component</code></dd>
+        <dt>Memory</dt><dd><code>Design file</code> context</dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> right-panel chat inside a Figma file; output renders on the canvas</li>
+        <li><b>Thinking:</b> tiny status line, no expandable reasoning</li>
+        <li><b>Tool calls:</b> silent by default — expanded in "Details" drawer</li>
+        <li><b>Errors:</b> terse "Couldn't generate" with a retry button</li>
+        <li><b>Control:</b> edit on canvas, re-prompt with selection, export code</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>Figma purple accents on AI surfaces; sparkle is reserved for Make entry points.</li>
+        <li>Canvas is the primary output — code is secondary drawer.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>Uses the <b>design file itself</b> as memory — selection + components become context, no prompt engineering.</div>
+      <div class="right lose"><h4>Wrong</h4>Opaque about reasoning; hard to tell why a generation went wrong when it does.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 6. Bolt.new / Replit Agent -->
+<article class="product">
+  <div class="id">
+    <div class="num">06</div>
+    <h3>Bolt.new & Replit Agent</h3>
+    <div class="tagline">Full-stack agents that scaffold, run, and deploy apps from one prompt.</div>
+    <div class="url">bolt.new · replit.com/ai</div>
+    <div class="chips"><span class="chip ai">StackBlitz · Replit</span><span class="chip mode">autonomous build</span><span class="chip">checkpoints</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>Bolt</code> · <code>Replit Agent</code></dd>
+        <dt>Output</dt><dd><code>App</code> · <code>Preview</code> · <code>Project</code></dd>
+        <dt>Instruction</dt><dd><code>Prompt</code> · <code>Task</code></dd>
+        <dt>Thinking</dt><dd><code>Planning</code> → <code>Building</code> → <code>Running</code></dd>
+        <dt>Tool use</dt><dd><code>Install</code> · <code>Run</code> · <code>Deploy</code></dd>
+        <dt>Memory</dt><dd><code>Checkpoint</code> · <code>Rollback</code></dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> single prompt kicks a multi-minute autonomous run; chat logs the journey</li>
+        <li><b>Thinking:</b> phase badges (Plan / Build / Test / Deploy) animate as active</li>
+        <li><b>Tool calls:</b> each tool invocation is a card in the log with collapsible output</li>
+        <li><b>Errors:</b> auto-retries, asks user only when blocked; shows error cards</li>
+        <li><b>Control:</b> Checkpoint rollback, fork, edit files manually mid-run</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>Phase-pill UI is their signature; colored by stage (blue plan → amber build → green run).</li>
+        <li>Preview pane updates live as files mutate — the user watches their app grow.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>Checkpoints as a first-class concept — every significant state is rollback-able, making long autonomous runs safe.</div>
+      <div class="right lose"><h4>Wrong</h4>Autonomous loops burn tokens fast; cost predictability is still weak.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 7. Lovable.dev -->
+<article class="product">
+  <div class="id">
+    <div class="num">07</div>
+    <h3>Lovable.dev</h3>
+    <div class="tagline">Chat-to-web-app builder targeted at non-engineers, Supabase + Vite under the hood.</div>
+    <div class="url">lovable.dev</div>
+    <div class="chips"><span class="chip ai">Lovable</span><span class="chip mode">chat-to-app</span><span class="chip">non-technical</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>Lovable</code></dd>
+        <dt>Output</dt><dd><code>Project</code> · <code>Preview</code></dd>
+        <dt>Instruction</dt><dd><code>Message</code></dd>
+        <dt>Thinking</dt><dd><code>Working on it...</code></dd>
+        <dt>Tool use</dt><dd><code>Connect Supabase</code> · <code>Deploy</code> · <code>Edit file</code></dd>
+        <dt>Memory</dt><dd><code>Project</code> history</dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> chat left, live preview right; code hidden by default</li>
+        <li><b>Thinking:</b> friendly conversational updates ("I'll add a login page")</li>
+        <li><b>Tool calls:</b> abstracted as human actions ("Setting up database")</li>
+        <li><b>Errors:</b> plain-English explanations, suggested next prompt</li>
+        <li><b>Control:</b> Undo, Revert, Publish, Connect domain</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>Pink/magenta gradient reserved for AI — very explicit AI-ness.</li>
+        <li>Chat bubbles are the whole UX; code is a power-user drawer.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>Translates tool calls into <b>human-readable actions</b> — "Connecting your database" instead of "Executing SQL tool".</div>
+      <div class="right lose"><h4>Wrong</h4>Hides code so well that trust breaks when something goes wrong — users can't diagnose.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 8. Perplexity -->
+<article class="product">
+  <div class="id">
+    <div class="num">08</div>
+    <h3>Perplexity</h3>
+    <div class="tagline">Answer engine with citations, follow-ups, Spaces for memory, Pro reasoning.</div>
+    <div class="url">perplexity.ai</div>
+    <div class="chips"><span class="chip ai">Perplexity</span><span class="chip mode">search + answer</span><span class="chip">citations</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>Perplexity</code> · no character</dd>
+        <dt>Output</dt><dd><code>Answer</code> · <code>Thread</code> · <code>Page</code></dd>
+        <dt>Instruction</dt><dd><code>Ask</code> · <code>follow-up</code></dd>
+        <dt>Thinking</dt><dd><code>Searching</code> → <code>Reading</code> → <code>Reasoning</code></dd>
+        <dt>Tool use</dt><dd><code>Sources</code> chips, numbered citations</dd>
+        <dt>Memory</dt><dd><code>Spaces</code></dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> single-shot answer with chained follow-ups; Pro adds a Plan step</li>
+        <li><b>Thinking:</b> phased progress — Searching / Reading / Answering — with source count</li>
+        <li><b>Tool calls:</b> sources shown as a horizontal strip before the answer</li>
+        <li><b>Errors:</b> "I couldn't find reliable sources" + suggested narrower query</li>
+        <li><b>Control:</b> rewrite, change model, re-run as Pro</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>Source chips with favicons = signature element; teal accent for thinking.</li>
+        <li>Follow-up prompt chips under every answer drive the loop.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>Source-first UI makes reasoning auditable — every claim traces back to a chip. Best-in-class trust design.</div>
+      <div class="right lose"><h4>Wrong</h4>Pro reasoning mode mixes plan + answer in one scroll; hard to separate meta from content.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 9. Linear Copilot -->
+<article class="product">
+  <div class="id">
+    <div class="num">09</div>
+    <h3>Linear AI (Linear Copilot)</h3>
+    <div class="tagline">Inline AI for issue summarization, triage suggestions, project planning.</div>
+    <div class="url">linear.app</div>
+    <div class="chips"><span class="chip ai">Linear</span><span class="chip mode">inline assist</span><span class="chip">contextual</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>Linear</code> (as a verb) · <code>Ask AI</code></dd>
+        <dt>Output</dt><dd><code>Summary</code> · <code>Suggestion</code></dd>
+        <dt>Instruction</dt><dd><code>Ask</code> · <code>prompt</code></dd>
+        <dt>Thinking</dt><dd>subtle loader, no reasoning stream</dd>
+        <dt>Tool use</dt><dd>implicit (reads issue context, history)</dd>
+        <dt>Memory</dt><dd><code>Workspace</code></dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> cmd-K invoked or inline in issue; replies are short, structured</li>
+        <li><b>Thinking:</b> minimalist — just a skeleton shimmer</li>
+        <li><b>Tool calls:</b> none visible to user (all internal context)</li>
+        <li><b>Errors:</b> soft fallback — "Couldn't summarise", no modal</li>
+        <li><b>Control:</b> accept into description, copy, discard</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>Linear's signature is <b>restraint</b> — AI looks like the rest of the app, not a feature.</li>
+        <li>Sparkle icon only at the entry point, never inside output.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>Invisible AI — no "AI tab", just AI-powered actions in the flow. Models the "agent as teammate" posture beautifully.</div>
+      <div class="right lose"><h4>Wrong</h4>Because it's silent, users don't know what AI can do — discovery is a real problem.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 10. Notion AI -->
+<article class="product">
+  <div class="id">
+    <div class="num">10</div>
+    <h3>Notion AI</h3>
+    <div class="tagline">Inline AI blocks, workspace Q&A, autofill, translate, summarise.</div>
+    <div class="url">notion.so/product/ai</div>
+    <div class="chips"><span class="chip ai">Notion</span><span class="chip mode">inline block</span><span class="chip">workspace Q&A</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>Notion AI</code></dd>
+        <dt>Output</dt><dd><code>Block</code> · <code>Answer</code></dd>
+        <dt>Instruction</dt><dd><code>Ask</code> · <code>prompt</code> · slash command</dd>
+        <dt>Thinking</dt><dd><code>Thinking...</code></dd>
+        <dt>Tool use</dt><dd><code>Search workspace</code> · <code>Read page</code></dd>
+        <dt>Memory</dt><dd><code>Workspace</code></dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> space-key in empty block or cmd-J for workspace Q&A</li>
+        <li><b>Thinking:</b> streaming into the block; ghost text before commit</li>
+        <li><b>Tool calls:</b> workspace search returns cited pages in a footer</li>
+        <li><b>Errors:</b> fallback to plain paragraph, never modal</li>
+        <li><b>Control:</b> Replace · Insert below · Try again · Discard</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>AI output is framed in a subtle bordered block with a sparkle — clearly AI-touched.</li>
+        <li>Workspace Q&A cites source pages with their icons.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>AI is a <b>block type</b> — composable with the rest of the doc. The first mainstream "AI as a primitive" design.</div>
+      <div class="right lose"><h4>Wrong</h4>Workspace Q&A answers often feel stale; memory freshness isn't surfaced.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 11. Raycast AI -->
+<article class="product">
+  <div class="id">
+    <div class="num">11</div>
+    <h3>Raycast AI & Commands</h3>
+    <div class="tagline">Launcher-first AI: Commands, Quick AI, AI Chat, extensions as tools.</div>
+    <div class="url">raycast.com/ai</div>
+    <div class="chips"><span class="chip ai">Raycast</span><span class="chip mode">command + chat</span><span class="chip">extensions</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>AI</code> (generic) · picks model per command</dd>
+        <dt>Output</dt><dd><code>Result</code> · <code>Response</code></dd>
+        <dt>Instruction</dt><dd><code>Command</code> · <code>Quick AI</code> · <code>prompt</code></dd>
+        <dt>Thinking</dt><dd><code>Thinking...</code></dd>
+        <dt>Tool use</dt><dd><code>AI Extensions</code> (as @mentions)</dd>
+        <dt>Memory</dt><dd><code>Presets</code> · <code>AI Commands</code></dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> launcher-bar; Quick AI answers in-place, Chat opens panel</li>
+        <li><b>Thinking:</b> minimal — one-line status</li>
+        <li><b>Tool calls:</b> @extension syntax — user types @linear, @github explicitly</li>
+        <li><b>Errors:</b> inline toast, retry with different model</li>
+        <li><b>Control:</b> model picker per-message, presets, save as Command</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>Command palette is the hero; AI is a command type, not a product surface.</li>
+        <li>Model picker is first-class UI — no "autoselect magic".</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>@-mention tool invocation puts user in charge — they choose which capability runs. Most explicit tool-use UX of the bunch.</div>
+      <div class="right lose"><h4>Wrong</h4>Chat persistence feels bolted-on; Chat ⇄ Command conceptual split confuses users.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 12. GitHub Copilot Workspace -->
+<article class="product">
+  <div class="id">
+    <div class="num">12</div>
+    <h3>GitHub Copilot Workspace</h3>
+    <div class="tagline">Issue → Spec → Plan → Implementation → PR, as a reviewable agentic workflow.</div>
+    <div class="url">githubnext.com/projects/copilot-workspace</div>
+    <div class="chips"><span class="chip ai">GitHub</span><span class="chip mode">spec-plan-build</span><span class="chip">PR-first</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>Copilot</code></dd>
+        <dt>Output</dt><dd><code>Workspace</code> · <code>PR</code></dd>
+        <dt>Instruction</dt><dd><code>Task</code> · <code>Issue</code></dd>
+        <dt>Thinking</dt><dd><code>Spec</code> → <code>Plan</code> → <code>Implementation</code></dd>
+        <dt>Tool use</dt><dd><code>Edit</code> · <code>Run</code> · <code>Propose</code></dd>
+        <dt>Memory</dt><dd><code>Repo</code> context · <code>Session</code></dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> sequential editable stages — user can rewrite spec or plan before code</li>
+        <li><b>Thinking:</b> externalised as editable documents, not a hidden stream</li>
+        <li><b>Tool calls:</b> each file edit is a discrete diff card</li>
+        <li><b>Errors:</b> CI failures feed back, Copilot proposes fixes</li>
+        <li><b>Control:</b> edit any stage, rerun downstream, open as PR</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>Stepped progress rail — Spec / Plan / Build — is the signature.</li>
+        <li>Everything is a diff against the repo; nothing lives outside git.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>"Thinking" is <b>editable artefacts</b> (spec, plan), not hidden CoT. Users can steer the run by editing the plan before execution.</div>
+      <div class="right lose"><h4>Wrong</h4>Still feels slow and heavy for small tasks — the ceremony of stages has a floor cost.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 13. Claude Projects -->
+<article class="product">
+  <div class="id">
+    <div class="num">13</div>
+    <h3>Claude Projects</h3>
+    <div class="tagline">Memory + document context: pin files, set custom instructions, share with team.</div>
+    <div class="url">claude.ai/projects</div>
+    <div class="chips"><span class="chip ai">Anthropic</span><span class="chip mode">memory</span><span class="chip">shared</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>Output</dt><dd><code>Conversation</code> inside a <code>Project</code></dd>
+        <dt>Instruction</dt><dd><code>Custom instructions</code> · <code>project knowledge</code></dd>
+        <dt>Memory</dt><dd><code>Project knowledge</code> (files) + <code>instructions</code> (text)</dd>
+        <dt>Sharing</dt><dd>per-Project access controls</dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> Project page lists conversations + knowledge + instructions</li>
+        <li><b>Memory surfacing:</b> knowledge chips appear under the message input</li>
+        <li><b>Control:</b> add / remove files, edit instructions, see capacity %</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>Capacity bar for context window is shown — rare transparency about the underlying constraint.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>Separates <b>persistent instructions</b> (style, role) from <b>pinned knowledge</b> (files) — a cleaner memory model than "just remember".</div>
+      <div class="right lose"><h4>Wrong</h4>No way to scope memory per-conversation inside the Project — all conversations share everything.</div>
+    </div>
+  </div>
+</article>
+
+<!-- 14. OpenAI Canvas -->
+<article class="product">
+  <div class="id">
+    <div class="num">14</div>
+    <h3>OpenAI Canvas</h3>
+    <div class="tagline">Side-by-side writing and coding surface with inline edits and targeted prompts.</div>
+    <div class="url">chatgpt.com (Canvas mode)</div>
+    <div class="chips"><span class="chip ai">OpenAI</span><span class="chip mode">canvas + chat</span><span class="chip">inline edit</span></div>
+  </div>
+  <div class="sections">
+    <div class="sec">
+      <h4>B · Vocabulary</h4>
+      <dl class="kv">
+        <dt>AI</dt><dd><code>ChatGPT</code></dd>
+        <dt>Output</dt><dd><code>Canvas</code></dd>
+        <dt>Instruction</dt><dd><code>Message</code> · <code>selection edit</code></dd>
+        <dt>Thinking</dt><dd><code>Thinking</code> (o-models) · hidden for base</dd>
+        <dt>Tool use</dt><dd>shortcut pills (Adjust length, Reading level, Polish)</dd>
+        <dt>Memory</dt><dd><code>Memory</code> (global) · <code>Projects</code></dd>
+      </dl>
+    </div>
+    <div class="sec">
+      <h4>C · Interaction</h4>
+      <ul>
+        <li><b>Mode:</b> chat left, canvas right; selection in canvas opens an inline prompt</li>
+        <li><b>Thinking:</b> collapsible "Thoughts" for reasoning models</li>
+        <li><b>Tool calls:</b> canvas shortcuts (pills) do tool-like transforms</li>
+        <li><b>Errors:</b> soft in-canvas notice with retry</li>
+        <li><b>Control:</b> undo per edit, version history, "copy to chat"</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h4>D · Visual signature</h4>
+      <ul>
+        <li>Canvas uses highlight-to-edit — selecting text spawns a contextual prompt box.</li>
+        <li>No branded AI color — canvas text is normal text, AI edits flash briefly.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <div class="right win"><h4>Right</h4>Selection-as-prompt is the most natural edit affordance in an agentic surface — localises AI action to a region the user points at.</div>
+      <div class="right lose"><h4>Wrong</h4>Tool-shortcut pills feel hard-coded; no way for users or third parties to add their own.</div>
+    </div>
+  </div>
+</article>
+
+</div>
+
+<!-- ======================= PATTERNS ======================= -->
+<h2>The 2026 Agentic UX design patterns</h2>
+<p class="sub">Ten patterns observed in two or more shipped products. These are the building blocks a hiring manager in 2026 expects an AI Product Designer to know by name.</p>
+
+<div class="patterns">
+
+  <div class="pattern">
+    <div class="n">P01</div>
+    <h3>Artifact Panel (split-pane chat + output)</h3>
+    <p>Long-form AI output lives in a persistent right panel, never inline bubbles. Chat becomes the controller for the artifact.</p>
+    <div class="examples">Exemplars: <b>Claude Artifacts, v0, OpenAI Canvas, Figma Make, Lovable</b></div>
+  </div>
+
+  <div class="pattern">
+    <div class="n">P02</div>
+    <h3>Visible Thinking, collapsible by default</h3>
+    <p>Chain-of-thought streams in real time but stays collapsed unless the user expands it. "Thinking" is the dominant label.</p>
+    <div class="examples">Exemplars: <b>Claude, Perplexity Pro, Cursor, ChatGPT o-models</b></div>
+  </div>
+
+  <div class="pattern">
+    <div class="n">P03</div>
+    <h3>Tool Call as a Card</h3>
+    <p>Every tool invocation renders as a compact card with name, args, status, and collapsible result. Users can audit what the agent did.</p>
+    <div class="examples">Exemplars: <b>Claude Code, Cursor Agent, Bolt, Replit Agent</b></div>
+  </div>
+
+  <div class="pattern">
+    <div class="n">P04</div>
+    <h3>Plan before Build (editable plan)</h3>
+    <p>Agent externalises a plan or spec as an editable artefact; user can edit before execution, steering the run.</p>
+    <div class="examples">Exemplars: <b>Copilot Workspace, Claude Code, v0, Bolt</b></div>
+  </div>
+
+  <div class="pattern">
+    <div class="n">P05</div>
+    <h3>Diff-Review as the Unit of Trust</h3>
+    <p>Every AI mutation lands as a reviewable diff or versioned change. Nothing applies silently.</p>
+    <div class="examples">Exemplars: <b>Cursor, Copilot Workspace, Claude Code, v0</b></div>
+  </div>
+
+  <div class="pattern">
+    <div class="n">P06</div>
+    <h3>Checkpoint &amp; Rollback</h3>
+    <p>Long autonomous runs write named checkpoints; users can roll back the entire world (files, DB, deps) to any prior state.</p>
+    <div class="examples">Exemplars: <b>Bolt, Replit Agent, Lovable</b></div>
+  </div>
+
+  <div class="pattern">
+    <div class="n">P07</div>
+    <h3>Sources-first Answering</h3>
+    <p>Citations or retrieved sources precede the answer, with inline numbered references inside the prose.</p>
+    <div class="examples">Exemplars: <b>Perplexity, Notion AI Workspace Q&A, Claude with web search</b></div>
+  </div>
+
+  <div class="pattern">
+    <div class="n">P08</div>
+    <h3>Selection-as-Prompt (localised AI action)</h3>
+    <p>Select a region (text, component, block) to invoke AI scoped to that selection. Replaces "write a long prompt".</p>
+    <div class="examples">Exemplars: <b>OpenAI Canvas, Figma Make, Notion AI, Cursor</b></div>
+  </div>
+
+  <div class="pattern">
+    <div class="n">P09</div>
+    <h3>Named Capabilities (Skills &amp; @-mentions)</h3>
+    <p>Tools are exposed to the user as named, composable skills — invoked explicitly via @-mention, slash command, or skill picker.</p>
+    <div class="examples">Exemplars: <b>Claude Skills, Raycast AI Extensions, Cursor MCP, Perplexity (Search / Pages)</b></div>
+  </div>
+
+  <div class="pattern">
+    <div class="n">P10</div>
+    <h3>Memory Split: Instructions vs Knowledge</h3>
+    <p>Persistent state is decomposed into (a) instruction / style / role text, and (b) pinned documents or files. Two different shelves.</p>
+    <div class="examples">Exemplars: <b>Claude Projects, ChatGPT Projects + Memory, Cursor Rules + indexed repo</b></div>
+  </div>
+
+</div>
+
+<!-- ======================= DR-CV MAP ======================= -->
+<h2>What dr-cv's case studies should emphasize</h2>
+<p class="sub">Mapping Danilo's four case studies onto the patterns and vocabulary above, so the landing demonstrates fluency. Each case gets: the right <b>term</b>, the right <b>pattern</b>, and a one-line <b>framing</b>.</p>
+
+<div class="map">
+
+  <article class="case">
+    <h3>EnRegla — compliance platform</h3>
+    <div class="tag">Framing · Agent-assisted compliance workflows</div>
+    <h4>Vocabulary to use</h4>
+    <ul>
+      <li>Call the AI features <b>skills</b>, not "AI features".</li>
+      <li>Call the outputs <b>artifacts</b> (compliance reports, driver packets).</li>
+      <li>Call long runs <b>agentic workflows</b>, not "automations".</li>
+    </ul>
+    <h4>Patterns to emphasize</h4>
+    <ul>
+      <li>P03 Tool Call as a Card — audit trail for regulators.</li>
+      <li>P04 Plan before Build — editable plan before batch compliance runs.</li>
+      <li>P05 Diff-Review as the Unit of Trust — inspectors sign off on diffs.</li>
+    </ul>
+    <div class="vocab">Headline pattern: “<b>Plan → Review → Apply</b>” — compliance changes ship as agentic diffs, not black-box automations.</div>
+  </article>
+
+  <article class="case">
+    <h3>TE Skin — agent-consumable Design System</h3>
+    <div class="tag">Framing · Design System as a Skill</div>
+    <h4>Vocabulary to use</h4>
+    <ul>
+      <li>Call it a <b>Skill</b> (agent-consumable) — not "component library".</li>
+      <li>Talk about <b>tokens as tool inputs</b>, not "design tokens".</li>
+      <li>Call the output <b>agent-rendered artifacts</b>.</li>
+    </ul>
+    <h4>Patterns to emphasize</h4>
+    <ul>
+      <li>P09 Named Capabilities — TE Skin IS a named skill agents invoke.</li>
+      <li>P08 Selection-as-Prompt — designers scope changes inside Figma.</li>
+      <li>P10 Memory Split — DS docs are Knowledge, tokens are Instructions.</li>
+    </ul>
+    <div class="vocab">Headline pattern: “<b>A Design System that an agent can call</b>” — the DS is not a library humans read, it's a <b>skill</b> humans and agents both invoke.</div>
+  </article>
+
+  <article class="case">
+    <h3>TE Black — dark-first DS with a11y in tokens</h3>
+    <div class="tag">Framing · Policy-as-tokens</div>
+    <h4>Vocabulary to use</h4>
+    <ul>
+      <li>Call contrast/a11y rules <b>policies encoded in tokens</b>.</li>
+      <li>Call the audit a <b>token-level a11y skill</b>.</li>
+      <li>Avoid "component audit" — use <b>automated a11y run</b>.</li>
+    </ul>
+    <h4>Patterns to emphasize</h4>
+    <ul>
+      <li>P03 Tool Call as a Card — a11y audit outputs a readable report.</li>
+      <li>P05 Diff-Review — contrast fixes ship as reviewable diffs.</li>
+      <li>P10 Memory Split — accessibility rules live in Instructions layer.</li>
+    </ul>
+    <div class="vocab">Headline pattern: “<b>Accessibility as a skill the agent runs</b>” — dark-mode + a11y is not a checklist, it's a capability invoked on every token change.</div>
+  </article>
+
+  <article class="case">
+    <h3>Life Update Mobile — runtime Gemini app</h3>
+    <div class="tag">Framing · Agent-native product design</div>
+    <h4>Vocabulary to use</h4>
+    <ul>
+      <li>Call the LLM surface a <b>thinking surface</b>, not "AI screen".</li>
+      <li>Call user entries <b>messages</b> that feed <b>memory</b>.</li>
+      <li>Call structured outputs <b>artifacts</b> (plans, recaps, summaries).</li>
+    </ul>
+    <h4>Patterns to emphasize</h4>
+    <ul>
+      <li>P02 Visible Thinking — expose reasoning for sensitive suggestions.</li>
+      <li>P07 Sources-first — when referencing the user's history, cite it.</li>
+      <li>P10 Memory Split — daily entries are Knowledge; user preferences are Instructions.</li>
+    </ul>
+    <div class="vocab">Headline pattern: “<b>A journaling app that thinks with you</b>” — Gemini is not a chatbot bolted on; it's the <b>reasoning surface</b> the app is built around.</div>
+  </article>
+
+</div>
+
+<!-- ======================= SUMMARY ======================= -->
+<div class="summary">
+  <h3>Top 5 patterns dr-cv must demonstrate fluency in</h3>
+  <ol>
+    <li><b>P01 · Artifact Panel</b> — split-pane chat + persistent output surface (Claude, v0, Canvas).</li>
+    <li><b>P02 · Visible Thinking</b> — streamed, collapsible reasoning with the exact label "Thinking".</li>
+    <li><b>P04 · Plan before Build</b> — externalised, editable plan as the steering surface for agent runs.</li>
+    <li><b>P05 · Diff-Review as the Unit of Trust</b> — every AI mutation is a reviewable, rollback-able change.</li>
+    <li><b>P09 · Named Capabilities (Skills)</b> — tools exposed as composable, discoverable skills — not hidden features.</li>
+  </ol>
+</div>
+
+</body>
+</html>
