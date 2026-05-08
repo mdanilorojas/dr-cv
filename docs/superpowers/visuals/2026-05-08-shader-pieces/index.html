@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 original shader pieces · dr-cv</title>
+<style>
+  :root {
+    --bg: #07080d;
+    --bg-card: #0e1018;
+    --line: rgba(255,255,255,0.08);
+    --line-strong: rgba(255,255,255,0.18);
+    --text: #f4f4f5;
+    --text-muted: #8f8f95;
+    --accent: #FF8964;
+    --accent-cool: #5683DA;
+    --font: "Inter","Helvetica Neue",Arial,sans-serif;
+    --font-mono: "JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 15px; line-height: 1.6; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 48px 32px 120px; }
+  header { margin-bottom: 48px; border-bottom: 1px solid var(--line); padding-bottom: 28px; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 12px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .eyebrow::before { content: "// "; color: var(--text-muted); }
+  h1 { font-size: 40px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.05; margin: 14px 0 8px; }
+  h1 .accent { color: var(--accent); }
+  header p { color: var(--text-muted); max-width: 68ch; margin: 0; font-size: 16px; }
+  .meta {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    margin-top: 20px;
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--text-muted); letter-spacing: 0.04em;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  .piece {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 280px auto;
+  }
+  .piece__visual {
+    position: relative;
+    background: linear-gradient(180deg, #0b1220 0%, #07080d 100%);
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .piece__body { padding: 22px 26px 28px; }
+  .piece__num {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .piece__title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 0 0 8px;
+    color: var(--text);
+  }
+  .piece__concept {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+    line-height: 1.55;
+  }
+  .piece__meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
+  .piece__meta dt { text-transform: uppercase; color: var(--accent); letter-spacing: 0.1em; }
+  .piece__meta dd { margin: 0; color: var(--text); }
+
+  /* ===== 1. RECURSIVE SCORE DIAL ===== */
+  .p1 {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .p1__ring {
+    width: 180px; height: 180px; border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    position: relative;
+  }
+  .p1__ring::before, .p1__ring::after {
+    content: ""; position: absolute; inset: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+  }
+  .p1__ring::after { inset: 20px; border-color: rgba(255,137,100,0.3); }
+  .p1__ticks {
+    position: absolute; inset: 0;
+    background:
+      conic-gradient(from -90deg,
+        var(--accent) 0%, var(--accent) 78.4%,
+        rgba(255,137,100,0.15) 78.4%, rgba(255,137,100,0.15) 95.6%,
+        transparent 95.6%);
+    border-radius: 50%;
+    mask: radial-gradient(circle, transparent 68%, #000 70%, #000 78%, transparent 80%);
+    -webkit-mask: radial-gradient(circle, transparent 68%, #000 70%, #000 78%, transparent 80%);
+  }
+  .p1__label {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+  }
+  .p1__score { font-size: 32px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; }
+  .p1__delta { font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
+
+  /* ===== 2. DATA-STRATA METALLIC SHEET ===== */
+  .p2 {
+    position: absolute; inset: 20px;
+    border-radius: 10px;
+    background: linear-gradient(135deg,
+      #2b3240 0%, #55606f 25%, #929ba8 50%, #55606f 75%, #2b3240 100%);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+    overflow: hidden;
+  }
+  .p2::before {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      to bottom, transparent 0 7px,
+      rgba(255,255,255,0.08) 7px 8px);
+    mix-blend-mode: overlay;
+  }
+  .p2::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 30% 30%,
+      rgba(255,255,255,0.3), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%,
+      rgba(255,137,100,0.15), transparent 50%);
+    mix-blend-mode: screen;
+  }
+
+  /* ===== 3. SINGLE SOURCE / MANY OUTPUTS PRISM ===== */
+  .p3 {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .p3__src {
+    position: absolute;
+    width: 4px; height: 2px;
+    background: var(--text);
+    border-radius: 1px;
+    box-shadow: 0 0 20px 6px var(--text);
+    left: 20%; top: 50%; transform: translate(-50%, -50%);
+  }
+  .p3__tri {
+    position: absolute;
+    left: 45%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 0; height: 0;
+    border-top: 48px solid transparent;
+    border-bottom: 48px solid transparent;
+    border-left: 60px solid rgba(255,255,255,0.08);
+  }
+  .p3__rays {
+    position: absolute;
+    left: 60%; top: 50%;
+    transform: translateY(-50%);
+  }
+  .p3__ray {
+    display: block;
+    width: 140px; height: 1.5px;
+    margin: 8px 0;
+    transform-origin: left;
+    opacity: 0.85;
+  }
+  .p3__ray:nth-child(1) { background: linear-gradient(90deg, #FF8964, transparent); transform: rotate(-30deg); }
+  .p3__ray:nth-child(2) { background: linear-gradient(90deg, #FFAA81, transparent); transform: rotate(-15deg); }
+  .p3__ray:nth-child(3) { background: linear-gradient(90deg, #FFD79F, transparent); transform: rotate(0deg); }
+  .p3__ray:nth-child(4) { background: linear-gradient(90deg, #A8D0FF, transparent); transform: rotate(15deg); }
+  .p3__ray:nth-child(5) { background: linear-gradient(90deg, #5683DA, transparent); transform: rotate(30deg); }
+
+  /* ===== 4. AGENT SWARM ORBIT ===== */
+  .p4 {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .p4__core {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
+    box-shadow: 0 0 30px var(--accent);
+  }
+  .p4__orbit {
+    position: absolute;
+    width: var(--r); height: var(--r);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .p4__agent {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--text);
+    box-shadow: 0 0 10px var(--accent);
+  }
+  .p4__o1 { --r: 120px; }
+  .p4__o2 { --r: 180px; }
+  .p4__o3 { --r: 240px; }
+  .p4__a1 { top: 50%; left: calc(50% + 60px); transform: translate(-50%,-50%); }
+  .p4__a2 { top: calc(50% - 70px); left: calc(50% + 50px); transform: translate(-50%,-50%); background: var(--accent-cool); box-shadow: 0 0 10px var(--accent-cool); }
+  .p4__a3 { top: calc(50% + 80px); left: calc(50% - 100px); transform: translate(-50%,-50%); background: #ff5eae; box-shadow: 0 0 10px #ff5eae; }
+  .p4__a4 { top: calc(50% - 120px); left: calc(50% - 20px); transform: translate(-50%,-50%); background: #a855f7; box-shadow: 0 0 10px #a855f7; }
+
+  /* ===== 5. IRIDESCENT CRAFT SPHERE ===== */
+  .p5 {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .p5__sphere {
+    width: 180px; height: 180px; border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,255,255,0.9), transparent 24%),
+      conic-gradient(from 45deg,
+        #FF8964, #ff5eae, #a855f7, #3b82f6, #22d3ee, #FF8964);
+    box-shadow: 0 20px 60px rgba(168,85,247,0.3), inset -30px -30px 60px rgba(0,0,0,0.5);
+    filter: saturate(0.9);
+    position: relative;
+  }
+  .p5__sphere::after {
+    content: ""; position: absolute; inset: 18%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 60% 70%, rgba(255,255,255,0.25), transparent 50%);
+    mix-blend-mode: overlay;
+  }
+
+  /* ===== 6. COMMIT WAVEFORM ===== */
+  .p6 {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; padding: 0 20px;
+  }
+  .p6__bars {
+    display: flex; gap: 3px;
+    align-items: center;
+    width: 100%; height: 120px;
+  }
+  .p6__bar {
+    flex: 1; background: linear-gradient(to top, var(--accent), rgba(255,137,100,0.2));
+    border-radius: 1px;
+    box-shadow: 0 0 8px rgba(255,137,100,0.3);
+  }
+  .p6__bar:nth-child(odd) { background: linear-gradient(to top, var(--accent-cool), rgba(86,131,218,0.2)); box-shadow: 0 0 8px rgba(86,131,218,0.3); }
+  .p6__label {
+    position: absolute; bottom: 16px; left: 20px;
+    font-family: var(--font-mono); font-size: 10px;
+    color: var(--text-muted); letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ===== 7. BRUSHED-STEEL NAMEPLATE ===== */
+  .p7 {
+    position: absolute; inset: 40px;
+    border-radius: 4px;
+    background:
+      repeating-linear-gradient(95deg,
+        #3a4150 0%, #4a5161 0.2%, #353b48 0.5%, #454c5c 0.7%, #3d4454 1%),
+      linear-gradient(180deg, #4a5161 0%, #2a2f3a 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.2),
+      inset 0 -1px 0 rgba(0,0,0,0.4),
+      0 20px 40px rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .p7::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+  }
+  .p7__text {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.12em;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== 8. DESIGN-SYSTEM LATTICE ===== */
+  .p8 {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .p8__cube {
+    width: 160px; height: 160px;
+    transform-style: preserve-3d;
+    transform: rotateX(25deg) rotateY(-30deg);
+    position: relative;
+  }
+  .p8__node {
+    position: absolute;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+  }
+  .p8__edge {
+    position: absolute;
+    background: linear-gradient(90deg, var(--accent), rgba(255,137,100,0.2));
+    height: 1px;
+    transform-origin: 0 0;
+  }
+  /* 8 corners + edges drawn with nth-child positioning (illustrative) */
+  .p8__n1 { left: 20px; top: 20px; }
+  .p8__n2 { right: 20px; top: 20px; }
+  .p8__n3 { left: 20px; bottom: 20px; }
+  .p8__n4 { right: 20px; bottom: 20px; }
+  .p8__n5 { left: 50%; top: 50%; transform: translate(-50%,-50%); width: 14px; height: 14px; background: var(--text); box-shadow: 0 0 20px var(--text); }
+
+  /* ===== 9. CHROMATIC FREQUENCY HALO (cymatics) ===== */
+  .p9 {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .p9__rings {
+    position: relative;
+    width: 220px; height: 220px;
+  }
+  .p9__ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid;
+    margin: auto;
+  }
+  .p9__ring:nth-child(1) { border-color: rgba(255,137,100,0.8); width: 40px; height: 40px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .p9__ring:nth-child(2) { border-color: rgba(255,94,174,0.5); width: 90px; height: 90px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .p9__ring:nth-child(3) { border-color: rgba(168,85,247,0.4); width: 140px; height: 140px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .p9__ring:nth-child(4) { border-color: rgba(59,130,246,0.3); width: 190px; height: 190px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .p9__ring:nth-child(5) { border-color: rgba(34,211,238,0.2); width: 230px; height: 230px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .p9__core {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 18px; height: 18px; border-radius: 50%;
+    background: radial-gradient(circle, #fff, var(--accent));
+    box-shadow: 0 0 20px var(--accent);
+  }
+
+  /* ===== 10. VOLUMETRIC BEAM PORTAL ===== */
+  .p10 {
+    position: absolute; inset: 0;
+    overflow: hidden;
+  }
+  .p10__beam {
+    position: absolute;
+    left: 50%; top: 20%; bottom: 0;
+    width: 40px;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, rgba(200,225,255,0.8) 0%, rgba(120,170,255,0.2) 60%, transparent 100%);
+    filter: blur(2px);
+    mix-blend-mode: screen;
+  }
+  .p10__bloom {
+    position: absolute;
+    left: 50%; top: 10%; bottom: 0;
+    width: 240px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse 40% 80% at 50% 0%, rgba(140,180,255,0.35), transparent 70%);
+    filter: blur(28px);
+    mix-blend-mode: screen;
+  }
+  .p10__base {
+    position: absolute;
+    left: 50%; bottom: 20%;
+    transform: translateX(-50%);
+    width: 140px; height: 2px;
+    background: linear-gradient(90deg, transparent, #fff, transparent);
+    box-shadow: 0 0 24px rgba(200,225,255,0.8);
+  }
+  .p10__dot {
+    position: absolute;
+    left: 50%; top: calc(20% + 40px); width: 3px; height: 3px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 8px #fff;
+    transform: translateX(-50%);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Phase 3 · Shader pieces mood-board</div>
+  <h1>10 original pieces — tied to <span class="accent">your</span> narrative, not someone else's demo.</h1>
+  <p>Each mockup below is a static placeholder made with CSS. The real version lives in <strong>Three.js + R3F + postprocessing</strong> (Tier 3) with PBR materials, IBL environments, and custom fragment shaders. You pick 2–3 by number; I don't build before you choose.</p>
+  <div class="meta">
+    <span>Date · 2026-05-08</span>
+    <span>Tier · 3 (maximalist)</span>
+    <span>Stack · Three.js + R3F + drei + postprocessing</span>
+    <span>Bundle target · ≤ 350 KB gzipped for landing-huly v3</span>
+  </div>
+</header>
+
+<div class="grid">
+
+  <!-- 1 -->
+  <article class="piece">
+    <div class="piece__visual">
+      <div class="p1">
+        <div class="p1__ring">
+          <div class="p1__ticks"></div>
+          <div class="p1__label">
+            <div class="p1__score">95.6</div>
+            <div class="p1__delta">↑ from 78.4</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="piece__body">
+      <div class="piece__num">Piece 01 — hero / method</div>
+      <h2 class="piece__title">Recursive Score Dial</h2>
+      <p class="piece__concept">The score jumps <strong>78.4 → 95.6</strong> over 5 recursive rounds. A segmented arc fills in real time as the user scrolls. Tick marks engraved in brushed steel. Core displays the current score in huge mono numerals.</p>
+      <dl class="piece__meta">
+        <dt>Ties to</dt><dd>DS migration case · 17 parts × 5 rounds</dd>
+        <dt>Tech</dt><dd>R3F scene with emissive segmented ring + metallic brushed base (anisotropic texture)</dd>
+        <dt>Interaction</dt><dd>Scroll-linked fill · hover reveals round-by-round scores</dd>
+      </dl>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="piece">
+    <div class="piece__visual">
+      <div class="p2"></div>
+    </div>
+    <div class="piece__body">
+      <div class="piece__num">Piece 02 — about / strata backdrop</div>
+      <h2 class="piece__title">Data-Strata Metallic Sheet</h2>
+      <p class="piece__concept">A brushed-aluminium panel that represents your <strong>15 years of delivery as geological strata</strong>. Each horizontal band is a year; the bands at the top glow warm orange (recent enterprise), the bottom ones are cooler (early career).</p>
+      <dl class="piece__meta">
+        <dt>Ties to</dt><dd>About · "15 years shipping. Still curious."</dd>
+        <dt>Tech</dt><dd>MeshPhysicalMaterial · metalness 1 · roughness 0.35 · anisotropy map · HDRI warehouse preset</dd>
+        <dt>Interaction</dt><dd>Pointer tilt (3D rotation on mouse) · years highlight on hover</dd>
+      </dl>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="piece">
+    <div class="piece__visual">
+      <div class="p3">
+        <div class="p3__src"></div>
+        <div class="p3__tri"></div>
+        <div class="p3__rays">
+          <span class="p3__ray"></span>
+          <span class="p3__ray"></span>
+          <span class="p3__ray"></span>
+          <span class="p3__ray"></span>
+          <span class="p3__ray"></span>
+        </div>
+      </div>
+    </div>
+    <div class="piece__body">
+      <div class="piece__num">Piece 03 — architecture section</div>
+      <h2 class="piece__title">Single-Source Prism</h2>
+      <p class="piece__concept">A single white light beam hits a glass prism and splits into <strong>5 colored outputs</strong>: skills-sheet, warm CV, serious CV, BairesDev CV, landing. Labels hover beside each ray. Prism is real refractive glass (transmission + chromatic aberration).</p>
+      <dl class="piece__meta">
+        <dt>Ties to</dt><dd>Architecture decision · one repo → many artifacts</dd>
+        <dt>Tech</dt><dd>MeshTransmissionMaterial with ior 1.5 · chromatic aberration post-pass · instanced mesh for rays</dd>
+        <dt>Interaction</dt><dd>Hover a ray to dim others · click opens the corresponding PDF</dd>
+      </dl>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="piece">
+    <div class="piece__visual">
+      <div class="p4">
+        <div class="p4__orbit p4__o1"></div>
+        <div class="p4__orbit p4__o2"></div>
+        <div class="p4__orbit p4__o3"></div>
+        <div class="p4__core"></div>
+        <div class="p4__agent p4__a1"></div>
+        <div class="p4__agent p4__a2"></div>
+        <div class="p4__agent p4__a3"></div>
+        <div class="p4__agent p4__a4"></div>
+      </div>
+    </div>
+    <div class="piece__body">
+      <div class="piece__num">Piece 04 — method / "combination" section</div>
+      <h2 class="piece__title">Agent Swarm Orbit</h2>
+      <p class="piece__concept">Your profile sits at the center as a warm orange core. <strong>4+ subagents</strong> orbit at different radii with distinct colors (one for each: Claude Code, MCP, design-reviewer, code-reviewer). Trails fade behind them. Each subagent pulses when its task label appears.</p>
+      <dl class="piece__meta">
+        <dt>Ties to</dt><dd>Agentic Designer · profile + agentic AI = combination</dd>
+        <dt>Tech</dt><dd>Particle system with trail shader · point lights with emissive intensity · bloom pass</dd>
+        <dt>Interaction</dt><dd>Click an agent to see its current task · speed follows scroll velocity</dd>
+      </dl>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="piece">
+    <div class="piece__visual">
+      <div class="p5">
+        <div class="p5__sphere"></div>
+      </div>
+    </div>
+    <div class="piece__body">
+      <div class="piece__num">Piece 05 — hero alternate / craft block</div>
+      <h2 class="piece__title">Iridescent Craft Sphere</h2>
+      <p class="piece__concept">A floating sphere with <strong>true thin-film iridescence</strong>. The rainbow shifts as the user moves their cursor across it — oil-slick on water, not a flat gradient. This is the "craft" surface: polished, technical, and different at every angle.</p>
+      <dl class="piece__meta">
+        <dt>Ties to</dt><dd>Positioning · "the craft is mine"</dd>
+        <dt>Tech</dt><dd>MeshPhysicalMaterial · iridescence 1 · iridescenceIOR 1.8 · iridescenceThicknessRange [100, 800]nm · HDRI studio-small-06</dd>
+        <dt>Interaction</dt><dd>Mouse parallax rotation · double-click explodes into orbital rings</dd>
+      </dl>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="piece">
+    <div class="piece__visual">
+      <div class="p6">
+        <div class="p6__bars">
+          <div class="p6__bar" style="height: 30%"></div>
+          <div class="p6__bar" style="height: 55%"></div>
+          <div class="p6__bar" style="height: 42%"></div>
+          <div class="p6__bar" style="height: 78%"></div>
+          <div class="p6__bar" style="height: 62%"></div>
+          <div class="p6__bar" style="height: 89%"></div>
+          <div class="p6__bar" style="height: 71%"></div>
+          <div class="p6__bar" style="height: 94%"></div>
+          <div class="p6__bar" style="height: 52%"></div>
+          <div class="p6__bar" style="height: 80%"></div>
+          <div class="p6__bar" style="height: 66%"></div>
+          <div class="p6__bar" style="height: 40%"></div>
+          <div class="p6__bar" style="height: 85%"></div>
+          <div class="p6__bar" style="height: 58%"></div>
+          <div class="p6__bar" style="height: 73%"></div>
+          <div class="p6__bar" style="height: 47%"></div>
+          <div class="p6__bar" style="height: 82%"></div>
+          <div class="p6__bar" style="height: 68%"></div>
+          <div class="p6__bar" style="height: 91%"></div>
+          <div class="p6__bar" style="height: 55%"></div>
+          <div class="p6__bar" style="height: 77%"></div>
+          <div class="p6__bar" style="height: 36%"></div>
+          <div class="p6__bar" style="height: 86%"></div>
+          <div class="p6__bar" style="height: 60%"></div>
+          <div class="p6__bar" style="height: 50%"></div>
+        </div>
+      </div>
+      <div class="p6__label">346 commits · last 40 days · EnRegla</div>
+    </div>
+    <div class="piece__body">
+      <div class="piece__num">Piece 06 — proof numbers section</div>
+      <h2 class="piece__title">Commit Waveform</h2>
+      <p class="piece__concept">Your commit history rendered as a <strong>live audio-waveform bar chart</strong>. Real data pulled from `github.com/mdanilorojas`. Bars alternate warm/cool by weekday. A vertical playhead moves slowly across as if playing. Could sonify commits into ambient audio if you want.</p>
+      <dl class="piece__meta">
+        <dt>Ties to</dt><dd>Proof number · "346 commits · 40 days"</dd>
+        <dt>Tech</dt><dd>Instanced box geometry · emissive material · Web Audio API optional for ambient layer</dd>
+        <dt>Interaction</dt><dd>Hover bar for date + commit count · click scrubs to that day</dd>
+      </dl>
+    </div>
+  </article>
+
+  <!-- 7 -->
+  <article class="piece">
+    <div class="piece__visual">
+      <div class="p7">
+        <div class="p7__text">DANILO ROJAS</div>
+      </div>
+    </div>
+    <div class="piece__body">
+      <div class="piece__num">Piece 07 — about / signature</div>
+      <h2 class="piece__title">Brushed-Steel Nameplate</h2>
+      <p class="piece__concept">Your name engraved on <strong>brushed anisotropic steel</strong>. Light reflects along the brush direction as the user's mouse moves — a signature plaque. Pair this with the availability live-dot. Think: engineer's bench plate, not marketing.</p>
+      <dl class="piece__meta">
+        <dt>Ties to</dt><dd>Identity block · professional signature</dd>
+        <dt>Tech</dt><dd>MeshPhysicalMaterial · metalness 1 · anisotropy 1 · anisotropyMap (linear brush texture) · HDRI studio</dd>
+        <dt>Interaction</dt><dd>Specular highlight tracks cursor · subtle parallax depth on scroll</dd>
+      </dl>
+    </div>
+  </article>
+
+  <!-- 8 -->
+  <article class="piece">
+    <div class="piece__visual">
+      <div class="p8">
+        <div class="p8__cube">
+          <div class="p8__node p8__n1"></div>
+          <div class="p8__node p8__n2"></div>
+          <div class="p8__node p8__n3"></div>
+          <div class="p8__node p8__n4"></div>
+          <div class="p8__node p8__n5"></div>
+        </div>
+      </div>
+    </div>
+    <div class="piece__body">
+      <div class="piece__num">Piece 08 — design system section</div>
+      <h2 class="piece__title">Design-System Lattice</h2>
+      <p class="piece__concept">A 3D lattice of <strong>17 glowing nodes connected by lines</strong> — each node a DS component (Button, Card, Token, Theme, etc.). Rotates slowly. When the "95.6 score" appears, nodes flash green one by one; when "78.4" appears they're red. Represents the recursive review sweeping across the DS.</p>
+      <dl class="piece__meta">
+        <dt>Ties to</dt><dd>BAH TE Skin / TE Black case · "17 parts × 5 rounds"</dd>
+        <dt>Tech</dt><dd>InstancedMesh for nodes · line segments · emissive per-instance attribute · orbit controls locked</dd>
+        <dt>Interaction</dt><dd>Hover a node to see its WCAG score + part name · drag to rotate</dd>
+      </dl>
+    </div>
+  </article>
+
+  <!-- 9 -->
+  <article class="piece">
+    <div class="piece__visual">
+      <div class="p9">
+        <div class="p9__rings">
+          <div class="p9__ring"></div>
+          <div class="p9__ring"></div>
+          <div class="p9__ring"></div>
+          <div class="p9__ring"></div>
+          <div class="p9__ring"></div>
+          <div class="p9__core"></div>
+        </div>
+      </div>
+    </div>
+    <div class="piece__body">
+      <div class="piece__num">Piece 09 — contact / signal section</div>
+      <h2 class="piece__title">Chromatic Frequency Halo (cymatics)</h2>
+      <p class="piece__concept">Concentric rings expanding outward like <strong>real cymatic wave propagation</strong>. Each ring a distinct chromatic color (orange → pink → purple → blue → cyan). Ripples pulse in sync with the live-dot. When the user hovers the CTA, the rings accelerate and tighten.</p>
+      <dl class="piece__meta">
+        <dt>Ties to</dt><dd>Live status · "signal is open" metaphor</dd>
+        <dt>Tech</dt><dd>Custom ShaderMaterial with sin(length(uv - 0.5) * freq - time) · 5 instanced rings · chromatic offset per ring</dd>
+        <dt>Interaction</dt><dd>CTA hover accelerates propagation · reduced-motion stops at static still</dd>
+      </dl>
+    </div>
+  </article>
+
+  <!-- 10 -->
+  <article class="piece">
+    <div class="piece__visual">
+      <div class="p10">
+        <div class="p10__bloom"></div>
+        <div class="p10__beam"></div>
+        <div class="p10__dot"></div>
+        <div class="p10__base"></div>
+      </div>
+    </div>
+    <div class="piece__body">
+      <div class="piece__num">Piece 10 — work section intro</div>
+      <h2 class="piece__title">Volumetric Beam Portal</h2>
+      <p class="piece__concept">A <strong>true volumetric light beam</strong> (god rays with real scattering) dropping from the top of the work section, lighting up a platform where each case-card "emerges from the light". As you scroll into Work, the beam intensifies; when you scroll past, it fades to ambient.</p>
+      <dl class="piece__meta">
+        <dt>Ties to</dt><dd>Work section · revealing the case studies</dd>
+        <dt>Tech</dt><dd>GodRaysEffect (postprocessing) · volumetric cone mesh · UnrealBloom pass · depth-of-field on content</dd>
+        <dt>Interaction</dt><dd>Scroll-linked intensity · reduced-motion keeps static beam, no scatter</dd>
+      </dl>
+    </div>
+  </article>
+
+</div>
+
+<section style="margin-top: 80px; border-top: 1px solid var(--line); padding-top: 40px;">
+  <div class="eyebrow">How to pick</div>
+  <h2 style="font-size: 26px; font-weight: 600; letter-spacing: -0.015em; margin: 14px 0 18px;">The call I'd make</h2>
+  <p style="color: var(--text-muted); max-width: 68ch;">For a first Tier-3 v3 landing you don't need all ten. I'd pick <strong>three</strong> with distinct roles:</p>
+  <ol style="color: var(--text); max-width: 72ch; padding-left: 22px;">
+    <li style="margin-bottom: 10px;"><strong>Piece 05 · Iridescent Craft Sphere</strong> — hero anchor, carries "craft" metaphor, most likely to get the "wow".</li>
+    <li style="margin-bottom: 10px;"><strong>Piece 03 · Single-Source Prism</strong> — architecture block, tells your repo-as-system story without needing copy.</li>
+    <li style="margin-bottom: 10px;"><strong>Piece 04 · Agent Swarm Orbit</strong> — method section, literalises "profile + agentic AI = combination" as motion.</li>
+  </ol>
+  <p style="color: var(--text-muted); max-width: 68ch; margin-top: 20px;">
+    Piece 01 (Recursive Score Dial), Piece 02 (Data-Strata), Piece 07 (Brushed-Steel Nameplate) are great Tier-2 additions you can layer in next. Pieces 06, 08, 09, 10 are maximum-effort flourishes — save for v4 if you want.
+  </p>
+  <p style="color: var(--accent); font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.06em; margin-top: 28px;">→ Tell me which numbers and I implement only those. I do not build before you pick.</p>
+</section>
+
+</div>
+</body>
+</html>
