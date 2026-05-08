@@ -5,7 +5,8 @@ import { renderProofNumbers } from "../generators/templates/landing/components/p
 import { renderCaseExpander } from "../generators/templates/landing/components/case-expander.js";
 import { renderMethodDiagram } from "../generators/templates/landing/components/method-diagram.js";
 import { renderTimeline } from "../generators/templates/landing/components/timeline.js";
-import type { Landing, Identity, Positioning, Case, Experience } from "../generators/lib/types.js";
+import { renderTestimonialFeatured } from "../generators/templates/landing/components/testimonial-featured.js";
+import type { Landing, Identity, Positioning, Case, Experience, Testimonial } from "../generators/lib/types.js";
 
 const identityFixture: Identity = {
   name: "Danilo Rojas",
@@ -282,6 +283,42 @@ describe("renderTimeline", () => {
   it("shows 'Present' in EN and 'presente' in ES", () => {
     expect(renderTimeline(experienceFixture, "en")).toContain("Present");
     expect(renderTimeline(experienceFixture, "es")).toContain("presente");
+  });
+});
+
+describe("renderTestimonialFeatured", () => {
+  const verified: Testimonial = {
+    quote: "Danilo is doing wonderful things.",
+    quoteEs: "Danilo está haciendo cosas geniales.",
+    author: "Jennifer Sheppard",
+    role: "Product Lead · Developer Portal",
+    company: "Booz Allen Hamilton",
+    source: "verified",
+  };
+
+  it("renders the quote + attribution", () => {
+    const html = renderTestimonialFeatured(verified, "en");
+    expect(html).toContain("Danilo is doing wonderful things");
+    expect(html).toContain("Jennifer Sheppard");
+    expect(html).toContain("Product Lead");
+    expect(html).toContain("Booz Allen Hamilton");
+  });
+
+  it("uses ES quote when lang=es and quoteEs is present", () => {
+    const html = renderTestimonialFeatured(verified, "es");
+    expect(html).toContain("cosas geniales");
+    expect(html).not.toContain("Danilo is doing wonderful things");
+  });
+
+  it("renders a 'Verified' badge for verified source", () => {
+    const html = renderTestimonialFeatured(verified, "en");
+    expect(html).toContain("Verified");
+    expect(html).toContain("lp-quote__badge--verified");
+  });
+
+  it("renders 'Verificado' badge in ES", () => {
+    const html = renderTestimonialFeatured(verified, "es");
+    expect(html).toContain("Verificado");
   });
 });
 
