@@ -214,3 +214,53 @@ describe("renderCaseCard", () => {
     expect(html).not.toContain("cv-case--featured");
   });
 });
+
+import { renderTestimonialItem } from "../generators/templates/cv/components/testimonial-item.js";
+import type { Testimonial, AttributedTestimonial } from "../generators/lib/types.js";
+
+describe("renderTestimonialItem", () => {
+  const verified: Testimonial = {
+    quote: "A real loss for us.",
+    quoteEs: "Una pérdida de verdad.",
+    author: "Jennifer Sheppard",
+    role: "Product Lead · Developer Portal",
+    company: "Booz Allen Hamilton",
+    source: "verified",
+  };
+
+  const attributed: AttributedTestimonial = {
+    quote: "He ships the way a senior team ships.",
+    author: "Head of Product",
+    role: "EnRegla pilot",
+    source: "attributed",
+  };
+
+  it("renders quote + author + role for verified", () => {
+    const html = renderTestimonialItem(verified, "en");
+    expect(html).toContain("A real loss for us");
+    expect(html).toContain("Jennifer Sheppard");
+    expect(html).toContain("Product Lead");
+  });
+
+  it("uses 'verified' badge for verified source", () => {
+    const html = renderTestimonialItem(verified, "en");
+    expect(html).toContain("cv-testimonial__badge--verified");
+    expect(html).toContain("verified");
+  });
+
+  it("uses 'attributed' badge for attributed source", () => {
+    const html = renderTestimonialItem(attributed, "en");
+    expect(html).toContain("cv-testimonial__badge--attributed");
+    expect(html).toContain("attributed");
+  });
+
+  it("prefers Spanish quote when lang=es and quoteEs exists", () => {
+    const html = renderTestimonialItem(verified, "es");
+    expect(html).toContain("Una pérdida de verdad");
+  });
+
+  it("falls back to English quote when lang=es but no quoteEs", () => {
+    const html = renderTestimonialItem(attributed, "es");
+    expect(html).toContain("senior team ships");
+  });
+});
