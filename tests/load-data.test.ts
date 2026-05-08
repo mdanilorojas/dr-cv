@@ -1,7 +1,17 @@
 import { describe, it, expect } from "vitest";
-import { loadSkills, loadAllData, DataLoadError } from "../generators/lib/load-data.js";
+import {
+  loadSkills,
+  loadAllData,
+  loadCase,
+  loadCases,
+  loadEducation,
+  loadAttributedTestimonials,
+  loadCvData,
+  DataLoadError,
+} from "../generators/lib/load-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { writeFileSync, unlinkSync, mkdirSync } from "node:fs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const fixtureDir = path.join(__dirname, "fixtures");
@@ -42,14 +52,6 @@ describe("loadAllData", () => {
   });
 });
 
-import {
-  loadCase,
-  loadCases,
-  loadEducation,
-  loadAttributedTestimonials,
-  loadCvData,
-} from "../generators/lib/load-data.js";
-
 describe("loadCase", () => {
   it("parses a case markdown file with YAML front matter", () => {
     const casePath = path.join(fixtureDir, "cases", "test-case.md");
@@ -62,11 +64,44 @@ describe("loadCase", () => {
   });
 
   it("throws DataLoadError when front matter delimiters are missing", () => {
+    mkdirSync(fixtureBadDir, { recursive: true });
     const tmpPath = path.join(fixtureBadDir, "no-frontmatter.md");
-    const fs = require("node:fs");
-    fs.writeFileSync(tmpPath, "plain markdown, no front matter\n");
-    expect(() => loadCase(tmpPath)).toThrow(DataLoadError);
-    fs.unlinkSync(tmpPath);
+    writeFileSync(tmpPath, "plain markdown, no front matter\n");
+    try {
+      expect(() => loadCase(tmpPath)).toThrow(DataLoadError);
+    } finally {
+      unlinkSync(tmpPath);
+    }
+  });
+
+  it("parses front matter with CRLF line endings (Windows editors)", () => {
+    mkdirSync(fixtureBadDir, { recursive: true });
+    const tmpPath = path.join(fixtureBadDir, "crlf-case.md");
+    const crlfContent =
+      "---\r\n" +
+      "slug: crlf-case\r\n" +
+      'titleEn: "CRLF EN"\r\n' +
+      'titleEs: "CRLF ES"\r\n' +
+      'clientEn: "X"\r\n' +
+      'clientEs: "X"\r\n' +
+      "yearStart: 2024\r\n" +
+      "yearEnd: 2025\r\n" +
+      'hookEn: "h"\r\n' +
+      'hookEs: "h"\r\n' +
+      "bulletsEn:\r\n  - a\r\n" +
+      "bulletsEs:\r\n  - a\r\n" +
+      "stack:\r\n  - t\r\n" +
+      "featured: false\r\n" +
+      "---\r\n" +
+      "body\r\n";
+    writeFileSync(tmpPath, crlfContent);
+    try {
+      const c = loadCase(tmpPath);
+      expect(c.slug).toBe("crlf-case");
+      expect(c.titleEn).toBe("CRLF EN");
+    } finally {
+      unlinkSync(tmpPath);
+    }
   });
 });
 

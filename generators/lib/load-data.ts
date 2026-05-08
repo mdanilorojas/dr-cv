@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
 import path from "node:path";
 import yaml from "js-yaml";
 import type {
@@ -9,6 +9,10 @@ import type {
   Clients,
   Testimonials,
   SkillsSheetData,
+  Case,
+  Education,
+  AttributedTestimonial,
+  CvData,
 } from "./types.js";
 
 export class DataLoadError extends Error {
@@ -199,7 +203,7 @@ function validateTestimonials(raw: unknown): Testimonials {
 }
 
 // ============= validators for new types =============
-function validateCase(raw: unknown, path: string): import("./types.js").Case {
+function validateCase(raw: unknown, path: string): Case {
   const o = requireObject(raw, `case front matter in ${path}`);
   const yEnd = o.yearEnd;
   let yearEnd: number | "present";
@@ -231,7 +235,7 @@ function validateCase(raw: unknown, path: string): import("./types.js").Case {
   };
 }
 
-function validateEducation(raw: unknown): import("./types.js").Education {
+function validateEducation(raw: unknown): Education {
   return requireArray(raw, "education", (item, i) => {
     const o = requireObject(item, `education[${i}]`);
     const y = o.year;
@@ -252,7 +256,7 @@ function validateEducation(raw: unknown): import("./types.js").Education {
   });
 }
 
-function validateAttributedTestimonials(raw: unknown): import("./types.js").AttributedTestimonial[] {
+function validateAttributedTestimonials(raw: unknown): AttributedTestimonial[] {
   return requireArray(raw, "attributedTestimonials", (t, i) => {
     const o = requireObject(t, `attributedTestimonials[${i}]`);
     const source = requireString(o.source, `attributedTestimonials[${i}].source`);
@@ -271,7 +275,8 @@ function validateAttributedTestimonials(raw: unknown): import("./types.js").Attr
 }
 
 // ============= markdown front matter parser =============
-const FRONT_MATTER_RE = /^---\n([\s\S]*?)\n---/;
+// Match --- fences tolerating CRLF (Windows) or LF (Unix) line endings.
+const FRONT_MATTER_RE = /^---\r?\n([\s\S]*?)\r?\n---/;
 
 function parseFrontMatter(markdown: string): unknown {
   const match = FRONT_MATTER_RE.exec(markdown);
@@ -298,9 +303,6 @@ export function loadAllData(dataDir: string): SkillsSheetData {
 }
 
 // ---------- new public API ----------
-import { readdirSync } from "node:fs";
-import type { Case, Education, AttributedTestimonial, CvData } from "./types.js";
-
 export function loadCase(filePath: string): Case {
   if (!existsSync(filePath)) {
     throw new DataLoadError(`Case file not found: ${filePath}`, filePath);
