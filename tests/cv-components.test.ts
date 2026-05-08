@@ -264,3 +264,80 @@ describe("renderTestimonialItem", () => {
     expect(html).toContain("senior team ships");
   });
 });
+
+import { renderSkillsSidebar } from "../generators/templates/cv/components/skills-sidebar.js";
+import { renderEducationBlock } from "../generators/templates/cv/components/education-block.js";
+import type { Skills, Education } from "../generators/lib/types.js";
+
+const skillsFixture: Skills = {
+  byLayer: {
+    name: "Visual A",
+    axis: "axis · product layer",
+    groups: [
+      {
+        title: "Strategy",
+        skills: [
+          { name: "Product vision", level: "mastered" },
+          { name: "Pricing", level: "learning" },
+        ],
+      },
+      {
+        title: "Agents",
+        skills: [
+          { name: "Claude Code", level: "mastered" },
+        ],
+      },
+    ],
+  },
+  byOutcome: {
+    name: "Visual B",
+    axis: "axis · outcome",
+    groups: [],
+  },
+};
+
+describe("renderSkillsSidebar", () => {
+  it("renders group titles and skill names", () => {
+    const html = renderSkillsSidebar(skillsFixture, { variant: "warm", lang: "en" });
+    expect(html).toContain("Strategy");
+    expect(html).toContain("Agents");
+    expect(html).toContain("Product vision");
+    expect(html).toContain("Claude Code");
+  });
+
+  it("marks learning skills with a class", () => {
+    const html = renderSkillsSidebar(skillsFixture, { variant: "warm", lang: "en" });
+    const pricingIdx = html.indexOf("Pricing");
+    expect(pricingIdx).toBeGreaterThan(-1);
+    const section = html.slice(Math.max(0, pricingIdx - 100), pricingIdx + 50);
+    expect(section).toContain("cv-skill--learning");
+  });
+
+  it("uses key/value grid layout for bairesdev variant", () => {
+    const html = renderSkillsSidebar(skillsFixture, { variant: "bairesdev", lang: "en" });
+    expect(html).toContain("cv-skills--bairesdev");
+  });
+});
+
+describe("renderEducationBlock", () => {
+  const eduFixture: Education = [
+    { year: 2015, name: "B.Sc. Systems Engineering", institution: "EPN" },
+    { year: null, name: "Independent study", institution: "Self-taught" },
+  ];
+
+  it("renders each education item with name and institution", () => {
+    const html = renderEducationBlock(eduFixture, "en");
+    expect(html).toContain("B.Sc. Systems Engineering");
+    expect(html).toContain("EPN");
+  });
+
+  it("renders year when present", () => {
+    const html = renderEducationBlock(eduFixture, "en");
+    expect(html).toContain("2015");
+  });
+
+  it("renders em dash for null year", () => {
+    const html = renderEducationBlock(eduFixture, "en");
+    expect(html).toContain("—");
+  });
+});
