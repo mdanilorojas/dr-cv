@@ -13,6 +13,11 @@ import type {
   Testimonial,
   Testimonials,
   SkillsSheetData,
+  Case,
+  Education,
+  EducationItem,
+  AttributedTestimonial,
+  CvData,
 } from "../generators/lib/types.js";
 
 describe("data schema types", () => {
@@ -68,14 +73,6 @@ describe("data schema types", () => {
   });
 });
 
-import type {
-  Case,
-  Education,
-  EducationItem,
-  AttributedTestimonial,
-  CvData,
-} from "../generators/lib/types.js";
-
 describe("CV data schema types", () => {
   it("Case has multilingual title + hook + bullets + stack + featured", () => {
     expectTypeOf<Case>().toMatchTypeOf<{
@@ -119,6 +116,9 @@ describe("CV data schema types", () => {
   });
 
   it("CvData extends SkillsSheetData with past + education + cases + attributed", () => {
+    // Strong assertion: CvData must be assignable to SkillsSheetData (structural extension).
+    expectTypeOf<CvData>().toMatchTypeOf<SkillsSheetData>();
+    // Shape assertion: CvData adds the CV-specific fields.
     expectTypeOf<CvData>().toMatchTypeOf<{
       identity: unknown;
       positioning: unknown;
