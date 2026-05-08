@@ -82,10 +82,10 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; font-family: va
   border-bottom: 2px solid var(--ink);
   margin-bottom: 6mm;
 }
-[class$="identity__name"] { font-size: 22pt; letter-spacing: -0.02em; line-height: 1; margin: 0 0 3mm 0; }
-[class$="identity__name-accent"] { color: inherit; }
-[class$="identity__role"] { font-size: 10pt; margin-bottom: 2mm; color: var(--ink); font-weight: 500; }
-[class$="identity__availability"] { font-size: 9pt; color: var(--ink-muted); }
+.cv-identity__name { font-size: 22pt; letter-spacing: -0.02em; line-height: 1; margin: 0 0 3mm 0; }
+.cv-identity__name-accent { color: inherit; }
+.cv-identity__role { font-size: 10pt; margin-bottom: 2mm; color: var(--ink); font-weight: 500; }
+.cv-identity__availability { font-size: 9pt; color: var(--ink-muted); }
 .cv-identity__contact {
   text-align: right; font-size: 8.5pt; color: var(--ink-body); line-height: 1.6;
 }

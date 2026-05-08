@@ -17,8 +17,8 @@ describe("renderBairesdevCv", () => {
 
   it("does NOT contain Agentic Designer in the role line", () => {
     const html = renderBairesdevCv(data);
-    // The role in identity block should NOT be Agentic Designer
-    const identityMatch = html.match(/cv-identity__role[^>]*>([^<]+)</);
+    const body = bodyOnly(html);
+    const identityMatch = body.match(/cv-identity__role[^>]*>([^<]+)</);
     expect(identityMatch).toBeTruthy();
     expect(identityMatch![1]).not.toContain("Agentic Designer");
     expect(identityMatch![1]).toContain("Product Designer");
