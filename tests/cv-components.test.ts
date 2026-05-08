@@ -68,3 +68,45 @@ describe("renderIdentityBlock", () => {
     expect(html).toContain("&lt;script&gt;");
   });
 });
+
+import { renderSummaryBlock } from "../generators/templates/cv/components/summary-block.js";
+import type { Positioning } from "../generators/lib/types.js";
+
+const positioningFixture: Positioning = {
+  thesis: {
+    en: "I ship real products — and I ship the tools agents use to help me ship them.",
+    es: "Entrego productos reales — y entrego las herramientas que los agentes usan para ayudarme.",
+  },
+  tagline: {
+    en: "Fifteen years of delivery.",
+    es: "Quince años entregando.",
+  },
+  proofNumbers: [],
+};
+
+describe("renderSummaryBlock", () => {
+  it("uses 'hello · summary' eyebrow for warm variant", () => {
+    const html = renderSummaryBlock(positioningFixture, { variant: "warm", lang: "en" });
+    expect(html).toContain("hello");
+  });
+
+  it("uses 'Professional Summary' eyebrow for serious variant", () => {
+    const html = renderSummaryBlock(positioningFixture, { variant: "serious", lang: "en" });
+    expect(html).toContain("Professional Summary");
+  });
+
+  it("uses 'Professional Summary' eyebrow for bairesdev variant", () => {
+    const html = renderSummaryBlock(positioningFixture, { variant: "bairesdev", lang: "en" });
+    expect(html).toContain("Professional Summary");
+  });
+
+  it("renders EN thesis when lang=en", () => {
+    const html = renderSummaryBlock(positioningFixture, { variant: "warm", lang: "en" });
+    expect(html).toContain("I ship real products");
+  });
+
+  it("renders ES thesis when lang=es", () => {
+    const html = renderSummaryBlock(positioningFixture, { variant: "warm", lang: "es" });
+    expect(html).toContain("Entrego productos reales");
+  });
+});
