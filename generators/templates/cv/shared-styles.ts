@@ -348,11 +348,11 @@ body {
   letter-spacing: 0.14em;
   margin-left: auto;
 }
-.cv-testimonial__badge\\--verified {
+.cv-testimonial__badge--verified {
   color: var(--accent);
   border: 1px solid var(--accent);
 }
-.cv-testimonial__badge\\--attributed {
+.cv-testimonial__badge--attributed {
   color: var(--ink-muted);
   border: 1px solid var(--line-strong);
 }

@@ -31,17 +31,24 @@ describe("renderWarmCv", () => {
     expect(html).toContain("#FF8964");
   });
 
+  function bodyOnly(html: string): string {
+    const m = /<body>([\s\S]*?)<\/body>/i.exec(html);
+    return m ? m[1] : html;
+  }
+
   it("renders 4 case cards with first being featured dark", () => {
     const html = renderWarmCv(data, "en", tokensCss);
-    const caseCount = (html.match(/class="cv-case /g) || []).length;
+    const body = bodyOnly(html);
+    const caseCount = (body.match(/class="cv-case /g) || []).length;
     expect(caseCount).toBeGreaterThanOrEqual(4);
-    expect(html).toContain("cv-case--dark");
+    expect(body).toContain("cv-case--dark");
   });
 
   it("renders 2 verified + 3 attributed testimonials", () => {
     const html = renderWarmCv(data, "en", tokensCss);
-    const verified = (html.match(/cv-testimonial__badge--verified/g) || []).length;
-    const attributed = (html.match(/cv-testimonial__badge--attributed/g) || []).length;
+    const body = bodyOnly(html);
+    const verified = (body.match(/cv-testimonial__badge--verified/g) || []).length;
+    const attributed = (body.match(/cv-testimonial__badge--attributed/g) || []).length;
     expect(verified).toBe(2);
     expect(attributed).toBe(3);
   });
