@@ -4,7 +4,8 @@ import { renderHeroBlock } from "../generators/templates/landing/components/hero
 import { renderProofNumbers } from "../generators/templates/landing/components/proof-numbers.js";
 import { renderCaseExpander } from "../generators/templates/landing/components/case-expander.js";
 import { renderMethodDiagram } from "../generators/templates/landing/components/method-diagram.js";
-import type { Landing, Identity, Positioning, Case } from "../generators/lib/types.js";
+import { renderTimeline } from "../generators/templates/landing/components/timeline.js";
+import type { Landing, Identity, Positioning, Case, Experience } from "../generators/lib/types.js";
 
 const identityFixture: Identity = {
   name: "Danilo Rojas",
@@ -238,6 +239,49 @@ describe("renderMethodDiagram", () => {
     const html = renderMethodDiagram("en");
     expect(html).toContain('role="img"');
     expect(html).toMatch(/aria-label="[^"]+"/);
+  });
+});
+
+describe("renderTimeline", () => {
+  const experienceFixture: Experience = {
+    current: [
+      {
+        company: "Booz Allen Hamilton",
+        role: "Design Engineer",
+        startYear: 2025,
+        endYear: "present",
+        descriptionEn: "Consulting engagement.",
+        descriptionEs: "Consultoría.",
+        stack: ["React"],
+      },
+    ],
+    past: [
+      {
+        company: "Xentinels",
+        role: "DesignOps Lead",
+        startYear: 2021,
+        endYear: 2023,
+        descriptionEn: "Led DS migration.",
+        descriptionEs: "Lideré migración DS.",
+        stack: ["Figma"],
+      },
+    ],
+  };
+
+  it("renders both current and past entries", () => {
+    const html = renderTimeline(experienceFixture, "en");
+    expect(html).toContain("Booz Allen Hamilton");
+    expect(html).toContain("Xentinels");
+  });
+
+  it("marks current-job rows with a current class", () => {
+    const html = renderTimeline(experienceFixture, "en");
+    expect(html).toContain("lp-timeline__row--current");
+  });
+
+  it("shows 'Present' in EN and 'presente' in ES", () => {
+    expect(renderTimeline(experienceFixture, "en")).toContain("Present");
+    expect(renderTimeline(experienceFixture, "es")).toContain("presente");
   });
 });
 
