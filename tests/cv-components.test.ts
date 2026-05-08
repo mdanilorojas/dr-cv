@@ -110,3 +110,53 @@ describe("renderSummaryBlock", () => {
     expect(html).toContain("Entrego productos reales");
   });
 });
+
+import { renderExperienceItem } from "../generators/templates/cv/components/experience-item.js";
+import type { ExperienceItem } from "../generators/lib/types.js";
+
+const xpFixture: ExperienceItem = {
+  company: "Xentinels DesignOps",
+  role: "Product Manager / UX-UI Designer",
+  startYear: 2016,
+  endYear: "present",
+  descriptionEn: "Led design system work across enterprise clients.",
+  descriptionEs: "Lideré trabajo de design system con clientes enterprise.",
+  stack: ["Design system", "Figma"],
+};
+
+describe("renderExperienceItem", () => {
+  it("renders company, role, timeframe", () => {
+    const html = renderExperienceItem(xpFixture, { lang: "en", density: "full" });
+    expect(html).toContain("Xentinels DesignOps");
+    expect(html).toContain("Product Manager");
+    expect(html).toContain("2016");
+  });
+
+  it("uses 'Present' when endYear is 'present' in EN", () => {
+    const html = renderExperienceItem(xpFixture, { lang: "en", density: "full" });
+    expect(html).toContain("Present");
+  });
+
+  it("uses 'presente' when endYear is 'present' in ES", () => {
+    const html = renderExperienceItem(xpFixture, { lang: "es", density: "full" });
+    expect(html).toContain("presente");
+  });
+
+  it("renders numeric endYear directly", () => {
+    const closed: ExperienceItem = { ...xpFixture, endYear: 2017 };
+    const html = renderExperienceItem(closed, { lang: "en", density: "full" });
+    expect(html).toContain("2017");
+  });
+
+  it("omits description in condensed density", () => {
+    const html = renderExperienceItem(xpFixture, { lang: "en", density: "condensed" });
+    expect(html).not.toContain("Led design system work");
+    expect(html).toContain("Xentinels DesignOps");
+  });
+
+  it("renders stack pills in full density", () => {
+    const html = renderExperienceItem(xpFixture, { lang: "en", density: "full" });
+    expect(html).toContain("Design system");
+    expect(html).toContain("Figma");
+  });
+});
