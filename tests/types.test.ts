@@ -67,3 +67,68 @@ describe("data schema types", () => {
     }>();
   });
 });
+
+import type {
+  Case,
+  Education,
+  EducationItem,
+  AttributedTestimonial,
+  CvData,
+} from "../generators/lib/types.js";
+
+describe("CV data schema types", () => {
+  it("Case has multilingual title + hook + bullets + stack + featured", () => {
+    expectTypeOf<Case>().toMatchTypeOf<{
+      slug: string;
+      titleEn: string;
+      titleEs: string;
+      clientEn: string;
+      clientEs: string;
+      yearStart: number;
+      yearEnd: number | "present";
+      hookEn: string;
+      hookEs: string;
+      bulletsEn: string[];
+      bulletsEs: string[];
+      stack: string[];
+      featured: boolean;
+    }>();
+  });
+
+  it("EducationItem has year (nullable) + name + institution", () => {
+    expectTypeOf<EducationItem>().toMatchTypeOf<{
+      year: number | null;
+      name: string;
+      institution: string;
+    }>();
+  });
+
+  it("Education is an array of items", () => {
+    expectTypeOf<Education>().toMatchTypeOf<EducationItem[]>();
+  });
+
+  it("AttributedTestimonial has quote + author + role + source='attributed'", () => {
+    expectTypeOf<AttributedTestimonial>().toMatchTypeOf<{
+      quote: string;
+      quoteEs?: string;
+      author: string;
+      role: string;
+      company?: string;
+      source: "attributed";
+    }>();
+  });
+
+  it("CvData extends SkillsSheetData with past + education + cases + attributed", () => {
+    expectTypeOf<CvData>().toMatchTypeOf<{
+      identity: unknown;
+      positioning: unknown;
+      skills: unknown;
+      experience: unknown;
+      clients: unknown;
+      testimonials: unknown;
+      education: Education;
+      cases: Case[];
+      attributedTestimonials: AttributedTestimonial[];
+    }>();
+  });
+});

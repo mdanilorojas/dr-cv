@@ -104,3 +104,47 @@ export interface SkillsSheetData {
   clients: Clients;
   testimonials: Testimonials;
 }
+
+// ============= CASES =============
+export interface Case {
+  slug: string;                // unique id, matches file name
+  titleEn: string;
+  titleEs: string;
+  clientEn: string;            // e.g. "Booz Allen Hamilton · Developer Portal"
+  clientEs: string;
+  yearStart: number;
+  yearEnd: number | "present";
+  hookEn: string;              // one-paragraph pitch
+  hookEs: string;
+  bulletsEn: string[];         // 2–4 bullet points
+  bulletsEs: string[];
+  stack: string[];             // short tech tags
+  featured: boolean;           // if true, can be rendered as the featured card
+}
+
+// ============= EDUCATION =============
+export interface EducationItem {
+  year: number | null;         // null for items without a specific year
+  name: string;
+  institution: string;
+  location?: string;
+}
+
+export type Education = EducationItem[];
+
+// ============= ATTRIBUTED TESTIMONIALS =============
+export interface AttributedTestimonial {
+  quote: string;
+  quoteEs?: string;
+  author: string;              // e.g. "Head of Product"
+  role: string;                // e.g. "EnRegla pilot customer"
+  company?: string;
+  source: "attributed";
+}
+
+// ============= CV DATA =============
+export interface CvData extends SkillsSheetData {
+  education: Education;
+  cases: Case[];
+  attributedTestimonials: AttributedTestimonial[];
+}
