@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>dr-cv · Phase 3 · Landing Page · Design Spec</title>
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --ink-body: #2b2b2b;
+    --ink-muted: #6b6b6b;
+    --ink-inverse: #f4f4f5;
+    --bg: #f7f5f1;
+    --bg-card: #ffffff;
+    --bg-dark: #0a0a0f;
+    --line: #e5e2da;
+    --line-soft: #efece4;
+    --accent: #FF8964;
+    --accent-deep: #e0674a;
+    --font-body: "Inter","Helvetica Neue",Arial,sans-serif;
+    --font-mono: "JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+  }
+  * { box-sizing: border-box; }
+  html,body { margin:0; padding:0; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--ink-body);
+    line-height: 1.55;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 48px 32px 120px; }
+  header.lead {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 32px;
+    margin-bottom: 48px;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .eyebrow::before { content: "// "; color: var(--ink-muted); }
+  h1 {
+    font-family: var(--font-body);
+    font-size: 38px;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 12px 0 8px;
+    font-weight: 600;
+  }
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-muted);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .meta span { letter-spacing: 0.03em; }
+  h2 {
+    font-family: var(--font-body);
+    font-size: 22px;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 48px 0 16px;
+    font-weight: 600;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  h3 {
+    font-family: var(--font-body);
+    font-size: 17px;
+    color: var(--ink);
+    margin: 32px 0 12px;
+    font-weight: 600;
+  }
+  p { margin: 0 0 14px; }
+  code {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    background: var(--line-soft);
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+  pre {
+    background: var(--ink);
+    color: var(--ink-inverse);
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+  pre code { background: transparent; color: inherit; padding: 0; }
+  ul { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 4px; }
+  strong { color: var(--ink); font-weight: 600; }
+  /* summary cards */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .card__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .card__title {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .card__body {
+    font-size: 13px;
+    color: var(--ink-body);
+    line-height: 1.5;
+  }
+  /* tabs mockup */
+  .tabs-mock {
+    background: var(--bg-dark);
+    color: var(--ink-inverse);
+    border-radius: 10px;
+    padding: 28px;
+    margin: 24px 0;
+  }
+  .tabs-mock__nav {
+    display: flex;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    padding-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .tabs-mock__tab {
+    color: #8f8f95;
+    cursor: pointer;
+    padding-bottom: 4px;
+  }
+  .tabs-mock__tab.active {
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: -12px;
+  }
+  .tabs-mock__section {
+    margin-top: 20px;
+    font-family: var(--font-body);
+  }
+  .tabs-mock__section h4 {
+    font-size: 28px;
+    letter-spacing: -0.03em;
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  .tabs-mock__section .sub {
+    color: #a8a8ae;
+    font-size: 14px;
+  }
+  /* flow diagram */
+  .flow {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 20px 0;
+    overflow-x: auto;
+  }
+  /* table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 16px 0;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  th {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 500;
+    background: var(--line-soft);
+  }
+  .decisions th:first-child, .decisions td:first-child { width: 56px; }
+  /* callout */
+  .callout {
+    background: var(--bg-dark);
+    color: var(--ink-inverse);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-left: 3px solid var(--accent);
+  }
+  .callout .eyebrow { color: var(--accent); }
+  .callout p:last-child { margin-bottom: 0; }
+  /* toc */
+  nav.toc {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 40px;
+    font-size: 14px;
+  }
+  nav.toc ol {
+    margin: 0;
+    padding-left: 22px;
+    columns: 2;
+    column-gap: 32px;
+  }
+  nav.toc a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--ink-muted);
+  }
+  nav.toc a:hover { color: var(--accent); border-color: var(--accent); }
+  /* status pill */
+  .pill {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 99px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    background: rgba(255,137,100,.08);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="lead">
+  <div class="eyebrow">Phase 3 · Design Spec</div>
+  <h1>Landing Page · DaniloRojas.design</h1>
+  <p style="font-size:17px; color:var(--ink); margin-top:4px;">
+    The public-facing surface that turns prospects into conversations.
+    Reuses the single source of truth; no hand-edited content.
+  </p>
+  <div class="meta">
+    <span>Date · 2026-05-08</span>
+    <span>Author · Danilo Rojas</span>
+    <span>Status · <span class="pill">ready for plan</span></span>
+    <span>Canonical md · <code>2026-05-08-phase3-landing-design.md</code></span>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="card__eyebrow" style="margin-bottom:8px;">Table of contents</div>
+  <ol>
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#goal">Goal</a></li>
+    <li><a href="#nongoals">Non-goals</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#flow">User flow</a></li>
+    <li><a href="#tabs">Tabs mockup</a></li>
+    <li><a href="#components">Components</a></li>
+    <li><a href="#testing">Testing</a></li>
+    <li><a href="#success">Success criteria</a></li>
+    <li><a href="#risks">Risks</a></li>
+    <li><a href="#decisions">Decisions</a></li>
+    <li><a href="#next">Next step</a></li>
+  </ol>
+</nav>
+
+<section id="problem">
+  <h2>Problem</h2>
+  <p>
+    Phases 1 and 2 shipped (skills sheet generator + 5 CV PDFs). None of that is visible on the public internet.
+    A prospect arriving via LinkedIn, a BairesDev placement, or a CV handoff has nowhere to land that shows Danilo's 2026 Agentic Designer positioning,
+    case studies, method, and real social proof.
+  </p>
+  <div class="cards">
+    <div class="card">
+      <div class="card__eyebrow">Entry A</div>
+      <div class="card__title">LinkedIn outreach</div>
+      <div class="card__body">Direct prospects who clicked Danilo's profile after a DM campaign.</div>
+    </div>
+    <div class="card">
+      <div class="card__eyebrow">Entry B</div>
+      <div class="card__title">CV handoff</div>
+      <div class="card__body">A recruiter reads a PDF and wants to verify the work online.</div>
+    </div>
+    <div class="card">
+      <div class="card__eyebrow">Entry C</div>
+      <div class="card__title">BairesDev placement</div>
+      <div class="card__body">Client decision-makers vetting Danilo as a candidate for a specific engagement.</div>
+    </div>
+    <div class="card">
+      <div class="card__eyebrow">Entry D</div>
+      <div class="card__title">Warm intro</div>
+      <div class="card__body">Ex-colleagues forwarding Danilo's URL to their network.</div>
+    </div>
+  </div>
+</section>
+
+<section id="goal">
+  <h2>Goal</h2>
+  <p>
+    Ship a production-ready landing page at <code>danilorojas.design</code> (domain TBD) that:
+  </p>
+  <ol>
+    <li>Loads the same <code>/data/*</code> single source of truth used by Phases 1 and 2 — zero hand-edited content.</li>
+    <li>Matches the <strong>Huly.io aesthetic</strong>: dark-dominant, alternating light bands, JetBrains Mono display, Inter body, warm accent <code>#FF8964</code>, one animated visual per section.</li>
+    <li>Follows the <strong>tab-SPA single-file pattern</strong> Danilo already shipped at BAH in <code>te-landing-v4.5.html</code>.</li>
+    <li>Is <strong>mobile-first</strong>, renders cleanly at 375px without horizontal overflow.</li>
+    <li>Is <strong>bilingual EN/ES</strong> via dual-file emission (<code>/index.html</code> + <code>/es/index.html</code>), not a JS runtime toggle.</li>
+    <li>Deploys to any static host (Vercel, GitHub Pages, Netlify) with zero env vars.</li>
+  </ol>
+</section>
+
+<section id="nongoals">
+  <h2>Non-goals</h2>
+  <div class="cards">
+    <div class="card"><div class="card__eyebrow">Not</div><div class="card__title">A React/Next/SSR app</div><div class="card__body">Vanilla HTML/CSS proved itself in SharePoint at BAH. Adding a framework is Phase 5+ if ever.</div></div>
+    <div class="card"><div class="card__eyebrow">Not</div><div class="card__title">A CMS</div><div class="card__body">Content lives in <code>/data/</code> YAML/Markdown, like Phases 1–2.</div></div>
+    <div class="card"><div class="card__eyebrow">Not</div><div class="card__title">A backend</div><div class="card__body">No APIs, no forms, no LLM calls. The "me" agent dock is reserved but empty in Phase 3.</div></div>
+    <div class="card"><div class="card__eyebrow">Not</div><div class="card__title">Analytics in v1</div><div class="card__body">No PostHog, no Sentry, no cookies, no consent banner needed.</div></div>
+    <div class="card"><div class="card__eyebrow">Not</div><div class="card__title">A contact form</div><div class="card__body">Mailto + copy-email is enough without a backend.</div></div>
+    <div class="card"><div class="card__eyebrow">Not</div><div class="card__title">A blog</div><div class="card__body">Case studies are the only long-form surface.</div></div>
+  </div>
+</section>
+
+<section id="architecture">
+  <h2>Architecture</h2>
+  <h3>Tab-SPA pattern</h3>
+  <p>
+    One HTML file per language. All sections exist in the DOM at load; a tab bar toggles visibility via CSS <code>[hidden]</code>.
+    URL hash reflects the active tab (<code>/#work</code>) for shareability. No router, no framework, no hydration.
+  </p>
+
+  <h3>Five tabs</h3>
+  <div class="cards">
+    <div class="card"><div class="card__eyebrow">Tab 1 · default</div><div class="card__title">Overview</div><div class="card__body">Hero (name, category, thesis), live-dot status, 4 proof numbers, primary CTA.</div></div>
+    <div class="card"><div class="card__eyebrow">Tab 2</div><div class="card__title">Work</div><div class="card__body">Case-study grid expanding inline — TE Skin, TE Black, TE Landing v4.5, EnRegla, Life Update Mobile, DS migration.</div></div>
+    <div class="card"><div class="card__eyebrow">Tab 3</div><div class="card__title">Method</div><div class="card__body">Profile + agentic AI = combination. Animated diagram of Claude Code + MCP + subagents + skills-lock. Links to Phase 1/2 artifacts.</div></div>
+    <div class="card"><div class="card__eyebrow">Tab 4</div><div class="card__title">About</div><div class="card__body">Bio, 2010–2026 timeline, education, languages, location.</div></div>
+    <div class="card"><div class="card__eyebrow">Tab 5</div><div class="card__title">Contact</div><div class="card__body">Mailto, LinkedIn, GitHub, Behance, copy-email, live-dot. Reserves the <code>#me-agent-dock</code> slot for Phase 4+.</div></div>
+  </div>
+
+  <h3>Bilingual via dual-file emission</h3>
+  <ul>
+    <li><code>dist/landing/index.html</code> — English (primary).</li>
+    <li><code>dist/landing/es/index.html</code> — Spanish.</li>
+    <li>Language toggle is an <code>&lt;a href&gt;</code> in the header, not a JS state toggle — SEO, shareability, simplicity.</li>
+    <li>Language switch preserves active tab via hash.</li>
+  </ul>
+
+  <h3>Generator scaffold</h3>
+  <pre><code>generators/landing.ts                        # orchestrator → 2 HTML files
+generators/templates/landing/
+  ├── index.ts                               # full-page template
+  ├── landing-styles.ts                      # inline &lt;style&gt;, single blob
+  ├── landing-script.ts                      # inline &lt;script&gt;, tab logic only
+  └── components/
+      ├── hero-block.ts
+      ├── proof-numbers.ts
+      ├── tab-nav.ts
+      ├── case-expander.ts
+      ├── method-diagram.ts
+      ├── timeline.ts
+      ├── testimonial-featured.ts
+      ├── section-visual.ts
+      └── contact-block.ts</code></pre>
+
+  <h3>New data file</h3>
+  <p>Only one new file in <code>/data/</code>: <code>landing.yaml</code> — defines tab order, tab visibility flags, per-section visual choice, CTA text per language, SEO metadata.</p>
+</section>
+
+<section id="flow">
+  <h2>User flow</h2>
+  <p>All paths a user can take from entry to conversation. Each branch is self-contained and reversible.</p>
+  <div class="flow">
+    <div id="mermaid-flow" style="font-family:var(--font-mono);font-size:13px;line-height:1.6;color:var(--ink);white-space:pre;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" style="width:100%;height:auto;font-family:var(--font-body);">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b6b6b"/>
+    </marker>
+    <marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#FF8964"/>
+    </marker>
+  </defs>
+
+  <!-- Entries -->
+  <g font-size="11" font-family="JetBrains Mono, monospace" fill="#6b6b6b">
+    <text x="80" y="30" text-anchor="middle">LINKEDIN</text>
+    <text x="230" y="30" text-anchor="middle">CV HANDOFF</text>
+    <text x="380" y="30" text-anchor="middle">BAH PLACEMENT</text>
+    <text x="530" y="30" text-anchor="middle">WARM INTRO</text>
+  </g>
+
+  <!-- Entry arrows down to landing -->
+  <line x1="80" y1="40" x2="310" y2="90" stroke="#6b6b6b" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="230" y1="40" x2="310" y2="90" stroke="#6b6b6b" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="380" y1="40" x2="310" y2="90" stroke="#6b6b6b" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="530" y1="40" x2="310" y2="90" stroke="#6b6b6b" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Landing -->
+  <rect x="210" y="90" width="200" height="46" rx="6" fill="#0a0a0f"/>
+  <text x="310" y="114" text-anchor="middle" fill="#f4f4f5" font-size="13" font-weight="600">Landing · /</text>
+  <text x="310" y="128" text-anchor="middle" fill="#a8a8ae" font-size="10">default: #overview</text>
+
+  <!-- Overview pill -->
+  <rect x="240" y="165" width="140" height="34" rx="17" fill="#FF8964" stroke="none"/>
+  <text x="310" y="187" text-anchor="middle" fill="#0a0a0f" font-size="12" font-weight="600">OVERVIEW</text>
+  <line x1="310" y1="136" x2="310" y2="163" stroke="#FF8964" stroke-width="2" marker-end="url(#arrow-accent)"/>
+
+  <!-- Four tab branches -->
+  <g>
+    <rect x="40"  y="260" width="130" height="40" rx="6" fill="#ffffff" stroke="#e5e2da"/>
+    <text x="105" y="285" text-anchor="middle" fill="#0a0a0f" font-size="13" font-weight="500">Work</text>
+
+    <rect x="195" y="260" width="130" height="40" rx="6" fill="#ffffff" stroke="#e5e2da"/>
+    <text x="260" y="285" text-anchor="middle" fill="#0a0a0f" font-size="13" font-weight="500">Method</text>
+
+    <rect x="350" y="260" width="130" height="40" rx="6" fill="#ffffff" stroke="#e5e2da"/>
+    <text x="415" y="285" text-anchor="middle" fill="#0a0a0f" font-size="13" font-weight="500">About</text>
+
+    <rect x="505" y="260" width="130" height="40" rx="6" fill="#ffffff" stroke="#e5e2da"/>
+    <text x="570" y="285" text-anchor="middle" fill="#0a0a0f" font-size="13" font-weight="500">Contact</text>
+
+    <rect x="680" y="260" width="180" height="40" rx="6" fill="#fff7f3" stroke="#FF8964"/>
+    <text x="770" y="285" text-anchor="middle" fill="#FF8964" font-size="12" font-weight="600" font-family="JetBrains Mono, monospace">LANG · /es/</text>
+  </g>
+
+  <!-- Overview to tabs -->
+  <line x1="270" y1="199" x2="120" y2="258" stroke="#6b6b6b" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="290" y1="199" x2="260" y2="258" stroke="#6b6b6b" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="330" y1="199" x2="415" y2="258" stroke="#6b6b6b" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="350" y1="199" x2="570" y2="258" stroke="#6b6b6b" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="380" y1="182" x2="680" y2="275" stroke="#FF8964" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-accent)"/>
+
+  <!-- Sub actions -->
+  <g font-size="11" font-family="Inter, sans-serif">
+    <!-- Work -->
+    <rect x="20" y="350" width="170" height="50" rx="6" fill="#ffffff" stroke="#efece4"/>
+    <text x="105" y="370" text-anchor="middle" fill="#0a0a0f" font-size="12" font-weight="500">Click case card</text>
+    <text x="105" y="386" text-anchor="middle" fill="#6b6b6b" font-size="10">expand inline (no modal)</text>
+    <line x1="105" y1="300" x2="105" y2="348" stroke="#6b6b6b" stroke-width="1" marker-end="url(#arrow)"/>
+
+    <!-- Method -->
+    <rect x="195" y="350" width="130" height="50" rx="6" fill="#ffffff" stroke="#efece4"/>
+    <text x="260" y="370" text-anchor="middle" fill="#0a0a0f" font-size="12" font-weight="500">Links out</text>
+    <text x="260" y="386" text-anchor="middle" fill="#6b6b6b" font-size="10">skills-sheet · CV PDFs</text>
+    <line x1="260" y1="300" x2="260" y2="348" stroke="#6b6b6b" stroke-width="1" marker-end="url(#arrow)"/>
+
+    <!-- About -->
+    <rect x="350" y="350" width="130" height="50" rx="6" fill="#ffffff" stroke="#efece4"/>
+    <text x="415" y="370" text-anchor="middle" fill="#0a0a0f" font-size="12" font-weight="500">Scroll timeline</text>
+    <text x="415" y="386" text-anchor="middle" fill="#6b6b6b" font-size="10">2010 → 2026</text>
+    <line x1="415" y1="300" x2="415" y2="348" stroke="#6b6b6b" stroke-width="1" marker-end="url(#arrow)"/>
+
+    <!-- Contact -->
+    <rect x="505" y="350" width="170" height="50" rx="6" fill="#0a0a0f" stroke="#0a0a0f"/>
+    <text x="590" y="370" text-anchor="middle" fill="#f4f4f5" font-size="12" font-weight="500">Mailto · Copy email</text>
+    <text x="590" y="386" text-anchor="middle" fill="#a8a8ae" font-size="10">conversation starts</text>
+    <line x1="570" y1="300" x2="570" y2="348" stroke="#FF8964" stroke-width="2" marker-end="url(#arrow-accent)"/>
+
+    <!-- /es/ -->
+    <rect x="700" y="350" width="160" height="50" rx="6" fill="#fff7f3" stroke="#FF8964"/>
+    <text x="780" y="370" text-anchor="middle" fill="#0a0a0f" font-size="12" font-weight="500">Spanish mirror</text>
+    <text x="780" y="386" text-anchor="middle" fill="#6b6b6b" font-size="10">hash preserved</text>
+    <line x1="770" y1="300" x2="770" y2="348" stroke="#FF8964" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-accent)"/>
+  </g>
+
+  <!-- Terminal: conversation -->
+  <g>
+    <rect x="330" y="460" width="240" height="60" rx="8" fill="#0a0a0f" stroke="#FF8964" stroke-width="2"/>
+    <text x="450" y="485" text-anchor="middle" fill="#FF8964" font-size="11" font-family="JetBrains Mono, monospace" letter-spacing="2">// GOAL</text>
+    <text x="450" y="505" text-anchor="middle" fill="#f4f4f5" font-size="14" font-weight="600">Conversation with Danilo</text>
+  </g>
+  <line x1="590" y1="400" x2="500" y2="458" stroke="#FF8964" stroke-width="2" marker-end="url(#arrow-accent)"/>
+  <line x1="105" y1="400" x2="370" y2="460" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+  <line x1="260" y1="400" x2="410" y2="460" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+  <line x1="415" y1="400" x2="450" y2="458" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+  <line x1="780" y1="400" x2="530" y2="480" stroke="#FF8964" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-accent)"/>
+
+  <!-- Legend -->
+  <g font-size="10" font-family="JetBrains Mono, monospace" fill="#6b6b6b">
+    <line x1="40" y1="565" x2="70" y2="565" stroke="#FF8964" stroke-width="2"/>
+    <text x="80" y="569">PRIMARY PATH</text>
+    <line x1="200" y1="565" x2="230" y2="565" stroke="#6b6b6b" stroke-width="1"/>
+    <text x="240" y="569">NAVIGATION</text>
+    <line x1="340" y1="565" x2="370" y2="565" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="380" y="569">CONVERSION</text>
+    <line x1="490" y1="565" x2="520" y2="565" stroke="#FF8964" stroke-width="1" stroke-dasharray="4 3"/>
+    <text x="530" y="569">LANGUAGE SWITCH</text>
+  </g>
+</svg>
+    </div>
+  </div>
+</section>
+
+<section id="tabs">
+  <h2>Visual mockup · Overview tab</h2>
+  <p>The Huly-inspired dark hero, rendered statically here for review.</p>
+  <div class="tabs-mock">
+    <div class="tabs-mock__nav">
+      <span class="tabs-mock__tab active">Overview</span>
+      <span class="tabs-mock__tab">Work</span>
+      <span class="tabs-mock__tab">Method</span>
+      <span class="tabs-mock__tab">About</span>
+      <span class="tabs-mock__tab">Contact</span>
+      <span class="tabs-mock__tab" style="margin-left:auto;color:#FF8964;">EN · ES</span>
+    </div>
+    <div class="tabs-mock__section">
+      <div style="font-family:var(--font-mono); font-size:12px; letter-spacing:0.14em; color:#FF8964; text-transform:uppercase;">// Agentic Designer · Product Engineer</div>
+      <h4 style="margin-top:12px;">I ship real products —<br>and I ship the tools<br>agents use to help me.</h4>
+      <div class="sub">Fifteen years of delivery. Enterprise clients, production SaaS, active consulting at Booz Allen Hamilton.</div>
+      <div style="display:flex; gap:40px; margin-top:28px; flex-wrap:wrap;">
+        <div><div style="font-size:28px; font-weight:600; letter-spacing:-0.02em;">15<span style="color:#FF8964">+</span></div><div style="font-size:11px; color:#8f8f95; font-family:var(--font-mono); letter-spacing:0.08em;">YEARS SHIPPING</div></div>
+        <div><div style="font-size:28px; font-weight:600; letter-spacing:-0.02em;">346</div><div style="font-size:11px; color:#8f8f95; font-family:var(--font-mono); letter-spacing:0.08em;">COMMITS · 40 DAYS</div></div>
+        <div><div style="font-size:28px; font-weight:600; letter-spacing:-0.02em;">1<span style="color:#FF8964">.0</span></div><div style="font-size:11px; color:#8f8f95; font-family:var(--font-mono); letter-spacing:0.08em;">SAAS LIVE</div></div>
+        <div><div style="font-size:28px; font-weight:600; letter-spacing:-0.02em;">95<span style="color:#FF8964">.6</span></div><div style="font-size:11px; color:#8f8f95; font-family:var(--font-mono); letter-spacing:0.08em;">DS SCORE</div></div>
+      </div>
+      <div style="margin-top:28px;">
+        <a href="#contact" style="display:inline-block; background:#FF8964; color:#0a0a0f; padding:10px 18px; border-radius:99px; font-weight:600; text-decoration:none; font-size:13px;">Let's work together →</a>
+        <span style="margin-left:14px; color:#a8a8ae; font-size:12px; font-family:var(--font-mono);">● Open to work · Remote global</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="components">
+  <h2>Components</h2>
+  <p>Each component is a pure render function <code>(data, lang) =&gt; string</code>. Testable in isolation.</p>
+  <table>
+    <thead>
+      <tr><th>Component</th><th>Purpose</th><th>Used by tab</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>hero-block</code></td><td>Overview hero — name + category + thesis + live dot + CTA</td><td>Overview</td></tr>
+      <tr><td><code>proof-numbers</code></td><td>Four stats strip from <code>positioning.yaml.proofNumbers</code></td><td>Overview, Method</td></tr>
+      <tr><td><code>tab-nav</code></td><td>Sticky nav, 5 tabs, hash-sync, keyboard nav, lang toggle</td><td>Every tab</td></tr>
+      <tr><td><code>case-expander</code></td><td>Case card expanding inline (reads <code>/data/cases/*.md</code> body)</td><td>Work</td></tr>
+      <tr><td><code>method-diagram</code></td><td>SVG diagram of Claude Code + MCP + subagents + skills-lock flow</td><td>Method</td></tr>
+      <tr><td><code>timeline</code></td><td>2010–2026 strip from <code>experience.yaml</code></td><td>About</td></tr>
+      <tr><td><code>testimonial-featured</code></td><td>Large-format quote with verified/attributed badge</td><td>Work, Method</td></tr>
+      <tr><td><code>section-visual</code></td><td>Per-section animated background (particles / flow / grid / timeline / signature)</td><td>Every tab</td></tr>
+      <tr><td><code>contact-block</code></td><td>Mailto + social links + copy-email</td><td>Contact</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="testing">
+  <h2>Testing strategy</h2>
+  <ul>
+    <li><strong>Unit</strong> (vitest) per component: returns non-empty string, escapes HTML, renders EN + ES variants.</li>
+    <li><strong>Integration</strong> for <code>renderLanding(data, lang)</code>: contains all 5 tab panels; all case entries from <code>/data/cases/</code>; EN CTA "Let's work together" + ES "Trabajemos juntos"; both verified testimonials (Sheppard, Giraldez); no scrub-list URL; total HTML ≤ 400 KB uncompressed.</li>
+    <li><strong>Smoke</strong> (puppeteer): load each HTML, check Lighthouse ≥ 90/95/95/95, no horizontal scroll at 375px, tab switching works.</li>
+  </ul>
+</section>
+
+<section id="success">
+  <h2>Success criteria</h2>
+  <div class="callout">
+    <div class="eyebrow">Phase 3 shipped</div>
+    <p style="margin-top:8px;">
+      When <code>npm run build:landing</code> emits <code>dist/landing/index.html</code> and <code>dist/landing/es/index.html</code> from <code>/data/*</code> only,
+      both render cleanly at mobile/tablet/desktop, Lighthouse ≥ 90 performance and ≥ 95 accessibility, all tests green,
+      and the output is deployable to any static host.
+    </p>
+  </div>
+  <ol>
+    <li>Zero hand-edited content in output.</li>
+    <li>Renders correctly at 375 / 768 / 1280 px.</li>
+    <li>Tab switching works via click, keyboard, and URL hash.</li>
+    <li>Language toggle preserves active tab (<code>/#work → /es/#work</code>).</li>
+    <li>Lighthouse ≥ 90 performance, ≥ 95 accessibility.</li>
+    <li>All tests green: existing 97 + new landing tests.</li>
+    <li>Deployable via <code>npx http-server dist/landing</code>.</li>
+    <li>BAH scrub list respected.</li>
+  </ol>
+</section>
+
+<section id="risks">
+  <h2>Risks &amp; mitigations</h2>
+  <table>
+    <thead><tr><th>Risk</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td>Tab-SPA hurts SEO vs multi-page</td><td>Each language gets its own <code>&lt;title&gt;</code> / <code>&lt;meta description&gt;</code>; hash URLs are client-only. Acceptable tradeoff.</td></tr>
+      <tr><td>Dark landing clashes with light CV/skills-sheet</td><td>Forked token set: <code>tokens-landing.css</code> separate from <code>tokens.css</code>. No cross-contamination.</td></tr>
+      <tr><td>Performance budget blown by fonts</td><td>Subset to Latin-1 at build; woff2 only; <code>font-display: swap</code>. Fallback: drop JetBrains Mono.</td></tr>
+      <tr><td>Motion-sensitive users</td><td><code>prefers-reduced-motion: reduce</code> disables non-essential motion; live-dot static.</td></tr>
+      <tr><td>Copy-email fails on iOS Safari</td><td>Fallback to <code>window.prompt</code> if <code>navigator.clipboard</code> unavailable.</td></tr>
+      <tr><td>Hash routing breaks browser back</td><td><code>history.pushState</code> + <code>popstate</code> listener syncs UI.</td></tr>
+      <tr><td>Lang switch loses active tab</td><td>Toggle href explicitly preserves <code>location.hash</code>.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="decisions" class="decisions">
+  <h2>Decisions locked for Phase 3</h2>
+  <table>
+    <thead><tr><th>#</th><th>Decision</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td>P3-1</td><td>Tab-SPA single-file-per-language, not React/Next</td><td>Proven at BAH; zero runtime complexity</td></tr>
+      <tr><td>P3-2</td><td>Bilingual via dual-file emission, not JS toggle</td><td>SEO, shareability, simplicity</td></tr>
+      <tr><td>P3-3</td><td>Dark-dominant visual system, separate token file</td><td>Matches Huly aesthetic; doesn't touch Phases 1–2</td></tr>
+      <tr><td>P3-4</td><td>5 tabs: Overview / Work / Method / About / Contact</td><td>Master plan; maps to existing data</td></tr>
+      <tr><td>P3-5</td><td>Self-hosted fonts, no CDN</td><td>Performance + offline</td></tr>
+      <tr><td>P3-6</td><td>Vanilla TS generator + vanilla JS runtime</td><td>Consistent with Phases 1–2</td></tr>
+      <tr><td>P3-7</td><td>Mailto CTA, no form</td><td>No backend in Phase 3</td></tr>
+      <tr><td>P3-8</td><td>Performance budget ≤ 250 KB gzipped per language</td><td>Hard ceiling</td></tr>
+      <tr><td>P3-9</td><td>Lighthouse a11y ≥ 95</td><td>BAH TE Black baseline</td></tr>
+      <tr><td>P3-10</td><td><code>data/landing.yaml</code> is the only new data file</td><td>Minimize new surface</td></tr>
+      <tr><td>P3-11</td><td>Case expansion inline, not modals</td><td>Tab-SPA purity</td></tr>
+      <tr><td>P3-12</td><td>"me" agent dock reserved as empty <code>&lt;aside&gt;</code></td><td>Phase 4 hook without Phase 3 work</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="next">
+  <h2>Next step</h2>
+  <div class="callout">
+    <div class="eyebrow">Ready for</div>
+    <p style="margin-top:8px;">
+      Invoke <code>superpowers:writing-plans</code> skill to produce the Phase 3 implementation plan — tasks, order,
+      test-first checkpoints, commit boundaries.
+    </p>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
