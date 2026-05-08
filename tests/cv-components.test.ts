@@ -160,3 +160,57 @@ describe("renderExperienceItem", () => {
     expect(html).toContain("Figma");
   });
 });
+
+import { renderCaseCard } from "../generators/templates/cv/components/case-card.js";
+import type { Case } from "../generators/lib/types.js";
+
+const caseFixture: Case = {
+  slug: "te-skin",
+  titleEn: "/te-skin — a design system as an agent-consumable skill",
+  titleEs: "/te-skin — un design system como skill consumible por agentes",
+  clientEn: "Booz Allen Hamilton · Developer Portal",
+  clientEs: "Booz Allen Hamilton · Developer Portal",
+  yearStart: 2024,
+  yearEnd: 2026,
+  hookEn: "Packaged a 17-component design system as a slash-command skill.",
+  hookEs: "Empaqueté un DS de 17 componentes como slash-command skill.",
+  bulletsEn: ["Bullet 1 EN", "Bullet 2 EN"],
+  bulletsEs: ["Bullet 1 ES", "Bullet 2 ES"],
+  stack: ["Agent", "W3C"],
+  featured: true,
+};
+
+describe("renderCaseCard", () => {
+  it("renders title, client, hook, bullets, stack", () => {
+    const html = renderCaseCard(caseFixture, { variant: "warm", lang: "en", featured: false });
+    expect(html).toContain("/te-skin");
+    expect(html).toContain("Developer Portal");
+    expect(html).toContain("Packaged a 17-component");
+    expect(html).toContain("Bullet 1 EN");
+    expect(html).toContain("Agent");
+  });
+
+  it("renders ES content when lang=es", () => {
+    const html = renderCaseCard(caseFixture, { variant: "warm", lang: "es", featured: false });
+    expect(html).toContain("Empaqueté un DS");
+    expect(html).toContain("Bullet 1 ES");
+  });
+
+  it("adds 'cv-case--featured' class when featured=true for warm", () => {
+    const html = renderCaseCard(caseFixture, { variant: "warm", lang: "en", featured: true });
+    expect(html).toContain("cv-case--featured");
+  });
+
+  it("adds 'cv-case--warm' + 'cv-case--featured' but NOT 'cv-case--dark' for serious featured", () => {
+    const html = renderCaseCard(caseFixture, { variant: "serious", lang: "en", featured: true });
+    expect(html).toContain("cv-case--serious");
+    expect(html).toContain("cv-case--featured");
+    expect(html).not.toContain("cv-case--dark");
+  });
+
+  it("no featured treatment for bairesdev", () => {
+    const html = renderCaseCard(caseFixture, { variant: "bairesdev", lang: "en", featured: true });
+    expect(html).toContain("cv-case--bairesdev");
+    expect(html).not.toContain("cv-case--featured");
+  });
+});
