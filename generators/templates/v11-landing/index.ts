@@ -5,6 +5,9 @@ import type {
   Landing,
   Case,
   Testimonial,
+  HorizonSection,
+  HorizonColumn,
+  HorizonChip,
 } from "../../lib/types.js";
 import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 import { V11_STYLES } from "./v11-styles.js";
@@ -434,6 +437,72 @@ ${paragraphsHtml}
 </section>`;
 }
 
+/* ============== HORIZON TIMELINE ============== */
+
+function renderHorizonChip(
+  chip: HorizonChip,
+  columnId: string,
+  lang: Lang,
+): string {
+  const label = lang === "en" ? chip.label.en : chip.label.es;
+  const labelSafe = escapeHtml(label);
+
+  // Past column: span + aria-label contextualizing the strikethrough.
+  if (columnId === "earned") {
+    const ariaPrefix = lang === "en"
+      ? "Earned, now commoditized:"
+      : "Ganado, ahora commoditizado:";
+    const aria = escapeHtml(`${ariaPrefix} ${label}`);
+    return `<li><span class="v11-horizon__chip" aria-label="${aria}">${labelSafe}</span></li>`;
+  }
+
+  // Future column, bet chip: span + bet badge + aria-label "declared bet, no evidence yet".
+  if (columnId === "horizon" && chip.kind === "bet") {
+    const aria = lang === "en"
+      ? escapeHtml(`${label}. Declared bet, no evidence yet.`)
+      : escapeHtml(`${label}. Apuesta declarada, sin evidencia aún.`);
+    const betLabel = lang === "en" ? "bet" : "apuesta";
+    return `<li><span class="v11-horizon__chip" data-kind="bet" aria-label="${aria}">${labelSafe} <span class="v11-horizon__bet-badge">${escapeHtml(betLabel)}</span></span></li>`;
+  }
+
+  // All other cases: <a href>. Kind attribute only when defined.
+  const href = chip.href ?? "#";
+  const kindAttr = chip.kind ? ` data-kind="${escapeHtml(chip.kind)}"` : "";
+  const isExternal = /^https?:\/\//.test(href);
+  const extAttrs = isExternal ? ' target="_blank" rel="noopener"' : "";
+  return `<li><a class="v11-horizon__chip"${kindAttr} href="${escapeHtml(href)}"${extAttrs}>${labelSafe}</a></li>`;
+}
+
+function renderHorizonColumn(col: HorizonColumn, lang: Lang): string {
+  const stage = lang === "en" ? col.stage.en : col.stage.es;
+  const heading = lang === "en" ? col.heading.en : col.heading.es;
+  const body = lang === "en" ? col.body.en : col.body.es;
+  const emphasisAttr = col.emphasis ? ' data-emphasis="true"' : "";
+  const chips = col.chips.map((c) => renderHorizonChip(c, col.id, lang)).join("");
+  return `<div class="v11-horizon__col" data-horizon-col="${escapeHtml(col.id)}"${emphasisAttr}>
+    <div class="v11-horizon__dot" aria-hidden="true"></div>
+    <div class="v11-horizon__stage">${escapeHtml(stage)}</div>
+    <h3 class="v11-horizon__heading">${escapeHtml(heading)}</h3>
+    <p class="v11-horizon__body">${escapeHtml(body)}</p>
+    <ul class="v11-horizon__chips">${chips}</ul>
+  </div>`;
+}
+
+function renderHorizon(horizon: HorizonSection, lang: Lang): string {
+  const eyebrow = lang === "en" ? horizon.eyebrow.en : horizon.eyebrow.es;
+  const title = lang === "en" ? horizon.sectionTitle.en : horizon.sectionTitle.es;
+  const columns = horizon.columns.map((c) => renderHorizonColumn(c, lang)).join("\n");
+  return `<section class="v11-horizon" aria-labelledby="horizon-h">
+  <div class="v11-container">
+    <div class="v11-horizon__eyebrow">${escapeHtml(eyebrow)}</div>
+    <h2 id="horizon-h" class="v11-horizon__title">${escapeHtml(title)}</h2>
+    <div class="v11-horizon__grid" role="list">
+${columns}
+    </div>
+  </div>
+</section>`;
+}
+
 /* ============== WORK ============== */
 
 function renderCase(c: Case, lang: Lang): string {
@@ -711,6 +780,7 @@ ${renderNav(data.identity, lang)}
 <main id="main">
 ${renderHero(data.identity, data.positioning, lang)}
 ${renderProof(data.positioning, lang)}
+${renderHorizon(data.horizon, lang)}
 ${renderNotebook(lang)}
 ${renderWork(data, lang)}
 ${renderMethod(data, lang)}
