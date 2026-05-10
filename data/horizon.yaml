@@ -1,0 +1,68 @@
+eyebrow:
+  en: "Direction · 2026"
+  es: "Dirección · 2026"
+
+sectionTitle:
+  en: "Where my hours are going"
+  es: "A dónde van mis horas"
+
+columns:
+  - id: earned
+    stage:
+      en: "Earned · 2010–2023"
+      es: "Ganado · 2010–2023"
+    heading:
+      en: "The craft I mastered, now commoditized"
+      es: "El craft que dominé, ahora commoditizado"
+    body:
+      en: "15 years shipping enterprise product. I keep the judgment — the hours that built it no longer compound."
+      es: "15 años shippeando producto enterprise. Me quedo con el juicio — las horas que lo construyeron ya no componen."
+    chips:
+      - label: { en: "Figma mastery",         es: "Dominio de Figma" }
+      - label: { en: "Hand-coded UI",         es: "UI a mano" }
+      - label: { en: "Design reviews",        es: "Design reviews" }
+      - label: { en: "Component libraries",   es: "Librerías de componentes" }
+      - label: { en: "Style-guide PDFs",      es: "PDFs de guía de estilo" }
+
+  - id: investing
+    emphasis: true
+    stage:
+      en: "Investing · 2024–Now"
+      es: "Invirtiendo · 2024–Hoy"
+    heading:
+      en: "Where my hours go today"
+      es: "A dónde van mis horas hoy"
+    body:
+      en: "The frontline moved. I moved with it. Craft is now judgment + orchestration: I ship what used to take a team, and I ship the tools that make it possible."
+      es: "La frontera se movió. Me moví con ella. El craft ahora es juicio + orquestación: entrego lo que antes tomaba un equipo, y entrego las herramientas que lo hacen posible."
+    chips:
+      - label: { en: "Agent orchestration",     es: "Orquestación de agentes" }
+        href: "#case-enregla"
+      - label: { en: "MCP servers",             es: "MCP servers" }
+        href: "#case-enregla"
+      - label: { en: "Design-system-as-skill",  es: "Design-system-as-skill" }
+        href: "#case-te-skin"
+      - label: { en: "Recursive critic loops",  es: "Loops de crítico recursivos" }
+        href: "#case-te-black"
+      - label: { en: "Taste as rubric",         es: "Taste como rúbrica" }
+        href: "#method"
+
+  - id: horizon
+    stage:
+      en: "Next horizon · 12 mo"
+      es: "Próximo horizonte · 12 meses"
+    heading:
+      en: "What I'm walking toward"
+      es: "Hacia dónde camino"
+    body:
+      en: "Embedded in a serious product team, owning the seam between design judgment and agentic execution — at a scale where one person's leverage becomes a team's."
+      es: "Embebido en un equipo de producto serio, dueño de la costura entre juicio de diseño y ejecución agéntica — a una escala donde el leverage de una persona se convierte en el del equipo."
+    chips:
+      - label: { en: "Team-scale agent tooling", es: "Tooling a escala de equipo" }
+        href: "https://github.com/mdanilorojas/dr-cv"
+        kind: evidence
+      - label: { en: "Audited agent workflows",  es: "Workflows de agentes auditados" }
+        href: "https://github.com/mdanilorojas/dr-cv"
+        kind: evidence
+      - label: { en: "Eval-driven UI",           es: "UI dirigida por evals" }
+        kind: bet
