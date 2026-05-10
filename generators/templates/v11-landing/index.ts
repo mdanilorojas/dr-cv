@@ -459,7 +459,7 @@ function renderCase(c: Case, lang: Lang): string {
 
   const chips = c.stack.map((s) => `<span class="v11-chip">${escapeHtml(s)}</span>`).join(" ");
 
-  return `<article class="v11-case" data-reveal>
+  return `<article id="case-${escapeHtml(c.slug)}" class="v11-case" data-reveal>
   <div class="v11-case__head">
     <span class="v11-case__client">${escapeHtml(client)}</span>
     <span class="v11-case__dates">${escapeHtml(dates)}</span>
