@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dr-cv docs</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0f17;
+        --panel: #111827;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #1f2937;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        background: radial-gradient(circle at 20% -20%, #1e3a8a 0%, var(--bg) 45%);
+        color: var(--text);
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 3rem 1.25rem 4rem;
+      }
+
+      h1 {
+        margin: 0 0 0.5rem;
+        font-size: 2rem;
+      }
+
+      p {
+        margin: 0 0 1.5rem;
+        color: var(--muted);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 0.9rem;
+      }
+
+      a.card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent), var(--panel);
+        padding: 1rem 1rem 1.1rem;
+        transition: transform 120ms ease, border-color 120ms ease;
+      }
+
+      a.card:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent);
+      }
+
+      .title {
+        margin: 0 0 0.35rem;
+        font-weight: 600;
+      }
+
+      .desc {
+        margin: 0;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      h2 {
+        margin: 2rem 0 0.8rem;
+        font-size: 1.1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>dr-cv docs</h1>
+      <p>Entry point for GitHub Pages. Quick links to the main HTML artifacts.</p>
+
+      <h2>Reference universes</h2>
+      <section class="grid">
+        <a class="card" href="./references/visual-universe/master.html">
+          <h3 class="title">Visual Universe (master)</h3>
+          <p class="desc">Master visual exploration and narrative direction.</p>
+        </a>
+        <a class="card" href="./references/hiring-universe/master.html">
+          <h3 class="title">Hiring Universe (master)</h3>
+          <p class="desc">Master hiring narrative and scenario exploration.</p>
+        </a>
+      </section>
+
+      <h2>Specs and plans</h2>
+      <section class="grid">
+        <a class="card" href="./superpowers/specs/2026-05-08-phase3-landing-design.html">
+          <h3 class="title">Phase 3 landing design</h3>
+          <p class="desc">Spec companion for the landing page direction.</p>
+        </a>
+        <a class="card" href="./superpowers/plans/2026-05-08-phase3-landing.html">
+          <h3 class="title">Phase 3 implementation plan</h3>
+          <p class="desc">Implementation plan companion for landing delivery.</p>
+        </a>
+      </section>
+
+      <h2>Latest visual</h2>
+      <section class="grid">
+        <a class="card" href="./superpowers/visuals/2026-05-10-v11-narrative-reframe/direction-comparison-es.html">
+          <h3 class="title">Narrative reframe (ES)</h3>
+          <p class="desc">Latest side-by-side direction comparison in Spanish.</p>
+        </a>
+      </section>
+    </main>
+  </body>
+</html>
