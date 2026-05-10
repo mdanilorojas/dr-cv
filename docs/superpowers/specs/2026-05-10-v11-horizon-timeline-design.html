@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>v11 · Horizon Timeline — design spec</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  :root {
+    --bg-deep:    #060708;
+    --bg-primary: #0A0B0E;
+    --bg-alt:     #111318;
+    --bg-elev:    #14161C;
+    --bg-elev-2:  #1C1F27;
+    --bg-inset:   #0D0F13;
+    --bg-paper:   #F6F4F0;
+    --ink:        #F4F4F5;
+    --ink-body:   #D7D8DB;
+    --ink-70:     #B0B2B7;
+    --ink-50:     #797D86;
+    --ink-40:     #61656B;
+    --paper-ink:  #0B0C0E;
+    --paper-body: #303236;
+    --paper-muted:#4A4B50;
+    --accent:     #FF8964;
+    --accent-deep:#E0674A;
+    --accent-soft:rgba(255,137,100,.14);
+    --accent-line:rgba(255,137,100,.28);
+    --signal-cool:#5683DA;
+    --signal-warn:#E5A84B;
+    --signal-pos: #4ADE80;
+    --line:       rgba(255,255,255,.08);
+    --line-strong:rgba(255,255,255,.18);
+    --sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg-primary); color: var(--ink); font-family: var(--sans); }
+  body { font-size: 15px; line-height: 1.6; }
+
+  /* Page layout */
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 48px; }
+
+  /* Hero strip */
+  .doc-head {
+    padding: 56px 0 40px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-deep);
+  }
+  .doc-head .eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 14px;
+  }
+  .doc-head h1 { margin: 0 0 10px; font-size: 32px; font-weight: 600; letter-spacing: -.01em; }
+  .doc-head .sub {
+    color: var(--ink-70); max-width: 780px; margin: 0 0 22px;
+  }
+  .doc-meta {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px 24px; font-family: var(--mono); font-size: 12px;
+  }
+  .doc-meta dt { color: var(--ink-50); letter-spacing: .12em; text-transform: uppercase; font-size: 10px; }
+  .doc-meta dd { margin: 0; color: var(--ink-body); }
+
+  /* TOC */
+  .toc {
+    padding: 28px 0 20px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-alt);
+  }
+  .toc-title {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink-50); margin: 0 0 12px;
+  }
+  .toc ol { margin: 0; padding-left: 20px; column-count: 2; column-gap: 40px; color: var(--ink-body); font-size: 14px; }
+  .toc li { margin-bottom: 4px; }
+  .toc a { color: var(--ink-body); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+
+  /* Section */
+  section { padding: 48px 0; border-bottom: 1px solid var(--line); }
+  section:nth-of-type(odd) { background: var(--bg-primary); }
+  section:nth-of-type(even) { background: var(--bg-alt); }
+  h2 {
+    font-size: 22px; font-weight: 600; letter-spacing: -.005em; margin: 0 0 6px;
+    display: flex; align-items: baseline; gap: 14px;
+  }
+  h2 .num {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .18em; color: var(--ink-50);
+  }
+  h3 { font-size: 16px; font-weight: 600; margin: 28px 0 10px; letter-spacing: -.005em; }
+  h4 { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-50); margin: 20px 0 8px; }
+  p  { color: var(--ink-body); margin: 0 0 12px; max-width: 820px; }
+  p  em { color: var(--ink-70); font-style: italic; }
+
+  ul { color: var(--ink-body); }
+  code {
+    font-family: var(--mono); font-size: 0.88em;
+    background: var(--bg-inset); padding: 2px 6px; border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+  pre {
+    background: var(--bg-inset); border: 1px solid var(--line); border-radius: 8px;
+    padding: 18px; overflow-x: auto; font-family: var(--mono); font-size: 12.5px;
+    color: var(--ink-body); line-height: 1.55;
+  }
+  pre code { background: transparent; border: 0; padding: 0; }
+  blockquote {
+    margin: 12px 0; padding: 10px 16px; border-left: 3px solid var(--accent);
+    background: var(--accent-soft); color: var(--ink-body); font-size: 14px; border-radius: 0 6px 6px 0;
+  }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td {
+    text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top;
+  }
+  th { color: var(--ink); font-weight: 600; background: var(--bg-elev); border-bottom-color: var(--line-strong); font-size: 13px; }
+  td { color: var(--ink-body); }
+  td code { white-space: nowrap; }
+
+  /* Reader-flow diagram */
+  .flow-wrap {
+    background: var(--bg-elev); border: 1px solid var(--line); border-radius: 14px;
+    padding: 32px; margin: 20px 0;
+  }
+  .flow-wrap svg { width: 100%; height: auto; max-width: 880px; display: block; margin: 0 auto; }
+  .flow-legend {
+    margin-top: 22px; padding-top: 18px; border-top: 1px dashed var(--line);
+    display: flex; gap: 24px; flex-wrap: wrap; font-size: 12px; color: var(--ink-70);
+  }
+  .flow-legend .swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+
+  /* Placement diagram */
+  .placement {
+    background: var(--bg-elev); border: 1px solid var(--line); border-radius: 14px;
+    padding: 28px; margin: 16px 0 24px;
+  }
+  .placement-row {
+    padding: 16px 20px; border-radius: 8px; border: 1px solid var(--line);
+    margin-bottom: 8px; background: var(--bg-inset);
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .placement-row.new {
+    border-color: var(--accent-line); background: var(--accent-soft);
+    box-shadow: 0 0 0 3px rgba(255,137,100,0.08);
+  }
+  .placement-row .label { font-weight: 600; color: var(--ink); }
+  .placement-row .state {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-50);
+  }
+  .placement-row.new .state { color: var(--accent); }
+
+  /* Horizon preview (small) */
+  .horizon-preview {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; position: relative;
+    background: var(--bg-elev); border: 1px solid var(--line); border-radius: 14px;
+    padding: 40px; margin: 20px 0;
+  }
+  .horizon-preview::before {
+    content: ""; position: absolute; left: 40px; right: 40px; top: 78px; height: 1px;
+    background: var(--line-strong);
+  }
+  .hcol { padding: 0 28px; position: relative; }
+  .hcol + .hcol { border-left: 1px solid var(--line); }
+  .hstage { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+             color: var(--ink-50); margin-bottom: 22px; }
+  .hdot { width: 10px; height: 10px; border-radius: 50%;
+          background: var(--bg-elev); border: 1px solid var(--line-strong);
+          position: absolute; left: 28px; top: 74px; }
+  .hcol.present .hdot { background: var(--accent); border-color: var(--accent);
+                         box-shadow: 0 0 0 4px rgba(255,137,100,.18); }
+  .hcol.present .hstage { color: var(--accent); }
+  .hcol h5 { font-size: 14px; font-weight: 600; margin: 18px 0 8px; letter-spacing: -.005em; }
+  .hcol .htext { color: var(--ink-70); font-size: 13px; margin: 0 0 14px; }
+  .hchips { display: flex; flex-wrap: wrap; gap: 4px; }
+  .hchip { font-family: var(--mono); font-size: 10px; padding: 3px 8px; border-radius: 999px;
+            background: var(--bg-inset); color: var(--ink-70); border: 1px solid var(--line); }
+  .hcol.past .hchip { text-decoration: line-through; text-decoration-color: var(--ink-40); color: var(--ink-50); }
+  .hcol.present .hchip { background: var(--accent-soft); color: var(--ink); border-color: var(--accent-line); }
+  .hcol.future .hchip { border-style: dashed; color: var(--ink-body); }
+  .hchip.bet::after { content: " · bet"; color: var(--signal-warn); font-weight: 600; }
+
+  /* DoD checklist */
+  .checklist { list-style: none; padding: 0; margin: 12px 0; }
+  .checklist li {
+    padding: 8px 0 8px 28px; position: relative; color: var(--ink-body); font-size: 14px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .checklist li:last-child { border-bottom: 0; }
+  .checklist li::before {
+    content: ""; position: absolute; left: 0; top: 12px;
+    width: 14px; height: 14px; border: 1.5px solid var(--ink-50); border-radius: 3px;
+  }
+
+  @media (max-width: 820px) {
+    .wrap { padding: 0 20px; }
+    .toc ol { column-count: 1; }
+    .horizon-preview { grid-template-columns: 1fr; }
+    .horizon-preview::before { display: none; }
+    .hcol + .hcol { border-left: 0; border-top: 1px solid var(--line); margin-top: 20px; padding-top: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="doc-head">
+  <div class="wrap">
+    <p class="eyebrow">Design spec · v11 · landing</p>
+    <h1>Horizon Timeline — narrative reframe</h1>
+    <p class="sub">Shift the v11 landing from "what I am" to "where I'm investing my hours". Placed directly below the hero. Three horizontal columns — Earned, Investing, Next horizon — with evidence attached to every claim in the present and a disciplined "2 evidence + 1 declared bet" rule for the future.</p>
+    <dl class="doc-meta">
+      <div><dt>Date</dt><dd>2026-05-10</dd></div>
+      <div><dt>Target</dt><dd>dist/landing-v11/</dd></div>
+      <div><dt>Generator</dt><dd>generators/v11-landing.ts</dd></div>
+      <div><dt>Status</dt><dd>ready for plan</dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <p class="toc-title">Contents</p>
+    <ol>
+      <li><a href="#s1">Problem</a></li>
+      <li><a href="#s2">Target reader &amp; success</a></li>
+      <li><a href="#s3">Concept — Horizon Timeline</a></li>
+      <li><a href="#s4">Copy (verbatim, EN + ES)</a></li>
+      <li><a href="#s5">Placement in v11</a></li>
+      <li><a href="#s6">Reader flow</a></li>
+      <li><a href="#s7">Implementation scope</a></li>
+      <li><a href="#s8">Tests</a></li>
+      <li><a href="#s9">Risks &amp; mitigations</a></li>
+      <li><a href="#s10">Out of scope</a></li>
+      <li><a href="#s11">Definition of done</a></li>
+    </ol>
+  </div>
+</nav>
+
+<section id="s1"><div class="wrap">
+  <h2><span class="num">§ 1</span> Problem</h2>
+  <p>The current v11 landing reads as a static catalog of "what I am": <em>Agentic Designer</em>, tagline, proof numbers, then cases. For the target reader — a technical hiring manager (Head of Eng / Head of Design) — that framing is wrong for two reasons:</p>
+  <ol>
+    <li><strong>The job categories are mutating.</strong> Figma mastery and hand-coded UI — skills that used to define a role — are commoditized by agents. A senior reader knows this. A résumé built on those categories looks like a snapshot of the old world.</li>
+    <li><strong>The reader wants trajectory, not taxonomy.</strong> A hiring manager asks: "Does this person know where they're going, and is their time compounding?" Static titles and skill tags don't answer that; movement does.</li>
+  </ol>
+  <blockquote>What changes: reframe the landing from "what I am" to <strong>"where I'm investing my hours"</strong>, with evidence.</blockquote>
+</div></section>
+
+<section id="s2"><div class="wrap">
+  <h2><span class="num">§ 2</span> Target reader &amp; success</h2>
+  <p><strong>Reader:</strong> Head of Engineering or Head of Design at a serious product company, scanning in 5 seconds and then reading for 30 if the scan earns it.</p>
+  <h4>Success for this reader</h4>
+  <ul>
+    <li><strong>5-second scan:</strong> understands this person has made a deliberate shift away from commoditized craft toward orchestrated judgment.</li>
+    <li><strong>30-second read:</strong> sees concrete evidence of each move — clickable chips → real cases.</li>
+    <li><strong>Walk-away phrase:</strong> <em>"keeps the judgment, retires the hours"</em> — or equivalent — as the summary they carry.</li>
+  </ul>
+</div></section>
+
+<section id="s3"><div class="wrap">
+  <h2><span class="num">§ 3</span> Concept — Horizon Timeline</h2>
+  <p>A three-stage horizontal timeline, placed immediately after the hero. Each stage is one column; the middle one is visually emphasized because that is where the reader lives.</p>
+
+  <div class="horizon-preview">
+    <div class="hcol past">
+      <div class="hdot"></div>
+      <div class="hstage">Earned · 2010–2023</div>
+      <h5>The craft I mastered, now commoditized</h5>
+      <p class="htext">15 years shipping enterprise product. I keep the judgment — the hours that built it no longer compound.</p>
+      <div class="hchips">
+        <span class="hchip">Figma mastery</span>
+        <span class="hchip">Hand-coded UI</span>
+        <span class="hchip">Design reviews</span>
+        <span class="hchip">Component libraries</span>
+        <span class="hchip">Style-guide PDFs</span>
+      </div>
+    </div>
+    <div class="hcol present">
+      <div class="hdot"></div>
+      <div class="hstage">Investing · 2024–Now</div>
+      <h5>Where my hours go today</h5>
+      <p class="htext">The frontline moved. I moved with it. Craft is now judgment + orchestration: I ship what used to take a team, and I ship the tools that make it possible.</p>
+      <div class="hchips">
+        <span class="hchip">Agent orchestration</span>
+        <span class="hchip">MCP servers</span>
+        <span class="hchip">Design-system-as-skill</span>
+        <span class="hchip">Recursive critic loops</span>
+        <span class="hchip">Taste as rubric</span>
+      </div>
+    </div>
+    <div class="hcol future">
+      <div class="hdot"></div>
+      <div class="hstage">Next horizon · 12 mo</div>
+      <h5>What I'm walking toward</h5>
+      <p class="htext">Embedded in a serious product team, owning the seam between design judgment and agentic execution — where one person's leverage becomes a team's.</p>
+      <div class="hchips">
+        <span class="hchip">Team-scale agent tooling</span>
+        <span class="hchip">Audited agent workflows</span>
+        <span class="hchip bet">Eval-driven UI</span>
+      </div>
+    </div>
+  </div>
+
+  <h4>The rule that keeps the future credible</h4>
+  <p>A chip enters the <code>Next horizon</code> column only if it is (a) already backed by a public commit / skill / repo, or (b) explicitly marked as a <em>declared bet</em> with no evidence yet. No wish-list chips.</p>
+</div></section>
+
+<section id="s4"><div class="wrap">
+  <h2><span class="num">§ 4</span> Copy (verbatim, EN + ES)</h2>
+
+  <h3>Section frame</h3>
+  <table>
+    <tr><th>Field</th><th>EN</th><th>ES</th></tr>
+    <tr><td>Eyebrow</td><td><code>Direction · 2026</code></td><td><code>Dirección · 2026</code></td></tr>
+    <tr><td>H2</td><td>Where my hours are going</td><td>A dónde van mis horas</td></tr>
+  </table>
+
+  <h3>Column 1 — Earned · 2010–2023</h3>
+  <table>
+    <tr><th>Field</th><th>EN</th><th>ES</th></tr>
+    <tr><td>Stage</td><td><code>Earned · 2010–2023</code></td><td><code>Ganado · 2010–2023</code></td></tr>
+    <tr><td>H3</td><td>The craft I mastered, now commoditized</td><td>El craft que dominé, ahora commoditizado</td></tr>
+    <tr><td>Body</td><td>15 years shipping enterprise product. I keep the judgment — the hours that built it no longer compound.</td><td>15 años shippeando producto enterprise. Me quedo con el juicio — las horas que lo construyeron ya no componen.</td></tr>
+  </table>
+  <h4>Chips (5, strikethrough, non-clickable)</h4>
+  <p>EN: Figma mastery · Hand-coded UI · Design reviews · Component libraries · Style-guide PDFs<br>
+     ES: Dominio de Figma · UI a mano · Design reviews · Librerías de componentes · PDFs de guía de estilo</p>
+
+  <h3>Column 2 — Investing · 2024–Now · <em>emphasized</em></h3>
+  <table>
+    <tr><th>Field</th><th>EN</th><th>ES</th></tr>
+    <tr><td>Stage</td><td><code>Investing · 2024–Now</code></td><td><code>Invirtiendo · 2024–Hoy</code></td></tr>
+    <tr><td>H3</td><td>Where my hours go today</td><td>A dónde van mis horas hoy</td></tr>
+    <tr><td>Body</td><td>The frontline moved. I moved with it. Craft is now judgment + orchestration: I ship what used to take a team, and I ship the tools that make it possible.</td><td>La frontera se movió. Me moví con ella. El craft ahora es juicio + orquestación: entrego lo que antes tomaba un equipo, y entrego las herramientas que lo hacen posible.</td></tr>
+  </table>
+  <h4>Chips (5, clickable)</h4>
+  <table>
+    <tr><th>Chip EN</th><th>Chip ES</th><th>Links to</th></tr>
+    <tr><td>Agent orchestration</td><td>Orquestación de agentes</td><td><code>#case-enregla</code></td></tr>
+    <tr><td>MCP servers</td><td>MCP servers</td><td><code>#case-enregla-mcp</code></td></tr>
+    <tr><td>Design-system-as-skill</td><td>Design-system-as-skill</td><td><code>#case-te-skin</code></td></tr>
+    <tr><td>Recursive critic loops</td><td>Loops de crítico recursivos</td><td><code>#case-te-black</code></td></tr>
+    <tr><td>Taste as rubric</td><td>Taste como rúbrica</td><td><code>#tab-method</code></td></tr>
+  </table>
+
+  <h3>Column 3 — Next horizon · 12 mo</h3>
+  <table>
+    <tr><th>Field</th><th>EN</th><th>ES</th></tr>
+    <tr><td>Stage</td><td><code>Next horizon · 12 mo</code></td><td><code>Próximo horizonte · 12 meses</code></td></tr>
+    <tr><td>H3</td><td>What I'm walking toward</td><td>Hacia dónde camino</td></tr>
+    <tr><td>Body</td><td>Embedded in a serious product team, owning the seam between design judgment and agentic execution — at a scale where one person's leverage becomes a team's.</td><td>Embebido en un equipo de producto serio, dueño de la costura entre juicio de diseño y ejecución agéntica — a una escala donde el leverage de una persona se convierte en el del equipo.</td></tr>
+  </table>
+  <h4>Chips (3, rule "2 evidence + 1 bet")</h4>
+  <table>
+    <tr><th>Chip EN</th><th>Chip ES</th><th>Kind</th><th>Href / Signal</th></tr>
+    <tr><td>Team-scale agent tooling</td><td>Tooling a escala de equipo</td><td>evidence</td><td><code>https://github.com/mdanilorojas/dr-cv</code></td></tr>
+    <tr><td>Audited agent workflows</td><td>Workflows de agentes auditados</td><td>evidence</td><td><code>#skills-audit</code></td></tr>
+    <tr><td>Eval-driven UI</td><td>UI dirigida por evals</td><td>bet</td><td>— (dashed + badge)</td></tr>
+  </table>
+
+  <h3>Tone rules</h3>
+  <ul>
+    <li>First person, direct verbs: <em>I ship / I keep / I moved</em>. No "I am X".</li>
+    <li>No role titles, no tag clouds, no taxonomy vocabulary.</li>
+    <li>Past is archived, not negated: "keep the judgment, retire the hours."</li>
+    <li>Future is concrete, never abstract aspiration.</li>
+  </ul>
+</div></section>
+
+<section id="s5"><div class="wrap">
+  <h2><span class="num">§ 5</span> Placement in v11</h2>
+  <p>Below the current hero, as the first new section. Not a hero replacement, not a new tab.</p>
+  <div class="placement">
+    <div class="placement-row"><span class="label">HERO · thesis + tagline + proof numbers</span><span class="state">unchanged</span></div>
+    <div class="placement-row new"><span class="label">HORIZON TIMELINE · eyebrow + H2 + 3 columns</span><span class="state">new</span></div>
+    <div class="placement-row"><span class="label">TAB NAV · Overview · Work · Method · About · Contact</span><span class="state">unchanged</span></div>
+    <div class="placement-row"><span class="label">Rest of page</span><span class="state">unchanged</span></div>
+  </div>
+</div></section>
+
+<section id="s6"><div class="wrap">
+  <h2><span class="num">§ 6</span> Reader flow</h2>
+  <p>How the hiring manager moves through the page when this section does its job. Three branches: scan-only, skeptic clicks for evidence, curious reader reads the future column.</p>
+
+  <div class="flow-wrap">
+    <svg viewBox="0 0 880 640" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#797D86" />
+        </marker>
+        <marker id="arrow-accent" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#FF8964" />
+        </marker>
+      </defs>
+      <style>
+        .node  { fill: #14161C; stroke: rgba(255,255,255,.18); stroke-width: 1; rx: 10; ry: 10; }
+        .node.accent { fill: rgba(255,137,100,.10); stroke: rgba(255,137,100,.45); }
+        .node.end    { fill: #0D0F13; stroke: #4ADE80; stroke-width: 1.5; }
+        .label { fill: #F4F4F5; font-family: "Inter", sans-serif; font-size: 13px; font-weight: 500; }
+        .sub   { fill: #B0B2B7; font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+        .edge  { fill: none; stroke: #797D86; stroke-width: 1; }
+        .edge.accent { stroke: #FF8964; stroke-width: 1.5; }
+        .edge-label { fill: #797D86; font-family: "JetBrains Mono", monospace; font-size: 10px; }
+      </style>
+
+      <!-- Landing loads -->
+      <rect class="node" x="340" y="10"  width="200" height="54" />
+      <text class="sub"   x="440" y="30"  text-anchor="middle">entry</text>
+      <text class="label" x="440" y="50"  text-anchor="middle">Landing loads</text>
+
+      <!-- Hero -->
+      <rect class="node" x="340" y="90"  width="200" height="54" />
+      <text class="sub"   x="440" y="110" text-anchor="middle">unchanged</text>
+      <text class="label" x="440" y="130" text-anchor="middle">Hero · thesis + proof</text>
+
+      <!-- Horizon enters viewport -->
+      <rect class="node accent" x="320" y="170" width="240" height="54" />
+      <text class="sub"   x="440" y="190" text-anchor="middle">new section</text>
+      <text class="label" x="440" y="210" text-anchor="middle">Horizon timeline in viewport</text>
+
+      <!-- 5s scan decision -->
+      <rect class="node" x="320" y="250" width="240" height="54" />
+      <text class="sub"   x="440" y="270" text-anchor="middle">5s scan</text>
+      <text class="label" x="440" y="290" text-anchor="middle">Stage labels · middle column</text>
+
+      <!-- Branches -->
+      <rect class="node" x="60"  y="340" width="220" height="54" />
+      <text class="sub"   x="170" y="360" text-anchor="middle">branch A · skeptic</text>
+      <text class="label" x="170" y="380" text-anchor="middle">Reads Investing + clicks chip</text>
+
+      <rect class="node" x="330" y="340" width="220" height="54" />
+      <text class="sub"   x="440" y="360" text-anchor="middle">branch B · curious</text>
+      <text class="label" x="440" y="380" text-anchor="middle">Reads Next horizon column</text>
+
+      <rect class="node" x="600" y="340" width="220" height="54" />
+      <text class="sub"   x="710" y="360" text-anchor="middle">branch C · scan-only</text>
+      <text class="label" x="710" y="380" text-anchor="middle">Scrolls past</text>
+
+      <!-- Outcomes -->
+      <rect class="node" x="60"  y="430" width="220" height="54" />
+      <text class="sub"   x="170" y="450" text-anchor="middle">case study</text>
+      <text class="label" x="170" y="470" text-anchor="middle">Lands on real evidence</text>
+
+      <rect class="node" x="330" y="430" width="220" height="54" />
+      <text class="sub"   x="440" y="450" text-anchor="middle">honesty registered</text>
+      <text class="label" x="440" y="470" text-anchor="middle">"bet" badge = credibility</text>
+
+      <rect class="node" x="600" y="430" width="220" height="54" />
+      <text class="sub"   x="710" y="450" text-anchor="middle">framing retained</text>
+      <text class="label" x="710" y="470" text-anchor="middle">"going somewhere" sticks</text>
+
+      <!-- Cases / Method / About -->
+      <rect class="node" x="290" y="520" width="300" height="54" />
+      <text class="sub"   x="440" y="540" text-anchor="middle">normal path resumes</text>
+      <text class="label" x="440" y="560" text-anchor="middle">Cases · Method · About</text>
+
+      <!-- Contact CTA -->
+      <rect class="node end" x="340" y="600" width="200" height="32" />
+      <text class="label" x="440" y="620" text-anchor="middle">Contact CTA</text>
+
+      <!-- Edges -->
+      <path class="edge"        d="M440,64 L440,90"   marker-end="url(#arrow)" />
+      <path class="edge accent" d="M440,144 L440,170" marker-end="url(#arrow-accent)" />
+      <path class="edge"        d="M440,224 L440,250" marker-end="url(#arrow)" />
+
+      <path class="edge" d="M380,304 Q280,322 170,340" marker-end="url(#arrow)" />
+      <path class="edge" d="M440,304 L440,340"                    marker-end="url(#arrow)" />
+      <path class="edge" d="M500,304 Q600,322 710,340" marker-end="url(#arrow)" />
+
+      <path class="edge" d="M170,394 L170,430" marker-end="url(#arrow)" />
+      <path class="edge" d="M440,394 L440,430" marker-end="url(#arrow)" />
+      <path class="edge" d="M710,394 L710,430" marker-end="url(#arrow)" />
+
+      <path class="edge" d="M170,484 Q270,505 380,520" marker-end="url(#arrow)" />
+      <path class="edge" d="M440,484 L440,520"          marker-end="url(#arrow)" />
+      <path class="edge" d="M710,484 Q610,505 500,520" marker-end="url(#arrow)" />
+
+      <path class="edge end" d="M440,574 L440,600" marker-end="url(#arrow)" />
+    </svg>
+    <div class="flow-legend">
+      <span><span class="swatch" style="background: rgba(255,137,100,.10); border: 1px solid rgba(255,137,100,.45);"></span>New section (Horizon)</span>
+      <span><span class="swatch" style="background: #14161C; border: 1px solid rgba(255,255,255,.18);"></span>Existing flow (unchanged)</span>
+      <span><span class="swatch" style="background: #0D0F13; border: 1.5px solid #4ADE80;"></span>Terminal (CTA)</span>
+    </div>
+  </div>
+</div></section>
+
+<section id="s7"><div class="wrap">
+  <h2><span class="num">§ 7</span> Implementation scope</h2>
+
+  <h3>Files touched (4)</h3>
+  <table>
+    <tr><th>File</th><th>Change</th></tr>
+    <tr><td><code>generators/lib/load-data.ts</code></td><td>Load <code>horizon.yaml</code> into <code>LandingData.horizon</code></td></tr>
+    <tr><td><code>generators/lib/types.ts</code></td><td>Add <code>HorizonSection</code> type: <code>{ eyebrow, sectionTitle, columns: HorizonColumn[] }</code></td></tr>
+    <tr><td><code>generators/templates/v11-landing/index.ts</code></td><td>New <code>renderHorizon(data, lang)</code>; injected between hero and tab-nav</td></tr>
+    <tr><td><code>generators/templates/v11-landing/v11-styles.ts</code></td><td>Append <code>.horizon-*</code> CSS block adapted from the mockup</td></tr>
+  </table>
+
+  <h3>Files created (1)</h3>
+  <ul><li><code>data/horizon.yaml</code> — bilingual source of truth (schema below)</li></ul>
+
+  <h3>Files untouched</h3>
+  <ul>
+    <li><code>v11-script.ts</code> — pure CSS solution; chips are native <code>&lt;a&gt;</code></li>
+    <li>Hero, tabs, cases, testimonials, method, contact sections</li>
+    <li><code>design-system/tokens-v11.css</code> — all required tokens exist already</li>
+    <li>Other landings (<code>dist/landing/</code>, <code>dist/landing-huly/</code>)</li>
+  </ul>
+
+  <h3>Anchor prerequisites</h3>
+  <p>The chips in §4 reference on-page anchors. Before implementation, the plan must <strong>audit the current v11 output</strong> and, for every anchor used, either (a) confirm it already exists, or (b) add an <code>id</code> attribute to the correct element (the case card, the Method tab panel). Anchor additions are the only permitted exception to "files untouched" — they are additive (<code>id="…"</code>) and change no other markup. Anchors referenced: <code>#case-enregla</code>, <code>#case-enregla-mcp</code>, <code>#case-te-skin</code>, <code>#case-te-black</code>, <code>#tab-method</code>, <code>#skills-audit</code>. If a target doesn't exist and can't reasonably be added, the chip becomes a <code>bet</code> instead of evidence. Test #7 enforces this at build time.</p>
+
+  <h3><code>horizon.yaml</code> schema</h3>
+<pre><code>eyebrow:
+  en: "Direction · 2026"
+  es: "Dirección · 2026"
+
+sectionTitle:
+  en: "Where my hours are going"
+  es: "A dónde van mis horas"
+
+columns:
+  - id: earned
+    stage: { en: "...", es: "..." }
+    heading: { en: "...", es: "..." }
+    body: { en: "...", es: "..." }
+    chips:
+      - label: { en: "...", es: "..." }
+        # no href → rendered as &lt;span&gt;, strikethrough
+
+  - id: investing
+    emphasis: true            # triggers accent treatment
+    stage: { en: "...", es: "..." }
+    heading: { en: "...", es: "..." }
+    body: { en: "...", es: "..." }
+    chips:
+      - label: { en: "...", es: "..." }
+        href: "#case-enregla"
+        # href present → rendered as &lt;a&gt;
+
+  - id: horizon
+    stage: { en: "...", es: "..." }
+    heading: { en: "...", es: "..." }
+    body: { en: "...", es: "..." }
+    chips:
+      - label: { en: "...", es: "..." }
+        href: "https://github.com/mdanilorojas/dr-cv"
+        kind: evidence         # enum: evidence | bet
+      - label: { en: "...", es: "..." }
+        kind: bet              # no href + kind: bet → dashed + badge</code></pre>
+
+  <h3>Accessibility</h3>
+  <ul>
+    <li>Non-clickable past chips: <code>&lt;span&gt;</code> with <code>aria-label="Earned, now commoditized: {label}"</code> so a screen reader contextualizes the strikethrough.</li>
+    <li>Clickable chips: native <code>&lt;a href&gt;</code>, keyboard-tabbable, visible focus using <code>--v11-accent-ring</code>.</li>
+    <li>"Bet" chips: <code>aria-label="{label}. Declared bet, no evidence yet."</code> + a visible small <code>bet</code> badge.</li>
+    <li>Decorative timeline line is <code>aria-hidden</code>.</li>
+    <li>Emphasis is multi-channel: accent color + larger dot + filled chip backgrounds — not color alone.</li>
+  </ul>
+</div></section>
+
+<section id="s8"><div class="wrap">
+  <h2><span class="num">§ 8</span> Tests</h2>
+  <p>Added to <code>tests/landing/v11.test.ts</code>.</p>
+  <ol>
+    <li><strong>Section placement</strong> — renders after the hero and before the tab-nav, EN and ES.</li>
+    <li><strong>Emphasized column</strong> — <code>investing</code> column has <code>data-emphasis="true"</code> and the accent-dot class applied.</li>
+    <li><strong>Investing chips are links</strong> — all 5 chips in the <code>investing</code> column are <code>&lt;a&gt;</code> with non-empty <code>href</code>.</li>
+    <li><strong>Horizon column composition</strong> — the <code>horizon</code> column has exactly 2 chips <code>kind=evidence</code> + 1 chip <code>kind=bet</code>.</li>
+    <li><strong>Past chips have contextual aria-label</strong> — every chip in <code>earned</code> has an <code>aria-label</code> starting with "Earned" / "Ganado".</li>
+    <li><strong>HTML budget</strong> — rendered output stays below the <code>400_000</code>-byte budget, both locales.</li>
+    <li><strong>Internal anchors resolve</strong> — every <code>href="#..."</code> points to an <code>id</code> that exists in the rendered HTML. Prevents silent dead links.</li>
+  </ol>
+</div></section>
+
+<section id="s9"><div class="wrap">
+  <h2><span class="num">§ 9</span> Risks &amp; mitigations</h2>
+  <table>
+    <tr><th>Risk</th><th>Mitigation</th></tr>
+    <tr><td><code>horizon.yaml</code> hrefs drift from page ids</td><td>Test #7 enforces internal-anchor resolution at build time.</td></tr>
+    <tr><td>Tablet viewport (1024px) collapses awkwardly</td><td>Mediaquery at 920px → vertical; verified visually.</td></tr>
+    <tr><td>Copy ages out (12-month horizon)</td><td>Eyebrow includes the year — revisit next year is obvious by scent.</td></tr>
+    <tr><td>Struck-through past reads as self-deprecation</td><td>Body copy reframes: "I keep the judgment — the hours no longer compound." Tone stays confident.</td></tr>
+    <tr><td>Emphasis relies on accent color alone</td><td>Multi-channel: color + dot size + filled backgrounds; fails gracefully for color-blind readers.</td></tr>
+  </table>
+</div></section>
+
+<section id="s10"><div class="wrap">
+  <h2><span class="num">§ 10</span> Out of scope</h2>
+  <ul>
+    <li>No changes to the hero (thesis line + proof numbers stay).</li>
+    <li>No changes to other landings (<code>dist/landing/</code>, <code>dist/landing-huly/</code>).</li>
+    <li>No new "Direction" tab (explicitly rejected).</li>
+    <li>No deployment — ships as a local build only.</li>
+    <li>No new tokens, fonts, or external dependencies.</li>
+  </ul>
+</div></section>
+
+<section id="s11"><div class="wrap">
+  <h2><span class="num">§ 11</span> Definition of done</h2>
+  <ul class="checklist">
+    <li><code>npm run build:landing-v11</code> emits EN + ES under the 400k-byte budget</li>
+    <li><code>npm test</code> passes (existing + 7 new tests)</li>
+    <li><code>npm run typecheck</code> clean</li>
+    <li>Horizon section renders between hero and tab-nav in both locales</li>
+    <li>Investing column visually emphasized (accent dot + chip treatment + heading weight)</li>
+    <li>5 past chips non-clickable with contextual <code>aria-label</code></li>
+    <li>5 investing chips are links to existing on-page anchors</li>
+    <li>3 horizon chips: exactly 2 evidence (solid) + 1 bet (dashed + badge)</li>
+    <li>Mobile ≤ 920px collapses to vertical without overlap</li>
+    <li>Diff is surgical: hero, tabs, cases, testimonials, method, contact untouched</li>
+  </ul>
+</div></section>
+
+</body>
+</html>

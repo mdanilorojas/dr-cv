@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>v11 · reencuadre narrativo — 3 direcciones</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  :root {
+    --bg-deep:    #060708;
+    --bg-primary: #0A0B0E;
+    --bg-alt:     #111318;
+    --bg-elev:    #14161C;
+    --bg-elev-2:  #1C1F27;
+    --bg-inset:   #0D0F13;
+    --bg-paper:   #F6F4F0;
+    --ink:        #F4F4F5;
+    --ink-body:   #D7D8DB;
+    --ink-70:     #B0B2B7;
+    --ink-50:     #797D86;
+    --ink-40:     #61656B;
+    --paper-ink:  #0B0C0E;
+    --paper-body: #303236;
+    --paper-muted:#4A4B50;
+    --accent:     #FF8964;
+    --accent-deep:#E0674A;
+    --accent-soft:rgba(255,137,100,.14);
+    --accent-line:rgba(255,137,100,.28);
+    --signal-cool:#5683DA;
+    --signal-warn:#E5A84B;
+    --signal-pos: #4ADE80;
+    --line:       rgba(255,255,255,.08);
+    --line-strong:rgba(255,255,255,.18);
+    --sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg-primary); color: var(--ink); font-family: var(--sans); }
+  body { font-size: 15px; line-height: 1.55; }
+
+  /* ── page header ─────────────────────────────────────────── */
+  .page-head {
+    padding: 48px 48px 32px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-deep);
+  }
+  .page-head .eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 12px;
+  }
+  .page-head h1 { margin: 0 0 8px; font-size: 28px; font-weight: 600; letter-spacing: -.01em; }
+  .page-head p  { margin: 0; color: var(--ink-70); max-width: 780px; }
+
+  /* ── direction block ─────────────────────────────────────── */
+  .direction {
+    padding: 56px 48px;
+    border-bottom: 1px solid var(--line);
+  }
+  .direction + .direction { background: var(--bg-alt); }
+  .direction:nth-child(odd) { background: var(--bg-primary); }
+
+  .dir-head {
+    display: flex; align-items: baseline; gap: 16px;
+    margin-bottom: 8px;
+  }
+  .dir-num {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .16em;
+    color: var(--ink-50); text-transform: uppercase;
+  }
+  .dir-title {
+    font-size: 22px; font-weight: 600; letter-spacing: -.005em; margin: 0;
+  }
+  .dir-gist {
+    color: var(--ink-70); max-width: 820px; margin: 0 0 32px;
+  }
+  .dir-stage {
+    background: var(--bg-elev); border: 1px solid var(--line); border-radius: 14px;
+    padding: 40px; margin-bottom: 20px;
+  }
+  .dir-notes {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    font-size: 13px;
+  }
+  .dir-notes h4 {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink-50); margin: 0 0 8px;
+  }
+  .dir-notes ul { margin: 0; padding-left: 18px; color: var(--ink-body); }
+  .dir-notes li { margin-bottom: 4px; }
+  .dir-notes .strength li::marker { color: var(--signal-pos); }
+  .dir-notes .risk     li::marker { color: var(--signal-warn); }
+
+  /* ═══════════════════════════════════════════════════════════
+   * DIRECCIÓN 1 — Línea de Horizonte
+   * ═══════════════════════════════════════════════════════════ */
+  .horizon {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    position: relative;
+  }
+  .horizon::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 58px; height: 1px;
+    background: linear-gradient(to right, transparent 0%, var(--line-strong) 8%, var(--line-strong) 92%, transparent 100%);
+  }
+  .horizon-col {
+    padding: 0 32px;
+    position: relative;
+  }
+  .horizon-col + .horizon-col { border-left: 1px solid var(--line); }
+  .horizon-stage {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--ink-50); margin-bottom: 24px;
+  }
+  .horizon-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--bg-elev); border: 1px solid var(--line-strong);
+    position: absolute; left: 32px; top: 54px;
+  }
+  .horizon-col.present .horizon-dot {
+    background: var(--accent); border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(255,137,100,.18);
+  }
+  .horizon-col.present .horizon-stage { color: var(--accent); }
+  .horizon-col h3 {
+    font-size: 17px; font-weight: 600; margin: 18px 0 10px; letter-spacing: -.005em;
+  }
+  .horizon-col p {
+    color: var(--ink-70); font-size: 14px; margin: 0 0 16px;
+  }
+  .horizon-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    font-family: var(--mono); font-size: 11px;
+    padding: 4px 10px; border-radius: 999px;
+    background: var(--bg-inset); color: var(--ink-70);
+    border: 1px solid var(--line);
+  }
+  .horizon-col.past .chip { text-decoration: line-through; text-decoration-color: var(--ink-40); color: var(--ink-50); }
+  .horizon-col.present .chip { background: var(--accent-soft); color: var(--ink); border-color: var(--accent-line); }
+  .horizon-col.future .chip { border-style: dashed; color: var(--ink-body); }
+
+  /* ═══════════════════════════════════════════════════════════
+   * DIRECCIÓN 2 — Libro Mayor de Inversión
+   * ═══════════════════════════════════════════════════════════ */
+  .ledger {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+  }
+  .ledger-side { padding: 32px; }
+  .ledger-side.from { background: var(--bg-inset); border-right: 1px solid var(--line); }
+  .ledger-side.to   { background: linear-gradient(180deg, var(--bg-elev) 0%, var(--bg-elev-2) 100%); }
+  .ledger-label {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink-50); margin-bottom: 18px;
+  }
+  .ledger-label .arrow {
+    font-size: 14px; color: var(--ink-40);
+  }
+  .ledger-side.to .ledger-label { color: var(--accent); }
+  .ledger-list { list-style: none; margin: 0; padding: 0; }
+  .ledger-list li {
+    padding: 14px 0; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: baseline;
+  }
+  .ledger-list li:first-child { border-top: 0; }
+  .ledger-item-label { color: var(--ink-body); font-size: 14px; }
+  .ledger-side.from .ledger-item-label { color: var(--ink-50); }
+  .ledger-item-meta {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-50);
+    white-space: nowrap;
+  }
+  .ledger-side.to .ledger-item-meta { color: var(--accent); }
+  .ledger-footnote {
+    margin-top: 22px; padding-top: 18px; border-top: 1px dashed var(--line);
+    font-size: 13px; color: var(--ink-70);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+   * DIRECCIÓN 3 — Tesis + Movimientos
+   * ═══════════════════════════════════════════════════════════ */
+  .thesis-block {
+    text-align: left; max-width: 860px; margin: 0 auto 40px;
+    padding-bottom: 28px; border-bottom: 1px solid var(--line);
+  }
+  .thesis-eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+  }
+  .thesis-text {
+    font-size: 26px; font-weight: 500; line-height: 1.3; letter-spacing: -.01em; margin: 0;
+  }
+  .thesis-text em { font-style: normal; color: var(--accent); }
+  .thesis-sub {
+    margin-top: 14px; color: var(--ink-70); font-size: 14px; max-width: 720px;
+  }
+  .moves {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  }
+  .move {
+    background: var(--bg-elev); border: 1px solid var(--line); border-radius: 10px;
+    padding: 22px;
+  }
+  .move-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    margin-bottom: 10px;
+  }
+  .move-num {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .18em; color: var(--ink-50);
+  }
+  .move-state {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 3px;
+  }
+  .move-state.shipped { background: rgba(74,222,128,.12); color: var(--signal-pos); }
+  .move-state.live    { background: var(--accent-soft); color: var(--accent); }
+  .move-state.next    { background: rgba(86,131,218,.14); color: var(--signal-cool); }
+  .move h3 {
+    font-size: 16px; font-weight: 600; margin: 0 0 6px; letter-spacing: -.005em;
+  }
+  .move-from {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-50);
+    margin-bottom: 10px;
+  }
+  .move-from s { color: var(--ink-40); }
+  .move-from span { color: var(--accent); }
+  .move p {
+    color: var(--ink-body); font-size: 13.5px; margin: 0 0 12px;
+  }
+  .move-evidence {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-50);
+    padding-top: 10px; border-top: 1px dashed var(--line);
+  }
+  .move-evidence b { color: var(--ink); font-weight: 500; }
+
+  @media (max-width: 920px) {
+    .page-head, .direction { padding-left: 24px; padding-right: 24px; }
+    .dir-notes, .moves { grid-template-columns: 1fr; }
+    .horizon { grid-template-columns: 1fr; }
+    .horizon::before { display: none; }
+    .horizon-col + .horizon-col { border-left: 0; border-top: 1px solid var(--line); margin-top: 24px; padding-top: 24px; }
+    .ledger { grid-template-columns: 1fr; }
+    .ledger-side.from { border-right: 0; border-bottom: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <p class="eyebrow">v11 · reencuadre narrativo · 3 direcciones</p>
+  <h1>De "qué soy" a "dónde estoy invirtiendo"</h1>
+  <p>Tres formas de materializar el giro: el dominio de Figma ya es commodity, implementar interfaces a mano es instantáneo — el lector debería ver a dónde va mi <em>tiempo</em> ahora, no un catálogo estático de skills. Compara. Elige una. La detallo en un spec.</p>
+</header>
+
+<!-- ══════════════ DIRECCIÓN 1 ══════════════ -->
+<section class="direction">
+  <div class="dir-head">
+    <span class="dir-num">Dirección 1</span>
+    <h2 class="dir-title">Línea de Horizonte</h2>
+  </div>
+  <p class="dir-gist">Timeline horizontal de tres etapas en el hero: <strong>Ganado</strong> (craft que dominé, ahora commodity) → <strong>Invirtiendo</strong> (presente, a dónde van mis horas hoy) → <strong>Próximo horizonte</strong> (hacia dónde voy en 12 meses). Los chips bajo cada etapa lo hacen escaneable. La columna del medio lleva el peso visual — ahí vive el lector.</p>
+
+  <div class="dir-stage">
+    <div class="horizon">
+      <div class="horizon-col past">
+        <div class="horizon-dot"></div>
+        <div class="horizon-stage">Ganado · 2010–2023</div>
+        <h3>El craft que dominé, ahora commoditizado</h3>
+        <p>15 años shippeando producto enterprise. Es real y me quedo con el juicio — pero las horas que lo construyeron ya no son las horas que componen.</p>
+        <div class="horizon-chips">
+          <span class="chip">Dominio de Figma</span>
+          <span class="chip">UI a mano</span>
+          <span class="chip">Design reviews</span>
+          <span class="chip">Librerías de componentes</span>
+          <span class="chip">PDFs de guía de estilo</span>
+        </div>
+      </div>
+      <div class="horizon-col present">
+        <div class="horizon-dot"></div>
+        <div class="horizon-stage">Invirtiendo · 2024–Hoy</div>
+        <h3>A dónde van mis horas hoy</h3>
+        <p>La frontera se movió. Me moví con ella. El craft ahora es juicio + orquestación: entrego lo que antes tomaba un equipo, y entrego las herramientas que lo hacen posible.</p>
+        <div class="horizon-chips">
+          <span class="chip">Orquestación de agentes</span>
+          <span class="chip">MCP servers</span>
+          <span class="chip">Taste como crítico en loop</span>
+          <span class="chip">Design-system-as-skill</span>
+          <span class="chip">Revisión recursiva</span>
+        </div>
+      </div>
+      <div class="horizon-col future">
+        <div class="horizon-dot"></div>
+        <div class="horizon-stage">Próximo horizonte · 12 meses</div>
+        <h3>Hacia dónde camino</h3>
+        <p>Embebido en un equipo de producto serio, dueño del puente entre juicio de diseño y ejecución agéntica — a una escala donde el leverage de una persona se convierte en el del equipo.</p>
+        <div class="horizon-chips">
+          <span class="chip">Tooling a escala de equipo</span>
+          <span class="chip">UI dirigida por evals</span>
+          <span class="chip">Loops de crítico compartidos</span>
+          <span class="chip">Workflows de agentes auditados</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dir-notes">
+    <div class="strength">
+      <h4>Por qué funciona</h4>
+      <ul>
+        <li>Honesto sobre el giro — no pretende que las skills viejas sean el punto</li>
+        <li>La columna del medio es el ancla que el lector se lleva</li>
+        <li>Se escanea en 5 segundos; premia 30 segundos de lectura</li>
+        <li>Los chips leen como evidencia, no como buzzwords</li>
+      </ul>
+    </div>
+    <div class="risk">
+      <h4>Dónde puede fallar</h4>
+      <ul>
+        <li>El pasado tachado puede leerse como autodesprecio — el tono tiene que quedar seguro</li>
+        <li>"Próximo horizonte" arriesga sonar a wish-list sin evidencia</li>
+        <li>Necesita links a case studies desde cada chip para mantener credibilidad</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ DIRECCIÓN 2 ══════════════ -->
+<section class="direction">
+  <div class="dir-head">
+    <span class="dir-num">Dirección 2</span>
+    <h2 class="dir-title">Libro Mayor de Inversión</h2>
+  </div>
+  <p class="dir-gist">Libro mayor a dos columnas: <strong>Reasignando desde</strong> (horas que ya no gasto y por qué) <strong>→</strong> <strong>Capitalizando en</strong> (horas que invierto ahora, con evidencia). Presentado como decisión consciente, no obsolescencia. Se lee como el libro de decisiones de un operador senior.</p>
+
+  <div class="dir-stage">
+    <div class="ledger">
+      <div class="ledger-side from">
+        <div class="ledger-label"><span class="arrow">◄</span> Reasignando desde</div>
+        <ul class="ledger-list">
+          <li><span class="ledger-item-label">Mover píxeles en Figma</span><span class="ledger-item-meta">commodity · agentes lo hacen</span></li>
+          <li><span class="ledger-item-label">Codear a mano patrones UI conocidos</span><span class="ledger-item-meta">commodity · instantáneo desde prompts</span></li>
+          <li><span class="ledger-item-label">Ciclos manuales de design review</span><span class="ledger-item-meta">reemplazado por loops de crítico</span></li>
+          <li><span class="ledger-item-label">Producir PDFs de spec para devs</span><span class="ledger-item-meta">reemplazado por skills + MCP</span></li>
+          <li><span class="ledger-item-label">Defender un título</span><span class="ledger-item-meta">la caja misma está cambiando</span></li>
+        </ul>
+        <p class="ledger-footnote">Son skills reales que gané. Me quedo con el juicio, retiro las horas.</p>
+      </div>
+      <div class="ledger-side to">
+        <div class="ledger-label">Capitalizando en <span class="arrow">►</span></div>
+        <ul class="ledger-list">
+          <li><span class="ledger-item-label">Orquestación de agentes para producto real</span><span class="ledger-item-meta">EnRegla · 346 commits / 40d</span></li>
+          <li><span class="ledger-item-label">Design systems como skills de agente</span><span class="ledger-item-meta">TE Skin · BAH</span></li>
+          <li><span class="ledger-item-label">Loops de crítico recursivos para calidad UI</span><span class="ledger-item-meta">migración DS 78.4 → 95.6</span></li>
+          <li><span class="ledger-item-label">Tooling MCP para stacks de producción</span><span class="ledger-item-meta">Supabase · a nivel schema</span></li>
+          <li><span class="ledger-item-label">Juicio en la costura diseño ↔ ingeniería</span><span class="ledger-item-meta">donde vive el 90% del producto</span></li>
+        </ul>
+        <p class="ledger-footnote">Esto compone. Cada hora acá sube el techo de lo que un equipo de uno (yo + agentes) puede entregar.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dir-notes">
+    <div class="strength">
+      <h4>Por qué funciona</h4>
+      <ul>
+        <li>Presenta el cambio como decisión, no desplazamiento — tono senior</li>
+        <li>La columna derecha está cargada de evidencia concreta en el meta</li>
+        <li>Le dice al hiring manager que piensas dónde invertir tu tiempo</li>
+        <li>Metáfora espacial clara: capital viejo → capital nuevo</li>
+      </ul>
+    </div>
+    <div class="risk">
+      <h4>Dónde puede fallar</h4>
+      <ul>
+        <li>La metáfora contable es nicho — algunos lectores no la parsean al instante</li>
+        <li>Más denso; menos punch visual que un timeline</li>
+        <li>El hero necesita un visual separado — el ledger solo no alcanza para el top de la página</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ DIRECCIÓN 3 ══════════════ -->
+<section class="direction">
+  <div class="dir-head">
+    <span class="dir-num">Dirección 3</span>
+    <h2 class="dir-title">Tesis + Movimientos</h2>
+  </div>
+  <p class="dir-gist">Una tesis fuerte en primera persona (una frase, no un tagline), seguida de 4 "movimientos" concretos que estoy haciendo ahora. Cada movimiento tiene un estado (entregado / en curso / siguiente), una línea "de X → a Y" de reasignación, y una evidencia debajo. Se lee como un memo, no como un CV.</p>
+
+  <div class="dir-stage">
+    <div class="thesis-block">
+      <div class="thesis-eyebrow">Tesis · 2026</div>
+      <p class="thesis-text">La frontera del producto se movió del <em>craft manual</em> al <em>juicio orquestado</em>. Me moví con ella — y estoy invirtiendo el próximo año en ser el operador que cierra el loop entre los dos.</p>
+      <p class="thesis-sub">Abajo: cuatro movimientos que estoy haciendo ahora. Cada uno atado a trabajo real, con evidencia que puedes leer.</p>
+    </div>
+
+    <div class="moves">
+      <div class="move">
+        <div class="move-head">
+          <span class="move-num">Movimiento 01</span>
+          <span class="move-state shipped">Entregado</span>
+        </div>
+        <h3>Entregar SaaS de producción solo, con agentes como co-autores</h3>
+        <div class="move-from"><s>PM + 2 devs + 1 diseñador</s> → <span>yo + agentes orquestados</span></div>
+        <p>Reemplacé el supuesto de equipo-de-cuatro con un stack disciplinado de solo + agentes. No un demo — un producto vivo con pilotos pagados.</p>
+        <div class="move-evidence">Evidencia · <b>EnRegla</b> — 346 commits en 40 días, en producción con pilotos pagados</div>
+      </div>
+
+      <div class="move">
+        <div class="move-head">
+          <span class="move-num">Movimiento 02</span>
+          <span class="move-state live">En curso</span>
+        </div>
+        <h3>Convertir un design system en un skill que los agentes usan</h3>
+        <div class="move-from"><s>Librería Figma + PDFs de spec</s> → <span>skill slash-command invocable</span></div>
+        <p>El DS antes era un entregable que se pasaba a devs. Ahora es un artefacto de runtime al que los agentes llegan durante la construcción.</p>
+        <div class="move-evidence">Evidencia · <b>TE Skin · BAH</b> — design review: 2 semanas → 36 horas</div>
+      </div>
+
+      <div class="move">
+        <div class="move-head">
+          <span class="move-num">Movimiento 03</span>
+          <span class="move-state live">En curso</span>
+        </div>
+        <h3>Reemplazar revisión manual con loops de crítico recursivos</h3>
+        <div class="move-from"><s>Revisión PR-por-PR humana</s> → <span>crítico automatizado + rúbrica de taste</span></div>
+        <p>Taste-como-juicio es escaso; taste-como-rúbrica escala. Cinco rondas de un loop de crítico subieron el score de migración DS 78.4 → 95.6.</p>
+        <div class="move-evidence">Evidencia · <b>Migración DS</b> · 5 rondas recursivas · scoring por tokens</div>
+      </div>
+
+      <div class="move">
+        <div class="move-head">
+          <span class="move-num">Movimiento 04</span>
+          <span class="move-state next">Próximos 12 meses</span>
+        </div>
+        <h3>Ser dueño de la costura diseño ↔ ingeniería en un equipo serio</h3>
+        <div class="move-from"><s>Silo de especialista</s> → <span>embed que amplifica leverage</span></div>
+        <p>A dónde quiero que componga el próximo año: embebido en un equipo de producto como el operador que convierte juicio en workflows de agentes shippeables.</p>
+        <div class="move-evidence">Objetivo · <b>Head-of-Product / Head-of-Eng</b> contratando para esa costura exacta</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dir-notes">
+    <div class="strength">
+      <h4>Por qué funciona</h4>
+      <ul>
+        <li>Tesis al frente — POV fuerte sin sonar a manifiesto por manifiesto</li>
+        <li>Cada movimiento está anclado en evidencia real, no aspiración</li>
+        <li>Las líneas "de → a" hacen el movimiento literal</li>
+        <li>Escala: fácil añadir/retirar un movimiento cada trimestre sin rediseñar la página</li>
+      </ul>
+    </div>
+    <div class="risk">
+      <h4>Dónde puede fallar</h4>
+      <ul>
+        <li>Si la frase-tesis no está afilada, toda la sección tambalea</li>
+        <li>El "Movimiento 04" (aspiracional) debe quedarse corto — una deriva a wish-list mata el tono</li>
+        <li>Necesita vivir arriba o reemplazar al actual strip de "proof numbers" para sentirse primario</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
