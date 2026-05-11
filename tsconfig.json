@@ -12,5 +12,6 @@
     "allowImportingTsExtensions": false,
     "isolatedModules": true
   },
-  "include": ["generators/**/*.ts", "tests/**/*.ts"]
+  "include": ["generators/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules", "dist", "studies"]
 }
