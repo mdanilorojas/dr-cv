@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Danilo Rojas · Hoja de habilidades</title>
+<style>
+/* =====================================================================
+   dr-cv · design tokens (light system derived from huly.io)
+   ---------------------------------------------------------------------
+   Huly is dark-mode dominant. For printable A4 documents (skills sheet,
+   CV) we run it in light-mode while keeping:
+     · Monospace display font (JetBrains Mono as open-source esbuild sub)
+     · Inter body
+     · Warm accent orange (#FF8964) as single live color
+     · Cool blue accent (#5683DA) used sparingly for links
+     · Tight letter-spacing on headings (-0.04em / -0.05em)
+     · Huly's neutrality discipline — one accent at a time
+   ===================================================================== */
+
+:root {
+  /* ---- surface (LIGHT) ----------------------------------------- */
+  --bg-paper:        #FAFAF7;   /* page background — warm white */
+  --bg-section:      #F2F0EA;   /* alternate band */
+  --bg-card:         #FFFFFF;   /* raised surface */
+  --bg-ink:          #0B0C0E;   /* inverted dark for accent sections */
+  --bg-ink-2:        #18191B;
+
+  /* ---- text --------------------------------------------------- */
+  --ink:             #0B0C0E;   /* primary text */
+  --ink-body:        #303236;   /* body copy */
+  --ink-muted:       #61656B;   /* secondary */
+  --ink-subtle:      #95979E;   /* tertiary / captions */
+  --ink-inverse:     #FAFAF7;   /* text on dark sections */
+
+  /* ---- accents ------------------------------------------------- */
+  --accent:          #FF8964;   /* warm orange — unique live color */
+  --accent-deep:     #CD3100;   /* press / active */
+  --accent-ink:      #5A250A;   /* text on warm accent backgrounds */
+  --accent-cool:     #5683DA;   /* cool blue — links only */
+
+  /* ---- lines / rules ------------------------------------------ */
+  --line:            #E3E1DA;
+  --line-strong:     #C9C7BF;
+  --line-soft:       #ECEAE3;
+
+  /* ---- warm glow (signature element) -------------------------- */
+  --glow-1: #FFFFF5;
+  --glow-2: #FFAA81;
+  --glow-3: #FFDA9F;
+
+  /* ---- elevation --------------------------------------------- */
+  --shadow-card:       0 1px 2px rgba(11,12,14,.06), 0 4px 10px rgba(11,12,14,.06);
+  --shadow-card-lift:  0 4px 16px rgba(11,12,14,.10);
+  --shadow-inset:      inset 0 0 0 1px var(--line);
+
+  /* ---- radius ------------------------------------------------- */
+  --r-pill: 9999px;
+  --r-sm:   6px;
+  --r-md:   10px;
+  --r-lg:   12px;
+
+  /* ---- typography -------------------------------------------- */
+  --font-body:    "Inter", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-display: "JetBrains Mono", "Geist Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  --font-mono:    "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+
+  /* scale reduced for A4 — huly's 84px won't fit print */
+  --fs-display: 36pt;  /* hero-ish, name on CV */
+  --fs-h1:      22pt;
+  --fs-h2:      14pt;
+  --fs-h3:      11pt;
+  --fs-body:    9.5pt;
+  --fs-small:   8.5pt;
+  --fs-micro:   7pt;
+  --fs-caption: 7.5pt;
+
+  /* ---- tracking --------------------------------------------- */
+  --tr-snug:    -0.01em;
+  --tr-snugger: -0.02em;
+  --tr-tight:   -0.03em;
+  --tr-tighter: -0.04em;
+  --tr-wide:     0.08em;
+  --tr-uppercase:0.12em;
+
+  /* ---- leading --------------------------------------------- */
+  --lh-display: 0.92;
+  --lh-heading: 1.05;
+  --lh-body:    1.45;
+  --lh-tight:   1.2;
+
+  /* ---- motion (for screen preview — not printed) ---------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 180ms;
+  --dur-med:  280ms;
+
+  /* ---- A4 --------------------------------------------------- */
+  --a4-w: 210mm;
+  --a4-h: 297mm;
+  --a4-pad: 14mm;
+}
+
+/* =====================================================================
+   base
+   ===================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background: #e8e5de;  /* screen only — gray around pages */
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "kern", "liga", "calt", "ss01";
+  font-variant-numeric: tabular-nums;
+}
+
+/* =====================================================================
+   page (A4)
+   ===================================================================== */
+.page {
+  width: var(--a4-w);
+  min-height: var(--a4-h);
+  margin: 24px auto;
+  background: var(--bg-paper);
+  color: var(--ink);
+  padding: var(--a4-pad);
+  box-shadow: 0 4px 24px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.06);
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+}
+.page:last-of-type { page-break-after: auto; }
+
+/* subtle huly-esque line-bg texture, muy sutil */
+.page::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(
+      92deg,
+      transparent 0 48px,
+      rgba(255,137,100,.025) 48px 49px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+.page > * { position: relative; z-index: 1; }
+
+@media print {
+  body { background: var(--bg-paper); }
+  .page {
+    margin: 0; box-shadow: none;
+    width: var(--a4-w); min-height: var(--a4-h);
+  }
+  .no-print { display: none !important; }
+  @page { size: A4; margin: 0; }
+}
+
+/* =====================================================================
+   typography helpers
+   ===================================================================== */
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: var(--tr-tighter);
+  line-height: var(--lh-heading);
+}
+h1 { font-size: var(--fs-h1); letter-spacing: -0.045em; line-height: var(--lh-display); }
+h2 { font-size: var(--fs-h2); letter-spacing: var(--tr-tighter); }
+h3 { font-size: var(--fs-h3); letter-spacing: var(--tr-tight); }
+
+p { margin: 0; }
+
+.mono { font-family: var(--font-mono); font-feature-settings: "ss01", "cv01"; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: var(--tr-uppercase);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.muted   { color: var(--ink-muted); }
+.subtle  { color: var(--ink-subtle); }
+.tight   { letter-spacing: var(--tr-tight); }
+.tighter { letter-spacing: var(--tr-tighter); }
+
+/* =====================================================================
+   rules + dividers
+   ===================================================================== */
+.rule {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+  margin: 0;
+}
+.rule-strong { background: var(--ink); height: 2px; }
+.rule-accent { background: var(--accent); height: 2px; }
+
+/* =====================================================================
+   pills + chips
+   ===================================================================== */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1.4;
+  background: var(--bg-section);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.pill--ink {
+  background: var(--bg-ink);
+  color: var(--ink-inverse);
+  border-color: var(--bg-ink);
+}
+.pill--accent {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.pill--outline {
+  background: transparent;
+  color: var(--ink-body);
+  border-color: var(--line-strong);
+}
+.pill--dot::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+}
+
+/* =====================================================================
+   cards
+   ===================================================================== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 12px 14px;
+}
+.card--ink {
+  background: var(--bg-ink);
+  color: var(--ink-inverse);
+  border-color: var(--bg-ink);
+}
+
+/* =====================================================================
+   CTA pill — warm glow signature
+   ===================================================================== */
+.cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  background: radial-gradient(ellipse at 50% 50%,
+              var(--glow-1) 0%,
+              var(--glow-2) 40%,
+              var(--glow-3) 70%);
+  color: var(--accent-ink);
+  border: 1px solid rgba(255,137,100,.5);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.6) inset,
+    0 2px 12px rgba(255,137,100,.3);
+  text-decoration: none;
+}
+
+/* =====================================================================
+   section heading pattern (huly-style)
+   ===================================================================== */
+.sec-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.sec-head__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.sec-head__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  letter-spacing: var(--tr-tighter);
+  line-height: 1;
+}
+.sec-head__rule {
+  justify-self: stretch;
+  height: 1px;
+  background: var(--line);
+  margin-left: 8px;
+  align-self: center;
+}
+
+/* =====================================================================
+   screen-only toolbar (no-print)
+   ===================================================================== */
+.toolbar {
+  position: fixed;
+  top: 14px; right: 18px;
+  z-index: 99;
+  display: inline-flex; gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 4px;
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+}
+.toolbar button {
+  all: unset;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  color: var(--ink-muted);
+  transition: background var(--dur-fast) var(--ease-standard),
+              color var(--dur-fast) var(--ease-standard);
+}
+.toolbar button.on {
+  background: var(--ink);
+  color: var(--ink-inverse);
+}
+.toolbar button:hover { color: var(--ink); }
+.toolbar button.on:hover { color: var(--ink-inverse); }
+
+
+/* ============== skills-sheet specific (scoped overrides of tokens) ============== */
+.ss {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 10mm;
+  height: calc(297mm - 28mm);
+}
+.ss-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-end;
+  gap: 10mm;
+  padding-bottom: 6mm;
+  border-bottom: 2px solid var(--ink);
+}
+.ss-head h1 { font-size: 30pt; letter-spacing: -0.05em; line-height: 1; margin: 0; }
+.ss-head h1 .accent { color: var(--accent); }
+.ss-head h1 .tag {
+  display: block; margin-top: 5px;
+  font-family: var(--font-mono);
+  font-size: 8pt; color: var(--ink-muted);
+  letter-spacing: var(--tr-uppercase); text-transform: uppercase;
+}
+.ss-head .meta {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 7pt; color: var(--ink-muted);
+  letter-spacing: var(--tr-uppercase); text-transform: uppercase;
+  line-height: 1.7;
+}
+.ss-head .meta b { color: var(--ink); font-weight: 500; }
+
+.ss-intro {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 8mm;
+  align-items: start;
+}
+.ss-intro .lead {
+  font-family: var(--font-display);
+  font-size: 13pt; line-height: 1.3;
+  letter-spacing: -0.03em; color: var(--ink);
+}
+.ss-intro .lead .faint { color: var(--ink-muted); }
+.ss-intro .proof {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--line); border: 1px solid var(--line);
+}
+.ss-intro .proof div { background: var(--bg-card); padding: 8px 10px; }
+.ss-intro .proof .n {
+  font-family: var(--font-display); font-size: 16pt; font-weight: 600;
+  letter-spacing: -0.04em; line-height: 1; color: var(--ink);
+}
+.ss-intro .proof .n .accent { color: var(--accent); }
+.ss-intro .proof .l {
+  margin-top: 3px; font-family: var(--font-mono);
+  font-size: 6.5pt; color: var(--ink-muted);
+  letter-spacing: var(--tr-uppercase); text-transform: uppercase;
+}
+
+.ss-body { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+.ss-col { display: flex; flex-direction: column; gap: 4mm; }
+.ss-col-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding-bottom: 3mm; border-bottom: 1px solid var(--ink);
+}
+.ss-col-head .name {
+  font-family: var(--font-display); font-size: 11pt; font-weight: 600;
+  letter-spacing: -0.03em;
+}
+.ss-col-head .axis {
+  font-family: var(--font-mono); font-size: 6.5pt; color: var(--ink-muted);
+  text-transform: uppercase; letter-spacing: var(--tr-uppercase);
+}
+
+.group { page-break-inside: avoid; }
+.group__head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 3px;
+}
+.group__title {
+  font-family: var(--font-display); font-size: 8.5pt;
+  letter-spacing: var(--tr-wide); text-transform: uppercase;
+  font-weight: 600; color: var(--ink);
+}
+.group__count {
+  font-family: var(--font-mono); font-size: 6.5pt; color: var(--ink-subtle);
+}
+.group__list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.group__list li {
+  font-family: var(--font-body); font-size: 7.8pt; line-height: 1.3;
+  color: var(--ink-body); display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 7px; border-radius: var(--r-pill);
+  border: 1px solid var(--line); background: var(--bg-card);
+  letter-spacing: -0.005em;
+}
+.group__list li::before {
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent); flex: 0 0 auto;
+}
+.group__list li.learn::before {
+  background: transparent; border: 1px solid var(--accent-deep);
+}
+
+.ss-foot {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 10mm; align-items: center;
+  padding-top: 5mm; border-top: 1px solid var(--line);
+  font-family: var(--font-mono); font-size: 7pt; color: var(--ink-muted);
+  letter-spacing: var(--tr-uppercase); text-transform: uppercase;
+}
+.ss-foot .pills { display: inline-flex; gap: 6px; align-items: center; }
+.ss-foot .pills .k {
+  padding: 2px 7px; border-radius: var(--r-pill);
+  border: 1px solid var(--line); background: var(--bg-card); color: var(--ink);
+}
+.legend {
+  display: inline-flex; gap: 10px;
+  font-family: var(--font-mono); font-size: 6.5pt;
+  color: var(--ink-muted); text-transform: uppercase;
+  letter-spacing: var(--tr-uppercase); align-items: center;
+}
+.legend .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); display: inline-block; margin-right: 4px;
+}
+.legend .dot.hollow { background: transparent; border: 1px solid var(--accent-deep); }
+
+.voices { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-top: 4mm; }
+.voice {
+  padding: 5mm 6mm 5mm 5mm;
+  border-left: 2px solid var(--accent);
+  background: var(--bg-card);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+}
+.voice .q {
+  font-family: var(--font-display); font-size: 8.5pt; line-height: 1.5;
+  letter-spacing: -0.015em; color: var(--ink);
+  font-style: italic; margin: 0 0 3mm 0;
+}
+.voice .who {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 4mm;
+  font-family: var(--font-mono); font-size: 6.5pt;
+  letter-spacing: var(--tr-wide); text-transform: uppercase; color: var(--ink-muted);
+}
+.voice .who b {
+  color: var(--ink); font-weight: 600; letter-spacing: -0.01em; text-transform: none;
+  font-family: var(--font-display); font-size: 7.8pt;
+}
+.voice .verified {
+  font-family: var(--font-mono); font-size: 5.8pt;
+  letter-spacing: var(--tr-uppercase); text-transform: uppercase;
+  color: var(--accent);
+  padding: 1px 6px; border: 1px solid var(--accent); border-radius: var(--r-pill);
+  flex-shrink: 0;
+}
+
+</style>
+</head>
+<body>
+
+<article class="page">
+  <div class="ss">
+
+    <header class="ss-head">
+      <div>
+        <span class="eyebrow">skills sheet · v1.0 · 2026.05</span>
+        <h1>Danilo <span class="accent">Rojas</span>
+          <span class="tag">Agentic Designer · Product Engineer</span>
+        </h1>
+      </div>
+      <div class="meta">
+        <div>Quito · Ecuador</div>
+        <div>EN professional · ES native</div>
+        <div>Open to work · Remote global</div>
+      </div>
+    </header>
+
+    <section class="ss-intro">
+      <p class="lead"><span>Entrego productos reales — y entrego las herramientas que los agentes usan para ayudarme.</span> <span class="faint">Quince años entregando. Clientes enterprise, SaaS en producción, consultoría activa en Booz Allen Hamilton. Yo pongo el craft; los agentes dan el leverage.</span></p>
+      <div class="proof">
+        
+        <div>
+          <div class="n">15<span class="accent">+</span></div>
+          <div class="l">Años shippeando</div>
+        </div>
+
+        <div>
+          <div class="n">346</div>
+          <div class="l">Commits · 40 días</div>
+        </div>
+
+        <div>
+          <div class="n">1<span class="accent">.0</span></div>
+          <div class="l">SaaS en producción</div>
+        </div>
+
+        <div>
+          <div class="n">95<span class="accent">.6</span></div>
+          <div class="l">Score migración DS</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ss-body">
+      
+    <div class="ss-col">
+      <header class="ss-col-head">
+        <span class="name">Visual A</span>
+        <span class="axis">axis · product layer</span>
+      </header>
+      
+    <div class="group">
+      <div class="group__head">
+        <span class="group__title">Strategy</span>
+        <span class="group__count">4 mastered · 2 learning</span>
+      </div>
+      <ul class="group__list">
+        <li>Product vision</li>
+<li>Roadmapping · RICE</li>
+<li>GTM specs</li>
+<li>Multi-persona</li>
+<li class="learn">Pricing · packaging</li>
+<li class="learn">MRR / CAC / LTV</li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <div class="group__head">
+        <span class="group__title">Design</span>
+        <span class="group__count">7 mastered · 2 learning</span>
+      </div>
+      <ul class="group__list">
+        <li>Design systems</li>
+<li>Multi-theme (dark + light)</li>
+<li>W3C design tokens</li>
+<li>Figma · Style Dictionary</li>
+<li>Recursive DS review</li>
+<li>Interactive HTML docs</li>
+<li>Named anti-patterns</li>
+<li class="learn">Agentic UX patterns</li>
+<li class="learn">User research n&gt;10</li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <div class="group__head">
+        <span class="group__title">Engineering</span>
+        <span class="group__count">7 mastered · 3 learning</span>
+      </div>
+      <ul class="group__list">
+        <li>TypeScript · React 19</li>
+<li>Next 16 · Vite · Tailwind</li>
+<li>Supabase · Prisma</li>
+<li>SQL · RLS · edge</li>
+<li>CI · Vercel · DNS</li>
+<li>Houdini · canvas · glass</li>
+<li>SharePoint SPA engineering</li>
+<li class="learn">Test coverage discipline</li>
+<li class="learn">Sentry · PostHog</li>
+<li class="learn">Distributed backend</li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <div class="group__head">
+        <span class="group__title">Agents</span>
+        <span class="group__count">6 mastered · 2 learning</span>
+      </div>
+      <ul class="group__list">
+        <li>Claude Code · power user</li>
+<li>MCP servers</li>
+<li>Subagent orchestration</li>
+<li>Skills-lock · reproducible</li>
+<li>DS as agent-consumable skill</li>
+<li>Gemini API in runtime</li>
+<li class="learn">Evals · promptfoo</li>
+<li class="learn">RAG in production</li>
+      </ul>
+    </div>
+    </div>
+      
+    <div class="ss-col">
+      <header class="ss-col-head">
+        <span class="name">Visual B</span>
+        <span class="axis">axis · client outcome</span>
+      </header>
+      
+    <div class="group">
+      <div class="group__head">
+        <span class="group__title">Discovery</span>
+        <span class="group__count">3 mastered · 1 learning</span>
+      </div>
+      <ul class="group__list">
+        <li>Problem framing</li>
+<li>Non-goals discipline</li>
+<li>Persona-driven specs</li>
+<li class="learn">Live user interviews</li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <div class="group__head">
+        <span class="group__title">Build</span>
+        <span class="group__count">5 mastered · 1 learning</span>
+      </div>
+      <ul class="group__list">
+        <li>0 → prod in a day</li>
+<li>0 → 1.0-MVP in 40 days</li>
+<li>Full-stack TS + SQL</li>
+<li>DS migrations (17 parts)</li>
+<li>Functional prototypes</li>
+<li class="learn">LLM-native features</li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <div class="group__head">
+        <span class="group__title">Ship</span>
+        <span class="group__count">4 mastered · 2 learning</span>
+      </div>
+      <ul class="group__list">
+        <li>Vercel · GH Actions</li>
+<li>Conventional commits</li>
+<li>Deploy · DNS · domains</li>
+<li>RLS + demo-mode</li>
+<li class="learn">SLOs · on-call</li>
+<li class="learn">Load testing</li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <div class="group__head">
+        <span class="group__title">Scale</span>
+        <span class="group__count">4 mastered · 2 learning</span>
+      </div>
+      <ul class="group__list">
+        <li>Enterprise clients (15 yrs)</li>
+<li>Design ops · distributed DS</li>
+<li>Cross-team consulting (BAH)</li>
+<li>Solo founder · agent-multiplied</li>
+<li class="learn">Growth loops · PLG</li>
+<li class="learn">Team hiring</li>
+      </ul>
+    </div>
+    </div>
+    </section>
+
+    <footer class="ss-foot">
+      <div class="left">
+        <span class="legend">
+          <span class="dot"></span><span>Dominada · defendible</span>
+          <span class="dot hollow"></span><span>En curso · honesta</span>
+        </span>
+      </div>
+      <div class="pills">
+        <span class="k">github.com/mdanilorojas</span>
+        <span class="k">danilorojas@hotmail.com</span>
+      </div>
+    </footer>
+
+  </div>
+</article>
+
+<article class="page">
+  <div class="ss">
+
+    <header class="ss-head">
+      <div>
+        <span class="eyebrow">skills sheet · cont · p.2 of 2</span>
+        <h1 class="tighter">Cómo trabajo</h1>
+      </div>
+      <div class="meta">
+        <div>generado desde repo</div>
+        <div><b>/data/skills.yaml</b></div>
+      </div>
+    </header>
+
+    <section style="margin-top:4mm;">
+      <div class="sec-head">
+        <span class="sec-head__num">01</span>
+        <span class="sec-head__title">Trabajo actual</span>
+        <span class="sec-head__rule"></span>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:5mm; margin-top:4mm;">
+        
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2mm;">
+        <div class="eyebrow" style="color:var(--accent)">Design-engineering consultant</div>
+        <span class="pill pill--accent">Army · DoD</span>
+      </div>
+      <h3 style="font-size:11pt; margin-bottom:3mm;">Booz Allen Hamilton</h3>
+      <p style="font-size:8pt; line-height:1.45; color:var(--ink-body); margin:0 0 3mm 0;">Design-engineering en Trusted Environments — landing, producto Developer Portal y colaboración PM. Dos DS paralelos (/te-skin como skill consumible por agentes + TE Black dark-first con audit a11y en tokens). SPA SharePoint. Consultoría transversal a equipos Army/DoD.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:4px;">
+        <span class="pill">/te-skin</span>
+<span class="pill">Developer Portal</span>
+<span class="pill">TE Black DS</span>
+<span class="pill">SharePoint SPA</span>
+<span class="pill">Houdini</span>
+<span class="pill">Army · DoD</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2mm;">
+        <div class="eyebrow" style="color:var(--accent)">Founder · product · engineering</div>
+        <span class="pill pill--accent">paying pilots</span>
+      </div>
+      <h3 style="font-size:11pt; margin-bottom:3mm;">EnRegla</h3>
+      <p style="font-size:8pt; line-height:1.45; color:var(--ink-body); margin:0 0 3mm 0;">SaaS de compliance multi-sede para PYMES LATAM. 0 → 1.0-MVP en producción en 40 días. 346 commits, 21 migraciones SQL, 31 componentes UI, 1 edge function con cron, migración DS 17-partes × 5 rondas (78.4 → 95.6).</p>
+      <div style="display:flex; flex-wrap:wrap; gap:4px;">
+        <span class="pill">React 19</span>
+<span class="pill">Supabase</span>
+<span class="pill">Claude Code</span>
+<span class="pill">MCP</span>
+<span class="pill">RLS</span>
+      </div>
+    </div>
+      </div>
+    </section>
+
+    <section style="margin-top:8mm;">
+      <div class="sec-head">
+        <span class="sec-head__num">02</span>
+        <span class="sec-head__title">Clientes pasados (seleccionados)</span>
+        <span class="sec-head__rule"></span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:3mm; margin-top:4mm;">
+        
+    <div class="card" style="padding:10px 12px;">
+      <div class="mono" style="font-size:9.5pt; font-weight:600; letter-spacing:-0.02em;">Merck &amp; Co.</div>
+      <div style="font-size:7pt; color:var(--ink-muted); margin-top:2px;">Salud</div>
+    </div>
+
+    <div class="card" style="padding:10px 12px;">
+      <div class="mono" style="font-size:9.5pt; font-weight:600; letter-spacing:-0.02em;">Mondelēz Intl.</div>
+      <div style="font-size:7pt; color:var(--ink-muted); margin-top:2px;">CPG · Alimentos</div>
+    </div>
+
+    <div class="card" style="padding:10px 12px;">
+      <div class="mono" style="font-size:9.5pt; font-weight:600; letter-spacing:-0.02em;">Banco Pichincha</div>
+      <div style="font-size:7pt; color:var(--ink-muted); margin-top:2px;">Banca</div>
+    </div>
+
+    <div class="card" style="padding:10px 12px;">
+      <div class="mono" style="font-size:9.5pt; font-weight:600; letter-spacing:-0.02em;">Quifatex</div>
+      <div style="font-size:7pt; color:var(--ink-muted); margin-top:2px;">Logística</div>
+    </div>
+
+    <div class="card" style="padding:10px 12px;">
+      <div class="mono" style="font-size:9.5pt; font-weight:600; letter-spacing:-0.02em;">Grupo Superior</div>
+      <div style="font-size:7pt; color:var(--ink-muted); margin-top:2px;">Consumer</div>
+    </div>
+
+    <div class="card" style="padding:10px 12px;">
+      <div class="mono" style="font-size:9.5pt; font-weight:600; letter-spacing:-0.02em;">Moderna Corp.</div>
+      <div style="font-size:7pt; color:var(--ink-muted); margin-top:2px;">Farma</div>
+    </div>
+
+    <div class="card" style="padding:10px 12px;">
+      <div class="mono" style="font-size:9.5pt; font-weight:600; letter-spacing:-0.02em;">Azzorti</div>
+      <div style="font-size:7pt; color:var(--ink-muted); margin-top:2px;">Retail</div>
+    </div>
+
+    <div class="card" style="padding:10px 12px;">
+      <div class="mono" style="font-size:9.5pt; font-weight:600; letter-spacing:-0.02em;">Flamingo CO.</div>
+      <div style="font-size:7pt; color:var(--ink-muted); margin-top:2px;">Retail</div>
+    </div>
+      </div>
+    </section>
+
+    <section style="margin-top:8mm;">
+      <div class="sec-head">
+        <span class="sec-head__num">03</span>
+        <span class="sec-head__title">Voces</span>
+        <span class="sec-head__rule"></span>
+      </div>
+      <div class="voices">
+        
+    <div class="voice">
+      <p class="q">&ldquo;Danilo está haciendo cosas geniales usando AI de las maneras correctas. Se metió a fondo en el mundo de developer-portal y entregó trabajo que quería seguir reutilizando. Una pérdida de verdad para nosotros.&rdquo;</p>
+      <div class="who">
+        <span><b>Jennifer Sheppard</b> · Product Lead · Developer Portal · Booz Allen Hamilton</span>
+        <span class="verified">verificado</span>
+      </div>
+    </div>
+
+    <div class="voice">
+      <p class="q">&ldquo;Danilo mezcla diseño, requerimientos, desarrollo e IA — el unicornio que la mayoría de empresas está buscando en este cambio de era. Un gran aporte para cualquier equipo.&rdquo;</p>
+      <div class="who">
+        <span><b>Alexander Giraldez</b> · Design Lead · Trusted Environments · Booz Allen Hamilton</span>
+        <span class="verified">verificado</span>
+      </div>
+    </div>
+      </div>
+    </section>
+
+    <section style="margin-top:auto; padding-top:8mm; display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <div class="eyebrow">hablemos</div>
+        <h2 style="font-size:16pt; margin-top:3px; letter-spacing:-0.04em;">La combinación es el producto.</h2>
+      </div>
+      <a class="cta" href="mailto:danilorojas@hotmail.com">
+        <span>Trabajemos juntos</span>
+        <span style="transform:translateY(-1px)">→</span>
+      </a>
+    </section>
+
+    <footer class="ss-foot" style="margin-top:6mm;">
+      <div class="left">
+        <span>dr-cv · skills sheet · generado desde fuente única</span>
+      </div>
+      <div class="pills">
+        <span class="k">Page 2 / 2</span>
+      </div>
+    </footer>
+  </div>
+</article>
+</body>
+</html>

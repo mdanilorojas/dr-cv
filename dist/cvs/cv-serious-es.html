@@ -1,0 +1,1064 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Danilo Rojas · Curriculum Vitae</title>
+<style>
+/* =====================================================================
+   dr-cv · design tokens (light system derived from huly.io)
+   ---------------------------------------------------------------------
+   Huly is dark-mode dominant. For printable A4 documents (skills sheet,
+   CV) we run it in light-mode while keeping:
+     · Monospace display font (JetBrains Mono as open-source esbuild sub)
+     · Inter body
+     · Warm accent orange (#FF8964) as single live color
+     · Cool blue accent (#5683DA) used sparingly for links
+     · Tight letter-spacing on headings (-0.04em / -0.05em)
+     · Huly's neutrality discipline — one accent at a time
+   ===================================================================== */
+
+:root {
+  /* ---- surface (LIGHT) ----------------------------------------- */
+  --bg-paper:        #FAFAF7;   /* page background — warm white */
+  --bg-section:      #F2F0EA;   /* alternate band */
+  --bg-card:         #FFFFFF;   /* raised surface */
+  --bg-ink:          #0B0C0E;   /* inverted dark for accent sections */
+  --bg-ink-2:        #18191B;
+
+  /* ---- text --------------------------------------------------- */
+  --ink:             #0B0C0E;   /* primary text */
+  --ink-body:        #303236;   /* body copy */
+  --ink-muted:       #61656B;   /* secondary */
+  --ink-subtle:      #95979E;   /* tertiary / captions */
+  --ink-inverse:     #FAFAF7;   /* text on dark sections */
+
+  /* ---- accents ------------------------------------------------- */
+  --accent:          #FF8964;   /* warm orange — unique live color */
+  --accent-deep:     #CD3100;   /* press / active */
+  --accent-ink:      #5A250A;   /* text on warm accent backgrounds */
+  --accent-cool:     #5683DA;   /* cool blue — links only */
+
+  /* ---- lines / rules ------------------------------------------ */
+  --line:            #E3E1DA;
+  --line-strong:     #C9C7BF;
+  --line-soft:       #ECEAE3;
+
+  /* ---- warm glow (signature element) -------------------------- */
+  --glow-1: #FFFFF5;
+  --glow-2: #FFAA81;
+  --glow-3: #FFDA9F;
+
+  /* ---- elevation --------------------------------------------- */
+  --shadow-card:       0 1px 2px rgba(11,12,14,.06), 0 4px 10px rgba(11,12,14,.06);
+  --shadow-card-lift:  0 4px 16px rgba(11,12,14,.10);
+  --shadow-inset:      inset 0 0 0 1px var(--line);
+
+  /* ---- radius ------------------------------------------------- */
+  --r-pill: 9999px;
+  --r-sm:   6px;
+  --r-md:   10px;
+  --r-lg:   12px;
+
+  /* ---- typography -------------------------------------------- */
+  --font-body:    "Inter", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-display: "JetBrains Mono", "Geist Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  --font-mono:    "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+
+  /* scale reduced for A4 — huly's 84px won't fit print */
+  --fs-display: 36pt;  /* hero-ish, name on CV */
+  --fs-h1:      22pt;
+  --fs-h2:      14pt;
+  --fs-h3:      11pt;
+  --fs-body:    9.5pt;
+  --fs-small:   8.5pt;
+  --fs-micro:   7pt;
+  --fs-caption: 7.5pt;
+
+  /* ---- tracking --------------------------------------------- */
+  --tr-snug:    -0.01em;
+  --tr-snugger: -0.02em;
+  --tr-tight:   -0.03em;
+  --tr-tighter: -0.04em;
+  --tr-wide:     0.08em;
+  --tr-uppercase:0.12em;
+
+  /* ---- leading --------------------------------------------- */
+  --lh-display: 0.92;
+  --lh-heading: 1.05;
+  --lh-body:    1.45;
+  --lh-tight:   1.2;
+
+  /* ---- motion (for screen preview — not printed) ---------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 180ms;
+  --dur-med:  280ms;
+
+  /* ---- A4 --------------------------------------------------- */
+  --a4-w: 210mm;
+  --a4-h: 297mm;
+  --a4-pad: 14mm;
+}
+
+/* =====================================================================
+   base
+   ===================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background: #e8e5de;  /* screen only — gray around pages */
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "kern", "liga", "calt", "ss01";
+  font-variant-numeric: tabular-nums;
+}
+
+/* =====================================================================
+   page (A4)
+   ===================================================================== */
+.page {
+  width: var(--a4-w);
+  min-height: var(--a4-h);
+  margin: 24px auto;
+  background: var(--bg-paper);
+  color: var(--ink);
+  padding: var(--a4-pad);
+  box-shadow: 0 4px 24px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.06);
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+}
+.page:last-of-type { page-break-after: auto; }
+
+/* subtle huly-esque line-bg texture, muy sutil */
+.page::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(
+      92deg,
+      transparent 0 48px,
+      rgba(255,137,100,.025) 48px 49px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+.page > * { position: relative; z-index: 1; }
+
+@media print {
+  body { background: var(--bg-paper); }
+  .page {
+    margin: 0; box-shadow: none;
+    width: var(--a4-w); min-height: var(--a4-h);
+  }
+  .no-print { display: none !important; }
+  @page { size: A4; margin: 0; }
+}
+
+/* =====================================================================
+   typography helpers
+   ===================================================================== */
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: var(--tr-tighter);
+  line-height: var(--lh-heading);
+}
+h1 { font-size: var(--fs-h1); letter-spacing: -0.045em; line-height: var(--lh-display); }
+h2 { font-size: var(--fs-h2); letter-spacing: var(--tr-tighter); }
+h3 { font-size: var(--fs-h3); letter-spacing: var(--tr-tight); }
+
+p { margin: 0; }
+
+.mono { font-family: var(--font-mono); font-feature-settings: "ss01", "cv01"; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: var(--tr-uppercase);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.muted   { color: var(--ink-muted); }
+.subtle  { color: var(--ink-subtle); }
+.tight   { letter-spacing: var(--tr-tight); }
+.tighter { letter-spacing: var(--tr-tighter); }
+
+/* =====================================================================
+   rules + dividers
+   ===================================================================== */
+.rule {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+  margin: 0;
+}
+.rule-strong { background: var(--ink); height: 2px; }
+.rule-accent { background: var(--accent); height: 2px; }
+
+/* =====================================================================
+   pills + chips
+   ===================================================================== */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1.4;
+  background: var(--bg-section);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.pill--ink {
+  background: var(--bg-ink);
+  color: var(--ink-inverse);
+  border-color: var(--bg-ink);
+}
+.pill--accent {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.pill--outline {
+  background: transparent;
+  color: var(--ink-body);
+  border-color: var(--line-strong);
+}
+.pill--dot::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+}
+
+/* =====================================================================
+   cards
+   ===================================================================== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 12px 14px;
+}
+.card--ink {
+  background: var(--bg-ink);
+  color: var(--ink-inverse);
+  border-color: var(--bg-ink);
+}
+
+/* =====================================================================
+   CTA pill — warm glow signature
+   ===================================================================== */
+.cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  background: radial-gradient(ellipse at 50% 50%,
+              var(--glow-1) 0%,
+              var(--glow-2) 40%,
+              var(--glow-3) 70%);
+  color: var(--accent-ink);
+  border: 1px solid rgba(255,137,100,.5);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.6) inset,
+    0 2px 12px rgba(255,137,100,.3);
+  text-decoration: none;
+}
+
+/* =====================================================================
+   section heading pattern (huly-style)
+   ===================================================================== */
+.sec-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.sec-head__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.sec-head__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  letter-spacing: var(--tr-tighter);
+  line-height: 1;
+}
+.sec-head__rule {
+  justify-self: stretch;
+  height: 1px;
+  background: var(--line);
+  margin-left: 8px;
+  align-self: center;
+}
+
+/* =====================================================================
+   screen-only toolbar (no-print)
+   ===================================================================== */
+.toolbar {
+  position: fixed;
+  top: 14px; right: 18px;
+  z-index: 99;
+  display: inline-flex; gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 4px;
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+}
+.toolbar button {
+  all: unset;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  color: var(--ink-muted);
+  transition: background var(--dur-fast) var(--ease-standard),
+              color var(--dur-fast) var(--ease-standard);
+}
+.toolbar button.on {
+  background: var(--ink);
+  color: var(--ink-inverse);
+}
+.toolbar button:hover { color: var(--ink); }
+.toolbar button.on:hover { color: var(--ink-inverse); }
+
+
+/* ============== A4 page setup ============== */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background: #e8e5de;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "kern", "liga", "calt";
+  font-variant-numeric: tabular-nums;
+}
+.cv-page {
+  width: var(--a4-w);
+  min-height: var(--a4-h);
+  margin: 24px auto;
+  background: var(--bg-paper);
+  color: var(--ink);
+  padding: var(--a4-pad);
+  box-shadow: 0 4px 24px rgba(0,0,0,.12);
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  display: grid;
+  grid-template-columns: 62mm 1fr;
+  gap: 10mm;
+}
+.cv-page:last-of-type { page-break-after: auto; }
+@media print {
+  body { background: var(--bg-paper); }
+  .cv-page { margin: 0; box-shadow: none; }
+  @page { size: A4; margin: 0; }
+}
+
+/* ============== identity ============== */
+.cv-identity {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 10mm;
+  padding-bottom: 6mm;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 6mm;
+}
+.cv-identity__name {
+  font-family: var(--font-display);
+  font-size: 24pt;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  margin: 0 0 3mm 0;
+  font-weight: 600;
+}
+.cv-identity__name-accent { color: var(--accent); }
+.cv-identity--bairesdev .cv-identity__name-accent { color: inherit; }
+.cv-identity__role {
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  margin-bottom: 2mm;
+}
+.cv-identity__availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 8pt;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+.cv-identity__live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255,137,100,.25);
+  animation: cv-livepulse 2.4s ease-in-out infinite;
+}
+@keyframes cv-livepulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(255,137,100,.25); }
+  50%      { box-shadow: 0 0 0 6px rgba(255,137,100,.08); }
+}
+.cv-identity__contact {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 8pt;
+  color: var(--ink-muted);
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+}
+
+/* ============== summary ============== */
+.cv-summary { margin-bottom: 6mm; grid-column: 2 / -1; }
+.cv-summary__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 8pt;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 2mm;
+}
+.cv-summary__thesis {
+  font-family: var(--font-display);
+  font-size: 15pt;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 3mm 0;
+  font-weight: 600;
+}
+.cv-summary__tagline {
+  font-size: 9pt;
+  line-height: 1.5;
+  color: var(--ink-body);
+  margin: 0;
+}
+
+/* ============== skills sidebar ============== */
+.cv-skills { grid-column: 1; }
+.cv-skills__heading {
+  font-family: var(--font-display);
+  font-size: 9pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 4mm 0;
+  padding-bottom: 2mm;
+  border-bottom: 1px solid var(--ink);
+  font-weight: 600;
+}
+.cv-skills__group { margin-bottom: 3mm; }
+.cv-skills__group-title {
+  font-family: var(--font-mono);
+  font-size: 7.5pt;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1.5mm 0;
+}
+.cv-skills__list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 3px;
+}
+.cv-skill {
+  font-size: 7.5pt;
+  padding: 1.5px 6px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  color: var(--ink-body);
+}
+.cv-skill--learning {
+  border-color: var(--accent-deep);
+  color: var(--accent-deep);
+}
+
+/* ============== experience ============== */
+.cv-xp {
+  margin-bottom: 4mm;
+  padding-bottom: 4mm;
+  border-bottom: 1px dashed var(--line-soft);
+}
+.cv-xp:last-child { border-bottom: 0; }
+.cv-xp__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.5mm;
+}
+.cv-xp__company {
+  font-family: var(--font-display);
+  font-size: 10.5pt;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.cv-xp__dates {
+  font-family: var(--font-mono);
+  font-size: 8pt;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+}
+.cv-xp__role {
+  font-family: var(--font-mono);
+  font-size: 8.5pt;
+  color: var(--ink);
+  margin-bottom: 2mm;
+  letter-spacing: 0.02em;
+}
+.cv-xp__badge {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 99px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 6.5pt;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.cv-xp__description {
+  font-size: 8.5pt;
+  line-height: 1.5;
+  color: var(--ink-body);
+  margin: 0 0 2mm 0;
+}
+.cv-xp__stack {
+  display: flex; flex-wrap: wrap; gap: 3px;
+}
+.cv-xp__stack-pill {
+  font-family: var(--font-mono);
+  font-size: 6.5pt;
+  padding: 1px 6px;
+  border-radius: 99px;
+  background: var(--bg-section);
+  border: 1px solid var(--line);
+  color: var(--ink-body);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ============== case card ============== */
+.cv-case {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 4mm 5mm;
+  background: var(--bg-card);
+  margin-bottom: 3mm;
+  page-break-inside: avoid;
+}
+.cv-case--featured.cv-case--dark {
+  background: var(--bg-ink);
+  color: var(--ink-inverse);
+  border-color: var(--bg-ink);
+}
+.cv-case--featured.cv-case--accent-border {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent) inset;
+}
+.cv-case__meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 6.5pt;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 2mm;
+}
+.cv-case--dark .cv-case__meta { color: #c9cbcf; }
+.cv-case__client { color: var(--accent); }
+.cv-case--dark .cv-case__client { color: var(--accent); }
+.cv-case__title {
+  font-family: var(--font-display);
+  font-size: 12pt;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 2mm 0;
+  font-weight: 600;
+  color: inherit;
+}
+.cv-case__hook {
+  font-size: 8.5pt;
+  line-height: 1.5;
+  color: var(--ink-body);
+  margin: 0 0 2mm 0;
+}
+.cv-case--dark .cv-case__hook { color: #d7d8db; }
+.cv-case__bullets {
+  list-style: none; margin: 0 0 2mm 0; padding: 0;
+}
+.cv-case__bullets li {
+  font-size: 7.8pt;
+  line-height: 1.45;
+  padding-left: 12px;
+  position: relative;
+  color: var(--ink-body);
+  margin-bottom: 1mm;
+}
+.cv-case--dark .cv-case__bullets li { color: #d7d8db; }
+.cv-case__bullets li::before {
+  content: "";
+  position: absolute; left: 0; top: 6px;
+  width: 6px; height: 1px;
+  background: var(--accent);
+}
+.cv-case__stack {
+  display: flex; flex-wrap: wrap; gap: 3px;
+}
+.cv-case__stack-pill {
+  font-family: var(--font-mono);
+  font-size: 6.5pt;
+  padding: 1px 6px;
+  border-radius: 99px;
+  background: var(--bg-section);
+  border: 1px solid var(--line);
+  color: var(--ink-body);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.cv-case--dark .cv-case__stack-pill {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.15);
+  color: #e5e5e7;
+}
+
+/* ============== testimonials ============== */
+.cv-testimonial {
+  border-left: 2px solid var(--accent);
+  padding: 2mm 0 2mm 4mm;
+  margin-bottom: 3mm;
+}
+.cv-testimonial__quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 8.5pt;
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0 0 1.5mm 0;
+  letter-spacing: -0.01em;
+}
+.cv-testimonial__attribution {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 6.5pt;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  flex-wrap: wrap;
+}
+.cv-testimonial__author {
+  color: var(--ink);
+  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 7.5pt;
+  letter-spacing: -0.01em;
+}
+.cv-testimonial__badge {
+  padding: 1px 6px;
+  border-radius: 99px;
+  font-size: 5.8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-left: auto;
+}
+.cv-testimonial__badge--verified {
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.cv-testimonial__badge--attributed {
+  color: var(--ink-muted);
+  border: 1px solid var(--line-strong);
+}
+
+/* ============== education ============== */
+.cv-edu__heading {
+  font-family: var(--font-display);
+  font-size: 9pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 3mm 0;
+  padding-bottom: 2mm;
+  border-bottom: 1px solid var(--ink);
+  font-weight: 600;
+}
+.cv-edu__list { list-style: none; margin: 0; padding: 0; }
+.cv-edu__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 6mm;
+  font-size: 8.5pt;
+  padding: 1.5mm 0;
+  border-top: 1px dashed var(--line-soft);
+}
+.cv-edu__item:first-child { border-top: 0; }
+.cv-edu__year {
+  font-family: var(--font-mono);
+  font-size: 7.5pt;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  min-width: 10mm;
+}
+.cv-edu__name {
+  font-family: var(--font-display);
+  font-size: 9pt;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.cv-edu__inst {
+  grid-column: 2;
+  font-family: var(--font-mono);
+  font-size: 7pt;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ============== client chips ============== */
+.cv-client-chip {
+  display: inline-block;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg-card);
+  margin: 0 3px 3px 0;
+}
+.cv-client-chip__name {
+  font-family: var(--font-display);
+  font-size: 9pt;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.cv-client-chip__industry {
+  font-family: var(--font-mono);
+  font-size: 6.5pt;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  margin-top: 1px;
+}
+
+/* ============== main + right column ============== */
+.cv-right { grid-column: 2; }
+.cv-section { margin-bottom: 6mm; }
+.cv-section__heading {
+  font-family: var(--font-display);
+  font-size: 9pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 3mm 0;
+  font-weight: 600;
+}
+
+</style>
+</head>
+<body>
+
+<article class="cv-page">
+  
+<header class="cv-identity cv-identity--serious">
+  <div class="cv-identity__main">
+    <h1 class="cv-identity__name">Danilo <span class="cv-identity__name-accent">Rojas</span></h1>
+    <div class="cv-identity__role">Agentic Designer · Product Engineer</div>
+    <span class="cv-identity__availability">Open to work · Remote global</span>
+  </div>
+  <div class="cv-identity__contact">
+    <span class="cv-identity__contact-item">danilorojas@hotmail.com</span> · <span class="cv-identity__contact-item">linkedin.com/in/mdanilorojas</span> · <span class="cv-identity__contact-item">github.com/mdanilorojas</span> · <span class="cv-identity__contact-item">behance.net/mariodanilo</span>
+  </div>
+</header>
+
+  
+<aside class="cv-skills cv-skills--serious">
+  <h3 class="cv-skills__heading">Habilidades</h3>
+  
+    <div class="cv-skills__group">
+      <h4 class="cv-skills__group-title">Strategy</h4>
+      <ul class="cv-skills__list"><li class="cv-skill">Product vision</li>
+<li class="cv-skill">Roadmapping · RICE</li>
+<li class="cv-skill">GTM specs</li>
+<li class="cv-skill">Multi-persona</li>
+<li class="cv-skill cv-skill--learning">Pricing · packaging</li>
+<li class="cv-skill cv-skill--learning">MRR / CAC / LTV</li></ul>
+    </div>
+
+    <div class="cv-skills__group">
+      <h4 class="cv-skills__group-title">Design</h4>
+      <ul class="cv-skills__list"><li class="cv-skill">Design systems</li>
+<li class="cv-skill">Multi-theme (dark + light)</li>
+<li class="cv-skill">W3C design tokens</li>
+<li class="cv-skill">Figma · Style Dictionary</li>
+<li class="cv-skill">Recursive DS review</li>
+<li class="cv-skill">Interactive HTML docs</li>
+<li class="cv-skill">Named anti-patterns</li>
+<li class="cv-skill cv-skill--learning">Agentic UX patterns</li>
+<li class="cv-skill cv-skill--learning">User research n&gt;10</li></ul>
+    </div>
+
+    <div class="cv-skills__group">
+      <h4 class="cv-skills__group-title">Engineering</h4>
+      <ul class="cv-skills__list"><li class="cv-skill">TypeScript · React 19</li>
+<li class="cv-skill">Next 16 · Vite · Tailwind</li>
+<li class="cv-skill">Supabase · Prisma</li>
+<li class="cv-skill">SQL · RLS · edge</li>
+<li class="cv-skill">CI · Vercel · DNS</li>
+<li class="cv-skill">Houdini · canvas · glass</li>
+<li class="cv-skill">SharePoint SPA engineering</li>
+<li class="cv-skill cv-skill--learning">Test coverage discipline</li>
+<li class="cv-skill cv-skill--learning">Sentry · PostHog</li>
+<li class="cv-skill cv-skill--learning">Distributed backend</li></ul>
+    </div>
+
+    <div class="cv-skills__group">
+      <h4 class="cv-skills__group-title">Agents</h4>
+      <ul class="cv-skills__list"><li class="cv-skill">Claude Code · power user</li>
+<li class="cv-skill">MCP servers</li>
+<li class="cv-skill">Subagent orchestration</li>
+<li class="cv-skill">Skills-lock · reproducible</li>
+<li class="cv-skill">DS as agent-consumable skill</li>
+<li class="cv-skill">Gemini API in runtime</li>
+<li class="cv-skill cv-skill--learning">Evals · promptfoo</li>
+<li class="cv-skill cv-skill--learning">RAG in production</li></ul>
+    </div>
+</aside>
+
+  <div class="cv-right">
+    
+<section class="cv-summary cv-summary--serious">
+  <div class="cv-summary__eyebrow">Resumen Profesional</div>
+  <h2 class="cv-summary__thesis">Entrego productos reales — y entrego las herramientas que los agentes usan para ayudarme.</h2>
+  <p class="cv-summary__tagline">Quince años entregando. Clientes enterprise, SaaS en producción, consultoría activa en Booz Allen Hamilton. Yo pongo el craft; los agentes dan el leverage.</p>
+</section>
+
+    <section class="cv-section">
+      <h3 class="cv-section__heading">Casos seleccionados</h3>
+      
+<article class="cv-case cv-case--serious cv-case--featured cv-case--accent-border">
+  <header class="cv-case__meta">
+    <span class="cv-case__client">Booz Allen Hamilton · Developer Portal</span>
+    <span class="cv-case__years">2024 — 2026</span>
+  </header>
+  <h3 class="cv-case__title">/te-skin — un design system como skill consumible por agentes</h3>
+  <p class="cv-case__hook">Empaqueté un DS de 17 componentes como slash-command skill (/te-skin) que los agentes invocan para devolver componentes listos — HTML + CSS + tokens W3C en JSON — desde un índice machine-readable. Prueba de que &#39;Agentic Designer&#39; no es un rol que reclamo, sino uno que entrego.</p>
+  <ul class="cv-case__bullets">
+    <li>17 componentes, versioned 2.0.0, metadata HTML+CSS+JSON por componente</li>
+<li>Design DNA codificado: hard constraints, soft guidelines, anti-patterns con nombre, testing checklist</li>
+<li>Tokens W3C + CSS vars en paralelo — una fuente, múltiples consumidores</li>
+  </ul>
+  <div class="cv-case__stack"><span class="cv-case__stack-pill">Agent-consumable</span> <span class="cv-case__stack-pill">Developer Portal</span> <span class="cv-case__stack-pill">W3C tokens</span> <span class="cv-case__stack-pill">COMPONENT-INDEX.json</span></div>
+</article>
+
+<article class="cv-case cv-case--serious">
+  <header class="cv-case__meta">
+    <span class="cv-case__client">producto propio · pilotos pagados</span>
+    <span class="cv-case__years">2026</span>
+  </header>
+  <h3 class="cv-case__title">EnRegla — SaaS de compliance, 0 → 1.0-MVP en 40 días</h3>
+  <p class="cv-case__hook">SaaS de compliance multi-sede para PYMES LATAM. 0 → 1.0-MVP en producción en 40 días, co-construido con Claude Code usando MCP servers y subagents en paralelo.</p>
+  <ul class="cv-case__bullets">
+    <li>346 commits · 21 migraciones SQL · 31 componentes UI · 1 edge function con cron</li>
+<li>Supabase MCP conectado a Claude Code para SQL y migraciones directas</li>
+<li>Migración DS recursiva (17 partes × 5 rondas) de 78.4 → 95.6</li>
+  </ul>
+  <div class="cv-case__stack"><span class="cv-case__stack-pill">React 19</span> <span class="cv-case__stack-pill">Supabase</span> <span class="cv-case__stack-pill">MCP</span> <span class="cv-case__stack-pill">Paying pilots</span></div>
+</article>
+
+<article class="cv-case cv-case--serious">
+  <header class="cv-case__meta">
+    <span class="cv-case__client">producto propio · LLM en runtime</span>
+    <span class="cv-case__years">2026</span>
+  </header>
+  <h3 class="cv-case__title">Life Update Mobile — API Gemini en runtime</h3>
+  <p class="cv-case__hook">Sistema de tracking personal — entries diarios analizados por Gemini en runtime, distancia semántica a un plan a 5 años, métricas de foco tipo Steve Jobs (3 cosas al día). 0 → producción en un día.</p>
+  <ul class="cv-case__bullets">
+    <li>API Gemini en runtime para análisis semántico de entries diarios</li>
+<li>Data híbrida: .md como fuente de verdad + DB como motor de ejecución</li>
+<li>Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits en 24h</li>
+  </ul>
+  <div class="cv-case__stack"><span class="cv-case__stack-pill">Gemini API</span> <span class="cv-case__stack-pill">Next.js 16</span> <span class="cv-case__stack-pill">Prisma</span> <span class="cv-case__stack-pill">0 → prod / 1d</span></div>
+</article>
+
+<article class="cv-case cv-case--serious">
+  <header class="cv-case__meta">
+    <span class="cv-case__client">Booz Allen Hamilton</span>
+    <span class="cv-case__years">2025 — 2026</span>
+  </header>
+  <h3 class="cv-case__title">TE Black — DS dark-first con a11y audit en tokens</h3>
+  <p class="cv-case__hook">Autoré un DS enterprise dark-first con override data-theme=&#39;light&#39; donde cada color semantic light carga su ratio de contraste WCAG inline — y el valor rechazado. El token file ES el audit trail.</p>
+  <ul class="cv-case__bullets">
+    <li>CSS en 3 capas (tokens / components / patterns), shadcn alias layer para drop-in en React</li>
+<li>CSS Houdini @property + bordes conic-gradient animados, glass con backdrop-filter</li>
+<li>Canvas mesh-gradient hecho a mano, 5 orbes paramétricos, respeta reduced-motion</li>
+  </ul>
+  <div class="cv-case__stack"><span class="cv-case__stack-pill">Houdini</span> <span class="cv-case__stack-pill">Canvas</span> <span class="cv-case__stack-pill">shadcn alias</span> <span class="cv-case__stack-pill">WCAG 2.2</span></div>
+</article>
+    </section>
+
+    <section class="cv-section">
+      <h3 class="cv-section__heading">Experiencia</h3>
+      
+<div class="cv-xp cv-xp--full">
+  <div class="cv-xp__header">
+    <div class="cv-xp__company">Booz Allen Hamilton</div>
+    <div class="cv-xp__dates">2024 — presente</div>
+  </div>
+  <div class="cv-xp__role">Design-engineering consultant <span class="cv-xp__badge">Army · DoD</span></div>
+  <p class="cv-xp__description">Design-engineering en Trusted Environments — landing, producto Developer Portal y colaboración PM. Dos DS paralelos (/te-skin como skill consumible por agentes + TE Black dark-first con audit a11y en tokens). SPA SharePoint. Consultoría transversal a equipos Army/DoD.</p>
+  <div class="cv-xp__stack"><span class="cv-xp__stack-pill">/te-skin</span> <span class="cv-xp__stack-pill">Developer Portal</span> <span class="cv-xp__stack-pill">TE Black DS</span> <span class="cv-xp__stack-pill">SharePoint SPA</span> <span class="cv-xp__stack-pill">Houdini</span> <span class="cv-xp__stack-pill">Army · DoD</span></div>
+</div>
+
+<div class="cv-xp cv-xp--full">
+  <div class="cv-xp__header">
+    <div class="cv-xp__company">EnRegla</div>
+    <div class="cv-xp__dates">2026 — presente</div>
+  </div>
+  <div class="cv-xp__role">Founder · product · engineering <span class="cv-xp__badge">paying pilots</span></div>
+  <p class="cv-xp__description">SaaS de compliance multi-sede para PYMES LATAM. 0 → 1.0-MVP en producción en 40 días. 346 commits, 21 migraciones SQL, 31 componentes UI, 1 edge function con cron, migración DS 17-partes × 5 rondas (78.4 → 95.6).</p>
+  <div class="cv-xp__stack"><span class="cv-xp__stack-pill">React 19</span> <span class="cv-xp__stack-pill">Supabase</span> <span class="cv-xp__stack-pill">Claude Code</span> <span class="cv-xp__stack-pill">MCP</span> <span class="cv-xp__stack-pill">RLS</span></div>
+</div>
+    </section>
+  </div>
+</article>
+
+<article class="cv-page">
+  <aside>
+    
+<section class="cv-edu">
+  <h3 class="cv-edu__heading">Educación</h3>
+  <ul class="cv-edu__list">
+    
+    <li class="cv-edu__item">
+      <span class="cv-edu__year">2015</span>
+      <span class="cv-edu__name">B.Sc. Systems Engineering</span>
+      <span class="cv-edu__inst">Escuela Politécnica Nacional (EPN) · Quito, Ecuador</span>
+    </li>
+
+    <li class="cv-edu__item">
+      <span class="cv-edu__year">2021</span>
+      <span class="cv-edu__name">Google UX Design Certificate</span>
+      <span class="cv-edu__inst">Coursera</span>
+    </li>
+
+    <li class="cv-edu__item">
+      <span class="cv-edu__year">2020</span>
+      <span class="cv-edu__name">Design Thinking</span>
+      <span class="cv-edu__inst">IBM</span>
+    </li>
+
+    <li class="cv-edu__item">
+      <span class="cv-edu__year">—</span>
+      <span class="cv-edu__name">UX &amp; UI Fundamental Patterns</span>
+      <span class="cv-edu__inst">Independent study</span>
+    </li>
+  </ul>
+</section>
+  </aside>
+
+  <div class="cv-right">
+    <section class="cv-section">
+      <h3 class="cv-section__heading">Experiencia</h3>
+      
+<div class="cv-xp cv-xp--full">
+  <div class="cv-xp__header">
+    <div class="cv-xp__company">Xentinels DesignOps</div>
+    <div class="cv-xp__dates">2016 — presente</div>
+  </div>
+  <div class="cv-xp__role">Product Manager / UX-UI Designer </div>
+  <p class="cv-xp__description">Formalicé un equipo dentro de Central Design para ofrecer un DS distribuido pero centralizado. Definí la hoja de ruta, roles, responsabilidades y formas de trabajo. Creé una cultura de contribución para escalar. Entregué un toolkit unificado de pautas, tokens y componentes accesibles para clientes enterprise (Merck, Mondelēz, Banco Pichincha, Quifatex, Grupo Superior, Moderna Corp., Azzorti, Flamingo CO.).</p>
+  <div class="cv-xp__stack"><span class="cv-xp__stack-pill">Design system</span> <span class="cv-xp__stack-pill">Figma</span> <span class="cv-xp__stack-pill">Tokens</span> <span class="cv-xp__stack-pill">Team lead</span> <span class="cv-xp__stack-pill">Enterprise</span></div>
+</div>
+
+<div class="cv-xp cv-xp--full">
+  <div class="cv-xp__header">
+    <div class="cv-xp__company">Arpatel Cia. Ltda.</div>
+    <div class="cv-xp__dates">2014 — 2017</div>
+  </div>
+  <div class="cv-xp__role">Co-Founder · Product Manager </div>
+  <p class="cv-xp__description">Visión estratégica de largo plazo para los productos de Arpatel. Construí el sitio web, plantillas de CRM y flujos de order-management. Soporte de diseño para la experiencia de Retail POS (alfa + beta). Prototipé patrones de search y scan.</p>
+  <div class="cv-xp__stack"><span class="cv-xp__stack-pill">Retail POS</span> <span class="cv-xp__stack-pill">CRM</span> <span class="cv-xp__stack-pill">Prototyping</span> <span class="cv-xp__stack-pill">Strategy</span></div>
+</div>
+
+<div class="cv-xp cv-xp--full">
+  <div class="cv-xp__header">
+    <div class="cv-xp__company">Tecniequipos S.A.</div>
+    <div class="cv-xp__dates">2013 — 2015</div>
+  </div>
+  <div class="cv-xp__role">Senior Visual Designer / Developer </div>
+  <p class="cv-xp__description">Desarrollé una plataforma propietaria de eventos. Gestioné e-commerce, reportes y admin de sistemas. Entregué requerimientos específicos en PHP, JavaScript, HTML, CSS y MariaDB.</p>
+  <div class="cv-xp__stack"><span class="cv-xp__stack-pill">PHP</span> <span class="cv-xp__stack-pill">JavaScript</span> <span class="cv-xp__stack-pill">MariaDB</span> <span class="cv-xp__stack-pill">HTML · CSS</span></div>
+</div>
+
+<div class="cv-xp cv-xp--full">
+  <div class="cv-xp__header">
+    <div class="cv-xp__company">Canadian Bank Note</div>
+    <div class="cv-xp__dates">2011 — 2013</div>
+  </div>
+  <div class="cv-xp__role">Project Administrator </div>
+  <p class="cv-xp__description">Administré un proyecto de red eléctrica a nivel regional. Supervisé la instalación de redes y el manejo de inventarios. Diseñé estrategias de ejecución de proyectos en base a datos históricos.</p>
+  <div class="cv-xp__stack"><span class="cv-xp__stack-pill">Project mgmt</span> <span class="cv-xp__stack-pill">Operations</span></div>
+</div>
+    </section>
+
+    <section class="cv-section">
+      <h3 class="cv-section__heading">Referencias</h3>
+      
+<div class="cv-testimonial cv-testimonial--verified">
+  <p class="cv-testimonial__quote">&ldquo;Danilo está haciendo cosas geniales usando AI de las maneras correctas. Se metió a fondo en el mundo de developer-portal y entregó trabajo que quería seguir reutilizando. Una pérdida de verdad para nosotros.&rdquo;</p>
+  <div class="cv-testimonial__attribution">
+    <span class="cv-testimonial__author">Jennifer Sheppard</span>
+    <span class="cv-testimonial__role"> · Product Lead · Developer Portal · Booz Allen Hamilton</span>
+    <span class="cv-testimonial__badge cv-testimonial__badge--verified">verificado</span>
+  </div>
+</div>
+
+<div class="cv-testimonial cv-testimonial--verified">
+  <p class="cv-testimonial__quote">&ldquo;Danilo mezcla diseño, requerimientos, desarrollo e IA — el unicornio que la mayoría de empresas está buscando en este cambio de era. Un gran aporte para cualquier equipo.&rdquo;</p>
+  <div class="cv-testimonial__attribution">
+    <span class="cv-testimonial__author">Alexander Giraldez</span>
+    <span class="cv-testimonial__role"> · Design Lead · Trusted Environments · Booz Allen Hamilton</span>
+    <span class="cv-testimonial__badge cv-testimonial__badge--verified">verificado</span>
+  </div>
+</div>
+    </section>
+  </div>
+</article>
+
+</body>
+</html>

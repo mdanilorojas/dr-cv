@@ -1,0 +1,1594 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Danilo Rojas — Agentic Designer · Product Engineer</title>
+<meta name="description" content="A point of view on agentic design, not a résumé. Fifteen years shipping product; the last year rebuilt around agents. Available for Staff / Principal AI Product Designer roles.">
+<meta property="og:title" content="Danilo Rojas — Agentic Designer · Product Engineer">
+<meta property="og:description" content="A point of view on agentic design, not a résumé. Fifteen years shipping product; the last year rebuilt around agents. Available for Staff / Principal AI Product Designer roles.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://danilorojas.design/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Danilo Rojas — Agentic Designer · Product Engineer">
+<meta name="twitter:description" content="A point of view on agentic design, not a résumé. Fifteen years shipping product; the last year rebuilt around agents. Available for Staff / Principal AI Product Designer roles.">
+<link rel="canonical" href="https://danilorojas.design/">
+<link rel="alternate" hreflang="en" href="https://danilorojas.design/">
+<link rel="alternate" hreflang="es" href="https://danilorojas.design/es/">
+<link rel="alternate" hreflang="x-default" href="https://danilorojas.design/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* =========================================================================
+ * dr-cv · V11 tokens · Warm Huly Refined + AI Product-Tour
+ *
+ * Base: Warm Huly Refined (forked from tokens-huly.css, stripped of the
+ * pill-radial-glow CTA which V11 R8 marked as anti-pattern #1).
+ * Layer: AI Product-Tour (artifact surfaces — PDF embed, generator
+ * live-preview, stream UI, plan-before-build, diff-review, named skills).
+ *
+ * Sources this token set resolves:
+ * - V11 R5 — Taste-first critic voice → restrained accent, not decorative
+ * - V11 R7 — Craft floors → self-hosted fonts, WCAG AA contrast
+ * - V11 R8 — Anti-patterns → NO warm-radial-glow pill
+ * - V11 R9 — Direction = Notebook + proof-strip graft
+ * - Visual-universe R10 — Warm Huly palette verdict
+ * ========================================================================= */
+
+:root {
+  /* ─────────────────────────────────────────────────────────────
+   * 1 · SURFACE (dark-dominant)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-bg-deep:        #060708;   /* OLED-adjacent deepest */
+  --v11-bg-primary:     #0A0B0E;   /* page background (warm-huly base) */
+  --v11-bg-alt:         #111318;   /* section alt (for dark/dark-alt rhythm) */
+  --v11-bg-paper:       #F6F4F0;   /* cream section for contrast chapters */
+  --v11-bg-elevated:    #14161C;   /* card surface on dark */
+  --v11-bg-elevated-2:  #1C1F27;   /* toolbar / nested surface */
+  --v11-bg-inset:       #0D0F13;   /* code / inputs / embed wells */
+
+  /* ─────────────────────────────────────────────────────────────
+   * 2 · INK (on dark)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-text:           #F4F4F5;   /* primary on dark */
+  --v11-text-body:      #D7D8DB;
+  --v11-text-85:        #C9CBCF;
+  --v11-text-70:        #B0B2B7;
+  --v11-text-60:        #95979E;
+  --v11-text-50:        #797D86;
+  --v11-text-40:        #61656B;
+  --v11-text-subtle:    #4A4B50;
+
+  /* Ink on cream (paper sections) */
+  --v11-paper-ink:      #0B0C0E;
+  --v11-paper-body:     #303236;
+  --v11-paper-muted:    #4A4B50;
+  --v11-paper-subtle:   #797D86;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 3 · ACCENT · restrained (V11 R8 — NO glow, punctuation only)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-accent:         #FF8964;   /* warm orange — used as punctuation */
+  --v11-accent-ink:     #2A0F05;   /* dark ink on accent bg */
+  --v11-accent-deep:    #E0674A;   /* hover / active state */
+  --v11-accent-soft:    rgba(255, 137, 100, 0.14);
+  --v11-accent-ring:    rgba(255, 137, 100, 0.35);
+  --v11-accent-line:    rgba(255, 137, 100, 0.28);
+
+  /* Secondary signal — used only for agentic UX state:
+     Visible Thinking / Plan-before-Build / Diff-Review additions */
+  --v11-signal-cool:    #5683DA;   /* tool-use / plan state */
+  --v11-signal-warn:    #E5A84B;   /* caution / learning-level */
+  --v11-signal-pos:     #4ADE80;   /* diff additions / success */
+  --v11-signal-neg:     #F87171;   /* diff deletions / errors */
+
+  /* ─────────────────────────────────────────────────────────────
+   * 4 · LINES & DIVIDERS
+   * ───────────────────────────────────────────────────────────── */
+  --v11-line:           rgba(255, 255, 255, 0.08);
+  --v11-line-strong:    rgba(255, 255, 255, 0.18);
+  --v11-line-soft:      rgba(255, 255, 255, 0.04);
+  --v11-line-paper:     #E5E2DA;
+  --v11-line-paper-sf:  #EFECE4;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 5 · ELEVATION (shadows — muted, Huly-derived)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-shadow-card:        0 6px 25px rgba(0, 0, 0, 0.50);
+  --v11-shadow-card-hover:  0 14px 30px rgba(0, 0, 0, 0.80);
+  --v11-shadow-float:       0 10px 20px rgba(0, 0, 0, 0.50);
+  --v11-shadow-artifact:    0 16px 40px rgba(0, 0, 0, 0.45),
+                            0 2px 0 rgba(255, 255, 255, 0.04) inset;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 6 · TYPOGRAPHY (self-hosted per V11 R7)
+   * Variable fonts, Latin-1 subset — load via @font-face in styles,
+   * not via Google Fonts CDN.
+   * ───────────────────────────────────────────────────────────── */
+  --v11-font-body:     'Inter', 'Helvetica Neue', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --v11-font-display:  'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+  --v11-font-mono:     'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+  --v11-font-serif:    'Source Serif 4', 'Source Serif Pro', Georgia, 'Times New Roman', serif;
+    /* serif reserved for long-form essay surface (R9 Notebook thesis) */
+
+  /* Scale — clamp-based for responsive.
+     H1 hero: 72px desktop, 32px mobile (V11 R7 signature recommendation). */
+  --v11-fs-hero:       clamp(32px, 7vw, 72px);
+  --v11-fs-h1:         clamp(28px, 5.5vw, 56px);
+  --v11-fs-h2:         clamp(24px, 4vw, 40px);
+  --v11-fs-h3:         clamp(20px, 2.8vw, 28px);
+  --v11-fs-lead:       clamp(17px, 1.9vw, 20px);
+  --v11-fs-body:       16px;
+  --v11-fs-small:      14px;
+  --v11-fs-micro:      12px;
+  --v11-fs-nano:       11px;
+
+  /* Tracking */
+  --v11-track-snug:     -0.01em;
+  --v11-track-snugger:  -0.02em;
+  --v11-track-tight:    -0.04em;
+  --v11-track-tighter:  -0.05em;
+  --v11-track-loose:     0.08em;
+  --v11-track-code:      0.14em;
+  --v11-track-micro:     0.16em;
+
+  /* Leading */
+  --v11-lead-hero:    0.95;     /* H1 hero — tight */
+  --v11-lead-h:       1.1;
+  --v11-lead-tight:   1.25;
+  --v11-lead-body:    1.55;
+  --v11-lead-loose:   1.7;      /* essay body */
+
+  /* Weight */
+  --v11-wt-regular:   400;
+  --v11-wt-medium:    500;
+  --v11-wt-semibold:  600;
+  --v11-wt-bold:      700;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 7 · RADIUS
+   * ───────────────────────────────────────────────────────────── */
+  --v11-radius-none:   0;
+  --v11-radius-sm:     4px;
+  --v11-radius:        8px;
+  --v11-radius-card:   12px;
+  --v11-radius-lg:     16px;
+  --v11-radius-xl:     24px;
+  --v11-radius-pill:   9999px;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 8 · SPACING scale (4-base)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-s-0:   0;
+  --v11-s-1:   4px;
+  --v11-s-2:   8px;
+  --v11-s-3:   12px;
+  --v11-s-4:   16px;
+  --v11-s-5:   24px;
+  --v11-s-6:   32px;
+  --v11-s-7:   48px;
+  --v11-s-8:   64px;
+  --v11-s-9:   80px;
+  --v11-s-10:  96px;
+  --v11-s-11:  128px;
+  --v11-s-12:  160px;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 9 · LAYOUT
+   * ───────────────────────────────────────────────────────────── */
+  --v11-container:         80rem;   /* 1280 */
+  --v11-container-narrow:  42rem;   /* 672 — essay body width */
+  --v11-container-wide:    88rem;
+  --v11-pad-x:             clamp(20px, 4vw, 32px);
+
+  /* ─────────────────────────────────────────────────────────────
+   * 10 · MOTION (V11 R7 reduced-motion respected)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-ease-standard:   cubic-bezier(0.22, 0.61, 0.36, 1);
+  --v11-ease-in:         cubic-bezier(0.4, 0, 1, 1);
+  --v11-ease-out:        cubic-bezier(0, 0, 0.2, 1);
+  --v11-ease-emphasize:  cubic-bezier(0.2, 0, 0, 1);
+
+  --v11-dur-instant:  80ms;
+  --v11-dur-fast:     180ms;
+  --v11-dur-base:     280ms;
+  --v11-dur-slow:     480ms;
+  --v11-dur-extra:    720ms;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 11 · Z-INDEX
+   * ───────────────────────────────────────────────────────────── */
+  --v11-z-base:    0;
+  --v11-z-raised:  1;
+  --v11-z-nav:     50;
+  --v11-z-toast:   60;
+  --v11-z-modal:   70;
+  --v11-z-hint:    80;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 12 · ARTIFACT SURFACE (AI Product-Tour layer)
+   * Tokens specific to the signature hero + in-page embeds of
+   * artifacts Danilo's workflow produces. These are not "effects" —
+   * they're product-UI tokens because the landing embeds running UI.
+   * ───────────────────────────────────────────────────────────── */
+  --v11-artifact-bg:          #111318;
+  --v11-artifact-bg-alt:      #16181F;
+  --v11-artifact-line:        rgba(255, 255, 255, 0.10);
+  --v11-artifact-line-strong: rgba(255, 255, 255, 0.20);
+  --v11-artifact-glow:        rgba(255, 137, 100, 0.08);
+  /* used at 1px border on focused artifact frames, not hero glow */
+
+  --v11-artifact-chip-bg:     rgba(255, 137, 100, 0.12);
+  --v11-artifact-chip-ink:    var(--v11-accent);
+  --v11-artifact-chip-line:   var(--v11-accent-line);
+
+  /* Stream UI (Visible Thinking / Plan-before-Build) */
+  --v11-stream-bg:            rgba(255, 255, 255, 0.025);
+  --v11-stream-line:          rgba(255, 255, 255, 0.06);
+  --v11-stream-caret:         var(--v11-accent);
+
+  /* Diff-Review state tokens */
+  --v11-diff-add-bg:          rgba(74, 222, 128, 0.08);
+  --v11-diff-add-line:        rgba(74, 222, 128, 0.25);
+  --v11-diff-del-bg:          rgba(248, 113, 113, 0.08);
+  --v11-diff-del-line:        rgba(248, 113, 113, 0.25);
+}
+
+/* Reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --v11-dur-instant: 0ms;
+    --v11-dur-fast:    0ms;
+    --v11-dur-base:    0ms;
+    --v11-dur-slow:    0ms;
+    --v11-dur-extra:   0ms;
+  }
+}
+
+
+/* ============== reset + base ============== */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+body {
+  font-family: var(--v11-font-body);
+  font-size: var(--v11-fs-body);
+  line-height: var(--v11-lead-body);
+  background: var(--v11-bg-primary);
+  color: var(--v11-text-body);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "kern", "liga", "calt";
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; padding: 0; }
+ul, ol { list-style: none; padding: 0; margin: 0; }
+img { max-width: 100%; display: block; }
+
+:focus-visible {
+  outline: 2px solid var(--v11-accent);
+  outline-offset: 3px;
+  border-radius: var(--v11-radius-sm);
+}
+
+.v11-container { max-width: var(--v11-container); margin: 0 auto; padding: 0 var(--v11-pad-x); }
+.v11-container-narrow { max-width: var(--v11-container-narrow); margin: 0 auto; padding: 0 var(--v11-pad-x); }
+
+/* ============== skip link (V11 R7 floor 02) ============== */
+.v11-skip {
+  position: absolute;
+  left: -9999px; top: 0;
+  background: var(--v11-accent);
+  color: var(--v11-accent-ink);
+  padding: 8px 14px;
+  border-radius: var(--v11-radius);
+  font-family: var(--v11-font-body);
+  font-weight: var(--v11-wt-semibold);
+  font-size: var(--v11-fs-small);
+  z-index: var(--v11-z-hint);
+}
+.v11-skip:focus { left: 8px; top: 8px; }
+
+/* ============== NAV ============== */
+.v11-nav {
+  position: sticky; top: 0; z-index: var(--v11-z-nav);
+  padding: var(--v11-s-3) 0;
+  background: rgba(10, 11, 14, 0.80);
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--v11-dur-fast) var(--v11-ease-standard);
+}
+.v11-nav.is-scrolled { border-bottom-color: var(--v11-line); }
+.v11-nav__inner {
+  max-width: var(--v11-container);
+  margin: 0 auto;
+  padding: 0 var(--v11-pad-x);
+  display: flex;
+  align-items: center;
+  gap: var(--v11-s-4);
+}
+.v11-nav__brand {
+  font-family: var(--v11-font-display);
+  font-size: 15px;
+  color: var(--v11-text);
+  letter-spacing: var(--v11-track-snug);
+  font-weight: var(--v11-wt-semibold);
+}
+.v11-nav__brand-sep { color: var(--v11-accent); margin: 0 6px; }
+.v11-nav__tabs { display: flex; gap: var(--v11-s-4); margin: 0 auto; }
+@media (max-width: 680px) {
+  .v11-nav__tabs { display: none; }
+}
+.v11-nav__link {
+  font-size: var(--v11-fs-small);
+  color: var(--v11-text-85);
+  letter-spacing: var(--v11-track-snug);
+  transition: color var(--v11-dur-fast) var(--v11-ease-standard);
+}
+.v11-nav__link:hover { color: var(--v11-accent); }
+.v11-nav__lang {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  padding: 6px 12px;
+  border-radius: var(--v11-radius-pill);
+  border: 1px solid var(--v11-line);
+  color: var(--v11-text-70);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  transition: color var(--v11-dur-fast), border-color var(--v11-dur-fast);
+}
+.v11-nav__lang:hover { border-color: var(--v11-accent); color: var(--v11-accent); }
+
+/* ============== BUTTONS (V11 R8 #1 compliant — no glow) ============== */
+.v11-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 var(--v11-s-5);
+  border-radius: var(--v11-radius-pill);
+  font-family: var(--v11-font-body);
+  font-weight: var(--v11-wt-semibold);
+  font-size: var(--v11-fs-small);
+  letter-spacing: var(--v11-track-snug);
+  transition: background var(--v11-dur-fast) var(--v11-ease-standard),
+              border-color var(--v11-dur-fast) var(--v11-ease-standard),
+              color var(--v11-dur-fast) var(--v11-ease-standard);
+}
+.v11-btn--primary {
+  background: var(--v11-accent);
+  color: var(--v11-accent-ink);
+  border: 1px solid var(--v11-accent);
+}
+.v11-btn--primary:hover { background: var(--v11-accent-deep); border-color: var(--v11-accent-deep); }
+.v11-btn--ghost {
+  background: transparent;
+  border: 1px solid var(--v11-line-strong);
+  color: var(--v11-text);
+}
+.v11-btn--ghost:hover { border-color: var(--v11-text); }
+.v11-btn__arrow { transition: transform var(--v11-dur-fast) var(--v11-ease-standard); }
+.v11-btn:hover .v11-btn__arrow { transform: translateX(3px); }
+
+/* ============== LIVE DOT ============== */
+.v11-live {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--v11-accent);
+  box-shadow: 0 0 0 3px var(--v11-accent-soft);
+  animation: v11-livepulse 2.4s ease-in-out infinite;
+}
+@keyframes v11-livepulse {
+  0%, 100% { box-shadow: 0 0 0 3px var(--v11-accent-soft); }
+  50%      { box-shadow: 0 0 0 8px rgba(255,137,100,0.03); }
+}
+
+/* ============== SECTION shell ============== */
+.v11-section {
+  padding: clamp(72px, 10vw, 120px) 0;
+  position: relative;
+}
+.v11-section--alt { background: var(--v11-bg-alt); }
+.v11-section--paper {
+  background: var(--v11-bg-paper);
+  color: var(--v11-paper-body);
+}
+.v11-section__eyebrow {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-micro);
+  color: var(--v11-accent);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  margin-bottom: var(--v11-s-4);
+}
+.v11-section__eyebrow::before { content: "// "; color: var(--v11-text-subtle); }
+.v11-section--paper .v11-section__eyebrow { color: var(--v11-accent-deep); }
+.v11-section--paper .v11-section__eyebrow::before { color: var(--v11-paper-subtle); }
+
+.v11-h1 {
+  font-family: var(--v11-font-display);
+  font-size: var(--v11-fs-h1);
+  font-weight: var(--v11-wt-semibold);
+  line-height: var(--v11-lead-h);
+  letter-spacing: var(--v11-track-tight);
+  color: var(--v11-text);
+  margin: 0 0 var(--v11-s-5);
+}
+.v11-section--paper .v11-h1 { color: var(--v11-paper-ink); }
+.v11-h1 em { font-style: normal; color: var(--v11-accent); font-weight: var(--v11-wt-regular); }
+
+.v11-lead {
+  font-size: var(--v11-fs-lead);
+  line-height: var(--v11-lead-tight);
+  color: var(--v11-text-body);
+  max-width: 62ch;
+  margin: 0 0 var(--v11-s-7);
+}
+.v11-section--paper .v11-lead { color: var(--v11-paper-body); }
+
+/* ============== HERO ============== */
+.v11-hero {
+  min-height: 100vh;
+  padding-top: clamp(100px, 14vw, 180px);
+  padding-bottom: clamp(80px, 10vw, 140px);
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.v11-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--v11-s-7);
+  align-items: center;
+}
+@media (min-width: 960px) {
+  .v11-hero__grid { grid-template-columns: 6fr 6fr; }
+}
+.v11-hero__eyebrow {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-micro);
+  color: var(--v11-accent);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  margin-bottom: var(--v11-s-5);
+}
+.v11-hero__eyebrow::before { content: "// "; color: var(--v11-text-subtle); }
+.v11-hero__title {
+  font-family: var(--v11-font-display);
+  font-size: var(--v11-fs-hero);
+  font-weight: var(--v11-wt-semibold);
+  line-height: var(--v11-lead-hero);
+  letter-spacing: var(--v11-track-tight);
+  color: var(--v11-text);
+  margin: 0 0 var(--v11-s-5);
+  max-width: 18ch;
+}
+.v11-hero__title em {
+  font-style: normal;
+  color: var(--v11-accent);
+  font-weight: var(--v11-wt-regular);
+}
+.v11-hero__sub {
+  font-size: var(--v11-fs-lead);
+  line-height: var(--v11-lead-tight);
+  color: var(--v11-text-body);
+  max-width: 52ch;
+  margin: 0 0 var(--v11-s-6);
+}
+.v11-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--v11-s-3);
+  align-items: center;
+  margin-bottom: var(--v11-s-5);
+}
+.v11-hero__availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-micro);
+  color: var(--v11-text-60);
+  letter-spacing: var(--v11-track-snug);
+}
+
+/* ============== ARTIFACT FRAME (AI Product-Tour layer) ============== */
+.v11-artifact {
+  position: relative;
+  background: var(--v11-artifact-bg);
+  border: 1px solid var(--v11-artifact-line);
+  border-radius: var(--v11-radius-card);
+  box-shadow: var(--v11-shadow-artifact);
+  overflow: hidden;
+  isolation: isolate;
+}
+.v11-artifact__head {
+  display: flex;
+  align-items: center;
+  gap: var(--v11-s-3);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--v11-artifact-line);
+  background: var(--v11-artifact-bg-alt);
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  color: var(--v11-text-60);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+}
+.v11-artifact__dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--v11-accent);
+  box-shadow: 0 0 0 2px var(--v11-accent-soft);
+}
+.v11-artifact__file { color: var(--v11-text); text-transform: none; letter-spacing: var(--v11-track-snug); font-size: var(--v11-fs-micro); }
+.v11-artifact__status { margin-left: auto; color: var(--v11-signal-pos); }
+.v11-artifact__body {
+  padding: var(--v11-s-5);
+  background: var(--v11-artifact-bg);
+}
+
+/* Paper artifact preview (emulates the actual PDF look) */
+.v11-artifact-paper {
+  padding: var(--v11-s-5);
+  background: var(--v11-bg-paper);
+  color: var(--v11-paper-ink);
+  border-radius: var(--v11-radius);
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--v11-s-2);
+}
+.v11-artifact-paper__kicker {
+  font-family: var(--v11-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v11-accent-deep);
+}
+.v11-artifact-paper__name {
+  font-family: var(--v11-font-display);
+  font-size: 22px;
+  font-weight: var(--v11-wt-semibold);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.v11-artifact-paper__name span { color: var(--v11-accent-deep); }
+.v11-artifact-paper__meta {
+  font-family: var(--v11-font-mono);
+  font-size: 10px;
+  color: var(--v11-paper-muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.v11-artifact-paper__hr {
+  border: 0;
+  border-top: 1px solid var(--v11-line-paper-sf);
+  margin: 8px 0;
+}
+.v11-artifact-paper__body {
+  font-size: 12px;
+  color: var(--v11-paper-body);
+  line-height: 1.55;
+}
+
+/* Stream (Visible Thinking) */
+.v11-stream {
+  padding: var(--v11-s-4);
+  margin-top: var(--v11-s-3);
+  background: var(--v11-stream-bg);
+  border: 1px solid var(--v11-stream-line);
+  border-radius: var(--v11-radius);
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-small);
+  color: var(--v11-text-70);
+  line-height: 1.7;
+}
+.v11-stream__head {
+  display: flex;
+  gap: var(--v11-s-2);
+  align-items: center;
+  color: var(--v11-text-60);
+  font-size: var(--v11-fs-nano);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  margin-bottom: var(--v11-s-3);
+}
+.v11-stream__head::before {
+  content: "";
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--v11-accent);
+  animation: v11-pulse 1.6s ease-in-out infinite;
+}
+@keyframes v11-pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+.v11-stream__line { display: block; margin-bottom: 4px; }
+.v11-stream__caret {
+  display: inline-block;
+  width: 6px; height: 14px;
+  background: var(--v11-stream-caret);
+  vertical-align: -2px;
+  margin-left: 2px;
+  animation: v11-blink 1.1s steps(2, end) infinite;
+}
+@keyframes v11-blink { 50% { opacity: 0; } }
+
+/* ============== PROOF STRIP ============== */
+.v11-proof {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  border: 1px solid var(--v11-line);
+  border-radius: var(--v11-radius-card);
+  background: var(--v11-bg-elevated);
+  margin: var(--v11-s-5) 0;
+}
+.v11-proof__item {
+  padding: var(--v11-s-5);
+  border-left: 1px solid var(--v11-line);
+}
+.v11-proof__item:first-child { border-left: 0; }
+@media (max-width: 720px) {
+  .v11-proof__item { border-left: 0; border-top: 1px solid var(--v11-line); }
+  .v11-proof__item:first-child { border-top: 0; }
+}
+.v11-proof__num {
+  font-family: var(--v11-font-display);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: var(--v11-wt-semibold);
+  line-height: 1;
+  letter-spacing: var(--v11-track-tight);
+  color: var(--v11-text);
+}
+.v11-proof__num em {
+  font-style: normal;
+  color: var(--v11-accent);
+  font-weight: var(--v11-wt-regular);
+}
+.v11-proof__label {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  color: var(--v11-text-60);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+.v11-proof__attr {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  color: var(--v11-text-subtle);
+  letter-spacing: var(--v11-track-snug);
+  margin-top: 4px;
+}
+
+/* ============== NOTEBOOK (essay) ============== */
+.v11-notebook {
+  max-width: var(--v11-container-narrow);
+  margin: 0 auto;
+}
+.v11-notebook h2.v11-h1 { color: var(--v11-paper-ink); }
+.v11-notebook__essay {
+  font-family: var(--v11-font-serif);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--v11-paper-body);
+}
+.v11-notebook__essay p { margin: 0 0 var(--v11-s-5); }
+.v11-notebook__essay em { color: var(--v11-accent-deep); font-style: italic; }
+.v11-notebook__toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--v11-s-3);
+  padding: var(--v11-s-4);
+  background: rgba(11, 12, 14, 0.04);
+  border-radius: var(--v11-radius);
+  margin: var(--v11-s-5) 0;
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  color: var(--v11-paper-muted);
+}
+.v11-notebook__toc a { color: var(--v11-paper-ink); }
+.v11-notebook__toc a:hover { color: var(--v11-accent-deep); }
+
+/* ============== WORK / CASE CARDS ============== */
+.v11-work {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--v11-s-5);
+}
+@media (min-width: 820px) {
+  .v11-work { grid-template-columns: repeat(2, 1fr); }
+}
+.v11-case {
+  background: var(--v11-bg-elevated);
+  border: 1px solid var(--v11-line);
+  border-radius: var(--v11-radius-card);
+  padding: var(--v11-s-6);
+  page-break-inside: avoid;
+}
+.v11-case__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--v11-s-3);
+  align-items: baseline;
+  margin-bottom: var(--v11-s-3);
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  color: var(--v11-text-60);
+}
+.v11-case__client { color: var(--v11-accent); }
+.v11-case__dates { margin-left: auto; color: var(--v11-text-subtle); }
+.v11-case__title {
+  font-family: var(--v11-font-display);
+  font-size: var(--v11-fs-h3);
+  font-weight: var(--v11-wt-semibold);
+  line-height: var(--v11-lead-h);
+  letter-spacing: var(--v11-track-snugger);
+  color: var(--v11-text);
+  margin: 0 0 var(--v11-s-3);
+}
+.v11-case__hook {
+  font-size: var(--v11-fs-small);
+  color: var(--v11-text-body);
+  line-height: 1.6;
+  margin: 0 0 var(--v11-s-4);
+}
+.v11-case__beats {
+  display: grid;
+  gap: var(--v11-s-3);
+  margin: var(--v11-s-4) 0 var(--v11-s-4);
+}
+.v11-case__beat {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: var(--v11-s-3);
+  font-size: var(--v11-fs-small);
+}
+@media (max-width: 540px) {
+  .v11-case__beat { grid-template-columns: 1fr; gap: 4px; }
+}
+.v11-case__beat dt {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  color: var(--v11-text-60);
+}
+.v11-case__beat dd {
+  margin: 0;
+  color: var(--v11-text-body);
+  line-height: 1.55;
+}
+.v11-case__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: var(--v11-s-4);
+}
+
+/* ============== CHIPS (Named Skills) ============== */
+.v11-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--v11-radius-pill);
+  background: var(--v11-artifact-chip-bg);
+  border: 1px solid var(--v11-artifact-chip-line);
+  color: var(--v11-artifact-chip-ink);
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+}
+.v11-chip--cool {
+  background: rgba(86, 131, 218, 0.10);
+  border-color: rgba(86, 131, 218, 0.28);
+  color: var(--v11-signal-cool);
+}
+.v11-chip--muted {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--v11-line-strong);
+  color: var(--v11-text-60);
+}
+.v11-chip__at { color: var(--v11-text-subtle); }
+
+/* ============== METHOD section ============== */
+.v11-method {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--v11-s-5);
+  margin: var(--v11-s-5) 0;
+}
+@media (min-width: 820px) {
+  .v11-method { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+.v11-plan {
+  border: 1px solid var(--v11-line);
+  border-radius: var(--v11-radius);
+  padding: var(--v11-s-4);
+  background: var(--v11-bg-elevated);
+}
+.v11-plan__head {
+  display: flex; align-items: center; gap: var(--v11-s-2);
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  color: var(--v11-accent);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  margin-bottom: var(--v11-s-3);
+}
+.v11-plan__list { list-style: none; padding: 0; margin: 0; counter-reset: v11step; }
+.v11-plan__step {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--v11-line);
+  font-size: var(--v11-fs-small);
+  align-items: center;
+  color: var(--v11-text-body);
+}
+.v11-plan__step:first-child { border-top: 0; }
+.v11-plan__step::before {
+  counter-increment: v11step;
+  content: counter(v11step, decimal-leading-zero);
+  font-family: var(--v11-font-mono);
+  color: var(--v11-text-subtle);
+  font-size: var(--v11-fs-nano);
+  letter-spacing: var(--v11-track-code);
+}
+.v11-plan__step--done { color: var(--v11-text-60); }
+.v11-plan__step--done strong { text-decoration: line-through; text-decoration-color: var(--v11-text-subtle); }
+.v11-plan__meta { font-family: var(--v11-font-mono); font-size: var(--v11-fs-nano); color: var(--v11-text-50); }
+
+.v11-diff {
+  background: var(--v11-bg-inset);
+  border: 1px solid var(--v11-line);
+  border-radius: var(--v11-radius);
+  overflow: hidden;
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-small);
+  line-height: 1.6;
+}
+.v11-diff__row {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+  padding: 3px 12px;
+  color: var(--v11-text-70);
+}
+.v11-diff__row--add { background: var(--v11-diff-add-bg); color: var(--v11-signal-pos); }
+.v11-diff__row--del { background: var(--v11-diff-del-bg); color: var(--v11-signal-neg); }
+.v11-diff__ln { color: var(--v11-text-subtle); text-align: right; user-select: none; }
+
+/* ============== QUOTE ============== */
+.v11-quote {
+  padding: var(--v11-s-5) var(--v11-s-6);
+  border-left: 2px solid var(--v11-accent);
+  background: var(--v11-bg-elevated);
+  border-radius: 0 var(--v11-radius) var(--v11-radius) 0;
+  margin: var(--v11-s-4) 0;
+}
+.v11-quote__text {
+  font-family: var(--v11-font-display);
+  font-size: clamp(17px, 2vw, 20px);
+  font-style: italic;
+  line-height: 1.4;
+  letter-spacing: var(--v11-track-snug);
+  color: var(--v11-text);
+  margin: 0 0 var(--v11-s-4);
+}
+.v11-quote__text::before {
+  content: "\" ";
+  color: var(--v11-accent);
+  font-style: normal;
+}
+.v11-quote__attr {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--v11-s-3);
+  align-items: center;
+}
+.v11-quote__author {
+  font-family: var(--v11-font-display);
+  font-weight: var(--v11-wt-semibold);
+  color: var(--v11-text);
+  font-size: var(--v11-fs-small);
+  letter-spacing: var(--v11-track-snug);
+}
+.v11-quote__role {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  color: var(--v11-text-60);
+  letter-spacing: var(--v11-track-snug);
+}
+.v11-quote__badge {
+  font-family: var(--v11-font-mono);
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: var(--v11-radius-pill);
+  color: var(--v11-accent);
+  border: 1px solid var(--v11-accent-line);
+  letter-spacing: var(--v11-track-micro);
+  text-transform: uppercase;
+  margin-left: auto;
+}
+
+/* ============== CONTACT ============== */
+.v11-contact {
+  display: grid;
+  gap: var(--v11-s-4);
+  padding: var(--v11-s-6);
+  background: var(--v11-bg-elevated);
+  border: 1px solid var(--v11-line);
+  border-radius: var(--v11-radius-card);
+  max-width: 560px;
+}
+.v11-contact__headline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-micro);
+  color: var(--v11-text-60);
+  letter-spacing: var(--v11-track-snug);
+}
+.v11-contact__email-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--v11-s-3);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--v11-s-3) var(--v11-s-4);
+  background: var(--v11-bg-primary);
+  border: 1px solid var(--v11-line);
+  border-radius: var(--v11-radius-sm);
+}
+.v11-contact__email {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-small);
+  color: var(--v11-text);
+  letter-spacing: var(--v11-track-snug);
+  word-break: break-all;
+}
+.v11-contact__copy {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  padding: 7px 12px;
+  border: 1px solid var(--v11-line-strong);
+  border-radius: var(--v11-radius-sm);
+  color: var(--v11-text);
+  transition: color var(--v11-dur-fast), border-color var(--v11-dur-fast);
+}
+.v11-contact__copy:hover { border-color: var(--v11-accent); color: var(--v11-accent); }
+.v11-contact__copy[data-copied="true"] { border-color: var(--v11-accent); color: var(--v11-accent); }
+.v11-contact__socials {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+.v11-contact__social {
+  padding: 12px;
+  border: 1px solid var(--v11-line);
+  border-radius: var(--v11-radius-sm);
+  transition: border-color var(--v11-dur-fast);
+}
+.v11-contact__social:hover { border-color: var(--v11-accent); }
+.v11-contact__social-label {
+  display: block;
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin-bottom: 3px;
+}
+.v11-contact__social-handle {
+  display: block;
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  color: var(--v11-text-80);
+  letter-spacing: var(--v11-track-snug);
+  word-break: break-all;
+}
+
+/* ============== FOOTER ============== */
+.v11-footer {
+  padding: var(--v11-s-6) 0;
+  background: var(--v11-bg-deep);
+  border-top: 1px solid var(--v11-line);
+}
+.v11-footer__inner {
+  max-width: var(--v11-container);
+  margin: 0 auto;
+  padding: 0 var(--v11-pad-x);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--v11-s-3);
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  color: var(--v11-text-40);
+  letter-spacing: var(--v11-track-snug);
+}
+.v11-footer a { color: var(--v11-text-70); transition: color var(--v11-dur-fast); }
+.v11-footer a:hover { color: var(--v11-accent); }
+
+/* ============== reduced motion (V11 R7 floor 04) ============== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .v11-live { animation: none; box-shadow: 0 0 0 3px var(--v11-accent-soft); }
+  .v11-stream__head::before { animation: none; opacity: 1; }
+  .v11-stream__caret { animation: none; opacity: 1; }
+}
+
+/* ============== HORIZON TIMELINE ============== */
+.v11-horizon {
+  padding: 64px 0;
+  background: var(--v11-bg-alt);
+  border-bottom: 1px solid var(--v11-line);
+}
+.v11-horizon__eyebrow {
+  font-family: var(--v11-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin: 0 0 12px;
+}
+.v11-horizon__title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 40px;
+  color: var(--v11-text);
+}
+.v11-horizon__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  position: relative;
+}
+.v11-horizon__grid::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 58px;
+  height: 1px;
+  background: linear-gradient(to right, transparent 0%, var(--v11-line-strong) 8%, var(--v11-line-strong) 92%, transparent 100%);
+  pointer-events: none;
+}
+.v11-horizon__col {
+  padding: 0 28px;
+  position: relative;
+}
+.v11-horizon__col + .v11-horizon__col {
+  border-left: 1px solid var(--v11-line);
+}
+.v11-horizon__stage {
+  font-family: var(--v11-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-text-50);
+  margin-bottom: 22px;
+}
+.v11-horizon__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--v11-bg-elevated);
+  border: 1px solid var(--v11-line-strong);
+  position: absolute;
+  left: 28px;
+  top: 54px;
+}
+.v11-horizon__col[data-emphasis="true"] .v11-horizon__dot {
+  background: var(--v11-accent);
+  border-color: var(--v11-accent);
+  box-shadow: 0 0 0 4px var(--v11-accent-soft);
+}
+.v11-horizon__col[data-emphasis="true"] .v11-horizon__stage {
+  color: var(--v11-accent);
+}
+.v11-horizon__heading {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin: 18px 0 10px;
+  color: var(--v11-text);
+}
+.v11-horizon__body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--v11-text-70);
+  margin: 0 0 16px;
+}
+.v11-horizon__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.v11-horizon__chip {
+  font-family: var(--v11-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--v11-bg-inset);
+  color: var(--v11-text-70);
+  border: 1px solid var(--v11-line);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+a.v11-horizon__chip:hover,
+a.v11-horizon__chip:focus-visible {
+  border-color: var(--v11-accent-line);
+  color: var(--v11-text);
+  outline: none;
+}
+a.v11-horizon__chip:focus-visible {
+  box-shadow: 0 0 0 3px var(--v11-accent-ring);
+}
+[data-horizon-col='earned'] .v11-horizon__chip {
+  text-decoration: line-through;
+  text-decoration-color: var(--v11-text-40);
+  color: var(--v11-text-50);
+  cursor: default;
+}
+[data-horizon-col='investing'] .v11-horizon__chip {
+  background: var(--v11-accent-soft);
+  color: var(--v11-text);
+  border-color: var(--v11-accent-line);
+}
+[data-horizon-col='horizon'] .v11-horizon__chip[data-kind='bet'] {
+  border-style: dashed;
+  color: var(--v11-text-body);
+}
+.v11-horizon__bet-badge {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v11-signal-warn);
+  font-weight: 600;
+  padding: 1px 5px;
+  border: 1px solid var(--v11-signal-warn);
+  border-radius: 3px;
+  line-height: 1;
+}
+
+@media (max-width: 920px) {
+  .v11-horizon__grid {
+    grid-template-columns: 1fr;
+  }
+  .v11-horizon__grid::before {
+    display: none;
+  }
+  .v11-horizon__col + .v11-horizon__col {
+    border-left: 0;
+    border-top: 1px solid var(--v11-line);
+    margin-top: 24px;
+    padding-top: 24px;
+  }
+  .v11-horizon__dot {
+    top: -6px;
+    left: 0;
+  }
+}
+
+</style>
+</head>
+<body>
+<a class="v11-skip" href="#main">Skip to content</a>
+<nav class="v11-nav" aria-label="Main navigation">
+  <div class="v11-nav__inner">
+    <a href="#top" class="v11-nav__brand">Danilo Rojas<span class="v11-nav__brand-sep">·</span>dr</a>
+    <div class="v11-nav__tabs">
+      <a class="v11-nav__link" href="#notebook">Notebook</a>
+      <a class="v11-nav__link" href="#work">Work</a>
+      <a class="v11-nav__link" href="#method">Method</a>
+      <a class="v11-nav__link" href="#contact">Contact</a>
+    </div>
+    <a class="v11-nav__lang" href="/es/" hreflang="es" aria-label="View in Spanish">EN / ES</a>
+  </div>
+</nav>
+<main id="main">
+<section id="top" class="v11-hero" aria-label="Hero">
+  <div class="v11-container">
+    <div class="v11-hero__grid">
+      <div>
+        <div class="v11-hero__eyebrow">Currently · Booz Allen Hamilton · Trusted Environments</div>
+        <h1 class="v11-hero__title">A point of view on agentic design, <em>not a résumé.</em></h1>
+        <p class="v11-hero__sub">Fifteen years shipping product. The last twelve months rebuilt around a Claude Code workflow I use every day. I keep the craft — agents give me the leverage.</p>
+        <div class="v11-hero__actions">
+          <a class="v11-btn v11-btn--primary" href="#notebook">
+            Read the notebook
+            <span class="v11-btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="v11-btn v11-btn--ghost" href="#work">
+            See the work
+            <span class="v11-btn__arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+        <span class="v11-hero__availability">
+          <span class="v11-live" aria-hidden="true"></span>
+          Open to work · Remote global
+        </span>
+      </div>
+
+      <div>
+        <div class="v11-artifact" aria-label="Generated CV artifact preview">
+          <div class="v11-artifact__head">
+            <span class="v11-artifact__dot" aria-hidden="true"></span>
+            <span class="v11-artifact__file">cv-serious.en.pdf</span>
+            <span>· generated 08 May 2026</span>
+            <span class="v11-artifact__status">ready</span>
+          </div>
+          <div class="v11-artifact__body">
+            <div class="v11-artifact-paper">
+              <div class="v11-artifact-paper__kicker">// Agentic Designer · Product Engineer</div>
+              <div class="v11-artifact-paper__name">Danilo <span>Rojas</span></div>
+              <div class="v11-artifact-paper__meta">Quito · Ecuador · EN professional · ES native</div>
+              <hr class="v11-artifact-paper__hr">
+              <div class="v11-artifact-paper__body">15 years shipping. Booz Allen Hamilton (current). EnRegla (own SaaS). Claude Code power-user. 346 commits · 40 days.</div>
+            </div>
+          </div>
+        </div>
+        <div class="v11-stream" role="status" aria-live="polite">
+          <div class="v11-stream__head">Regenerating EN / ES</div>
+          <span class="v11-stream__line">npm run build:cvs</span>
+          <span class="v11-stream__line">[cv] wrote dist/cvs/cv-warm-en.pdf</span>
+          <span class="v11-stream__line">[cv] wrote dist/cvs/cv-serious-en.pdf<span class="v11-stream__caret" aria-hidden="true"></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="v11-section" aria-labelledby="proof-h">
+  <div class="v11-container">
+    <div class="v11-section__eyebrow">Evidence</div>
+    <h2 id="proof-h" class="v11-h1">Evidence, not adjectives.</h2>
+    <div class="v11-proof" role="list">
+
+      <div class="v11-proof__item" role="listitem">
+        <div class="v11-proof__num">15<em>+</em></div>
+        <div class="v11-proof__label">Years shipping product</div>
+        <div class="v11-proof__attr">2010–present · LATAM + US enterprise</div>
+      </div>
+      <div class="v11-proof__item" role="listitem">
+        <div class="v11-proof__num">346</div>
+        <div class="v11-proof__label">Commits · last 40 days</div>
+        <div class="v11-proof__attr">github.com/mdanilorojas · EnRegla</div>
+      </div>
+      <div class="v11-proof__item" role="listitem">
+        <div class="v11-proof__num">1<em>.0</em></div>
+        <div class="v11-proof__label">SaaS live · paying pilots</div>
+        <div class="v11-proof__attr">EnRegla · 0→1.0 in 40 days with agents</div>
+      </div>
+      <div class="v11-proof__item" role="listitem">
+        <div class="v11-proof__num">95<em>.6</em></div>
+        <div class="v11-proof__label">DS migration score</div>
+        <div class="v11-proof__attr">17 parts × 5 rounds · 78.4→95.6 · TE Skin</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="v11-horizon" aria-labelledby="horizon-h">
+  <div class="v11-container">
+    <div class="v11-horizon__eyebrow">Direction · 2026</div>
+    <h2 id="horizon-h" class="v11-horizon__title">Where my hours are going</h2>
+    <div class="v11-horizon__grid" role="list">
+<div class="v11-horizon__col" data-horizon-col="earned">
+    <div class="v11-horizon__dot" aria-hidden="true"></div>
+    <div class="v11-horizon__stage">Earned · 2010–2023</div>
+    <h3 class="v11-horizon__heading">The craft I mastered, now commoditized</h3>
+    <p class="v11-horizon__body">15 years running the old pipeline: Figma → design system → components → tokens → prototypes → handoff to a developer. The craft is real. The handoff is now a commodity.</p>
+    <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip" aria-label="Earned, now commoditized: Figma mastery">Figma mastery</span></li><li><span class="v11-horizon__chip" aria-label="Earned, now commoditized: Hand-coded UI">Hand-coded UI</span></li><li><span class="v11-horizon__chip" aria-label="Earned, now commoditized: Design reviews">Design reviews</span></li><li><span class="v11-horizon__chip" aria-label="Earned, now commoditized: Component libraries">Component libraries</span></li><li><span class="v11-horizon__chip" aria-label="Earned, now commoditized: Style-guide PDFs">Style-guide PDFs</span></li></ul>
+  </div>
+<div class="v11-horizon__col" data-horizon-col="investing" data-emphasis="true">
+    <div class="v11-horizon__dot" aria-hidden="true"></div>
+    <div class="v11-horizon__stage">Investing · 2024–Now</div>
+    <h3 class="v11-horizon__heading">Where my hours go today</h3>
+    <p class="v11-horizon__body">The new pipeline: Figma → Cloud Storybook → GitHub → ready for the user. No developer handoff in the middle — the agents ship the code, I ship the judgment that tells them what to build.</p>
+    <ul class="v11-horizon__chips"><li><a class="v11-horizon__chip" href="#case-enregla">Agent orchestration</a></li><li><a class="v11-horizon__chip" href="#case-enregla">MCP servers</a></li><li><a class="v11-horizon__chip" href="#case-te-skin">Design-system-as-skill</a></li><li><a class="v11-horizon__chip" href="#case-te-black">Recursive critic loops</a></li><li><a class="v11-horizon__chip" href="#method">Taste as rubric</a></li></ul>
+  </div>
+<div class="v11-horizon__col" data-horizon-col="horizon">
+    <div class="v11-horizon__dot" aria-hidden="true"></div>
+    <div class="v11-horizon__stage">Next horizon · 12 mo</div>
+    <h3 class="v11-horizon__heading">What I&#39;m walking toward</h3>
+    <p class="v11-horizon__body">Embedded in a serious product team, owning the seam between design judgment and agentic execution — at a scale where one person&#39;s leverage becomes a team&#39;s.</p>
+    <ul class="v11-horizon__chips"><li><a class="v11-horizon__chip" data-kind="evidence" href="https://github.com/mdanilorojas/dr-cv" target="_blank" rel="noopener">Team-scale agent tooling</a></li><li><a class="v11-horizon__chip" data-kind="evidence" href="https://github.com/mdanilorojas/dr-cv" target="_blank" rel="noopener">Audited agent workflows</a></li><li><span class="v11-horizon__chip" data-kind="bet" aria-label="Eval-driven UI. Declared bet, no evidence yet.">Eval-driven UI <span class="v11-horizon__bet-badge">bet</span></span></li></ul>
+  </div>
+    </div>
+  </div>
+</section>
+<section id="notebook" class="v11-section v11-section--paper" aria-labelledby="notebook-h">
+  <div class="v11-container-narrow v11-notebook">
+    <div class="v11-section__eyebrow">Notebook · essay</div>
+    <h2 id="notebook-h" class="v11-h1">Trust is the unit of economy.</h2>
+    <div class="v11-notebook__toc">1 · The diff is the contract  /  2 · Skills, not prompts  /  3 · What I still won&#39;t let the agent do</div>
+    <div class="v11-notebook__essay">
+<p>The hardest thing about agentic design isn't the prompt engineering. It's deciding, at every junction, whether the human reviews the diff or the agent just ships it. <em>Trust is the unit of economy.</em> Every tool I build for myself starts by answering one question: what do I get to keep looking at?</p>
+<p>The teams shipping real agentic work in 2026 aren't the ones with the cleverest prompts. They're the ones that put the diff at the center. Claude Code is the prototype: every mutation proposed, reviewable, rejectable. The UX work is hiding the machinery when the trust is earned — not pretending the machinery isn't there.</p>
+<p>I didn't start my career building for agents. I spent fifteen years shipping product for humans. The combination is the work now — profile plus agents — and it's not a productivity story. It's a <em>taste</em> story. The agent will propose a hundred things; picking the six that should ship is the skill.</p>
+    </div>
+  </div>
+</section>
+<section id="work" class="v11-section" aria-labelledby="work-h">
+  <div class="v11-container">
+    <div class="v11-section__eyebrow">Selected work · 2025–2026</div>
+    <h2 id="work-h" class="v11-h1">Four ships. Four agent-built artifacts.</h2>
+    <p class="v11-lead">Everything below was built with agents at the center of the workflow. The craft floor is mine — the leverage is the combination.</p>
+    <div class="v11-work">
+<article id="case-enregla" class="v11-case" data-reveal>
+  <div class="v11-case__head">
+    <span class="v11-case__client">own product · paying pilots</span>
+    <span class="v11-case__dates">2026</span>
+  </div>
+  <h3 class="v11-case__title">EnRegla — compliance SaaS, 0 → 1.0-MVP in 40 days</h3>
+  <p class="v11-case__hook">SaaS de compliance multi-sede for LATAM SMBs. 0 → 1.0-MVP in production in 40 days, co-built with Claude Code using MCP servers and parallel subagents.</p>
+
+  <dl class="v11-case__beats">
+    <div class="v11-case__beat"><dt>Context</dt><dd>LATAM SMB compliance. Multi-site reporting was done in spreadsheets, manually, every month. Nobody owned the data model.</dd></div>
+    <div class="v11-case__beat"><dt>Problem</dt><dd>Existing tools priced out SMBs or required a sysadmin to deploy. Nothing shipped as a 40-day 0→1.0.</dd></div>
+    <div class="v11-case__beat"><dt>Approach</dt><dd>Built the SaaS as a co-author exercise with Claude Code. Supabase MCP server in the loop for SQL + migrations. Parallel subagents on UI, data model, edge functions.</dd></div>
+    <div class="v11-case__beat"><dt>Ship</dt><dd>346 commits in 40 days. 21 SQL migrations, 31 UI components, 1 edge function with cron. Live with paying pilots.</dd></div>
+    <div class="v11-case__beat"><dt>Outcome</dt><dd>DS migration ran 5 recursive rounds scoring 78.4 → 95.6. First pilots reporting monthly compliance in minutes instead of days.</dd></div>
+    <div class="v11-case__beat"><dt>Differently</dt><dd>Next time I write the MCP servers before the schema. The agent kept proposing columns it couldn&#39;t write back — half the recursion was plumbing.</dd></div>
+    <div class="v11-case__beat"><dt>Craft floor</dt><dd>RLS on every table. Type-safe Supabase client. Dark-mode primary with per-token WCAG trail. 0 hand-edited SQL in prod.</dd></div>
+  </dl>
+  <div class="v11-case__stack"><span class="v11-chip">React 19</span> <span class="v11-chip">Supabase</span> <span class="v11-chip">MCP</span> <span class="v11-chip">Paying pilots</span></div>
+</article>
+<article id="case-te-skin" class="v11-case" data-reveal>
+  <div class="v11-case__head">
+    <span class="v11-case__client">Booz Allen Hamilton · Developer Portal</span>
+    <span class="v11-case__dates">2024 — 2026</span>
+  </div>
+  <h3 class="v11-case__title">/te-skin — a design system as an agent-consumable skill</h3>
+  <p class="v11-case__hook">Packaged a 17-component design system as a slash-command skill (/te-skin) that AI agents invoke to return ready-to-use components — HTML + CSS + W3C-token JSON each — from a machine-readable index. Proof that &#39;Agentic Designer&#39; is not a role I claim, but one I ship.</p>
+
+  <dl class="v11-case__beats">
+    <div class="v11-case__beat"><dt>Context</dt><dd>Booz Allen Hamilton / Trusted Environments — a government-facing platform. Design review was a two-week bottleneck on every ticket.</dd></div>
+    <div class="v11-case__beat"><dt>Problem</dt><dd>Designers reviewed the same WCAG + token mismatches on every PR. The DS existed as Figma — the agents couldn&#39;t reach it.</dd></div>
+    <div class="v11-case__beat"><dt>Approach</dt><dd>Packaged the DS as a Claude Code slash-command skill. Tokens + decision trees + 17 recursive review rules invokable with @te-skin.</dd></div>
+    <div class="v11-case__beat"><dt>Ship</dt><dd>Shipped in four weeks. Two-person agent workflow: one proposes UI, one runs recursive review. Five rounds raised the score 78.4 → 95.6.</dd></div>
+    <div class="v11-case__beat"><dt>Outcome</dt><dd>Design review cycles dropped from 2 weeks → 36 hours. Jennifer Sheppard, Product Lead, called it \&quot;work I wanted to keep reusing.\&quot;</dd></div>
+    <div class="v11-case__beat"><dt>Differently</dt><dd>I would ship a public skill scaffold first. The BAH-specific tokens should have been a layer, not the base.</dd></div>
+    <div class="v11-case__beat"><dt>Craft floor</dt><dd>WCAG audit trail stored per token. Dark-mode primary. Skill idempotent under re-invocation. No manual edits in the generated output.</dd></div>
+  </dl>
+  <div class="v11-case__stack"><span class="v11-chip">Agent-consumable</span> <span class="v11-chip">Developer Portal</span> <span class="v11-chip">W3C tokens</span> <span class="v11-chip">COMPONENT-INDEX.json</span></div>
+</article>
+<article id="case-te-black" class="v11-case" data-reveal>
+  <div class="v11-case__head">
+    <span class="v11-case__client">Booz Allen Hamilton</span>
+    <span class="v11-case__dates">2025 — 2026</span>
+  </div>
+  <h3 class="v11-case__title">TE Black — dark-first DS with a11y audit in tokens</h3>
+  <p class="v11-case__hook">Authored a dark-first enterprise design system with a data-theme=&#39;light&#39; override where every light-mode semantic color carries its computed WCAG contrast ratio inline — and the rejected value history. The token file is the audit trail.</p>
+
+  <dl class="v11-case__beats">
+    <div class="v11-case__beat"><dt>Context</dt><dd>Booz Allen Hamilton / Trusted Environments — operators working 12-hour shifts on dark-first consoles. Existing components washed out under mission lighting.</dd></div>
+    <div class="v11-case__beat"><dt>Problem</dt><dd>Design system treated dark as a theme. Operators were the primary audience — it needed to be the base.</dd></div>
+    <div class="v11-case__beat"><dt>Approach</dt><dd>Built TE Black: dark-primary palette with per-token WCAG audit written into the token definition, not as a downstream check.</dd></div>
+    <div class="v11-case__beat"><dt>Ship</dt><dd>Tokens expose `wcag.normal` and `wcag.large` ratios for every ink-on-surface pair. Component library migrated in the same PR as the tokens.</dd></div>
+    <div class="v11-case__beat"><dt>Outcome</dt><dd>Every contrast pair provably ≥ 4.5:1. Operators stopped reporting \&quot;dim text\&quot; in weekly retros. Cited in the TE design review as the reference palette.</dd></div>
+    <div class="v11-case__beat"><dt>Differently</dt><dd>I would publish the audit trail as a CI gate. Right now it&#39;s a convention; a failed ratio should fail the build.</dd></div>
+    <div class="v11-case__beat"><dt>Craft floor</dt><dd>Tokens in CSS + JSON + Figma library in sync. APCA-adjacent luminance verified. No undocumented color combinations ship.</dd></div>
+  </dl>
+  <div class="v11-case__stack"><span class="v11-chip">Houdini</span> <span class="v11-chip">Canvas</span> <span class="v11-chip">shadcn alias</span> <span class="v11-chip">WCAG 2.2</span></div>
+</article>
+<article id="case-life-update-mobile" class="v11-case" data-reveal>
+  <div class="v11-case__head">
+    <span class="v11-case__client">own product · LLM in runtime</span>
+    <span class="v11-case__dates">2026</span>
+  </div>
+  <h3 class="v11-case__title">Life Update Mobile — Gemini API in runtime</h3>
+  <p class="v11-case__hook">Personal tracking system — daily entries analyzed by Gemini in runtime, semantic distance to a 5-year plan, Steve-Jobs-style focus metrics (3 things a day). Shipped 0 → production in a day.</p>
+
+  <dl class="v11-case__beats">
+    <div class="v11-case__beat"><dt>Context</dt><dd>A personal product — a tracking app that uses Gemini at runtime to summarize what I wrote this week.</dd></div>
+    <div class="v11-case__beat"><dt>Problem</dt><dd>Every journal-AI app I&#39;d tried either stored my text on someone else&#39;s server or refused to run without internet. I wanted local-first + LLM on demand.</dd></div>
+    <div class="v11-case__beat"><dt>Approach</dt><dd>Local SQLite store, plain-text journal. Summarization is opt-in: tap a week, send it to Gemini, cache the result.</dd></div>
+    <div class="v11-case__beat"><dt>Ship</dt><dd>Single binary build. No auth server. Gemini API key ships with the user, not the app.</dd></div>
+    <div class="v11-case__beat"><dt>Outcome</dt><dd>Shipped private for my own use. Three friends asked to install it. Weekly summaries in 4 seconds.</dd></div>
+    <div class="v11-case__beat"><dt>Differently</dt><dd>I would put the prompt on the Settings page. Right now it&#39;s hidden — advanced users want to see it and I was being overly protective.</dd></div>
+    <div class="v11-case__beat"><dt>Craft floor</dt><dd>No analytics. No telemetry. No account. Bundle under 8 MB. Works airplane-mode except the summary action.</dd></div>
+  </dl>
+  <div class="v11-case__stack"><span class="v11-chip">Gemini API</span> <span class="v11-chip">Next.js 16</span> <span class="v11-chip">Prisma</span> <span class="v11-chip">0 → prod / 1d</span></div>
+</article>
+    </div>
+  </div>
+</section>
+<section id="method" class="v11-section v11-section--alt" aria-labelledby="method-h">
+  <div class="v11-container">
+    <div class="v11-section__eyebrow">Method</div>
+    <h2 id="method-h" class="v11-h1">Profile plus agents. Diff as the contract.</h2>
+    <p class="v11-lead">I plan before I build. I review every diff. I package skills, not prompts. The agent proposes; I decide.</p>
+
+    <div class="v11-method">
+      <div class="v11-plan" aria-label="plan before build specimen">
+        <div class="v11-plan__head">Plan · approved · dr-cv-v11</div>
+        <ol class="v11-plan__list">
+<li class="v11-plan__step v11-plan__step--done"><strong>Load CvData + Landing config</strong> <span class="v11-plan__meta">0:12</span></li>
+<li class="v11-plan__step v11-plan__step--done"><strong>Render hero + artifact viewer</strong> <span class="v11-plan__meta">0:48</span></li>
+<li class="v11-plan__step v11-plan__step--done"><strong>Render 4 Narrative Ship cases</strong> <span class="v11-plan__meta">1:20</span></li>
+<li class="v11-plan__step"><strong>Emit EN + ES with hreflang</strong> <span class="v11-plan__meta">0:22</span></li>
+<li class="v11-plan__step"><strong>Run a11y + perf smoke</strong> <span class="v11-plan__meta">0:18</span></li>
+        </ol>
+      </div>
+
+      <div class="v11-diff" aria-label="diff review specimen">
+        <div class="v11-diff__row v11-diff__row--del"><span class="v11-diff__ln">42</span><span>- &lt;h1&gt;Agentic Designer shipping real products&lt;/h1&gt;</span></div>
+        <div class="v11-diff__row v11-diff__row--add"><span class="v11-diff__ln">42</span><span>+ &lt;h1&gt;A point of view on agentic design.&lt;/h1&gt;</span></div>
+        <div class="v11-diff__row"><span class="v11-diff__ln">43</span><span>&nbsp;&nbsp;&lt;p&gt;I keep the craft…&lt;/p&gt;</span></div>
+        <div class="v11-diff__row v11-diff__row--add"><span class="v11-diff__ln">44</span><span>+ &lt;div data-v11-skill="@te-skin"&gt;…&lt;/div&gt;</span></div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin: 0 0 32px;">
+      <span class="v11-chip"><span class="v11-chip__at">@</span>dr-cv-skill</span>
+      <span class="v11-chip"><span class="v11-chip__at">@</span>te-skin</span>
+      <span class="v11-chip v11-chip--cool"><span class="v11-chip__at">/</span>ds-review</span>
+      <span class="v11-chip v11-chip--cool"><span class="v11-chip__at">/</span>case-compose</span>
+      <span class="v11-chip v11-chip--muted"><span class="v11-chip__at">@</span>mcp:supabase</span>
+      <span class="v11-chip v11-chip--muted"><span class="v11-chip__at">@</span>mcp:github</span>
+    </div>
+
+    <figure class="v11-quote">
+  <blockquote class="v11-quote__text">Danilo blends design, requirements, development and AI — the unicorn most companies are looking for in this changing time. A huge boon for any team.</blockquote>
+  <figcaption class="v11-quote__attr">
+    <span class="v11-quote__author">Alexander Giraldez</span>
+    <span class="v11-quote__role">Design Lead · Trusted Environments · Booz Allen Hamilton</span>
+    <span class="v11-quote__badge">Verified</span>
+  </figcaption>
+</figure>
+  </div>
+</section>
+<section id="contact" class="v11-section v11-section--alt" aria-labelledby="contact-h">
+  <div class="v11-container">
+    <div class="v11-section__eyebrow">Contact</div>
+    <h2 id="contact-h" class="v11-h1">Let&#39;s talk.</h2>
+    <p class="v11-lead">Direct email is the fastest path. I reply within one business day. Open to Staff / Principal AI Product Designer roles.</p>
+
+    <div class="v11-contact">
+      <div class="v11-contact__headline">
+        <span class="v11-live" aria-hidden="true"></span>
+        <span>Open to work · Remote global</span>
+      </div>
+      <a class="v11-btn v11-btn--primary" href="mailto:danilorojas@hotmail.com" style="align-self:flex-start">
+        Reach out
+        <span class="v11-btn__arrow" aria-hidden="true">→</span>
+      </a>
+      <div class="v11-contact__email-row">
+        <span class="v11-contact__email">danilorojas@hotmail.com</span>
+        <button type="button"
+          class="v11-contact__copy"
+          data-action="copy-email"
+          data-email="danilorojas@hotmail.com"
+          data-copy-label="Copy email"
+          data-copied-label="Copied"
+        >Copy email</button>
+      </div>
+      <div class="v11-contact__socials">
+    <a class="v11-contact__social" href="https://linkedin.com/in/mdanilorojas" rel="noopener" target="_blank">
+      <span class="v11-contact__social-label">LinkedIn</span>
+      <span class="v11-contact__social-handle">linkedin.com/in/mdanilorojas</span>
+    </a>
+    <a class="v11-contact__social" href="https://github.com/mdanilorojas" rel="noopener" target="_blank">
+      <span class="v11-contact__social-label">GitHub</span>
+      <span class="v11-contact__social-handle">github.com/mdanilorojas</span>
+    </a>
+    <a class="v11-contact__social" href="https://behance.net/mariodanilo" rel="noopener" target="_blank">
+      <span class="v11-contact__social-label">Behance</span>
+      <span class="v11-contact__social-handle">behance.net/mariodanilo</span>
+    </a>
+      </div>
+    </div>
+
+    <div style="margin-top:48px"><figure class="v11-quote">
+  <blockquote class="v11-quote__text">Danilo is doing wonderful things using AI in the right ways. He dove into the developer-portal world and delivered work I wanted to keep reusing. A real loss for us.</blockquote>
+  <figcaption class="v11-quote__attr">
+    <span class="v11-quote__author">Jennifer Sheppard</span>
+    <span class="v11-quote__role">Product Lead · Developer Portal · Booz Allen Hamilton</span>
+    <span class="v11-quote__badge">Verified</span>
+  </figcaption>
+</figure></div>
+  </div>
+</section>
+</main>
+<footer class="v11-footer">
+  <div class="v11-footer__inner">
+    <span>Built by Danilo Rojas · source on github.com/mdanilorojas · updated 2026-05-08</span>
+    <div style="display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="https://github.com/mdanilorojas/dr-cv">github.com/mdanilorojas</a>
+      <a href="mailto:danilorojas@hotmail.com">danilorojas@hotmail.com</a>
+      <span>Design System V11</span>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  "use strict";
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* nav scroll state */
+  var nav = document.querySelector('.v11-nav');
+  function onScroll(){
+    if (!nav) return;
+    if (window.scrollY > 40) nav.classList.add('is-scrolled');
+    else                     nav.classList.remove('is-scrolled');
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* lang-toggle — preserve hash + scroll target across languages */
+  document.querySelectorAll('a.v11-nav__lang').forEach(function(a){
+    a.addEventListener('click', function(){
+      var href = a.getAttribute('href') || '';
+      if (location.hash) {
+        a.setAttribute('href', href.split('#')[0] + location.hash);
+      }
+    });
+  });
+
+  /* copy-email */
+  document.addEventListener('click', function(e){
+    var btn = e.target && e.target.closest ? e.target.closest('[data-action="copy-email"]') : null;
+    if (!btn) return;
+    var email = btn.getAttribute('data-email') || '';
+    var copiedLabel = btn.getAttribute('data-copied-label') || 'Copied';
+    var copyLabel   = btn.getAttribute('data-copy-label')   || 'Copy email';
+
+    function flash(){
+      btn.textContent = copiedLabel;
+      btn.setAttribute('data-copied', 'true');
+      setTimeout(function(){
+        btn.textContent = copyLabel;
+        btn.removeAttribute('data-copied');
+      }, 1800);
+    }
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      navigator.clipboard.writeText(email).then(flash, function(){
+        window.prompt(copyLabel, email);
+      });
+    } else {
+      window.prompt(copyLabel, email);
+    }
+  });
+
+  /* scroll-reveal — only if motion allowed */
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          en.target.classList.add('is-visible');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
