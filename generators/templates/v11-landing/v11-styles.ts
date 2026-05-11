@@ -792,4 +792,163 @@ img { max-width: 100%; display: block; }
   .v11-stream__head::before { animation: none; opacity: 1; }
   .v11-stream__caret { animation: none; opacity: 1; }
 }
+
+/* ============== HORIZON TIMELINE ============== */
+.v11-horizon {
+  padding: 64px 0;
+  background: var(--v11-bg-alt);
+  border-bottom: 1px solid var(--v11-line);
+}
+.v11-horizon__eyebrow {
+  font-family: var(--v11-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin: 0 0 12px;
+}
+.v11-horizon__title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 40px;
+  color: var(--v11-text);
+}
+.v11-horizon__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  position: relative;
+}
+.v11-horizon__grid::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 58px;
+  height: 1px;
+  background: linear-gradient(to right, transparent 0%, var(--v11-line-strong) 8%, var(--v11-line-strong) 92%, transparent 100%);
+  pointer-events: none;
+}
+.v11-horizon__col {
+  padding: 0 28px;
+  position: relative;
+}
+.v11-horizon__col + .v11-horizon__col {
+  border-left: 1px solid var(--v11-line);
+}
+.v11-horizon__stage {
+  font-family: var(--v11-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-text-50);
+  margin-bottom: 22px;
+}
+.v11-horizon__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--v11-bg-elevated);
+  border: 1px solid var(--v11-line-strong);
+  position: absolute;
+  left: 28px;
+  top: 54px;
+}
+.v11-horizon__col[data-emphasis="true"] .v11-horizon__dot {
+  background: var(--v11-accent);
+  border-color: var(--v11-accent);
+  box-shadow: 0 0 0 4px var(--v11-accent-soft);
+}
+.v11-horizon__col[data-emphasis="true"] .v11-horizon__stage {
+  color: var(--v11-accent);
+}
+.v11-horizon__heading {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin: 18px 0 10px;
+  color: var(--v11-text);
+}
+.v11-horizon__body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--v11-text-70);
+  margin: 0 0 16px;
+}
+.v11-horizon__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.v11-horizon__chip {
+  font-family: var(--v11-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--v11-bg-inset);
+  color: var(--v11-text-70);
+  border: 1px solid var(--v11-line);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+a.v11-horizon__chip:hover,
+a.v11-horizon__chip:focus-visible {
+  border-color: var(--v11-accent-line);
+  color: var(--v11-text);
+  outline: none;
+}
+a.v11-horizon__chip:focus-visible {
+  box-shadow: 0 0 0 3px var(--v11-accent-ring);
+}
+[data-horizon-col='earned'] .v11-horizon__chip {
+  text-decoration: line-through;
+  text-decoration-color: var(--v11-text-40);
+  color: var(--v11-text-50);
+  cursor: default;
+}
+[data-horizon-col='investing'] .v11-horizon__chip {
+  background: var(--v11-accent-soft);
+  color: var(--v11-text);
+  border-color: var(--v11-accent-line);
+}
+[data-horizon-col='horizon'] .v11-horizon__chip[data-kind='bet'] {
+  border-style: dashed;
+  color: var(--v11-text-body);
+}
+.v11-horizon__bet-badge {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v11-signal-warn);
+  font-weight: 600;
+  padding: 1px 5px;
+  border: 1px solid var(--v11-signal-warn);
+  border-radius: 3px;
+  line-height: 1;
+}
+
+@media (max-width: 920px) {
+  .v11-horizon__grid {
+    grid-template-columns: 1fr;
+  }
+  .v11-horizon__grid::before {
+    display: none;
+  }
+  .v11-horizon__col + .v11-horizon__col {
+    border-left: 0;
+    border-top: 1px solid var(--v11-line);
+    margin-top: 24px;
+    padding-top: 24px;
+  }
+  .v11-horizon__dot {
+    top: -6px;
+    left: 0;
+  }
+}
 `;

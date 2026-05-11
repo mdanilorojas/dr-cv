@@ -18,6 +18,9 @@ import type {
   LandingTabId,
   LandingVisualKind,
   LandingData,
+  HorizonSection,
+  HorizonColumn,
+  HorizonChip,
 } from "./types.js";
 
 export class DataLoadError extends Error {
@@ -423,5 +426,54 @@ export function loadLanding(filePath: string): Landing {
 export function loadLandingData(dataDir: string): LandingData {
   const cv = loadCvData(dataDir);
   const landing = loadLanding(path.join(dataDir, "landing.yaml"));
-  return { ...cv, landing };
+  const horizon = loadHorizon(path.join(dataDir, "horizon.yaml"));
+  return { ...cv, landing, horizon };
+}
+
+// ============= HORIZON VALIDATION =============
+function validateBilingual(raw: unknown, ctx: string): { en: string; es: string } {
+  const o = requireObject(raw, ctx);
+  return {
+    en: requireString(o.en, `${ctx}.en`),
+    es: requireString(o.es, `${ctx}.es`),
+  };
+}
+
+function validateHorizon(raw: unknown): HorizonSection {
+  const o = requireObject(raw, "horizon");
+  const eyebrow = validateBilingual(o.eyebrow, "horizon.eyebrow");
+  const sectionTitle = validateBilingual(o.sectionTitle, "horizon.sectionTitle");
+  const columns = requireArray(o.columns, "horizon.columns", (col, i): HorizonColumn => {
+    const co = requireObject(col, `horizon.columns[${i}]`);
+    const id = requireString(co.id, `horizon.columns[${i}].id`);
+    const chips = requireArray(co.chips, `horizon.columns[${i}].chips`, (chip, ci): HorizonChip => {
+      const ch = requireObject(chip, `horizon.columns[${i}].chips[${ci}]`);
+      const label = validateBilingual(ch.label, `horizon.columns[${i}].chips[${ci}].label`);
+      const href = typeof ch.href === "string" ? ch.href : undefined;
+      let kind: "evidence" | "bet" | undefined;
+      if (ch.kind === undefined) {
+        kind = undefined;
+      } else if (ch.kind === "evidence" || ch.kind === "bet") {
+        kind = ch.kind;
+      } else {
+        throw new Error(
+          `horizon.columns[${i}].chips[${ci}].kind must be 'evidence' or 'bet', got '${String(ch.kind)}'`,
+        );
+      }
+      return { label, href, kind };
+    });
+    return {
+      id,
+      stage: validateBilingual(co.stage, `horizon.columns[${i}].stage`),
+      heading: validateBilingual(co.heading, `horizon.columns[${i}].heading`),
+      body: validateBilingual(co.body, `horizon.columns[${i}].body`),
+      emphasis: typeof co.emphasis === "boolean" ? co.emphasis : undefined,
+      chips,
+    };
+  });
+  return { eyebrow, sectionTitle, columns };
+}
+
+export function loadHorizon(filePath: string): HorizonSection {
+  return loadYaml(filePath, validateHorizon);
 }

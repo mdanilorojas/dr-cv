@@ -172,6 +172,29 @@ export interface Landing {
   };
 }
 
+// ============= HORIZON =============
+export interface HorizonChip {
+  label: { en: string; es: string };
+  href?: string;           // if present → <a>; if absent → <span>
+  kind?: "evidence" | "bet"; // used by the `horizon` column
+}
+
+export interface HorizonColumn {
+  id: string;              // stable id: "earned" | "investing" | "horizon"
+  stage: { en: string; es: string };
+  heading: { en: string; es: string };
+  body: { en: string; es: string };
+  emphasis?: boolean;      // true for the "investing" column
+  chips: HorizonChip[];
+}
+
+export interface HorizonSection {
+  eyebrow: { en: string; es: string };
+  sectionTitle: { en: string; es: string };
+  columns: HorizonColumn[];
+}
+
 export interface LandingData extends CvData {
   landing: Landing;
+  horizon: HorizonSection;
 }
