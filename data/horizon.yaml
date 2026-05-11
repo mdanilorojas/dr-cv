@@ -15,8 +15,8 @@ columns:
       en: "The craft I mastered, now commoditized"
       es: "El craft que dominé, ahora commoditizado"
     body:
-      en: "15 years shipping enterprise product. I keep the judgment — the hours that built it no longer compound."
-      es: "15 años shippeando producto enterprise. Me quedo con el juicio — las horas que lo construyeron ya no componen."
+      en: "15 years running the old pipeline: Figma → design system → components → tokens → prototypes → handoff to a developer. The craft is real. The handoff is now a commodity."
+      es: "15 años corriendo el pipeline viejo: Figma → design system → componentes → tokens → prototipos → handoff a un desarrollador. El craft es real. El handoff ya es commodity."
     chips:
       - label: { en: "Figma mastery",         es: "Dominio de Figma" }
       - label: { en: "Hand-coded UI",         es: "UI a mano" }
@@ -33,8 +33,8 @@ columns:
       en: "Where my hours go today"
       es: "A dónde van mis horas hoy"
     body:
-      en: "The frontline moved. I moved with it. Craft is now judgment + orchestration: I ship what used to take a team, and I ship the tools that make it possible."
-      es: "La frontera se movió. Me moví con ella. El craft ahora es juicio + orquestación: entrego lo que antes tomaba un equipo, y entrego las herramientas que lo hacen posible."
+      en: "The new pipeline: Figma → Cloud Storybook → GitHub → ready for the user. No developer handoff in the middle — the agents ship the code, I ship the judgment that tells them what to build."
+      es: "El pipeline nuevo: Figma → Cloud Storybook → GitHub → listo para el usuario. Sin handoff al developer en el medio — los agentes entregan el código, yo entrego el juicio que les dice qué construir."
     chips:
       - label: { en: "Agent orchestration",     es: "Orquestación de agentes" }
         href: "#case-enregla"
