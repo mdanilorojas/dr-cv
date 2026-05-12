@@ -306,17 +306,20 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
 .cv-industries__label { color: var(--accent); font-weight: 600; }
 .cv-industries__item { color: var(--ink); }
 
-/* ===== summary — thesis smaller ===== */
+/* ===== summary — thesis smaller, eyebrow matches section heading ===== */
 .cv-summary { margin-bottom: 6mm; grid-column: 2 / -1; }
 .cv-summary__eyebrow {
   font-family: var(--font-mono);
-  font-size: 7pt;
+  font-size: 7.5pt;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ink-muted);
-  margin-bottom: 3mm;
+  color: var(--ink);
+  margin: 0 0 3mm 0;
+  padding-bottom: 2mm;
+  border-bottom: 1px solid var(--ink);
+  font-weight: 600;
 }
-.cv-summary__eyebrow::before { content: "// "; color: var(--accent); }
+.cv-summary__eyebrow::before { content: "// "; color: var(--accent); font-weight: 400; }
 .cv-summary__thesis {
   font-family: var(--font-display);
   font-size: 11pt;           /* was 13pt */
@@ -750,13 +753,17 @@ const IDENTITY = {
   ],
 };
 
+// Industries actually represented by Danilo's client history:
+//   - Department of Defense / US Army (via Booz Allen Hamilton, 2022–2026)
+//   - Banking (Banco Pichincha)
+//   - Pharmaceuticals (Merck, Quifatex)
+//   - Consumer Goods (Mondelēz, Grupo Superior, Azzorti, Flamingo)
+// Government is redundant with DoD; Energy was never a real client — both removed.
 const INDUSTRIES_FULL = [
   "Department of Defense",
   "Banking",
   "Pharmaceuticals",
   "Consumer Goods",
-  "Government",
-  "Energy (regulated)",
 ];
 
 const INDUSTRIES_PHASE1 = [
@@ -1534,7 +1541,7 @@ const phase2Variants = [
     file: "v2-1/V2-13-content-compliance.html",
     html: renderV2_1({
       title: "V2.13 Content · Compliance-led",
-      showIndustriesBand: false,
+      showIndustriesBand: true,
       showCompliancePerRole: true,
       thesis: "Compliance-first product design for regulated industries. WCAG 2.1 AA and Section 508 audited inside design tokens. Documented handoff to senior engineering. Fifteen years across defense, banking, and pharmaceuticals.",
     }),
