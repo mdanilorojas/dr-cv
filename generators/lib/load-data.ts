@@ -134,7 +134,7 @@ function validateIdentity(raw: unknown): Identity {
   };
 }
 
-function validatePositioning(raw: unknown): Positioning {
+export function validatePositioning(raw: unknown): Positioning {
   const o = requireObject(raw, "positioning");
   const th = requireObject(o.thesis, "positioning.thesis");
   const tg = requireObject(o.tagline, "positioning.tagline");

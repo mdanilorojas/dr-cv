@@ -10,6 +10,8 @@ import {
   loadLanding,
   loadLandingData,
   DataLoadError,
+  validateSkills,
+  validatePositioning,
 } from "../generators/lib/load-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -238,24 +240,19 @@ describe("validatePositioning — thesisBairesdev", () => {
       thesisBairesdev: { en: "agentic forward" },
       proofNumbers: [],
     };
-    const tmpPath = path.join(fixtureBadDir, "positioning-with-bd.yaml");
-    mkdirSync(fixtureBadDir, { recursive: true });
-    writeFileSync(tmpPath, `thesis:
-  en: "a"
-  es: "b"
-tagline:
-  en: "c"
-  es: "d"
-thesisBairesdev:
-  en: "agentic forward"
-proofNumbers: []
-`);
-    try {
-      const positioning = loadAllData(dataDir).positioning;
-      expect(positioning).toBeDefined();
-    } finally {
-      unlinkSync(tmpPath);
-    }
+    const v = validatePositioning(raw);
+    expect(v.thesisBairesdev).toBeDefined();
+    expect(v.thesisBairesdev!.en).toBe("agentic forward");
+  });
+
+  it("leaves thesisBairesdev undefined when not present", () => {
+    const raw = {
+      thesis: { en: "a", es: "b" },
+      tagline: { en: "c", es: "d" },
+      proofNumbers: [],
+    };
+    const v = validatePositioning(raw);
+    expect(v.thesisBairesdev).toBeUndefined();
   });
 });
 
