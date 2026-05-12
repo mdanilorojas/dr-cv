@@ -287,7 +287,7 @@ function renderNav(identity: Identity, lang: Lang): string {
 
 /* ============== HERO (AI Product-Tour layer) ============== */
 
-function renderHero(identity: Identity, positioning: Positioning, lang: Lang): string {
+function renderHero(identity: Identity, positioning: Positioning, lang: Lang, photoHref: string): string {
   const { first, last } = splitName(identity.name);
   const eyebrow = lang === "en" ? COPY.hero.eyebrowEn : COPY.hero.eyebrowEs;
   const title = lang === "en" ? COPY.hero.titleEn : COPY.hero.titleEs;
@@ -306,11 +306,18 @@ function renderHero(identity: Identity, positioning: Positioning, lang: Lang): s
     ? "15 years shipping. Booz Allen Hamilton (current). EnRegla (own SaaS). Claude Code power-user. 346 commits · 40 days."
     : "15 años entregando. Booz Allen Hamilton (actual). EnRegla (SaaS propio). Claude Code power-user. 346 commits · 40 días.";
 
+  const avatarAlt = lang === "en"
+    ? `Portrait of ${identity.name}`
+    : `Retrato de ${identity.name}`;
+
   return `<section id="top" class="v11-hero" aria-label="Hero">
   <div class="v11-container">
     <div class="v11-hero__grid">
       <div>
-        <div class="v11-hero__eyebrow">${escapeHtml(eyebrow)}</div>
+        <div class="v11-hero__byline">
+          <img class="v11-hero__avatar" src="${escapeHtml(photoHref)}" alt="${escapeHtml(avatarAlt)}" width="110" height="110" loading="eager" decoding="async">
+          <div class="v11-hero__eyebrow">${escapeHtml(eyebrow)}</div>
+        </div>
         <h1 class="v11-hero__title">${escapeHtml(title)} <em>${escapeHtml(titleEm)}</em></h1>
         <p class="v11-hero__sub">${escapeHtml(sub)}</p>
         <div class="v11-hero__actions">
@@ -417,7 +424,7 @@ ${cards}
 
 /* ============== NOTEBOOK ============== */
 
-function renderNotebook(lang: Lang): string {
+function renderNotebook(identity: Identity, lang: Lang, photoHref: string): string {
   const eyebrow = lang === "en" ? COPY.notebook.eyebrowEn : COPY.notebook.eyebrowEs;
   const title = lang === "en" ? COPY.notebook.titleEn : COPY.notebook.titleEs;
   const toc = lang === "en" ? COPY.notebook.tocEn : COPY.notebook.tocEs;
@@ -425,11 +432,25 @@ function renderNotebook(lang: Lang): string {
 
   const paragraphsHtml = paragraphs.map((p) => `<p>${p}</p>`).join("\n");
 
+  const bylineByLabel = lang === "en" ? "By" : "Por";
+  const bylineRole = lang === "en" ? "Agentic Designer" : "Diseñador Agéntico";
+  const bylineDate = "2026-05-12";
+  const avatarAlt = lang === "en"
+    ? `Portrait of ${identity.name}`
+    : `Retrato de ${identity.name}`;
+
   return `<section id="notebook" class="v11-section v11-section--paper" aria-labelledby="notebook-h">
   <div class="v11-container-narrow v11-notebook">
     <div class="v11-section__eyebrow">${escapeHtml(eyebrow)}</div>
     <h2 id="notebook-h" class="v11-h1">${escapeHtml(title)}</h2>
     <div class="v11-notebook__toc">${escapeHtml(toc)}</div>
+    <figure class="v11-notebook__byline">
+      <img class="v11-notebook__byline-photo" src="${escapeHtml(photoHref)}" alt="${escapeHtml(avatarAlt)}" width="52" height="52" loading="lazy" decoding="async">
+      <figcaption class="v11-notebook__byline-meta">
+        <span class="v11-notebook__byline-name">${escapeHtml(bylineByLabel)} <strong>${escapeHtml(identity.name)}</strong></span>
+        <span class="v11-notebook__byline-sub">${escapeHtml(bylineRole)} · ${escapeHtml(bylineDate)}</span>
+      </figcaption>
+    </figure>
     <div class="v11-notebook__essay">
 ${paragraphsHtml}
     </div>
@@ -736,7 +757,19 @@ function renderFooter(identity: Identity, lang: Lang): string {
 
 /* ============== ROOT ============== */
 
-export function renderV11Landing(data: LandingData, lang: Lang, tokensCss: string): string {
+export interface V11LandingAssets {
+  /** Relative href from the rendered HTML file to the portrait photo. */
+  photoHref: string;
+  /** Absolute URL to the Open Graph image (must be absolute for og:image). */
+  ogImageUrl: string;
+}
+
+export function renderV11Landing(
+  data: LandingData,
+  lang: Lang,
+  tokensCss: string,
+  assets: V11LandingAssets,
+): string {
   const seoTitle = lang === "en"
     ? "Danilo Rojas — Agentic Designer · Product Engineer"
     : "Danilo Rojas — Diseñador Agéntico · Product Engineer";
@@ -747,6 +780,9 @@ export function renderV11Landing(data: LandingData, lang: Lang, tokensCss: strin
   const altHref = lang === "en" ? "/es/" : "/";
   const selfHref = lang === "en" ? "/" : "/es/";
   const skipLabel = lang === "en" ? "Skip to content" : "Saltar al contenido";
+  const ogAlt = lang === "en"
+    ? `Danilo Rojas — Agentic Designer`
+    : `Danilo Rojas — Diseñador Agéntico`;
 
   return `<!doctype html>
 <html lang="${lang}">
@@ -759,9 +795,14 @@ export function renderV11Landing(data: LandingData, lang: Lang, tokensCss: strin
 <meta property="og:description" content="${escapeHtml(seoDesc)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://danilorojas.design${selfHref}">
+<meta property="og:image" content="${escapeHtml(assets.ogImageUrl)}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${escapeHtml(ogAlt)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${escapeHtml(seoTitle)}">
 <meta name="twitter:description" content="${escapeHtml(seoDesc)}">
+<meta name="twitter:image" content="${escapeHtml(assets.ogImageUrl)}">
 <link rel="canonical" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${lang}" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${altLang}" href="https://danilorojas.design${altHref}">
@@ -778,10 +819,10 @@ ${V11_STYLES}
 <a class="v11-skip" href="#main">${escapeHtml(skipLabel)}</a>
 ${renderNav(data.identity, lang)}
 <main id="main">
-${renderHero(data.identity, data.positioning, lang)}
+${renderHero(data.identity, data.positioning, lang, assets.photoHref)}
 ${renderProof(data.positioning, lang)}
 ${renderHorizon(data.horizon, lang)}
-${renderNotebook(lang)}
+${renderNotebook(data.identity, lang, assets.photoHref)}
 ${renderWork(data, lang)}
 ${renderMethod(data, lang)}
 ${renderContact(data, lang)}
