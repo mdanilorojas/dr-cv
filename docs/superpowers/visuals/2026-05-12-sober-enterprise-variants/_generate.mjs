@@ -1439,13 +1439,13 @@ function renderV2_1({
 </body></html>`;
 }
 
-// V2.13 three-page layout — user explicitly requested splitting so each page has
-// a full aside + full main. Also silences `page-break-inside: avoid` on case cards
-// so long pages can break naturally if anything overflows, rather than getting cut.
+// V2.13 two-page layout — page 2 carries clients + education sidebar and all
+// remaining experience + references in the main column. Page-break-inside
+// silenced on cards so overflow breaks naturally rather than clipping.
 function renderV2_13ThreePage() {
   const role = "Senior Product Designer · Agentic Design";
   const thesis = "Compliance-first product design for regulated industries. WCAG 2.1 AA and Section 508 audited inside design tokens. Documented handoff to senior engineering. Fifteen years across defense, banking, and pharmaceuticals.";
-  return `${p2_head("Danilo Rojas — CV · V2.13 Content · Compliance-led (3-page)")}
+  return `${p2_head("Danilo Rojas — CV · V2.13 Content · Compliance-led (2-page)")}
 <style>
   /* Overrides for this variant only: allow natural breaks if content overflows */
   .cv-case { page-break-inside: auto; }
@@ -1469,25 +1469,17 @@ function renderV2_13ThreePage() {
   </div>
 </article>
 
-<!-- PAGE 2 · clients sidebar + professional experience (current) -->
+<!-- PAGE 2 · clients + education sidebar · professional + past experience + references -->
 <article class="cv-page">
   <aside>
     ${p2_renderClientsSidebar()}
+    ${p2_renderEducation()}
   </aside>
   <div class="cv-right">
     <section class="cv-section">
       <h3 class="cv-section__heading">Professional experience</h3>
       ${p2_renderExperience(EXPERIENCE_P2.slice(0, 2), { showCompliance: true })}
     </section>
-  </div>
-</article>
-
-<!-- PAGE 3 · education sidebar + past experience + references -->
-<article class="cv-page">
-  <aside>
-    ${p2_renderEducation()}
-  </aside>
-  <div class="cv-right">
     <section class="cv-section">
       <h3 class="cv-section__heading">Past experience</h3>
       ${p2_renderExperience(EXPERIENCE_P2.slice(2))}
