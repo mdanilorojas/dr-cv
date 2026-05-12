@@ -290,3 +290,16 @@ inventory:
     expect(skills.inventory).toBeUndefined();
   });
 });
+
+describe("loadCvData — inventory round-trip", () => {
+  it("data/skills.yaml exposes a non-empty inventory", () => {
+    const here = path.dirname(fileURLToPath(import.meta.url));
+    const dataDir = path.join(here, "..", "data");
+    const cv = loadCvData(dataDir);
+    expect(cv.skills.inventory).toBeDefined();
+    expect(cv.skills.inventory!.length).toBeGreaterThanOrEqual(20);
+    const uxui = cv.skills.inventory!.find((i) => i.skill === "UX/UI");
+    expect(uxui).toBeDefined();
+    expect(uxui!.years).toBe("10+");
+  });
+});
