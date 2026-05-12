@@ -1439,6 +1439,65 @@ function renderV2_1({
 </body></html>`;
 }
 
+// V2.13 three-page layout — user explicitly requested splitting so each page has
+// a full aside + full main. Also silences `page-break-inside: avoid` on case cards
+// so long pages can break naturally if anything overflows, rather than getting cut.
+function renderV2_13ThreePage() {
+  const role = "Senior Product Designer · Agentic Design";
+  const thesis = "Compliance-first product design for regulated industries. WCAG 2.1 AA and Section 508 audited inside design tokens. Documented handoff to senior engineering. Fifteen years across defense, banking, and pharmaceuticals.";
+  return `${p2_head("Danilo Rojas — CV · V2.13 Content · Compliance-led (3-page)")}
+<style>
+  /* Overrides for this variant only: allow natural breaks if content overflows */
+  .cv-case { page-break-inside: auto; }
+  .cv-xp { page-break-inside: auto; }
+</style>
+
+<!-- PAGE 1 · identity · industries · skills sidebar + summary + selected work -->
+<article class="cv-page">
+  ${p2_renderIdentity({ role })}
+  ${p2_renderIndustriesBand()}
+  ${p2_renderSkillsSidebar()}
+  <div class="cv-right">
+    <section class="cv-summary">
+      <div class="cv-summary__eyebrow">Professional summary</div>
+      <h2 class="cv-summary__thesis">${thesis}</h2>
+    </section>
+    <section class="cv-section">
+      <h3 class="cv-section__heading">Selected work</h3>
+      ${[CASE_BAH_P2, CASE_BANCO].map(p2_renderCase).join("")}
+    </section>
+  </div>
+</article>
+
+<!-- PAGE 2 · clients sidebar + professional experience (current) -->
+<article class="cv-page">
+  <aside>
+    ${p2_renderClientsSidebar()}
+  </aside>
+  <div class="cv-right">
+    <section class="cv-section">
+      <h3 class="cv-section__heading">Professional experience</h3>
+      ${p2_renderExperience(EXPERIENCE_P2.slice(0, 2), { showCompliance: true })}
+    </section>
+  </div>
+</article>
+
+<!-- PAGE 3 · education sidebar + past experience + references -->
+<article class="cv-page">
+  <aside>
+    ${p2_renderEducation()}
+  </aside>
+  <div class="cv-right">
+    <section class="cv-section">
+      <h3 class="cv-section__heading">Past experience</h3>
+      ${p2_renderExperience(EXPERIENCE_P2.slice(2))}
+    </section>
+    ${p2_renderReferences()}
+  </div>
+</article>
+</body></html>`;
+}
+
 // ============================================================================
 // EMIT
 // ============================================================================
@@ -1539,12 +1598,7 @@ const phase2Variants = [
   },
   {
     file: "v2-1/V2-13-content-compliance.html",
-    html: renderV2_1({
-      title: "V2.13 Content · Compliance-led",
-      showIndustriesBand: true,
-      showCompliancePerRole: true,
-      thesis: "Compliance-first product design for regulated industries. WCAG 2.1 AA and Section 508 audited inside design tokens. Documented handoff to senior engineering. Fifteen years across defense, banking, and pharmaceuticals.",
-    }),
+    html: renderV2_13ThreePage(),
   },
 ];
 
