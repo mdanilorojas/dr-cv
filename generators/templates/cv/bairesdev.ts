@@ -33,12 +33,12 @@ const BAIRESDEV_TOKENS = `
   --font-display: "Inter", "Helvetica Neue", Arial, sans-serif;
   --font-mono:    "JetBrains Mono", "SF Mono", Menlo, Consolas, ui-monospace, monospace;
 
-  --fs-body: 9.5pt;
-  --lh-body: 1.5;
+  --fs-body: 9.2pt;
+  --lh-body: 1.43;
 
   --a4-w: 210mm;
   --a4-h: 297mm;
-  --a4-pad: 16mm;
+  --a4-pad: 7mm;
 }
 `;
 
@@ -65,8 +65,8 @@ body {
   box-shadow: 0 2px 12px rgba(0,0,0,.08);
   page-break-after: always;
   display: grid;
-  grid-template-columns: 62mm 1fr;
-  gap: 10mm;
+  grid-template-columns: 60mm 1fr;
+  gap: 9mm;
 }
 .cv-page:last-of-type { page-break-after: auto; }
 @media print {
@@ -83,17 +83,17 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: end;
-  gap: 10mm;
-  padding-bottom: 6mm;
+  gap: 8mm;
+  padding-bottom: 4.5mm;
   border-bottom: 1px solid var(--ink);
-  margin-bottom: 6mm;
+  margin-bottom: 4.5mm;
 }
 .cv-identity__name {
   font-family: var(--font-display);
   font-size: 22pt;
   letter-spacing: -0.035em;
   line-height: 1;
-  margin: 0 0 3mm 0;
+  margin: 0 0 2.5mm 0;
   font-weight: 600;
   color: var(--ink);
 }
@@ -103,7 +103,7 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   font-size: 8.5pt;
   letter-spacing: 0.02em;
   color: var(--ink);
-  margin-bottom: 2mm;
+  margin-bottom: 1.5mm;
 }
 .cv-identity__availability {
   font-family: var(--font-mono);
@@ -122,14 +122,14 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
 }
 
 /* ============== summary ============== */
-.cv-summary { margin-bottom: 6mm; grid-column: 2 / -1; }
+.cv-summary { margin-bottom: 4.5mm; grid-column: 2 / -1; }
 .cv-summary__eyebrow {
   font-family: var(--font-mono);
   font-size: 7pt;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-muted);
-  margin-bottom: 3mm;
+  margin-bottom: 2.5mm;
 }
 .cv-summary__eyebrow::before {
   content: "// ";
@@ -137,11 +137,11 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
 }
 .cv-summary__thesis {
   font-family: var(--font-display);
-  font-size: 13pt;
+  font-size: 12pt;
   letter-spacing: -0.02em;
-  line-height: 1.3;
+  line-height: 1.23;
   color: var(--ink);
-  margin: 0 0 3mm 0;
+  margin: 0;
   font-weight: 500;
 }
 .cv-summary__tagline {
@@ -156,8 +156,8 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink);
-  margin: 0 0 4mm 0;
-  padding-bottom: 2mm;
+  margin: 0 0 3.5mm 0;
+  padding-bottom: 1.8mm;
   border-bottom: 1px solid var(--ink);
   font-weight: 600;
 }
@@ -166,7 +166,7 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   color: var(--ink-subtle);
   font-weight: 400;
 }
-.cv-skills__group { margin-bottom: 4mm; }
+.cv-skills__group { margin-bottom: 3.5mm; }
 .cv-skills__group-title {
   font-family: var(--font-mono);
   font-size: 7pt;
@@ -198,15 +198,15 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
 
 /* ============== main + right column ============== */
 .cv-right { grid-column: 2; }
-.cv-section { margin-bottom: 6mm; }
+.cv-section { margin-bottom: 4mm; }
 .cv-section__heading {
   font-family: var(--font-mono);
   font-size: 7.5pt;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink);
-  margin: 0 0 3mm 0;
-  padding-bottom: 2mm;
+  margin: 0 0 2mm 0;
+  padding-bottom: 1.5mm;
   border-bottom: 1px solid var(--ink);
   font-weight: 600;
 }
@@ -218,8 +218,8 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
 
 /* ============== experience ============== */
 .cv-xp {
-  margin-bottom: 4mm;
-  padding-bottom: 3.5mm;
+  margin-bottom: 3mm;
+  padding-bottom: 2.5mm;
   border-bottom: 1px solid var(--line-soft);
 }
 .cv-xp:last-child { border-bottom: 0; padding-bottom: 0; }
@@ -227,7 +227,7 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 1mm;
+  margin-bottom: 0.8mm;
 }
 .cv-xp__company {
   font-family: var(--font-display);
@@ -246,15 +246,15 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   font-family: var(--font-mono);
   font-size: 8pt;
   color: var(--ink);
-  margin-bottom: 2mm;
+  margin-bottom: 1.5mm;
   letter-spacing: 0.01em;
 }
 .cv-xp__badge { display: none; }
 .cv-xp__description {
-  font-size: 9pt;
-  line-height: 1.5;
+  font-size: 8.8pt;
+  line-height: 1.43;
   color: var(--ink-body);
-  margin: 0 0 2mm 0;
+  margin: 0 0 1.5mm 0;
 }
 .cv-xp__stack { display: flex; flex-wrap: wrap; gap: 3px; }
 .cv-xp__stack-pill {
@@ -273,8 +273,8 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
 .cv-case {
   border: 1px solid var(--line);
   border-radius: 4px;
-  padding: 4mm 5mm;
-  margin-bottom: 3mm;
+  padding: 3mm 4mm;
+  margin-bottom: 1.8mm;
   page-break-inside: avoid;
   background: var(--bg-card);
 }
@@ -285,34 +285,34 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-muted);
-  margin-bottom: 2mm;
+  margin-bottom: 1.5mm;
 }
 .cv-case__client { color: var(--ink); font-weight: 500; }
 .cv-case__title {
   font-family: var(--font-display);
-  font-size: 11.5pt;
+  font-size: 10.8pt;
   letter-spacing: -0.02em;
-  line-height: 1.2;
-  margin: 0 0 2mm 0;
+  line-height: 1.18;
+  margin: 0 0 1mm 0;
   font-weight: 600;
   color: var(--ink);
 }
 .cv-case__hook {
-  font-size: 9pt;
-  line-height: 1.5;
+  font-size: 8.8pt;
+  line-height: 1.4;
   color: var(--ink-body);
-  margin: 0 0 2mm 0;
+  margin: 0 0 1mm 0;
 }
 .cv-case__bullets {
-  list-style: none; margin: 0 0 3mm 0; padding: 0;
+  list-style: none; margin: 0 0 2mm 0; padding: 0;
 }
 .cv-case__bullets li {
-  font-size: 8.3pt;
-  line-height: 1.45;
+  font-size: 8pt;
+  line-height: 1.35;
   padding-left: 12px;
   position: relative;
   color: var(--ink-body);
-  margin-bottom: 1mm;
+  margin-bottom: 0.6mm;
 }
 .cv-case__bullets li::before {
   content: "—";
@@ -340,8 +340,8 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink);
-  margin: 0 0 3mm 0;
-  padding-bottom: 2mm;
+  margin: 0 0 2.5mm 0;
+  padding-bottom: 1.8mm;
   border-bottom: 1px solid var(--ink);
   font-weight: 600;
 }
@@ -356,7 +356,7 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   grid-template-columns: auto 1fr;
   column-gap: 5mm;
   row-gap: 0.5mm;
-  padding: 1.8mm 0;
+  padding: 1.5mm 0;
   border-top: 1px solid var(--line-soft);
 }
 .cv-edu__item:first-child { border-top: 0; }
@@ -393,8 +393,8 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   margin: 0;
 }
 .cv-references__list {
-  list-style: none; padding: 0; margin: 2mm 0 0;
-  display: grid; gap: 1.5mm;
+  list-style: none; padding: 0; margin: 1.5mm 0 0;
+  display: grid; gap: 1.2mm;
 }
 .cv-references__list li {
   font-family: var(--font-mono);
@@ -411,15 +411,15 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
 }
 
 /* ============== skills inventory ============== */
-.cv-inventory { margin-top: 6mm; }
+.cv-inventory { margin-top: 3mm; }
 .cv-inventory__heading {
   font-family: var(--font-mono);
   font-size: 7.5pt;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink);
-  margin: 0 0 3mm 0;
-  padding-bottom: 2mm;
+  margin: 0 0 1.5mm 0;
+  padding-bottom: 1.3mm;
   border-bottom: 1px solid var(--ink);
   font-weight: 600;
 }
@@ -431,27 +431,27 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
 .cv-inventory__grid {
   display: grid;
   grid-template-columns: 1fr auto;
-  column-gap: 4mm;
-  row-gap: 1.2mm;
+  column-gap: 2mm;
+  row-gap: 0.2mm;
 }
 .cv-inventory__row {
   display: contents;
 }
 .cv-inventory__skill {
   font-family: var(--font-body);
-  font-size: 7.8pt;
+  font-size: 6.3pt;
   color: var(--ink);
   letter-spacing: 0;
-  padding: 0.8mm 0;
+  padding: 0.25mm 0;
   border-top: 1px solid var(--line-soft);
 }
 .cv-inventory__years {
   font-family: var(--font-mono);
-  font-size: 7pt;
+  font-size: 5.8pt;
   color: var(--ink-muted);
   letter-spacing: 0.04em;
   text-align: right;
-  padding: 0.8mm 0;
+  padding: 0.25mm 0;
   border-top: 1px solid var(--line-soft);
 }
 .cv-inventory__grid > .cv-inventory__row:first-child .cv-inventory__skill,
