@@ -16,3 +16,14 @@
   author: "Design Systems Lead"
   role: "ex-colleague · Xentinels"
   source: attributed
+
+# Paraphrase of verified Lizzie Salita testimonial, stripped of AI vocabulary
+# for use in the sober-enterprise CV variant (regulated-industry clients).
+# The literal original lives in testimonials/verified.yaml — do NOT use this
+# paraphrase in contexts that quote testimonials verbatim.
+- quote: "Danilo consistently demonstrates proactive initiative, creating new systems and tools to improve team workflows. He shows a deep commitment to the end-user experience, advocating for research-driven decisions and strong design principles. Highly collaborative, he engages across multiple workstreams to gather feedback and understand the product from every angle."
+  quoteEs: "Danilo demuestra consistentemente iniciativa proactiva, creando nuevos sistemas y herramientas para mejorar los workflows del equipo. Muestra un compromiso profundo con la experiencia del usuario final, defendiendo decisiones basadas en research y principios de diseño sólidos. Altamente colaborativo, se involucra en múltiples workstreams para recoger feedback y entender el producto desde todos los ángulos."
+  author: "Lizzie Salita"
+  role: "Customer Success Manager · paraphrased"
+  company: "Booz Allen Hamilton"
+  source: attributed
