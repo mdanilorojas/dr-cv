@@ -25,6 +25,9 @@ export interface Positioning {
     en: string;
     es: string;
   };
+  thesisBairesdev?: {
+    en: string;
+  };
   proofNumbers: Array<{
     value: string;      // e.g. "346"
     unit?: string;      // e.g. "+" or ".0"
@@ -51,9 +54,15 @@ export interface SkillAxis {
   groups: SkillGroup[];
 }
 
+export interface SkillInventoryItem {
+  skill: string;
+  years: string;
+}
+
 export interface Skills {
   byLayer: SkillAxis;
   byOutcome: SkillAxis;
+  inventory?: SkillInventoryItem[];
 }
 
 // ============= EXPERIENCE =============
