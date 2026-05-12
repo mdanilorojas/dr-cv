@@ -229,3 +229,67 @@ describe("loadLandingData", () => {
     expect(ld.landing.cta.en).toContain("Let");
   });
 });
+
+describe("validatePositioning — thesisBairesdev", () => {
+  it("accepts optional thesisBairesdev.en", () => {
+    const raw = {
+      thesis: { en: "a", es: "b" },
+      tagline: { en: "c", es: "d" },
+      thesisBairesdev: { en: "agentic forward" },
+      proofNumbers: [],
+    };
+    const tmpPath = path.join(fixtureBadDir, "positioning-with-bd.yaml");
+    mkdirSync(fixtureBadDir, { recursive: true });
+    writeFileSync(tmpPath, `thesis:
+  en: "a"
+  es: "b"
+tagline:
+  en: "c"
+  es: "d"
+thesisBairesdev:
+  en: "agentic forward"
+proofNumbers: []
+`);
+    try {
+      const positioning = loadAllData(dataDir).positioning;
+      expect(positioning).toBeDefined();
+    } finally {
+      unlinkSync(tmpPath);
+    }
+  });
+});
+
+describe("validateSkills — inventory", () => {
+  it("accepts a non-empty inventory list", () => {
+    const tmpPath = path.join(fixtureBadDir, "skills-with-inventory.yaml");
+    mkdirSync(fixtureBadDir, { recursive: true });
+    writeFileSync(tmpPath, `byLayer:
+  name: "L"
+  axis: "a"
+  groups: []
+byOutcome:
+  name: "O"
+  axis: "a"
+  groups: []
+inventory:
+  - skill: "UX/UI"
+    years: "10+"
+  - skill: "React"
+    years: "4+"
+`);
+    try {
+      const skills = loadSkills(tmpPath);
+      expect(skills.inventory).toBeDefined();
+      expect(skills.inventory!.length).toBe(2);
+      expect(skills.inventory![0]).toEqual({ skill: "UX/UI", years: "10+" });
+    } finally {
+      unlinkSync(tmpPath);
+    }
+  });
+
+  it("leaves inventory undefined when not present", () => {
+    const skillsPath = path.join(fixtureDir, "minimal-skills.yaml");
+    const skills = loadSkills(skillsPath);
+    expect(skills.inventory).toBeUndefined();
+  });
+});
