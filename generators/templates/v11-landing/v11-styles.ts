@@ -870,24 +870,104 @@ img { max-width: 100%; display: block; }
   margin: 0 0 40px;
   color: var(--v11-text);
 }
+
+/* Progress bar — segmented rail sits ABOVE tool rail and columns */
+.v11-horizon__progress {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  padding: 0 22px;
+  margin: 36px 0 16px;
+}
+.v11-horizon__seg {
+  height: 6px;
+  border-radius: 3px;
+  position: relative;
+}
+.v11-horizon__seg--earned {
+  background: var(--v11-signal-pos);
+  box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.32);
+}
+.v11-horizon__seg--investing {
+  background: var(--v11-accent);
+}
+.v11-horizon__seg--horizon {
+  background: transparent;
+  border: 1px dashed var(--v11-accent);
+}
+.v11-horizon__marker {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--v11-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  white-space: nowrap;
+  padding: 3px 10px;
+  background: var(--v11-accent-soft);
+  border: 1px solid var(--v11-accent-line);
+  border-radius: 3px;
+  font-weight: 600;
+}
+.v11-horizon__marker::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -4px;
+  border: 4px solid transparent;
+  border-top-color: var(--v11-accent);
+}
+
+/* Tool rail — neutral monochrome pills, canonical tool inventory */
+.v11-horizon__tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  margin-bottom: 8px;
+}
+.v11-horizon__tools-block {
+  padding: 14px 22px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: var(--v11-font-mono, "JetBrains Mono", ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+.v11-horizon__tools-block + .v11-horizon__tools-block {
+  border-left: 1px solid var(--v11-line);
+}
+.v11-horizon__tool {
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: var(--v11-bg-inset);
+  border: 1px solid var(--v11-line);
+  color: var(--v11-text-70);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+.v11-horizon__arrow {
+  color: var(--v11-text-40);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* Main grid — stage labels → headings → body → content chips */
 .v11-horizon__grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0;
-  position: relative;
-}
-.v11-horizon__grid::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 58px;
-  height: 1px;
-  background: linear-gradient(to right, transparent 0%, var(--v11-line-strong) 8%, var(--v11-line-strong) 92%, transparent 100%);
-  pointer-events: none;
 }
 .v11-horizon__col {
-  padding: 0 28px;
+  padding: 16px 22px 0;
   position: relative;
 }
 .v11-horizon__col + .v11-horizon__col {
@@ -899,22 +979,10 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--v11-text-50);
-  margin-bottom: 22px;
+  margin-bottom: 14px;
 }
-.v11-horizon__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--v11-bg-elevated);
-  border: 1px solid var(--v11-line-strong);
-  position: absolute;
-  left: 28px;
-  top: 54px;
-}
-.v11-horizon__col[data-emphasis="true"] .v11-horizon__dot {
-  background: var(--v11-accent);
-  border-color: var(--v11-accent);
-  box-shadow: 0 0 0 4px var(--v11-accent-soft);
+.v11-horizon__col[data-horizon-col='earned'] .v11-horizon__stage {
+  color: var(--v11-signal-pos);
 }
 .v11-horizon__col[data-emphasis="true"] .v11-horizon__stage {
   color: var(--v11-accent);
@@ -923,7 +991,7 @@ img { max-width: 100%; display: block; }
   font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.005em;
-  margin: 18px 0 10px;
+  margin: 0 0 10px;
   color: var(--v11-text);
 }
 .v11-horizon__body {
@@ -932,18 +1000,20 @@ img { max-width: 100%; display: block; }
   color: var(--v11-text-70);
   margin: 0 0 16px;
 }
+
+/* Content chips */
 .v11-horizon__chips {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0 4px;
 }
 .v11-horizon__chip {
   font-family: var(--v11-font-mono, "JetBrains Mono", ui-monospace, monospace);
   font-size: 11px;
-  padding: 4px 10px;
+  padding: 4px 10px 4px 8px;
   border-radius: 999px;
   background: var(--v11-bg-inset);
   color: var(--v11-text-70);
@@ -951,7 +1021,8 @@ img { max-width: 100%; display: block; }
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  line-height: 1;
 }
 a.v11-horizon__chip:hover,
 a.v11-horizon__chip:focus-visible {
@@ -962,11 +1033,25 @@ a.v11-horizon__chip:focus-visible {
 a.v11-horizon__chip:focus-visible {
   box-shadow: 0 0 0 3px var(--v11-accent-ring);
 }
+
+/* Earned chips — achieved milestones (green pill + inline check glyph) */
 [data-horizon-col='earned'] .v11-horizon__chip {
-  text-decoration: line-through;
-  text-decoration-color: var(--v11-text-40);
-  color: var(--v11-text-50);
-  cursor: default;
+  background: rgba(74, 222, 128, 0.14);
+  border-color: rgba(74, 222, 128, 0.32);
+  color: var(--v11-text);
+  text-decoration: none;
+}
+[data-horizon-col='earned'] .v11-horizon__chip::before {
+  content: "";
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--v11-signal-pos);
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.3 2.3 4.7-4.7' stroke='%230A0B0E' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 9px 9px;
 }
 [data-horizon-col='investing'] .v11-horizon__chip {
   background: var(--v11-accent-soft);
@@ -990,21 +1075,17 @@ a.v11-horizon__chip:focus-visible {
 }
 
 @media (max-width: 920px) {
+  .v11-horizon__progress { display: none; }
+  .v11-horizon__tools,
   .v11-horizon__grid {
     grid-template-columns: 1fr;
   }
-  .v11-horizon__grid::before {
-    display: none;
-  }
+  .v11-horizon__tools-block + .v11-horizon__tools-block,
   .v11-horizon__col + .v11-horizon__col {
     border-left: 0;
     border-top: 1px solid var(--v11-line);
-    margin-top: 24px;
-    padding-top: 24px;
-  }
-  .v11-horizon__dot {
-    top: -6px;
-    left: 0;
+    margin-top: 12px;
+    padding-top: 16px;
   }
 }
 `;

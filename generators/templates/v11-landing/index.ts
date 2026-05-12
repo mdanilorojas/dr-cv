@@ -501,7 +501,6 @@ function renderHorizonColumn(col: HorizonColumn, lang: Lang): string {
   const emphasisAttr = col.emphasis ? ' data-emphasis="true"' : "";
   const chips = col.chips.map((c) => renderHorizonChip(c, col.id, lang)).join("");
   return `<div class="v11-horizon__col" data-horizon-col="${escapeHtml(col.id)}"${emphasisAttr}>
-    <div class="v11-horizon__dot" aria-hidden="true"></div>
     <div class="v11-horizon__stage">${escapeHtml(stage)}</div>
     <h3 class="v11-horizon__heading">${escapeHtml(heading)}</h3>
     <p class="v11-horizon__body">${escapeHtml(body)}</p>
@@ -509,14 +508,48 @@ function renderHorizonColumn(col: HorizonColumn, lang: Lang): string {
   </div>`;
 }
 
+function renderHorizonProgress(columns: HorizonColumn[], lang: Lang): string {
+  const youAreHere = lang === "en" ? "You are here" : "Estás aquí";
+  const segs = columns
+    .map((col) => {
+      const marker = col.emphasis
+        ? `<span class="v11-horizon__marker">${escapeHtml(youAreHere)}</span>`
+        : "";
+      return `<div class="v11-horizon__seg v11-horizon__seg--${escapeHtml(col.id)}">${marker}</div>`;
+    })
+    .join("");
+  return `<div class="v11-horizon__progress" aria-hidden="true">${segs}</div>`;
+}
+
+function renderHorizonTools(columns: HorizonColumn[]): string {
+  const hasAnyTools = columns.some((c) => c.tools && c.tools.length > 0);
+  if (!hasAnyTools) return "";
+  const blocks = columns
+    .map((col) => {
+      const tools = col.tools ?? [];
+      const parts: string[] = [];
+      tools.forEach((t, idx) => {
+        if (idx > 0) parts.push(`<span class="v11-horizon__arrow">→</span>`);
+        parts.push(`<span class="v11-horizon__tool">${escapeHtml(t)}</span>`);
+      });
+      return `<div class="v11-horizon__tools-block" data-tools-for="${escapeHtml(col.id)}">${parts.join("")}</div>`;
+    })
+    .join("");
+  return `<div class="v11-horizon__tools" aria-hidden="true">${blocks}</div>`;
+}
+
 function renderHorizon(horizon: HorizonSection, lang: Lang): string {
   const eyebrow = lang === "en" ? horizon.eyebrow.en : horizon.eyebrow.es;
   const title = lang === "en" ? horizon.sectionTitle.en : horizon.sectionTitle.es;
+  const progress = renderHorizonProgress(horizon.columns, lang);
+  const tools = renderHorizonTools(horizon.columns);
   const columns = horizon.columns.map((c) => renderHorizonColumn(c, lang)).join("\n");
   return `<section class="v11-horizon" aria-labelledby="horizon-h">
   <div class="v11-container">
     <div class="v11-horizon__eyebrow">${escapeHtml(eyebrow)}</div>
     <h2 id="horizon-h" class="v11-horizon__title">${escapeHtml(title)}</h2>
+    ${progress}
+    ${tools}
     <div class="v11-horizon__grid" role="list">
 ${columns}
     </div>

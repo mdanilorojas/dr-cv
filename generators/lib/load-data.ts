@@ -483,12 +483,25 @@ function validateHorizon(raw: unknown): HorizonSection {
       }
       return { label, href, kind };
     });
+    let tools: string[] | undefined;
+    if (co.tools !== undefined) {
+      if (!Array.isArray(co.tools)) {
+        throw new Error(`horizon.columns[${i}].tools must be an array of strings`);
+      }
+      tools = co.tools.map((t, ti) => {
+        if (typeof t !== "string") {
+          throw new Error(`horizon.columns[${i}].tools[${ti}] must be a string`);
+        }
+        return t;
+      });
+    }
     return {
       id,
       stage: validateBilingual(co.stage, `horizon.columns[${i}].stage`),
       heading: validateBilingual(co.heading, `horizon.columns[${i}].heading`),
       body: validateBilingual(co.body, `horizon.columns[${i}].body`),
       emphasis: typeof co.emphasis === "boolean" ? co.emphasis : undefined,
+      tools,
       chips,
     };
   });

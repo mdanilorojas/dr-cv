@@ -194,6 +194,7 @@ export interface HorizonColumn {
   heading: { en: string; es: string };
   body: { en: string; es: string };
   emphasis?: boolean;      // true for the "investing" column
+  tools?: string[];        // pipeline tools for this stage (rendered as a neutral rail)
   chips: HorizonChip[];
 }
 

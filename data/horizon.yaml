@@ -17,6 +17,7 @@ columns:
     body:
       en: "15 years running the old pipeline: Figma → design system → components → tokens → prototypes → handoff to a developer. The craft is real. The handoff is now a commodity."
       es: "15 años corriendo el pipeline viejo: Figma → design system → componentes → tokens → prototipos → handoff a un desarrollador. El craft es real. El handoff ya es commodity."
+    tools: ["Figma", "DS", "Handoff"]
     chips:
       - label: { en: "Figma mastery",         es: "Dominio de Figma" }
       - label: { en: "Hand-coded UI",         es: "UI a mano" }
@@ -35,6 +36,7 @@ columns:
     body:
       en: "The new pipeline: Figma → Cloud Storybook → GitHub → ready for the user. No developer handoff in the middle — the agents ship the code, I ship the judgment that tells them what to build."
       es: "El pipeline nuevo: Figma → Cloud Storybook → GitHub → listo para el usuario. Sin handoff al developer en el medio — los agentes entregan el código, yo entrego el juicio que les dice qué construir."
+    tools: ["Hi-Fi Figma", "Storybook", "GitHub"]
     chips:
       - label: { en: "Agent orchestration",     es: "Orquestación de agentes" }
         href: "#case-enregla"
@@ -57,6 +59,7 @@ columns:
     body:
       en: "Embedded in a serious product team, owning the seam between design judgment and agentic execution — at a scale where one person's leverage becomes a team's."
       es: "Embebido en un equipo de producto serio, dueño de la costura entre juicio de diseño y ejecución agéntica — a una escala donde el leverage de una persona se convierte en el del equipo."
+    tools: ["Team", "Agent tooling", "Eval-driven"]
     chips:
       - label: { en: "Team-scale agent tooling", es: "Tooling a escala de equipo" }
         href: "https://github.com/mdanilorojas/dr-cv"
