@@ -5,6 +5,7 @@ import { renderSkillsSidebar } from "./components/skills-sidebar.js";
 import { renderExperienceItem } from "./components/experience-item.js";
 import { renderCaseCard } from "./components/case-card.js";
 import { renderEducationBlock } from "./components/education-block.js";
+import { renderSkillsInventory } from "./components/skills-inventory.js";
 
 const BAIRESDEV_TOKENS = `
 :root {
@@ -408,6 +409,55 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   position: absolute; left: 0;
   color: var(--ink-subtle);
 }
+
+/* ============== skills inventory ============== */
+.cv-inventory { margin-top: 6mm; }
+.cv-inventory__heading {
+  font-family: var(--font-mono);
+  font-size: 7.5pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 3mm 0;
+  padding-bottom: 2mm;
+  border-bottom: 1px solid var(--ink);
+  font-weight: 600;
+}
+.cv-inventory__heading::before {
+  content: "// ";
+  color: var(--ink-subtle);
+  font-weight: 400;
+}
+.cv-inventory__grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 4mm;
+  row-gap: 1.2mm;
+}
+.cv-inventory__row {
+  display: contents;
+}
+.cv-inventory__skill {
+  font-family: var(--font-body);
+  font-size: 7.8pt;
+  color: var(--ink);
+  letter-spacing: 0;
+  padding: 0.8mm 0;
+  border-top: 1px solid var(--line-soft);
+}
+.cv-inventory__years {
+  font-family: var(--font-mono);
+  font-size: 7pt;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  text-align: right;
+  padding: 0.8mm 0;
+  border-top: 1px solid var(--line-soft);
+}
+.cv-inventory__grid > .cv-inventory__row:first-child .cv-inventory__skill,
+.cv-inventory__grid > .cv-inventory__row:first-child .cv-inventory__years {
+  border-top: 0;
+}
 `;
 
 function renderSummaryBairesdev(thesisEn: string): string {
@@ -459,7 +509,7 @@ ${BAIRESDEV_STYLES}
   ${renderSkillsSidebar(data.skills, { variant: "bairesdev", lang })}
 
   <div class="cv-right">
-    ${renderSummaryBairesdev(data.positioning.thesis.en)}
+    ${renderSummaryBairesdev(data.positioning.thesisBairesdev?.en ?? data.positioning.thesis.en)}
 
     <section class="cv-section">
       <h3 class="cv-section__heading">Experience Highlights</h3>
@@ -476,6 +526,9 @@ ${BAIRESDEV_STYLES}
 <article class="cv-page">
   <aside>
     ${renderEducationBlock(data.education, lang)}
+    ${data.skills.inventory && data.skills.inventory.length > 0
+      ? renderSkillsInventory(data.skills.inventory, lang)
+      : ""}
   </aside>
 
   <div class="cv-right">
