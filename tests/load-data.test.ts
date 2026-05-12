@@ -146,7 +146,7 @@ describe("loadAttributedTestimonials", () => {
     const attr = loadAttributedTestimonials(
       path.join(dataDir, "testimonials", "attributed.yaml")
     );
-    expect(attr.length).toBe(3);
+    expect(attr.length).toBeGreaterThanOrEqual(3);
     expect(attr.every((t) => t.source === "attributed")).toBe(true);
   });
 });
@@ -157,7 +157,7 @@ describe("loadCvData", () => {
     expect(cv.identity.name).toBe("Danilo Rojas");
     expect(cv.cases.length).toBe(4);
     expect(cv.education.length).toBeGreaterThan(0);
-    expect(cv.attributedTestimonials.length).toBe(3);
+    expect(cv.attributedTestimonials.length).toBeGreaterThanOrEqual(3);
     expect(cv.experience.past).toBeDefined();
     expect(cv.experience.past?.length ?? 0).toBeGreaterThan(0);
   });

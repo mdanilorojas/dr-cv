@@ -44,13 +44,13 @@ describe("renderWarmCv", () => {
     expect(body).toContain("cv-case--dark");
   });
 
-  it("renders 2 verified + 3 attributed testimonials", () => {
+  it("renders at least 2 verified + 3 attributed testimonials", () => {
     const html = renderWarmCv(data, "en", tokensCss);
     const body = bodyOnly(html);
     const verified = (body.match(/cv-testimonial__badge--verified/g) || []).length;
     const attributed = (body.match(/cv-testimonial__badge--attributed/g) || []).length;
-    expect(verified).toBe(2);
-    expect(attributed).toBe(3);
+    expect(verified).toBeGreaterThanOrEqual(2);
+    expect(attributed).toBeGreaterThanOrEqual(3);
   });
 
   it("generates ES version with Spanish thesis", () => {

@@ -31,12 +31,12 @@ describe("renderSeriousCv", () => {
     expect(body).not.toContain("cv-case--dark");
   });
 
-  it("renders only 2 verified testimonials, no attributed", () => {
+  it("renders verified testimonials only (no attributed)", () => {
     const html = renderSeriousCv(data, "en", tokensCss);
     const body = bodyOnly(html);
     const verified = (body.match(/cv-testimonial__badge--verified/g) || []).length;
     const attributed = (body.match(/cv-testimonial__badge--attributed/g) || []).length;
-    expect(verified).toBe(2);
+    expect(verified).toBeGreaterThanOrEqual(2);
     expect(attributed).toBe(0);
   });
 

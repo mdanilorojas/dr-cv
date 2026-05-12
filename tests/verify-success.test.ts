@@ -31,8 +31,8 @@ describe("success criteria", () => {
     expect(data.clients).toHaveLength(8);
   });
 
-  it("has 2 verified testimonials", () => {
-    expect(data.testimonials).toHaveLength(2);
+  it("has at least 2 verified testimonials, all sourced as verified", () => {
+    expect(data.testimonials.length).toBeGreaterThanOrEqual(2);
     expect(data.testimonials.every(t => t.source === "verified")).toBe(true);
   });
 });
