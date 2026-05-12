@@ -410,8 +410,8 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   color: var(--ink-subtle);
 }
 
-/* ============== skills inventory ============== */
-.cv-inventory { margin-top: 6mm; }
+/* ============== skills inventory (2-col, renders in main column of page 2) ============== */
+.cv-inventory { margin-top: 4mm; }
 .cv-inventory__heading {
   font-family: var(--font-mono);
   font-size: 7.5pt;
@@ -430,28 +430,28 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
 }
 .cv-inventory__grid {
   display: grid;
-  grid-template-columns: 1fr auto;
-  column-gap: 4mm;
-  row-gap: 1.2mm;
+  grid-template-columns: 1fr auto 1fr auto;
+  column-gap: 6mm;
+  row-gap: 0.6mm;
 }
 .cv-inventory__row {
   display: contents;
 }
 .cv-inventory__skill {
   font-family: var(--font-body);
-  font-size: 7.8pt;
+  font-size: 8pt;
   color: var(--ink);
   letter-spacing: 0;
-  padding: 0.8mm 0;
+  padding: 0.6mm 0;
   border-top: 1px solid var(--line-soft);
 }
 .cv-inventory__years {
   font-family: var(--font-mono);
-  font-size: 7pt;
+  font-size: 7.5pt;
   color: var(--ink-muted);
   letter-spacing: 0.04em;
   text-align: right;
-  padding: 0.8mm 0;
+  padding: 0.6mm 0;
   border-top: 1px solid var(--line-soft);
 }
 .cv-inventory__grid > .cv-inventory__row:first-child .cv-inventory__skill,
@@ -526,9 +526,6 @@ ${BAIRESDEV_STYLES}
 <article class="cv-page">
   <aside>
     ${renderEducationBlock(data.education, lang)}
-    ${data.skills.inventory && data.skills.inventory.length > 0
-      ? renderSkillsInventory(data.skills.inventory, lang)
-      : ""}
   </aside>
 
   <div class="cv-right">
@@ -547,6 +544,10 @@ ${BAIRESDEV_STYLES}
         <li>Xentinels · DesignOps Lead</li>
       </ul>
     </section>
+
+    ${data.skills.inventory && data.skills.inventory.length > 0
+      ? renderSkillsInventory(data.skills.inventory, lang)
+      : ""}
   </div>
 </article>
 
