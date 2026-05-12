@@ -96,9 +96,21 @@ export function validateSkills(raw: unknown): Skills {
       }),
     };
   };
+  const inventoryRaw = obj.inventory;
+  let inventory: Skills["inventory"] = undefined;
+  if (inventoryRaw !== undefined && inventoryRaw !== null) {
+    inventory = requireArray(inventoryRaw, "skills.inventory", (it, i) => {
+      const io = requireObject(it, `skills.inventory[${i}]`);
+      return {
+        skill: requireString(io.skill, `skills.inventory[${i}].skill`),
+        years: requireString(io.years, `skills.inventory[${i}].years`),
+      };
+    });
+  }
   return {
     byLayer: validateAxis(obj.byLayer, "byLayer"),
     byOutcome: validateAxis(obj.byOutcome, "byOutcome"),
+    inventory,
   };
 }
 
@@ -122,10 +134,18 @@ function validateIdentity(raw: unknown): Identity {
   };
 }
 
-function validatePositioning(raw: unknown): Positioning {
+export function validatePositioning(raw: unknown): Positioning {
   const o = requireObject(raw, "positioning");
   const th = requireObject(o.thesis, "positioning.thesis");
   const tg = requireObject(o.tagline, "positioning.tagline");
+  const tb = o.thesisBairesdev;
+  let thesisBairesdev: Positioning["thesisBairesdev"] = undefined;
+  if (tb !== undefined && tb !== null) {
+    const tbo = requireObject(tb, "positioning.thesisBairesdev");
+    thesisBairesdev = {
+      en: requireString(tbo.en, "positioning.thesisBairesdev.en"),
+    };
+  }
   return {
     thesis: {
       en: requireString(th.en, "positioning.thesis.en"),
@@ -135,6 +155,7 @@ function validatePositioning(raw: unknown): Positioning {
       en: requireString(tg.en, "positioning.tagline.en"),
       es: requireString(tg.es, "positioning.tagline.es"),
     },
+    thesisBairesdev,
     proofNumbers: requireArray(o.proofNumbers, "positioning.proofNumbers", (p, i) => {
       const po = requireObject(p, `positioning.proofNumbers[${i}]`);
       return {

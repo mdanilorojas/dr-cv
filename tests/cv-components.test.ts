@@ -364,3 +364,77 @@ describe("renderEducationBlock", () => {
     expect(html).toContain("—");
   });
 });
+
+import { renderSkillsInventory } from "../generators/templates/cv/components/skills-inventory.js";
+
+describe("renderSkillsInventory", () => {
+  const items = [
+    { skill: "UX/UI", years: "10+" },
+    { skill: "React", years: "4+" },
+    { skill: "Supabase", years: "2+" },
+  ];
+
+  it("renders an EN heading 'Skills Inventory'", () => {
+    const html = renderSkillsInventory(items, "en");
+    expect(html).toContain("Skills Inventory");
+  });
+
+  it("renders an ES heading 'Inventario de skills'", () => {
+    const html = renderSkillsInventory(items, "es");
+    expect(html).toContain("Inventario de skills");
+  });
+
+  it("emits one row per item with skill and years", () => {
+    const html = renderSkillsInventory(items, "en");
+    expect(html).toContain("UX/UI");
+    expect(html).toContain("10+");
+    expect(html).toContain("React");
+    expect(html).toContain("4+");
+    expect(html).toContain("Supabase");
+    expect(html).toContain("2+");
+  });
+
+  it("wraps output in <section class=\"cv-inventory\">", () => {
+    const html = renderSkillsInventory(items, "en");
+    expect(html).toMatch(/<section\s+class="cv-inventory/);
+  });
+
+  it("escapes HTML-sensitive characters in skill names", () => {
+    const hostile = [{ skill: "<script>", years: "1+" }];
+    const html = renderSkillsInventory(hostile, "en");
+    expect(html).not.toContain("<script>");
+    expect(html).toContain("&lt;script&gt;");
+  });
+});
+
+import { loadCvData } from "../generators/lib/load-data.js";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+describe("renderSkillsSidebar — bairesdev ordering", () => {
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  const dataDir = path.join(here, "..", "data");
+  const data = loadCvData(dataDir);
+
+  it("puts the Agents group first for the bairesdev variant", () => {
+    const html = renderSkillsSidebar(data.skills, { variant: "bairesdev", lang: "en" });
+    const agentsIdx = html.indexOf("Agents");
+    const designIdx = html.indexOf("Design");
+    const engineeringIdx = html.indexOf("Engineering");
+    const strategyIdx = html.indexOf("Strategy");
+    expect(agentsIdx).toBeGreaterThan(-1);
+    expect(designIdx).toBeGreaterThan(-1);
+    expect(engineeringIdx).toBeGreaterThan(-1);
+    expect(strategyIdx).toBeGreaterThan(-1);
+    expect(agentsIdx).toBeLessThan(designIdx);
+    expect(designIdx).toBeLessThan(engineeringIdx);
+    expect(engineeringIdx).toBeLessThan(strategyIdx);
+  });
+
+  it("keeps the original Strategy-first order for warm and serious variants", () => {
+    const htmlWarm = renderSkillsSidebar(data.skills, { variant: "warm", lang: "en" });
+    const strategyIdx = htmlWarm.indexOf("Strategy");
+    const agentsIdx = htmlWarm.indexOf("Agents");
+    expect(strategyIdx).toBeLessThan(agentsIdx);
+  });
+});

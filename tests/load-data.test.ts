@@ -10,6 +10,8 @@ import {
   loadLanding,
   loadLandingData,
   DataLoadError,
+  validateSkills,
+  validatePositioning,
 } from "../generators/lib/load-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -227,5 +229,90 @@ describe("loadLandingData", () => {
     expect(ld.cases.length).toBe(4);
     expect(ld.landing.tabs).toHaveLength(5);
     expect(ld.landing.cta.en).toContain("Let");
+  });
+});
+
+describe("validatePositioning — thesisBairesdev", () => {
+  it("accepts optional thesisBairesdev.en", () => {
+    const raw = {
+      thesis: { en: "a", es: "b" },
+      tagline: { en: "c", es: "d" },
+      thesisBairesdev: { en: "agentic forward" },
+      proofNumbers: [],
+    };
+    const v = validatePositioning(raw);
+    expect(v.thesisBairesdev).toBeDefined();
+    expect(v.thesisBairesdev!.en).toBe("agentic forward");
+  });
+
+  it("leaves thesisBairesdev undefined when not present", () => {
+    const raw = {
+      thesis: { en: "a", es: "b" },
+      tagline: { en: "c", es: "d" },
+      proofNumbers: [],
+    };
+    const v = validatePositioning(raw);
+    expect(v.thesisBairesdev).toBeUndefined();
+  });
+});
+
+describe("validateSkills — inventory", () => {
+  it("accepts a non-empty inventory list", () => {
+    const tmpPath = path.join(fixtureBadDir, "skills-with-inventory.yaml");
+    mkdirSync(fixtureBadDir, { recursive: true });
+    writeFileSync(tmpPath, `byLayer:
+  name: "L"
+  axis: "a"
+  groups: []
+byOutcome:
+  name: "O"
+  axis: "a"
+  groups: []
+inventory:
+  - skill: "UX/UI"
+    years: "10+"
+  - skill: "React"
+    years: "4+"
+`);
+    try {
+      const skills = loadSkills(tmpPath);
+      expect(skills.inventory).toBeDefined();
+      expect(skills.inventory!.length).toBe(2);
+      expect(skills.inventory![0]).toEqual({ skill: "UX/UI", years: "10+" });
+    } finally {
+      unlinkSync(tmpPath);
+    }
+  });
+
+  it("leaves inventory undefined when not present", () => {
+    const skillsPath = path.join(fixtureDir, "minimal-skills.yaml");
+    const skills = loadSkills(skillsPath);
+    expect(skills.inventory).toBeUndefined();
+  });
+});
+
+describe("loadCvData — inventory round-trip", () => {
+  it("data/skills.yaml exposes a non-empty inventory", () => {
+    const here = path.dirname(fileURLToPath(import.meta.url));
+    const dataDir = path.join(here, "..", "data");
+    const cv = loadCvData(dataDir);
+    expect(cv.skills.inventory).toBeDefined();
+    expect(cv.skills.inventory!.length).toBeGreaterThanOrEqual(20);
+    const uxui = cv.skills.inventory!.find((i) => i.skill === "UX/UI");
+    expect(uxui).toBeDefined();
+    expect(uxui!.years).toBe("10+");
+  });
+});
+
+describe("loadCvData — thesisBairesdev round-trip", () => {
+  it("data/positioning.yaml exposes thesisBairesdev.en starting with 'Agentic Designer.'", () => {
+    const here = path.dirname(fileURLToPath(import.meta.url));
+    const dataDir = path.join(here, "..", "data");
+    const cv = loadCvData(dataDir);
+    expect(cv.positioning.thesisBairesdev).toBeDefined();
+    expect(cv.positioning.thesisBairesdev!.en.startsWith("Agentic Designer."))
+      .toBe(true);
+    expect(cv.positioning.thesisBairesdev!.en).toContain("15 years");
+    expect(cv.positioning.thesisBairesdev!.en).toContain("agents as force multiplier");
   });
 });

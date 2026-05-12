@@ -55,4 +55,38 @@ describe("renderBairesdevCv", () => {
     expect(html).toContain("Professional Summary");
     expect(html).toContain("Education");
   });
+
+  it("renders the agentic-forward thesis (not the generic one)", () => {
+    const html = renderBairesdevCv(data);
+    expect(html).toContain("Agentic Designer.");
+    expect(html).toContain("15 years delivering product");
+    expect(html).toContain("agents as force multiplier");
+    expect(html).not.toContain("I ship real products — and I ship the tools");
+  });
+
+  it("renders a skills inventory section with ≥ 20 rows", () => {
+    const html = renderBairesdevCv(data);
+    expect(html).toMatch(/<section\s+class="cv-inventory/);
+    const rowMatches = html.match(/class="cv-inventory__row"/g) ?? [];
+    expect(rowMatches.length).toBeGreaterThanOrEqual(20);
+  });
+
+  it("renders the inventory section INSIDE page 2 (after the second <article>)", () => {
+    const html = renderBairesdevCv(data);
+    const pageBoundaries = [...html.matchAll(/<article class="cv-page"/g)].map((m) => m.index ?? -1);
+    expect(pageBoundaries.length).toBe(2);
+    const inventoryIdx = html.indexOf('class="cv-inventory');
+    expect(inventoryIdx).toBeGreaterThan(pageBoundaries[1]);
+  });
+
+  it("puts Agents group before Design group in the sidebar", () => {
+    const html = renderBairesdevCv(data);
+    const agentsGroupMatch = html.match(/<h4 class="cv-skills__group-title">Agents<\/h4>/);
+    const designGroupMatch = html.match(/<h4 class="cv-skills__group-title">Design<\/h4>/);
+    expect(agentsGroupMatch).toBeTruthy();
+    expect(designGroupMatch).toBeTruthy();
+    const agentsIdx = agentsGroupMatch!.index!;
+    const designIdx = designGroupMatch!.index!;
+    expect(agentsIdx).toBeLessThan(designIdx);
+  });
 });
