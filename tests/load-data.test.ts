@@ -303,3 +303,16 @@ describe("loadCvData — inventory round-trip", () => {
     expect(uxui!.years).toBe("10+");
   });
 });
+
+describe("loadCvData — thesisBairesdev round-trip", () => {
+  it("data/positioning.yaml exposes thesisBairesdev.en starting with 'Agentic Designer.'", () => {
+    const here = path.dirname(fileURLToPath(import.meta.url));
+    const dataDir = path.join(here, "..", "data");
+    const cv = loadCvData(dataDir);
+    expect(cv.positioning.thesisBairesdev).toBeDefined();
+    expect(cv.positioning.thesisBairesdev!.en.startsWith("Agentic Designer."))
+      .toBe(true);
+    expect(cv.positioning.thesisBairesdev!.en).toContain("15 years");
+    expect(cv.positioning.thesisBairesdev!.en).toContain("agents as force multiplier");
+  });
+});

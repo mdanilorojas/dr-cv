@@ -20,3 +20,6 @@ proofNumbers:
     unit: ".6"
     labelEn: "DS migration score"
     labelEs: "Score migración DS"
+
+thesisBairesdev:
+  en: "Agentic Designer. 15 years delivering product — today I ship SaaS, design systems, and frontend with agents as force multiplier."
