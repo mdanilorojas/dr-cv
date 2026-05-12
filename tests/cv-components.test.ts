@@ -406,3 +406,35 @@ describe("renderSkillsInventory", () => {
     expect(html).toContain("&lt;script&gt;");
   });
 });
+
+import { loadCvData } from "../generators/lib/load-data.js";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+describe("renderSkillsSidebar — bairesdev ordering", () => {
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  const dataDir = path.join(here, "..", "data");
+  const data = loadCvData(dataDir);
+
+  it("puts the Agents group first for the bairesdev variant", () => {
+    const html = renderSkillsSidebar(data.skills, { variant: "bairesdev", lang: "en" });
+    const agentsIdx = html.indexOf("Agents");
+    const designIdx = html.indexOf("Design");
+    const engineeringIdx = html.indexOf("Engineering");
+    const strategyIdx = html.indexOf("Strategy");
+    expect(agentsIdx).toBeGreaterThan(-1);
+    expect(designIdx).toBeGreaterThan(-1);
+    expect(engineeringIdx).toBeGreaterThan(-1);
+    expect(strategyIdx).toBeGreaterThan(-1);
+    expect(agentsIdx).toBeLessThan(designIdx);
+    expect(designIdx).toBeLessThan(engineeringIdx);
+    expect(engineeringIdx).toBeLessThan(strategyIdx);
+  });
+
+  it("keeps the original Strategy-first order for warm and serious variants", () => {
+    const htmlWarm = renderSkillsSidebar(data.skills, { variant: "warm", lang: "en" });
+    const strategyIdx = htmlWarm.indexOf("Strategy");
+    const agentsIdx = htmlWarm.indexOf("Agents");
+    expect(strategyIdx).toBeLessThan(agentsIdx);
+  });
+});

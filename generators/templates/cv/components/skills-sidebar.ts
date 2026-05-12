@@ -21,11 +21,28 @@ function renderGroup(group: SkillGroup): string {
     </div>`;
 }
 
+const BAIRESDEV_ORDER = ["Agents", "Design", "Engineering", "Strategy"] as const;
+
 export function renderSkillsSidebar(skills: Skills, options: SkillsSidebarOptions): string {
-  // CVs intentionally render only `byLayer` (Strategy / Design / Engineering / Agents).
-  // `byOutcome` (Discovery / Build / Ship / Scale) is the alternate view used by the
+  // CVs intentionally render only byLayer (Strategy / Design / Engineering / Agents).
+  // byOutcome (Discovery / Build / Ship / Scale) is the alternate view used by the
   // skills sheet; including both in the 62mm CV sidebar would overflow A4.
-  const groups = skills.byLayer.groups.map(renderGroup).join("\n");
+  const sourceGroups = skills.byLayer.groups;
+
+  let orderedGroups: SkillGroup[];
+  if (options.variant === "bairesdev") {
+    orderedGroups = BAIRESDEV_ORDER
+      .map((title) => sourceGroups.find((g) => g.title === title))
+      .filter((g): g is SkillGroup => g !== undefined);
+    // Append any extra groups not in the explicit order (defensive)
+    for (const g of sourceGroups) {
+      if (!orderedGroups.includes(g)) orderedGroups.push(g);
+    }
+  } else {
+    orderedGroups = sourceGroups;
+  }
+
+  const groups = orderedGroups.map(renderGroup).join("\n");
   const heading = options.lang === "en" ? "Skills" : "Habilidades";
   return `
 <aside class="cv-skills cv-skills--${options.variant}">
