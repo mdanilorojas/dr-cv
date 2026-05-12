@@ -14,8 +14,12 @@ let htmlEs: string;
 beforeAll(() => {
   const data = loadLandingData(DATA_DIR);
   const tokensCss = readFileSync(TOKENS_PATH, "utf8");
-  htmlEn = renderV11Landing(data, "en", tokensCss);
-  htmlEs = renderV11Landing(data, "es", tokensCss);
+  const assets = {
+    photoHref: "assets/photo/danilo.jpg",
+    ogImageUrl: "https://danilorojas.design/og.png",
+  };
+  htmlEn = renderV11Landing(data, "en", tokensCss, assets);
+  htmlEs = renderV11Landing(data, "es", tokensCss, assets);
 });
 
 describe("v11 horizon timeline — placement", () => {

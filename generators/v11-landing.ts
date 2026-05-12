@@ -1,17 +1,21 @@
-import { readFileSync, mkdirSync } from "node:fs";
+import { readFileSync, mkdirSync, copyFileSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadLandingData } from "./lib/load-data.js";
 import { renderV11Landing } from "./templates/v11-landing/index.js";
+import { renderOgCardHtml } from "./templates/v11-landing/og-card.js";
+import { renderOgImage } from "./lib/render-og.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, "..");
 const dataDir = path.join(projectRoot, "data");
 const tokensPath = path.join(projectRoot, "design-system", "tokens-v11.css");
 const distDir = path.join(projectRoot, "dist", "landing-v11");
+const photoSrc = path.join(projectRoot, "assets", "photo", "danilo.jpg");
 
 const MAX_HTML_BYTES = 400_000;
+const SITE_ORIGIN = "https://danilorojas.design";
 
 async function emit(relPath: string, html: string): Promise<void> {
   if (html.length > MAX_HTML_BYTES) {
@@ -21,6 +25,30 @@ async function emit(relPath: string, html: string): Promise<void> {
   mkdirSync(path.dirname(fullPath), { recursive: true });
   await writeFile(fullPath, html);
   console.log(`[v11-landing] wrote ${fullPath} (${html.length} bytes)`);
+}
+
+async function copyPhoto(): Promise<string> {
+  const photoDestDir = path.join(distDir, "assets", "photo");
+  const photoDest = path.join(photoDestDir, "danilo.jpg");
+  mkdirSync(photoDestDir, { recursive: true });
+  copyFileSync(photoSrc, photoDest);
+  console.log(`[v11-landing] copied photo → ${photoDest}`);
+  return photoDest;
+}
+
+async function buildOgImage(): Promise<void> {
+  const photoBytes = readFileSync(photoSrc);
+  const photoDataUrl = `data:image/jpeg;base64,${photoBytes.toString("base64")}`;
+  const cardHtml = renderOgCardHtml({
+    photoDataUrl,
+    name: "Danilo Rojas",
+    role: "Agentic Designer · Product Engineer",
+    tagline: "A point of view on agentic design, not a résumé.",
+    domain: "danilorojas.design",
+  });
+  const outputPath = path.join(distDir, "og.png");
+  await renderOgImage({ html: cardHtml, outputPath });
+  console.log(`[v11-landing] wrote OG image → ${outputPath}`);
 }
 
 async function main(): Promise<void> {
@@ -33,8 +61,25 @@ async function main(): Promise<void> {
 
   mkdirSync(distDir, { recursive: true });
 
-  await emit("index.html", renderV11Landing(data, "en", tokensCss));
-  await emit(path.join("es", "index.html"), renderV11Landing(data, "es", tokensCss));
+  await copyPhoto();
+  await buildOgImage();
+
+  const ogImageUrl = `${SITE_ORIGIN}/og.png`;
+
+  await emit(
+    "index.html",
+    renderV11Landing(data, "en", tokensCss, {
+      photoHref: "assets/photo/danilo.jpg",
+      ogImageUrl,
+    }),
+  );
+  await emit(
+    path.join("es", "index.html"),
+    renderV11Landing(data, "es", tokensCss, {
+      photoHref: "../assets/photo/danilo.jpg",
+      ogImageUrl,
+    }),
+  );
 
   console.log("[v11-landing] done.");
 }

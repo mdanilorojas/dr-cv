@@ -205,15 +205,34 @@ img { max-width: 100%; display: block; }
 @media (min-width: 960px) {
   .v11-hero__grid { grid-template-columns: 6fr 6fr; }
 }
+.v11-hero__byline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: var(--v11-s-5);
+}
+.v11-hero__avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 6px 22px rgba(0, 0, 0, 0.45);
+  flex-shrink: 0;
+  display: block;
+}
+@media (max-width: 720px) {
+  .v11-hero__avatar { width: 88px; height: 88px; }
+}
 .v11-hero__eyebrow {
   font-family: var(--v11-font-mono);
   font-size: var(--v11-fs-micro);
   color: var(--v11-accent);
   letter-spacing: var(--v11-track-code);
   text-transform: uppercase;
-  margin-bottom: var(--v11-s-5);
+  margin-bottom: 0;
 }
-.v11-hero__eyebrow::before { content: "// "; color: var(--v11-text-subtle); }
+.v11-hero__byline .v11-hero__eyebrow::before { content: ""; }
 .v11-hero__title {
   font-family: var(--v11-font-display);
   font-size: var(--v11-fs-hero);
@@ -449,6 +468,43 @@ img { max-width: 100%; display: block; }
 }
 .v11-notebook__toc a { color: var(--v11-paper-ink); }
 .v11-notebook__toc a:hover { color: var(--v11-accent-deep); }
+.v11-notebook__byline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: var(--v11-s-5) 0 var(--v11-s-6);
+  padding: var(--v11-s-4) 0;
+  border-top: 1px solid rgba(11, 12, 14, 0.12);
+  border-bottom: 1px solid rgba(11, 12, 14, 0.12);
+}
+.v11-notebook__byline-photo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+  flex-shrink: 0;
+  display: block;
+}
+.v11-notebook__byline-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.v11-notebook__byline-name {
+  font-family: var(--v11-font-serif);
+  font-size: 15px;
+  color: var(--v11-paper-ink);
+  letter-spacing: -0.005em;
+}
+.v11-notebook__byline-name strong { font-weight: 600; }
+.v11-notebook__byline-sub {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  color: var(--v11-paper-muted);
+}
 
 /* ============== WORK / CASE CARDS ============== */
 .v11-work {
