@@ -129,6 +129,7 @@ export interface Case {
   bulletsEs: string[];
   stack: string[];             // short tech tags
   featured: boolean;           // if true, can be rendered as the featured card
+  animation?: string;          // optional animation slug (matches assets/animations/<slug>/)
 }
 
 // ============= EDUCATION =============

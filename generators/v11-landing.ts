@@ -1,9 +1,10 @@
-import { readFileSync, mkdirSync, copyFileSync } from "node:fs";
+import { readFileSync, mkdirSync, copyFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadLandingData } from "./lib/load-data.js";
 import { renderV11Landing } from "./templates/v11-landing/index.js";
+import { renderCaseDetailPage } from "./templates/v11-landing/case-detail.js";
 import { renderOgCardHtml } from "./templates/v11-landing/og-card.js";
 import { renderOgImage } from "./lib/render-og.js";
 
@@ -36,6 +37,26 @@ async function copyPhoto(): Promise<string> {
   return photoDest;
 }
 
+function copyAnimationAssets(): void {
+  const src = path.join(projectRoot, "assets", "animations");
+  if (!existsSync(src)) return;
+  const destRoot = path.join(distDir, "assets", "animations");
+  function recurse(from: string, to: string): void {
+    mkdirSync(to, { recursive: true });
+    for (const entry of readdirSync(from)) {
+      const fromPath = path.join(from, entry);
+      const toPath = path.join(to, entry);
+      if (statSync(fromPath).isDirectory()) {
+        recurse(fromPath, toPath);
+      } else {
+        copyFileSync(fromPath, toPath);
+      }
+    }
+  }
+  recurse(src, destRoot);
+  console.log(`[v11-landing] copied animation assets → ${destRoot}`);
+}
+
 async function buildOgImage(): Promise<void> {
   const photoBytes = readFileSync(photoSrc);
   const photoDataUrl = `data:image/jpeg;base64,${photoBytes.toString("base64")}`;
@@ -62,6 +83,7 @@ async function main(): Promise<void> {
   mkdirSync(distDir, { recursive: true });
 
   await copyPhoto();
+  copyAnimationAssets();
   await buildOgImage();
 
   const ogImageUrl = `${SITE_ORIGIN}/og.png`;
@@ -80,6 +102,32 @@ async function main(): Promise<void> {
       ogImageUrl,
     }),
   );
+
+  // Per-case detail pages (EN + ES).
+  for (const c of data.cases) {
+    const enPath = path.join("work", c.slug, "index.html");
+    const esPath = path.join("es", "work", c.slug, "index.html");
+    await emit(
+      enPath,
+      renderCaseDetailPage({
+        data,
+        caseData: c,
+        lang: "en",
+        tokensCss,
+        assets: { photoHref: "../../assets/photo/danilo.jpg", ogImageUrl },
+      }),
+    );
+    await emit(
+      esPath,
+      renderCaseDetailPage({
+        data,
+        caseData: c,
+        lang: "es",
+        tokensCss,
+        assets: { photoHref: "../../../assets/photo/danilo.jpg", ogImageUrl },
+      }),
+    );
+  }
 
   console.log("[v11-landing] done.");
 }

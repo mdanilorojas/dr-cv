@@ -66,5 +66,19 @@ export const V11_SCRIPT = `
     }, { threshold: 0.12 });
     document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
   }
+
+  /* case animations — play when in viewport, pause when leaving */
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var animIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          en.target.classList.add('is-playing');
+        } else {
+          en.target.classList.remove('is-playing');
+        }
+      });
+    }, { threshold: 0.35, rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll('[data-animate]').forEach(function(el){ animIo.observe(el); });
+  }
 })();
 `;

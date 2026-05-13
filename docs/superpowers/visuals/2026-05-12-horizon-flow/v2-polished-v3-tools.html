@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Horizon · tool rail · 5 variantes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --v11-bg-primary: #0A0B0E;
+  --v11-bg-alt: #111318;
+  --v11-bg-elevated: #14161C;
+  --v11-bg-inset: #0D0F13;
+  --v11-text: #F4F4F5;
+  --v11-text-70: #B0B2B7;
+  --v11-text-50: #797D86;
+  --v11-text-40: #61656B;
+  --v11-accent: #FF8964;
+  --v11-accent-soft: rgba(255, 137, 100, 0.14);
+  --v11-accent-line: rgba(255, 137, 100, 0.28);
+  --v11-signal-pos: #4ADE80;
+  --v11-signal-warn: #E5A84B;
+  --v11-line: rgba(255, 255, 255, 0.08);
+  --v11-line-strong: rgba(255, 255, 255, 0.18);
+  --v11-font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --green: var(--v11-signal-pos);
+  --green-soft: rgba(74, 222, 128, 0.14);
+  --green-line: rgba(74, 222, 128, 0.32);
+}
+
+html, body {
+  margin: 0;
+  background: var(--v11-bg-primary);
+  color: var(--v11-text);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 32px 96px;
+}
+.page__kicker {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin: 0 0 12px;
+}
+.page__title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+}
+.page__lead {
+  font-size: 14px;
+  color: var(--v11-text-70);
+  margin: 0 0 32px;
+  max-width: 820px;
+}
+
+.variant {
+  background: var(--v11-bg-alt);
+  border: 1px solid var(--v11-line);
+  border-radius: 8px;
+  padding: 28px 0 0;
+  margin: 0 0 32px;
+  overflow: hidden;
+}
+.variant__head {
+  padding: 0 28px 24px;
+  border-bottom: 1px solid var(--v11-line);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.variant__id {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  background: var(--v11-accent-soft);
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+.variant__name {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  flex: 1 1 auto;
+}
+.variant__hook {
+  font-size: 13px;
+  color: var(--v11-text-70);
+  margin: 6px 0 0;
+  flex: 1 1 100%;
+}
+.variant__demo { padding: 48px 0; }
+
+/* ================================================================
+ * SHARED HORIZON SECTION PRIMITIVES
+ * ================================================================ */
+.v11-container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+.v11-horizon__eyebrow {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin: 0 0 12px;
+}
+.v11-horizon__title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 40px;
+  color: var(--v11-text);
+}
+.v11-horizon__progress {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  padding: 0 22px;
+  margin: 36px 0 16px;
+}
+.v11-horizon__seg { height: 6px; border-radius: 3px; position: relative; }
+.v11-horizon__seg--earned { background: var(--green); box-shadow: 0 0 0 1px var(--green-line); }
+.v11-horizon__seg--investing { background: var(--v11-accent); }
+.v11-horizon__seg--horizon { background: transparent; border: 1px dashed var(--v11-accent); }
+.v11-horizon__marker {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--v11-font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  white-space: nowrap;
+  padding: 3px 10px;
+  background: var(--v11-accent-soft);
+  border: 1px solid var(--v11-accent-line);
+  border-radius: 3px;
+  font-weight: 600;
+}
+.v11-horizon__marker::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -4px;
+  border: 4px solid transparent;
+  border-top-color: var(--v11-accent);
+}
+
+/* Shared tool rail grid (each variant overrides the chip style only) */
+.v11-horizon__tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  margin-bottom: 8px;
+}
+.v11-horizon__tools-block {
+  padding: 14px 22px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+.v11-horizon__tools-block + .v11-horizon__tools-block {
+  border-left: 1px solid var(--v11-line);
+}
+
+/* Main grid (stage labels → headings → body → chips) */
+.v11-horizon__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+}
+.v11-horizon__col {
+  padding: 16px 22px 0;
+  position: relative;
+}
+.v11-horizon__col + .v11-horizon__col { border-left: 1px solid var(--v11-line); }
+.v11-horizon__stage {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-text-50);
+  margin-bottom: 14px;
+}
+.v11-horizon__col[data-stage='earned'] .v11-horizon__stage { color: var(--green); }
+.v11-horizon__col[data-stage='investing'] .v11-horizon__stage { color: var(--v11-accent); }
+.v11-horizon__heading {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin: 0 0 10px;
+  color: var(--v11-text);
+}
+.v11-horizon__body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--v11-text-70);
+  margin: 0 0 16px;
+}
+
+/* Content chips (NOT tool chips — these keep their stage tints) */
+.v11-horizon__chips {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  list-style: none; margin: 0; padding: 0 0 28px;
+}
+.v11-horizon__chip {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  padding: 4px 10px 4px 8px;
+  border-radius: 999px;
+  background: var(--v11-bg-inset);
+  color: var(--v11-text-70);
+  border: 1px solid var(--v11-line);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  line-height: 1;
+}
+[data-stage='earned'] .v11-horizon__chip {
+  background: var(--green-soft);
+  border-color: var(--green-line);
+  color: var(--v11-text);
+}
+[data-stage='earned'] .v11-horizon__chip::before {
+  content: "";
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.3 2.3 4.7-4.7' stroke='%230A0B0E' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 9px 9px;
+}
+[data-stage='investing'] .v11-horizon__chip {
+  background: var(--v11-accent-soft);
+  color: var(--v11-text);
+  border-color: var(--v11-accent-line);
+}
+[data-stage='horizon'] .v11-horizon__chip[data-kind='bet'] {
+  border-style: dashed; color: var(--v11-text);
+}
+.v11-horizon__bet-badge {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v11-signal-warn);
+  font-weight: 600;
+  padding: 1px 5px;
+  border: 1px solid var(--v11-signal-warn);
+  border-radius: 3px;
+  line-height: 1;
+}
+
+/* ================================================================
+ * T1 · Plain monochrome pills (canonical tag style)
+ * ----------------------------------------------------------------
+ * All tools look the same regardless of stage. Neutral chrome, mono
+ * font. Reads like "these are tools, not states".
+ * ================================================================ */
+.t1 .v11-horizon__tool {
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: var(--v11-bg-inset);
+  border: 1px solid var(--v11-line);
+  color: var(--v11-text-70);
+  font-weight: 500;
+}
+.t1 .v11-horizon__arrow { color: var(--v11-text-40); font-size: 11px; }
+
+/* ================================================================
+ * T2 · Mono pills with leading initial glyph
+ * ----------------------------------------------------------------
+ * Each tool chip has a small circled first letter — an icon slot.
+ * Looks like a proto-logo row; all neutral.
+ * ================================================================ */
+.t2 .v11-horizon__tool {
+  padding: 4px 10px 4px 4px;
+  border-radius: 999px;
+  background: var(--v11-bg-inset);
+  border: 1px solid var(--v11-line);
+  color: var(--v11-text);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.t2 .v11-horizon__tool::before {
+  content: attr(data-glyph);
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--v11-bg-elevated);
+  color: var(--v11-text-70);
+  font-family: var(--v11-font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--v11-line-strong);
+}
+.t2 .v11-horizon__arrow { color: var(--v11-text-40); font-size: 11px; }
+
+/* ================================================================
+ * T3 · Text-only with arrow separators (ultra-minimal)
+ * ----------------------------------------------------------------
+ * No chips, no backgrounds. Just tool names in mono with arrows
+ * between them. Reads as a literal pipeline string.
+ * ================================================================ */
+.t3 .v11-horizon__tool {
+  color: var(--v11-text);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.t3 .v11-horizon__arrow { color: var(--v11-text-40); }
+.t3 .v11-horizon__tools-block {
+  padding: 16px 22px;
+  gap: 8px;
+}
+
+/* ================================================================
+ * T4 · Boxed tools with underline accent
+ * ----------------------------------------------------------------
+ * Neutral outlined boxes (square-ish), subtle bottom-border accent
+ * per column. Looks more "enterprise documentation" neutral.
+ * ================================================================ */
+.t4 .v11-horizon__tools-block {
+  border-bottom: 2px solid var(--v11-line);
+}
+.t4 .v11-horizon__tools-block--earned { border-bottom-color: var(--green-line); }
+.t4 .v11-horizon__tools-block--investing { border-bottom-color: var(--v11-accent-line); }
+.t4 .v11-horizon__tools-block--horizon {
+  border-bottom-color: var(--v11-accent-line);
+  border-bottom-style: dashed;
+}
+.t4 .v11-horizon__tool {
+  padding: 5px 9px;
+  border-radius: 3px;
+  background: var(--v11-bg-elevated);
+  border: 1px solid var(--v11-line-strong);
+  color: var(--v11-text);
+  font-weight: 500;
+}
+.t4 .v11-horizon__arrow { color: var(--v11-text-40); font-size: 10px; }
+
+/* ================================================================
+ * T5 · Brand-like wordmarks (no chrome)
+ * ----------------------------------------------------------------
+ * Uses a heavier Inter weight, each tool rendered as a mini-wordmark
+ * with a tiny accent dot. Feels like a "powered by / built with"
+ * row — the most canonical "tool manifest" reading.
+ * ================================================================ */
+.t5 .v11-horizon__tools-block {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 13px;
+  letter-spacing: -0.005em;
+  gap: 12px;
+}
+.t5 .v11-horizon__tool {
+  color: var(--v11-text);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.t5 .v11-horizon__tool::before {
+  content: "";
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--v11-text-40);
+  flex-shrink: 0;
+}
+.t5 .v11-horizon__arrow {
+  color: var(--v11-text-40);
+  font-weight: 400;
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+}
+
+/* Responsive safety */
+@media (max-width: 920px) {
+  .v11-horizon__progress,
+  .v11-horizon__tools,
+  .v11-horizon__grid { grid-template-columns: 1fr; }
+  .v11-horizon__tools-block + .v11-horizon__tools-block,
+  .v11-horizon__col + .v11-horizon__col {
+    border-left: 0;
+    border-top: 1px solid var(--v11-line);
+  }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <p class="page__kicker">V2 · tool rail · 5 variantes · 2026-05-12</p>
+  <h1 class="page__title">Tools — 5 tratamientos neutros</h1>
+  <p class="page__lead">Los tool chips ya <strong>no</strong> heredan verde/naranja/dashed. Son inventario de herramientas, no etapas. Cada variante propone una forma canónica distinta. Lo demás (barra de progreso, content chips, stage labels, headings) queda intacto.</p>
+
+  <!-- T1 -->
+  <section class="variant t1">
+    <header class="variant__head">
+      <span class="variant__id">T1</span>
+      <h2 class="variant__name">Plain monochrome pills</h2>
+      <p class="variant__hook">Chips idénticos en todas las etapas: fondo inset, borde línea, texto 70%. Máxima neutralidad. Reads like "estas son las herramientas, no el estado".</p>
+    </header>
+    <div class="variant__demo">
+      <div class="v11-container">
+        <div class="v11-horizon__eyebrow">Direction · 2026</div>
+        <h2 class="v11-horizon__title">Where my hours are going</h2>
+        <div class="v11-horizon__progress">
+          <div class="v11-horizon__seg v11-horizon__seg--earned"></div>
+          <div class="v11-horizon__seg v11-horizon__seg--investing"><span class="v11-horizon__marker">You are here</span></div>
+          <div class="v11-horizon__seg v11-horizon__seg--horizon"></div>
+        </div>
+        <div class="v11-horizon__tools">
+          <div class="v11-horizon__tools-block">
+            <span class="v11-horizon__tool">Figma</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">DS</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Handoff</span>
+          </div>
+          <div class="v11-horizon__tools-block">
+            <span class="v11-horizon__tool">Hi-Fi Figma</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Storybook</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">GitHub</span>
+          </div>
+          <div class="v11-horizon__tools-block">
+            <span class="v11-horizon__tool">Team</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Agent tooling</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Eval-driven</span>
+          </div>
+        </div>
+        <div class="v11-horizon__grid">
+          <div class="v11-horizon__col" data-stage="earned">
+            <div class="v11-horizon__stage">Earned · 2010–2023</div>
+            <h3 class="v11-horizon__heading">The craft I mastered, now commoditized</h3>
+            <p class="v11-horizon__body">15 years running the old pipeline: Figma → design system → components → tokens → prototypes → handoff to a developer.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Figma mastery</span></li><li><span class="v11-horizon__chip">Hand-coded UI</span></li><li><span class="v11-horizon__chip">Design reviews</span></li></ul>
+          </div>
+          <div class="v11-horizon__col" data-stage="investing">
+            <div class="v11-horizon__stage">Investing · 2024–Now</div>
+            <h3 class="v11-horizon__heading">Where my hours go today</h3>
+            <p class="v11-horizon__body">The new pipeline: agents ship the code, I ship the judgment.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Agent orchestration</span></li><li><span class="v11-horizon__chip">MCP servers</span></li><li><span class="v11-horizon__chip">DS-as-skill</span></li></ul>
+          </div>
+          <div class="v11-horizon__col" data-stage="horizon">
+            <div class="v11-horizon__stage">Next horizon · 12 mo</div>
+            <h3 class="v11-horizon__heading">What I'm walking toward</h3>
+            <p class="v11-horizon__body">Embedded in a serious product team, owning the seam between design judgment and agentic execution.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Team-scale tooling</span></li><li><span class="v11-horizon__chip" data-kind="bet">Eval-driven UI <span class="v11-horizon__bet-badge">bet</span></span></li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- T2 -->
+  <section class="variant t2">
+    <header class="variant__head">
+      <span class="variant__id">T2</span>
+      <h2 class="variant__name">Pills con initial glyph (icon slot)</h2>
+      <p class="variant__hook">Cada tool chip lleva una inicial circular — slot listo para íconos reales. Sensación de "tech stack badge" sin tintar por etapa.</p>
+    </header>
+    <div class="variant__demo">
+      <div class="v11-container">
+        <div class="v11-horizon__eyebrow">Direction · 2026</div>
+        <h2 class="v11-horizon__title">Where my hours are going</h2>
+        <div class="v11-horizon__progress">
+          <div class="v11-horizon__seg v11-horizon__seg--earned"></div>
+          <div class="v11-horizon__seg v11-horizon__seg--investing"><span class="v11-horizon__marker">You are here</span></div>
+          <div class="v11-horizon__seg v11-horizon__seg--horizon"></div>
+        </div>
+        <div class="v11-horizon__tools">
+          <div class="v11-horizon__tools-block">
+            <span class="v11-horizon__tool" data-glyph="F">Figma</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool" data-glyph="D">DS</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool" data-glyph="H">Handoff</span>
+          </div>
+          <div class="v11-horizon__tools-block">
+            <span class="v11-horizon__tool" data-glyph="F">Hi-Fi Figma</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool" data-glyph="S">Storybook</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool" data-glyph="G">GitHub</span>
+          </div>
+          <div class="v11-horizon__tools-block">
+            <span class="v11-horizon__tool" data-glyph="T">Team</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool" data-glyph="A">Agent tooling</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool" data-glyph="E">Eval-driven</span>
+          </div>
+        </div>
+        <div class="v11-horizon__grid">
+          <div class="v11-horizon__col" data-stage="earned">
+            <div class="v11-horizon__stage">Earned · 2010–2023</div>
+            <h3 class="v11-horizon__heading">The craft I mastered, now commoditized</h3>
+            <p class="v11-horizon__body">15 years running the old pipeline.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Figma mastery</span></li><li><span class="v11-horizon__chip">Hand-coded UI</span></li><li><span class="v11-horizon__chip">Design reviews</span></li></ul>
+          </div>
+          <div class="v11-horizon__col" data-stage="investing">
+            <div class="v11-horizon__stage">Investing · 2024–Now</div>
+            <h3 class="v11-horizon__heading">Where my hours go today</h3>
+            <p class="v11-horizon__body">Agents ship the code, I ship the judgment.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Agent orchestration</span></li><li><span class="v11-horizon__chip">MCP servers</span></li><li><span class="v11-horizon__chip">DS-as-skill</span></li></ul>
+          </div>
+          <div class="v11-horizon__col" data-stage="horizon">
+            <div class="v11-horizon__stage">Next horizon · 12 mo</div>
+            <h3 class="v11-horizon__heading">What I'm walking toward</h3>
+            <p class="v11-horizon__body">Embedded in a serious product team.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Team-scale tooling</span></li><li><span class="v11-horizon__chip" data-kind="bet">Eval-driven UI <span class="v11-horizon__bet-badge">bet</span></span></li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- T3 -->
+  <section class="variant t3">
+    <header class="variant__head">
+      <span class="variant__id">T3</span>
+      <h2 class="variant__name">Text-only con separador (ultra-minimal)</h2>
+      <p class="variant__hook">Sin chips, sin fondo. Solo los nombres en mono con flechas. Lee como un literal de pipeline: <code style="color: var(--v11-text); font-size: 11px;">Figma → DS → Handoff</code>.</p>
+    </header>
+    <div class="variant__demo">
+      <div class="v11-container">
+        <div class="v11-horizon__eyebrow">Direction · 2026</div>
+        <h2 class="v11-horizon__title">Where my hours are going</h2>
+        <div class="v11-horizon__progress">
+          <div class="v11-horizon__seg v11-horizon__seg--earned"></div>
+          <div class="v11-horizon__seg v11-horizon__seg--investing"><span class="v11-horizon__marker">You are here</span></div>
+          <div class="v11-horizon__seg v11-horizon__seg--horizon"></div>
+        </div>
+        <div class="v11-horizon__tools">
+          <div class="v11-horizon__tools-block">
+            <span class="v11-horizon__tool">Figma</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">DS</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Handoff</span>
+          </div>
+          <div class="v11-horizon__tools-block">
+            <span class="v11-horizon__tool">Hi-Fi Figma</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Storybook</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">GitHub</span>
+          </div>
+          <div class="v11-horizon__tools-block">
+            <span class="v11-horizon__tool">Team</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Agent tooling</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Eval-driven</span>
+          </div>
+        </div>
+        <div class="v11-horizon__grid">
+          <div class="v11-horizon__col" data-stage="earned">
+            <div class="v11-horizon__stage">Earned · 2010–2023</div>
+            <h3 class="v11-horizon__heading">The craft I mastered, now commoditized</h3>
+            <p class="v11-horizon__body">15 years running the old pipeline.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Figma mastery</span></li><li><span class="v11-horizon__chip">Hand-coded UI</span></li><li><span class="v11-horizon__chip">Design reviews</span></li></ul>
+          </div>
+          <div class="v11-horizon__col" data-stage="investing">
+            <div class="v11-horizon__stage">Investing · 2024–Now</div>
+            <h3 class="v11-horizon__heading">Where my hours go today</h3>
+            <p class="v11-horizon__body">Agents ship the code, I ship the judgment.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Agent orchestration</span></li><li><span class="v11-horizon__chip">MCP servers</span></li><li><span class="v11-horizon__chip">DS-as-skill</span></li></ul>
+          </div>
+          <div class="v11-horizon__col" data-stage="horizon">
+            <div class="v11-horizon__stage">Next horizon · 12 mo</div>
+            <h3 class="v11-horizon__heading">What I'm walking toward</h3>
+            <p class="v11-horizon__body">Embedded in a serious product team.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Team-scale tooling</span></li><li><span class="v11-horizon__chip" data-kind="bet">Eval-driven UI <span class="v11-horizon__bet-badge">bet</span></span></li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- T4 -->
+  <section class="variant t4">
+    <header class="variant__head">
+      <span class="variant__id">T4</span>
+      <h2 class="variant__name">Boxed tools con underline accent</h2>
+      <p class="variant__hook">Cajitas cuadradas neutras. La única señal de etapa es una línea sutil debajo del bloque (verde / naranja / dashed). Los tools no se tintean — solo el riel.</p>
+    </header>
+    <div class="variant__demo">
+      <div class="v11-container">
+        <div class="v11-horizon__eyebrow">Direction · 2026</div>
+        <h2 class="v11-horizon__title">Where my hours are going</h2>
+        <div class="v11-horizon__progress">
+          <div class="v11-horizon__seg v11-horizon__seg--earned"></div>
+          <div class="v11-horizon__seg v11-horizon__seg--investing"><span class="v11-horizon__marker">You are here</span></div>
+          <div class="v11-horizon__seg v11-horizon__seg--horizon"></div>
+        </div>
+        <div class="v11-horizon__tools">
+          <div class="v11-horizon__tools-block v11-horizon__tools-block--earned">
+            <span class="v11-horizon__tool">Figma</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">DS</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Handoff</span>
+          </div>
+          <div class="v11-horizon__tools-block v11-horizon__tools-block--investing">
+            <span class="v11-horizon__tool">Hi-Fi Figma</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Storybook</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">GitHub</span>
+          </div>
+          <div class="v11-horizon__tools-block v11-horizon__tools-block--horizon">
+            <span class="v11-horizon__tool">Team</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Agent tooling</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Eval-driven</span>
+          </div>
+        </div>
+        <div class="v11-horizon__grid">
+          <div class="v11-horizon__col" data-stage="earned">
+            <div class="v11-horizon__stage">Earned · 2010–2023</div>
+            <h3 class="v11-horizon__heading">The craft I mastered, now commoditized</h3>
+            <p class="v11-horizon__body">15 years running the old pipeline.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Figma mastery</span></li><li><span class="v11-horizon__chip">Hand-coded UI</span></li><li><span class="v11-horizon__chip">Design reviews</span></li></ul>
+          </div>
+          <div class="v11-horizon__col" data-stage="investing">
+            <div class="v11-horizon__stage">Investing · 2024–Now</div>
+            <h3 class="v11-horizon__heading">Where my hours go today</h3>
+            <p class="v11-horizon__body">Agents ship the code, I ship the judgment.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Agent orchestration</span></li><li><span class="v11-horizon__chip">MCP servers</span></li><li><span class="v11-horizon__chip">DS-as-skill</span></li></ul>
+          </div>
+          <div class="v11-horizon__col" data-stage="horizon">
+            <div class="v11-horizon__stage">Next horizon · 12 mo</div>
+            <h3 class="v11-horizon__heading">What I'm walking toward</h3>
+            <p class="v11-horizon__body">Embedded in a serious product team.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Team-scale tooling</span></li><li><span class="v11-horizon__chip" data-kind="bet">Eval-driven UI <span class="v11-horizon__bet-badge">bet</span></span></li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- T5 -->
+  <section class="variant t5">
+    <header class="variant__head">
+      <span class="variant__id">T5</span>
+      <h2 class="variant__name">Brand-like wordmarks (no chrome)</h2>
+      <p class="variant__hook">Inter 600, sin caja, con un dot pequeño antes de cada tool. Lee como "built with / powered by" — cambio de familia tipográfica para separar herramientas del resto.</p>
+    </header>
+    <div class="variant__demo">
+      <div class="v11-container">
+        <div class="v11-horizon__eyebrow">Direction · 2026</div>
+        <h2 class="v11-horizon__title">Where my hours are going</h2>
+        <div class="v11-horizon__progress">
+          <div class="v11-horizon__seg v11-horizon__seg--earned"></div>
+          <div class="v11-horizon__seg v11-horizon__seg--investing"><span class="v11-horizon__marker">You are here</span></div>
+          <div class="v11-horizon__seg v11-horizon__seg--horizon"></div>
+        </div>
+        <div class="v11-horizon__tools">
+          <div class="v11-horizon__tools-block">
+            <span class="v11-horizon__tool">Figma</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">DS</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Handoff</span>
+          </div>
+          <div class="v11-horizon__tools-block">
+            <span class="v11-horizon__tool">Hi-Fi Figma</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Storybook</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">GitHub</span>
+          </div>
+          <div class="v11-horizon__tools-block">
+            <span class="v11-horizon__tool">Team</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Agent tooling</span><span class="v11-horizon__arrow">→</span>
+            <span class="v11-horizon__tool">Eval-driven</span>
+          </div>
+        </div>
+        <div class="v11-horizon__grid">
+          <div class="v11-horizon__col" data-stage="earned">
+            <div class="v11-horizon__stage">Earned · 2010–2023</div>
+            <h3 class="v11-horizon__heading">The craft I mastered, now commoditized</h3>
+            <p class="v11-horizon__body">15 years running the old pipeline.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Figma mastery</span></li><li><span class="v11-horizon__chip">Hand-coded UI</span></li><li><span class="v11-horizon__chip">Design reviews</span></li></ul>
+          </div>
+          <div class="v11-horizon__col" data-stage="investing">
+            <div class="v11-horizon__stage">Investing · 2024–Now</div>
+            <h3 class="v11-horizon__heading">Where my hours go today</h3>
+            <p class="v11-horizon__body">Agents ship the code, I ship the judgment.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Agent orchestration</span></li><li><span class="v11-horizon__chip">MCP servers</span></li><li><span class="v11-horizon__chip">DS-as-skill</span></li></ul>
+          </div>
+          <div class="v11-horizon__col" data-stage="horizon">
+            <div class="v11-horizon__stage">Next horizon · 12 mo</div>
+            <h3 class="v11-horizon__heading">What I'm walking toward</h3>
+            <p class="v11-horizon__body">Embedded in a serious product team.</p>
+            <ul class="v11-horizon__chips"><li><span class="v11-horizon__chip">Team-scale tooling</span></li><li><span class="v11-horizon__chip" data-kind="bet">Eval-driven UI <span class="v11-horizon__bet-badge">bet</span></span></li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="margin-top: 64px; padding: 24px; border: 1px solid var(--v11-line); border-radius: 8px;">
+    <p style="margin: 0 0 10px; font-family: var(--v11-font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--v11-accent);">Next step</p>
+    <p style="margin: 0; color: var(--v11-text-70);">Pick a variant (T1–T5). Reply with the ID + any tweak. Apply to <code style="color: var(--v11-text); background: var(--v11-bg-inset); padding: 1px 6px; border-radius: 3px;">dist/landing-v11/index.html</code> + ES copy.</p>
+  </div>
+</div>
+</body>
+</html>

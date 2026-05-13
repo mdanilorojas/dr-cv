@@ -261,6 +261,7 @@ function validateCase(raw: unknown, path: string): Case {
     featured: typeof o.featured === "boolean"
       ? o.featured
       : (() => { throw new Error(`case ${path}: featured must be boolean`); })(),
+    animation: typeof o.animation === "string" ? o.animation : undefined,
   };
 }
 

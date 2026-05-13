@@ -45,10 +45,10 @@ describe("renderSeriousCv", () => {
     expect(html).toContain("Professional Summary");
   });
 
-  it("renders 4 case cards", () => {
+  it("renders 3 case cards", () => {
     const html = renderSeriousCv(data, "en", tokensCss);
     const body = bodyOnly(html);
     const caseCount = (body.match(/class="cv-case /g) || []).length;
-    expect(caseCount).toBeGreaterThanOrEqual(4);
+    expect(caseCount).toBeGreaterThanOrEqual(3);
   });
 });

@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Horizon flow · 5 opciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+/* ================================================================
+ * Tokens (copiados desde dist/landing-v11/index.html para fidelidad)
+ * ================================================================ */
+:root {
+  --v11-bg-primary: #0A0B0E;
+  --v11-bg-alt: #111318;
+  --v11-bg-elevated: #14161C;
+  --v11-bg-inset: #0D0F13;
+  --v11-text: #F4F4F5;
+  --v11-text-70: #B0B2B7;
+  --v11-text-50: #797D86;
+  --v11-text-40: #61656B;
+  --v11-accent: #FF8964;
+  --v11-accent-deep: #E0674A;
+  --v11-accent-soft: rgba(255, 137, 100, 0.14);
+  --v11-accent-ring: rgba(255, 137, 100, 0.35);
+  --v11-accent-line: rgba(255, 137, 100, 0.28);
+  --v11-signal-warn: #E5A84B;
+  --v11-line: rgba(255, 255, 255, 0.08);
+  --v11-line-strong: rgba(255, 255, 255, 0.18);
+  --v11-font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html, body {
+  margin: 0;
+  background: var(--v11-bg-primary);
+  color: var(--v11-text);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ================================================================
+ * Page shell
+ * ================================================================ */
+.page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 32px 96px;
+}
+.page__kicker {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin: 0 0 12px;
+}
+.page__title {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px;
+}
+.page__lead {
+  font-size: 15px;
+  color: var(--v11-text-70);
+  margin: 0 0 10px;
+  max-width: 820px;
+}
+.page__note {
+  font-family: var(--v11-font-mono);
+  font-size: 12px;
+  color: var(--v11-text-50);
+  margin: 0 0 48px;
+}
+
+.variant {
+  background: var(--v11-bg-alt);
+  border: 1px solid var(--v11-line);
+  border-radius: 8px;
+  padding: 28px 0 0;
+  margin: 0 0 32px;
+  overflow: hidden;
+}
+.variant__head {
+  padding: 0 28px 24px;
+  border-bottom: 1px solid var(--v11-line);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.variant__id {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  background: var(--v11-accent-soft);
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+.variant__name {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  flex: 1 1 auto;
+}
+.variant__hook {
+  font-size: 13px;
+  color: var(--v11-text-70);
+  margin: 6px 0 0;
+  flex: 1 1 100%;
+}
+.variant__demo {
+  padding: 56px 0;
+  background: var(--v11-bg-alt);
+}
+
+/* ================================================================
+ * Shared horizon primitives (mirrors landing V11)
+ * ================================================================ */
+.hz {
+  padding: 0 28px;
+}
+.hz__eyebrow {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin: 0 0 12px;
+}
+.hz__title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 40px;
+  color: var(--v11-text);
+}
+.hz__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  position: relative;
+}
+.hz__col {
+  padding: 0 22px;
+  position: relative;
+}
+.hz__col + .hz__col {
+  border-left: 1px solid var(--v11-line);
+}
+.hz__stage {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-text-50);
+  margin-bottom: 22px;
+}
+.hz__col[data-emph] .hz__stage {
+  color: var(--v11-accent);
+}
+.hz__heading {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin: 18px 0 10px;
+  color: var(--v11-text);
+}
+.hz__body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--v11-text-70);
+  margin: 0 0 16px;
+}
+.hz__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.hz__chip {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--v11-bg-inset);
+  color: var(--v11-text-70);
+  border: 1px solid var(--v11-line);
+}
+[data-stage='earned'] .hz__chip {
+  text-decoration: line-through;
+  text-decoration-color: var(--v11-text-40);
+  color: var(--v11-text-50);
+}
+[data-stage='investing'] .hz__chip {
+  background: var(--v11-accent-soft);
+  border-color: var(--v11-accent-line);
+  color: var(--v11-text);
+}
+[data-stage='horizon'] .hz__chip[data-kind='bet'] {
+  border-style: dashed;
+  color: var(--v11-text);
+}
+.hz__bet {
+  font-family: var(--v11-font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v11-signal-warn);
+  font-weight: 600;
+  padding: 1px 5px;
+  border: 1px solid var(--v11-signal-warn);
+  border-radius: 3px;
+  margin-left: 6px;
+}
+
+/* ================================================================
+ * V1 · Timeline arrow (above headings)
+ * ----------------------------------------------------------------
+ * Linear line sits ABOVE headings (not crossing them). Gray → accent
+ * → accent-dashed. Arrow cap on the right. Dot per column on the line.
+ * ================================================================ */
+.v1 .hz__grid {
+  padding-top: 56px; /* room for the rail */
+}
+.v1 .hz__grid::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 20px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--v11-line-strong) 0%,
+    var(--v11-line-strong) 33%,
+    var(--v11-accent) 33%,
+    var(--v11-accent) 66%,
+    var(--v11-accent) 66%
+  );
+  pointer-events: none;
+}
+.v1 .hz__grid::after {
+  content: "";
+  position: absolute;
+  right: 22px;
+  top: 16px;
+  width: 10px;
+  height: 10px;
+  border-top: 1px dashed var(--v11-accent);
+  border-right: 1px dashed var(--v11-accent);
+  transform: rotate(45deg);
+}
+.v1 .hz__dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 15px;
+  left: 22px;
+  border-radius: 50%;
+  background: var(--v11-bg-elevated);
+  border: 1px solid var(--v11-line-strong);
+}
+.v1 .hz__col[data-emph] .hz__dot {
+  background: var(--v11-accent);
+  border-color: var(--v11-accent);
+  box-shadow: 0 0 0 4px var(--v11-accent-soft);
+}
+.v1 .hz__col[data-stage='horizon'] .hz__dot {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--v11-accent);
+}
+
+/* ================================================================
+ * V2 · Segmented progress bar
+ * ----------------------------------------------------------------
+ * A 3-segment bar sits at the top of the grid. Each segment aligned
+ * to a column. Earned = muted filled. Investing = accent filled.
+ * Horizon = accent dashed outline. "YOU ARE HERE" marker.
+ * ================================================================ */
+.v2 .hz__grid {
+  padding-top: 68px;
+}
+.v2 .hz__bar {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+.v2 .hz__seg {
+  height: 6px;
+  border-radius: 3px;
+  position: relative;
+}
+.v2 .hz__seg--earned { background: var(--v11-line-strong); }
+.v2 .hz__seg--investing { background: var(--v11-accent); }
+.v2 .hz__seg--horizon {
+  background: transparent;
+  border: 1px dashed var(--v11-accent);
+}
+.v2 .hz__marker {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--v11-font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  white-space: nowrap;
+  padding: 2px 6px;
+  background: var(--v11-accent-soft);
+  border: 1px solid var(--v11-accent-line);
+  border-radius: 3px;
+}
+.v2 .hz__marker::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -3px;
+  border: 3px solid transparent;
+  border-top-color: var(--v11-accent);
+}
+
+/* ================================================================
+ * V3 · Pipeline ribbon with flowing arrow
+ * ----------------------------------------------------------------
+ * A subtle ribbon (SVG path) flows across the three columns, bending
+ * slightly on hand-offs. Each stage has a numbered node. Feels like
+ * a real pipeline, not a generic divider.
+ * ================================================================ */
+.v3 .hz__grid {
+  padding-top: 88px;
+}
+.v3 .hz__pipeline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 76px;
+  pointer-events: none;
+}
+.v3 .hz__pipeline svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.v3 .hz__node {
+  position: absolute;
+  top: 34px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--v11-bg-alt);
+  border: 1px solid var(--v11-line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v11-text-70);
+}
+.v3 .hz__node--1 { left: calc(16.66% - 14px); }
+.v3 .hz__node--2 {
+  left: calc(50% - 14px);
+  background: var(--v11-accent);
+  border-color: var(--v11-accent);
+  color: #2A0F05;
+  box-shadow: 0 0 0 4px var(--v11-accent-soft);
+}
+.v3 .hz__node--3 {
+  left: calc(83.33% - 14px);
+  border-style: dashed;
+  border-color: var(--v11-accent);
+  color: var(--v11-accent);
+  background: transparent;
+}
+
+/* ================================================================
+ * V4 · Explicit old pipeline vs new pipeline
+ * ----------------------------------------------------------------
+ * The one that speaks to Danilo's "old vs new pipeline" tesis.
+ * Each column shows its pipeline as tiny inline chips with arrows.
+ * Top rail shows the transition strip: old-noisy → new-clean → horizon.
+ * ================================================================ */
+.v4 .hz__grid {
+  padding-top: 92px;
+}
+.v4 .hz__rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  padding: 0 22px;
+}
+.v4 .hz__rail-block {
+  padding: 12px 14px;
+  font-family: var(--v11-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--v11-text-50);
+  border-bottom: 1px dashed var(--v11-line-strong);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.v4 .hz__rail-block--investing {
+  color: var(--v11-accent);
+  border-bottom-color: var(--v11-accent);
+  border-bottom-style: solid;
+}
+.v4 .hz__rail-block--horizon {
+  color: var(--v11-text-70);
+  border-bottom-color: var(--v11-accent);
+  border-bottom-style: dashed;
+}
+.v4 .hz__step {
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--v11-bg-inset);
+  border: 1px solid var(--v11-line);
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+}
+.v4 .hz__rail-block--earned .hz__step {
+  text-decoration: line-through;
+  text-decoration-color: var(--v11-text-40);
+  color: var(--v11-text-40);
+}
+.v4 .hz__rail-block--investing .hz__step {
+  background: var(--v11-accent-soft);
+  color: var(--v11-text);
+  border-color: var(--v11-accent-line);
+}
+.v4 .hz__arrow {
+  color: var(--v11-text-40);
+  font-weight: 500;
+}
+.v4 .hz__rail-block--investing .hz__arrow { color: var(--v11-accent); }
+
+/* ================================================================
+ * V5 · Zone-based with chevron dividers
+ * ----------------------------------------------------------------
+ * No horizontal line at all. Instead each column has its own surface
+ * tint and large chevron dividers between columns communicate flow.
+ * ================================================================ */
+.v5 .hz__grid {
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  border-radius: 10px;
+  overflow: visible;
+}
+.v5 .hz__col {
+  padding: 32px 22px;
+  border-left: 0 !important;
+}
+.v5 .hz__col[data-stage='earned'] {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px 0 0 8px;
+}
+.v5 .hz__col[data-stage='investing'] {
+  background: var(--v11-accent-soft);
+  box-shadow: inset 0 0 0 1px var(--v11-accent-line);
+  position: relative;
+  z-index: 2;
+}
+.v5 .hz__col[data-stage='horizon'] {
+  background: rgba(255, 255, 255, 0.015);
+  box-shadow: inset 0 0 0 1px var(--v11-line);
+  border-style: dashed;
+  border-radius: 0 8px 8px 0;
+}
+.v5 .hz__chev {
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform: translateY(-50%);
+  z-index: 3;
+  pointer-events: none;
+}
+.v5 .hz__chev--1 {
+  right: -10px;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 14px solid var(--v11-accent);
+  filter: drop-shadow(0 0 0 1px var(--v11-bg-alt));
+}
+.v5 .hz__chev--2 {
+  right: -10px;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 14px solid var(--v11-accent-line);
+}
+
+/* ================================================================
+ * Responsive safety
+ * ================================================================ */
+@media (max-width: 920px) {
+  .hz__grid,
+  .v2 .hz__bar,
+  .v4 .hz__rail {
+    grid-template-columns: 1fr !important;
+  }
+  .hz__col + .hz__col {
+    border-left: 0;
+    border-top: 1px solid var(--v11-line);
+    margin-top: 22px;
+    padding-top: 22px;
+  }
+  .v1 .hz__grid::before,
+  .v1 .hz__grid::after,
+  .v3 .hz__pipeline,
+  .v3 .hz__node,
+  .v5 .hz__chev {
+    display: none;
+  }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <p class="page__kicker">Brainstorming · visual companion</p>
+  <h1 class="page__title">Horizon section — 5 opciones de flujo</h1>
+  <p class="page__lead">Cada variante resuelve los dos problemas del actual: (1) línea horizontal cortando los títulos, (2) falta de dirección/flujo entre las 3 columnas. Heredan los mismos tokens V11 de la landing real — lo que ves es lo que se publicaría.</p>
+  <p class="page__note">Open comparison in a wide browser window. Each variant shows the SAME copy to isolate the visual treatment.</p>
+
+  <!-- V1 -->
+  <section class="variant v1">
+    <header class="variant__head">
+      <span class="variant__id">V1</span>
+      <h2 class="variant__name">Timeline arrow</h2>
+      <p class="variant__hook">Rail on top: gray (earned) → solid accent (investing) → dashed accent (horizon). Dot per column. Arrow cap on the right. Mínimo cambio estructural, máximo arreglo del bug.</p>
+    </header>
+    <div class="variant__demo">
+      <div class="hz">
+        <div class="hz__eyebrow">Direction · 2026</div>
+        <h2 class="hz__title">Where my hours are going</h2>
+        <div class="hz__grid">
+          <div class="hz__col" data-stage="earned">
+            <span class="hz__dot"></span>
+            <div class="hz__stage">Earned · 2010–2023</div>
+            <h3 class="hz__heading">The craft I mastered, now commoditized</h3>
+            <p class="hz__body">15 years running the old pipeline: Figma → design system → components → tokens → prototypes → handoff to a developer. The craft is real. The handoff is now a commodity.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Figma mastery</span></li><li><span class="hz__chip">Hand-coded UI</span></li><li><span class="hz__chip">Design reviews</span></li></ul>
+          </div>
+          <div class="hz__col" data-stage="investing" data-emph="true">
+            <span class="hz__dot"></span>
+            <div class="hz__stage">Investing · 2024–Now</div>
+            <h3 class="hz__heading">Where my hours go today</h3>
+            <p class="hz__body">The new pipeline: Figma → Cloud Storybook → GitHub → ready for the user. No developer handoff in the middle — the agents ship the code, I ship the judgment that tells them what to build.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Agent orchestration</span></li><li><span class="hz__chip">MCP servers</span></li><li><span class="hz__chip">Design-system-as-skill</span></li></ul>
+          </div>
+          <div class="hz__col" data-stage="horizon">
+            <span class="hz__dot"></span>
+            <div class="hz__stage">Next horizon · 12 mo</div>
+            <h3 class="hz__heading">What I'm walking toward</h3>
+            <p class="hz__body">Embedded in a serious product team, owning the seam between design judgment and agentic execution — at a scale where one person's leverage becomes a team's.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Team-scale tooling</span></li><li><span class="hz__chip" data-kind="bet">Eval-driven UI<span class="hz__bet">bet</span></span></li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- V2 -->
+  <section class="variant v2">
+    <header class="variant__head">
+      <span class="variant__id">V2</span>
+      <h2 class="variant__name">Segmented progress bar</h2>
+      <p class="variant__hook">3 segmentos alineados a las columnas: muted fill / accent fill / accent dashed. Marker "YOU ARE HERE" en Investing. Legible como barra de avance de pipeline.</p>
+    </header>
+    <div class="variant__demo">
+      <div class="hz">
+        <div class="hz__eyebrow">Direction · 2026</div>
+        <h2 class="hz__title">Where my hours are going</h2>
+        <div class="hz__grid">
+          <div class="hz__bar">
+            <div class="hz__seg hz__seg--earned"></div>
+            <div class="hz__seg hz__seg--investing"><span class="hz__marker">You are here</span></div>
+            <div class="hz__seg hz__seg--horizon"></div>
+          </div>
+          <div class="hz__col" data-stage="earned">
+            <div class="hz__stage">Earned · 2010–2023</div>
+            <h3 class="hz__heading">The craft I mastered, now commoditized</h3>
+            <p class="hz__body">15 years running the old pipeline: Figma → design system → components → tokens → prototypes → handoff to a developer. The craft is real. The handoff is now a commodity.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Figma mastery</span></li><li><span class="hz__chip">Hand-coded UI</span></li><li><span class="hz__chip">Design reviews</span></li></ul>
+          </div>
+          <div class="hz__col" data-stage="investing" data-emph="true">
+            <div class="hz__stage">Investing · 2024–Now</div>
+            <h3 class="hz__heading">Where my hours go today</h3>
+            <p class="hz__body">The new pipeline: Figma → Cloud Storybook → GitHub → ready for the user. No developer handoff in the middle — the agents ship the code, I ship the judgment that tells them what to build.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Agent orchestration</span></li><li><span class="hz__chip">MCP servers</span></li><li><span class="hz__chip">Design-system-as-skill</span></li></ul>
+          </div>
+          <div class="hz__col" data-stage="horizon">
+            <div class="hz__stage">Next horizon · 12 mo</div>
+            <h3 class="hz__heading">What I'm walking toward</h3>
+            <p class="hz__body">Embedded in a serious product team, owning the seam between design judgment and agentic execution — at a scale where one person's leverage becomes a team's.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Team-scale tooling</span></li><li><span class="hz__chip" data-kind="bet">Eval-driven UI<span class="hz__bet">bet</span></span></li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- V3 -->
+  <section class="variant v3">
+    <header class="variant__head">
+      <span class="variant__id">V3</span>
+      <h2 class="variant__name">Pipeline ribbon (numbered nodes)</h2>
+      <p class="variant__hook">Curva SVG suave entre 3 nodos numerados (1 → 2 → 3). Señal más literal de "pipeline". Investing es nodo activo lleno; Horizon es nodo dasheado.</p>
+    </header>
+    <div class="variant__demo">
+      <div class="hz">
+        <div class="hz__eyebrow">Direction · 2026</div>
+        <h2 class="hz__title">Where my hours are going</h2>
+        <div class="hz__grid">
+          <div class="hz__pipeline" aria-hidden="true">
+            <svg viewBox="0 0 1200 76" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="pipe-grad" x1="0" x2="1">
+                  <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+                  <stop offset="45%" stop-color="rgba(255,255,255,0.18)"/>
+                  <stop offset="55%" stop-color="#FF8964"/>
+                  <stop offset="100%" stop-color="#FF8964"/>
+                </linearGradient>
+              </defs>
+              <path d="M 40 48 Q 220 48 260 48 T 600 48 T 940 48 Q 1060 48 1160 48"
+                    stroke="url(#pipe-grad)" stroke-width="1.5" fill="none"/>
+              <path d="M 940 48 L 1160 48"
+                    stroke="#FF8964" stroke-width="1.5" fill="none" stroke-dasharray="4 4"/>
+            </svg>
+          </div>
+          <div class="hz__node hz__node--1">1</div>
+          <div class="hz__node hz__node--2">2</div>
+          <div class="hz__node hz__node--3">3</div>
+          <div class="hz__col" data-stage="earned">
+            <div class="hz__stage">Earned · 2010–2023</div>
+            <h3 class="hz__heading">The craft I mastered, now commoditized</h3>
+            <p class="hz__body">15 years running the old pipeline: Figma → design system → components → tokens → prototypes → handoff to a developer. The craft is real. The handoff is now a commodity.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Figma mastery</span></li><li><span class="hz__chip">Hand-coded UI</span></li><li><span class="hz__chip">Design reviews</span></li></ul>
+          </div>
+          <div class="hz__col" data-stage="investing" data-emph="true">
+            <div class="hz__stage">Investing · 2024–Now</div>
+            <h3 class="hz__heading">Where my hours go today</h3>
+            <p class="hz__body">The new pipeline: Figma → Cloud Storybook → GitHub → ready for the user. No developer handoff in the middle — the agents ship the code, I ship the judgment that tells them what to build.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Agent orchestration</span></li><li><span class="hz__chip">MCP servers</span></li><li><span class="hz__chip">Design-system-as-skill</span></li></ul>
+          </div>
+          <div class="hz__col" data-stage="horizon">
+            <div class="hz__stage">Next horizon · 12 mo</div>
+            <h3 class="hz__heading">What I'm walking toward</h3>
+            <p class="hz__body">Embedded in a serious product team, owning the seam between design judgment and agentic execution — at a scale where one person's leverage becomes a team's.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Team-scale tooling</span></li><li><span class="hz__chip" data-kind="bet">Eval-driven UI<span class="hz__bet">bet</span></span></li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- V4 -->
+  <section class="variant v4">
+    <header class="variant__head">
+      <span class="variant__id">V4</span>
+      <h2 class="variant__name">Old pipeline vs new pipeline (literal)</h2>
+      <p class="variant__hook">Rail superior muestra LITERALMENTE el pipeline de cada etapa (Figma → DS → handoff vs Figma → Storybook → GitHub). Refuerza la tesis "old vs new pipeline" de tu narrativa.</p>
+    </header>
+    <div class="variant__demo">
+      <div class="hz">
+        <div class="hz__eyebrow">Direction · 2026</div>
+        <h2 class="hz__title">Where my hours are going</h2>
+        <div class="hz__grid">
+          <div class="hz__rail" aria-hidden="true">
+            <div class="hz__rail-block hz__rail-block--earned">
+              <span class="hz__step">Figma</span><span class="hz__arrow">→</span>
+              <span class="hz__step">DS</span><span class="hz__arrow">→</span>
+              <span class="hz__step">Handoff</span>
+            </div>
+            <div class="hz__rail-block hz__rail-block--investing">
+              <span class="hz__step">Figma</span><span class="hz__arrow">→</span>
+              <span class="hz__step">Storybook</span><span class="hz__arrow">→</span>
+              <span class="hz__step">GitHub</span>
+            </div>
+            <div class="hz__rail-block hz__rail-block--horizon">
+              <span class="hz__step">Team</span><span class="hz__arrow">→</span>
+              <span class="hz__step">Agent tooling</span><span class="hz__arrow">→</span>
+              <span class="hz__step">Eval-driven</span>
+            </div>
+          </div>
+          <div class="hz__col" data-stage="earned">
+            <div class="hz__stage">Earned · 2010–2023</div>
+            <h3 class="hz__heading">The craft I mastered, now commoditized</h3>
+            <p class="hz__body">15 years running the old pipeline: Figma → design system → components → tokens → prototypes → handoff to a developer. The craft is real. The handoff is now a commodity.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Figma mastery</span></li><li><span class="hz__chip">Hand-coded UI</span></li><li><span class="hz__chip">Design reviews</span></li></ul>
+          </div>
+          <div class="hz__col" data-stage="investing" data-emph="true">
+            <div class="hz__stage">Investing · 2024–Now</div>
+            <h3 class="hz__heading">Where my hours go today</h3>
+            <p class="hz__body">The new pipeline: Figma → Cloud Storybook → GitHub → ready for the user. No developer handoff in the middle — the agents ship the code, I ship the judgment that tells them what to build.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Agent orchestration</span></li><li><span class="hz__chip">MCP servers</span></li><li><span class="hz__chip">Design-system-as-skill</span></li></ul>
+          </div>
+          <div class="hz__col" data-stage="horizon">
+            <div class="hz__stage">Next horizon · 12 mo</div>
+            <h3 class="hz__heading">What I'm walking toward</h3>
+            <p class="hz__body">Embedded in a serious product team, owning the seam between design judgment and agentic execution — at a scale where one person's leverage becomes a team's.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Team-scale tooling</span></li><li><span class="hz__chip" data-kind="bet">Eval-driven UI<span class="hz__bet">bet</span></span></li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- V5 -->
+  <section class="variant v5">
+    <header class="variant__head">
+      <span class="variant__id">V5</span>
+      <h2 class="variant__name">Zone-based with chevrons</h2>
+      <p class="variant__hook">Sin línea horizontal. Cada columna es una zona con su propio fondo (muted / accent-tinted / dashed). Chevrons grandes entre zonas comunican flujo sin cortar títulos.</p>
+    </header>
+    <div class="variant__demo">
+      <div class="hz">
+        <div class="hz__eyebrow">Direction · 2026</div>
+        <h2 class="hz__title">Where my hours are going</h2>
+        <div class="hz__grid">
+          <div class="hz__col" data-stage="earned">
+            <div class="hz__stage">Earned · 2010–2023</div>
+            <h3 class="hz__heading">The craft I mastered, now commoditized</h3>
+            <p class="hz__body">15 years running the old pipeline: Figma → design system → components → tokens → prototypes → handoff to a developer. The craft is real. The handoff is now a commodity.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Figma mastery</span></li><li><span class="hz__chip">Hand-coded UI</span></li><li><span class="hz__chip">Design reviews</span></li></ul>
+            <span class="hz__chev hz__chev--1" aria-hidden="true"></span>
+          </div>
+          <div class="hz__col" data-stage="investing" data-emph="true">
+            <div class="hz__stage">Investing · 2024–Now</div>
+            <h3 class="hz__heading">Where my hours go today</h3>
+            <p class="hz__body">The new pipeline: Figma → Cloud Storybook → GitHub → ready for the user. No developer handoff in the middle — the agents ship the code, I ship the judgment that tells them what to build.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Agent orchestration</span></li><li><span class="hz__chip">MCP servers</span></li><li><span class="hz__chip">Design-system-as-skill</span></li></ul>
+            <span class="hz__chev hz__chev--2" aria-hidden="true"></span>
+          </div>
+          <div class="hz__col" data-stage="horizon">
+            <div class="hz__stage">Next horizon · 12 mo</div>
+            <h3 class="hz__heading">What I'm walking toward</h3>
+            <p class="hz__body">Embedded in a serious product team, owning the seam between design judgment and agentic execution — at a scale where one person's leverage becomes a team's.</p>
+            <ul class="hz__chips"><li><span class="hz__chip">Team-scale tooling</span></li><li><span class="hz__chip" data-kind="bet">Eval-driven UI<span class="hz__bet">bet</span></span></li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="margin-top: 64px; padding: 24px; border: 1px solid var(--v11-line); border-radius: 8px;">
+    <p style="margin: 0 0 10px; font-family: var(--v11-font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--v11-accent);">Next step</p>
+    <p style="margin: 0; color: var(--v11-text-70);">Pick a variant (V1–V5). Reply with the ID + any tweak (e.g. "V4 but the middle block in a pill shape", "V2 without the YOU ARE HERE marker"). I'll apply to <code style="color: var(--v11-text); background: var(--v11-bg-inset); padding: 1px 6px; border-radius: 3px;">dist/landing-v11/index.html</code> + the ES copy.</p>
+  </div>
+</div>
+</body>
+</html>

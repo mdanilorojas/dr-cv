@@ -36,11 +36,11 @@ describe("renderWarmCv", () => {
     return m ? m[1] : html;
   }
 
-  it("renders 4 case cards with first being featured dark", () => {
+  it("renders 3 case cards with first being featured dark", () => {
     const html = renderWarmCv(data, "en", tokensCss);
     const body = bodyOnly(html);
     const caseCount = (body.match(/class="cv-case /g) || []).length;
-    expect(caseCount).toBeGreaterThanOrEqual(4);
+    expect(caseCount).toBeGreaterThanOrEqual(3);
     expect(body).toContain("cv-case--dark");
   });
 

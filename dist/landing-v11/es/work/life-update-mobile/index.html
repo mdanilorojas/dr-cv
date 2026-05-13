@@ -1,9 +1,256 @@
-/**
- * V11 production styles — extracted from docs/design-system/v11/index.html
- * Imports design-system/tokens-v11.css via the orchestrator concat.
- * No Huly-glow CTA (V11 R8 #1). Self-hosted fonts (V11 R7).
- */
-export const V11_STYLES = `
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Life Update Mobile — API Gemini en runtime · Danilo Rojas</title>
+<meta name="description" content="Sistema de tracking personal — entries diarios analizados por Gemini en runtime, distancia semántica a un plan a 5 años, métricas de foco tipo Steve Jobs (3 cosas al día). 0 → producción en un día.">
+<meta property="og:title" content="Life Update Mobile — API Gemini en runtime · Danilo Rojas">
+<meta property="og:description" content="Sistema de tracking personal — entries diarios analizados por Gemini en runtime, distancia semántica a un plan a 5 años, métricas de foco tipo Steve Jobs (3 cosas al día). 0 → producción en un día.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://danilorojas.design/es/work/life-update-mobile/">
+<meta property="og:image" content="https://danilorojas.design/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Life Update Mobile — API Gemini en runtime · Danilo Rojas">
+<meta name="twitter:description" content="Sistema de tracking personal — entries diarios analizados por Gemini en runtime, distancia semántica a un plan a 5 años, métricas de foco tipo Steve Jobs (3 cosas al día). 0 → producción en un día.">
+<meta name="twitter:image" content="https://danilorojas.design/og.png">
+<link rel="canonical" href="https://danilorojas.design/es/work/life-update-mobile/">
+<link rel="alternate" hreflang="es" href="https://danilorojas.design/es/work/life-update-mobile/">
+<link rel="alternate" hreflang="en" href="https://danilorojas.design/work/life-update-mobile/">
+<link rel="alternate" hreflang="x-default" href="https://danilorojas.design/work/life-update-mobile/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* =========================================================================
+ * dr-cv · V11 tokens · Warm Huly Refined + AI Product-Tour
+ *
+ * Base: Warm Huly Refined (forked from tokens-huly.css, stripped of the
+ * pill-radial-glow CTA which V11 R8 marked as anti-pattern #1).
+ * Layer: AI Product-Tour (artifact surfaces — PDF embed, generator
+ * live-preview, stream UI, plan-before-build, diff-review, named skills).
+ *
+ * Sources this token set resolves:
+ * - V11 R5 — Taste-first critic voice → restrained accent, not decorative
+ * - V11 R7 — Craft floors → self-hosted fonts, WCAG AA contrast
+ * - V11 R8 — Anti-patterns → NO warm-radial-glow pill
+ * - V11 R9 — Direction = Notebook + proof-strip graft
+ * - Visual-universe R10 — Warm Huly palette verdict
+ * ========================================================================= */
+
+:root {
+  /* ─────────────────────────────────────────────────────────────
+   * 1 · SURFACE (dark-dominant)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-bg-deep:        #060708;   /* OLED-adjacent deepest */
+  --v11-bg-primary:     #0A0B0E;   /* page background (warm-huly base) */
+  --v11-bg-alt:         #111318;   /* section alt (for dark/dark-alt rhythm) */
+  --v11-bg-paper:       #F6F4F0;   /* cream section for contrast chapters */
+  --v11-bg-elevated:    #14161C;   /* card surface on dark */
+  --v11-bg-elevated-2:  #1C1F27;   /* toolbar / nested surface */
+  --v11-bg-inset:       #0D0F13;   /* code / inputs / embed wells */
+
+  /* ─────────────────────────────────────────────────────────────
+   * 2 · INK (on dark)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-text:           #F4F4F5;   /* primary on dark */
+  --v11-text-body:      #D7D8DB;
+  --v11-text-85:        #C9CBCF;
+  --v11-text-70:        #B0B2B7;
+  --v11-text-60:        #95979E;
+  --v11-text-50:        #797D86;
+  --v11-text-40:        #61656B;
+  --v11-text-subtle:    #4A4B50;
+
+  /* Ink on cream (paper sections) */
+  --v11-paper-ink:      #0B0C0E;
+  --v11-paper-body:     #303236;
+  --v11-paper-muted:    #4A4B50;
+  --v11-paper-subtle:   #797D86;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 3 · ACCENT · restrained (V11 R8 — NO glow, punctuation only)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-accent:         #FF8964;   /* warm orange — used as punctuation */
+  --v11-accent-ink:     #2A0F05;   /* dark ink on accent bg */
+  --v11-accent-deep:    #E0674A;   /* hover / active state */
+  --v11-accent-soft:    rgba(255, 137, 100, 0.14);
+  --v11-accent-ring:    rgba(255, 137, 100, 0.35);
+  --v11-accent-line:    rgba(255, 137, 100, 0.28);
+
+  /* Secondary signal — used only for agentic UX state:
+     Visible Thinking / Plan-before-Build / Diff-Review additions */
+  --v11-signal-cool:    #5683DA;   /* tool-use / plan state */
+  --v11-signal-warn:    #E5A84B;   /* caution / learning-level */
+  --v11-signal-pos:     #4ADE80;   /* diff additions / success */
+  --v11-signal-neg:     #F87171;   /* diff deletions / errors */
+
+  /* ─────────────────────────────────────────────────────────────
+   * 4 · LINES & DIVIDERS
+   * ───────────────────────────────────────────────────────────── */
+  --v11-line:           rgba(255, 255, 255, 0.08);
+  --v11-line-strong:    rgba(255, 255, 255, 0.18);
+  --v11-line-soft:      rgba(255, 255, 255, 0.04);
+  --v11-line-paper:     #E5E2DA;
+  --v11-line-paper-sf:  #EFECE4;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 5 · ELEVATION (shadows — muted, Huly-derived)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-shadow-card:        0 6px 25px rgba(0, 0, 0, 0.50);
+  --v11-shadow-card-hover:  0 14px 30px rgba(0, 0, 0, 0.80);
+  --v11-shadow-float:       0 10px 20px rgba(0, 0, 0, 0.50);
+  --v11-shadow-artifact:    0 16px 40px rgba(0, 0, 0, 0.45),
+                            0 2px 0 rgba(255, 255, 255, 0.04) inset;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 6 · TYPOGRAPHY (self-hosted per V11 R7)
+   * Variable fonts, Latin-1 subset — load via @font-face in styles,
+   * not via Google Fonts CDN.
+   * ───────────────────────────────────────────────────────────── */
+  --v11-font-body:     'Inter', 'Helvetica Neue', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --v11-font-display:  'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+  --v11-font-mono:     'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+  --v11-font-serif:    'Source Serif 4', 'Source Serif Pro', Georgia, 'Times New Roman', serif;
+    /* serif reserved for long-form essay surface (R9 Notebook thesis) */
+
+  /* Scale — clamp-based for responsive.
+     H1 hero: 72px desktop, 32px mobile (V11 R7 signature recommendation). */
+  --v11-fs-hero:       clamp(32px, 7vw, 72px);
+  --v11-fs-h1:         clamp(28px, 5.5vw, 56px);
+  --v11-fs-h2:         clamp(24px, 4vw, 40px);
+  --v11-fs-h3:         clamp(20px, 2.8vw, 28px);
+  --v11-fs-lead:       clamp(17px, 1.9vw, 20px);
+  --v11-fs-body:       16px;
+  --v11-fs-small:      14px;
+  --v11-fs-micro:      12px;
+  --v11-fs-nano:       11px;
+
+  /* Tracking */
+  --v11-track-snug:     -0.01em;
+  --v11-track-snugger:  -0.02em;
+  --v11-track-tight:    -0.04em;
+  --v11-track-tighter:  -0.05em;
+  --v11-track-loose:     0.08em;
+  --v11-track-code:      0.14em;
+  --v11-track-micro:     0.16em;
+
+  /* Leading */
+  --v11-lead-hero:    0.95;     /* H1 hero — tight */
+  --v11-lead-h:       1.1;
+  --v11-lead-tight:   1.25;
+  --v11-lead-body:    1.55;
+  --v11-lead-loose:   1.7;      /* essay body */
+
+  /* Weight */
+  --v11-wt-regular:   400;
+  --v11-wt-medium:    500;
+  --v11-wt-semibold:  600;
+  --v11-wt-bold:      700;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 7 · RADIUS
+   * ───────────────────────────────────────────────────────────── */
+  --v11-radius-none:   0;
+  --v11-radius-sm:     4px;
+  --v11-radius:        8px;
+  --v11-radius-card:   12px;
+  --v11-radius-lg:     16px;
+  --v11-radius-xl:     24px;
+  --v11-radius-pill:   9999px;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 8 · SPACING scale (4-base)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-s-0:   0;
+  --v11-s-1:   4px;
+  --v11-s-2:   8px;
+  --v11-s-3:   12px;
+  --v11-s-4:   16px;
+  --v11-s-5:   24px;
+  --v11-s-6:   32px;
+  --v11-s-7:   48px;
+  --v11-s-8:   64px;
+  --v11-s-9:   80px;
+  --v11-s-10:  96px;
+  --v11-s-11:  128px;
+  --v11-s-12:  160px;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 9 · LAYOUT
+   * ───────────────────────────────────────────────────────────── */
+  --v11-container:         80rem;   /* 1280 */
+  --v11-container-narrow:  42rem;   /* 672 — essay body width */
+  --v11-container-wide:    88rem;
+  --v11-pad-x:             clamp(20px, 4vw, 32px);
+
+  /* ─────────────────────────────────────────────────────────────
+   * 10 · MOTION (V11 R7 reduced-motion respected)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-ease-standard:   cubic-bezier(0.22, 0.61, 0.36, 1);
+  --v11-ease-in:         cubic-bezier(0.4, 0, 1, 1);
+  --v11-ease-out:        cubic-bezier(0, 0, 0.2, 1);
+  --v11-ease-emphasize:  cubic-bezier(0.2, 0, 0, 1);
+
+  --v11-dur-instant:  80ms;
+  --v11-dur-fast:     180ms;
+  --v11-dur-base:     280ms;
+  --v11-dur-slow:     480ms;
+  --v11-dur-extra:    720ms;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 11 · Z-INDEX
+   * ───────────────────────────────────────────────────────────── */
+  --v11-z-base:    0;
+  --v11-z-raised:  1;
+  --v11-z-nav:     50;
+  --v11-z-toast:   60;
+  --v11-z-modal:   70;
+  --v11-z-hint:    80;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 12 · ARTIFACT SURFACE (AI Product-Tour layer)
+   * Tokens specific to the signature hero + in-page embeds of
+   * artifacts Danilo's workflow produces. These are not "effects" —
+   * they're product-UI tokens because the landing embeds running UI.
+   * ───────────────────────────────────────────────────────────── */
+  --v11-artifact-bg:          #111318;
+  --v11-artifact-bg-alt:      #16181F;
+  --v11-artifact-line:        rgba(255, 255, 255, 0.10);
+  --v11-artifact-line-strong: rgba(255, 255, 255, 0.20);
+  --v11-artifact-glow:        rgba(255, 137, 100, 0.08);
+  /* used at 1px border on focused artifact frames, not hero glow */
+
+  --v11-artifact-chip-bg:     rgba(255, 137, 100, 0.12);
+  --v11-artifact-chip-ink:    var(--v11-accent);
+  --v11-artifact-chip-line:   var(--v11-accent-line);
+
+  /* Stream UI (Visible Thinking / Plan-before-Build) */
+  --v11-stream-bg:            rgba(255, 255, 255, 0.025);
+  --v11-stream-line:          rgba(255, 255, 255, 0.06);
+  --v11-stream-caret:         var(--v11-accent);
+
+  /* Diff-Review state tokens */
+  --v11-diff-add-bg:          rgba(74, 222, 128, 0.08);
+  --v11-diff-add-line:        rgba(74, 222, 128, 0.25);
+  --v11-diff-del-bg:          rgba(248, 113, 113, 0.08);
+  --v11-diff-del-line:        rgba(248, 113, 113, 0.25);
+}
+
+/* Reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --v11-dur-instant: 0ms;
+    --v11-dur-fast:    0ms;
+    --v11-dur-base:    0ms;
+    --v11-dur-slow:    0ms;
+    --v11-dur-extra:   0ms;
+  }
+}
+
+
 /* ============== reset + base ============== */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -909,7 +1156,7 @@ img { max-width: 100%; display: block; }
   margin: 0 0 var(--v11-s-4);
 }
 .v11-quote__text::before {
-  content: "\\" ";
+  content: "\" ";
   color: var(--v11-accent);
   font-style: normal;
 }
@@ -1365,4 +1612,550 @@ a.v11-horizon__chip:focus-visible {
     box-shadow: 0 0 0 3px rgba(255, 137, 100, 0.28);
   }
 }
-`;
+
+
+/* ============== ANIMATIONS — picture-in-picture ============== */
+.v11-anim {
+  width: 100%;
+  aspect-ratio: 820 / 500;
+  background: #06080a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  color: #e8ecef;
+  font: 14px/1.5 var(--v11-font-body, "Inter", system-ui, sans-serif);
+  contain: layout paint;
+}
+.v11-anim__frame {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.v11-anim__chrome {
+  height: 32px;
+  background: #13171c;
+  border-bottom: 1px solid #1f242a;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 6px;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+}
+.v11-anim__chrome-dot { width: 8px; height: 8px; border-radius: 50%; }
+.v11-anim__chrome-dot--r { background: #ff5f57; }
+.v11-anim__chrome-dot--y { background: #ffbd2e; }
+.v11-anim__chrome-dot--g { background: #28c840; }
+.v11-anim__chrome-title {
+  margin: 0 auto;
+  font-size: 10px;
+  color: #9aa4ae;
+  font-family: var(--v11-font-mono, ui-monospace, monospace);
+  letter-spacing: 0.05em;
+}
+.v11-anim__chrome-badge {
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid #0d8f93;
+  color: #23d2d7;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+.v11-anim__content {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+/* Background stills */
+.v11-anim__shot {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  will-change: opacity, transform;
+  opacity: 0;
+}
+.v11-anim__shot--1 { opacity: 1; }
+.v11-anim__tint {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 0%, rgba(52, 211, 153, 0.12), transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Contextual tags */
+.v11-anim__tag {
+  position: absolute;
+  top: 14%;
+  right: 34%;
+  background: #13171c;
+  border: 1px solid #0d8f93;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 10px;
+  color: #23d2d7;
+  font-family: var(--v11-font-mono, ui-monospace, monospace);
+  opacity: 0;
+  transform: translateX(8px);
+  box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.5);
+  z-index: 6;
+  white-space: nowrap;
+}
+.v11-anim__tag::before {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-left-color: #0d8f93;
+}
+
+/* PIP */
+.v11-anim__pip {
+  position: absolute;
+  top: 4%;
+  right: 3%;
+  width: 32%;
+  height: 35%;
+  background: #13171c;
+  border: 1px solid #1f242a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.98);
+  opacity: 0.92;
+  transition: transform 400ms ease, opacity 400ms ease, box-shadow 400ms ease;
+  z-index: 5;
+}
+.v11-anim__pip-chrome {
+  height: 20px;
+  background: #1a1f26;
+  border-bottom: 1px solid #1f242a;
+  display: flex;
+  align-items: center;
+  padding: 0 7px;
+  gap: 3px;
+  font-size: 9px;
+  color: #9aa4ae;
+  font-family: var(--v11-font-mono, ui-monospace, monospace);
+  flex-shrink: 0;
+}
+.v11-anim__pip-dot { width: 5px; height: 5px; border-radius: 50%; }
+.v11-anim__pip-dot--r { background: #ff5f57; }
+.v11-anim__pip-dot--y { background: #ffbd2e; }
+.v11-anim__pip-dot--g { background: #28c840; }
+.v11-anim__pip-chrome-title { margin-left: 5px; }
+.v11-anim__pip-body {
+  flex: 1;
+  padding: 10px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.v11-anim__pip-step {
+  position: absolute;
+  inset: 10px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  opacity: 0;
+}
+.v11-anim__pip-step--s1 { opacity: 1; }
+
+.v11-anim__pip-greeting {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e8ecef;
+}
+.v11-anim__pip-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 12px;
+  background: #23d2d7;
+  vertical-align: -2px;
+  margin-left: 2px;
+  animation: v11-anim-blink 700ms steps(2) infinite;
+}
+.v11-anim__pip-processing {
+  font-size: 10px;
+  color: #23d2d7;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.v11-anim__pip-proc-bar {
+  margin-top: 8px;
+  width: 140px;
+  height: 3px;
+  background: #1f242a;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.v11-anim__pip-proc-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #23d2d7, #6effff, #23d2d7);
+  width: 0;
+}
+.v11-anim__pip-envs { display: flex; gap: 5px; }
+.v11-anim__pip-env {
+  padding: 3px 8px;
+  font-size: 9px;
+  font-family: var(--v11-font-mono, ui-monospace, monospace);
+  border: 1px solid #1f242a;
+  border-radius: 3px;
+  color: #9aa4ae;
+  background: #1a1f26;
+}
+.v11-anim__pip-env--active {
+  border-color: #23d2d7;
+  color: #23d2d7;
+  box-shadow: 0 0 0 2px rgba(35, 210, 215, 0.15);
+}
+.v11-anim__pip-check {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(52, 211, 153, 0.14);
+  border: 2px solid #34d399;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 6px;
+  transform: scale(0);
+}
+.v11-anim__pip-check svg { width: 16px; height: 16px; color: #34d399; }
+.v11-anim__pip-check svg path { stroke-dasharray: 30; stroke-dashoffset: 30; }
+.v11-anim__pip-done { font-size: 12px; font-weight: 600; color: #e8ecef; }
+.v11-anim__pip-done-sub {
+  font-size: 9px;
+  color: #9aa4ae;
+  margin-top: 2px;
+  font-family: var(--v11-font-mono, ui-monospace, monospace);
+}
+
+/* ============== PLAYING STATE — only runs when in viewport ============== */
+.v11-anim.is-playing .v11-anim__shot--1 {
+  animation: v11-anim-bg1-fade 1400ms ease forwards 1000ms;
+}
+.v11-anim.is-playing .v11-anim__shot--2 {
+  animation:
+    v11-anim-bg2-in 1000ms ease forwards 1100ms,
+    v11-anim-bg2-out 800ms ease forwards 2500ms;
+}
+.v11-anim.is-playing .v11-anim__shot--3 {
+  animation:
+    v11-anim-bg3-in 900ms cubic-bezier(.4, 0, .2, 1) forwards 2500ms,
+    v11-anim-bg3-out 900ms ease forwards 3800ms;
+}
+.v11-anim.is-playing .v11-anim__shot--4 {
+  animation: v11-anim-bg4-in 1200ms cubic-bezier(.2, 0, .1, 1) forwards 3900ms;
+}
+.v11-anim.is-playing .v11-anim__tint {
+  animation: v11-anim-tint-in 1000ms ease forwards 4400ms;
+}
+.v11-anim.is-playing .v11-anim__pip {
+  transform: scale(1.02);
+  opacity: 1;
+  box-shadow: 0 16px 40px -6px rgba(35, 210, 215, 0.35), 0 0 0 1px rgba(35, 210, 215, 0.5);
+}
+.v11-anim.is-playing .v11-anim__pip-step--s1 {
+  animation: v11-anim-cycle 1200ms ease forwards 0ms;
+}
+.v11-anim.is-playing .v11-anim__pip-step--s2 {
+  animation: v11-anim-cycle 1400ms ease forwards 1200ms;
+}
+.v11-anim.is-playing .v11-anim__pip-step--s3 {
+  animation: v11-anim-cycle 1400ms ease forwards 2600ms;
+}
+.v11-anim.is-playing .v11-anim__pip-step--s4 {
+  animation: v11-anim-cycle-keep 1800ms ease forwards 4000ms;
+}
+.v11-anim.is-playing .v11-anim__pip-step--s2 .v11-anim__pip-proc-bar::after {
+  animation: v11-anim-fill 1200ms ease forwards 1300ms;
+}
+.v11-anim.is-playing .v11-anim__pip-step--s4 .v11-anim__pip-check {
+  animation: v11-anim-pop 300ms cubic-bezier(.34, 1.56, .64, 1) forwards 4100ms;
+}
+.v11-anim.is-playing .v11-anim__pip-step--s4 .v11-anim__pip-check svg path {
+  animation: v11-anim-draw 350ms ease forwards 4350ms;
+}
+.v11-anim.is-playing .v11-anim__tag--t1 {
+  animation:
+    v11-anim-tag-show 1200ms ease forwards 200ms,
+    v11-anim-tag-hide 400ms ease forwards 1000ms;
+}
+.v11-anim.is-playing .v11-anim__tag--t2 {
+  animation:
+    v11-anim-tag-show 1200ms ease forwards 1400ms,
+    v11-anim-tag-hide 400ms ease forwards 2400ms;
+}
+.v11-anim.is-playing .v11-anim__tag--t3 {
+  animation:
+    v11-anim-tag-show 1200ms ease forwards 2800ms,
+    v11-anim-tag-hide 400ms ease forwards 3800ms;
+}
+.v11-anim.is-playing .v11-anim__tag--t4 {
+  animation: v11-anim-tag-show-keep 1200ms ease forwards 4500ms;
+}
+
+@keyframes v11-anim-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes v11-anim-bg1-fade {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.04); }
+}
+@keyframes v11-anim-bg2-in {
+  0% { opacity: 0; transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes v11-anim-bg2-out {
+  0% { opacity: 1; transform: scale(1) translateX(0); }
+  100% { opacity: 0; transform: scale(1.02) translateX(-40px); }
+}
+@keyframes v11-anim-bg3-in {
+  0% { opacity: 0; transform: translateX(60px) scale(1); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes v11-anim-bg3-out {
+  0% { opacity: 1; transform: scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: scale(.92); filter: blur(2px); }
+}
+@keyframes v11-anim-bg4-in {
+  0% { opacity: 0; transform: scale(1.08); filter: brightness(.7); }
+  60% { opacity: 1; transform: scale(1); filter: brightness(1); }
+  100% { opacity: 1; transform: scale(1); filter: brightness(1); }
+}
+@keyframes v11-anim-tint-in { to { opacity: 1; } }
+@keyframes v11-anim-cycle {
+  0% { opacity: 0; }
+  15%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes v11-anim-cycle-keep {
+  0% { opacity: 0; }
+  15%, 100% { opacity: 1; }
+}
+@keyframes v11-anim-fill { to { width: 100%; } }
+@keyframes v11-anim-pop { to { transform: scale(1); } }
+@keyframes v11-anim-draw { to { stroke-dashoffset: 0; } }
+@keyframes v11-anim-tag-show { to { opacity: 1; transform: translateX(0); } }
+@keyframes v11-anim-tag-show-keep { to { opacity: 1; transform: translateX(0); } }
+@keyframes v11-anim-tag-hide { to { opacity: 0; transform: translateX(-6px); } }
+
+/* Reduced motion — show final frame, no animation */
+@media (prefers-reduced-motion: reduce) {
+  .v11-anim__shot--1,
+  .v11-anim__shot--2,
+  .v11-anim__shot--3 {
+    opacity: 0;
+  }
+  .v11-anim__shot--4 { opacity: 1; }
+  .v11-anim__tint { opacity: 1; }
+  .v11-anim__pip-step--s1,
+  .v11-anim__pip-step--s2,
+  .v11-anim__pip-step--s3 { opacity: 0; }
+  .v11-anim__pip-step--s4 { opacity: 1; }
+  .v11-anim__pip-check { transform: scale(1); }
+  .v11-anim__pip-check svg path { stroke-dashoffset: 0; }
+  .v11-anim__tag--t4 { opacity: 1; transform: translateX(0); }
+  .v11-anim.is-playing * { animation: none !important; }
+  .v11-anim__pip-cursor { animation: none; }
+}
+
+</style>
+</head>
+<body>
+<a class="v11-skip" href="#main">Saltar al contenido</a>
+<nav class="v11-nav" aria-label="Navegación principal">
+  <div class="v11-nav__inner">
+    <a href="/es/" class="v11-nav__brand">Danilo Rojas<span class="v11-nav__brand-sep">·</span>dr</a>
+    <div class="v11-nav__tabs">
+      <a class="v11-nav__link" href="/es/#notebook">Notebook</a>
+      <a class="v11-nav__link" href="/es/#work">Trabajo</a>
+      <a class="v11-nav__link" href="/es/#method">Método</a>
+      <a class="v11-nav__link" href="/es/#contact">Contacto</a>
+    </div>
+    <a class="v11-nav__lang" href="/work/life-update-mobile/" hreflang="en" aria-label="View in English">ES / EN</a>
+  </div>
+</nav>
+<main id="main">
+  <article class="v11-case-detail">
+    <div class="v11-container-narrow">
+      <a class="v11-case-detail__back" href="/es/#work">← Volver al trabajo</a>
+      <div class="v11-case-detail__head">
+        <span class="v11-case-detail__client">producto propio · LLM en runtime</span>
+        <span class="v11-case-detail__dates">2026</span>
+      </div>
+      <h1 class="v11-case-detail__title">Life Update Mobile — API Gemini en runtime</h1>
+      <p class="v11-case-detail__hook">Sistema de tracking personal — entries diarios analizados por Gemini en runtime, distancia semántica a un plan a 5 años, métricas de foco tipo Steve Jobs (3 cosas al día). 0 → producción en un día.</p>
+      <ul class="v11-case-detail__bullets"><li>API Gemini en runtime para análisis semántico de entries diarios</li><li>Data híbrida: .md como fuente de verdad + DB como motor de ejecución</li><li>Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits en 24h</li></ul>
+      <div class="v11-case-detail__stack"><span class="v11-chip">Gemini API</span> <span class="v11-chip">Next.js 16</span> <span class="v11-chip">Prisma</span> <span class="v11-chip">0 → prod / 1d</span></div>
+      <dl class="v11-case-detail__beats">
+    <div class="v11-case-detail__beat"><dt>Contexto</dt><dd>Un producto personal — una app de tracking que usa Gemini en runtime para resumir lo que escribí esta semana.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Problema</dt><dd>Cada app de journal-AI que había probado o guardaba mi texto en el servidor de otro o se negaba a correr sin internet. Quería local-first + LLM on demand.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Aproximación</dt><dd>Almacenamiento SQLite local, journal en texto plano. La resumción es opt-in: tocas una semana, se envía a Gemini, se cachea el resultado.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Ship</dt><dd>Build de un solo binario. Sin servidor de auth. La API key de Gemini la tiene el usuario, no la app.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Resultado</dt><dd>Shippeado privado para uso propio. Tres amigos pidieron instalarlo. Resúmenes semanales en 4 segundos.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Lo cambiaría</dt><dd>Pondría el prompt en la página de Settings. Ahora está oculto — los usuarios avanzados quieren verlo y yo estaba siendo sobreprotector.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Craft floor</dt><dd>Sin analytics. Sin telemetría. Sin cuenta. Bundle bajo 8 MB. Funciona en modo avión excepto la acción de resumen.</dd></div>
+  </dl>
+      
+    </div>
+  </article>
+  <section id="contact" class="v11-section v11-section--alt" aria-labelledby="contact-h">
+  <div class="v11-container">
+    <div class="v11-section__eyebrow">Contacto</div>
+    <h2 id="contact-h" class="v11-h1">Hablemos.</h2>
+    <p class="v11-lead">Email directo es el camino más rápido. Respondo en un día hábil. Abierto a roles Staff / Principal AI Product Designer.</p>
+
+    <div class="v11-contact">
+      <div class="v11-contact__headline">
+        <span class="v11-live" aria-hidden="true"></span>
+        <span>Open to work · Remote global</span>
+      </div>
+      <a class="v11-btn v11-btn--primary" href="mailto:danilorojas@hotmail.com" style="align-self:flex-start">
+        Escribirme
+        <span class="v11-btn__arrow" aria-hidden="true">→</span>
+      </a>
+      <div class="v11-contact__email-row">
+        <span class="v11-contact__email">danilorojas@hotmail.com</span>
+        <button type="button"
+          class="v11-contact__copy"
+          data-action="copy-email"
+          data-email="danilorojas@hotmail.com"
+          data-copy-label="Copiar email"
+          data-copied-label="Copiado"
+        >Copiar email</button>
+      </div>
+      <div class="v11-contact__socials">
+    <a class="v11-contact__social" href="https://linkedin.com/in/mdanilorojas" rel="noopener" target="_blank">
+      <span class="v11-contact__social-label">LinkedIn</span>
+      <span class="v11-contact__social-handle">linkedin.com/in/mdanilorojas</span>
+    </a>
+    <a class="v11-contact__social" href="https://github.com/mdanilorojas" rel="noopener" target="_blank">
+      <span class="v11-contact__social-label">GitHub</span>
+      <span class="v11-contact__social-handle">github.com/mdanilorojas</span>
+    </a>
+    <a class="v11-contact__social" href="https://behance.net/mariodanilo" rel="noopener" target="_blank">
+      <span class="v11-contact__social-label">Behance</span>
+      <span class="v11-contact__social-handle">behance.net/mariodanilo</span>
+    </a>
+      </div>
+    </div>
+
+    <div style="margin-top:48px"><figure class="v11-quote">
+  <blockquote class="v11-quote__text">Danilo está haciendo cosas geniales usando AI de las maneras correctas. Se metió a fondo en el mundo de developer-portal y entregó trabajo que quería seguir reutilizando. Una pérdida de verdad para nosotros.</blockquote>
+  <figcaption class="v11-quote__attr">
+    <span class="v11-quote__author">Jennifer Sheppard</span>
+    <span class="v11-quote__role">Product Lead · Developer Portal · Booz Allen Hamilton</span>
+    <span class="v11-quote__badge">Verificado</span>
+  </figcaption>
+</figure></div>
+  </div>
+</section>
+</main>
+<footer class="v11-footer">
+  <div class="v11-footer__inner">
+    <span>Hecho por Danilo Rojas · código en github.com/mdanilorojas · actualizado 2026-05-08</span>
+    <div style="display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="https://github.com/mdanilorojas/dr-cv">github.com/mdanilorojas</a>
+      <a href="mailto:danilorojas@hotmail.com">danilorojas@hotmail.com</a>
+      <span>Sistema de Diseño V11</span>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  "use strict";
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* nav scroll state */
+  var nav = document.querySelector('.v11-nav');
+  function onScroll(){
+    if (!nav) return;
+    if (window.scrollY > 40) nav.classList.add('is-scrolled');
+    else                     nav.classList.remove('is-scrolled');
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* lang-toggle — preserve hash + scroll target across languages */
+  document.querySelectorAll('a.v11-nav__lang').forEach(function(a){
+    a.addEventListener('click', function(){
+      var href = a.getAttribute('href') || '';
+      if (location.hash) {
+        a.setAttribute('href', href.split('#')[0] + location.hash);
+      }
+    });
+  });
+
+  /* copy-email */
+  document.addEventListener('click', function(e){
+    var btn = e.target && e.target.closest ? e.target.closest('[data-action="copy-email"]') : null;
+    if (!btn) return;
+    var email = btn.getAttribute('data-email') || '';
+    var copiedLabel = btn.getAttribute('data-copied-label') || 'Copied';
+    var copyLabel   = btn.getAttribute('data-copy-label')   || 'Copy email';
+
+    function flash(){
+      btn.textContent = copiedLabel;
+      btn.setAttribute('data-copied', 'true');
+      setTimeout(function(){
+        btn.textContent = copyLabel;
+        btn.removeAttribute('data-copied');
+      }, 1800);
+    }
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      navigator.clipboard.writeText(email).then(flash, function(){
+        window.prompt(copyLabel, email);
+      });
+    } else {
+      window.prompt(copyLabel, email);
+    }
+  });
+
+  /* scroll-reveal — only if motion allowed */
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          en.target.classList.add('is-visible');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
+  }
+
+  /* case animations — play when in viewport, pause when leaving */
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var animIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          en.target.classList.add('is-playing');
+        } else {
+          en.target.classList.remove('is-playing');
+        }
+      });
+    }, { threshold: 0.35, rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll('[data-animate]').forEach(function(el){ animIo.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>

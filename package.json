@@ -12,6 +12,7 @@
     "build:cvs": "tsx generators/cv.ts",
     "build:landing-v11": "tsx generators/v11-landing.ts",
     "build:all": "npm run build:skills-sheet && npm run build:cvs && npm run build:landing-v11",
+    "optimize:animations": "tsx generators/lib/optimize-animation-stills.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
@@ -21,6 +22,7 @@
     "@types/node": "^20.11.0",
     "js-yaml": "^4.1.0",
     "puppeteer": "^22.0.0",
+    "sharp": "^0.34.5",
     "tsx": "^4.7.0",
     "typescript": "^5.3.0",
     "vitest": "^1.2.0"

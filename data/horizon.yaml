@@ -43,9 +43,9 @@ columns:
       - label: { en: "MCP servers",             es: "MCP servers" }
         href: "#case-enregla"
       - label: { en: "Design-system-as-skill",  es: "Design-system-as-skill" }
-        href: "#case-te-skin"
+        href: "#case-developer-portal"
       - label: { en: "Recursive critic loops",  es: "Loops de crítico recursivos" }
-        href: "#case-te-black"
+        href: "#case-developer-portal"
       - label: { en: "Taste as rubric",         es: "Taste como rúbrica" }
         href: "#method"
 

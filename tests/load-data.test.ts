@@ -120,9 +120,9 @@ describe("loadCases", () => {
   it("loads real /data/cases/*.md files", () => {
     const realCasesDir = path.join(dataDir, "cases");
     const cases = loadCases(realCasesDir);
-    expect(cases.length).toBe(4);
+    expect(cases.length).toBe(3);
     const slugs = cases.map((c) => c.slug).sort();
-    expect(slugs).toEqual(["enregla", "life-update-mobile", "te-black", "te-skin"]);
+    expect(slugs).toEqual(["developer-portal", "enregla", "life-update-mobile"]);
   });
 });
 
@@ -155,7 +155,7 @@ describe("loadCvData", () => {
   it("loads the real /data/ directory including cases, education, and attributed", () => {
     const cv = loadCvData(dataDir);
     expect(cv.identity.name).toBe("Danilo Rojas");
-    expect(cv.cases.length).toBe(4);
+    expect(cv.cases.length).toBe(3);
     expect(cv.education.length).toBeGreaterThan(0);
     expect(cv.attributedTestimonials.length).toBeGreaterThanOrEqual(3);
     expect(cv.experience.past).toBeDefined();
@@ -226,7 +226,7 @@ describe("loadLandingData", () => {
   it("combines CvData and landing config", () => {
     const ld = loadLandingData(dataDir);
     expect(ld.identity.name).toBe("Danilo Rojas");
-    expect(ld.cases.length).toBe(4);
+    expect(ld.cases.length).toBe(3);
     expect(ld.landing.tabs).toHaveLength(5);
     expect(ld.landing.cta.en).toContain("Let");
   });

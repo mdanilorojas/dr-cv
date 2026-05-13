@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Horizon flow · V2 pulido · reorder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --v11-bg-primary: #0A0B0E;
+  --v11-bg-alt: #111318;
+  --v11-bg-elevated: #14161C;
+  --v11-bg-inset: #0D0F13;
+  --v11-text: #F4F4F5;
+  --v11-text-70: #B0B2B7;
+  --v11-text-50: #797D86;
+  --v11-text-40: #61656B;
+  --v11-accent: #FF8964;
+  --v11-accent-soft: rgba(255, 137, 100, 0.14);
+  --v11-accent-line: rgba(255, 137, 100, 0.28);
+  --v11-signal-pos: #4ADE80;
+  --v11-signal-warn: #E5A84B;
+  --v11-line: rgba(255, 255, 255, 0.08);
+  --v11-line-strong: rgba(255, 255, 255, 0.18);
+  --v11-font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --green: var(--v11-signal-pos);
+  --green-soft: rgba(74, 222, 128, 0.14);
+  --green-line: rgba(74, 222, 128, 0.32);
+}
+
+html, body {
+  margin: 0;
+  background: var(--v11-bg-primary);
+  color: var(--v11-text);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 32px 96px;
+}
+.page__kicker {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin: 0 0 12px;
+}
+.page__title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+}
+.page__lead {
+  font-size: 14px;
+  color: var(--v11-text-70);
+  margin: 0 0 48px;
+  max-width: 820px;
+}
+
+/* ================================================================
+ * HORIZON SECTION — V2 pulida · reorder
+ * ================================================================ */
+.v11-horizon {
+  padding: 64px 0;
+  background: var(--v11-bg-alt);
+  border-top: 1px solid var(--v11-line);
+  border-bottom: 1px solid var(--v11-line);
+}
+.v11-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.v11-horizon__eyebrow {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin: 0 0 12px;
+}
+.v11-horizon__title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 40px;
+  color: var(--v11-text);
+}
+
+/* ---- Progress bar block (lives ABOVE the grid) ---- */
+.v11-horizon__progress {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding: 0 22px;
+}
+.v11-horizon__seg {
+  height: 6px;
+  border-radius: 3px;
+  position: relative;
+}
+.v11-horizon__seg--earned {
+  background: var(--green);
+  box-shadow: 0 0 0 1px var(--green-line);
+}
+.v11-horizon__seg--investing {
+  background: var(--v11-accent);
+}
+.v11-horizon__seg--horizon {
+  background: transparent;
+  border: 1px dashed var(--v11-accent);
+}
+.v11-horizon__marker {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--v11-font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  white-space: nowrap;
+  padding: 3px 10px;
+  background: var(--v11-accent-soft);
+  border: 1px solid var(--v11-accent-line);
+  border-radius: 3px;
+  font-weight: 600;
+}
+.v11-horizon__marker::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -4px;
+  border: 4px solid transparent;
+  border-top-color: var(--v11-accent);
+}
+
+/* ---- Tool-rail block (lives BELOW the progress bar) ---- */
+.v11-horizon__tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  margin-bottom: 8px;
+}
+.v11-horizon__tools-block {
+  padding: 10px 22px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-family: var(--v11-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+.v11-horizon__tools-block + .v11-horizon__tools-block {
+  border-left: 1px solid var(--v11-line);
+}
+.v11-horizon__step {
+  padding: 3px 8px;
+  border-radius: 3px;
+  background: var(--v11-bg-inset);
+  border: 1px solid var(--v11-line);
+  color: var(--v11-text-70);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.v11-horizon__arrow {
+  color: var(--v11-text-40);
+  font-weight: 500;
+}
+.v11-horizon__tools-block--earned .v11-horizon__step {
+  background: var(--green-soft);
+  border-color: var(--green-line);
+  color: var(--green);
+}
+.v11-horizon__tools-block--investing .v11-horizon__step {
+  background: var(--v11-accent-soft);
+  border-color: var(--v11-accent-line);
+  color: var(--v11-text);
+}
+.v11-horizon__tools-block--investing .v11-horizon__arrow {
+  color: var(--v11-accent);
+}
+.v11-horizon__tools-block--horizon .v11-horizon__step {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--v11-accent-line);
+  color: var(--v11-text-70);
+}
+
+/* ---- Main grid (stage label → heading → body → chips) ---- */
+.v11-horizon__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+}
+.v11-horizon__col {
+  padding: 16px 22px 0;
+  position: relative;
+}
+.v11-horizon__col + .v11-horizon__col {
+  border-left: 1px solid var(--v11-line);
+}
+.v11-horizon__stage {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-text-50);
+  margin-bottom: 14px;
+}
+.v11-horizon__col[data-stage='earned'] .v11-horizon__stage {
+  color: var(--green);
+}
+.v11-horizon__col[data-stage='investing'] .v11-horizon__stage {
+  color: var(--v11-accent);
+}
+.v11-horizon__heading {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin: 0 0 10px;
+  color: var(--v11-text);
+}
+.v11-horizon__body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--v11-text-70);
+  margin: 0 0 16px;
+}
+
+/* ---- Chips (content chips, not tool rail) ---- */
+.v11-horizon__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.v11-horizon__chip {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  padding: 4px 10px 4px 8px;
+  border-radius: 999px;
+  background: var(--v11-bg-inset);
+  color: var(--v11-text-70);
+  border: 1px solid var(--v11-line);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  line-height: 1;
+}
+[data-stage='earned'] .v11-horizon__chip {
+  background: var(--green-soft);
+  border-color: var(--green-line);
+  color: var(--v11-text);
+  text-decoration: none;
+}
+[data-stage='earned'] .v11-horizon__chip::before {
+  content: "";
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.3 2.3 4.7-4.7' stroke='%230A0B0E' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 9px 9px;
+}
+[data-stage='investing'] .v11-horizon__chip {
+  background: var(--v11-accent-soft);
+  color: var(--v11-text);
+  border-color: var(--v11-accent-line);
+}
+[data-stage='horizon'] .v11-horizon__chip[data-kind='bet'] {
+  border-style: dashed;
+  color: var(--v11-text);
+}
+.v11-horizon__bet-badge {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v11-signal-warn);
+  font-weight: 600;
+  padding: 1px 5px;
+  border: 1px solid var(--v11-signal-warn);
+  border-radius: 3px;
+  line-height: 1;
+}
+
+/* Give the "You are here" marker vertical breathing room above the bar */
+.v11-horizon__progress {
+  margin-top: 36px;
+}
+
+@media (max-width: 920px) {
+  .v11-horizon__progress,
+  .v11-horizon__tools,
+  .v11-horizon__grid {
+    grid-template-columns: 1fr;
+  }
+  .v11-horizon__progress { display: none; }
+  .v11-horizon__tools-block + .v11-horizon__tools-block,
+  .v11-horizon__col + .v11-horizon__col {
+    border-left: 0;
+    border-top: 1px solid var(--v11-line);
+  }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <p class="page__kicker">V2 · pulido · reorder · 2026-05-12</p>
+  <h1 class="page__title">Horizon section — V2 polished · nuevo orden</h1>
+  <p class="page__lead">Orden pedido: Direction → title → "You are here" → 3 barras de progreso → tool chips (Figma/DS/Handoff · Hi-Fi Figma/Storybook/GitHub · Team/Agent tooling/Eval-driven) → stage labels (Earned · Investing · Next horizon) → headings + body + content chips con check verde.</p>
+
+  <section class="v11-horizon" aria-labelledby="horizon-h">
+    <div class="v11-container">
+      <div class="v11-horizon__eyebrow">Direction · 2026</div>
+      <h2 id="horizon-h" class="v11-horizon__title">Where my hours are going</h2>
+
+      <!-- 1 · Progress bar + "You are here" -->
+      <div class="v11-horizon__progress" aria-hidden="true">
+        <div class="v11-horizon__seg v11-horizon__seg--earned"></div>
+        <div class="v11-horizon__seg v11-horizon__seg--investing">
+          <span class="v11-horizon__marker">You are here</span>
+        </div>
+        <div class="v11-horizon__seg v11-horizon__seg--horizon"></div>
+      </div>
+
+      <!-- 2 · Tool chips per pipeline -->
+      <div class="v11-horizon__tools" aria-hidden="true">
+        <div class="v11-horizon__tools-block v11-horizon__tools-block--earned">
+          <span class="v11-horizon__step">Figma</span>
+          <span class="v11-horizon__arrow">→</span>
+          <span class="v11-horizon__step">DS</span>
+          <span class="v11-horizon__arrow">→</span>
+          <span class="v11-horizon__step">Handoff</span>
+        </div>
+        <div class="v11-horizon__tools-block v11-horizon__tools-block--investing">
+          <span class="v11-horizon__step">Hi-Fi Figma</span>
+          <span class="v11-horizon__arrow">→</span>
+          <span class="v11-horizon__step">Storybook</span>
+          <span class="v11-horizon__arrow">→</span>
+          <span class="v11-horizon__step">GitHub</span>
+        </div>
+        <div class="v11-horizon__tools-block v11-horizon__tools-block--horizon">
+          <span class="v11-horizon__step">Team</span>
+          <span class="v11-horizon__arrow">→</span>
+          <span class="v11-horizon__step">Agent tooling</span>
+          <span class="v11-horizon__arrow">→</span>
+          <span class="v11-horizon__step">Eval-driven</span>
+        </div>
+      </div>
+
+      <!-- 3 · Stage columns -->
+      <div class="v11-horizon__grid" role="list">
+        <div class="v11-horizon__col" data-stage="earned" role="listitem">
+          <div class="v11-horizon__stage">Earned · 2010–2023</div>
+          <h3 class="v11-horizon__heading">The craft I mastered, now commoditized</h3>
+          <p class="v11-horizon__body">15 years running the old pipeline: Figma → design system → components → tokens → prototypes → handoff to a developer. The craft is real. The handoff is now a commodity.</p>
+          <ul class="v11-horizon__chips">
+            <li><span class="v11-horizon__chip">Figma mastery</span></li>
+            <li><span class="v11-horizon__chip">Hand-coded UI</span></li>
+            <li><span class="v11-horizon__chip">Design reviews</span></li>
+            <li><span class="v11-horizon__chip">Component libraries</span></li>
+            <li><span class="v11-horizon__chip">Style-guide PDFs</span></li>
+          </ul>
+        </div>
+
+        <div class="v11-horizon__col" data-stage="investing" role="listitem">
+          <div class="v11-horizon__stage">Investing · 2024–Now</div>
+          <h3 class="v11-horizon__heading">Where my hours go today</h3>
+          <p class="v11-horizon__body">The new pipeline: Hi-Fi Figma → Cloud Storybook → GitHub → ready for the user. No developer handoff in the middle — the agents ship the code, I ship the judgment that tells them what to build.</p>
+          <ul class="v11-horizon__chips">
+            <li><span class="v11-horizon__chip">Agent orchestration</span></li>
+            <li><span class="v11-horizon__chip">MCP servers</span></li>
+            <li><span class="v11-horizon__chip">Design-system-as-skill</span></li>
+            <li><span class="v11-horizon__chip">Recursive critic loops</span></li>
+            <li><span class="v11-horizon__chip">Taste as rubric</span></li>
+          </ul>
+        </div>
+
+        <div class="v11-horizon__col" data-stage="horizon" role="listitem">
+          <div class="v11-horizon__stage">Next horizon · 12 mo</div>
+          <h3 class="v11-horizon__heading">What I'm walking toward</h3>
+          <p class="v11-horizon__body">Embedded in a serious product team, owning the seam between design judgment and agentic execution — at a scale where one person's leverage becomes a team's.</p>
+          <ul class="v11-horizon__chips">
+            <li><span class="v11-horizon__chip">Team-scale agent tooling</span></li>
+            <li><span class="v11-horizon__chip">Audited agent workflows</span></li>
+            <li><span class="v11-horizon__chip" data-kind="bet">Eval-driven UI <span class="v11-horizon__bet-badge">bet</span></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

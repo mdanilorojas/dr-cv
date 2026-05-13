@@ -12,6 +12,7 @@ import type {
 import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 import { V11_STYLES } from "./v11-styles.js";
 import { V11_SCRIPT } from "./v11-script.js";
+import { renderPipAnimation, pipAnimationCss } from "./animations/picture-in-picture.js";
 
 /* ============== Narrative Ship case-study beats ==============
  * Hand-authored beats per case in the Narrative Ship format
@@ -60,64 +61,34 @@ const CASE_BEATS: Record<string, CaseBeats> = {
       es: "RLS en cada tabla. Cliente Supabase type-safe. Dark-mode primario con trazabilidad WCAG por token. 0 SQL hand-edited en prod.",
     },
   },
-  "te-skin": {
+  "developer-portal": {
     context: {
-      en: "Booz Allen Hamilton / Trusted Environments — a government-facing platform. Design review was a two-week bottleneck on every ticket.",
-      es: "Booz Allen Hamilton / Trusted Environments — plataforma government-facing. La revisión de diseño era un cuello de botella de dos semanas por cada ticket.",
+      en: "Booz Allen Hamilton · Developer Portal — a government-facing platform where two design systems run side by side: /te-skin (the component library) and TE Black (the dark-first palette). Design review was a two-week bottleneck on every ticket and existing components washed out under 12-hour mission lighting.",
+      es: "Booz Allen Hamilton · Developer Portal — plataforma government-facing donde dos design systems corren en paralelo: /te-skin (la librería de componentes) y TE Black (la paleta dark-first). La revisión de diseño era un cuello de botella de dos semanas y los componentes existentes se lavaban bajo iluminación de misión de 12 horas.",
     },
     problem: {
-      en: "Designers reviewed the same WCAG + token mismatches on every PR. The DS existed as Figma — the agents couldn't reach it.",
-      es: "Los diseñadores revisaban los mismos desajustes WCAG + tokens en cada PR. El DS existía en Figma — los agentes no podían alcanzarlo.",
+      en: "Designers reviewed the same WCAG + token mismatches on every PR. The DS existed as Figma — the agents couldn't reach it. And dark mode was treated as a theme even though operators on the platform lived in it.",
+      es: "Los diseñadores revisaban los mismos desajustes WCAG + tokens en cada PR. El DS existía en Figma — los agentes no lo alcanzaban. Y dark era tratado como un tema, pese a que los operadores de la plataforma vivían ahí.",
     },
     approach: {
-      en: "Packaged the DS as a Claude Code slash-command skill. Tokens + decision trees + 17 recursive review rules invokable with @te-skin.",
-      es: "Empaqueté el DS como slash-command skill para Claude Code. Tokens + árboles de decisión + 17 reglas recursivas invocables con @te-skin.",
+      en: "Packaged the DS as a Claude Code slash-command skill (/te-skin). Tokens + decision trees + 17 recursive review rules invokable inline. In parallel, authored TE Black: dark-primary palette with the per-token WCAG audit written into the definition itself, not a downstream lint.",
+      es: "Empaqueté el DS como slash-command skill para Claude Code (/te-skin). Tokens + árboles de decisión + 17 reglas recursivas invocables inline. En paralelo, autoré TE Black: paleta dark-primaria con auditoría WCAG por token escrita en la definición, no en un lint downstream.",
     },
     ship: {
-      en: "Shipped in four weeks. Two-person agent workflow: one proposes UI, one runs recursive review. Five rounds raised the score 78.4 → 95.6.",
-      es: "Shippeado en cuatro semanas. Workflow de dos agentes: uno propone UI, otro corre revisión recursiva. Cinco rondas subieron el score 78.4 → 95.6.",
+      en: "Shipped in four weeks. Two-agent workflow: one proposes UI, one runs recursive review. Five rounds raised the score 78.4 → 95.6. Tokens expose wcag.normal and wcag.large ratios for every ink-on-surface pair; component library migrated in the same PR as the tokens.",
+      es: "Shippeado en cuatro semanas. Workflow de dos agentes: uno propone UI, otro corre revisión recursiva. Cinco rondas subieron el score 78.4 → 95.6. Los tokens exponen ratios wcag.normal y wcag.large para cada par ink-on-surface; librería migrada en la misma PR que los tokens.",
     },
     outcome: {
-      en: "Design review cycles dropped from 2 weeks → 36 hours. Jennifer Sheppard, Product Lead, called it \\\"work I wanted to keep reusing.\\\"",
-      es: "Los ciclos de revisión cayeron de 2 semanas → 36 horas. Jennifer Sheppard, Product Lead, lo llamó \\\"work I wanted to keep reusing.\\\"",
+      en: "Design review cycles dropped from 2 weeks → 36 hours. Every contrast pair provably ≥ 4.5:1, and operators stopped reporting dim text in weekly retros. Jennifer Sheppard, Product Lead, called it \\\"work I wanted to keep reusing.\\\"",
+      es: "Los ciclos de revisión cayeron de 2 semanas → 36 horas. Cada par de contraste probadamente ≥ 4.5:1, y los operadores dejaron de reportar texto apagado en los retros semanales. Jennifer Sheppard, Product Lead, lo llamó \\\"work I wanted to keep reusing.\\\"",
     },
     differently: {
-      en: "I would ship a public skill scaffold first. The BAH-specific tokens should have been a layer, not the base.",
-      es: "Shippearía primero un scaffold público del skill. Los tokens BAH-specific deberían haber sido una capa, no la base.",
+      en: "I would ship a public skill scaffold first and publish the audit trail as a CI gate. The client-specific tokens should have been a layer, not the base; and a failed WCAG ratio should fail the build, not rely on convention.",
+      es: "Shippearía primero un scaffold público del skill y publicaría la trazabilidad como gate de CI. Los tokens específicos del cliente debieron ser una capa, no la base; y una ratio WCAG fallada debería romper el build, no confiar en la convención.",
     },
     craft: {
-      en: "WCAG audit trail stored per token. Dark-mode primary. Skill idempotent under re-invocation. No manual edits in the generated output.",
-      es: "Trazabilidad WCAG guardada por token. Dark-mode primario. Skill idempotente bajo re-invocación. Cero edits manuales en el output generado.",
-    },
-  },
-  "te-black": {
-    context: {
-      en: "Booz Allen Hamilton / Trusted Environments — operators working 12-hour shifts on dark-first consoles. Existing components washed out under mission lighting.",
-      es: "Booz Allen Hamilton / Trusted Environments — operadores en turnos de 12 horas en consolas dark-first. Los componentes existentes se lavaban bajo la iluminación de misión.",
-    },
-    problem: {
-      en: "Design system treated dark as a theme. Operators were the primary audience — it needed to be the base.",
-      es: "El sistema trataba dark como tema. Los operadores eran la audiencia primaria — debía ser la base.",
-    },
-    approach: {
-      en: "Built TE Black: dark-primary palette with per-token WCAG audit written into the token definition, not as a downstream check.",
-      es: "Construí TE Black: paleta dark-primaria con auditoría WCAG por token escrita en la definición del token, no como chequeo downstream.",
-    },
-    ship: {
-      en: "Tokens expose `wcag.normal` and `wcag.large` ratios for every ink-on-surface pair. Component library migrated in the same PR as the tokens.",
-      es: "Los tokens exponen ratios `wcag.normal` y `wcag.large` para cada par ink-on-surface. La librería de componentes migrada en la misma PR que los tokens.",
-    },
-    outcome: {
-      en: "Every contrast pair provably ≥ 4.5:1. Operators stopped reporting \\\"dim text\\\" in weekly retros. Cited in the TE design review as the reference palette.",
-      es: "Cada par de contraste probablemente ≥ 4.5:1. Los operadores dejaron de reportar \\\"texto apagado\\\" en los retros semanales. Citado en la review de diseño TE como paleta de referencia.",
-    },
-    differently: {
-      en: "I would publish the audit trail as a CI gate. Right now it's a convention; a failed ratio should fail the build.",
-      es: "Publicaría la trazabilidad como un gate de CI. Ahora es una convención; una ratio fallada debería romper el build.",
-    },
-    craft: {
-      en: "Tokens in CSS + JSON + Figma library in sync. APCA-adjacent luminance verified. No undocumented color combinations ship.",
-      es: "Tokens en CSS + JSON + librería Figma sincronizados. Luminancia APCA-adjacent verificada. No se shippean combinaciones de color sin documentar.",
+      en: "WCAG audit trail stored per token. Dark-mode primary. Tokens in CSS + JSON + Figma library in sync. Skill idempotent under re-invocation. APCA-adjacent luminance verified. No manual edits in the generated output.",
+      es: "Trazabilidad WCAG guardada por token. Dark-mode primario. Tokens en CSS + JSON + librería Figma sincronizados. Skill idempotente bajo re-invocación. Luminancia APCA-adjacent verificada. Sin edits manuales en el output generado.",
     },
   },
   "life-update-mobile": {
@@ -152,9 +123,12 @@ const CASE_BEATS: Record<string, CaseBeats> = {
   },
 };
 
-function beatsFor(slug: string): CaseBeats | null {
+export function beatsFor(slug: string): CaseBeats | null {
   return CASE_BEATS[slug] ?? null;
 }
+export { COPY as V11_COPY };
+export { renderNav, renderContact, renderFooter };
+export type { NavOpts };
 
 /* ============== helpers ============== */
 
@@ -212,8 +186,8 @@ const COPY = {
   work: {
     eyebrowEn: "Selected work · 2025–2026",
     eyebrowEs: "Trabajo seleccionado · 2025–2026",
-    titleEn: "Four ships. Four agent-built artifacts.",
-    titleEs: "Cuatro ships. Cuatro artefactos construidos con agentes.",
+    titleEn: "Three ships. Three agent-built artifacts.",
+    titleEs: "Tres ships. Tres artefactos construidos con agentes.",
     leadEn: "Everything below was built with agents at the center of the workflow. The craft floor is mine — the leverage is the combination.",
     leadEs: "Todo lo de abajo fue construido con agentes al centro del workflow. El craft floor es mío — el apalancamiento es la combinación.",
     beatsEn: {
@@ -234,6 +208,12 @@ const COPY = {
       differently: "Lo cambiaría",
       craft: "Craft floor",
     },
+    caseCtaEn: "How this shipped",
+    caseCtaEs: "Cómo se shippeó",
+    caseBackEn: "Back to work",
+    caseBackEs: "Volver al trabajo",
+    caseNextEn: "Next case",
+    caseNextEs: "Siguiente caso",
   },
   method: {
     eyebrowEn: "Method",
@@ -261,26 +241,35 @@ const COPY = {
 
 /* ============== NAV ============== */
 
-function renderNav(identity: Identity, lang: Lang): string {
+interface NavOpts {
+  /** Prefix to turn section anchors into links back to the landing.
+   *  Empty string on the landing itself; "../../" on a case-detail page. */
+  homeHref: string;
+  /** Override for the lang-toggle href when the current page has a direct twin. */
+  langHrefOverride?: string;
+}
+function renderNav(identity: Identity, lang: Lang, opts: NavOpts): string {
   const workLabel = lang === "en" ? "Work" : "Trabajo";
   const notebookLabel = lang === "en" ? "Notebook" : "Notebook";
   const methodLabel = lang === "en" ? "Method" : "Método";
   const contactLabel = lang === "en" ? "Contact" : "Contacto";
-  const langHref = lang === "en" ? "/es/" : "/";
+  const defaultLangHref = lang === "en" ? "/es/" : "/";
+  const langHref = opts.langHrefOverride ?? defaultLangHref;
   const langCode = lang === "en" ? "EN / ES" : "ES / EN";
   const langAria = lang === "en" ? "View in Spanish" : "View in English";
   const navAria = lang === "en" ? "Main navigation" : "Navegación principal";
+  const brandHref = opts.homeHref === "" ? "#top" : opts.homeHref;
 
   return `<nav class="v11-nav" aria-label="${escapeHtml(navAria)}">
   <div class="v11-nav__inner">
-    <a href="#top" class="v11-nav__brand">${escapeHtml(identity.name)}<span class="v11-nav__brand-sep">·</span>dr</a>
+    <a href="${escapeHtml(brandHref)}" class="v11-nav__brand">${escapeHtml(identity.name)}<span class="v11-nav__brand-sep">·</span>dr</a>
     <div class="v11-nav__tabs">
-      <a class="v11-nav__link" href="#notebook">${escapeHtml(notebookLabel)}</a>
-      <a class="v11-nav__link" href="#work">${escapeHtml(workLabel)}</a>
-      <a class="v11-nav__link" href="#method">${escapeHtml(methodLabel)}</a>
-      <a class="v11-nav__link" href="#contact">${escapeHtml(contactLabel)}</a>
+      <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#notebook">${escapeHtml(notebookLabel)}</a>
+      <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#work">${escapeHtml(workLabel)}</a>
+      <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#method">${escapeHtml(methodLabel)}</a>
+      <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#contact">${escapeHtml(contactLabel)}</a>
     </div>
-    <a class="v11-nav__lang" href="${langHref}" hreflang="${lang === "en" ? "es" : "en"}" aria-label="${escapeHtml(langAria)}">${escapeHtml(langCode)}</a>
+    <a class="v11-nav__lang" href="${escapeHtml(langHref)}" hreflang="${lang === "en" ? "es" : "en"}" aria-label="${escapeHtml(langAria)}">${escapeHtml(langCode)}</a>
   </div>
 </nav>`;
 }
@@ -559,48 +548,9 @@ ${columns}
 
 /* ============== WORK ============== */
 
-function renderCase(c: Case, lang: Lang): string {
-  const title = lang === "en" ? c.titleEn : c.titleEs;
-  const client = lang === "en" ? c.clientEn : c.clientEs;
-  const hook = lang === "en" ? c.hookEn : c.hookEs;
-  const dates = yearRange(c.yearStart, c.yearEnd, lang);
-  const beats = beatsFor(c.slug);
-  const labels = lang === "en" ? COPY.work.beatsEn : COPY.work.beatsEs;
-
-  const beatsHtml = beats
-    ? `
-  <dl class="v11-case__beats">
-    <div class="v11-case__beat"><dt>${escapeHtml(labels.context)}</dt><dd>${escapeHtml(beats.context[lang])}</dd></div>
-    <div class="v11-case__beat"><dt>${escapeHtml(labels.problem)}</dt><dd>${escapeHtml(beats.problem[lang])}</dd></div>
-    <div class="v11-case__beat"><dt>${escapeHtml(labels.approach)}</dt><dd>${escapeHtml(beats.approach[lang])}</dd></div>
-    <div class="v11-case__beat"><dt>${escapeHtml(labels.ship)}</dt><dd>${escapeHtml(beats.ship[lang])}</dd></div>
-    <div class="v11-case__beat"><dt>${escapeHtml(labels.outcome)}</dt><dd>${escapeHtml(beats.outcome[lang])}</dd></div>
-    <div class="v11-case__beat"><dt>${escapeHtml(labels.differently)}</dt><dd>${escapeHtml(beats.differently[lang])}</dd></div>
-    <div class="v11-case__beat"><dt>${escapeHtml(labels.craft)}</dt><dd>${escapeHtml(beats.craft[lang])}</dd></div>
-  </dl>`
-    : "";
-
-  const chips = c.stack.map((s) => `<span class="v11-chip">${escapeHtml(s)}</span>`).join(" ");
-
-  return `<article id="case-${escapeHtml(c.slug)}" class="v11-case" data-reveal>
-  <div class="v11-case__head">
-    <span class="v11-case__client">${escapeHtml(client)}</span>
-    <span class="v11-case__dates">${escapeHtml(dates)}</span>
-  </div>
-  <h3 class="v11-case__title">${escapeHtml(title)}</h3>
-  <p class="v11-case__hook">${escapeHtml(hook)}</p>
-${beatsHtml}
-  <div class="v11-case__stack">${chips}</div>
-</article>`;
-}
-
-function renderWork(data: LandingData, lang: Lang): string {
-  const eyebrow = lang === "en" ? COPY.work.eyebrowEn : COPY.work.eyebrowEs;
-  const title = lang === "en" ? COPY.work.titleEn : COPY.work.titleEs;
-  const lead = lang === "en" ? COPY.work.leadEn : COPY.work.leadEs;
-
-  const order = ["enregla", "te-skin", "te-black", "life-update-mobile"];
-  const sorted = [...data.cases].sort((a, b) => {
+export function sortedCases(cases: Case[]): Case[] {
+  const order = ["enregla", "developer-portal", "life-update-mobile"];
+  return [...cases].sort((a, b) => {
     const ia = order.indexOf(a.slug);
     const ib = order.indexOf(b.slug);
     if (ia !== -1 && ib !== -1) return ia - ib;
@@ -608,8 +558,66 @@ function renderWork(data: LandingData, lang: Lang): string {
     if (ib !== -1) return 1;
     return b.yearStart - a.yearStart;
   });
+}
 
-  const cases = sorted.map((c) => renderCase(c, lang)).join("\n");
+function renderCase(c: Case, lang: Lang, basePath: string): string {
+  const title = lang === "en" ? c.titleEn : c.titleEs;
+  const client = lang === "en" ? c.clientEn : c.clientEs;
+  const hook = lang === "en" ? c.hookEn : c.hookEs;
+  const dates = yearRange(c.yearStart, c.yearEnd, lang);
+  const bullets = lang === "en" ? c.bulletsEn : c.bulletsEs;
+  const cta = lang === "en" ? COPY.work.caseCtaEn : COPY.work.caseCtaEs;
+
+  const chips = c.stack.map((s) => `<span class="v11-chip">${escapeHtml(s)}</span>`).join(" ");
+
+  const bulletsHtml = bullets.length > 0
+    ? `<ul class="v11-case__bullets">${bullets
+        .slice(0, 3)
+        .map((b) => `<li>${escapeHtml(b)}</li>`)
+        .join("")}</ul>`
+    : "";
+
+  const animationHtml = c.animation === "developer-portal"
+    ? renderPipAnimation({
+        slug: c.slug,
+        stillBase: `${basePath}assets/animations/${c.animation}`,
+      })
+    : "";
+  const hasAnim = animationHtml !== "";
+  const articleClass = hasAnim ? "v11-case v11-case--has-anim" : "v11-case";
+
+  // Detail-page href. From landing root: work/<slug>/. From ES landing: work/<slug>/.
+  const detailHref = `${basePath}work/${encodeURIComponent(c.slug)}/`;
+
+  const textBlock = `<div class="v11-case__text">
+  <div class="v11-case__head">
+    <span class="v11-case__client">${escapeHtml(client)}</span>
+    <span class="v11-case__dates">${escapeHtml(dates)}</span>
+  </div>
+  <h3 class="v11-case__title">${escapeHtml(title)}</h3>
+  <p class="v11-case__hook">${escapeHtml(hook)}</p>
+  ${bulletsHtml}
+  <div class="v11-case__stack">${chips}</div>
+  <a class="v11-case__cta" href="${escapeHtml(detailHref)}">${escapeHtml(cta)}<span class="v11-case__cta-arrow" aria-hidden="true"> →</span></a>
+</div>`;
+
+  const animBlock = hasAnim
+    ? `<aside class="v11-case__aside">${animationHtml}</aside>`
+    : "";
+
+  return `<article id="case-${escapeHtml(c.slug)}" class="${articleClass}" data-reveal>
+${textBlock}
+${animBlock}
+</article>`;
+}
+
+function renderWork(data: LandingData, lang: Lang, basePath: string): string {
+  const eyebrow = lang === "en" ? COPY.work.eyebrowEn : COPY.work.eyebrowEs;
+  const title = lang === "en" ? COPY.work.titleEn : COPY.work.titleEs;
+  const lead = lang === "en" ? COPY.work.leadEn : COPY.work.leadEs;
+
+  const sorted = sortedCases(data.cases);
+  const cases = sorted.map((c) => renderCase(c, lang, basePath)).join("\n");
 
   return `<section id="work" class="v11-section" aria-labelledby="work-h">
   <div class="v11-container">
@@ -846,17 +854,18 @@ export function renderV11Landing(
 <style>
 ${tokensCss}
 ${V11_STYLES}
+${pipAnimationCss}
 </style>
 </head>
 <body>
 <a class="v11-skip" href="#main">${escapeHtml(skipLabel)}</a>
-${renderNav(data.identity, lang)}
+${renderNav(data.identity, lang, { homeHref: "" })}
 <main id="main">
 ${renderHero(data.identity, data.positioning, lang, assets.photoHref)}
 ${renderProof(data.positioning, lang)}
 ${renderHorizon(data.horizon, lang)}
 ${renderNotebook(data.identity, lang, assets.photoHref)}
-${renderWork(data, lang)}
+${renderWork(data, lang, "")}
 ${renderMethod(data, lang)}
 ${renderContact(data, lang)}
 </main>
