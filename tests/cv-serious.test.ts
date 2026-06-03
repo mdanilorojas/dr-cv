@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(here, "..", "data");
+const dataDir = path.join(here, ".." , "data");
 const tokensPath = path.join(here, "..", "design-system", "tokens.css");
 const tokensCss = readFileSync(tokensPath, "utf8");
 

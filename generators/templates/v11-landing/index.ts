@@ -13,6 +13,12 @@ import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 import { V11_STYLES } from "./v11-styles.js";
 import { V11_SCRIPT } from "./v11-script.js";
 import { renderPipAnimation, pipAnimationCss } from "./animations/picture-in-picture.js";
+import {
+  renderIframeAnimation,
+  hasIframeAnimation,
+  iframeAnimationCss,
+  iframeAnimationScript,
+} from "./animations/iframe-animation.js";
 
 /* ============== Narrative Ship case-study beats ==============
  * Hand-authored beats per case in the Narrative Ship format
@@ -560,6 +566,21 @@ export function sortedCases(cases: Case[]): Case[] {
   });
 }
 
+function renderCaseAnimation(c: Case, lang: Lang, basePath: string): string {
+  // Prefer the new iframe-based gallery animations when the slug is mapped.
+  if (hasIframeAnimation(c.slug)) {
+    return renderIframeAnimation({ slug: c.slug, lang, basePath });
+  }
+  // Legacy fallback: inline PIP animation driven by the data's `animation` field.
+  if (c.animation) {
+    return renderPipAnimation({
+      slug: c.slug,
+      stillBase: `${basePath}assets/animations/${c.animation}`,
+    });
+  }
+  return "";
+}
+
 function renderCase(c: Case, lang: Lang, basePath: string): string {
   const title = lang === "en" ? c.titleEn : c.titleEs;
   const client = lang === "en" ? c.clientEn : c.clientEs;
@@ -568,7 +589,14 @@ function renderCase(c: Case, lang: Lang, basePath: string): string {
   const bullets = lang === "en" ? c.bulletsEn : c.bulletsEs;
   const cta = lang === "en" ? COPY.work.caseCtaEn : COPY.work.caseCtaEs;
 
-  const chips = c.stack.map((s) => `<span class="v11-chip">${escapeHtml(s)}</span>`).join(" ");
+  // Labels for the editorial sidebar (V3 · Magazine)
+  const labelClient = lang === "en" ? "Client" : "Cliente";
+  const labelYears = lang === "en" ? "Years" : "Años";
+  const labelStack = lang === "en" ? "Stack" : "Stack";
+
+  const stackChips = c.stack
+    .map((s) => `<span class="v11-case__chip">${escapeHtml(s)}</span>`)
+    .join("");
 
   const bulletsHtml = bullets.length > 0
     ? `<ul class="v11-case__bullets">${bullets
@@ -577,37 +605,47 @@ function renderCase(c: Case, lang: Lang, basePath: string): string {
         .join("")}</ul>`
     : "";
 
-  const animationHtml = c.animation === "developer-portal"
-    ? renderPipAnimation({
-        slug: c.slug,
-        stillBase: `${basePath}assets/animations/${c.animation}`,
-      })
-    : "";
+  const animationHtml = renderCaseAnimation(c, lang, basePath);
   const hasAnim = animationHtml !== "";
   const articleClass = hasAnim ? "v11-case v11-case--has-anim" : "v11-case";
 
-  // Detail-page href. From landing root: work/<slug>/. From ES landing: work/<slug>/.
   const detailHref = `${basePath}work/${encodeURIComponent(c.slug)}/`;
 
-  const textBlock = `<div class="v11-case__text">
-  <div class="v11-case__head">
-    <span class="v11-case__client">${escapeHtml(client)}</span>
-    <span class="v11-case__dates">${escapeHtml(dates)}</span>
+  // Editorial sidebar — client / years / stack (vertical chips).
+  const metaCol = `<aside class="v11-case__meta-col">
+  <div class="v11-case__meta-block">
+    <div class="v11-case__meta-label">${escapeHtml(labelClient)}</div>
+    <div class="v11-case__meta-value v11-case__meta-value--accent">${escapeHtml(client)}</div>
   </div>
+  <div class="v11-case__meta-block">
+    <div class="v11-case__meta-label">${escapeHtml(labelYears)}</div>
+    <div class="v11-case__meta-value">${escapeHtml(dates)}</div>
+  </div>
+  <div class="v11-case__meta-block">
+    <div class="v11-case__meta-label">${escapeHtml(labelStack)}</div>
+    <div class="v11-case__meta-chips">${stackChips}</div>
+  </div>
+</aside>`;
+
+  // Text column (title + hook + bullets + CTA).
+  const textCol = `<div class="v11-case__text">
   <h3 class="v11-case__title">${escapeHtml(title)}</h3>
   <p class="v11-case__hook">${escapeHtml(hook)}</p>
   ${bulletsHtml}
-  <div class="v11-case__stack">${chips}</div>
-  <a class="v11-case__cta" href="${escapeHtml(detailHref)}">${escapeHtml(cta)}<span class="v11-case__cta-arrow" aria-hidden="true"> →</span></a>
+  <a class="v11-case__cta" href="${escapeHtml(detailHref)}">${escapeHtml(cta)}<span class="v11-case__cta-arrow" aria-hidden="true">→</span></a>
 </div>`;
 
-  const animBlock = hasAnim
-    ? `<aside class="v11-case__aside">${animationHtml}</aside>`
-    : "";
+  // Inner content grid: text left, animation right (or full-width text if no anim).
+  const contentInner = hasAnim
+    ? `<div class="v11-case__content">
+  ${textCol}
+  <aside class="v11-case__anim">${animationHtml}</aside>
+</div>`
+    : `<div class="v11-case__content v11-case__content--solo">${textCol}</div>`;
 
   return `<article id="case-${escapeHtml(c.slug)}" class="${articleClass}" data-reveal>
-${textBlock}
-${animBlock}
+${metaCol}
+${contentInner}
 </article>`;
 }
 
@@ -855,6 +893,7 @@ export function renderV11Landing(
 ${tokensCss}
 ${V11_STYLES}
 ${pipAnimationCss}
+${iframeAnimationCss}
 </style>
 </head>
 <body>
@@ -871,6 +910,7 @@ ${renderContact(data, lang)}
 </main>
 ${renderFooter(data.identity, lang)}
 <script>${V11_SCRIPT}</script>
+<script>${iframeAnimationScript}</script>
 </body>
 </html>`;
 }

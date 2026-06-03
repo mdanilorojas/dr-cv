@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(here, "..", "data");
+const dataDir = path.join(here, ".." , "data");
 
 function bodyOnly(html: string): string {
   const m = /<body>([\s\S]*?)<\/body>/i.exec(html);

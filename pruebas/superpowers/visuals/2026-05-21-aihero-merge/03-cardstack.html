@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Direction C · Card stack</title>
+<link rel="stylesheet" href="tokens-v11.css">
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* Direction C · Card stack
+     Most literal aihero merge — H2 + 4-card grid pattern. */
+
+  .c-page { background: var(--v11-bg-primary); color: var(--v11-text-body); }
+  .c-container { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+
+  .c-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 0;
+  }
+  .c-nav__brand { font-family: var(--v11-font-display); font-size: 14px; color: var(--v11-text); letter-spacing: -0.01em; font-weight: 600; }
+  .c-nav__brand b { color: var(--v11-accent); }
+  .c-nav__links { display: flex; gap: 24px; font-family: var(--v11-font-display); font-size: 13px; color: var(--v11-text-70); }
+  .c-nav__links a:hover { color: var(--v11-accent); }
+
+  .c-hero { padding: 80px 0 64px; text-align: center; }
+  .c-hero__byline { font-family: var(--v11-font-display); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v11-text-50); margin-bottom: 16px; }
+  .c-hero__title {
+    font-family: var(--v11-font-display);
+    font-weight: 600;
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--v11-text);
+    margin: 0 0 24px;
+    max-width: 18ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .c-hero__title span { color: var(--v11-accent); }
+  .c-hero__avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background-image: url('danilo.jpg');
+    background-size: cover; background-position: center;
+    border: 1px solid var(--v11-line);
+    margin: 24px auto 0;
+  }
+
+  .c-section { padding: 72px 0; }
+  .c-section__h {
+    font-family: var(--v11-font-display);
+    font-weight: 600;
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    color: var(--v11-text);
+    margin: 0 0 8px;
+    text-align: center;
+  }
+  .c-section__h span { color: var(--v11-accent); }
+  .c-section__sub {
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--v11-text-50);
+    text-align: center;
+    margin: 0 0 48px;
+  }
+
+  /* Card grid */
+  .c-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .c-card {
+    display: block;
+    border: 1px solid var(--v11-line);
+    border-radius: var(--v11-radius-card);
+    background: var(--v11-bg-elevated);
+    overflow: hidden;
+    transition: border-color 180ms, transform 180ms;
+  }
+  .c-card:hover { border-color: var(--v11-accent); transform: translateY(-3px); }
+  .c-card__thumb {
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #1A1D24 0%, #0E1014 100%);
+    border-bottom: 1px solid var(--v11-line);
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .c-card__thumb-mark {
+    font-family: var(--v11-font-display);
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--v11-accent);
+    letter-spacing: -0.04em;
+  }
+  .c-card__body { padding: 20px 24px 24px; }
+  .c-card__meta { font-family: var(--v11-font-display); font-size: 11px; color: var(--v11-text-50); letter-spacing: 0.06em; margin-bottom: 8px; }
+  .c-card__title {
+    font-family: var(--v11-font-display);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--v11-text);
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+  }
+  .c-card__desc { font-size: 14px; line-height: 1.5; color: var(--v11-text-70); margin: 0; }
+
+  .c-footer {
+    padding: 32px 0;
+    border-top: 1px solid var(--v11-line-soft);
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--v11-text-50);
+    display: flex; justify-content: space-between;
+  }
+
+  .return-bar { position: sticky; top: 0; z-index: 100; background: var(--v11-bg-deep); padding: 8px 24px; border-bottom: 1px solid var(--v11-line); font-family: var(--v11-font-display); font-size: 11px; color: var(--v11-text-60); letter-spacing: 0.08em; text-transform: uppercase; }
+  .return-bar a { color: var(--v11-accent); }
+</style>
+</head>
+<body class="c-page">
+
+<div class="return-bar">← <a href="index.html">Back to hub</a> · Direction C · Card stack</div>
+
+<header>
+  <div class="c-container">
+    <nav class="c-nav">
+      <div class="c-nav__brand">danilorojas<b>.</b>design</div>
+      <div class="c-nav__links">
+        <a>Work</a>
+        <a>Notes</a>
+        <a>About</a>
+        <a>Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="c-hero">
+    <div class="c-container">
+      <div class="c-hero__byline">Danilo Rojas — Designer engineer</div>
+      <h1 class="c-hero__title">Become a <span>real</span> agentic designer.</h1>
+      <p style="max-width:48ch;margin:0 auto;color:var(--v11-text-70);font-size:17px;line-height:1.55;">
+        Fifteen years shipping product. Today I ship SaaS, design systems, and frontends with agents as a force
+        multiplier — not the other way around.
+      </p>
+      <div class="c-hero__avatar"></div>
+    </div>
+  </section>
+
+  <section class="c-section">
+    <div class="c-container">
+      <h2 class="c-section__h">Level up with <span>real shipped work</span>.</h2>
+      <p class="c-section__sub">Four cases · 2024 — 2026</p>
+
+      <div class="c-cards">
+        <a class="c-card">
+          <div class="c-card__thumb"><div class="c-card__thumb-mark">EnRegla</div></div>
+          <div class="c-card__body">
+            <div class="c-card__meta">2026 · 0→1.0 · Pilots live</div>
+            <h3 class="c-card__title">LATAM SMB compliance SaaS</h3>
+            <p class="c-card__desc">346 commits in 40 days. Co-author with Claude Code, Supabase MCP in the loop.</p>
+          </div>
+        </a>
+
+        <a class="c-card">
+          <div class="c-card__thumb"><div class="c-card__thumb-mark">/te-skin</div></div>
+          <div class="c-card__body">
+            <div class="c-card__meta">2025–2026 · Booz Allen Hamilton</div>
+            <h3 class="c-card__title">Developer Portal · Trusted Environments</h3>
+            <p class="c-card__desc">DS as a Claude Code skill. TE Black palette with per-token WCAG audit baked in.</p>
+          </div>
+        </a>
+
+        <a class="c-card">
+          <div class="c-card__thumb"><div class="c-card__thumb-mark">Life</div></div>
+          <div class="c-card__body">
+            <div class="c-card__meta">2026 · React Native · Gemini</div>
+            <h3 class="c-card__title">Life Update — personal AI tracker</h3>
+            <p class="c-card__desc">Solo build. Conversational tracking with runtime LLM, mobile-first.</p>
+          </div>
+        </a>
+
+        <a class="c-card">
+          <div class="c-card__thumb"><div class="c-card__thumb-mark">Aura</div></div>
+          <div class="c-card__body">
+            <div class="c-card__meta">2025 · Brand system</div>
+            <h3 class="c-card__title">Aura — personal brand stack</h3>
+            <p class="c-card__desc">One YAML, four outputs: site, CV variants, skills sheet, social.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="c-section">
+    <div class="c-container">
+      <h2 class="c-section__h">Notes &amp; <span>writing</span>.</h2>
+      <p class="c-section__sub">Working in public</p>
+
+      <div class="c-cards">
+        <a class="c-card">
+          <div class="c-card__thumb" style="background:linear-gradient(135deg,#0F1014,#16181F)"><div class="c-card__thumb-mark" style="font-size:14px;letter-spacing:0.14em;text-transform:uppercase">Note · 2026-05-12</div></div>
+          <div class="c-card__body">
+            <h3 class="c-card__title">When the BAH NDA still lets you talk</h3>
+            <p class="c-card__desc">What you can and can't ship from a regulated client engagement.</p>
+          </div>
+        </a>
+        <a class="c-card">
+          <div class="c-card__thumb" style="background:linear-gradient(135deg,#0F1014,#16181F)"><div class="c-card__thumb-mark" style="font-size:14px;letter-spacing:0.14em;text-transform:uppercase">Note · 2026-05-08</div></div>
+          <div class="c-card__body">
+            <h3 class="c-card__title">Designing tokens that agents can read</h3>
+            <p class="c-card__desc">A skill-shaped DS — not a Figma library agents have to translate.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="c-container">
+    <div class="c-footer">
+      <span>© 2026 Danilo Rojas</span>
+      <span>Quito · Ecuador</span>
+      <span>github · linkedin · behance</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -20,7 +20,7 @@ import { writeFileSync, unlinkSync, mkdirSync } from "node:fs";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const fixtureDir = path.join(__dirname, "fixtures");
 const fixtureBadDir = path.join(__dirname, "fixtures-bad");
-const dataDir = path.join(__dirname, "..", "data");
+const dataDir = path.join(__dirname, ".." , "data");
 
 describe("loadSkills", () => {
   it("loads and parses a minimal skills YAML file", () => {
@@ -294,7 +294,7 @@ inventory:
 describe("loadCvData — inventory round-trip", () => {
   it("data/skills.yaml exposes a non-empty inventory", () => {
     const here = path.dirname(fileURLToPath(import.meta.url));
-    const dataDir = path.join(here, "..", "data");
+    const dataDir = path.join(here, ".." , "data");
     const cv = loadCvData(dataDir);
     expect(cv.skills.inventory).toBeDefined();
     expect(cv.skills.inventory!.length).toBeGreaterThanOrEqual(20);
@@ -307,7 +307,7 @@ describe("loadCvData — inventory round-trip", () => {
 describe("loadCvData — thesisBairesdev round-trip", () => {
   it("data/positioning.yaml exposes thesisBairesdev.en starting with 'Agentic Designer.'", () => {
     const here = path.dirname(fileURLToPath(import.meta.url));
-    const dataDir = path.join(here, "..", "data");
+    const dataDir = path.join(here, ".." , "data");
     const cv = loadCvData(dataDir);
     expect(cv.positioning.thesisBairesdev).toBeDefined();
     expect(cv.positioning.thesisBairesdev!.en.startsWith("Agentic Designer."))

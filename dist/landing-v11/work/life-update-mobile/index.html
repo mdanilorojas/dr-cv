@@ -757,59 +757,112 @@ img { max-width: 100%; display: block; }
 .v11-work {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--v11-s-5);
+  gap: var(--v11-s-6);
 }
-@media (min-width: 820px) {
-  .v11-work { grid-template-columns: repeat(2, 1fr); }
-}
+/* V3 · Magazine sidebar — editorial case card.
+ * Grid: [ meta sidebar | content (text + optional animation) ].
+ * One case per row, full-width. */
 .v11-case {
   background: var(--v11-bg-elevated);
   border: 1px solid var(--v11-line);
   border-radius: var(--v11-radius-card);
-  padding: var(--v11-s-6);
+  padding: var(--v11-s-6) var(--v11-s-6);
   page-break-inside: avoid;
-}
-/* Case card with an animation aside: text left, animation right on wide screens */
-.v11-case--has-anim {
-  grid-column: 1 / -1;
   display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
   gap: var(--v11-s-6);
-  grid-template-columns: 1fr;
+  align-items: start;
 }
-@media (min-width: 960px) {
-  .v11-case--has-anim {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: start;
+@media (max-width: 900px) {
+  .v11-case {
+    grid-template-columns: 1fr;
+    gap: var(--v11-s-5);
   }
 }
-.v11-case__text { min-width: 0; }
-.v11-case__aside {
-  min-width: 0;
+/* Meta sidebar — client, years, stack (vertical chips). */
+.v11-case__meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--v11-s-5);
+  padding: 4px var(--v11-s-6) 4px 0;
+  border-right: 1px solid var(--v11-line);
+  margin-right: calc(-1 * var(--v11-s-6));
   align-self: stretch;
-  display: flex;
+  min-width: 0;
 }
-.v11-case__aside > .v11-anim {
-  align-self: start;
-  position: sticky;
-  top: var(--v11-s-6);
+@media (max-width: 900px) {
+  .v11-case__meta-col {
+    border-right: 0;
+    border-bottom: 1px solid var(--v11-line);
+    padding: 0 0 var(--v11-s-4);
+    margin-right: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--v11-s-5);
+  }
 }
-@media (max-width: 959px) {
-  .v11-case__aside > .v11-anim { position: static; }
-}
-.v11-case__head {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--v11-s-3);
-  align-items: baseline;
-  margin-bottom: var(--v11-s-3);
+.v11-case__meta-block { min-width: 0; }
+.v11-case__meta-label {
   font-family: var(--v11-font-mono);
   font-size: var(--v11-fs-nano);
   letter-spacing: var(--v11-track-code);
   text-transform: uppercase;
-  color: var(--v11-text-60);
+  color: var(--v11-text-50);
+  margin-bottom: 6px;
 }
-.v11-case__client { color: var(--v11-accent); }
-.v11-case__dates { margin-left: auto; color: var(--v11-text-subtle); }
+.v11-case__meta-value {
+  font-family: var(--v11-font-mono);
+  font-size: 12px;
+  color: var(--v11-text);
+  line-height: 1.4;
+}
+.v11-case__meta-value--accent { color: var(--v11-accent); }
+.v11-case__meta-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+@media (max-width: 900px) {
+  .v11-case__meta-chips {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+}
+.v11-case__chip {
+  font-family: var(--v11-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+  color: var(--v11-text-60);
+  border: 1px solid var(--v11-line-strong);
+  background: transparent;
+}
+/* Content column — title/hook/bullets with optional animation aside. */
+.v11-case__content {
+  display: grid;
+  grid-template-columns: 1.1fr minmax(0, 1fr);
+  gap: var(--v11-s-6);
+  align-items: start;
+  min-width: 0;
+}
+.v11-case__content--solo { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 760px) {
+  .v11-case__content { grid-template-columns: 1fr; gap: var(--v11-s-5); }
+}
+.v11-case__text { min-width: 0; }
+.v11-case__anim {
+  min-width: 0;
+  align-self: start;
+  position: sticky;
+  top: var(--v11-s-6);
+}
+@media (max-width: 760px) {
+  .v11-case__anim { position: static; }
+}
 .v11-case__title {
   font-family: var(--v11-font-display);
   font-size: var(--v11-fs-h3);
@@ -818,12 +871,14 @@ img { max-width: 100%; display: block; }
   letter-spacing: var(--v11-track-snugger);
   color: var(--v11-text);
   margin: 0 0 var(--v11-s-3);
+  max-width: 22ch;
 }
 .v11-case__hook {
   font-size: var(--v11-fs-small);
   color: var(--v11-text-body);
   line-height: 1.6;
   margin: 0 0 var(--v11-s-4);
+  max-width: 50ch;
 }
 .v11-case__beats {
   display: grid;
@@ -883,24 +938,24 @@ img { max-width: 100%; display: block; }
 .v11-case__cta {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: 8px;
   margin-top: var(--v11-s-4);
-  padding: 8px 14px;
-  border: 1px solid var(--v11-accent-line, rgba(255, 137, 100, 0.28));
-  border-radius: 6px;
+  padding: 0 0 6px;
+  border: 0;
+  background: transparent;
   color: var(--v11-accent);
   text-decoration: none;
   font-family: var(--v11-font-mono);
   font-size: var(--v11-fs-nano);
   letter-spacing: var(--v11-track-code);
   text-transform: uppercase;
-  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+  border-bottom: 1px solid var(--v11-accent-line, rgba(255, 137, 100, 0.28));
+  transition: border-color 150ms ease, color 150ms ease, gap 150ms ease;
 }
 .v11-case__cta:hover,
 .v11-case__cta:focus-visible {
-  background: var(--v11-accent-soft, rgba(255, 137, 100, 0.14));
-  border-color: var(--v11-accent);
-  color: var(--v11-text);
+  border-bottom-color: var(--v11-accent);
+  gap: 12px;
   outline: none;
 }
 .v11-case__cta-arrow {
@@ -909,7 +964,7 @@ img { max-width: 100%; display: block; }
 }
 .v11-case__cta:hover .v11-case__cta-arrow { transform: translateX(3px); }
 
-/* ============== CASE DETAIL PAGE ============== */
+/* ============== CASE DETAIL PAGE (V3 editorial) ============== */
 .v11-case-detail {
   padding: var(--v11-s-8) 0 var(--v11-s-9);
 }
@@ -930,19 +985,43 @@ img { max-width: 100%; display: block; }
   color: var(--v11-accent);
   outline: none;
 }
-.v11-case-detail__head {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--v11-s-3);
-  align-items: baseline;
-  font-family: var(--v11-font-mono);
-  font-size: var(--v11-fs-nano);
-  letter-spacing: var(--v11-track-code);
-  text-transform: uppercase;
-  color: var(--v11-text-60);
-  margin-bottom: var(--v11-s-3);
+.v11-case-detail__grid {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: var(--v11-s-7);
+  align-items: start;
 }
-.v11-case-detail__client { color: var(--v11-accent); }
+@media (max-width: 900px) {
+  .v11-case-detail__grid {
+    grid-template-columns: 1fr;
+    gap: var(--v11-s-5);
+  }
+}
+.v11-case-detail__meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--v11-s-5);
+  padding: 4px var(--v11-s-6) 4px 0;
+  border-right: 1px solid var(--v11-line);
+  position: sticky;
+  top: var(--v11-s-8);
+}
+@media (max-width: 900px) {
+  .v11-case-detail__meta-col {
+    border-right: 0;
+    border-bottom: 1px solid var(--v11-line);
+    padding: 0 0 var(--v11-s-4);
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--v11-s-5);
+  }
+}
+.v11-case-detail__main { min-width: 0; }
+.v11-case-detail__anim {
+  margin: 0 0 var(--v11-s-6);
+  max-width: 780px;
+}
 .v11-case-detail__title {
   font-family: var(--v11-font-display, inherit);
   font-size: var(--v11-fs-hero, 32px);
@@ -983,12 +1062,6 @@ img { max-width: 100%; display: block; }
   width: 8px;
   height: 1px;
   background: var(--v11-accent);
-}
-.v11-case-detail__stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: var(--v11-s-4) 0 var(--v11-s-7);
 }
 .v11-case-detail__beats {
   display: grid;
@@ -1976,6 +2049,30 @@ a.v11-horizon__chip:focus-visible {
   .v11-anim__pip-cursor { animation: none; }
 }
 
+
+.v11-anim-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--v11-anim-ratio, 880 / 620);
+  border-radius: var(--v11-radius-card, 10px);
+  overflow: hidden;
+  border: 1px solid var(--v11-line);
+  background: var(--v11-bg-inset, #0D0F13);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+}
+.v11-anim-frame__iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  display: block;
+  background: transparent;
+  transform-origin: top left;
+  transform: scale(var(--v11-anim-scale, 1));
+  /* fallback while JS hasn't measured yet */
+  pointer-events: auto;
+}
+
 </style>
 </head>
 <body>
@@ -1994,17 +2091,41 @@ a.v11-horizon__chip:focus-visible {
 </nav>
 <main id="main">
   <article class="v11-case-detail">
-    <div class="v11-container-narrow">
+    <div class="v11-container">
       <a class="v11-case-detail__back" href="/#work">← Back to work</a>
-      <div class="v11-case-detail__head">
-        <span class="v11-case-detail__client">own product · LLM in runtime</span>
-        <span class="v11-case-detail__dates">2026</span>
-      </div>
-      <h1 class="v11-case-detail__title">Life Update Mobile — Gemini API in runtime</h1>
-      <p class="v11-case-detail__hook">Personal tracking system — daily entries analyzed by Gemini in runtime, semantic distance to a 5-year plan, Steve-Jobs-style focus metrics (3 things a day). Shipped 0 → production in a day.</p>
-      <ul class="v11-case-detail__bullets"><li>Gemini API runtime for semantic analysis of daily entries</li><li>Hybrid data model: .md files as source of truth + DB as execution engine</li><li>Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits in 24h</li></ul>
-      <div class="v11-case-detail__stack"><span class="v11-chip">Gemini API</span> <span class="v11-chip">Next.js 16</span> <span class="v11-chip">Prisma</span> <span class="v11-chip">0 → prod / 1d</span></div>
-      <dl class="v11-case-detail__beats">
+      <div class="v11-case-detail__grid">
+        <aside class="v11-case-detail__meta-col">
+    <div class="v11-case__meta-block">
+      <div class="v11-case__meta-label">Client</div>
+      <div class="v11-case__meta-value v11-case__meta-value--accent">own product · LLM in runtime</div>
+    </div>
+    <div class="v11-case__meta-block">
+      <div class="v11-case__meta-label">Years</div>
+      <div class="v11-case__meta-value">2026</div>
+    </div>
+    <div class="v11-case__meta-block">
+      <div class="v11-case__meta-label">Stack</div>
+      <div class="v11-case__meta-chips"><span class="v11-case__chip">Gemini API</span><span class="v11-case__chip">Next.js 16</span><span class="v11-case__chip">Prisma</span><span class="v11-case__chip">0 → prod / 1d</span></div>
+    </div>
+  </aside>
+        <div class="v11-case-detail__main">
+          <h1 class="v11-case-detail__title">Life Update Mobile — Gemini API in runtime</h1>
+          <p class="v11-case-detail__hook">Personal tracking system — daily entries analyzed by Gemini in runtime, semantic distance to a 5-year plan, Steve-Jobs-style focus metrics (3 things a day). Shipped 0 → production in a day.</p>
+          <div class="v11-case-detail__anim"><div class="v11-anim-frame" style="--v11-anim-ratio: 780 / 800;" data-anim-fit data-anim-natural-w="780">
+  <iframe
+    class="v11-anim-frame__iframe"
+    src="../../assets/animations/gallery/animations-life-update/alt-4-live-annotation-en.html"
+    title="Life Update Mobile — live annotation"
+    loading="lazy"
+    sandbox="allow-scripts allow-same-origin"
+    referrerpolicy="no-referrer"
+    width="780"
+    height="800"
+    style="width:780px;height:800px;"
+  ></iframe>
+</div></div>
+          <ul class="v11-case-detail__bullets"><li>Gemini API runtime for semantic analysis of daily entries</li><li>Hybrid data model: .md files as source of truth + DB as execution engine</li><li>Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits in 24h</li></ul>
+          <dl class="v11-case-detail__beats">
     <div class="v11-case-detail__beat"><dt>Context</dt><dd>A personal product — a tracking app that uses Gemini at runtime to summarize what I wrote this week.</dd></div>
     <div class="v11-case-detail__beat"><dt>Problem</dt><dd>Every journal-AI app I&#39;d tried either stored my text on someone else&#39;s server or refused to run without internet. I wanted local-first + LLM on demand.</dd></div>
     <div class="v11-case-detail__beat"><dt>Approach</dt><dd>Local SQLite store, plain-text journal. Summarization is opt-in: tap a week, send it to Gemini, cache the result.</dd></div>
@@ -2013,7 +2134,9 @@ a.v11-horizon__chip:focus-visible {
     <div class="v11-case-detail__beat"><dt>Differently</dt><dd>I would put the prompt on the Settings page. Right now it&#39;s hidden — advanced users want to see it and I was being overly protective.</dd></div>
     <div class="v11-case-detail__beat"><dt>Craft floor</dt><dd>No analytics. No telemetry. No account. Bundle under 8 MB. Works airplane-mode except the summary action.</dd></div>
   </dl>
-      
+          
+        </div>
+      </div>
     </div>
   </article>
   <section id="contact" class="v11-section v11-section--alt" aria-labelledby="contact-h">
@@ -2154,6 +2277,88 @@ a.v11-horizon__chip:focus-visible {
       });
     }, { threshold: 0.35, rootMargin: '0px 0px -10% 0px' });
     document.querySelectorAll('[data-animate]').forEach(function(el){ animIo.observe(el); });
+  }
+})();
+</script>
+<script>
+(function(){
+  // CSS injected into each animation iframe to strip captions, labels,
+  // hints, and sibling callouts — only the UI stage (.window / .phone)
+  // should render. Also removes stage padding and body centering so the
+  // iframe content box hugs the animation's intrinsic size.
+  var EMBED_CSS = [
+    'html, body { margin:0 !important; padding:0 !important; min-height:0 !important; background:transparent !important; display:block !important; place-items:initial !important; }',
+    '.stage { padding:0 !important; gap:0 !important; grid-template-columns:auto !important; display:block !important; text-align:left !important; }',
+    '.caption, .alt-label, .hint, .callouts { display:none !important; }',
+    /* keep only the primary visual (window OR phone-wrap) */
+    '.window { margin:0 !important; }',
+    '.phone-wrap { margin:0 !important; }'
+  ].join('\n');
+
+  function fitOne(wrapper){
+    var iframe = wrapper.querySelector('iframe');
+    if (!iframe) return;
+    var doc;
+    try { doc = iframe.contentDocument; } catch(_){ return; }
+    if (!doc || !doc.body) return;
+
+    // Inject embed CSS once.
+    if (!doc.getElementById('v11-embed-style')) {
+      var style = doc.createElement('style');
+      style.id = 'v11-embed-style';
+      style.textContent = EMBED_CSS;
+      (doc.head || doc.documentElement).appendChild(style);
+    }
+
+    // Measure the primary stage element — fall back to body if absent.
+    var target = doc.querySelector('.window')
+              || doc.querySelector('.phone-wrap')
+              || doc.querySelector('.stage')
+              || doc.body;
+    var rect = target.getBoundingClientRect();
+    var naturalW = Math.max(1, Math.round(rect.width));
+    var naturalH = Math.max(1, Math.round(rect.height));
+
+    // Size the iframe to the measured natural box so no scrollbars appear.
+    iframe.style.width  = naturalW + 'px';
+    iframe.style.height = naturalH + 'px';
+    iframe.setAttribute('width', String(naturalW));
+    iframe.setAttribute('height', String(naturalH));
+
+    // Update aspect ratio on wrapper so it reserves the right height.
+    wrapper.style.setProperty('--v11-anim-ratio', naturalW + ' / ' + naturalH);
+
+    // Apply scale to fit wrapper width.
+    var w = wrapper.clientWidth;
+    if (!w) return;
+    var scale = w / naturalW;
+    wrapper.style.setProperty('--v11-anim-scale', String(scale));
+  }
+
+  function fitAll(){
+    var wrappers = document.querySelectorAll('[data-anim-fit]');
+    for (var i = 0; i < wrappers.length; i++) fitOne(wrappers[i]);
+  }
+
+  // Hook each iframe's load so we inject + measure as soon as its doc is ready.
+  document.querySelectorAll('[data-anim-fit] iframe').forEach(function(iframe){
+    iframe.addEventListener('load', function(){
+      var wrapper = iframe.closest('[data-anim-fit]');
+      if (wrapper) fitOne(wrapper);
+    });
+    // If already loaded (cache), run now.
+    try { if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+      var wrapper = iframe.closest('[data-anim-fit]');
+      if (wrapper) fitOne(wrapper);
+    }} catch(_){}
+  });
+
+  fitAll();
+  window.addEventListener('resize', fitAll, { passive: true });
+  window.addEventListener('load', fitAll);
+  if (typeof ResizeObserver !== 'undefined') {
+    var ro = new ResizeObserver(fitAll);
+    document.querySelectorAll('[data-anim-fit]').forEach(function(el){ ro.observe(el); });
   }
 })();
 </script>

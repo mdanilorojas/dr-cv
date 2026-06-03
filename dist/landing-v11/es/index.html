@@ -758,59 +758,112 @@ img { max-width: 100%; display: block; }
 .v11-work {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--v11-s-5);
+  gap: var(--v11-s-6);
 }
-@media (min-width: 820px) {
-  .v11-work { grid-template-columns: repeat(2, 1fr); }
-}
+/* V3 · Magazine sidebar — editorial case card.
+ * Grid: [ meta sidebar | content (text + optional animation) ].
+ * One case per row, full-width. */
 .v11-case {
   background: var(--v11-bg-elevated);
   border: 1px solid var(--v11-line);
   border-radius: var(--v11-radius-card);
-  padding: var(--v11-s-6);
+  padding: var(--v11-s-6) var(--v11-s-6);
   page-break-inside: avoid;
-}
-/* Case card with an animation aside: text left, animation right on wide screens */
-.v11-case--has-anim {
-  grid-column: 1 / -1;
   display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
   gap: var(--v11-s-6);
-  grid-template-columns: 1fr;
+  align-items: start;
 }
-@media (min-width: 960px) {
-  .v11-case--has-anim {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: start;
+@media (max-width: 900px) {
+  .v11-case {
+    grid-template-columns: 1fr;
+    gap: var(--v11-s-5);
   }
 }
-.v11-case__text { min-width: 0; }
-.v11-case__aside {
-  min-width: 0;
+/* Meta sidebar — client, years, stack (vertical chips). */
+.v11-case__meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--v11-s-5);
+  padding: 4px var(--v11-s-6) 4px 0;
+  border-right: 1px solid var(--v11-line);
+  margin-right: calc(-1 * var(--v11-s-6));
   align-self: stretch;
-  display: flex;
+  min-width: 0;
 }
-.v11-case__aside > .v11-anim {
-  align-self: start;
-  position: sticky;
-  top: var(--v11-s-6);
+@media (max-width: 900px) {
+  .v11-case__meta-col {
+    border-right: 0;
+    border-bottom: 1px solid var(--v11-line);
+    padding: 0 0 var(--v11-s-4);
+    margin-right: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--v11-s-5);
+  }
 }
-@media (max-width: 959px) {
-  .v11-case__aside > .v11-anim { position: static; }
-}
-.v11-case__head {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--v11-s-3);
-  align-items: baseline;
-  margin-bottom: var(--v11-s-3);
+.v11-case__meta-block { min-width: 0; }
+.v11-case__meta-label {
   font-family: var(--v11-font-mono);
   font-size: var(--v11-fs-nano);
   letter-spacing: var(--v11-track-code);
   text-transform: uppercase;
-  color: var(--v11-text-60);
+  color: var(--v11-text-50);
+  margin-bottom: 6px;
 }
-.v11-case__client { color: var(--v11-accent); }
-.v11-case__dates { margin-left: auto; color: var(--v11-text-subtle); }
+.v11-case__meta-value {
+  font-family: var(--v11-font-mono);
+  font-size: 12px;
+  color: var(--v11-text);
+  line-height: 1.4;
+}
+.v11-case__meta-value--accent { color: var(--v11-accent); }
+.v11-case__meta-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+@media (max-width: 900px) {
+  .v11-case__meta-chips {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+}
+.v11-case__chip {
+  font-family: var(--v11-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+  color: var(--v11-text-60);
+  border: 1px solid var(--v11-line-strong);
+  background: transparent;
+}
+/* Content column — title/hook/bullets with optional animation aside. */
+.v11-case__content {
+  display: grid;
+  grid-template-columns: 1.1fr minmax(0, 1fr);
+  gap: var(--v11-s-6);
+  align-items: start;
+  min-width: 0;
+}
+.v11-case__content--solo { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 760px) {
+  .v11-case__content { grid-template-columns: 1fr; gap: var(--v11-s-5); }
+}
+.v11-case__text { min-width: 0; }
+.v11-case__anim {
+  min-width: 0;
+  align-self: start;
+  position: sticky;
+  top: var(--v11-s-6);
+}
+@media (max-width: 760px) {
+  .v11-case__anim { position: static; }
+}
 .v11-case__title {
   font-family: var(--v11-font-display);
   font-size: var(--v11-fs-h3);
@@ -819,12 +872,14 @@ img { max-width: 100%; display: block; }
   letter-spacing: var(--v11-track-snugger);
   color: var(--v11-text);
   margin: 0 0 var(--v11-s-3);
+  max-width: 22ch;
 }
 .v11-case__hook {
   font-size: var(--v11-fs-small);
   color: var(--v11-text-body);
   line-height: 1.6;
   margin: 0 0 var(--v11-s-4);
+  max-width: 50ch;
 }
 .v11-case__beats {
   display: grid;
@@ -884,24 +939,24 @@ img { max-width: 100%; display: block; }
 .v11-case__cta {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: 8px;
   margin-top: var(--v11-s-4);
-  padding: 8px 14px;
-  border: 1px solid var(--v11-accent-line, rgba(255, 137, 100, 0.28));
-  border-radius: 6px;
+  padding: 0 0 6px;
+  border: 0;
+  background: transparent;
   color: var(--v11-accent);
   text-decoration: none;
   font-family: var(--v11-font-mono);
   font-size: var(--v11-fs-nano);
   letter-spacing: var(--v11-track-code);
   text-transform: uppercase;
-  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+  border-bottom: 1px solid var(--v11-accent-line, rgba(255, 137, 100, 0.28));
+  transition: border-color 150ms ease, color 150ms ease, gap 150ms ease;
 }
 .v11-case__cta:hover,
 .v11-case__cta:focus-visible {
-  background: var(--v11-accent-soft, rgba(255, 137, 100, 0.14));
-  border-color: var(--v11-accent);
-  color: var(--v11-text);
+  border-bottom-color: var(--v11-accent);
+  gap: 12px;
   outline: none;
 }
 .v11-case__cta-arrow {
@@ -910,7 +965,7 @@ img { max-width: 100%; display: block; }
 }
 .v11-case__cta:hover .v11-case__cta-arrow { transform: translateX(3px); }
 
-/* ============== CASE DETAIL PAGE ============== */
+/* ============== CASE DETAIL PAGE (V3 editorial) ============== */
 .v11-case-detail {
   padding: var(--v11-s-8) 0 var(--v11-s-9);
 }
@@ -931,19 +986,43 @@ img { max-width: 100%; display: block; }
   color: var(--v11-accent);
   outline: none;
 }
-.v11-case-detail__head {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--v11-s-3);
-  align-items: baseline;
-  font-family: var(--v11-font-mono);
-  font-size: var(--v11-fs-nano);
-  letter-spacing: var(--v11-track-code);
-  text-transform: uppercase;
-  color: var(--v11-text-60);
-  margin-bottom: var(--v11-s-3);
+.v11-case-detail__grid {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: var(--v11-s-7);
+  align-items: start;
 }
-.v11-case-detail__client { color: var(--v11-accent); }
+@media (max-width: 900px) {
+  .v11-case-detail__grid {
+    grid-template-columns: 1fr;
+    gap: var(--v11-s-5);
+  }
+}
+.v11-case-detail__meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--v11-s-5);
+  padding: 4px var(--v11-s-6) 4px 0;
+  border-right: 1px solid var(--v11-line);
+  position: sticky;
+  top: var(--v11-s-8);
+}
+@media (max-width: 900px) {
+  .v11-case-detail__meta-col {
+    border-right: 0;
+    border-bottom: 1px solid var(--v11-line);
+    padding: 0 0 var(--v11-s-4);
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--v11-s-5);
+  }
+}
+.v11-case-detail__main { min-width: 0; }
+.v11-case-detail__anim {
+  margin: 0 0 var(--v11-s-6);
+  max-width: 780px;
+}
 .v11-case-detail__title {
   font-family: var(--v11-font-display, inherit);
   font-size: var(--v11-fs-hero, 32px);
@@ -984,12 +1063,6 @@ img { max-width: 100%; display: block; }
   width: 8px;
   height: 1px;
   background: var(--v11-accent);
-}
-.v11-case-detail__stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: var(--v11-s-4) 0 var(--v11-s-7);
 }
 .v11-case-detail__beats {
   display: grid;
@@ -1977,6 +2050,30 @@ a.v11-horizon__chip:focus-visible {
   .v11-anim__pip-cursor { animation: none; }
 }
 
+
+.v11-anim-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--v11-anim-ratio, 880 / 620);
+  border-radius: var(--v11-radius-card, 10px);
+  overflow: hidden;
+  border: 1px solid var(--v11-line);
+  background: var(--v11-bg-inset, #0D0F13);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+}
+.v11-anim-frame__iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  display: block;
+  background: transparent;
+  transform-origin: top left;
+  transform: scale(var(--v11-anim-scale, 1));
+  /* fallback while JS hasn't measured yet */
+  pointer-events: auto;
+}
+
 </style>
 </head>
 <body>
@@ -2130,97 +2227,116 @@ a.v11-horizon__chip:focus-visible {
     <h2 id="work-h" class="v11-h1">Tres ships. Tres artefactos construidos con agentes.</h2>
     <p class="v11-lead">Todo lo de abajo fue construido con agentes al centro del workflow. El craft floor es mío — el apalancamiento es la combinación.</p>
     <div class="v11-work">
-<article id="case-enregla" class="v11-case" data-reveal>
-<div class="v11-case__text">
-  <div class="v11-case__head">
-    <span class="v11-case__client">producto propio · pilotos pagados</span>
-    <span class="v11-case__dates">2026</span>
+<article id="case-enregla" class="v11-case v11-case--has-anim" data-reveal>
+<aside class="v11-case__meta-col">
+  <div class="v11-case__meta-block">
+    <div class="v11-case__meta-label">Cliente</div>
+    <div class="v11-case__meta-value v11-case__meta-value--accent">producto propio · pilotos pagados</div>
   </div>
+  <div class="v11-case__meta-block">
+    <div class="v11-case__meta-label">Años</div>
+    <div class="v11-case__meta-value">2026</div>
+  </div>
+  <div class="v11-case__meta-block">
+    <div class="v11-case__meta-label">Stack</div>
+    <div class="v11-case__meta-chips"><span class="v11-case__chip">React 19</span><span class="v11-case__chip">Supabase</span><span class="v11-case__chip">MCP</span><span class="v11-case__chip">Paying pilots</span></div>
+  </div>
+</aside>
+<div class="v11-case__content">
+  <div class="v11-case__text">
   <h3 class="v11-case__title">EnRegla — SaaS de compliance, 0 → 1.0-MVP en 40 días</h3>
   <p class="v11-case__hook">SaaS de compliance multi-sede para PYMES LATAM. 0 → 1.0-MVP en producción en 40 días, co-construido con Claude Code usando MCP servers y subagents en paralelo.</p>
   <ul class="v11-case__bullets"><li>346 commits · 21 migraciones SQL · 31 componentes UI · 1 edge function con cron</li><li>Supabase MCP conectado a Claude Code para SQL y migraciones directas</li><li>Migración DS recursiva (17 partes × 5 rondas) de 78.4 → 95.6</li></ul>
-  <div class="v11-case__stack"><span class="v11-chip">React 19</span> <span class="v11-chip">Supabase</span> <span class="v11-chip">MCP</span> <span class="v11-chip">Paying pilots</span></div>
-  <a class="v11-case__cta" href="work/enregla/">Cómo se shippeó<span class="v11-case__cta-arrow" aria-hidden="true"> →</span></a>
+  <a class="v11-case__cta" href="work/enregla/">Cómo se shippeó<span class="v11-case__cta-arrow" aria-hidden="true">→</span></a>
 </div>
-
+  <aside class="v11-case__anim"><div class="v11-anim-frame" style="--v11-anim-ratio: 820 / 640;" data-anim-fit data-anim-natural-w="820">
+  <iframe
+    class="v11-anim-frame__iframe"
+    src="assets/animations/gallery/animations-enregla/alt-1-screenshot-to-animation-es.html"
+    title="EnRegla — screenshot a animación en vivo"
+    loading="lazy"
+    sandbox="allow-scripts allow-same-origin"
+    referrerpolicy="no-referrer"
+    width="820"
+    height="640"
+    style="width:820px;height:640px;"
+  ></iframe>
+</div></aside>
+</div>
 </article>
 <article id="case-developer-portal" class="v11-case v11-case--has-anim" data-reveal>
-<div class="v11-case__text">
-  <div class="v11-case__head">
-    <span class="v11-case__client">Booz Allen Hamilton · Developer Portal</span>
-    <span class="v11-case__dates">2024 — 2026</span>
+<aside class="v11-case__meta-col">
+  <div class="v11-case__meta-block">
+    <div class="v11-case__meta-label">Cliente</div>
+    <div class="v11-case__meta-value v11-case__meta-value--accent">Booz Allen Hamilton · Developer Portal</div>
   </div>
+  <div class="v11-case__meta-block">
+    <div class="v11-case__meta-label">Años</div>
+    <div class="v11-case__meta-value">2024 — 2026</div>
+  </div>
+  <div class="v11-case__meta-block">
+    <div class="v11-case__meta-label">Stack</div>
+    <div class="v11-case__meta-chips"><span class="v11-case__chip">Agent-consumable</span><span class="v11-case__chip">Developer Portal</span><span class="v11-case__chip">W3C tokens</span><span class="v11-case__chip">Houdini · WCAG 2.2</span></div>
+  </div>
+</aside>
+<div class="v11-case__content">
+  <div class="v11-case__text">
   <h3 class="v11-case__title">Developer Portal — design system + DS dark-first, entregado como skill consumible por agentes</h3>
   <p class="v11-case__hook">Dos design systems entrelazados para una plataforma de developers gov-facing: /te-skin, skill slash-command de 17 componentes que los agentes invocan para devolver HTML + CSS + tokens W3C listos; y TE Black, DS enterprise dark-first donde cada color semantic carga su auditoría WCAG inline. Empaquetado, versionado, listo para agentes.</p>
   <ul class="v11-case__bullets"><li>/te-skin — 17 componentes, versionado 2.0.0, metadata HTML + CSS + JSON por componente</li><li>TE Black — DS dark-first con ratio WCAG guardado inline en cada token; los valores rechazados quedan como audit trail</li><li>CSS en 3 capas (tokens / components / patterns), shadcn alias para drop-in en React, backgrounds Houdini + canvas mesh-gradient</li></ul>
-  <div class="v11-case__stack"><span class="v11-chip">Agent-consumable</span> <span class="v11-chip">Developer Portal</span> <span class="v11-chip">W3C tokens</span> <span class="v11-chip">Houdini · WCAG 2.2</span></div>
-  <a class="v11-case__cta" href="work/developer-portal/">Cómo se shippeó<span class="v11-case__cta-arrow" aria-hidden="true"> →</span></a>
+  <a class="v11-case__cta" href="work/developer-portal/">Cómo se shippeó<span class="v11-case__cta-arrow" aria-hidden="true">→</span></a>
 </div>
-<aside class="v11-case__aside"><div class="v11-anim v11-anim--pip" data-animate="pip" data-anim-slug="developer-portal" aria-hidden="true">
-  <div class="v11-anim__frame">
-    <div class="v11-anim__chrome">
-      <span class="v11-anim__chrome-dot v11-anim__chrome-dot--r"></span>
-      <span class="v11-anim__chrome-dot v11-anim__chrome-dot--y"></span>
-      <span class="v11-anim__chrome-dot v11-anim__chrome-dot--g"></span>
-      <span class="v11-anim__chrome-title">developer-portal</span>
-      <span class="v11-anim__chrome-badge">Preview</span>
-    </div>
-    <div class="v11-anim__content">
-      <div class="v11-anim__shot v11-anim__shot--1" style="background-image:url('assets/animations/developer-portal/01-home.webp')"></div><div class="v11-anim__shot v11-anim__shot--2" style="background-image:url('assets/animations/developer-portal/02-catalog.webp')"></div><div class="v11-anim__shot v11-anim__shot--3" style="background-image:url('assets/animations/developer-portal/03-design-system.webp')"></div><div class="v11-anim__shot v11-anim__shot--4" style="background-image:url('assets/animations/developer-portal/04-observability.webp')"></div>
-      <div class="v11-anim__tint"></div>
-      <div class="v11-anim__tag v11-anim__tag--t1">developer arrives →</div><div class="v11-anim__tag v11-anim__tag--t2">picks a compliant template →</div><div class="v11-anim__tag v11-anim__tag--t3">built on a real design system →</div><div class="v11-anim__tag v11-anim__tag--t4">ships with metrics flowing →</div>
-      <div class="v11-anim__pip">
-        <div class="v11-anim__pip-chrome">
-          <span class="v11-anim__pip-dot v11-anim__pip-dot--r"></span>
-          <span class="v11-anim__pip-dot v11-anim__pip-dot--y"></span>
-          <span class="v11-anim__pip-dot v11-anim__pip-dot--g"></span>
-          <span class="v11-anim__pip-chrome-title">deploy</span>
-        </div>
-        <div class="v11-anim__pip-body">
-          <div class="v11-anim__pip-step v11-anim__pip-step--s1">
-            <div class="v11-anim__pip-greeting">Hello, developer<span class="v11-anim__pip-cursor"></span></div>
-          </div>
-          <div class="v11-anim__pip-step v11-anim__pip-step--s2">
-            <div>
-              <div class="v11-anim__pip-processing">Processing</div>
-              <div class="v11-anim__pip-proc-bar"></div>
-            </div>
-          </div>
-          <div class="v11-anim__pip-step v11-anim__pip-step--s3">
-            <div class="v11-anim__pip-envs">
-              <div class="v11-anim__pip-env">dev</div>
-              <div class="v11-anim__pip-env">staging</div>
-              <div class="v11-anim__pip-env v11-anim__pip-env--active">secure-cluster</div>
-            </div>
-          </div>
-          <div class="v11-anim__pip-step v11-anim__pip-step--s4">
-            <div>
-              <div class="v11-anim__pip-check">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
-              </div>
-              <div class="v11-anim__pip-done">Deployed</div>
-              <div class="v11-anim__pip-done-sub">all green</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <aside class="v11-case__anim"><div class="v11-anim-frame" style="--v11-anim-ratio: 920 / 660;" data-anim-fit data-anim-natural-w="920">
+  <iframe
+    class="v11-anim-frame__iframe"
+    src="assets/animations/gallery/animations-te/alt-2-picture-in-picture-es.html"
+    title="Developer Portal — picture in picture"
+    loading="lazy"
+    sandbox="allow-scripts allow-same-origin"
+    referrerpolicy="no-referrer"
+    width="920"
+    height="660"
+    style="width:920px;height:660px;"
+  ></iframe>
 </div></aside>
+</div>
 </article>
-<article id="case-life-update-mobile" class="v11-case" data-reveal>
-<div class="v11-case__text">
-  <div class="v11-case__head">
-    <span class="v11-case__client">producto propio · LLM en runtime</span>
-    <span class="v11-case__dates">2026</span>
+<article id="case-life-update-mobile" class="v11-case v11-case--has-anim" data-reveal>
+<aside class="v11-case__meta-col">
+  <div class="v11-case__meta-block">
+    <div class="v11-case__meta-label">Cliente</div>
+    <div class="v11-case__meta-value v11-case__meta-value--accent">producto propio · LLM en runtime</div>
   </div>
+  <div class="v11-case__meta-block">
+    <div class="v11-case__meta-label">Años</div>
+    <div class="v11-case__meta-value">2026</div>
+  </div>
+  <div class="v11-case__meta-block">
+    <div class="v11-case__meta-label">Stack</div>
+    <div class="v11-case__meta-chips"><span class="v11-case__chip">Gemini API</span><span class="v11-case__chip">Next.js 16</span><span class="v11-case__chip">Prisma</span><span class="v11-case__chip">0 → prod / 1d</span></div>
+  </div>
+</aside>
+<div class="v11-case__content">
+  <div class="v11-case__text">
   <h3 class="v11-case__title">Life Update Mobile — API Gemini en runtime</h3>
   <p class="v11-case__hook">Sistema de tracking personal — entries diarios analizados por Gemini en runtime, distancia semántica a un plan a 5 años, métricas de foco tipo Steve Jobs (3 cosas al día). 0 → producción en un día.</p>
   <ul class="v11-case__bullets"><li>API Gemini en runtime para análisis semántico de entries diarios</li><li>Data híbrida: .md como fuente de verdad + DB como motor de ejecución</li><li>Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits en 24h</li></ul>
-  <div class="v11-case__stack"><span class="v11-chip">Gemini API</span> <span class="v11-chip">Next.js 16</span> <span class="v11-chip">Prisma</span> <span class="v11-chip">0 → prod / 1d</span></div>
-  <a class="v11-case__cta" href="work/life-update-mobile/">Cómo se shippeó<span class="v11-case__cta-arrow" aria-hidden="true"> →</span></a>
+  <a class="v11-case__cta" href="work/life-update-mobile/">Cómo se shippeó<span class="v11-case__cta-arrow" aria-hidden="true">→</span></a>
 </div>
-
+  <aside class="v11-case__anim"><div class="v11-anim-frame" style="--v11-anim-ratio: 780 / 800;" data-anim-fit data-anim-natural-w="780">
+  <iframe
+    class="v11-anim-frame__iframe"
+    src="assets/animations/gallery/animations-life-update/alt-4-live-annotation-es.html"
+    title="Life Update Mobile — anotación en vivo"
+    loading="lazy"
+    sandbox="allow-scripts allow-same-origin"
+    referrerpolicy="no-referrer"
+    width="780"
+    height="800"
+    style="width:780px;height:800px;"
+  ></iframe>
+</div></aside>
+</div>
 </article>
     </div>
   </div>
@@ -2408,6 +2524,88 @@ a.v11-horizon__chip:focus-visible {
       });
     }, { threshold: 0.35, rootMargin: '0px 0px -10% 0px' });
     document.querySelectorAll('[data-animate]').forEach(function(el){ animIo.observe(el); });
+  }
+})();
+</script>
+<script>
+(function(){
+  // CSS injected into each animation iframe to strip captions, labels,
+  // hints, and sibling callouts — only the UI stage (.window / .phone)
+  // should render. Also removes stage padding and body centering so the
+  // iframe content box hugs the animation's intrinsic size.
+  var EMBED_CSS = [
+    'html, body { margin:0 !important; padding:0 !important; min-height:0 !important; background:transparent !important; display:block !important; place-items:initial !important; }',
+    '.stage { padding:0 !important; gap:0 !important; grid-template-columns:auto !important; display:block !important; text-align:left !important; }',
+    '.caption, .alt-label, .hint, .callouts { display:none !important; }',
+    /* keep only the primary visual (window OR phone-wrap) */
+    '.window { margin:0 !important; }',
+    '.phone-wrap { margin:0 !important; }'
+  ].join('\n');
+
+  function fitOne(wrapper){
+    var iframe = wrapper.querySelector('iframe');
+    if (!iframe) return;
+    var doc;
+    try { doc = iframe.contentDocument; } catch(_){ return; }
+    if (!doc || !doc.body) return;
+
+    // Inject embed CSS once.
+    if (!doc.getElementById('v11-embed-style')) {
+      var style = doc.createElement('style');
+      style.id = 'v11-embed-style';
+      style.textContent = EMBED_CSS;
+      (doc.head || doc.documentElement).appendChild(style);
+    }
+
+    // Measure the primary stage element — fall back to body if absent.
+    var target = doc.querySelector('.window')
+              || doc.querySelector('.phone-wrap')
+              || doc.querySelector('.stage')
+              || doc.body;
+    var rect = target.getBoundingClientRect();
+    var naturalW = Math.max(1, Math.round(rect.width));
+    var naturalH = Math.max(1, Math.round(rect.height));
+
+    // Size the iframe to the measured natural box so no scrollbars appear.
+    iframe.style.width  = naturalW + 'px';
+    iframe.style.height = naturalH + 'px';
+    iframe.setAttribute('width', String(naturalW));
+    iframe.setAttribute('height', String(naturalH));
+
+    // Update aspect ratio on wrapper so it reserves the right height.
+    wrapper.style.setProperty('--v11-anim-ratio', naturalW + ' / ' + naturalH);
+
+    // Apply scale to fit wrapper width.
+    var w = wrapper.clientWidth;
+    if (!w) return;
+    var scale = w / naturalW;
+    wrapper.style.setProperty('--v11-anim-scale', String(scale));
+  }
+
+  function fitAll(){
+    var wrappers = document.querySelectorAll('[data-anim-fit]');
+    for (var i = 0; i < wrappers.length; i++) fitOne(wrappers[i]);
+  }
+
+  // Hook each iframe's load so we inject + measure as soon as its doc is ready.
+  document.querySelectorAll('[data-anim-fit] iframe').forEach(function(iframe){
+    iframe.addEventListener('load', function(){
+      var wrapper = iframe.closest('[data-anim-fit]');
+      if (wrapper) fitOne(wrapper);
+    });
+    // If already loaded (cache), run now.
+    try { if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+      var wrapper = iframe.closest('[data-anim-fit]');
+      if (wrapper) fitOne(wrapper);
+    }} catch(_){}
+  });
+
+  fitAll();
+  window.addEventListener('resize', fitAll, { passive: true });
+  window.addEventListener('load', fitAll);
+  if (typeof ResizeObserver !== 'undefined') {
+    var ro = new ResizeObserver(fitAll);
+    document.querySelectorAll('[data-anim-fit]').forEach(function(el){ ro.observe(el); });
   }
 })();
 </script>

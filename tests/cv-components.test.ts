@@ -413,7 +413,7 @@ import { fileURLToPath } from "node:url";
 
 describe("renderSkillsSidebar — bairesdev ordering", () => {
   const here = path.dirname(fileURLToPath(import.meta.url));
-  const dataDir = path.join(here, "..", "data");
+  const dataDir = path.join(here, ".." , "data");
   const data = loadCvData(dataDir);
 
   it("puts the Agents group first for the bairesdev variant", () => {

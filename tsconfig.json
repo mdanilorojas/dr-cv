@@ -13,5 +13,5 @@
     "isolatedModules": true
   },
   "include": ["generators/**/*.ts", "tests/**/*.ts"],
-  "exclude": ["node_modules", "dist", "studies"]
+  "exclude": ["node_modules", "dist", "pruebas"]
 }

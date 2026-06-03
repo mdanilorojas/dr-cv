@@ -36,8 +36,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Publish only static documentation HTML
-          path: './docs'
+          path: './dist/landing-v11'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

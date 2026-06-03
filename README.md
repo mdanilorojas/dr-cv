@@ -38,18 +38,18 @@ Produces 5 PDFs in `dist/cvs/`:
 - `cv-serious-{en,es}.pdf` — LinkedIn serious (accent border, verified-only testimonials)
 - `cv-bairesdev-en.pdf` — BairesDev placement (minimalist sans+mono, grayscale, no testimonials)
 
-## Phase 3 · Landing page — shipped
+## Phase 3 · Landing page v11 — shipped
 
 ```bash
-npm run build:landing
-npx http-server dist/landing    # serve locally
+npm run build:landing-v11
+npx http-server dist/landing-v11 -p 5174    # serve locally
 ```
 
 Produces:
-- `dist/landing/index.html` (English)
-- `dist/landing/es/index.html` (Spanish)
-
-Single-file tab-SPA per language, dark-dominant Huly aesthetic. Open in any browser.
+- `dist/landing-v11/index.html` (English)
+- `dist/landing-v11/es/index.html` (Spanish)
+- `dist/landing-v11/work/<slug>/index.html` — case detail pages (EN)
+- `dist/landing-v11/es/work/<slug>/index.html` — case detail pages (ES)
 
 Edit any file under `/data/*.yaml` or `/data/landing.yaml`, rebuild, and the output reflects the change.
 
@@ -57,28 +57,32 @@ Edit any file under `/data/*.yaml` or `/data/landing.yaml`, rebuild, and the out
 
 ## Structure
 
+Ver `CLAUDE.md` para la política completa. Resumen:
+
 ```
 dr-cv/
-├── data/                    # single source of truth (YAML)
-│   ├── identity.yaml
-│   ├── positioning.yaml
-│   ├── skills.yaml          # dual taxonomy: by product layer + by client outcome
-│   ├── experience.yaml
-│   ├── clients.yaml
-│   └── testimonials/
-├── design-system/
-│   └── tokens.css           # Huly-inspired light-mode tokens
-├── generators/
-│   ├── lib/                 # types, loader, PDF renderer
-│   ├── templates/           # pure functions: (data, lang) -> html
-│   └── skills-sheet.ts      # orchestrator
-├── tests/                   # 30 tests, vitest
-├── docs/
-│   ├── superpowers/
-│   │   ├── specs/           # master plan spec (MD + HTML companion)
-│   │   └── plans/           # phase 1 implementation plan
-│   └── audits/              # GitHub audit (public); BAH audit (.gitignored)
-└── dist/                    # generated outputs (gitignored)
+├── productos/               # qué sale de aquí, organizado por deliverable
+│   ├── cv/                  # CVs PDF (warm / serious / bairesdev × EN/ES)
+│   ├── skills-sheet/        # skills sheet 2 páginas A4
+│   ├── landing/             # landing v11 (danilorojas.design)
+│   └── social/              # LinkedIn, contenido hecho a mano
+│
+├── data/                    # single source of truth (YAML + cases MD)
+├── design-system/           # tokens CSS por variante
+├── generators/              # code: data → HTML/PDF
+│   ├── lib/                 # types, loader, renderers
+│   └── templates/           # pure functions: (data, lang) → html
+├── tests/                   # vitest suites
+├── assets/                  # photo, animations (copiados a dist/ en build)
+├── dist/                    # outputs generados
+│
+├── pruebas/                 # TODO lo exploratorio vive aquí
+│   ├── superpowers/         # specs, plans, visuals (brainstorming artifacts)
+│   ├── landing-exploration/ # variantes descartadas de la landing
+│   ├── prompts/             # feedback guardado del usuario
+│   └── audits/              # auditorías internas
+│
+└── referencias/             # inspiración externa (Huly, hiring, visual)
 ```
 
 ---
@@ -90,7 +94,7 @@ dr-cv/
 | `npm install` | Install deps (Node 20+, TS, vitest, puppeteer, js-yaml) |
 | `npm run build:skills-sheet` | Regenerate `dist/skills-sheet-{en,es}.{html,pdf}` |
 | `npm run build:cvs` | Regenerate 5 CV PDFs in `dist/cvs/` |
-| `npm run build:landing` | Regenerate `dist/landing/{index.html, es/index.html}` |
+| `npm run build:landing-v11` | Regenerate `dist/landing-v11/` (landing + case details, EN+ES) |
 | `npm run build:all` | Run all three generators in sequence |
 | `npm test` | Run the full test suite (158 tests) |
 | `npm run typecheck` | Verify TypeScript types |

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Direction A · Editorial pure</title>
+<link rel="stylesheet" href="tokens-v11.css">
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* Direction A · Editorial pure
+     Source Serif 4 display, single narrow column, generous whitespace.
+     Closest to aihero.dev. */
+
+  .a-page { background: var(--v11-bg-primary); color: var(--v11-text-body); }
+  .a-container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+  /* Top nav — minimal */
+  .a-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--v11-line-soft);
+  }
+  .a-nav__brand {
+    font-family: var(--v11-font-display);
+    font-size: 14px;
+    color: var(--v11-text);
+    letter-spacing: -0.01em;
+  }
+  .a-nav__brand b { color: var(--v11-accent); font-weight: 600; }
+  .a-nav__links { display: flex; gap: 28px; font-family: var(--v11-font-display); font-size: 13px; color: var(--v11-text-70); }
+  .a-nav__links a:hover { color: var(--v11-accent); }
+
+  /* Hero */
+  .a-hero { padding: 96px 0 80px; }
+  .a-hero__avatar {
+    width: 88px; height: 88px; border-radius: 50%;
+    background-image: url('danilo.jpg');
+    background-size: cover; background-position: center;
+    margin: 0 auto 32px;
+    border: 1px solid var(--v11-line);
+  }
+  .a-hero__title {
+    font-family: var(--v11-font-serif);
+    font-weight: 500;
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--v11-text);
+    text-align: center;
+    margin: 0 0 24px;
+  }
+  .a-hero__title em { font-style: italic; color: var(--v11-accent); font-weight: 500; }
+  .a-hero__byline {
+    text-align: center;
+    font-family: var(--v11-font-display);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--v11-text-60);
+    text-transform: uppercase;
+  }
+  .a-hero__lede {
+    text-align: center;
+    margin: 32px auto 0;
+    max-width: 52ch;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--v11-text-70);
+  }
+
+  /* Section header */
+  .a-section { padding: 64px 0; border-top: 1px solid var(--v11-line-soft); }
+  .a-section__h {
+    font-family: var(--v11-font-serif);
+    font-weight: 500;
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--v11-text);
+    margin: 0 0 8px;
+  }
+  .a-section__h em { font-style: italic; color: var(--v11-accent); }
+  .a-section__sub {
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--v11-text-50);
+    margin: 0 0 40px;
+  }
+
+  /* Work — list, not grid */
+  .a-work__item {
+    display: block;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--v11-line-soft);
+    transition: padding 280ms;
+  }
+  .a-work__item:hover { padding-left: 8px; }
+  .a-work__item:hover .a-work__title { color: var(--v11-accent); }
+  .a-work__title {
+    font-family: var(--v11-font-serif);
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.2;
+    color: var(--v11-text);
+    margin: 0 0 6px;
+    transition: color 180ms;
+  }
+  .a-work__meta {
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--v11-text-50);
+    margin: 0 0 10px;
+  }
+  .a-work__desc { font-size: 15px; line-height: 1.55; color: var(--v11-text-70); margin: 0; max-width: 60ch; }
+
+  /* Notes */
+  .a-note {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--v11-line-soft);
+  }
+  .a-note__date {
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--v11-text-50);
+    margin-bottom: 8px;
+  }
+  .a-note__title {
+    font-family: var(--v11-font-serif);
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--v11-text);
+    margin: 0;
+  }
+  .a-note__title:hover { color: var(--v11-accent); }
+
+  /* Contact strip */
+  .a-contact { padding: 80px 0; text-align: center; }
+  .a-contact__h {
+    font-family: var(--v11-font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(28px, 4vw, 40px);
+    color: var(--v11-text);
+    margin: 0 0 24px;
+  }
+  .a-contact__email {
+    font-family: var(--v11-font-display);
+    font-size: 18px;
+    color: var(--v11-accent);
+    border-bottom: 1px solid var(--v11-accent-line);
+    padding-bottom: 4px;
+  }
+
+  .a-footer {
+    padding: 32px 0;
+    border-top: 1px solid var(--v11-line-soft);
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--v11-text-50);
+    display: flex; justify-content: space-between;
+  }
+
+  .return-bar { position: sticky; top: 0; z-index: 100; background: var(--v11-bg-deep); padding: 8px 24px; border-bottom: 1px solid var(--v11-line); font-family: var(--v11-font-display); font-size: 11px; color: var(--v11-text-60); letter-spacing: 0.08em; text-transform: uppercase; }
+  .return-bar a { color: var(--v11-accent); }
+</style>
+</head>
+<body class="a-page">
+
+<div class="return-bar">← <a href="index.html">Back to hub</a> · Direction A · Editorial pure</div>
+
+<header>
+  <div class="a-container">
+    <nav class="a-nav">
+      <div class="a-nav__brand">danilorojas<b>.</b>design</div>
+      <div class="a-nav__links">
+        <a>Work</a>
+        <a>Notes</a>
+        <a>About</a>
+        <a>EN/ES</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="a-hero">
+    <div class="a-container">
+      <div class="a-hero__avatar"></div>
+      <h1 class="a-hero__title">
+        I ship real products —<br>
+        and I ship the tools agents<br>
+        use to <em>help me ship them</em>.
+      </h1>
+      <div class="a-hero__byline">Danilo Rojas · Designer engineer · Quito</div>
+      <p class="a-hero__lede">
+        Fifteen years of delivery. Enterprise clients, production SaaS, active consulting at Booz Allen Hamilton.
+        I keep the craft; agents give me the leverage.
+      </p>
+    </div>
+  </section>
+
+  <section class="a-section">
+    <div class="a-container">
+      <h2 class="a-section__h">Selected <em>work</em></h2>
+      <p class="a-section__sub">Four projects · 2024 — 2026</p>
+
+      <a class="a-work__item">
+        <h3 class="a-work__title">EnRegla — LATAM SMB compliance SaaS</h3>
+        <div class="a-work__meta">2026 · 0→1.0 · Shipped with paying pilots</div>
+        <p class="a-work__desc">346 commits in 40 days. Built end-to-end with Claude Code as co-author and a Supabase MCP server in the loop. DS migration scored 78.4 → 95.6 across five recursive rounds.</p>
+      </a>
+
+      <a class="a-work__item">
+        <h3 class="a-work__title">Trusted Environments · Developer Portal</h3>
+        <div class="a-work__meta">2025–2026 · Booz Allen Hamilton</div>
+        <p class="a-work__desc">Packaged the design system as a Claude Code skill (/te-skin) so agents could review WCAG and tokens inline. Authored TE Black, a dark-primary palette with per-token accessibility audit.</p>
+      </a>
+
+      <a class="a-work__item">
+        <h3 class="a-work__title">Life Update · personal AI tracker</h3>
+        <div class="a-work__meta">2026 · Mobile · React Native + Gemini</div>
+        <p class="a-work__desc">Solo build. Conversational tracking layer with Gemini for runtime LLM. Used as testbed for the agentic-design method now applied to client work.</p>
+      </a>
+
+      <a class="a-work__item">
+        <h3 class="a-work__title">Aura · personal brand system</h3>
+        <div class="a-work__meta">2025 · Identity, voice, agents</div>
+        <p class="a-work__desc">The brand layer that produced this site, the CV variants, the skills sheet, and the copy across channels. Same data file, four outputs, regenerable.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="a-section">
+    <div class="a-container">
+      <h2 class="a-section__h">Recent <em>notes</em></h2>
+      <p class="a-section__sub">Working in public · 2026</p>
+
+      <div class="a-note">
+        <div class="a-note__date">2026-05-12</div>
+        <a class="a-note__title">When the BAH NDA still lets you talk</a>
+      </div>
+      <div class="a-note">
+        <div class="a-note__date">2026-05-08</div>
+        <a class="a-note__title">Designing tokens that agents can read</a>
+      </div>
+      <div class="a-note">
+        <div class="a-note__date">2026-04-29</div>
+        <a class="a-note__title">Why I rebuilt the recursive DS audit</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="a-contact">
+    <div class="a-container">
+      <h2 class="a-contact__h">Want to work together?</h2>
+      <a class="a-contact__email">danilorojas@hotmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="a-container">
+    <div class="a-footer">
+      <span>© 2026 Danilo Rojas</span>
+      <span>Quito · Ecuador</span>
+      <span>github · linkedin · behance</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

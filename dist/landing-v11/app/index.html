@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danilo Rojas | Senior Product Designer Assessment</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Design Tokens */
+    :root {
+      --bg-dark: #0b0f19;
+      --panel-dark: #121826;
+      --border-color: #222f47;
+      --border-focus: #3b82f6;
+      
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+      
+      --accent-purple: #8b5cf6;
+      --accent-pink: #ec4899;
+      --accent-blue: #3b82f6;
+      --accent-green: #10b981;
+      
+      --font-outfit: 'Outfit', sans-serif;
+      --font-inter: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-inter);
+      height: 100vh;
+      height: -webkit-fill-available; /* Fixed mobile viewport height */
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    html {
+      height: -webkit-fill-available;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 3px;
+    }
+
+    /* Mobile Header Layout */
+    header {
+      background-color: var(--panel-dark);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-logo {
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-outfit);
+      font-weight: 800;
+      font-size: 0.75rem;
+      color: #fff;
+    }
+
+    .brand-title {
+      font-family: var(--font-outfit);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-tag {
+      font-size: 0.6rem;
+      background: #1e293b;
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .progress-widget {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.02);
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .progress-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .progress-bar-container {
+      width: 100px;
+      height: 5px;
+      background-color: #1e293b;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Main Container */
+    .app-container {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Mobile Drawer Sidebar Navigation */
+    .sidebar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100%;
+      background-color: var(--panel-dark);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      z-index: 100;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+      box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+    }
+
+    .sidebar-header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sidebar-title {
+      font-family: var(--font-outfit);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .close-sidebar-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+
+    .sidebar-menu {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 0.5rem;
+    }
+
+    .menu-item-overview {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text-main);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .menu-item-overview:hover, .menu-item-overview.active {
+      background: var(--accent-blue-glow);
+      color: #fff;
+      border-color: rgba(59, 130, 246, 0.25);
+    }
+
+    .section-group {
+      margin-bottom: 1rem;
+    }
+
+    .section-header {
+      font-family: var(--font-outfit);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      padding: 0.4rem 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-badge {
+      font-size: 0.6rem;
+      background: #1a2333;
+      padding: 0.05rem 0.3rem;
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .question-list {
+      list-style: none;
+      margin-top: 0.15rem;
+    }
+
+    .question-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.1rem;
+      border: 1px solid transparent;
+    }
+
+    .question-item:hover, .question-item.active {
+      background: rgba(139, 92, 246, 0.08);
+      color: #fff;
+      border-color: rgba(139, 92, 246, 0.15);
+    }
+
+    .status-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1.2px solid var(--text-dim);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .question-item.completed .status-indicator {
+      border-color: var(--accent-green);
+      background-color: var(--accent-green);
+    }
+
+    .question-item.completed .status-indicator::after {
+      content: '✓';
+      color: #0b0f19;
+      font-size: 8px;
+      font-weight: 900;
+    }
+
+    .question-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      width: 14px;
+      text-align: right;
+    }
+
+    .question-text-truncate {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    /* Sidebar backdrop blur on mobile */
+    .sidebar-overlay {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+    }
+
+    .sidebar-overlay.active {
+      display: block;
+    }
+
+    /* Workspace Content Area */
+    .workspace {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background-color: var(--bg-dark);
+      position: relative;
+    }
+
+    /* Welcome/Overview Screen (Mobile Responsive) */
+    .overview-screen {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .welcome-hero {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(236, 72, 153, 0.03));
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-outfit);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #fff, #93c5fd, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .goal-tracker-card {
+      background-color: var(--panel-dark);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .goal-stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.5rem;
+    }
+
+    .goal-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      min-width: 100px;
+    }
+
+    .goal-stat-label {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .goal-stat-value {
+      font-family: var(--font-outfit);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .goal-stat-value.highlight {
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .start-button {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+      color: #fff;
+      font-family: var(--font-outfit);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+    }
+
+    .info-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .info-card {
+      background-color: var(--panel-dark);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .info-card-icon {
+      font-size: 1.25rem;
+      margin-top: -0.1rem;
+    }
+
+    .info-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .info-card-title {
+      font-family: var(--font-outfit);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .info-card-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Question Editor View (Mobile First Stacked Layout) */
+    .editor-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .editor-header {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      background: var(--panel-dark);
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      max-width: 70%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .breadcrumb-section {
+      color: var(--accent-purple);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .breadcrumb-separator {
+      color: var(--text-dim);
+    }
+
+    .breadcrumb-question {
+      color: var(--text-muted);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      background-color: #1a2333;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+    }
+
+    .status-badge .badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: var(--accent-green);
+    }
+
+    .status-badge.local-only .badge-dot {
+      background-color: var(--accent-blue);
+    }
+
+    .status-badge.syncing .badge-dot {
+      background-color: #eab308;
+      animation: pulse 1s infinite alternate;
+    }
+
+    /* Editor Body Scrollable */
+    .editor-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 1rem;
+      gap: 1rem;
+    }
+
+    .input-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .question-display {
+      background-color: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--font-outfit);
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #fff;
+      white-space: pre-wrap;
+    }
+
+    .textarea-container {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .textarea-label {
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .answer-textarea {
+      background-color: #0d131f;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.85rem;
+      color: var(--text-main);
+      font-family: var(--font-inter);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      min-height: 180px;
+      resize: vertical;
+      outline: none;
+    }
+
+    .answer-textarea:focus {
+      border-color: var(--border-focus);
+    }
+
+    .char-count {
+      position: absolute;
+      bottom: -1.2rem;
+      right: 0.25rem;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    /* Mobile Accordion Strategy Card */
+    .strategy-panel {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .strategy-card {
+      background: rgba(34, 47, 71, 0.15);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .strategy-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.6rem;
+      font-family: var(--font-mono);
+      color: var(--accent-purple);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .strategy-title {
+      font-family: var(--font-outfit);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .strategy-content {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .strategy-content p {
+      margin-bottom: 0.5rem;
+    }
+
+    .strategy-content ul {
+      margin-left: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .strategy-content li {
+      margin-bottom: 0.25rem;
+    }
+
+    /* Bottom Navigation Bar (Touch Optimized) */
+    .editor-footer {
+      background-color: var(--panel-dark);
+      border-top: 1px solid var(--border-color);
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      gap: 0.5rem;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .btn {
+      background-color: #1e293b;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      font-family: var(--font-inter);
+      flex: 1;
+      height: 44px; /* Minimum mobile touch target */
+    }
+
+    .btn-menu-trigger {
+      flex: 0;
+      min-width: 44px;
+      background-color: #111827;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-purple), #6d28d9);
+      border: none;
+      flex: 1.5;
+    }
+
+    .btn:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* Shortcuts panel - hidden on mobile */
+    .shortcuts-indicator {
+      display: none;
+    }
+
+    /* ==========================================================================
+       Desktop Media Query (Adapts interface for large screens)
+       ========================================================================== */
+    @media (min-width: 768px) {
+      header {
+        flex-direction: row;
+        padding: 1rem 2rem;
+        gap: 0;
+      }
+
+      .header-top {
+        width: auto;
+      }
+
+      .progress-widget {
+        width: 240px;
+        flex-direction: column;
+        align-items: flex-end;
+        background: transparent;
+        border: none;
+        padding: 0;
+      }
+
+      .progress-label {
+        font-size: 0.75rem;
+      }
+
+      .progress-bar-container {
+        width: 180px;
+        height: 6px;
+      }
+
+      .sidebar {
+        position: static;
+        width: 320px;
+        transform: translateX(0);
+        box-shadow: none;
+      }
+
+      .close-sidebar-btn {
+        display: none;
+      }
+
+      .sidebar-overlay {
+        display: none !important;
+      }
+
+      .welcome-hero {
+        padding: 2.5rem;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .goal-tracker-card {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+      }
+
+      .start-button {
+        width: auto;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+
+      .info-card {
+        padding: 1.25rem;
+      }
+
+      .overview-screen {
+        padding: 3rem;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      /* Desktop Split Editor */
+      .editor-body {
+        flex-direction: row;
+        padding: 0;
+        gap: 0;
+        overflow: hidden;
+      }
+
+      .input-panel {
+        flex: 3;
+        padding: 2rem;
+        border-right: 1px solid var(--border-color);
+        overflow-y: auto;
+        gap: 1.5rem;
+      }
+
+      .question-display {
+        font-size: 1.15rem;
+        padding: 1.5rem;
+      }
+
+      .answer-textarea {
+        font-size: 0.95rem;
+        min-height: 250px;
+      }
+
+      .strategy-panel {
+        flex: 2;
+        background-color: #0e1320;
+        padding: 2rem;
+        overflow-y: auto;
+        margin-top: 0;
+      }
+
+      .editor-footer {
+        padding: 1rem 2rem;
+      }
+
+      .nav-buttons {
+        width: auto;
+        gap: 0.75rem;
+      }
+
+      .btn {
+        flex: none;
+        width: auto;
+        padding: 0.6rem 1.2rem;
+        height: auto;
+      }
+
+      .btn-menu-trigger {
+        display: none;
+      }
+
+      .btn-primary {
+        flex: none;
+      }
+
+      .shortcuts-indicator {
+        display: flex;
+        gap: 0.5rem;
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        font-family: var(--font-mono);
+      }
+
+      .key-badge {
+        background: #1e293b;
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        border: 1px solid var(--border-color);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar Overlay for mobile -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-top">
+      <div class="brand">
+        <div class="brand-logo">DR</div>
+        <div>
+          <div class="brand-title">Danilo Rojas</div>
+        </div>
+        <div class="brand-tag">v2.0</div>
+      </div>
+      
+      <div class="header-actions">
+        <button class="btn" id="btn-export-md" style="padding: 0.4rem 0.75rem; height: 32px; font-size: 0.75rem;" title="Export responses to Markdown">
+          MD
+        </button>
+        <button class="btn" id="btn-export-json" style="padding: 0.4rem 0.75rem; height: 32px; font-size: 0.75rem;" title="Export responses to JSON">
+          JSON
+        </button>
+      </div>
+    </div>
+    
+    <div class="progress-widget">
+      <span class="progress-label" id="progress-text">0 / 80 Completed (0%)</span>
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progress-bar"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar-nav">
+      <div class="sidebar-header">
+        <span class="sidebar-title">Sections</span>
+        <button class="close-sidebar-btn" id="btn-close-sidebar">✕</button>
+      </div>
+      
+      <div class="sidebar-menu">
+        <div class="menu-item-overview active" id="menu-overview">
+          <span style="font-size: 1rem;">📊</span> Overview & Goals
+        </div>
+        
+        <div id="sections-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- Workspace Panel -->
+    <main class="workspace" id="main-workspace">
+      
+      <!-- VIEW 1: Overview Screen (Welcome) -->
+      <div class="overview-screen" id="view-overview">
+        <div class="welcome-hero">
+          <h1 class="hero-title">Senior Product Designer Training</h1>
+          <p class="hero-subtitle">
+            This self-assessment is the baseline of your current skills. By answering these 80 questions in English, you will map your strengths and weaknesses to construct your personalized path toward rare senior roles combining <strong>UX, product strategy, design systems, frontend, and AI-native workflows</strong>.
+          </p>
+        </div>
+        
+        <div class="goal-tracker-card">
+          <div class="goal-stats-row">
+            <div class="goal-stat">
+              <span class="goal-stat-label">Assessment Progress</span>
+              <span class="goal-stat-value" id="overview-progress-count">0 / 80</span>
+            </div>
+            <div class="goal-stat">
+              <span class="goal-stat-label">Salary Target</span>
+              <span class="goal-stat-value highlight">$250,000 / yr</span>
+            </div>
+          </div>
+          
+          <button class="start-button" id="btn-start-assessment">
+            Start Assessment
+          </button>
+        </div>
+        
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-card-icon">⚡</div>
+            <div class="info-card-content">
+              <h3 class="info-card-title">Real-Time Sync</h3>
+              <p class="info-card-desc">Every keypress is written instantly to your local <code>answers.md</code> and JSON state files on your hard drive.</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon">💡</div>
+            <div class="info-card-content">
+              <h3 class="info-card-title">Recruiter Tips</h3>
+              <p class="info-card-desc">Under every question, view specific strategies evaluated by high-paying US design panels.</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon">📱</div>
+            <div class="info-card-content">
+              <h3 class="info-card-title">Mobile Friendly</h3>
+              <p class="info-card-desc">Fully optimized to type or review details comfortably on your phone from your local network.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: Interactive Editor Screen -->
+      <div class="editor-screen" id="view-editor" style="display: none;">
+        
+        <div class="editor-header">
+          <div class="breadcrumb">
+            <span class="breadcrumb-section" id="breadcrumb-sec">Product Thinking</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-question" id="breadcrumb-que">Question 1</span>
+          </div>
+          
+          <div class="autosave-status">
+            <div class="status-badge" id="disk-badge">
+              <div class="badge-dot"></div>
+              <span id="disk-badge-text">LocalStorage</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="editor-body">
+          <!-- Text Input Panel -->
+          <div class="input-panel">
+            <div class="question-display" id="question-prompt">
+              <!-- Populated by JS -->
+            </div>
+            
+            <div class="textarea-container">
+              <label for="answer-input" class="textarea-label">Your Response (In English)</label>
+              <textarea 
+                id="answer-input" 
+                class="answer-textarea" 
+                placeholder="Write your detailed response here... Describe real projects, explain your methodology, and back it up with outcomes."
+              ></textarea>
+              <div class="char-count" id="editor-char-count">0 characters</div>
+            </div>
+          </div>
+          
+          <!-- Strategy / Recruiting Tips Panel -->
+          <div class="strategy-panel">
+            <div class="strategy-card">
+              <div class="strategy-badge">
+                <span>🎯</span> US Interview Strategy
+              </div>
+              <h4 class="strategy-title" id="strategy-theme">Strategic Evaluation Focus</h4>
+              <div class="strategy-content" id="strategy-details">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Footer Actions -->
+        <div class="editor-footer">
+          <div class="shortcuts-indicator">
+            <span>Navigation: <span class="key-badge">Alt</span> + <span class="key-badge">←</span> / <span class="key-badge">→</span></span>
+          </div>
+          
+          <div class="nav-buttons">
+            <button class="btn btn-menu-trigger" id="btn-open-sidebar" title="Open Questions Menu">☰</button>
+            <button class="btn" id="btn-prev">← Prev</button>
+            <button class="btn btn-primary" id="btn-next">Next →</button>
+          </div>
+        </div>
+        
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // 80 Questions Data with US Interview Tips
+    const questions = [
+      {
+        id: 1,
+        section: "PRODUCT THINKING",
+        question: "Your product's conversion rate drops by 15% over the last quarter.\n\nWalk me through your first 48 hours.",
+        tips: "<h4>What they evaluate:</h4><p>Your systematic triage strategy and avoidance of jump-to-solution bias.</p><ul><li><strong>First 24 hrs:</strong> Isolate variables. Segment the drop by platform (Web vs iOS/Android), geographical market, browser versions, and user cohorts. Check engineering release logs for recent deployments. Check for infrastructure failures or payment gateway issues.</li><li><strong>Next 24 hrs:</strong> Layer in qualitative behaviors. Review session recordings (FullStory/Hotjar), client error tracking logs (Sentry), and support tickets. Connect variables into testable hypotheses with product managers and engineers.</li></ul>"
+      },
+      {
+        id: 2,
+        section: "PRODUCT THINKING",
+        question: "How do you distinguish a UX problem from a business problem?",
+        tips: "<h4>What they evaluate:</h4><p>Your understanding of organizational objectives vs. user objectives.</p><ul><li><strong>UX Problem:</strong> Centered around usability, cognitive load, accessibility, or user friction. (e.g. \"Users cannot locate the payment button on mobile screens\").</li><li><strong>Business Problem:</strong> Focused on financial health, customer acquisition cost, conversion rate, customer lifetime value, or operations. (e.g. \"Our monthly active user churn is 8%\").</li><li><strong>Connection:</strong> Senior designers explain how fixing a UX problem drives the solution of a business problem without resorting to user-hostile monetization tactics.</li></ul>"
+      },
+      {
+        id: 3,
+        section: "PRODUCT THINKING",
+        question: "Tell me about a product decision that improved a business outcome.\n\nHow did you measure success?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to articulate direct business impact stemming from your design decisions.</p><ul><li>Use the <strong>STAR Method</strong> (Situation, Task, Action, Result).</li><li>Clearly state the business metric you targeted (e.g., Conversion, Retention, Average Order Value).</li><li>State the UX metric changed (e.g., completion rate, task time).</li><li>Deliver exact business results (e.g., \"Increased trial signups by 18%, driving $40k in additional annual recurring revenue\").</li></ul>"
+      },
+      {
+        id: 4,
+        section: "PRODUCT THINKING",
+        question: "What is the difference between an output and an outcome?\n\nGive a real example.",
+        tips: "<h4>What they evaluate:</h4><p>Your focus on customer and business value rather than shipping velocity.</p><ul><li><strong>Output:</strong> The tangible deliverable produced by the team (e.g., \"We shipped a custom search filter widget\").</li><li><strong>Outcome:</strong> The measurable difference in customer behavior resulting from that output (e.g., \"Search-to-cart conversions increased by 11% and search time dropped by 20 seconds\").</li></ul>"
+      },
+      {
+        id: 5,
+        section: "PRODUCT THINKING",
+        question: "What makes a product successful?",
+        tips: "<h4>What they evaluate:</h4><p>Strategic breadth and balance.</p><p>Explain that product success is the sweet spot of three dimensions:</p><ul><li><strong>Desirability:</strong> Do users need it, value it, and enjoy it?</li><li><strong>Feasibility:</strong> Can engineering build and scale it sustainably?</li><li><strong>Viability:</strong> Does it match the company's business model, operations, and growth goals?</li></ul>"
+      },
+      {
+        id: 6,
+        section: "PRODUCT STRATEGY",
+        question: "How do you define an MVP?",
+        tips: "<h4>What they evaluate:</h4><p>Pragmatism and lean thinking.</p><p>An MVP (Minimum Viable Product) is the smallest version of a concept that allows you to gather maximum validated learning about users with minimum effort. Highlight that it must still be a cohesive, high-quality experience (even if narrow in scope), rather than an unfinished or broken product.</p>"
+      },
+      {
+        id: 7,
+        section: "PRODUCT STRATEGY",
+        question: "What is NOT an MVP?",
+        tips: "<h4>What they evaluate:</h4><p>Your experience launching early-stage features.</p><ul><li>It is NOT a collection of buggy, incomplete features thrown together to hit a deadline.</li><li>It is NOT a fixed, multi-month release phase where user feedback will be ignored.</li><li>It is NOT a slice of a product that lacks usability and value. Show understanding of the \"Minimum Lovable Product\" or \"Minimum Usable Product\" concepts.</li></ul>"
+      },
+      {
+        id: 8,
+        section: "PRODUCT STRATEGY",
+        question: "Your CEO asks for ten new features.\n\nHow do you decide what gets built?",
+        tips: "<h4>What they evaluate:</h4><p>Stakeholder management and strategic alignment.</p><ul><li>Understand the underlying business objective: ask \"Why?\" and \"What metrics are we trying to improve?\"</li><li>Collaborate with product management and engineering to map requests to known user pain points.</li><li>Introduce objective prioritization frameworks (e.g., Value/Effort, RICE) to structure a collaborative trade-off discussion instead of executing based on HiPPO (Highest Paid Person's Opinion).</li></ul>"
+      },
+      {
+        id: 9,
+        section: "PRODUCT STRATEGY",
+        question: "How do you prioritize competing stakeholder requests?",
+        tips: "<h4>What they evaluate:</h4><p>Your negotiation skills and data-driven approach.</p><ul><li>Tie requests directly back to product vision and active organizational OKRs.</li><li>Validate features early through discovery experiments (user tests, smoke tests) to bring user evidence to the prioritization table.</li><li>Maintain a transparent backlog scoring system so stakeholders understand the rationale behind priorities.</li></ul>"
+      },
+      {
+        id: 10,
+        section: "PRODUCT STRATEGY",
+        question: "What prioritization frameworks have you used?\n\nHow?",
+        tips: "<h4>What they evaluate:</h4><p>Practical framework experience.</p><p>Do not just define them; explain how you facilitated their use:</p><ul><li><strong>RICE (Reach, Impact, Confidence, Effort):</strong> Used to evaluate feature backlogs quantitatively with tech and product leads.</li><li><strong>Kano Model:</strong> Used to understand user satisfaction categories (Must-have, Performance, Delighters).</li><li><strong>Opportunity Solution Trees:</strong> Used to map potential design solutions to clear user problems and business objectives.</li></ul>"
+      },
+      {
+        id: 11,
+        section: "DISCOVERY",
+        question: "What is Product Discovery?",
+        tips: "<h4>What they evaluate:</h4><p>Your understanding of the dual-track agile mindset.</p><p>Product Discovery is the phase dedicated to figuring out *what* to build, ensuring we minimize: </p><ul><li>Value risk (will they buy/use it?)</li><li>Usability risk (can they figure it out?)</li><li>Feasibility risk (can we build it?)</li><li>Viability risk (does it work for our business model?)</li></ul>"
+      },
+      {
+        id: 12,
+        section: "DISCOVERY",
+        question: "Describe your discovery process from start to finish.",
+        tips: "<h4>What they evaluate:</h4><p>Your execution and workflow structure.</p><p>Walk through your phases: Frame the problem definition -> Generative research and analytics mapping -> Co-design and ideation with cross-functional partners -> Prototyping (Figma) and usability validation -> Feasibility checks and handoff mapping.</p>"
+      },
+      {
+        id: 13,
+        section: "DISCOVERY",
+        question: "A stakeholder requests a new feature.\n\nWhat happens next?",
+        tips: "<h4>What they evaluate:</h4><p>Your design intake process.</p><p>Acknowledge their request, capture the problem they want solved, map it against your user segment profiles, consult existing product data, and run it through your next discovery cycle as a hypothesis to validate before starting high-fidelity layouts.</p>"
+      },
+      {
+        id: 14,
+        section: "DISCOVERY",
+        question: "How do you validate assumptions?",
+        tips: "<h4>What they evaluate:</h4><p>Validation diversity and lean tactics.</p><ul><li>List assumptions and classify them by risk and uncertainty.</li><li>For value: run user interviews, concept testing, or painted-door tests.</li><li>For usability: run interactive prototype testing.</li><li>For technical feasibility: run engineering spikes early.</li></ul>"
+      },
+      {
+        id: 15,
+        section: "DISCOVERY",
+        question: "How do you know when you have enough evidence to move forward?",
+        tips: "<h4>What they evaluate:</h4><p>Practical decision-making speed.</p><p>Highlight that you stop when you reach \"data saturation\" (you hear the same findings repeatedly, and no new usability flaws emerge) and when your key success criteria are met, allowing you to move into delivery without analysis paralysis.</p>"
+      },
+      {
+        id: 16,
+        section: "USER RESEARCH",
+        question: "When should you run user interviews?",
+        tips: "<h4>What they evaluate:</h4><p>Strategic research planning.</p><ul><li>During generative discovery to map user environments, mental models, workflows, and paint points.</li><li>To explore the qualitative \"why\" behind unexplained shifts in your quantitative metrics.</li></ul>"
+      },
+      {
+        id: 17,
+        section: "USER RESEARCH",
+        question: "When should you NOT run user interviews?",
+        tips: "<h4>What they evaluate:</h4><p>Methodological clarity.</p><ul><li>When trying to measure quantitative scales or market volumes (use surveys or product analytics).</li><li>When checking interface usability (use task-based usability testing instead of conversational interviews).</li><li>When asking users to predict their future choices (people are poor estimators of their future behavior).</li></ul>"
+      },
+      {
+        id: 18,
+        section: "USER RESEARCH",
+        question: "Tell me about a research project you conducted.",
+        tips: "<h4>What they evaluate:</h4><p>Practical execution of research.</p><p>Walk through: Context (why you researched) -> Method (e.g., 8 moderated customer sessions) -> Insight (what surprising thing you uncovered) -> Product Action (how designs changed) -> Business outcome.</p>"
+      },
+      {
+        id: 19,
+        section: "USER RESEARCH",
+        question: "How many users are enough for usability testing?\n\nWhy?",
+        tips: "<h4>What they evaluate:</h4><p>Usability testing ROI literacy.</p><p>State: <strong>5 to 8 users</strong> per user profile. Explain the Nielsen-Landauer formula: 5 users uncover 85% of usability issues. Testing more users provides diminishing returns and is better spent on subsequent iterative cycles.</p>"
+      },
+      {
+        id: 20,
+        section: "USER RESEARCH",
+        question: "What are the biggest mistakes researchers make?",
+        tips: "<h4>What they evaluate:</h4><p>Your critical research eye.</p><ul><li>Asking leading questions that direct user answers.</li><li>Seeking confirmation bias instead of trying to break their own prototypes.</li><li>Prioritizing subjective opinions (\"I like this blue\") over objective behavioral observation (\"The user clicked the wrong button twice\").</li></ul>"
+      },
+      {
+        id: 21,
+        section: "UX METRICS",
+        question: "What UX metrics do you track most often?",
+        tips: "<h4>What they evaluate:</h4><p>Your familiarity with standard UX metrics.</p><ul><li><strong>Task Success Rate (TSR):</strong> Completion rates.</li><li><strong>Time on Task:</strong> Execution speed.</li><li><strong>System Usability Scale (SUS):</strong> Perceived ease of use.</li><li><strong>Customer Effort Score (CES):</strong> Single-task user friction.</li><li><strong>Funnel Drop-offs:</strong> Drop-off points.</li></ul>"
+      },
+      {
+        id: 22,
+        section: "UX METRICS",
+        question: "Which is more important:\n\nTask Success Rate\n\nor\n\nTime on Task\n\nWhy?",
+        tips: "<h4>What they evaluate:</h4><p>Strategic contextual design judgment.</p><ul><li>Generally, <strong>Task Success Rate</strong> is primary: if a user fails to complete a task, speed is irrelevant.</li><li>However, it is highly contextual. In productivity tools (B2B SaaS, developer tools), Time on Task is crucial for efficiency. In consumer products (Spotify, Netflix), high Time on Task can signal high engagement, making it a positive metric.</li></ul>"
+      },
+      {
+        id: 23,
+        section: "UX METRICS",
+        question: "You have:\n\nVersion A\n\n90% Success Rate\n120 sec Time on Task\n4.8/5 CSAT\n\nVersion B\n\n95% Success Rate\n90 sec Time on Task\n3.1/5 CSAT\n\nWhich would you choose?",
+        tips: "<h4>What they evaluate:</h4><p>Product intuition and metrics reconciliation.</p><ul><li><strong>Select Version B:</strong> It is objectively more functional, faster, and has a lower failure rate.</li><li><strong>Address CSAT:</strong> CSAT drop (3.1 vs 4.8) is common when users face new flows, aesthetic changes, or minor friction points that don't block task completion but disrupt habits.</li><li><strong>Action:</strong> Run quick usability sessions to find and fix the subjective friction points in B, keeping the performance gains.</li></ul>"
+      },
+      {
+        id: 24,
+        section: "UX METRICS",
+        question: "Explain SUS.",
+        tips: "<h4>What they evaluate:</h4><p>Standard tool execution.</p><p>System Usability Scale: A 10-question survey scored on a 5-point Likert scale, conducted after usability testing. It yields a single score from 0-100. 68 is the global average; above 80 is considered excellent. Note that it measures perceived usability, not actual behavior.</p>"
+      },
+      {
+        id: 25,
+        section: "UX METRICS",
+        question: "Explain the HEART framework.",
+        tips: "<h4>What they evaluate:</h4><p>Framework familiarity.</p><p>Google's framework for mapping user experience goals to specific metrics:</p><ul><li><strong>Happiness:</strong> User satisfaction, ease of use.</li><li><strong>Engagement:</strong> Interaction frequency and depth.</li><li><strong>Adoption:</strong> New users trying a feature.</li><li><strong>Retention:</strong> Returning active users.</li><li><strong>Task Success:</strong> Completion rate, errors, speed.</li></ul>"
+      },
+      {
+        id: 26,
+        section: "DESIGN SYSTEMS",
+        question: "What is a Design System?",
+        tips: "<h4>What they evaluate:</h4><p>Familiarity with modern design systems at scale.</p><p>A Design System is a single source of truth containing reusable components, design tokens (colors, typography, spacing), patterns, and documentation synced directly with production code libraries, designed to accelerate design and development alignment.</p>"
+      },
+      {
+        id: 27,
+        section: "DESIGN SYSTEMS",
+        question: "How is a Design System different from a UI Kit?",
+        tips: "<h4>What they evaluate:</h4><p>Technical depth.</p><ul><li><strong>UI Kit:</strong> A static file library (e.g. Figma library) containing design assets used by designers to build UI layouts.</li><li><strong>Design System:</strong> An ecosystem connecting static designs to live code counterparts (React/Vue/etc.), design tokens, accessibility standards, voice and tone guides, and clear contribution models.</li></ul>"
+      },
+      {
+        id: 28,
+        section: "DESIGN SYSTEMS",
+        question: "How do you govern Design Systems?",
+        tips: "<h4>What they evaluate:</h4><p>System maintenance experience at scale.</p><p>Explain the models: Centralized, Federated, or Hybrid. Senior designers advocate for a **Federated or Hybrid model** where designers and developers across teams contribute updates, managed by a core review board to maintain standards.</p>"
+      },
+      {
+        id: 29,
+        section: "DESIGN SYSTEMS",
+        question: "A VP wants a custom component outside the system.\n\nWhat do you do?",
+        tips: "<h4>What they evaluate:</h4><p>Stakeholder management and component hygiene.</p><ul><li>Analyze the user need: Why does the system fail to support this request?</li><li>If it is an isolated validation test, suggest designing it locally to test the hypothesis.</li><li>If successful and broadly useful, run it through the system's contribution pipeline. Explain the long-term engineering maintenance costs and styling debt of custom, non-standard components.</li></ul>"
+      },
+      {
+        id: 30,
+        section: "DESIGN SYSTEMS",
+        question: "Tell me about a Design System challenge you solved.",
+        tips: "<h4>What they evaluate:</h4><p>Practical problem solving.</p><p>Discuss a real challenge: Syncing designs to code, establishing automation pipelines (Figma variables to Style Dictionary), getting cross-functional buy-in, or increasing component adoption rate.</p>"
+      },
+      {
+        id: 31,
+        section: "ENGINEERING",
+        question: "What makes a handoff successful?",
+        tips: "<h4>What they evaluate:</h4><p>Collaboration practices with development teams.</p><ul><li>Include engineering in discovery early to ensure early feasibility reviews.</li><li>Organize Figma files clearly (Autolayout, component states, responsive rules, designated tokens).</li><li>Document explicit user flows, interaction details, error conditions, and accessibility specifications inside the workspace.</li></ul>"
+      },
+      {
+        id: 32,
+        section: "ENGINEERING",
+        question: "Explain the difference between authentication and authorization.",
+        tips: "<h4>What they evaluate:</h4><p>Core technical literacy.</p><ul><li><strong>Authentication (AuthN):</strong> Confirming the identity of the user (e.g., \"Who are you?\" via password, email verification, or face scan).</li><li><strong>Authorization (AuthZ):</strong> Verifying the permissions of that user (e.g., \"What are you allowed to do?\" like admin rights vs. billing view).</li></ul>"
+      },
+      {
+        id: 33,
+        section: "ENGINEERING",
+        question: "What information should exist in a user flow?",
+        tips: "<h4>What they evaluate:</h4><p>Interaction documentation depth.</p><p>Ensure the flow maps: The trigger/entry point, explicit user actions, logic decision splits (e.g., guest vs. logged-in user), system responses (loading states, page loads), and final exit states.</p>"
+      },
+      {
+        id: 34,
+        section: "ENGINEERING",
+        question: "How do you document edge cases?",
+        tips: "<h4>What they evaluate:</h4><p>Your attention to detail.</p><p>Explain that you design for the non-happy paths: empty states, form validation errors, slow loading skeleton screens, API timeouts, and text overflow limitations. Put these in a dedicated, clearly labeled section in Figma.</p>"
+      },
+      {
+        id: 35,
+        section: "ENGINEERING",
+        question: "Engineering estimates 4 months.\n\nProduct wants 4 weeks.\n\nWhat do you do?",
+        tips: "<h4>What they evaluate:</h4><p>Negotiation, pragmatism, and scope optimization.</p><ul><li>Run a collaborative session with PM and Engineering Lead to review the scope.</li><li>Break the solution into core components. Identify what elements represent the thin-slice MVP (e.g. manual backend processes in v1).</li><li>Negotiate scope compromises to meet the 4-week timeline without sacrificing quality or essential usability.</li></ul>"
+      },
+      {
+        id: 36,
+        section: "ANALYTICS",
+        question: "What is the difference between a metric and a KPI?",
+        tips: "<h4>What they evaluate:</h4><p>Analytical literacy.</p><ul><li><strong>Metric:</strong> Any quantitative data point you can track (e.g., site page views, session durations).</li><li><strong>KPI (Key Performance Indicator):</strong> A metric selected because it directly measures progress toward a primary business objective (e.g., Monthly Recurring Revenue, Churn). All KPIs are metrics, not all metrics are KPIs.</li></ul>"
+      },
+      {
+        id: 37,
+        section: "ANALYTICS",
+        question: "What is a North Star Metric?",
+        tips: "<h4>What they evaluate:</h4><p>Strategic focus.</p><p>The single key metric that best reflects the core value your product delivers to customers. It aligns all product teams toward a single, long-term impact point (e.g., Airbnb: \"Nights Booked\"; Spotify: \"Time Spent Listening\").</p>"
+      },
+      {
+        id: 38,
+        section: "ANALYTICS",
+        question: "How would you measure activation?",
+        tips: "<h4>What they evaluate:</h4><p>Onboarding and product retention strategy.</p><p>Activation is the point where a user first experiences the product's value proposition (\"Aha!\" moment). Identify the user behavior that correlates with retention, and track the percentage of new signups who complete this behavior within N days.</p>"
+      },
+      {
+        id: 39,
+        section: "ANALYTICS",
+        question: "How would you measure retention?",
+        tips: "<h4>What they evaluate:</h4><p>Core growth analytics understanding.</p><p>Analyze retention using cohort tables, measuring what percentage of users return to perform a key active event in subsequent time periods (Day 1/7/30). A flattening retention curve is the best indicator of product-market fit.</p>"
+      },
+      {
+        id: 40,
+        section: "ANALYTICS",
+        question: "What analytics tools have you used?",
+        tips: "<h4>What they evaluate:</h4><p>Tooling familiarity.</p><p>State tools you have worked with across different areas: Event tracking (Amplitude, Mixpanel), Web traffic (GA4), Session replay (Hotjar, FullStory), and Data visualization (Looker, Tableau).</p>"
+      },
+      {
+        id: 41,
+        section: "LEADERSHIP",
+        question: "Tell me about a conflict with engineering.",
+        tips: "<h4>What they evaluate:</h4><p>Your cross-functional relationship management.</p><p>Frame the conflict constructively: focus on different viewpoints (e.g., visual polish vs. execution speed). Show active listening, joint brainstorming to find compromises, and how you built trust for future projects.</p>"
+      },
+      {
+        id: 42,
+        section: "LEADERSHIP",
+        question: "Tell me about a conflict with a stakeholder.",
+        tips: "<h4>What they evaluate:</h4><p>Stakeholder collaboration under pressure.</p><p>Highlight a disagreement (e.g. intrusive features). Explain how you validated their goal, suggested data-driven experiments (like A/B testing), and collaborated to find solutions supported by user behavior.</p>"
+      },
+      {
+        id: 43,
+        section: "LEADERSHIP",
+        question: "How do you align teams that disagree?",
+        tips: "<h4>What they evaluate:</h4><p>Facilitation and mediation skills.</p><p>Shift focus from subjective opinions back to user needs and business metrics. Map the arguments visually (journey mapping, trees) and frame the choices as hypotheses to validate rather than permanent battles.</p>"
+      },
+      {
+        id: 44,
+        section: "LEADERSHIP",
+        question: "How do you influence without authority?",
+        tips: "<h4>What they evaluate:</h4><p>Soft skills and leadership capacity.</p><ul><li>Bring cross-functional partner inputs into the design process early.</li><li>Invite PMs and developers to watch usability test sessions.</li><li>Ground design recommendations in data and patterns rather than personal opinions.</li></ul>"
+      },
+      {
+        id: 45,
+        section: "LEADERSHIP",
+        question: "Describe your leadership style.",
+        tips: "<h4>What they evaluate:</h4><p>Self-awareness and mentorship maturity.</p><p>Describe a style that is collaborative, outcome-focused, and supportive. Emphasize setting clear goals, building psychological safety within the team, and helping junior designers grow.</p>"
+      },
+      {
+        id: 46,
+        section: "AI",
+        question: "How has AI changed your design process?",
+        tips: "<h4>What they evaluate:</h4><p>Efficiency and adaptability.</p><p>Explain how AI acts as an assistant to accelerate generative stages: writing user scripts, synthesizing transcripts, exploring layout patterns, and writing placeholder copy. This frees you to focus on strategy and alignment.</p>"
+      },
+      {
+        id: 47,
+        section: "AI",
+        question: "What parts of Product Design should be automated?",
+        tips: "<h4>What they evaluate:</h4><p>Pragmatic evaluation of AI capabilities.</p><p>Repetitive, mechanical tasks: layer organization, responsive layout adaptation, component asset exporting, drafting boilerplate code, and creating content variations.</p>"
+      },
+      {
+        id: 48,
+        section: "AI",
+        question: "What parts should never be automated?",
+        tips: "<h4>What they evaluate:</h4><p>Strategic awareness of human value.</p><p>Generative empathy in user interviews, strategic decision-making, ethical product balances, cross-functional relationship building, and building team alignment.</p>"
+      },
+      {
+        id: 49,
+        section: "INTERVIEW PERFORMANCE",
+        question: "Tell me about a design decision you strongly disagreed with and how you handled it.",
+        tips: "<h4>What they evaluate:</h4><p>Professional maturity and \"Disagree and Commit\" alignment.</p><p>Explain the context and why you disagreed (using research or metrics). Show how you supported the group's final choice anyway, helped make it successful, set up metrics to monitor performance, and iterated based on outcomes.</p>"
+      },
+      {
+        id: 50,
+        section: "INTERVIEW PERFORMANCE",
+        question: "Why should we hire you instead of another Senior Product Designer?",
+        tips: "<h4>What they evaluate:</h4><p>Your unique value proposition (UVP).</p><p>Focus on your combination of skills: strategic product thinking (PM mindset), technical understanding (engineering empathy), and high-caliber interaction craftsmanship. Highlight your track record of shipping measurable business results.</p>"
+      },
+      {
+        id: 51,
+        section: "CLAUDE CODE & CURSOR",
+        question: "How would you use Claude Code in a real product design workflow without outsourcing your judgment?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to use AI as leverage while keeping product judgment, taste, and accountability.</p><h4>Study later:</h4><ul><li>Claude Code workflows: repo exploration, implementation plans, diffs, tests, and review loops.</li><li>Prompting for constraints, acceptance criteria, and verification evidence.</li><li>How to keep human decision-making in discovery, prioritization, and final UX quality.</li></ul>"
+      },
+      {
+        id: 52,
+        section: "CLAUDE CODE & CURSOR",
+        question: "What kinds of tasks would you give to Cursor versus Claude Code?",
+        tips: "<h4>What they evaluate:</h4><p>Your practical understanding of AI coding tools and when each one fits the workflow.</p><h4>Study later:</h4><ul><li>Cursor for inline editing, local refactors, codebase navigation, and pair-programming.</li><li>Claude Code for agentic tasks, multi-file changes, verification, and repo-level execution.</li><li>How to compare tools by context window, autonomy, reviewability, and speed.</li></ul>"
+      },
+      {
+        id: 53,
+        section: "CLAUDE CODE & CURSOR",
+        question: "Describe a design-to-code workflow where AI helps you move from Figma or a product idea to a working prototype.",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to turn design intent into executable artifacts without treating generated code as magic.</p><h4>Study later:</h4><ul><li>Figma inspection, component mapping, and responsive constraints.</li><li>Prototype stack choices: React, Tailwind, shadcn/ui, Supabase, Vercel.</li><li>Review steps: visual QA, accessibility checks, mobile screenshots, and interaction testing.</li></ul>"
+      },
+      {
+        id: 54,
+        section: "CLAUDE CODE & CURSOR",
+        question: "How do you review AI-generated code or UI before trusting it?",
+        tips: "<h4>What they evaluate:</h4><p>Your engineering empathy and your ability to prevent AI from shipping brittle product work.</p><h4>Study later:</h4><ul><li>Code review basics: readability, component boundaries, state management, error states.</li><li>Verification: typecheck, tests, lint, browser checks, and mobile viewport review.</li><li>UX review: hierarchy, affordance, accessibility, copy, empty/loading/error states.</li></ul>"
+      },
+      {
+        id: 55,
+        section: "CLAUDE CODE & CURSOR",
+        question: "What risks appear when designers rely too heavily on AI coding tools?",
+        tips: "<h4>What they evaluate:</h4><p>Your maturity around AI limitations, product risk, and professional responsibility.</p><h4>Study later:</h4><ul><li>Risks: generic interfaces, hallucinated APIs, hidden security issues, and maintainability debt.</li><li>How to preserve taste, domain understanding, and user research quality.</li><li>Governance habits: constraints, review checklists, source control, and rollback plans.</li></ul>"
+      },
+      {
+        id: 56,
+        section: "FIGMA MCP & AI AGENTS",
+        question: "What is MCP, and why does it matter for designers working with AI agents?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to explain technical infrastructure in product-design language.</p><h4>Study later:</h4><ul><li>MCP as a protocol for connecting AI tools to external systems and context.</li><li>Examples: Figma, GitHub, Slack, docs, databases, analytics, and local files.</li><li>The product value: better context, fewer manual handoffs, and more auditable AI workflows.</li></ul>"
+      },
+      {
+        id: 57,
+        section: "FIGMA MCP & AI AGENTS",
+        question: "How would a Figma MCP workflow improve design-system maintenance or design-to-code handoff?",
+        tips: "<h4>What they evaluate:</h4><p>Your understanding of how Figma, tokens, components, and code can become one operating system.</p><h4>Study later:</h4><ul><li>Reading component metadata, tokens, frames, variants, and naming patterns from Figma.</li><li>Mapping Figma components to React components and Storybook examples.</li><li>Detecting drift between design files and production UI.</li></ul>"
+      },
+      {
+        id: 58,
+        section: "FIGMA MCP & AI AGENTS",
+        question: "If an AI agent can inspect Figma files, what instructions and constraints would you give it?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to control an autonomous workflow through precise constraints.</p><h4>Study later:</h4><ul><li>Instructions for layout, spacing, breakpoints, component reuse, naming, and accessibility.</li><li>Guardrails: do not invent missing states, do not ignore tokens, do not override system conventions.</li><li>Expected outputs: implementation plan, component inventory, risk list, and verification checklist.</li></ul>"
+      },
+      {
+        id: 59,
+        section: "FIGMA MCP & AI AGENTS",
+        question: "What should never be automated in a Figma-to-code workflow?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to separate mechanical translation from design judgment.</p><h4>Study later:</h4><ul><li>Human decisions: user intent, product trade-offs, prioritization, ethics, and final quality bar.</li><li>Where automation helps: repetitive markup, token mapping, component scaffolding, and screenshots.</li><li>Where automation fails: ambiguous flows, missing states, unclear hierarchy, and weak product rationale.</li></ul>"
+      },
+      {
+        id: 60,
+        section: "FIGMA MCP & AI AGENTS",
+        question: "How would you explain AI agents to a product team that has never used them?",
+        tips: "<h4>What they evaluate:</h4><p>Your communication skill when introducing technical change to non-technical partners.</p><h4>Study later:</h4><ul><li>Agents as goal-directed assistants that can use tools, inspect context, and execute multi-step tasks.</li><li>Examples for product teams: research synthesis, prototype generation, QA support, analytics queries.</li><li>Limits: oversight, permissions, privacy, and verification.</li></ul>"
+      },
+      {
+        id: 61,
+        section: "FRONTEND FOUNDATIONS",
+        question: "Why should a product designer understand React?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to collaborate beyond static mockups and reason about real product interfaces.</p><h4>Study later:</h4><ul><li>Components, props, state, composition, conditional rendering, and lifecycle basics.</li><li>How design-system components become reusable product building blocks.</li><li>Why responsive behavior, loading states, and data-driven UI change design decisions.</li></ul>"
+      },
+      {
+        id: 62,
+        section: "FRONTEND FOUNDATIONS",
+        question: "What TypeScript concepts matter most for a designer collaborating with engineers?",
+        tips: "<h4>What they evaluate:</h4><p>Your technical literacy and ability to understand constraints in component APIs.</p><h4>Study later:</h4><ul><li>Types, interfaces, unions, optional properties, and enums.</li><li>How TypeScript models component variants, design tokens, and API data.</li><li>Why strong typing prevents edge-case bugs and unclear design states.</li></ul>"
+      },
+      {
+        id: 63,
+        section: "FRONTEND FOUNDATIONS",
+        question: "How would you decide whether to build a custom component or use shadcn/ui?",
+        tips: "<h4>What they evaluate:</h4><p>Your product judgment around speed, accessibility, maintainability, and brand expression.</p><h4>Study later:</h4><ul><li>shadcn/ui as copyable, customizable components built on Radix and Tailwind.</li><li>Use it when speed, accessibility primitives, and consistency matter.</li><li>Build custom when interaction model, brand, or domain workflow requires something specific.</li></ul>"
+      },
+      {
+        id: 64,
+        section: "FRONTEND FOUNDATIONS",
+        question: "When would you use Radix UI directly instead of a higher-level component library?",
+        tips: "<h4>What they evaluate:</h4><p>Your understanding of headless primitives and accessibility foundations.</p><h4>Study later:</h4><ul><li>Radix primitives: dialogs, popovers, menus, tabs, accordions, selects.</li><li>Use direct Radix when you need custom styling or behavior with accessible interaction patterns.</li><li>Understand keyboard navigation, focus management, ARIA, and composition.</li></ul>"
+      },
+      {
+        id: 65,
+        section: "FRONTEND FOUNDATIONS",
+        question: "What does Tailwind change about designer-developer collaboration?",
+        tips: "<h4>What they evaluate:</h4><p>Your understanding of utility-first styling and tokenized visual decisions.</p><h4>Study later:</h4><ul><li>Tailwind scales spacing, color, typography, layout, and responsive rules into reusable utilities.</li><li>How designers can map Figma decisions to implementation constraints.</li><li>Risks: one-off styling, weak token discipline, and unreadable markup if used without standards.</li></ul>"
+      },
+      {
+        id: 66,
+        section: "DESIGN SYSTEMS IN CODE",
+        question: "How would you explain design tokens to a PM, a designer, and a frontend engineer?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to translate the same system concept for different stakeholders.</p><h4>Study later:</h4><ul><li>PM: tokens reduce rework and improve speed/consistency.</li><li>Designer: tokens are reusable decisions for color, spacing, typography, radius, and motion.</li><li>Engineer: tokens are implementation variables that sync design intent across platforms.</li></ul>"
+      },
+      {
+        id: 67,
+        section: "DESIGN SYSTEMS IN CODE",
+        question: "What should exist in Storybook for a mature design system?",
+        tips: "<h4>What they evaluate:</h4><p>Your knowledge of production-grade component documentation.</p><h4>Study later:</h4><ul><li>Component states, variants, props, accessibility notes, interaction examples, and design links.</li><li>Usage guidelines, do/don't examples, changelog, and visual regression support.</li><li>How Storybook becomes a shared contract between design, engineering, and QA.</li></ul>"
+      },
+      {
+        id: 68,
+        section: "DESIGN SYSTEMS IN CODE",
+        question: "How do you keep Figma components, tokens, and production components aligned over time?",
+        tips: "<h4>What they evaluate:</h4><p>Your operational understanding of design-system governance.</p><h4>Study later:</h4><ul><li>Versioning, contribution process, token pipelines, changelogs, and release notes.</li><li>Design review plus engineering review before components enter the system.</li><li>Audits for drift between Figma, Storybook, and production screens.</li></ul>"
+      },
+      {
+        id: 69,
+        section: "DESIGN SYSTEMS IN CODE",
+        question: "What are the signs that a design system is creating friction instead of leverage?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to critique systems pragmatically rather than worship them.</p><h4>Study later:</h4><ul><li>Low adoption, too many overrides, unclear governance, slow contribution, and inaccessible components.</li><li>Components that do not match product needs or force awkward workarounds.</li><li>How to diagnose whether the problem is documentation, coverage, quality, or culture.</li></ul>"
+      },
+      {
+        id: 70,
+        section: "DESIGN SYSTEMS IN CODE",
+        question: "How would you measure design-system adoption and impact?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to connect systems work to business and delivery outcomes.</p><h4>Study later:</h4><ul><li>Adoption metrics: component usage, token usage, override frequency, contribution volume.</li><li>Impact metrics: delivery speed, QA defects, accessibility issues, visual consistency, rework reduction.</li><li>Qualitative signals: designer/developer satisfaction and support-request themes.</li></ul>"
+      },
+      {
+        id: 71,
+        section: "PRODUCT ANALYTICS & SHIPPING",
+        question: "What can PostHog tell you that a usability test cannot?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to choose the right evidence source for the question.</p><h4>Study later:</h4><ul><li>PostHog: funnels, retention, cohorts, feature flags, experiments, session replay, and event analytics.</li><li>Usability tests explain why a small sample struggles; analytics shows what happens at scale.</li><li>Strong designers combine both instead of treating one as superior.</li></ul>"
+      },
+      {
+        id: 72,
+        section: "PRODUCT ANALYTICS & SHIPPING",
+        question: "How would you define an event taxonomy for a new onboarding flow?",
+        tips: "<h4>What they evaluate:</h4><p>Your product analytics literacy and ability to instrument learning.</p><h4>Study later:</h4><ul><li>Define key events: viewed step, completed step, skipped step, error shown, activation reached.</li><li>Use consistent naming, properties, user segments, and success criteria.</li><li>Connect event design to questions about activation, drop-off, and retention.</li></ul>"
+      },
+      {
+        id: 73,
+        section: "PRODUCT ANALYTICS & SHIPPING",
+        question: "When should a designer care about feature flags, experiments, and session replay?",
+        tips: "<h4>What they evaluate:</h4><p>Your understanding of how products are shipped, measured, and iterated safely.</p><h4>Study later:</h4><ul><li>Feature flags for staged rollout, risk control, and internal testing.</li><li>Experiments for comparing behavior under controlled conditions.</li><li>Session replay for diagnosing real friction after launch, while respecting privacy.</li></ul>"
+      },
+      {
+        id: 74,
+        section: "PRODUCT ANALYTICS & SHIPPING",
+        question: "How would you use Supabase and Vercel to prototype or ship a product idea?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to think beyond mockups into functional product validation.</p><h4>Study later:</h4><ul><li>Supabase basics: auth, database, storage, edge functions, and realtime use cases.</li><li>Vercel basics: deployment, previews, domains, environment variables, and serverless functions.</li><li>How prototypes with real data change stakeholder conversations.</li></ul>"
+      },
+      {
+        id: 75,
+        section: "PRODUCT ANALYTICS & SHIPPING",
+        question: "How do LiteLLM or model routers change the way teams design AI features?",
+        tips: "<h4>What they evaluate:</h4><p>Your awareness that AI product design includes model choice, cost, latency, and reliability.</p><h4>Study later:</h4><ul><li>Model routing, fallbacks, observability, cost control, and provider abstraction.</li><li>How UX changes when latency, confidence, hallucination risk, or fallback states vary.</li><li>Designing clear error states, confidence signals, and human override paths.</li></ul>"
+      },
+      {
+        id: 76,
+        section: "PROTOTYPING, MOTION & DATA",
+        question: "When would you use Framer, ProtoPie, Rive, or a coded prototype?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to choose prototype fidelity based on the learning goal.</p><h4>Study later:</h4><ul><li>Framer for realistic web pages and quick interactive sites.</li><li>ProtoPie for complex device interactions, sensors, and high-fidelity flows.</li><li>Rive for production-ready motion; coded prototypes for real data, state, and responsiveness.</li></ul>"
+      },
+      {
+        id: 77,
+        section: "PROTOTYPING, MOTION & DATA",
+        question: "How would you use Recharts or D3 in a product-design context?",
+        tips: "<h4>What they evaluate:</h4><p>Your understanding of data visualization as product UX, not decoration.</p><h4>Study later:</h4><ul><li>Recharts for fast, React-friendly charts with common patterns.</li><li>D3 for custom visualization, scales, layouts, and specialized interactions.</li><li>Data UX: readability, comparison, annotation, accessibility, and decision support.</li></ul>"
+      },
+      {
+        id: 78,
+        section: "PROTOTYPING, MOTION & DATA",
+        question: "What are Bolt, Lovable, v0, Subframe, Magic Patterns, and Google Stitch useful for, and where do they fall short?",
+        tips: "<h4>What they evaluate:</h4><p>Your realistic view of AI UI generators and no-code/low-code acceleration.</p><h4>Study later:</h4><ul><li>Use them for fast concept exploration, layout alternatives, and prototype scaffolding.</li><li>Limitations: generic outputs, weak product reasoning, inconsistent code quality, and shallow domain understanding.</li><li>How to turn generated artifacts into reviewed, maintainable product work.</li></ul>"
+      },
+      {
+        id: 79,
+        section: "MARKET DIFFERENTIATION",
+        question: "Why is the combination of UX Designer, Design Systems, React, AI Agents, MCP, Claude Code, and Product Strategy commercially valuable?",
+        tips: "<h4>What they evaluate:</h4><p>Your ability to articulate a rare market position without sounding inflated.</p><h4>Study later:</h4><ul><li>Connect the stack to business value: faster discovery, better prototypes, tighter handoff, measurable outcomes.</li><li>Explain why the combination reduces coordination cost across design, product, and engineering.</li><li>Prepare examples that prove you can operate at strategy, system, and implementation levels.</li></ul>"
+      },
+      {
+        id: 80,
+        section: "MARKET DIFFERENTIATION",
+        question: "Pitch yourself for a role that wants a designer who can think strategically, design systems, prototype in code, and use AI-native workflows.",
+        tips: "<h4>What they evaluate:</h4><p>Your English interview narrative and your ability to make the whole profile coherent.</p><h4>Study later:</h4><ul><li>Build a 60-second version, a 2-minute version, and a deep portfolio version.</li><li>Use concrete proof: shipped products, systems improved, code prototypes, AI workflows, and metrics.</li><li>Avoid tool-listing; frame tools as evidence of better product outcomes.</li></ul>"
+      }
+    ];
+
+    // App State
+    let currentQuestionIdx = -1;
+    let answersState = {};
+    let isServerConnected = false;
+
+    // DOM Selection
+    const viewOverview = document.getElementById('view-overview');
+    const viewEditor = document.getElementById('view-editor');
+    const sectionsContainer = document.getElementById('sections-container');
+    const menuOverview = document.getElementById('menu-overview');
+    const questionPrompt = document.getElementById('question-prompt');
+    const answerInput = document.getElementById('answer-input');
+    const strategyTheme = document.getElementById('strategy-theme');
+    const strategyDetails = document.getElementById('strategy-details');
+    const breadcrumbSec = document.getElementById('breadcrumb-sec');
+    const breadcrumbQue = document.getElementById('breadcrumb-que');
+    const progressText = document.getElementById('progress-text');
+    const progressBar = document.getElementById('progress-bar');
+    const overviewProgressCount = document.getElementById('overview-progress-count');
+    const editorCharCount = document.getElementById('editor-char-count');
+    const diskBadge = document.getElementById('disk-badge');
+    const diskBadgeText = document.getElementById('disk-badge-text');
+
+    const sidebarNav = document.getElementById('sidebar-nav');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const btnOpenSidebar = document.getElementById('btn-open-sidebar');
+    const btnCloseSidebar = document.getElementById('btn-close-sidebar');
+
+    const btnStart = document.getElementById('btn-start-assessment');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const btnExportMd = document.getElementById('btn-export-md');
+    const btnExportJson = document.getElementById('btn-export-json');
+
+    // Grouping
+    const sections = {};
+    questions.forEach(q => {
+      if (!sections[q.section]) sections[q.section] = [];
+      sections[q.section].push(q);
+    });
+
+    // Populate Sidebar
+    function initSidebar() {
+      sectionsContainer.innerHTML = '';
+      Object.keys(sections).forEach(secName => {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = 'section-group';
+        
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'section-header';
+        headerDiv.innerHTML = `
+          <span>${secName}</span>
+          <span class="section-badge" id="badge-${secName.replace(/\s+/g, '-')}">0/${sections[secName].length}</span>
+        `;
+        groupDiv.appendChild(headerDiv);
+        
+        const qList = document.createElement('ul');
+        qList.className = 'question-list';
+        
+        sections[secName].forEach(q => {
+          const item = document.createElement('li');
+          item.className = 'question-item';
+          item.id = `q-item-${q.id}`;
+          item.innerHTML = `
+            <div class="status-indicator"></div>
+            <span class="question-num">${q.id}</span>
+            <span class="question-text-truncate">${q.question.split('\n')[0]}</span>
+          `;
+          item.addEventListener('click', () => {
+            selectQuestion(q.id - 1);
+            closeMobileSidebar();
+          });
+          qList.appendChild(item);
+        });
+        
+        groupDiv.appendChild(qList);
+        sectionsContainer.appendChild(groupDiv);
+      });
+    }
+
+    // Sidebar Mobile Controls
+    function openMobileSidebar() {
+      sidebarNav.classList.add('open');
+      sidebarOverlay.classList.add('active');
+    }
+
+    function closeMobileSidebar() {
+      sidebarNav.classList.remove('open');
+      sidebarOverlay.classList.remove('active');
+    }
+
+    btnOpenSidebar.addEventListener('click', openMobileSidebar);
+    btnCloseSidebar.addEventListener('click', closeMobileSidebar);
+    sidebarOverlay.addEventListener('click', closeMobileSidebar);
+
+    // Sync UI Status
+    function updateServerStatus(status) {
+      if (status === 'syncing') {
+        diskBadge.className = 'status-badge syncing';
+        diskBadgeText.textContent = "Syncing...";
+      } else if (status === 'synced') {
+        diskBadge.className = 'status-badge';
+        diskBadgeText.textContent = "Synced to Disk";
+      } else if (status === 'error') {
+        diskBadge.className = 'status-badge local-only';
+        diskBadgeText.textContent = "Sync Error";
+      } else if (status === true) {
+        diskBadge.className = 'status-badge';
+        diskBadgeText.textContent = "Connected";
+      } else {
+        diskBadge.className = 'status-badge local-only';
+        diskBadgeText.textContent = "Local Backup";
+      }
+    }
+
+    // Load state
+    async function loadState() {
+      try {
+        const response = await fetch('/load-state');
+        if (response.ok) {
+          const serverState = await response.json();
+          if (serverState && typeof serverState === 'object') {
+            answersState = serverState;
+            isServerConnected = true;
+            updateServerStatus(true);
+            updateAllProgress();
+            return;
+          }
+        }
+      } catch (e) {
+        console.log("LocalStorage Mode active.");
+      }
+
+      const stored = localStorage.getItem('danilo_pd_assessment_answers');
+      if (stored) {
+        try { answersState = JSON.parse(stored); } catch (e) { answersState = {}; }
+      }
+      isServerConnected = false;
+      updateServerStatus(false);
+      updateAllProgress();
+    }
+
+    // Save state
+    async function saveState() {
+      localStorage.setItem('danilo_pd_assessment_answers', JSON.stringify(answersState));
+
+      if (isServerConnected) {
+        try {
+          updateServerStatus('syncing');
+          const markdown = compileMarkdown();
+          const response = await fetch('/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ state: answersState, markdown: markdown })
+          });
+          if (response.ok) {
+            updateServerStatus('synced');
+          } else {
+            updateServerStatus('error');
+          }
+        } catch (err) {
+          updateServerStatus('error');
+        }
+      } else {
+        updateServerStatus(false);
+      }
+    }
+
+    // Progress updates
+    function updateAllProgress() {
+      let totalAnswered = 0;
+      const sectionCounts = {};
+      Object.keys(sections).forEach(s => sectionCounts[s] = 0);
+      
+      questions.forEach(q => {
+        const item = document.getElementById(`q-item-${q.id}`);
+        const ans = answersState[q.id];
+        const isAnswered = ans && ans.trim().length > 0;
+        
+        if (item) {
+          if (isAnswered) {
+            item.classList.add('completed');
+            sectionCounts[q.section]++;
+            totalAnswered++;
+          } else {
+            item.classList.remove('completed');
+          }
+        }
+      });
+      
+      Object.keys(sections).forEach(secName => {
+        const badge = document.getElementById(`badge-${secName.replace(/\s+/g, '-')}`);
+        if (badge) {
+          badge.textContent = `${sectionCounts[secName]}/${sections[secName].length}`;
+        }
+      });
+      
+      const percent = Math.round((totalAnswered / questions.length) * 100);
+      progressText.textContent = `${totalAnswered} / ${questions.length} Completed (${percent}%)`;
+      progressBar.style.width = `${percent}%`;
+      overviewProgressCount.textContent = `${totalAnswered} / ${questions.length}`;
+    }
+
+    // Navigation
+    function selectQuestion(idx) {
+      currentQuestionIdx = idx;
+      document.querySelectorAll('.question-item').forEach(el => el.classList.remove('active'));
+      menuOverview.classList.remove('active');
+      
+      if (idx === -1) {
+        viewOverview.style.display = 'flex';
+        viewEditor.style.display = 'none';
+        menuOverview.classList.add('active');
+        updateAllProgress();
+      } else {
+        viewOverview.style.display = 'none';
+        viewEditor.style.display = 'flex';
+        
+        const q = questions[idx];
+        const activeItem = document.getElementById(`q-item-${q.id}`);
+        if (activeItem) activeItem.classList.add('active');
+        
+        breadcrumbSec.textContent = q.section;
+        breadcrumbQue.textContent = `Q${q.id}`;
+        questionPrompt.textContent = q.question;
+        strategyTheme.textContent = `${q.section} Strategy`;
+        strategyDetails.innerHTML = q.tips;
+        
+        answerInput.value = answersState[q.id] || '';
+        updateCharCount();
+        
+        btnPrev.disabled = (idx === 0);
+        btnNext.textContent = (idx === questions.length - 1) ? 'Finish' : 'Next →';
+      }
+    }
+
+    function updateCharCount() {
+      const len = answerInput.value.length;
+      editorCharCount.textContent = `${len.toLocaleString()} chars`;
+    }
+
+    function compileMarkdown() {
+      let md = `# Danilo Rojas - Senior Product Designer Assessment\n`;
+      md += `*Goal Target: $250,000 / Year Product Design Role*\n`;
+      md += `*Updated: ${new Date().toLocaleDateString()}*\n\n`;
+      md += `---\n\n`;
+      
+      let lastSection = "";
+      questions.forEach(q => {
+        if (q.section !== lastSection) {
+          lastSection = q.section;
+          md += `## ${lastSection}\n\n`;
+        }
+        md += `### Question ${q.id}\n`;
+        md += `> ${q.question.replace(/\n/g, '\n> ')}\n\n`;
+        md += `**Answer:**\n`;
+        const ans = answersState[q.id];
+        md += `${ans && ans.trim() ? ans.trim() : '*(No answer provided yet)*'}\n\n`;
+        md += `---\n\n`;
+      });
+      return md;
+    }
+
+    function downloadFile(content, fileName, contentType) {
+      const a = document.createElement("a");
+      const file = new Blob([content], { type: contentType });
+      a.href = URL.createObjectURL(file);
+      a.download = fileName;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    menuOverview.addEventListener('click', () => {
+      selectQuestion(-1);
+      closeMobileSidebar();
+    });
+    btnStart.addEventListener('click', () => selectQuestion(0));
+    
+    btnPrev.addEventListener('click', () => {
+      if (currentQuestionIdx > 0) selectQuestion(currentQuestionIdx - 1);
+    });
+
+    btnNext.addEventListener('click', () => {
+      if (currentQuestionIdx < questions.length - 1) {
+        selectQuestion(currentQuestionIdx + 1);
+      } else {
+        selectQuestion(-1);
+      }
+    });
+
+    let autosaveTimeout;
+    answerInput.addEventListener('input', () => {
+      updateCharCount();
+      clearTimeout(autosaveTimeout);
+      autosaveTimeout = setTimeout(() => {
+        const q = questions[currentQuestionIdx];
+        answersState[q.id] = answerInput.value;
+        saveState();
+        updateAllProgress();
+      }, 400); // 400ms debounce
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.altKey && e.key === 'ArrowLeft') {
+        if (currentQuestionIdx > 0) selectQuestion(currentQuestionIdx - 1);
+      }
+      if (e.altKey && e.key === 'ArrowRight') {
+        if (currentQuestionIdx < questions.length - 1) selectQuestion(currentQuestionIdx + 1);
+      }
+    });
+
+    btnExportMd.addEventListener('click', () => {
+      downloadFile(compileMarkdown(), 'danilo_product_designer_assessment.md', 'text/markdown');
+    });
+
+    btnExportJson.addEventListener('click', () => {
+      const data = {
+        meta: { candidate: "Danilo Rojas", date: new Date().toISOString() },
+        responses: answersState
+      };
+      downloadFile(JSON.stringify(data, null, 2), 'danilo_product_designer_assessment.json', 'application/json');
+    });
+
+    initSidebar();
+    loadState();
+    selectQuestion(-1);
+  </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>life-update · Alt 4 — Live annotation</title>
+<style>
+  :root {
+    --bg: #0a0a0a; --phone: #1a1a1a; --panel-2: #262626; --line: #333;
+    --ink: #ffffff; --ink-dim: #a1a1aa; --orange: #f97316; --orange-light: #fb923c;
+    --green: #10b981;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font: 14px/1.5 "Inter", ui-sans-serif, system-ui, sans-serif;
+    min-height: 100vh; display: grid; place-items: center; }
+  .stage { padding: 40px; text-align: center; display: grid; grid-template-columns: auto 1fr; gap: 48px; align-items: center; }
+  .caption { color: var(--ink-dim); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 8px; grid-column: 1 / -1; text-align: center; }
+  .alt-label { color: var(--orange); font-size: 12px; margin-bottom: 22px; grid-column: 1 / -1; text-align: center; }
+  .hint { margin-top: 20px; color: var(--ink-dim); font-size: 11px; letter-spacing: 0.05em; grid-column: 1 / -1; text-align: center; }
+
+  .phone-wrap { position: relative; }
+  .phone {
+    width: 300px; height: 640px;
+    background: #000;
+    border: 8px solid #1f1f1f;
+    border-radius: 48px;
+    padding: 5px;
+    box-shadow: 0 30px 80px -10px rgba(249,115,22,0.3), 0 10px 40px rgba(0,0,0,0.9);
+    position: relative;
+  }
+  .phone::before {
+    content: ""; position: absolute; top: 9px; left: 50%; transform: translateX(-50%);
+    width: 100px; height: 24px; background: #000; border-radius: 0 0 14px 14px; z-index: 30;
+  }
+  .screen {
+    width: 100%; height: 100%;
+    background: var(--phone);
+    border-radius: 40px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .shot { position: absolute; inset: 0;
+    background: url("../stills-life-update/01-hoy-avance-diario.jpeg") center top/cover no-repeat; }
+
+  .pin {
+    position: absolute;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--orange);
+    border: 3px solid var(--phone);
+    box-shadow: 0 0 0 2px var(--orange), 0 0 28px rgba(249,115,22,0.7);
+    display: grid; place-items: center;
+    color: var(--phone); font-weight: 700; font-size: 12px;
+    opacity: 0; transform: scale(0.5); z-index: 5;
+  }
+  .pin::after {
+    content: ""; position: absolute; inset: -6px;
+    border-radius: 50%; border: 2px solid var(--orange);
+    animation: ping 1800ms ease-out infinite;
+  }
+  @keyframes ping { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2); opacity: 0; } }
+
+  /* Callouts sit OUTSIDE the phone */
+  .callouts { width: 340px; display: flex; flex-direction: column; gap: 10px; position: relative; height: 540px; }
+
+  .callout {
+    position: absolute; left: 0; right: 0;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: left;
+    box-shadow: 0 12px 32px -6px rgba(0,0,0,0.6);
+    opacity: 0;
+    z-index: 6;
+    transform: translateX(-8px);
+  }
+  .callout::before {
+    content: ""; position: absolute; left: -8px; top: 16px;
+    border: 6px solid transparent; border-right-color: var(--line);
+  }
+  .callout::after {
+    content: ""; position: absolute; left: -7px; top: 16px;
+    border: 6px solid transparent; border-right-color: var(--panel-2);
+  }
+  .callout .head { color: var(--orange); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; margin-bottom: 4px; }
+  .callout .body { color: var(--ink); font-size: 12.5px; line-height: 1.5; }
+  .callout code { color: var(--orange); background: rgba(249,115,22,0.14); padding: 1px 6px; border-radius: 3px; font-family: ui-monospace, monospace; font-size: 11px; }
+
+  /* Pin positions on phone screenshot */
+  .pin-1 { top: 8%;  left: 12%; }   .cal-1 { top: 0px; }
+  .pin-2 { top: 22%; left: 12%; }   .cal-2 { top: 140px; }
+  .pin-3 { top: 50%; left: 12%; }   .cal-3 { top: 280px; }
+  .pin-4 { top: 90%; left: 45%; }   .cal-4 { top: 420px; }
+
+  .summary {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 280px;
+    background: var(--panel-2);
+    border: 1px solid var(--orange);
+    border-radius: 14px;
+    padding: 20px 24px;
+    box-shadow: 0 0 0 1px rgba(249,115,22,0.3), 0 20px 60px -6px rgba(0,0,0,0.9);
+    text-align: center;
+    opacity: 0; z-index: 20;
+  }
+  .summary .head { color: var(--orange); font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700; margin-bottom: 6px; }
+  .summary .t { font-size: 16px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+  .summary .d { margin-top: 6px; color: var(--ink-dim); font-size: 12px; }
+  .summary .stats { display: flex; gap: 14px; justify-content: center; margin-top: 14px; }
+  .summary .stat b { display: block; font-size: 15px; color: var(--orange); font-weight: 600; font-family: ui-monospace, monospace; }
+  .summary .stat i { display: block; font-size: 9px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.1em; font-style: normal; margin-top: 2px; }
+
+  .dim { position: absolute; inset: 0; background: rgba(10,10,10,0.75); opacity: 0; z-index: 15; backdrop-filter: blur(4px); }
+
+  .phone-wrap:hover .pin-1 { animation: pinIn 400ms cubic-bezier(.34,1.56,.64,1) forwards 300ms, pinOut 400ms ease forwards 2400ms; }
+  .phone-wrap:hover .cal-1 { animation: calIn 400ms ease forwards 500ms, calOut 400ms ease forwards 2400ms; }
+
+  .phone-wrap:hover .pin-2 { animation: pinIn 400ms cubic-bezier(.34,1.56,.64,1) forwards 2600ms, pinOut 400ms ease forwards 4700ms; }
+  .phone-wrap:hover .cal-2 { animation: calIn 400ms ease forwards 2800ms, calOut 400ms ease forwards 4700ms; }
+
+  .phone-wrap:hover .pin-3 { animation: pinIn 400ms cubic-bezier(.34,1.56,.64,1) forwards 4900ms, pinOut 400ms ease forwards 7000ms; }
+  .phone-wrap:hover .cal-3 { animation: calIn 400ms ease forwards 5100ms, calOut 400ms ease forwards 7000ms; }
+
+  .phone-wrap:hover .pin-4 { animation: pinIn 400ms cubic-bezier(.34,1.56,.64,1) forwards 7200ms, pinOut 400ms ease forwards 9300ms; }
+  .phone-wrap:hover .cal-4 { animation: calIn 400ms ease forwards 7400ms, calOut 400ms ease forwards 9300ms; }
+
+  .phone-wrap:hover .dim { animation: dimIn 400ms ease forwards 9500ms; }
+  .phone-wrap:hover .summary { animation: summaryIn 600ms cubic-bezier(.34,1.56,.64,1) forwards 9700ms; }
+
+  @keyframes pinIn  { to { opacity: 1; transform: scale(1); } }
+  @keyframes pinOut { 0% { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.5); } }
+  @keyframes calIn  { to { opacity: 1; transform: translateX(0); } }
+  @keyframes calOut { 0% { opacity: 1; } to { opacity: 0; transform: translateX(-8px); } }
+  @keyframes dimIn  { to { opacity: 1; } }
+  @keyframes summaryIn { to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+</style>
+</head>
+<body>
+  <div class="stage phone-wrap">
+    <div class="caption">life-update · Alt 04 — Live annotation</div>
+    <div class="alt-label">The real screen · 4 pins reveal decisions</div>
+
+    <div>
+      <div class="phone">
+        <div class="screen">
+          <div class="shot"></div>
+          <div class="pin pin-1">1</div>
+          <div class="pin pin-2">2</div>
+          <div class="pin pin-3">3</div>
+          <div class="pin pin-4">4</div>
+
+          <div class="dim"></div>
+          <div class="summary">
+            <div class="head">life-update</div>
+            <div class="t">Journaling + AI coach.</div>
+            <div class="d">Privacy-first. Optional Zero Data Retention.</div>
+            <div class="stats">
+              <div class="stat"><b>5</b><i>tabs</i></div>
+              <div class="stat"><b>RN</b><i>+ Expo</i></div>
+              <div class="stat"><b>🔒</b><i>ZDR</i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callouts">
+      <div class="callout cal-1">
+        <div class="head">Pin 01 · Literary note</div>
+        <div class="body">Today's entry opens with a note about <code>Sparta's Agoge</code>. The journal doesn't ask "how do you feel?" — it makes you think.</div>
+      </div>
+      <div class="callout cal-2">
+        <div class="head">Pin 02 · Mission with a dimension</div>
+        <div class="body">Every mission is tagged: <code>CAREER</code>, <code>FINANCE</code>, <code>MENTAL</code>. A life without silos — and measurable.</div>
+      </div>
+      <div class="callout cal-3">
+        <div class="head">Pin 03 · Explicit source</div>
+        <div class="body">The mission cites its source: <code>newport-deepwork-2016</code>. Not AI slop — an identifiable method.</div>
+      </div>
+      <div class="callout cal-4">
+        <div class="head">Pin 04 · 5 tabs, zero noise</div>
+        <div class="body">Today · Plan · Coach · History · Settings. Five places. Zero lost modals.</div>
+      </div>
+    </div>
+
+    <div class="hint">hover · four pins over the real screen, then the summary</div>
+  </div>
+</body>
+</html>

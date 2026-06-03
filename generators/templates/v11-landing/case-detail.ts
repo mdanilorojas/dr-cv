@@ -15,6 +15,7 @@ import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 import { V11_STYLES } from "./v11-styles.js";
 import { V11_SCRIPT } from "./v11-script.js";
 import { pipAnimationCss } from "./animations/picture-in-picture.js";
+import { renderIframeAnimation, hasIframeAnimation, iframeAnimationCss, iframeAnimationScript } from "./animations/iframe-animation.js";
 import {
   beatsFor,
   renderNav,
@@ -53,8 +54,31 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
   const altHref = lang === "en" ? `/es/work/${c.slug}/` : `/work/${c.slug}/`;
   const selfHref = lang === "en" ? `/work/${c.slug}/` : `/es/work/${c.slug}/`;
 
-  const chips = c.stack.map((s) => `<span class="v11-chip">${escapeHtml(s)}</span>`).join(" ");
   const bullets = lang === "en" ? c.bulletsEn : c.bulletsEs;
+
+  // Editorial sidebar labels (echoes the landing V3 case card).
+  const labelClient = lang === "en" ? "Client" : "Cliente";
+  const labelYears = lang === "en" ? "Years" : "Años";
+  const labelStack = lang === "en" ? "Stack" : "Stack";
+
+  const stackChips = c.stack
+    .map((s) => `<span class="v11-case__chip">${escapeHtml(s)}</span>`)
+    .join("");
+
+  const metaCol = `<aside class="v11-case-detail__meta-col">
+    <div class="v11-case__meta-block">
+      <div class="v11-case__meta-label">${escapeHtml(labelClient)}</div>
+      <div class="v11-case__meta-value v11-case__meta-value--accent">${escapeHtml(client)}</div>
+    </div>
+    <div class="v11-case__meta-block">
+      <div class="v11-case__meta-label">${escapeHtml(labelYears)}</div>
+      <div class="v11-case__meta-value">${escapeHtml(dates)}</div>
+    </div>
+    <div class="v11-case__meta-block">
+      <div class="v11-case__meta-label">${escapeHtml(labelStack)}</div>
+      <div class="v11-case__meta-chips">${stackChips}</div>
+    </div>
+  </aside>`;
 
   const beatsHtml = beats
     ? `<dl class="v11-case-detail__beats">
@@ -74,6 +98,15 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
 
   const nextBlock = next
     ? `<a class="v11-case-detail__next" href="${escapeHtml(homeHref)}work/${encodeURIComponent(next.slug)}/">${escapeHtml(nextLabel)} · ${escapeHtml(lang === "en" ? next.titleEn : next.titleEs)} →</a>`
+    : "";
+
+  // Detail pages live two levels deep (work/<slug>/). basePath back to dist root.
+  const animBasePath = lang === "en" ? "../../" : "../../../";
+  const animationHtml = hasIframeAnimation(c.slug)
+    ? renderIframeAnimation({ slug: c.slug, lang, basePath: animBasePath })
+    : "";
+  const animationBlock = animationHtml
+    ? `<div class="v11-case-detail__anim">${animationHtml}</div>`
     : "";
 
   const seoTitle = lang === "en"
@@ -111,6 +144,7 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
 ${tokensCss}
 ${V11_STYLES}
 ${pipAnimationCss}
+${iframeAnimationCss}
 </style>
 </head>
 <body>
@@ -118,24 +152,26 @@ ${pipAnimationCss}
 ${renderNav(data.identity, lang, { homeHref, langHrefOverride: altHref })}
 <main id="main">
   <article class="v11-case-detail">
-    <div class="v11-container-narrow">
+    <div class="v11-container">
       <a class="v11-case-detail__back" href="${escapeHtml(homeHref)}#work">← ${escapeHtml(backLabel)}</a>
-      <div class="v11-case-detail__head">
-        <span class="v11-case-detail__client">${escapeHtml(client)}</span>
-        <span class="v11-case-detail__dates">${escapeHtml(dates)}</span>
+      <div class="v11-case-detail__grid">
+        ${metaCol}
+        <div class="v11-case-detail__main">
+          <h1 class="v11-case-detail__title">${escapeHtml(title)}</h1>
+          <p class="v11-case-detail__hook">${escapeHtml(hook)}</p>
+          ${animationBlock}
+          ${bulletsHtml}
+          ${beatsHtml}
+          ${nextBlock}
+        </div>
       </div>
-      <h1 class="v11-case-detail__title">${escapeHtml(title)}</h1>
-      <p class="v11-case-detail__hook">${escapeHtml(hook)}</p>
-      ${bulletsHtml}
-      <div class="v11-case-detail__stack">${chips}</div>
-      ${beatsHtml}
-      ${nextBlock}
     </div>
   </article>
   ${renderContact(data, lang)}
 </main>
 ${renderFooter(data.identity, lang)}
 <script>${V11_SCRIPT}</script>
+<script>${iframeAnimationScript}</script>
 </body>
 </html>`;
 }
