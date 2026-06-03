@@ -5,31 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Danilo Rojas | Senior Product Designer Assessment</title>
   
-  <!-- Fonts -->
+  <!-- Fonts — v11 design system (landing parity) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:wght@400;600;700&display=swap" rel="stylesheet">
   
   <style>
-    /* Design Tokens */
+    /* v11 tokens — synced with design-system/tokens-v11.css */
     :root {
-      --bg-dark: #0b0f19;
-      --panel-dark: #121826;
-      --border-color: #222f47;
-      --border-focus: #3b82f6;
-      
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-      --text-dim: #6b7280;
-      
-      --accent-purple: #8b5cf6;
-      --accent-pink: #ec4899;
-      --accent-blue: #3b82f6;
-      --accent-green: #10b981;
-      
-      --font-outfit: 'Outfit', sans-serif;
-      --font-inter: 'Inter', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --v11-bg-deep:        #060708;
+      --v11-bg-primary:     #0A0B0E;
+      --v11-bg-alt:         #111318;
+      --v11-bg-elevated:    #14161C;
+      --v11-bg-elevated-2:  #1C1F27;
+      --v11-bg-inset:       #0D0F13;
+
+      --v11-text:           #F4F4F5;
+      --v11-text-body:      #D7D8DB;
+      --v11-text-85:        #C9CBCF;
+      --v11-text-60:        #95979E;
+      --v11-text-50:        #797D86;
+      --v11-text-40:        #61656B;
+
+      --v11-accent:         #FF8964;
+      --v11-accent-ink:     #2A0F05;
+      --v11-accent-deep:    #E0674A;
+      --v11-accent-soft:    rgba(255, 137, 100, 0.14);
+      --v11-accent-ring:    rgba(255, 137, 100, 0.35);
+      --v11-accent-line:    rgba(255, 137, 100, 0.28);
+
+      --v11-signal-cool:    #5683DA;
+      --v11-signal-warn:    #E5A84B;
+      --v11-signal-pos:     #4ADE80;
+
+      --v11-line:           rgba(255, 255, 255, 0.08);
+      --v11-line-strong:    rgba(255, 255, 255, 0.18);
+      --v11-line-soft:      rgba(255, 255, 255, 0.04);
+
+      --v11-font-body:      'Inter', 'Helvetica Neue', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      --v11-font-display:   'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+      --v11-font-mono:      'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+      --v11-font-serif:     'Source Serif 4', 'Source Serif Pro', Georgia, 'Times New Roman', serif;
+
+      --v11-radius-sm:      4px;
+      --v11-radius:         8px;
+      --v11-radius-card:    12px;
+      --v11-radius-lg:      16px;
+      --v11-radius-pill:    9999px;
+
+      --v11-ease-standard:  cubic-bezier(0.22, 0.61, 0.36, 1);
+      --v11-dur-fast:       180ms;
+
+      /* Learning app semantics */
+      --font-ui:            var(--v11-font-body);
+      --font-read:          var(--v11-font-serif);
+      --font-mono:          var(--v11-font-mono);
+      --read-lead:          1.72;
+      --read-body:          1.65;
+      --v11-stream-bg:      rgba(255, 255, 255, 0.025);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--v11-accent);
+      outline-offset: 3px;
+      border-radius: var(--v11-radius-sm);
+    }
+
+    em, i, cite {
+      font-style: normal;
+    }
+
+    .lucide-icon {
+      width: 1.1em;
+      height: 1.1em;
+      stroke: currentColor;
+      stroke-width: 2;
+      flex-shrink: 0;
+    }
+
+    .lucide-icon svg {
+      width: 100%;
+      height: 100%;
     }
 
     * {
@@ -39,11 +95,15 @@
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: var(--font-inter);
+      background-color: var(--v11-bg-primary);
+      color: var(--v11-text-body);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: var(--read-body);
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: "kern", "liga", "calt";
       height: 100vh;
-      height: -webkit-fill-available; /* Fixed mobile viewport height */
+      height: -webkit-fill-available;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -62,14 +122,14 @@
       background: transparent;
     }
     ::-webkit-scrollbar-thumb {
-      background: #1e293b;
+      background: var(--v11-bg-elevated-2);
       border-radius: 3px;
     }
 
     /* Mobile Header Layout */
     header {
-      background-color: var(--panel-dark);
-      border-bottom: 1px solid var(--border-color);
+      background-color: var(--v11-bg-elevated);
+      border-bottom: 1px solid var(--v11-line);
       padding: 0.75rem 1rem;
       display: flex;
       flex-direction: column;
@@ -94,31 +154,36 @@
     .brand-logo {
       width: 24px;
       height: 24px;
-      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
-      border-radius: 6px;
+      background: var(--v11-accent);
+      border-radius: var(--v11-radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: var(--font-outfit);
-      font-weight: 800;
-      font-size: 0.75rem;
-      color: #fff;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 0.65rem;
+      letter-spacing: 0.04em;
+      color: var(--v11-accent-ink);
     }
 
     .brand-title {
-      font-family: var(--font-outfit);
+      font-family: var(--font-ui);
       font-size: 0.95rem;
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: -0.02em;
+      color: var(--v11-text);
     }
 
     .brand-tag {
       font-size: 0.6rem;
-      background: #1e293b;
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--v11-bg-inset);
       padding: 0.1rem 0.35rem;
-      border-radius: 3px;
-      color: var(--text-muted);
-      border: 1px solid var(--border-color);
+      border-radius: var(--v11-radius-sm);
+      color: var(--v11-text-60);
+      border: 1px solid var(--v11-line);
     }
 
     .header-actions {
@@ -131,31 +196,34 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(255,255,255,0.02);
+      background: var(--v11-stream-bg, rgba(255, 255, 255, 0.025));
       padding: 0.4rem 0.6rem;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
+      border-radius: var(--v11-radius);
+      border: 1px solid var(--v11-line);
     }
 
     .progress-label {
       font-size: 0.7rem;
-      color: var(--text-muted);
+      font-family: var(--font-mono);
+      letter-spacing: 0.06em;
+      color: var(--v11-text-60);
       font-weight: 500;
     }
 
     .progress-bar-container {
       width: 100px;
       height: 5px;
-      background-color: #1e293b;
-      border-radius: 2px;
+      background-color: var(--v11-bg-inset);
+      border-radius: var(--v11-radius-pill);
       overflow: hidden;
     }
 
     .progress-bar-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+      background: var(--v11-accent);
       width: 0%;
-      transition: width 0.3s ease;
+      transition: width 0.3s var(--v11-ease-standard);
+      box-shadow: 0 0 8px var(--v11-accent-soft);
     }
 
     /* Main Container */
@@ -174,8 +242,8 @@
       left: 0;
       width: 280px;
       height: 100%;
-      background-color: var(--panel-dark);
-      border-right: 1px solid var(--border-color);
+      background-color: var(--v11-bg-elevated);
+      border-right: 1px solid var(--v11-line);
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -191,25 +259,25 @@
 
     .sidebar-header {
       padding: 1rem;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--v11-line);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .sidebar-title {
-      font-family: var(--font-outfit);
-      font-size: 0.8rem;
-      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      color: var(--v11-text-60);
     }
 
     .close-sidebar-btn {
       background: transparent;
       border: none;
-      color: var(--text-muted);
+      color: var(--v11-text-60);
       font-size: 1.25rem;
       cursor: pointer;
       padding: 0.25rem;
@@ -228,21 +296,21 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.6rem 0.8rem;
-      border-radius: 6px;
+      border-radius: var(--v11-radius);
       cursor: pointer;
-      color: var(--text-main);
-      font-size: 0.8rem;
+      color: var(--v11-text);
+      font-size: 0.85rem;
       font-weight: 600;
       margin-bottom: 0.75rem;
       border: 1px solid transparent;
-      transition: all 0.2s ease;
-      background: rgba(255, 255, 255, 0.02);
+      transition: all var(--v11-dur-fast) var(--v11-ease-standard);
+      background: var(--v11-line-soft);
     }
 
     .menu-item-overview:hover, .menu-item-overview.active {
-      background: var(--accent-blue-glow);
-      color: #fff;
-      border-color: rgba(59, 130, 246, 0.25);
+      background: var(--v11-accent-soft);
+      color: var(--v11-text);
+      border-color: var(--v11-accent-line);
     }
 
     .section-group {
@@ -250,13 +318,13 @@
     }
 
     .section-header {
-      font-family: var(--font-outfit);
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--v11-text-50);
       padding: 0.4rem 0.5rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.1em;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -264,10 +332,10 @@
 
     .section-badge {
       font-size: 0.6rem;
-      background: #1a2333;
+      background: var(--v11-bg-inset);
       padding: 0.05rem 0.3rem;
-      border-radius: 8px;
-      color: var(--text-muted);
+      border-radius: var(--v11-radius-pill);
+      color: var(--v11-text-60);
       font-family: var(--font-mono);
     }
 
@@ -281,25 +349,26 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.45rem 0.5rem;
-      border-radius: 5px;
+      border-radius: var(--v11-radius-sm);
       cursor: pointer;
-      font-size: 0.75rem;
-      color: var(--text-muted);
+      font-size: 0.8rem;
+      color: var(--v11-text-60);
       margin-bottom: 0.1rem;
       border: 1px solid transparent;
+      transition: background var(--v11-dur-fast), color var(--v11-dur-fast);
     }
 
     .question-item:hover, .question-item.active {
-      background: rgba(139, 92, 246, 0.08);
-      color: #fff;
-      border-color: rgba(139, 92, 246, 0.15);
+      background: var(--v11-accent-soft);
+      color: var(--v11-text);
+      border-color: var(--v11-accent-line);
     }
 
     .status-indicator {
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      border: 1.2px solid var(--text-dim);
+      border: 1.2px solid var(--v11-text-50);
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -307,13 +376,13 @@
     }
 
     .question-item.completed .status-indicator {
-      border-color: var(--accent-green);
-      background-color: var(--accent-green);
+      border-color: var(--v11-signal-pos);
+      background-color: var(--v11-signal-pos);
     }
 
     .question-item.completed .status-indicator::after {
       content: '✓';
-      color: #0b0f19;
+      color: var(--v11-bg-deep);
       font-size: 8px;
       font-weight: 900;
     }
@@ -321,7 +390,7 @@
     .question-num {
       font-family: var(--font-mono);
       font-size: 0.7rem;
-      color: var(--text-dim);
+      color: var(--v11-text-50);
       width: 14px;
       text-align: right;
     }
@@ -355,7 +424,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      background-color: var(--bg-dark);
+      background-color: var(--v11-bg-primary);
       position: relative;
     }
 
@@ -370,33 +439,44 @@
     }
 
     .welcome-hero {
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(236, 72, 153, 0.03));
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
+      background: linear-gradient(135deg, var(--v11-accent-soft), transparent 60%);
+      border: 1px solid var(--v11-line);
+      border-left: 3px solid var(--v11-accent);
+      border-radius: var(--v11-radius-card);
       padding: 1.5rem;
     }
 
     .hero-title {
-      font-family: var(--font-outfit);
-      font-size: 1.5rem;
-      font-weight: 800;
+      font-family: var(--font-read);
+      font-size: 1.65rem;
+      font-weight: 700;
       letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(90deg, #fff, #93c5fd, #c084fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+      color: var(--v11-text);
+    }
+
+    .hero-accent {
+      color: var(--v11-accent);
     }
 
     .hero-subtitle {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.5;
+      font-family: var(--font-read);
+      font-size: 1rem;
+      color: var(--v11-text-85);
+      line-height: var(--read-lead);
+      max-width: 62ch;
+    }
+
+    .hero-subtitle strong {
+      color: var(--v11-text);
+      font-weight: 600;
     }
 
     .goal-tracker-card {
-      background-color: var(--panel-dark);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
+      background-color: var(--v11-bg-elevated);
+      border: 1px solid var(--v11-line);
+      border-radius: var(--v11-radius-card);
       padding: 1.25rem;
       display: flex;
       flex-direction: column;
@@ -418,37 +498,42 @@
 
     .goal-stat-label {
       font-size: 0.65rem;
-      color: var(--text-dim);
+      font-family: var(--font-mono);
+      color: var(--v11-text-50);
       text-transform: uppercase;
       font-weight: 600;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.1em;
     }
 
     .goal-stat-value {
-      font-family: var(--font-outfit);
+      font-family: var(--font-ui);
       font-size: 1.35rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--v11-text);
     }
 
     .goal-stat-value.highlight {
-      background: linear-gradient(90deg, #3b82f6, #60a5fa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--v11-accent);
     }
 
     .start-button {
-      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-      color: #fff;
-      font-family: var(--font-outfit);
+      background: var(--v11-accent);
+      color: var(--v11-accent-ink);
+      font-family: var(--font-ui);
       font-weight: 600;
-      font-size: 0.9rem;
-      padding: 0.75rem 1.5rem;
+      font-size: 0.95rem;
+      padding: 0.85rem 1.5rem;
       border: none;
-      border-radius: 6px;
+      border-radius: var(--v11-radius-pill);
       cursor: pointer;
       width: 100%;
       text-align: center;
+      transition: background var(--v11-dur-fast), transform var(--v11-dur-fast);
+    }
+
+    .start-button:hover {
+      background: var(--v11-accent-deep);
+      transform: translateY(-1px);
     }
 
     .info-grid {
@@ -458,9 +543,9 @@
     }
 
     .info-card {
-      background-color: var(--panel-dark);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
+      background-color: var(--v11-bg-elevated);
+      border: 1px solid var(--v11-line);
+      border-radius: var(--v11-radius);
       padding: 1rem;
       display: flex;
       gap: 0.75rem;
@@ -468,8 +553,43 @@
     }
 
     .info-card-icon {
-      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
       margin-top: -0.1rem;
+      color: var(--v11-accent);
+      background: var(--v11-accent-soft);
+      border-radius: var(--v11-radius);
+      flex-shrink: 0;
+    }
+
+    .info-card-icon .lucide-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .menu-item-overview .lucide-icon {
+      width: 16px;
+      height: 16px;
+      color: var(--v11-accent);
+    }
+
+    .strategy-badge .lucide-icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    .close-sidebar-btn .lucide-icon,
+    .btn-menu-trigger .lucide-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .btn .lucide-icon {
+      width: 16px;
+      height: 16px;
     }
 
     .info-card-content {
@@ -479,15 +599,26 @@
     }
 
     .info-card-title {
-      font-family: var(--font-outfit);
-      font-size: 0.85rem;
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
       font-weight: 600;
+      color: var(--v11-text);
     }
 
     .info-card-desc {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      line-height: 1.4;
+      font-family: var(--font-read);
+      font-size: 0.9rem;
+      color: var(--v11-text-85);
+      line-height: var(--read-body);
+    }
+
+    .info-card-desc code {
+      font-family: var(--font-mono);
+      font-size: 0.8em;
+      color: var(--v11-accent);
+      background: var(--v11-accent-soft);
+      padding: 0.1em 0.35em;
+      border-radius: var(--v11-radius-sm);
     }
 
     /* Question Editor View (Mobile First Stacked Layout) */
@@ -500,12 +631,12 @@
 
     .editor-header {
       padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--v11-line);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-shrink: 0;
-      background: var(--panel-dark);
+      background: var(--v11-bg-elevated);
     }
 
     .breadcrumb {
@@ -521,17 +652,17 @@
     }
 
     .breadcrumb-section {
-      color: var(--accent-purple);
+      color: var(--v11-accent);
       font-weight: 600;
       text-transform: uppercase;
     }
 
     .breadcrumb-separator {
-      color: var(--text-dim);
+      color: var(--v11-text-50);
     }
 
     .breadcrumb-question {
-      color: var(--text-muted);
+      color: var(--v11-text-60);
     }
 
     .status-badge {
@@ -540,26 +671,26 @@
       gap: 0.3rem;
       font-size: 0.65rem;
       font-family: var(--font-mono);
-      background-color: #1a2333;
+      background-color: var(--v11-bg-inset);
       padding: 0.15rem 0.4rem;
-      border-radius: 4px;
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
+      border-radius: var(--v11-radius-sm);
+      border: 1px solid var(--v11-line);
+      color: var(--v11-text-60);
     }
 
     .status-badge .badge-dot {
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background-color: var(--accent-green);
+      background-color: var(--v11-signal-pos);
     }
 
     .status-badge.local-only .badge-dot {
-      background-color: var(--accent-blue);
+      background-color: var(--v11-signal-cool);
     }
 
     .status-badge.syncing .badge-dot {
-      background-color: #eab308;
+      background-color: var(--v11-signal-warn);
       animation: pulse 1s infinite alternate;
     }
 
@@ -581,15 +712,16 @@
     }
 
     .question-display {
-      background-color: rgba(255, 255, 255, 0.01);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 1rem;
-      font-family: var(--font-outfit);
-      font-size: 0.95rem;
+      background-color: var(--v11-bg-alt);
+      border: 1px solid var(--v11-line);
+      border-left: 3px solid var(--v11-accent);
+      border-radius: var(--v11-radius);
+      padding: 1.25rem 1.15rem;
+      font-family: var(--font-read);
+      font-size: 1.0625rem;
       font-weight: 600;
-      line-height: 1.4;
-      color: #fff;
+      line-height: var(--read-lead);
+      color: var(--v11-text);
       white-space: pre-wrap;
     }
 
@@ -602,27 +734,34 @@
     .textarea-label {
       font-size: 0.65rem;
       font-family: var(--font-mono);
-      color: var(--text-dim);
+      color: var(--v11-text-50);
       text-transform: uppercase;
+      letter-spacing: 0.1em;
       margin-bottom: 0.35rem;
     }
 
     .answer-textarea {
-      background-color: #0d131f;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 0.85rem;
-      color: var(--text-main);
-      font-family: var(--font-inter);
-      font-size: 0.85rem;
-      line-height: 1.5;
-      min-height: 180px;
+      background-color: var(--v11-bg-inset);
+      border: 1px solid var(--v11-line);
+      border-radius: var(--v11-radius);
+      padding: 1rem 1.1rem;
+      color: var(--v11-text);
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      line-height: var(--read-body);
+      min-height: 200px;
       resize: vertical;
       outline: none;
+      transition: border-color var(--v11-dur-fast), box-shadow var(--v11-dur-fast);
+    }
+
+    .answer-textarea::placeholder {
+      color: var(--v11-text-50);
     }
 
     .answer-textarea:focus {
-      border-color: var(--border-focus);
+      border-color: var(--v11-accent-ring);
+      box-shadow: 0 0 0 3px var(--v11-accent-soft);
     }
 
     .char-count {
@@ -630,7 +769,7 @@
       bottom: -1.2rem;
       right: 0.25rem;
       font-size: 0.6rem;
-      color: var(--text-dim);
+      color: var(--v11-text-50);
       font-family: var(--font-mono);
     }
 
@@ -641,10 +780,10 @@
     }
 
     .strategy-card {
-      background: rgba(34, 47, 71, 0.15);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 1rem;
+      background: var(--v11-bg-alt);
+      border: 1px solid var(--v11-line);
+      border-radius: var(--v11-radius);
+      padding: 1.15rem;
     }
 
     .strategy-badge {
@@ -653,24 +792,41 @@
       gap: 0.3rem;
       font-size: 0.6rem;
       font-family: var(--font-mono);
-      color: var(--accent-purple);
+      color: var(--v11-accent);
       text-transform: uppercase;
       font-weight: 700;
+      letter-spacing: 0.1em;
       margin-bottom: 0.5rem;
     }
 
     .strategy-title {
-      font-family: var(--font-outfit);
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.5rem;
+      font-family: var(--font-ui);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--v11-text);
+      margin-bottom: 0.65rem;
     }
 
     .strategy-content {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      line-height: 1.5;
+      font-family: var(--font-read);
+      font-size: 0.9375rem;
+      color: var(--v11-text-85);
+      line-height: var(--read-lead);
+    }
+
+    .strategy-content h4 {
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--v11-text);
+      margin-bottom: 0.4rem;
+    }
+
+    .strategy-content strong {
+      color: var(--v11-text);
+      font-weight: 600;
     }
 
     .strategy-content p {
@@ -688,8 +844,8 @@
 
     /* Bottom Navigation Bar (Touch Optimized) */
     .editor-footer {
-      background-color: var(--panel-dark);
-      border-top: 1px solid var(--border-color);
+      background-color: var(--v11-bg-elevated);
+      border-top: 1px solid var(--v11-line);
       padding: 0.75rem 1rem;
       display: flex;
       justify-content: space-between;
@@ -706,34 +862,44 @@
     }
 
     .btn {
-      background-color: #1e293b;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
+      background-color: var(--v11-bg-elevated-2);
+      border: 1px solid var(--v11-line);
+      color: var(--v11-text);
       padding: 0.75rem 1rem;
-      border-radius: 6px;
-      font-size: 0.8rem;
+      border-radius: var(--v11-radius);
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.35rem;
-      font-family: var(--font-inter);
+      font-family: var(--font-ui);
       flex: 1;
-      height: 44px; /* Minimum mobile touch target */
+      height: 44px;
+      transition: border-color var(--v11-dur-fast), color var(--v11-dur-fast);
+    }
+
+    .btn:hover:not(:disabled) {
+      border-color: var(--v11-line-strong);
     }
 
     .btn-menu-trigger {
       flex: 0;
       min-width: 44px;
-      background-color: #111827;
+      background-color: var(--v11-bg-inset);
       font-size: 1rem;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent-purple), #6d28d9);
+      background: var(--v11-accent);
+      color: var(--v11-accent-ink);
       border: none;
       flex: 1.5;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--v11-accent-deep);
     }
 
     .btn:disabled {
@@ -799,11 +965,11 @@
       }
 
       .hero-title {
-        font-size: 2rem;
+        font-size: 2.25rem;
       }
 
       .hero-subtitle {
-        font-size: 1rem;
+        font-size: 1.0625rem;
       }
 
       .goal-tracker-card {
@@ -844,24 +1010,24 @@
       .input-panel {
         flex: 3;
         padding: 2rem;
-        border-right: 1px solid var(--border-color);
+        border-right: 1px solid var(--v11-line);
         overflow-y: auto;
         gap: 1.5rem;
       }
 
       .question-display {
-        font-size: 1.15rem;
-        padding: 1.5rem;
+        font-size: 1.1875rem;
+        padding: 1.5rem 1.35rem;
       }
 
       .answer-textarea {
-        font-size: 0.95rem;
-        min-height: 250px;
+        font-size: 1.0625rem;
+        min-height: 280px;
       }
 
       .strategy-panel {
         flex: 2;
-        background-color: #0e1320;
+        background-color: var(--v11-bg-alt);
         padding: 2rem;
         overflow-y: auto;
         margin-top: 0;
@@ -895,15 +1061,22 @@
         display: flex;
         gap: 0.5rem;
         font-size: 0.7rem;
-        color: var(--text-dim);
+        color: var(--v11-text-50);
         font-family: var(--font-mono);
       }
 
       .key-badge {
-        background: #1e293b;
+        background: var(--v11-bg-inset);
         padding: 0.1rem 0.3rem;
-        border-radius: 3px;
-        border: 1px solid var(--border-color);
+        border-radius: var(--v11-radius-sm);
+        border: 1px solid var(--v11-line);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
       }
     }
   </style>
@@ -949,12 +1122,15 @@
     <aside class="sidebar" id="sidebar-nav">
       <div class="sidebar-header">
         <span class="sidebar-title">Sections</span>
-        <button class="close-sidebar-btn" id="btn-close-sidebar">✕</button>
+        <button class="close-sidebar-btn" id="btn-close-sidebar" aria-label="Close menu">
+          <i data-lucide="x" class="lucide-icon" aria-hidden="true"></i>
+        </button>
       </div>
       
       <div class="sidebar-menu">
         <div class="menu-item-overview active" id="menu-overview">
-          <span style="font-size: 1rem;">📊</span> Overview & Goals
+          <i data-lucide="layout-dashboard" class="lucide-icon" aria-hidden="true"></i>
+          Overview & Goals
         </div>
         
         <div id="sections-container">
@@ -969,7 +1145,7 @@
       <!-- VIEW 1: Overview Screen (Welcome) -->
       <div class="overview-screen" id="view-overview">
         <div class="welcome-hero">
-          <h1 class="hero-title">Senior Product Designer Training</h1>
+          <h1 class="hero-title">Senior Product Designer <span class="hero-accent">Training</span></h1>
           <p class="hero-subtitle">
             This self-assessment is the baseline of your current skills. By answering these 80 questions in English, you will map your strengths and weaknesses to construct your personalized path toward rare senior roles combining <strong>UX, product strategy, design systems, frontend, and AI-native workflows</strong>.
           </p>
@@ -994,21 +1170,21 @@
         
         <div class="info-grid">
           <div class="info-card">
-            <div class="info-card-icon">⚡</div>
+            <div class="info-card-icon"><i data-lucide="zap" class="lucide-icon" aria-hidden="true"></i></div>
             <div class="info-card-content">
               <h3 class="info-card-title">Real-Time Sync</h3>
               <p class="info-card-desc">Every keypress is written instantly to your local <code>answers.md</code> and JSON state files on your hard drive.</p>
             </div>
           </div>
           <div class="info-card">
-            <div class="info-card-icon">💡</div>
+            <div class="info-card-icon"><i data-lucide="lightbulb" class="lucide-icon" aria-hidden="true"></i></div>
             <div class="info-card-content">
               <h3 class="info-card-title">Recruiter Tips</h3>
               <p class="info-card-desc">Under every question, view specific strategies evaluated by high-paying US design panels.</p>
             </div>
           </div>
           <div class="info-card">
-            <div class="info-card-icon">📱</div>
+            <div class="info-card-icon"><i data-lucide="smartphone" class="lucide-icon" aria-hidden="true"></i></div>
             <div class="info-card-content">
               <h3 class="info-card-title">Mobile Friendly</h3>
               <p class="info-card-desc">Fully optimized to type or review details comfortably on your phone from your local network.</p>
@@ -1057,7 +1233,8 @@
           <div class="strategy-panel">
             <div class="strategy-card">
               <div class="strategy-badge">
-                <span>🎯</span> US Interview Strategy
+                <i data-lucide="target" class="lucide-icon" aria-hidden="true"></i>
+                US Interview Strategy
               </div>
               <h4 class="strategy-title" id="strategy-theme">Strategic Evaluation Focus</h4>
               <div class="strategy-content" id="strategy-details">
@@ -1074,9 +1251,17 @@
           </div>
           
           <div class="nav-buttons">
-            <button class="btn btn-menu-trigger" id="btn-open-sidebar" title="Open Questions Menu">☰</button>
-            <button class="btn" id="btn-prev">← Prev</button>
-            <button class="btn btn-primary" id="btn-next">Next →</button>
+            <button class="btn btn-menu-trigger" id="btn-open-sidebar" title="Open Questions Menu" aria-label="Open questions menu">
+              <i data-lucide="menu" class="lucide-icon" aria-hidden="true"></i>
+            </button>
+            <button class="btn" id="btn-prev">
+              <i data-lucide="chevron-left" class="lucide-icon" aria-hidden="true"></i>
+              Prev
+            </button>
+            <button class="btn btn-primary" id="btn-next">
+              Next
+              <i data-lucide="chevron-right" class="lucide-icon" aria-hidden="true"></i>
+            </button>
           </div>
         </div>
         
@@ -1570,6 +1755,9 @@
       }
     ];
 
+    // Seeded answers — pre-populate localStorage on first load
+    const INITIAL_ANSWERS = {"1":"the main objective here is to identify the fundamentals of that which generated this phenomenon. we need to understand: where is the problem situated? is it several problems or one problem? what is going on behind it?\n\nwe need to design a test that puts to the test actually the process but also tries to understand if the tool is working properly and is achieving the goals. are our assumptions about the product's selling points correct? after that we run the test and we figure a course correction for what we understand is failing and is changing. ","2":"yeah the ux problem is centered around usability, around cognitive load, around accessibility, around user friction. for example users can't understand how to customize the product. the business problem is about customer acquisition cost, customer monthly churn percentage, conversion rate, etc. ","3":"we had engineers interested in using the cli rather than any ui. obviously they can now use a genic cli so they don't need to even visit a ui because they can ask the ilm what's going on, what kind of information they need, what format they needed, etc.\n\nwe had this amazing infrastructure that was bigger and bigger. we identified that people were accessing the architecture more often than at the beginning because the architecture was growing. when we have one component or two components or five components, let's say two uis, two frontend servers running in different ports, then two or three databases, then more components like databases, backend services, and more infrastructure like infrastructure as code service and security as a service, we end up growing a lot of our infrastructure. everybody was building their own tools but nobody understood what to look at if they didn't know exactly what their environment was looking like.\n\nwe created a react flow-based graphic. when you visit that graphic, we have all the different nodes with descriptions and some information. you could open it and play around with the service. you could fork it into your own project and use it at least as the basis of the available github repo because a lot of it was confidential and a lot of it was client-based. we had almost a sandbox for everything and a running sandbox. using this, people were allowed to discover a lot of things that existed inside our ecosystem and that was amazing because we didn't need everybody to run the same sandbox, the same backend service, because everything was actually running. they look at the interface, look at the graphic. they identify what was going on behind the graphic and they could do two things:\n1. identify all the modules that they already knew existed, the new services, the new tools, the new mcp servers, etc.\n2. look at the issues inside those because some of those were serving actual users inside the company and some of them were just for personal use for example a product team so they were allowed to understand the status of everything.\n ","4":"to be honest i'm not clear about this one. output and outcome sound like synonyms but actually i would say what i understand is output. i think output is a lot more logical and coherent. it's like one plus one is going to be two and outcome feels more intangible. it's not possible to measure. it's like quantitative and qualitative. quantitative sounds like but i'm not sure. ","5":"i think that the product that lives in the intersection between what a user wants, what a stakeholder wants, and what is technologically possible is going to be successful ","6":"mvp is a convention that we take into consideration, taking the variables that we need to adjust. we take time into consideration and a measurable amount of value that we will deliver at a certain point in time. we are able to dissect this deliverable and organize the team too so we can tackle everything around the product. so obviously it's like a minimal viable product right? we try to maximize value and then keep the effort controlled. ","7":"yeah what is non-mvp? it's a really complete set of features that at a certain point in time we are not able to measure the impact. we assume or we have certain information that those features are not delivering the same value as the features and the actual core of the product we are delivering so we need to be pretty cautious about this.\n\nin terms of things that are obvious for example:\n- super polished aesthetics\n- a ui that is glamorous and heavy in the web browser\n- a lot of things that are obviously not part of the mvp\n\n\nalso things that could live in the limits of being a feature that deserves to be in an mvp and a feature that is not going to be deserving to be in an mvp. how we can decide that is the expertise of the subject matter expert. what product are we building and our stakeholders will be able to help us to identify that. it depends on the product. we will be able to understand what we are doing in terms of let's say:\n- uber: we are letting people contact, ask for a ride, pay for the ride, and then go wherever they are going to\n\n\nrather than a lot of features like:\n- sharing your location with friends\n- splitting the bill\n- recording this\n\n\nso it's a lot of tools that are around the most important core value. ","8":"we need to measure the value of the features and try to be prescriptive so we need to research some sort of a score that we will assign to each feature. we would say what are all the metrics that we're going to expect from the features. for example if we are asking for a feature that allows users to log in faster so instead of using user email they're using google, what are the metrics? what are they? use the actual user experience improvement.\n\nafter analyzing all the features with all the metrics, we make sure that we try to come up with some sort of a system. we brainstorm a system to identify which are the priorities. when we are prioritizing, we need to make sure that we evaluate the effort from the engineering front and then we pick what we want to build with a stakeholder. ","9":"i would say all this about the output and the outcome expected. what metrics are we trying to improve? let's say if we're looking at okrs (objectives and key results) then what features are tackling those better? ","10":"i never used this kind of framework but i'm open to learn so i would love to have your recommendation on what framework i need to learn, like rese kind of model or opportunity solution trees or anything else, or just learn one very well or what ","11":"product discovery is when we test what we know about everything that we are trying to build. we have a lot of assumptions, a lot of content, and a lot of expertise in the area ideally. we identify pain points and then we propose solutions. what we are doing is trying to understand if those solutions that we propose are aligned with the pain points that we identify. ","12":"yeah so i usually start with the kick-off session when i want to raise my voice to identify the problem definition. that has to be in all people's minds because we need to be aligned at the beginning on the one thing that we know is a fact and that we believe is true. then we start navigating into that, going deeper and analyzing that problem, gathering all the information about it, mapping it, getting data, getting ideation, then proposing solutions with cross-functional teams or partners or everything.\n\nthen we need to prototype the solution but actually first of all i think we need to make sure that we understand the process where the process is located. we have a good context diagram then we have a good process diagram. we have a good solution for the portion of the process that we are tackling or step or portion of the process that we are tackling, which depends on the product of course. then we start prototyping, validation, usability, everything else right and then it ends up with a handoff mapping of the things that we discover and implement and design. ","13":"then i'll pick a framework to evaluate the feature in terms of what kind of feature i'll be looking for. i decide to go: if i need rise or the other models for feature request evaluation then after that i run it through the evaluation and propose some insight about that, a report on that. we make sure that it is well located in the roadmap of all the things that are existing because i have never been in a product that is empty. the work that we need to do is to understand where we have to locate it and then we start the discovery process.\n\nit's like i feel like it's like a regression test. we don't break things that are already working so i want to have that mindset in engineering but also user-centered or oriented. i need to empathize with the user and then we make sure that these new features are going to work for them. we discovered everything about it. we run from:\n- what the problem is\n- solving\n- what metrics are going to be improved with this feature\n\n\nafter this we ideate a design solution, prototyping, and hand-off design and that's it. \n\nin my last position we had a platform called aha so we laid out ideas from everybody including stakeholders. we run a process to identify what is the risk associated with it, the value of it. the framework that we picked then is after we decide to gather more information or we have seven or eight stages for it. after we run all the stages then we make sure that that feature is ready to go right into the backlog on jira and that's pretty much it. ","14":"i think an assumption could become a fact when you validate it with data right? the source of the data will be attached to the nature of the assumption. if the assumption is a result of an observation that we are having from analyzing data, then it will be way easier to tackle.\n\nan assumption that is coming from the highest-paid person in the company that says \"hey i think users want to perform task b not task k\" could be right but we need to find data that backs up that claim. we need to use common sense. no we need to classify that assumption:\n- what is the uncertainty, the level of entropy of that assumption or uncertainty?\n- how uncertain is that assumption?\n- what's the feasibility generally speaking when we understand that assumption, is it feasible or not feasible?\n ","15":"in my experience time and effort are the constraint. in a perfect world i will aim for 99.99% of accuracy, backing up an assumption or a hypothesis or a feature or whatever we want to build. i never reach that level of confidence but we need to agree. what is the risk associated with lowering that level of confidence and can we handle that risk or not? we can aim for 95%. the risk will be way lower than if we aim for 65% and we can calculate that based on the frame. we can pick a couple of frameworks to do that. i'm not sure which but i'm sure that there are some frameworks to tackle the accuracy of the evidence that i have for something. "};
+
     // App State
     let currentQuestionIdx = -1;
     let answersState = {};
@@ -1706,6 +1894,9 @@
       const stored = localStorage.getItem('danilo_pd_assessment_answers');
       if (stored) {
         try { answersState = JSON.parse(stored); } catch (e) { answersState = {}; }
+      } else if (Object.keys(INITIAL_ANSWERS).length > 0) {
+        answersState = { ...INITIAL_ANSWERS };
+        localStorage.setItem('danilo_pd_assessment_answers', JSON.stringify(answersState));
       }
       isServerConnected = false;
       updateServerStatus(false);
@@ -1802,7 +1993,10 @@
         updateCharCount();
         
         btnPrev.disabled = (idx === 0);
-        btnNext.textContent = (idx === questions.length - 1) ? 'Finish' : 'Next →';
+        btnNext.innerHTML = (idx === questions.length - 1)
+          ? 'Finish'
+          : 'Next <i data-lucide="chevron-right" class="lucide-icon" aria-hidden="true"></i>';
+        if (window.lucide) lucide.createIcons();
       }
     }
 
@@ -1896,6 +2090,10 @@
     initSidebar();
     loadState();
     selectQuestion(-1);
+  </script>
+  <script src="https://unpkg.com/lucide@0.487.0/dist/umd/lucide.min.js"></script>
+  <script>
+    if (window.lucide) lucide.createIcons();
   </script>
 </body>
 </html>
