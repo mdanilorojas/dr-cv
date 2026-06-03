@@ -1845,7 +1845,7 @@
     const GH_REPO  = 'dr-cv';
     const GH_FILE  = 'UR_training/starting_point/answers_state.json';
     let ghToken    = localStorage.getItem('dr_gh_token') || null;
-    let ghFileSha  = null;
+    let ghFileSha  = localStorage.getItem('dr_gh_sha') || null;
 
     function showGhModal() {
       const el = document.getElementById('gh-overlay');
@@ -1892,6 +1892,7 @@
         if (!res.ok) return null;
         const data = await res.json();
         ghFileSha = data.sha;
+        localStorage.setItem('dr_gh_sha', ghFileSha);
         return JSON.parse(atob(data.content.replace(/\s/g, '')));
       } catch (e) { return null; }
     }
@@ -1912,15 +1913,16 @@
         if (res.ok) {
           const data = await res.json();
           ghFileSha = data.content.sha;
+          localStorage.setItem('dr_gh_sha', ghFileSha);
           return true;
         }
         if (res.status === 409) {
-          // SHA stale — re-fetch and retry once
           const fresh = await ghLoad();
           if (fresh !== null) return ghSave(state);
         }
+        console.error('[GH Sync] Save failed', res.status, await res.text().catch(() => ''));
         return false;
-      } catch (e) { return false; }
+      } catch (e) { console.error('[GH Sync] Save error', e); return false; }
     }
 
     // Seeded answers — pre-populate localStorage on first load
