@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daily — Danilo Rojas</title>
+  <meta name="description" content="Mi horario de trabajo semanal y metas de la semana en curso.">
+  <meta property="og:title" content="Daily — Danilo Rojas">
+  <meta property="og:description" content="Horario real + metas semana a semana.">
+  <style>
+    :root {
+      --bg: #101114;
+      --panel: #17191f;
+      --panel2: #1e2128;
+      --line: #2d3140;
+      --text: #f1f3f7;
+      --muted: #a7adba;
+      --soft: #666d7e;
+      --blue: #7db1ff;
+      --green: #71d99e;
+      --yellow: #e9c46a;
+      --red: #f07178;
+      --orange: #f4a261;
+      --purple: #c77dff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.6 "Segoe UI", system-ui, sans-serif;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--line);
+      background: #0d0f13;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    nav a {
+      font-size: 13px;
+      color: var(--soft);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    nav a:hover { color: var(--text); }
+    nav .sep { color: var(--line); }
+    nav .current { color: var(--muted); }
+
+    /* ─── HEADER ─── */
+    header {
+      background: #13151a;
+      border-bottom: 1px solid var(--line);
+      padding: 32px 24px 24px;
+    }
+    header .eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--green); margin-bottom: 8px;
+    }
+    header h1 { font-size: clamp(24px, 4vw, 40px); font-weight: 900; line-height: 1.1; }
+    header p { color: var(--muted); margin-top: 8px; font-size: 14px; }
+
+    main { max-width: 1060px; margin: 0 auto; padding: 32px 18px 80px; }
+
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--soft); margin: 44px 0 16px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--line);
+    }
+
+    /* ─── TIMELINE ─── */
+    .schedule-table { width: 100%; border-collapse: collapse; }
+    .schedule-table tr { border-bottom: 1px solid var(--line); }
+    .schedule-table tr:last-child { border-bottom: none; }
+    .schedule-table td { padding: 0; vertical-align: stretch; }
+
+    .time-col {
+      width: 90px; padding: 16px 14px 16px 0;
+      font-size: 14px; font-weight: 800; color: var(--soft);
+      text-align: right; vertical-align: top; padding-top: 20px; white-space: nowrap;
+    }
+    .dot-col { width: 24px; position: relative; vertical-align: top; }
+    .dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      margin: 20px auto 0; position: relative; z-index: 1;
+    }
+    .dot-col::before {
+      content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
+      width: 2px; background: var(--line); transform: translateX(-50%);
+    }
+    .schedule-table tr:first-child .dot-col::before { top: 20px; }
+    .schedule-table tr:last-child .dot-col::before { bottom: calc(100% - 26px); }
+
+    .block-col { padding: 12px 0 12px 16px; }
+
+    .block-card {
+      background: var(--panel); border-radius: 10px;
+      padding: 13px 16px; border-left: 3px solid var(--line);
+    }
+    .block-card.levantada { border-color: var(--purple); }
+    .block-card.walk      { border-color: var(--green); }
+    .block-card.routine   { border-color: var(--soft); }
+    .block-card.work1     { border-color: var(--yellow); }
+    .block-card.lunch     { border-color: var(--soft); }
+    .block-card.work2     { border-color: var(--orange); }
+    .block-card.gym       { border-color: var(--green); }
+    .block-card.cierre    { border-color: var(--blue); }
+
+    .dot.levantada { background: var(--purple); }
+    .dot.walk      { background: var(--green); }
+    .dot.routine   { background: var(--soft); }
+    .dot.work1     { background: var(--yellow); }
+    .dot.lunch     { background: var(--soft); }
+    .dot.work2     { background: var(--orange); }
+    .dot.gym       { background: var(--green); }
+    .dot.cierre    { background: var(--blue); }
+
+    .block-title {
+      font-weight: 700; font-size: 15px;
+      display: flex; align-items: center; gap: 8px; margin-bottom: 3px;
+    }
+    .dur {
+      font-size: 11px; color: var(--muted);
+      background: var(--panel2); padding: 2px 7px; border-radius: 99px;
+    }
+    .block-detail { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .block-not { font-size: 12px; color: var(--red); margin-top: 4px; opacity: .8; }
+    .block-not b { font-weight: 700; }
+
+    /* ─── SEMANA ─── */
+    .week-days { display: flex; flex-direction: column; gap: 10px; }
+
+    .day-row {
+      background: var(--panel); border-radius: 12px;
+      border: 1px solid var(--line); overflow: hidden;
+    }
+    .day-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px; border-bottom: 1px solid var(--line);
+      background: var(--panel2);
+    }
+    .day-name { font-size: 16px; font-weight: 900; min-width: 90px; }
+    .day-date { font-size: 12px; color: var(--soft); }
+    .day-badge {
+      margin-left: auto; font-size: 11px; font-weight: 700;
+      padding: 2px 10px; border-radius: 99px;
+    }
+    .badge-work { background: rgba(233,196,106,.12); color: var(--yellow); }
+    .badge-opt  { background: rgba(102,109,126,.12); color: var(--soft); }
+    .badge-rev  { background: rgba(125,177,255,.12); color: var(--blue); }
+
+    .day-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    @media (max-width: 600px) { .day-blocks { grid-template-columns: 1fr; } }
+
+    .day-block { padding: 14px 18px; border-right: 1px solid var(--line); }
+    .day-block:last-child { border-right: none; }
+    .day-block:nth-child(2) { border-right: none; }
+    .day-block.full-width { grid-column: 1 / -1; border-right: none; }
+
+    .db-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .09em; margin-bottom: 8px;
+    }
+    .db-label.morning   { color: var(--yellow); }
+    .db-label.afternoon { color: var(--orange); }
+    .db-label.full      { color: var(--muted); }
+
+    .db-task { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .db-sub  { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    .tag {
+      display: inline-block; padding: 2px 8px; border-radius: 99px;
+      font-size: 11px; font-weight: 700; margin-right: 4px; margin-bottom: 2px;
+    }
+    .tag.ur   { background: rgba(233,196,106,.15); color: var(--yellow); }
+    .tag.port { background: rgba(113,217,158,.12); color: var(--green); }
+    .tag.apply{ background: rgba(125,177,255,.12); color: var(--blue); }
+    .tag.val  { background: rgba(244,162,97,.12);  color: var(--orange); }
+    .tag.opt  { background: rgba(102,109,126,.12); color: var(--soft); }
+
+    .day-note {
+      padding: 10px 18px; border-top: 1px solid var(--line);
+      font-size: 12px; color: var(--soft);
+    }
+
+    /* ─── METAS ─── */
+    .goals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+    .goal-card {
+      background: var(--panel); border-radius: 10px;
+      padding: 14px 16px; border: 1px solid var(--line); text-align: center;
+    }
+    .goal-num  { font-size: 30px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+    .goal-label{ font-size: 12px; color: var(--muted); }
+
+    /* ─── MODOS ─── */
+    .modos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 540px) { .modos { grid-template-columns: 1fr; } }
+    .modo {
+      background: var(--panel); border-radius: 10px;
+      padding: 16px 18px; border: 1px solid var(--line);
+    }
+    .modo h4 {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; margin-bottom: 10px;
+    }
+    .modo h4.mvp  { color: var(--orange); }
+    .modo h4.full { color: var(--green); }
+    .modo ul { list-style: none; }
+    .modo ul li {
+      font-size: 13px; color: var(--muted); padding: 4px 0;
+      display: flex; gap: 8px;
+    }
+    .modo ul li::before { content: '→'; color: var(--soft); flex-shrink: 0; }
+    .modo p { margin-top: 10px; font-size: 12px; color: var(--soft); }
+
+    .frase {
+      text-align: center; padding: 36px 20px; margin-top: 44px;
+      border-top: 1px solid var(--line); color: var(--muted);
+      font-size: 17px; font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/">danilorojas.design</a>
+  <span class="sep">/</span>
+  <span class="current">daily</span>
+</nav>
+
+<header>
+  <div class="eyebrow">Semana 1 · 8–14 jun 2026</div>
+  <h1>Mi semana, bloque a bloque</h1>
+  <p>Horario real · Objetivo: Product Designer / AI PD remoto en el rango $120k–$180k</p>
+</header>
+
+<main>
+
+  <!-- ─── HORARIO TIPO ─── -->
+  <div class="section-label">Horario diario — Lunes a Viernes</div>
+
+  <table class="schedule-table">
+    <tr>
+      <td class="time-col">07:00</td>
+      <td class="dot-col"><div class="dot levantada"></div></td>
+      <td class="block-col">
+        <div class="block-card levantada">
+          <div class="block-title">Arranque <span class="dur">15 min</span></div>
+          <div class="block-detail">Elegir el siguiente movimiento correcto del día. Sin noticias, sin redes sociales.</div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="time-col">07:15</td>
+      <td class="dot-col"><div class="dot walk"></div></td>
+      <td class="block-col">
+        <div class="block-card walk">
+          <div class="block-title">Caminata — mamá + perros <span class="dur">45–60 min</span></div>
+          <div class="block-detail">
+            Cuasi-obligatoria. No es solo ejercicio — es la transición del sueño al trabajo.<br>
+            Sin ella, el bloque de 9am arranca más lento.<br>
+            <strong style="color:var(--yellow)">Si mamá está cansada:</strong> igual salgo solo, 20–30 min mínimo.
+            Algo de caminata siempre gana a nada.
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="time-col">08:15</td>
+      <td class="dot-col"><div class="dot routine"></div></td>
+      <td class="block-col">
+        <div class="block-card routine">
+          <div class="block-title">Ducha + desayuno <span class="dur">45 min</span></div>
+          <div class="block-detail">Preparación. Sin pantallas de trabajo todavía.</div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="time-col">09:00</td>
+      <td class="dot-col"><div class="dot work1"></div></td>
+      <td class="block-col">
+        <div class="block-card work1">
+          <div class="block-title">Trabajo — Bloque 1 <span class="dur">4 horas</span></div>
+          <div class="block-detail">
+            <strong style="color:var(--yellow)">El bloque más importante del día.</strong><br>
+            Las preguntas de UR Training requieren pensamiento profundo — criterio, contexto, tradeoffs.
+            Eso pide cerebro fresco. Este bloque va aquí, no a las 4pm.<br><br>
+            Según el día: responder preguntas del plan de 80, avanzar en portfolio, o enviar aplicaciones.
+          </div>
+          <div class="block-not"><b>No:</b> abrir proyectos secundarios, herramientas por curiosidad</div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="time-col">13:00</td>
+      <td class="dot-col"><div class="dot lunch"></div></td>
+      <td class="block-col">
+        <div class="block-card lunch">
+          <div class="block-title">Almuerzo <span class="dur">1 hora</span></div>
+          <div class="block-detail">Pausa real. Sin pantallas de trabajo. Recarga antes del bloque 2.</div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="time-col">14:00</td>
+      <td class="dot-col"><div class="dot work2"></div></td>
+      <td class="block-col">
+        <div class="block-card work2">
+          <div class="block-title">Trabajo — Bloque 2 <span class="dur">2h 30min</span></div>
+          <div class="block-detail">
+            Validación comercial con clientes potenciales (conversaciones, no código)
+            o lo que quedó pendiente del bloque 1.
+          </div>
+          <div class="block-not"><b>No:</b> construir features sin validar demanda primero</div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="time-col">16:30</td>
+      <td class="dot-col"><div class="dot gym"></div></td>
+      <td class="block-col">
+        <div class="block-card gym">
+          <div class="block-title">Ejercicio <span class="dur">1h – 1h 30min</span></div>
+          <div class="block-detail">
+            Cardio, fuerza o movilidad. Va siempre — no se negocia después de trabajar.
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="time-col">18:00</td>
+      <td class="dot-col"><div class="dot routine"></div></td>
+      <td class="block-col">
+        <div class="block-card routine">
+          <div class="block-title">Tarde libre <span class="dur">~3 horas</span></div>
+          <div class="block-detail">Cena, descanso, vida. Sin trabajo.</div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="time-col">21:00</td>
+      <td class="dot-col"><div class="dot cierre"></div></td>
+      <td class="block-col">
+        <div class="block-card cierre">
+          <div class="block-title">Cierre <span class="dur">5–10 min</span></div>
+          <div class="block-detail">Check-in: bloques completados, métrica honesta del día, una línea.</div>
+          <div class="block-not"><b>No:</b> castigarme por lo que no hice</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- ─── SEMANA 1 ─── -->
+  <div class="section-label">Semana 1 — Qué hago cada día (8–14 jun)</div>
+
+  <div class="week-days">
+
+    <div class="day-row">
+      <div class="day-header">
+        <div class="day-name">Lunes</div>
+        <div class="day-date">8 jun</div>
+        <div class="day-badge badge-work">UR Training</div>
+      </div>
+      <div class="day-blocks">
+        <div class="day-block">
+          <div class="db-label morning">09:00 – 13:00 · Bloque 1</div>
+          <div class="db-task"><span class="tag ur">UR Q1–Q2</span></div>
+          <div class="db-sub">
+            Responder Q1 y Q2 con calidad senior:<br>
+            contexto → decisión → tradeoff → evidencia → cierre.<br>
+            Una respuesta bien hecha supera a cuatro superficiales.
+          </div>
+        </div>
+        <div class="day-block">
+          <div class="db-label afternoon">14:00 – 16:30 · Bloque 2</div>
+          <div class="db-task">Life Update — revisar uso</div>
+          <div class="db-sub">
+            Verificar que el sistema de tracking diario funciona como tablero operativo.
+          </div>
+        </div>
+      </div>
+      <div class="day-note">Meta: 2 respuestas UR con calidad senior completas</div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-header">
+        <div class="day-name">Martes</div>
+        <div class="day-date">9 jun</div>
+        <div class="day-badge badge-work">Portfolio</div>
+      </div>
+      <div class="day-blocks">
+        <div class="day-block">
+          <div class="db-label morning">09:00 – 13:00 · Bloque 1</div>
+          <div class="db-task"><span class="tag port">Portfolio — Developer Portal</span></div>
+          <div class="db-sub">
+            Documentar: problema + usuarios. Primera sección real del case study.
+          </div>
+        </div>
+        <div class="day-block">
+          <div class="db-label afternoon">14:00 – 16:30 · Bloque 2</div>
+          <div class="db-task"><span class="tag val">Validación comercial</span></div>
+          <div class="db-sub">
+            Listar 3 negocios para contactar. Sin demo, solo escuchar el dolor.
+          </div>
+        </div>
+      </div>
+      <div class="day-note">Meta: sección "Problema + Usuarios" del Developer Portal escrita</div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-header">
+        <div class="day-name">Miércoles</div>
+        <div class="day-date">10 jun</div>
+        <div class="day-badge badge-work">Portfolio</div>
+      </div>
+      <div class="day-blocks">
+        <div class="day-block">
+          <div class="db-label morning">09:00 – 13:00 · Bloque 1</div>
+          <div class="db-task"><span class="tag port">Portfolio — decisiones + resultados</span></div>
+          <div class="db-sub">
+            ¿Qué decisiones tomé en Developer Portal? ¿Qué resultó? Números o impacto.
+          </div>
+        </div>
+        <div class="day-block">
+          <div class="db-label afternoon">14:00 – 16:30 · Bloque 2</div>
+          <div class="db-task" style="color:var(--muted)">Recuperación</div>
+          <div class="db-sub">Sin proyecto. Si hay energía extra: una respuesta UR adicional.</div>
+        </div>
+      </div>
+      <div class="day-note">Meta: sección "Decisiones + Outcomes" del Developer Portal escrita</div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-header">
+        <div class="day-name">Jueves</div>
+        <div class="day-date">11 jun</div>
+        <div class="day-badge badge-work">UR Training</div>
+      </div>
+      <div class="day-blocks">
+        <div class="day-block">
+          <div class="db-label morning">09:00 – 13:00 · Bloque 1</div>
+          <div class="db-task"><span class="tag ur">UR Q3–Q5</span></div>
+          <div class="db-sub">
+            Responder Q3, Q4 y Q5 con calidad senior.<br>
+            Al final del día: 5 de 5 completadas → meta semana cumplida.
+          </div>
+        </div>
+        <div class="day-block">
+          <div class="db-label afternoon">14:00 – 16:30 · Bloque 2</div>
+          <div class="db-task"><span class="tag val">Validación — 2 convos</span></div>
+          <div class="db-sub">
+            Contactar 2 de los 3 negocios del martes. Escuchar, no vender.
+          </div>
+        </div>
+      </div>
+      <div class="day-note">Meta: 3 respuestas UR senior más = 5 total esta semana ✓</div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-header">
+        <div class="day-name">Viernes</div>
+        <div class="day-date">12 jun</div>
+        <div class="day-badge badge-work">Mercado</div>
+      </div>
+      <div class="day-blocks">
+        <div class="day-block">
+          <div class="db-label morning">09:00 – 13:00 · Bloque 1</div>
+          <div class="db-task"><span class="tag apply">2 aplicaciones</span></div>
+          <div class="db-sub">
+            2 aplicaciones o mensajes a recruiters de roles $120k+ remoto.<br>
+            Mensajes de alto valor, no spam.
+          </div>
+        </div>
+        <div class="day-block">
+          <div class="db-label afternoon">14:00 – 16:30 · Bloque 2</div>
+          <div class="db-task"><span class="tag val">Validación — 1 convo más</span></div>
+          <div class="db-sub">Tercer contacto. Total semana: 3 conversaciones ✓</div>
+        </div>
+      </div>
+      <div class="day-note">Meta: 2 aplicaciones enviadas + 3 convos de validación ✓</div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-header">
+        <div class="day-name">Sábado</div>
+        <div class="day-date">13 jun</div>
+        <div class="day-badge badge-opt">Opcional</div>
+      </div>
+      <div class="day-blocks">
+        <div class="day-block full-width">
+          <div class="db-label full">Sin obligación de producir</div>
+          <div class="db-task" style="color:var(--muted)">Descanso activo</div>
+          <div class="db-sub">
+            Ejercicio sí va si hay energía. Notas sueltas 15 min si hay ganas.
+            No se debe nada si no pasa nada de trabajo.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-header">
+        <div class="day-name">Domingo</div>
+        <div class="day-date">14 jun</div>
+        <div class="day-badge badge-rev">Review semanal</div>
+      </div>
+      <div class="day-blocks">
+        <div class="day-block full-width">
+          <div class="db-label full">30 min · Por la tarde</div>
+          <div class="db-task">Review semanal</div>
+          <div class="db-sub" style="margin-top:8px">
+            Revisar 6 métricas: ¿UR Training avanzó? ¿Portfolio tiene sección nueva?
+            ¿Salieron aplicaciones? ¿Hubo conversaciones de validación?
+            ¿Ejercicio 4+ días? ¿El sistema se siente liviano o pesado?<br><br>
+            Ajustar la semana 2 en base a lo que pasó realmente.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── METAS ─── -->
+  <div class="section-label">Metas — Semana 1</div>
+
+  <div class="goals-grid">
+    <div class="goal-card">
+      <div class="goal-num" style="color:var(--yellow)">5</div>
+      <div class="goal-label">UR Training senior<br><small style="color:var(--soft)">De 16 → 21 / 80</small></div>
+    </div>
+    <div class="goal-card">
+      <div class="goal-num" style="color:var(--green)">1</div>
+      <div class="goal-label">Sección portfolio<br><small style="color:var(--soft)">Developer Portal</small></div>
+    </div>
+    <div class="goal-card">
+      <div class="goal-num" style="color:var(--blue)">2</div>
+      <div class="goal-label">Aplicaciones<br><small style="color:var(--soft)">Roles $120k+ remoto</small></div>
+    </div>
+    <div class="goal-card">
+      <div class="goal-num" style="color:var(--orange)">3</div>
+      <div class="goal-label">Convos validación<br><small style="color:var(--soft)">Escuchar, no vender</small></div>
+    </div>
+    <div class="goal-card">
+      <div class="goal-num" style="color:var(--green)">4</div>
+      <div class="goal-label">Días con ejercicio<br><small style="color:var(--soft)">De 5 laborales</small></div>
+    </div>
+    <div class="goal-card">
+      <div class="goal-num" style="color:var(--purple)">7</div>
+      <div class="goal-label">Check-ins diarios<br><small style="color:var(--soft)">Aunque sean mínimos</small></div>
+    </div>
+  </div>
+
+  <!-- ─── MODOS ─── -->
+  <div class="section-label">Si el día sale mal</div>
+
+  <div class="modos">
+    <div class="modo">
+      <h4 class="mvp">Día mínimo viable</h4>
+      <ul>
+        <li>Ejercicio completado (aunque sean 20 min)</li>
+        <li>45 min de UR Training o portfolio</li>
+        <li>Check-in nocturno</li>
+      </ul>
+      <p>Este día cuenta. El sistema no se reinicia.</p>
+    </div>
+    <div class="modo">
+      <h4 class="full">Día completo</h4>
+      <ul>
+        <li>Bloque 1 completo (4 horas)</li>
+        <li>Bloque 2 completo (2.5 horas)</li>
+        <li>Ejercicio</li>
+        <li>Check-in</li>
+      </ul>
+      <p>4 de estos = semana ganada.</p>
+    </div>
+  </div>
+
+  <div class="frase">"No necesito claridad total. Necesito ejecutar el siguiente movimiento correcto."</div>
+
+</main>
+</body>
+</html>
