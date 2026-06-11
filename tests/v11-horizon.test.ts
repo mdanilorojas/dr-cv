@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { loadLandingData } from "../generators/lib/load-data.js";
-import { renderV11Landing } from "../generators/templates/v11-landing/index.js";
+import { loadLandingData } from "../generadores/lib/load-data.js";
+import { renderV11Landing } from "../generadores/templates/v11-landing/index.js";
 
 const PROJECT_ROOT = path.resolve(__dirname, "..");
-const DATA_DIR = path.join(PROJECT_ROOT, "data");
-const TOKENS_PATH = path.join(PROJECT_ROOT, "design-system", "tokens-v11.css");
+const DATA_DIR = path.join(PROJECT_ROOT, "perfil", "data");
+const TOKENS_PATH = path.join(PROJECT_ROOT, "design-system", "tokens-web.css");
 
 let htmlEn: string;
 let htmlEs: string;
@@ -22,7 +22,7 @@ beforeAll(() => {
   htmlEs = renderV11Landing(data, "es", tokensCss, assets);
 });
 
-describe("v11 horizon timeline — placement", () => {
+describe("v11 horizon timeline â€” placement", () => {
   it("renders after hero and before notebook in EN", () => {
     const heroIdx = htmlEn.indexOf('id="top"');
     const horizonIdx = htmlEn.indexOf('class="v11-horizon"');
@@ -42,7 +42,7 @@ describe("v11 horizon timeline — placement", () => {
   });
 });
 
-describe("v11 horizon timeline — emphasized column", () => {
+describe("v11 horizon timeline â€” emphasized column", () => {
   it("investing column has data-emphasis=true", () => {
     const col = extractColumn(htmlEn, "investing");
     expect(col).toContain('data-emphasis="true"');
@@ -54,7 +54,7 @@ describe("v11 horizon timeline — emphasized column", () => {
   });
 });
 
-describe("v11 horizon timeline — investing chips are links", () => {
+describe("v11 horizon timeline â€” investing chips are links", () => {
   it("all investing chips are <a> with non-empty href", () => {
     const col = extractColumn(htmlEn, "investing");
     const chips = extractChips(col);
@@ -65,7 +65,7 @@ describe("v11 horizon timeline — investing chips are links", () => {
   });
 });
 
-describe("v11 horizon timeline — horizon column composition", () => {
+describe("v11 horizon timeline â€” horizon column composition", () => {
   it("horizon column has exactly 2 evidence chips + 1 bet chip", () => {
     const col = extractColumn(htmlEn, "horizon");
     const chips = extractChips(col);
@@ -86,7 +86,7 @@ describe("v11 horizon timeline — horizon column composition", () => {
   });
 });
 
-describe("v11 horizon timeline — past chips aria-label", () => {
+describe("v11 horizon timeline â€” past chips aria-label", () => {
   it("every earned chip has aria-label starting with Earned (EN)", () => {
     const col = extractColumn(htmlEn, "earned");
     const chips = extractChips(col);
@@ -110,7 +110,7 @@ describe("v11 horizon timeline — past chips aria-label", () => {
   });
 });
 
-describe("v11 horizon timeline — HTML budget", () => {
+describe("v11 horizon timeline â€” HTML budget", () => {
   it("EN output stays under 400k bytes", () => {
     expect(htmlEn.length).toBeLessThan(400_000);
   });
@@ -119,7 +119,7 @@ describe("v11 horizon timeline — HTML budget", () => {
   });
 });
 
-describe("v11 horizon timeline — internal anchor resolution", () => {
+describe("v11 horizon timeline â€” internal anchor resolution", () => {
   it("every on-page href in the horizon section points to an id that exists in the HTML", () => {
     const section = extractHorizonSection(htmlEn);
     const anchors = Array.from(section.matchAll(/href="(#[^"]+)"/g)).map((m) => m[1]);

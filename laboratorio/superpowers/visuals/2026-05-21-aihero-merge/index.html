@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Landing rebuild â€” three iterations</title>
+<link rel="stylesheet" href="tokens-web.css">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .frame__group-h {
+    font-family: var(--v11-font-display);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--v11-accent);
+    margin: 48px 0 12px;
+  }
+  .frame__group-sub {
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    color: var(--v11-text-50);
+    letter-spacing: 0.06em;
+    margin: 0 0 20px;
+  }
+  .frame__card-tag {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--v11-accent);
+    color: var(--v11-accent-ink);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+<main class="frame">
+  <div class="frame__crumb">2026-05-21 Â· Brainstorm visuals</div>
+  <h1 class="frame__title">Landing rebuild â€” aihero Ã— dr-cv v11</h1>
+  <p class="frame__lede">
+    Three polished iterations of the landing, all built on the merge agreed upon: centered single column,
+    editorial rhythm from aihero.dev, all the v11 tokens kept intact (warm Huly dark, JetBrains Mono display,
+    Inter body, single warm orange accent â€” used as punctuation, never as decoration). Each iteration carries
+    a different section economy. v2 is the recommended target.
+  </p>
+
+  <div class="frame__group-h">Polished iterations</div>
+  <p class="frame__group-sub">Pick one as the implementation target. v2 recommended.</p>
+
+  <section class="frame__cards">
+
+    <a class="frame__card" href="v1-quiet.html">
+      <div class="frame__card-eyebrow">v1 Â· Quiet</div>
+      <h3 class="frame__card-title">Hero Â· Work Â· Contact</h3>
+      <p class="frame__card-desc">
+        Minimum-viable rebuild. No proof strip, no notes, no testimonial section. Three blocks of breath. The
+        work is the proof. Closest to a designer's personal site.
+      </p>
+    </a>
+
+    <a class="frame__card" href="v2-balanced.html">
+      <div class="frame__card-eyebrow">v2 Â· Balanced<span class="frame__card-tag">Target</span></div>
+      <h3 class="frame__card-title">Hero Â· Proof Â· Work Â· Testimonial Â· Notes Â· Contact</h3>
+      <p class="frame__card-desc">
+        Best chance of converting a client without feeling AI-templated. Discrete proof strip absorbs the old
+        Horizon numbers. One real testimonial (Giraldez). Notes block keeps the site alive between deploys.
+      </p>
+    </a>
+
+    <a class="frame__card" href="v3-method-forward.html">
+      <div class="frame__card-eyebrow">v3 Â· Method-forward</div>
+      <h3 class="frame__card-title">Hero Â· Method Â· Work Â· Testimonial Â· Contact</h3>
+      <p class="frame__card-desc">
+        Earned â†’ Investing â†’ Horizon survives â€” but as three quiet paragraphs, no chips, no progress bar. For
+        viewers who need to see the <i>how</i> before the <i>what</i>.
+      </p>
+    </a>
+
+  </section>
+
+  <div class="frame__group-h">Compare</div>
+  <p class="frame__group-sub">Side-by-side iframes</p>
+
+  <section class="frame__cards">
+    <a class="frame__card" href="04-side-by-side.html">
+      <div class="frame__card-eyebrow">A Â· Current vs Direction B</div>
+      <h3 class="frame__card-title">Live landing â‡„ Mono-editorial mockup</h3>
+      <p class="frame__card-desc">
+        What dies (chips, density, second nav) and what stays (color, type, photo). Useful for tone calibration.
+      </p>
+    </a>
+    <a class="frame__card" href="05-three-way.html">
+      <div class="frame__card-eyebrow">B Â· v1 vs v2 vs v3</div>
+      <h3 class="frame__card-title">Three iterations side-by-side</h3>
+      <p class="frame__card-desc">
+        Three iframes scrolling independently. Quickest way to feel the section-economy difference between
+        Quiet, Balanced, and Method-forward.
+      </p>
+    </a>
+  </section>
+
+  <div class="frame__group-h">Earlier directions (kept for reference)</div>
+  <p class="frame__group-sub">Concept-level, not polished. Direction B was the merge starting point.</p>
+
+  <section class="frame__cards">
+    <a class="frame__card" href="01-editorial-pure.html">
+      <div class="frame__card-eyebrow">A Â· Editorial pure</div>
+      <h3 class="frame__card-title">Source Serif 4, narrow column</h3>
+      <p class="frame__card-desc">Closest to aihero.dev. Display serif. Biggest departure from v11.</p>
+    </a>
+    <a class="frame__card" href="02-mono-editorial.html">
+      <div class="frame__card-eyebrow">B Â· Mono-editorial</div>
+      <h3 class="frame__card-title">v11 mono kept, structure cleaned</h3>
+      <p class="frame__card-desc">Concept page. v1/v2/v3 are the polished children.</p>
+    </a>
+    <a class="frame__card" href="03-cardstack.html">
+      <div class="frame__card-eyebrow">C Â· Card stack</div>
+      <h3 class="frame__card-title">aihero card grid in v11 mono</h3>
+      <p class="frame__card-desc">Most literal. Card grids re-introduce template feel â€” kept as cautionary.</p>
+    </a>
+  </section>
+</main>
+</body>
+</html>

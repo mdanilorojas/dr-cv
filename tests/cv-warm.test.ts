@@ -1,13 +1,13 @@
 import { describe, it, expect } from "vitest";
-import { renderWarmCv } from "../generators/templates/cv/warm.js";
-import { loadCvData } from "../generators/lib/load-data.js";
+import { renderWarmCv } from "../generadores/templates/cv/warm.js";
+import { loadCvData } from "../generadores/lib/load-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(here, ".." , "data");
-const tokensPath = path.join(here, "..", "design-system", "tokens.css");
+const dataDir = path.join(here, "..", "perfil", "data");
+const tokensPath = path.join(here, "..", "design-system", "tokens-print.css");
 const tokensCss = readFileSync(tokensPath, "utf8");
 
 describe("renderWarmCv", () => {
@@ -55,6 +55,6 @@ describe("renderWarmCv", () => {
 
   it("generates ES version with Spanish thesis", () => {
     const html = renderWarmCv(data, "es", tokensCss);
-    expect(html).toContain("Entrego productos reales");
+    expect(html).toContain("Entrego publicables reales");
   });
 });

@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dr-cv Â· Master Plan Spec Â· 2026-05-07</title>
+<style>
+  :root {
+    --ink:#0B0C0E; --ink-body:#303236; --ink-mute:#6b7078;
+    --line:#d8d8d8; --line-soft:#ececec; --bg:#fafaf7;
+    --bg-card:#fff; --bg-section:#f2f0ea; --bg-ink:#0B0C0E;
+    --accent:#FF8964; --accent-deep:#CD3100; --accent-ink:#5A250A;
+    --accent-cool:#5683DA;
+    --glow-1:#FFFFF5; --glow-2:#FFAA81; --glow-3:#FFDA9F;
+    --font-body:"Inter","Helvetica Neue",Arial,sans-serif;
+    --font-display:"JetBrains Mono","SF Mono",ui-monospace,Menlo,monospace;
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  html,body { margin:0; padding:0;
+    font-family:var(--font-body); font-size:15px; line-height:1.6;
+    color:var(--ink-body); background:var(--bg);
+    -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:920px; margin:0 auto; padding:48px 32px 120px; }
+
+  /* ===== hero ===== */
+  .hero {
+    margin-bottom:48px; padding-bottom:24px; border-bottom:2px solid var(--ink);
+    display:grid; grid-template-columns:1fr auto; gap:24px; align-items:flex-end;
+  }
+  .hero .kicker {
+    font-family:var(--font-display); font-size:11px; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:10px;
+  }
+  .hero h1 {
+    font-family:var(--font-display); font-size:40px; letter-spacing:-0.03em;
+    line-height:1.05; color:var(--ink); margin:0 0 10px; font-weight:600;
+  }
+  .hero h1 .accent { color:var(--accent); }
+  .hero .sub { font-size:15px; color:var(--ink-mute); max-width:520px; }
+  .hero .meta {
+    font-family:var(--font-display); font-size:11px; color:var(--ink-mute);
+    text-align:right; letter-spacing:0.08em; text-transform:uppercase;
+    line-height:1.7;
+  }
+  .hero .meta b { color:var(--ink); font-weight:500; }
+
+  /* ===== toc ===== */
+  .toc {
+    background:var(--bg-card); border:1px solid var(--line); border-radius:10px;
+    padding:20px 28px; margin-bottom:48px;
+  }
+  .toc h2 {
+    font-family:var(--font-display); font-size:10px; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--accent); margin:0 0 14px;
+  }
+  .toc ol { margin:0; padding-left:18px; column-count:2; column-gap:32px; }
+  .toc li { margin-bottom:6px; font-size:14px; }
+  .toc a { color:var(--ink); text-decoration:none; }
+  .toc a:hover { color:var(--accent); }
+
+  /* ===== section ===== */
+  section { margin-bottom:56px; scroll-margin-top:24px; }
+  section h2 {
+    font-family:var(--font-display); font-size:12px; letter-spacing:0.24em;
+    text-transform:uppercase; color:var(--accent); font-weight:500;
+    margin:0 0 6px;
+  }
+  section h3.display {
+    font-family:var(--font-display); font-size:28px; letter-spacing:-0.025em;
+    line-height:1.15; color:var(--ink); margin:0 0 20px; font-weight:600;
+  }
+  section p { margin:0 0 14px; }
+  section ul { margin:0 0 14px; padding-left:22px; }
+  section ul li { margin-bottom:6px; }
+  section b, section strong { color:var(--ink); font-weight:600; }
+
+  /* ===== phase cards ===== */
+  .phases { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:24px 0; }
+  @media (max-width:760px) { .phases { grid-template-columns:1fr; } }
+  .phase-card {
+    background:var(--bg-card); border:1px solid var(--line); border-radius:10px;
+    padding:20px 22px; position:relative;
+  }
+  .phase-card.active { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent) inset; }
+  .phase-card .n {
+    font-family:var(--font-display); font-size:11px; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:6px;
+  }
+  .phase-card h4 {
+    font-family:var(--font-display); font-size:16px; letter-spacing:-0.02em;
+    font-weight:600; color:var(--ink); margin:0 0 6px;
+  }
+  .phase-card p { font-size:13px; color:var(--ink-body); margin:0 0 10px; }
+  .phase-card .when {
+    font-family:var(--font-display); font-size:10px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--ink-mute);
+  }
+
+  /* ===== flow diagram ===== */
+  .flow-wrap {
+    margin:24px 0; padding:24px;
+    background:var(--bg-card); border:1px solid var(--line); border-radius:10px;
+  }
+  .flow-wrap svg { display:block; width:100%; height:auto; }
+  .flow-lbl { font-family:var(--font-body); font-size:12px; fill:var(--ink); }
+  .flow-lbl-sub { font-family:var(--font-body); font-size:10px; fill:var(--ink-mute); }
+  .flow-tag { font-family:var(--font-display); font-size:9px; fill:var(--accent);
+    letter-spacing:1.4px; text-transform:uppercase; }
+
+  /* ===== code blocks ===== */
+  pre, code {
+    font-family:var(--font-display); font-size:12.5px;
+  }
+  pre {
+    background:var(--bg-ink); color:#E5E5E7;
+    border-radius:8px; padding:18px 20px; overflow-x:auto;
+    line-height:1.5; margin:14px 0;
+  }
+  code { background:var(--line-soft); color:var(--ink); padding:1px 6px; border-radius:4px; }
+  pre code { background:transparent; color:inherit; padding:0; }
+
+  /* ===== decision table ===== */
+  table {
+    width:100%; border-collapse:collapse; font-size:13px;
+    background:var(--bg-card); border:1px solid var(--line);
+    border-radius:10px; overflow:hidden;
+  }
+  th, td { padding:10px 14px; text-align:left; border-bottom:1px solid var(--line-soft); }
+  th { background:var(--bg-section); font-family:var(--font-display); font-size:11px;
+       letter-spacing:0.14em; text-transform:uppercase; color:var(--ink); font-weight:600; }
+  tr:last-child td { border-bottom:0; }
+  td:first-child { font-family:var(--font-display); color:var(--accent); font-weight:500; width:40px; }
+
+  /* ===== callouts ===== */
+  .callout {
+    border-left:3px solid var(--accent); background:var(--bg-section);
+    padding:14px 18px; border-radius:0 8px 8px 0; margin:18px 0;
+    font-size:13.5px;
+  }
+  .callout.scrub { border-left-color:var(--accent-deep); background:#fff1ec; }
+  .callout h4 {
+    font-family:var(--font-display); font-size:11px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--accent); margin:0 0 6px;
+  }
+  .callout.scrub h4 { color:var(--accent-deep); }
+
+  /* ===== success criteria cards ===== */
+  .success { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  @media (max-width:760px) { .success { grid-template-columns:1fr; } }
+  .success div {
+    background:var(--bg-card); border:1px solid var(--line); border-radius:8px;
+    padding:14px 16px; font-size:13px;
+  }
+  .success div b {
+    display:block; font-family:var(--font-display); font-size:10px;
+    letter-spacing:0.16em; text-transform:uppercase; color:var(--accent); margin-bottom:4px;
+  }
+
+  /* ===== next step CTA ===== */
+  .next {
+    margin:60px 0 0; padding:32px 36px; background:var(--bg-ink); color:#fafaf7;
+    border-radius:12px; display:grid; grid-template-columns:1fr auto; align-items:center; gap:24px;
+  }
+  .next h3 {
+    font-family:var(--font-display); font-size:22px; letter-spacing:-0.025em;
+    font-weight:600; margin:0 0 6px; color:#fafaf7;
+  }
+  .next p { font-size:14px; color:#c9cbcf; margin:0; }
+  .next .cta {
+    display:inline-flex; align-items:center; gap:8px; padding:12px 22px;
+    border-radius:9999px;
+    background:radial-gradient(ellipse at 50% 50%,var(--glow-1) 0%,var(--glow-2) 40%,var(--glow-3) 70%);
+    color:var(--accent-ink); font-family:var(--font-display); font-size:11px;
+    font-weight:700; letter-spacing:0.12em; text-transform:uppercase;
+    border:1px solid rgba(255,137,100,.5);
+    box-shadow:0 0 0 1px rgba(255,255,255,.6) inset, 0 2px 12px rgba(255,137,100,.3);
+    text-decoration:none;
+  }
+  @media (max-width:620px) { .next { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============================================================== HERO -->
+  <header class="hero">
+    <div>
+      <div class="kicker">spec Â· master plan Â· 2026.05.07</div>
+      <h1>dr-cv <span class="accent">Â·</span> master plan</h1>
+      <p class="sub">A system that keeps itself alive â€” with agents. One source of truth, many generated deliverables. Sequential phases, no parallel scope.</p>
+    </div>
+    <div class="meta">
+      <div><b>Danilo Rojas</b></div>
+      <div>Quito Â· 2026.05.07</div>
+      <div>status Â· brainstorming âœ“</div>
+      <div>next Â· writing-plans</div>
+    </div>
+  </header>
+
+  <!-- ============================================================== TOC -->
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#goal">Goal</a></li>
+      <li><a href="#non-goals">Non-goals</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#flow">User flow</a></li>
+      <li><a href="#phases">Phases</a></li>
+      <li><a href="#positioning">Positioning rules</a></li>
+      <li><a href="#scrub">Scrub list</a></li>
+      <li><a href="#risks">Risks &amp; open items</a></li>
+      <li><a href="#success">Success criteria</a></li>
+      <li><a href="#decisions">Decisions locked</a></li>
+      <li><a href="#next">Next step</a></li>
+    </ol>
+  </nav>
+
+  <!-- ========================================================== PROBLEM -->
+  <section id="problem">
+    <h2>01 Â· Problem</h2>
+    <h3 class="display">The 2022â€“2026 narrative gap.</h3>
+    <p>Danilo's public professional narrative freezes in 2022 as "UX/UI Product Designer." Between 2023 and 2026 he has:</p>
+    <ul>
+      <li>Shipped production work at <b>Booz Allen Hamilton</b> (Trusted Environments / Developer Portal) â€” two parallel design systems (<code>/te-skin</code> as an agent-consumable slash-command skill, TE Black as a dark-first DS with per-token WCAG audit trail) and a SharePoint-deployable single-file SPA landing.</li>
+      <li>Built <b>EnRegla</b>, his own compliance SaaS, from zero to a 1.0-MVP in production in 40 days, now with paying pilots.</li>
+      <li>Built <b>Life Update Mobile</b>, a personal tracking product that uses the Gemini API in runtime for semantic analysis.</li>
+      <li>Industrialized an <b>agentic workflow</b> (Claude Code + MCP servers + subagents + skills-lock + recursive numeric review) that multiplies his delivery speed without sacrificing craft.</li>
+    </ul>
+    <p>None of this is visible in any public CV, portfolio or web presence. Clients and recruiters looking him up today see a 2022 UX/UI designer, not the Agentic Designer he is now.</p>
+    <p>He is currently employed by <b>BairesDev</b> (placed at Booz Allen Hamilton) and is running parallel outreach via LinkedIn to find direct clients.</p>
+  </section>
+
+  <!-- ============================================================= GOAL -->
+  <section id="goal">
+    <h2>02 Â· Goal</h2>
+    <h3 class="display">A system that keeps itself alive.</h3>
+    <p>A single-source-of-truth repository of Danilo's professional identity (skills, experience, cases, clients, testimonials, network) from which multiple deliverables are generated automatically: skills sheet, CVs, landing page, and eventually a "me" agent.</p>
+    <p>The platform itself is proof of the thesis: <b>an Agentic Designer who builds the tools agents use to help him ship.</b></p>
+    <div class="callout">
+      <h4>Framing</h4>
+      Profile + agentic AI = combination. Never <i>Danilo as solo superhuman</i>. Honesty as brand value.
+    </div>
+  </section>
+
+  <!-- ============================================================= NON-GOALS -->
+  <section id="non-goals">
+    <h2>03 Â· Non-goals</h2>
+    <ul>
+      <li>NOT a rewrite of the 2022 CV. This is a reposition and a narrative closure.</li>
+      <li>NOT a single-channel strategy. Same data, four audiences (US enterprise, LATAM SMB, full-time remote, SaaS investor) plus BairesDev template.</li>
+      <li>NOT a Figma-first workflow. Source of truth is code-first (YAML/JSON/MD in Git); Figma is downstream.</li>
+      <li>NOT mobile-only. Skills sheet &amp; CVs are A4 print-first; landing is mobile-first responsive.</li>
+      <li>NOT a solo-genius narrative. The combination is the product.</li>
+    </ul>
+  </section>
+
+  <!-- ======================================================= ARCHITECTURE -->
+  <section id="architecture">
+    <h2>04 Â· Architecture</h2>
+    <h3 class="display">Single source of truth Â· agents Â· generadores.</h3>
+    <p>All professional identity lives in <code>/perfil/data/</code>. Agents update it; generadores emit the deliverables.</p>
+
+    <pre><code>dr-cv/
+â”œâ”€â”€ perfil/data/
+â”‚   â”œâ”€â”€ identity.yaml          # name, role, contact, live status
+â”‚   â”œâ”€â”€ positioning.yaml       # headline variants, taglines
+â”‚   â”œâ”€â”€ skills.yaml            # dual taxonomy (by-layer + by-outcome)
+â”‚   â”œâ”€â”€ experience.yaml        # employment + client history
+â”‚   â”œâ”€â”€ clients.yaml           # enterprise list
+â”‚   â”œâ”€â”€ cases/                 # one .md per case study
+â”‚   â”œâ”€â”€ testimonials/
+â”‚   â”‚   â”œâ”€â”€ verified.yaml      # real (Sheppard, Giraldez, future)
+â”‚   â”‚   â””â”€â”€ attributed.yaml    # composed, labeled as such
+â”‚   â”œâ”€â”€ education.yaml
+â”‚   â””â”€â”€ network.yaml
+â”œâ”€â”€ generadores/
+â”‚   â”œâ”€â”€ skills-sheet.ts
+â”‚   â”œâ”€â”€ cv-warm.ts
+â”‚   â”œâ”€â”€ cv-serious.ts
+â”‚   â”œâ”€â”€ cv-bairesdev.ts
+â”‚   â””â”€â”€ landing.ts
+â”œâ”€â”€ design-system/
+â”‚   â”œâ”€â”€ tokens-print.css
+â”‚   â”œâ”€â”€ components.css
+â”‚   â””â”€â”€ patterns.css
+â””â”€â”€ dist/                      # generated outputs (PDFs, site)</code></pre>
+  </section>
+
+  <!-- ============================================================ FLOW -->
+  <section id="flow">
+    <h2>05 Â· User flow</h2>
+    <h3 class="display">How Danilo uses dr-cv every week.</h3>
+
+    <div class="flow-wrap">
+      <svg viewBox="0 0 860 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#303236"/>
+          </marker>
+          <style>
+            .step { fill:#fff; stroke:#0B0C0E; stroke-width:1; }
+            .step-accent { fill:#f2f0ea; stroke:#FF8964; stroke-width:1.2; }
+            .ln { stroke:#303236; stroke-width:1; fill:none; }
+            .travel { fill:#FF8964; }
+          </style>
+        </defs>
+
+        <rect class="step" x="10" y="80" width="140" height="70" rx="6"/>
+        <text class="flow-tag" x="80" y="72" text-anchor="middle">01</text>
+        <text class="flow-lbl" x="80" y="112" text-anchor="middle">You learn something</text>
+        <text class="flow-lbl-sub" x="80" y="128" text-anchor="middle">skill Â· tool Â· insight</text>
+
+        <rect class="step-accent" x="180" y="80" width="140" height="70" rx="6"/>
+        <text class="flow-tag" x="250" y="72" text-anchor="middle">02</text>
+        <text class="flow-lbl" x="250" y="112" text-anchor="middle">Tell an agent</text>
+        <text class="flow-lbl-sub" x="250" y="128" text-anchor="middle">"add this skill"</text>
+
+        <rect class="step" x="350" y="80" width="140" height="70" rx="6"/>
+        <text class="flow-tag" x="420" y="72" text-anchor="middle">03</text>
+        <text class="flow-lbl" x="420" y="112" text-anchor="middle">Agent updates repo</text>
+        <text class="flow-lbl-sub" x="420" y="128" text-anchor="middle">PR Â· review Â· merge</text>
+
+        <rect class="step-accent" x="520" y="80" width="140" height="70" rx="6"/>
+        <text class="flow-tag" x="590" y="72" text-anchor="middle">04</text>
+        <text class="flow-lbl" x="590" y="112" text-anchor="middle">CI re-emits</text>
+        <text class="flow-lbl-sub" x="590" y="128" text-anchor="middle">skills sheet Â· CVs Â· site</text>
+
+        <rect class="step" x="690" y="80" width="140" height="70" rx="6"/>
+        <text class="flow-tag" x="760" y="72" text-anchor="middle">05</text>
+        <text class="flow-lbl" x="760" y="112" text-anchor="middle">Client sees current you</text>
+        <text class="flow-lbl-sub" x="760" y="128" text-anchor="middle">no 3 docs to edit</text>
+
+        <path class="ln" d="M150,115 L180,115" marker-end="url(#arr)"/>
+        <path class="ln" d="M320,115 L350,115" marker-end="url(#arr)"/>
+        <path class="ln" d="M490,115 L520,115" marker-end="url(#arr)"/>
+        <path class="ln" d="M660,115 L690,115" marker-end="url(#arr)"/>
+
+        <path class="ln" d="M420,150 L420,195" stroke-dasharray="3 3"/>
+        <text class="flow-lbl-sub" x="430" y="210">weakness â†’ 'learning in progress'</text>
+
+        <circle class="travel" r="4" cx="80" cy="115">
+          <animate attributeName="cx" values="80;250;420;590;760;80" dur="9s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ============================================================= PHASES -->
+  <section id="phases">
+    <h2>06 Â· Phases</h2>
+    <h3 class="display">Strict order. No parallel scope.</h3>
+
+    <div class="phases">
+      <div class="phase-card active">
+        <div class="n">phase 1 Â· now</div>
+        <h4>Skills Sheet</h4>
+        <p>A4 PDF, 2 pp, dual-visual skills map, shareable by email. Populated from <code>/perfil/data/skills.yaml</code>.</p>
+        <div class="when">deliverable Â· pdf</div>
+      </div>
+      <div class="phase-card">
+        <div class="n">phase 2 Â· next</div>
+        <h4>CV Ã— 3 variants</h4>
+        <p>Warm (LinkedIn), Serious (enterprise), BairesDev (template-safe). Same <code>/perfil/data/</code>, three templates.</p>
+        <div class="when">deliverable Â· pdfs</div>
+      </div>
+      <div class="phase-card">
+        <div class="n">phase 3 Â· after</div>
+        <h4>DaniloRojas.design</h4>
+        <p>Huly.io aesthetic Â· tab-SPA pattern Â· mobile-first responsive. Includes Phase 4 hook for the "me" agent.</p>
+        <div class="when">deliverable Â· web</div>
+      </div>
+    </div>
+
+    <p style="margin-top:18px;"><b>Approval gate</b> between each phase: the next does not start until the previous is generated, approved, and in Danilo's hands.</p>
+  </section>
+
+  <!-- ======================================================= POSITIONING -->
+  <section id="positioning">
+    <h2>07 Â· Positioning rules</h2>
+    <ul>
+      <li><b>Role:</b> Agentic Designer Â· Product Engineer (hybrid headline).</li>
+      <li><b>Tone:</b> serious + warm. Authoritative without distance.</li>
+      <li><b>Frame:</b> profile + agentic AI = combination.</li>
+      <li><b>Language:</b> EN primary, ES toggle.</li>
+      <li><b>Visual:</b> Huly.io light-adapted, controlled structure + per-section animated visual.</li>
+      <li><b>CTA:</b> always "Let's work together" Â· no pricing shown.</li>
+      <li><b>Honesty:</b> testimonials disclosed (verified vs attributed); skills split (mastered vs learning); EnRegla as "early paying pilots" without numbers.</li>
+      <li><b>Audience:</b> US enterprise, LATAM SMB, full-time remote, SaaS investor, BairesDev template.</li>
+    </ul>
+  </section>
+
+  <!-- ============================================================ SCRUB -->
+  <section id="scrub">
+    <h2>08 Â· Scrub list</h2>
+    <div class="callout scrub">
+      <h4>Never expose publicly</h4>
+      Internal BAH URLs (<code>backstage.bah-ss-nonprod.te-test-domain.com</code>, <code>etc.bah.com</code>, <code>assistme.bah.com</code>, <code>cmisbahprod.servicenowservices.com</code>, SharePoint URLs with access tokens, specific Workday course URLs). Internal emails like <code>tecustomersuccess@bah.com</code>. Code, tokens or assets copied from BAH artifacts. Work from <code>E:\Trusted Environment Black\uploads\</code> (not Danilo's authorship). EnRegla customer count (Danilo chose to withhold).
+    </div>
+  </section>
+
+  <!-- ============================================================ RISKS -->
+  <section id="risks">
+    <h2>09 Â· Risks &amp; open items</h2>
+    <ul>
+      <li><b>Domain not purchased.</b> Placeholder <code>DaniloRojas.design</code> everywhere until Danilo confirms.</li>
+      <li><b>Real testimonials</b> (Sheppard, Giraldez) used with verbal permission; written OK before public landing launch.</li>
+      <li><b>Aura brand identity</b> needs a decision later (own page? logo? tagline?).</li>
+      <li><b>BairesDev-facing narrative</b> must not leak direct-outreach intent.</li>
+      <li><b><code>/te-skin</code> naming</b> may need anonymization to "component-library slash-command skill" if BAH is sensitive.</li>
+    </ul>
+  </section>
+
+  <!-- ============================================================ SUCCESS -->
+  <section id="success">
+    <h2>10 Â· Success criteria (Phase 1)</h2>
+    <div class="success">
+      <div>
+        <b>Data</b>
+        <code>/perfil/data/skills.yaml</code> exists with full dual-taxonomy structure.
+      </div>
+      <div>
+        <b>Generation</b>
+        <code>skills-sheet-A4.html</code> generates cleanly from data â€” no hand-edits.
+      </div>
+      <div>
+        <b>Print</b>
+        PDF passes print test. Fits exactly 2 pp A4.
+      </div>
+      <div>
+        <b>Shareable</b>
+        Danilo emails it to a prospect in under 3 minutes from learning something new.
+      </div>
+      <div>
+        <b>Consistency</b>
+        Any update to <code>/perfil/data/</code> is reflected in the PDF on next generation.
+      </div>
+      <div>
+        <b>Honesty</b>
+        "mastered" vs "learning" visible; no false claims detectable.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ DECISIONS -->
+  <section id="decisions">
+    <h2>11 Â· Decisions locked</h2>
+    <table>
+      <thead><tr><th>#</th><th>Decision</th><th>Confirmed</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Tone â€” serious + warm</td><td>2026-05-07</td></tr>
+        <tr><td>2</td><td>Category â€” Agentic Designer</td><td>2026-05-07</td></tr>
+        <tr><td>3</td><td>Visual â€” controlled sections + per-section animated visual</td><td>2026-05-07</td></tr>
+        <tr><td>4</td><td>Language â€” EN primary, ES toggle</td><td>2026-05-07</td></tr>
+        <tr><td>5</td><td>Domain â€” TBD placeholder DaniloRojas.design</td><td>2026-05-07</td></tr>
+        <tr><td>6</td><td>Social proof â€” verified + attributed with disclosure</td><td>2026-05-07</td></tr>
+        <tr><td>7</td><td>Behance â€” keep 7 public + add 4â€“7 more in Phase 3</td><td>2026-05-07</td></tr>
+        <tr><td>8</td><td>Pricing â€” none, single "Let's work together" CTA</td><td>2026-05-07</td></tr>
+        <tr><td>9</td><td>BairesDev â€” current employer, dedicated CV variant</td><td>2026-05-07</td></tr>
+        <tr><td>10</td><td>BAH â€” nameable + scrub internal URLs</td><td>2026-05-07</td></tr>
+        <tr><td>11</td><td>Testimonials â€” real (Sheppard, Giraldez) usable with verbal OK</td><td>2026-05-07</td></tr>
+        <tr><td>12</td><td>Positioning â€” profile + agentic AI = combination</td><td>2026-05-07</td></tr>
+        <tr><td>13</td><td>Visual reference â€” Huly.io system adapted to light mode</td><td>2026-05-07</td></tr>
+        <tr><td>14</td><td>Phasing â€” strict sequence, no parallel scope</td><td>2026-05-07</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================================================ NEXT -->
+  <div class="next" id="next">
+    <div>
+      <h3>Ready for writing-plans.</h3>
+      <p>Brainstorming complete. Next step: produce the Phase 1 implementation plan (skills sheet + <code>/perfil/data/skills.yaml</code> schema) via the writing-plans skill.</p>
+    </div>
+    <a class="cta" href="#">writing-plans Â· Phase 1 â†’</a>
+  </div>
+</div>
+</body>
+</html>

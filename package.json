@@ -1,18 +1,18 @@
 {
   "name": "dr-cv",
   "version": "0.1.0",
-  "description": "Danilo Rojas — single source of truth for CV, skills sheet and landing",
+  "description": "Danilo Rojas â€” single source of truth for CV, skills sheet and landing",
   "private": true,
   "type": "module",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "build:skills-sheet": "tsx generators/skills-sheet.ts",
-    "build:cvs": "tsx generators/cv.ts",
-    "build:landing-v11": "tsx generators/v11-landing.ts",
+    "build:skills-sheet": "tsx generadores/skills-sheet.ts",
+    "build:cvs": "tsx generadores/cv.ts",
+    "build:landing-v11": "tsx generadores/v11-landing.ts",
     "build:all": "npm run build:skills-sheet && npm run build:cvs && npm run build:landing-v11",
-    "optimize:animations": "tsx generators/lib/optimize-animation-stills.ts",
+    "optimize:animations": "tsx generadores/lib/optimize-animation-stills.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"

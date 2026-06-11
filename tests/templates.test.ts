@@ -1,13 +1,13 @@
 import { describe, it, expect } from "vitest";
-import { renderPage1 } from "../generators/templates/skills-sheet-page-1.js";
-import type { SkillsSheetData } from "../generators/lib/types.js";
+import { renderPage1 } from "../generadores/templates/skills-sheet-page-1.js";
+import type { SkillsSheetData } from "../generadores/lib/types.js";
 
 const fixture: SkillsSheetData = {
   identity: {
     name: "Test Person",
     role: "Test Role",
     location: "Test City",
-    languages: "EN · ES",
+    languages: "EN Â· ES",
     availability: "Open",
     contact: { email: "test@example.com" },
   },
@@ -15,7 +15,7 @@ const fixture: SkillsSheetData = {
     thesis: { en: "Test thesis EN", es: "Test thesis ES" },
     tagline: { en: "Test tagline EN", es: "Test tagline ES" },
     proofNumbers: [
-      { value: "10", unit: "+", labelEn: "Test metric", labelEs: "Métrica test" },
+      { value: "10", unit: "+", labelEn: "Test metric", labelEs: "MÃ©trica test" },
     ],
   },
   skills: {
@@ -97,7 +97,7 @@ describe("renderPage1", () => {
   });
 });
 
-import { renderPage2 } from "../generators/templates/skills-sheet-page-2.js";
+import { renderPage2 } from "../generadores/templates/skills-sheet-page-2.js";
 
 describe("renderPage2", () => {
   const fullFixture: SkillsSheetData = {
@@ -110,7 +110,7 @@ describe("renderPage2", () => {
           startYear: 2024,
           endYear: "present",
           highlight: true,
-          badge: "Army · DoD",
+          badge: "Army Â· DoD",
           descriptionEn: "Current BAH work EN",
           descriptionEs: "Trabajo BAH ES",
           stack: ["/te-skin", "DS"],
@@ -170,13 +170,13 @@ describe("renderPage2", () => {
   });
 });
 
-import { renderSkillsSheet } from "../generators/templates/skills-sheet.js";
+import { renderSkillsSheet } from "../generadores/templates/skills-sheet.js";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const tokensPath = path.join(here, "..", "design-system", "tokens.css");
+const tokensPath = path.join(here, "..", "design-system", "tokens-print.css");
 const tokensCss = readFileSync(tokensPath, "utf8");
 
 describe("renderSkillsSheet full page", () => {

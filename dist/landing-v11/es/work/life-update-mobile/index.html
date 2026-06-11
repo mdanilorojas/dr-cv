@@ -346,7 +346,7 @@ img { max-width: 100%; display: block; }
 }
 .v11-nav__lang:hover { border-color: var(--v11-accent); color: var(--v11-accent); }
 
-/* ============== BUTTONS (V11 R8 #1 compliant — no glow) ============== */
+/* ============== BUTTONS (V11 R8 #1 compliant â€” no glow) ============== */
 .v11-btn {
   display: inline-flex;
   align-items: center;
@@ -759,7 +759,7 @@ img { max-width: 100%; display: block; }
   grid-template-columns: 1fr;
   gap: var(--v11-s-6);
 }
-/* V3 · Magazine sidebar — editorial case card.
+/* V3 Â· Magazine sidebar â€” editorial case card.
  * Grid: [ meta sidebar | content (text + optional animation) ].
  * One case per row, full-width. */
 .v11-case {
@@ -779,7 +779,7 @@ img { max-width: 100%; display: block; }
     gap: var(--v11-s-5);
   }
 }
-/* Meta sidebar — client, years, stack (vertical chips). */
+/* Meta sidebar â€” client, years, stack (vertical chips). */
 .v11-case__meta-col {
   display: flex;
   flex-direction: column;
@@ -841,7 +841,7 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--v11-line-strong);
   background: transparent;
 }
-/* Content column — title/hook/bullets with optional animation aside. */
+/* Content column â€” title/hook/bullets with optional animation aside. */
 .v11-case__content {
   display: grid;
   grid-template-columns: 1.1fr minmax(0, 1fr);
@@ -1402,7 +1402,7 @@ img { max-width: 100%; display: block; }
   color: var(--v11-text);
 }
 
-/* Progress bar — segmented rail sits ABOVE tool rail and columns */
+/* Progress bar â€” segmented rail sits ABOVE tool rail and columns */
 .v11-horizon__progress {
   position: relative;
   display: grid;
@@ -1454,7 +1454,7 @@ img { max-width: 100%; display: block; }
   border-top-color: var(--v11-accent);
 }
 
-/* Tool rail — neutral monochrome pills, canonical tool inventory */
+/* Tool rail â€” neutral monochrome pills, canonical tool inventory */
 .v11-horizon__tools {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -1491,7 +1491,7 @@ img { max-width: 100%; display: block; }
   font-weight: 500;
 }
 
-/* Main grid — stage labels → headings → body → content chips */
+/* Main grid â€” stage labels â†’ headings â†’ body â†’ content chips */
 .v11-horizon__grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -1565,7 +1565,7 @@ a.v11-horizon__chip:focus-visible {
   box-shadow: 0 0 0 3px var(--v11-accent-ring);
 }
 
-/* Earned chips — achieved milestones (green pill + inline check glyph) */
+/* Earned chips â€” achieved milestones (green pill + inline check glyph) */
 [data-horizon-col='earned'] .v11-horizon__chip {
   background: rgba(74, 222, 128, 0.14);
   border-color: rgba(74, 222, 128, 0.32);
@@ -1652,19 +1652,19 @@ a.v11-horizon__chip:focus-visible {
   }
   .v11-horizon__col:last-child::after { display: none; }
 
-  /* Earned — solid green (achieved) */
+  /* Earned â€” solid green (achieved) */
   .v11-horizon__col[data-horizon-col='earned']::before {
     background: var(--v11-signal-pos);
     border-color: var(--v11-signal-pos);
     box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.22);
   }
-  /* Investing — orange + pulsing ring (in progress) */
+  /* Investing â€” orange + pulsing ring (in progress) */
   .v11-horizon__col[data-emphasis="true"]::before {
     background: var(--v11-accent);
     border-color: var(--v11-accent);
     animation: v11-horizon-pulse 2s ease-out infinite;
   }
-  /* Horizon — dashed outline gray (future) */
+  /* Horizon â€” dashed outline gray (future) */
   .v11-horizon__col[data-horizon-col='horizon']::before {
     background: transparent;
     border: 1px dashed var(--v11-text-50);
@@ -1687,7 +1687,7 @@ a.v11-horizon__chip:focus-visible {
 }
 
 
-/* ============== ANIMATIONS — picture-in-picture ============== */
+/* ============== ANIMATIONS â€” picture-in-picture ============== */
 .v11-anim {
   width: 100%;
   aspect-ratio: 820 / 500;
@@ -1918,7 +1918,7 @@ a.v11-horizon__chip:focus-visible {
   font-family: var(--v11-font-mono, ui-monospace, monospace);
 }
 
-/* ============== PLAYING STATE — only runs when in viewport ============== */
+/* ============== PLAYING STATE â€” only runs when in viewport ============== */
 .v11-anim.is-playing .v11-anim__shot--1 {
   animation: v11-anim-bg1-fade 1400ms ease forwards 1000ms;
 }
@@ -2029,7 +2029,7 @@ a.v11-horizon__chip:focus-visible {
 @keyframes v11-anim-tag-show-keep { to { opacity: 1; transform: translateX(0); } }
 @keyframes v11-anim-tag-hide { to { opacity: 0; transform: translateX(-6px); } }
 
-/* Reduced motion — show final frame, no animation */
+/* Reduced motion â€” show final frame, no animation */
 @media (prefers-reduced-motion: reduce) {
   .v11-anim__shot--1,
   .v11-anim__shot--2,
@@ -2077,13 +2077,13 @@ a.v11-horizon__chip:focus-visible {
 </head>
 <body>
 <a class="v11-skip" href="#main">Saltar al contenido</a>
-<nav class="v11-nav" aria-label="Navegación principal">
+<nav class="v11-nav" aria-label="NavegaciÃ³n principal">
   <div class="v11-nav__inner">
-    <a href="/es/" class="v11-nav__brand">Danilo Rojas<span class="v11-nav__brand-sep">·</span>dr</a>
+    <a href="/es/" class="v11-nav__brand">Danilo Rojas<span class="v11-nav__brand-sep">Â·</span>dr</a>
     <div class="v11-nav__tabs">
       <a class="v11-nav__link" href="/es/#notebook">Notebook</a>
       <a class="v11-nav__link" href="/es/#work">Trabajo</a>
-      <a class="v11-nav__link" href="/es/#method">Método</a>
+      <a class="v11-nav__link" href="/es/#method">MÃ©todo</a>
       <a class="v11-nav__link" href="/es/#contact">Contacto</a>
     </div>
     <a class="v11-nav__lang" href="/work/life-update-mobile/" hreflang="en" aria-label="View in English">ES / EN</a>
@@ -2115,7 +2115,7 @@ a.v11-horizon__chip:focus-visible {
   <iframe
     class="v11-anim-frame__iframe"
     src="../../../assets/animations/gallery/animations-life-update/alt-4-live-annotation-es.html"
-    title="Life Update Mobile — anotación en vivo"
+    title="Life Update Mobile â€” anotaciÃ³n en vivo"
     loading="lazy"
     sandbox="allow-scripts allow-same-origin"
     referrerpolicy="no-referrer"
@@ -2126,13 +2126,13 @@ a.v11-horizon__chip:focus-visible {
 </div></div>
           <ul class="v11-case-detail__bullets"><li>API Gemini en runtime para análisis semántico de entries diarios</li><li>Data híbrida: .md como fuente de verdad + DB como motor de ejecución</li><li>Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits en 24h</li></ul>
           <dl class="v11-case-detail__beats">
-    <div class="v11-case-detail__beat"><dt>Contexto</dt><dd>Un producto personal — una app de tracking que usa Gemini en runtime para resumir lo que escribí esta semana.</dd></div>
-    <div class="v11-case-detail__beat"><dt>Problema</dt><dd>Cada app de journal-AI que había probado o guardaba mi texto en el servidor de otro o se negaba a correr sin internet. Quería local-first + LLM on demand.</dd></div>
-    <div class="v11-case-detail__beat"><dt>Aproximación</dt><dd>Almacenamiento SQLite local, journal en texto plano. La resumción es opt-in: tocas una semana, se envía a Gemini, se cachea el resultado.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Contexto</dt><dd>Un producto personal â€” una app de tracking que usa Gemini en runtime para resumir lo que escribÃ­ esta semana.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Problema</dt><dd>Cada app de journal-AI que habÃ­a probado o guardaba mi texto en el servidor de otro o se negaba a correr sin internet. QuerÃ­a local-first + LLM on demand.</dd></div>
+    <div class="v11-case-detail__beat"><dt>AproximaciÃ³n</dt><dd>Almacenamiento SQLite local, journal en texto plano. La resumciÃ³n es opt-in: tocas una semana, se envÃ­a a Gemini, se cachea el resultado.</dd></div>
     <div class="v11-case-detail__beat"><dt>Ship</dt><dd>Build de un solo binario. Sin servidor de auth. La API key de Gemini la tiene el usuario, no la app.</dd></div>
-    <div class="v11-case-detail__beat"><dt>Resultado</dt><dd>Shippeado privado para uso propio. Tres amigos pidieron instalarlo. Resúmenes semanales en 4 segundos.</dd></div>
-    <div class="v11-case-detail__beat"><dt>Lo cambiaría</dt><dd>Pondría el prompt en la página de Settings. Ahora está oculto — los usuarios avanzados quieren verlo y yo estaba siendo sobreprotector.</dd></div>
-    <div class="v11-case-detail__beat"><dt>Craft floor</dt><dd>Sin analytics. Sin telemetría. Sin cuenta. Bundle bajo 8 MB. Funciona en modo avión excepto la acción de resumen.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Resultado</dt><dd>Shippeado privado para uso propio. Tres amigos pidieron instalarlo. ResÃºmenes semanales en 4 segundos.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Lo cambiarÃ­a</dt><dd>PondrÃ­a el prompt en la pÃ¡gina de Settings. Ahora estÃ¡ oculto â€” los usuarios avanzados quieren verlo y yo estaba siendo sobreprotector.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Craft floor</dt><dd>Sin analytics. Sin telemetrÃ­a. Sin cuenta. Bundle bajo 8 MB. Funciona en modo aviÃ³n excepto la acciÃ³n de resumen.</dd></div>
   </dl>
           
         </div>
@@ -2143,7 +2143,7 @@ a.v11-horizon__chip:focus-visible {
   <div class="v11-container">
     <div class="v11-section__eyebrow">Contacto</div>
     <h2 id="contact-h" class="v11-h1">Hablemos.</h2>
-    <p class="v11-lead">Email directo es el camino más rápido. Respondo en un día hábil. Abierto a roles Staff / Principal AI Product Designer.</p>
+    <p class="v11-lead">Email directo es el camino mÃ¡s rÃ¡pido. Respondo en un dÃ­a hÃ¡bil. Abierto a roles Staff / Principal AI Product Designer.</p>
 
     <div class="v11-contact">
       <div class="v11-contact__headline">
@@ -2152,7 +2152,7 @@ a.v11-horizon__chip:focus-visible {
       </div>
       <a class="v11-btn v11-btn--primary" href="mailto:danilorojas@hotmail.com" style="align-self:flex-start">
         Escribirme
-        <span class="v11-btn__arrow" aria-hidden="true">→</span>
+        <span class="v11-btn__arrow" aria-hidden="true">â†’</span>
       </a>
       <div class="v11-contact__email-row">
         <span class="v11-contact__email">danilorojas@hotmail.com</span>
@@ -2184,7 +2184,7 @@ a.v11-horizon__chip:focus-visible {
   <blockquote class="v11-quote__text">Danilo está haciendo cosas geniales usando AI de las maneras correctas. Se metió a fondo en el mundo de developer-portal y entregó trabajo que quería seguir reutilizando. Una pérdida de verdad para nosotros.</blockquote>
   <figcaption class="v11-quote__attr">
     <span class="v11-quote__author">Jennifer Sheppard</span>
-    <span class="v11-quote__role">Product Lead · Developer Portal · Booz Allen Hamilton</span>
+    <span class="v11-quote__role">Product Lead · Developer Portal Â· Booz Allen Hamilton</span>
     <span class="v11-quote__badge">Verificado</span>
   </figcaption>
 </figure></div>
@@ -2193,11 +2193,11 @@ a.v11-horizon__chip:focus-visible {
 </main>
 <footer class="v11-footer">
   <div class="v11-footer__inner">
-    <span>Hecho por Danilo Rojas · código en github.com/mdanilorojas · actualizado 2026-05-08</span>
+    <span>Hecho por Danilo Rojas Â· cÃ³digo en github.com/mdanilorojas Â· actualizado 2026-05-08</span>
     <div style="display:flex; gap:16px; flex-wrap:wrap;">
       <a href="https://github.com/mdanilorojas/dr-cv">github.com/mdanilorojas</a>
       <a href="mailto:danilorojas@hotmail.com">danilorojas@hotmail.com</a>
-      <span>Sistema de Diseño V11</span>
+      <span>Sistema de DiseÃ±o V11</span>
     </div>
   </div>
 </footer>
@@ -2283,7 +2283,7 @@ a.v11-horizon__chip:focus-visible {
 <script>
 (function(){
   // CSS injected into each animation iframe to strip captions, labels,
-  // hints, and sibling callouts — only the UI stage (.window / .phone)
+  // hints, and sibling callouts â€” only the UI stage (.window / .phone)
   // should render. Also removes stage padding and body centering so the
   // iframe content box hugs the animation's intrinsic size.
   var EMBED_CSS = [
@@ -2310,7 +2310,7 @@ a.v11-horizon__chip:focus-visible {
       (doc.head || doc.documentElement).appendChild(style);
     }
 
-    // Measure the primary stage element — fall back to body if absent.
+    // Measure the primary stage element â€” fall back to body if absent.
     var target = doc.querySelector('.window')
               || doc.querySelector('.phone-wrap')
               || doc.querySelector('.stage')

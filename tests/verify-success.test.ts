@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { loadAllData } from "../generators/lib/load-data.js";
+import { loadAllData } from "../generadores/lib/load-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(here, ".." , "data");
+const dataDir = path.join(here, "..", "perfil", "data");
 
 describe("success criteria", () => {
   const data = loadAllData(dataDir);

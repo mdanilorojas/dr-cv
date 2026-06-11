@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { renderBairesdevCv } from "../generators/templates/cv/bairesdev.js";
-import { loadCvData } from "../generators/lib/load-data.js";
+import { renderBairesdevCv } from "../generadores/templates/cv/bairesdev.js";
+import { loadCvData } from "../generadores/lib/load-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(here, ".." , "data");
+const dataDir = path.join(here, "..", "perfil", "data");
 
 function bodyOnly(html: string): string {
   const m = /<body>([\s\S]*?)<\/body>/i.exec(html);
@@ -24,7 +24,7 @@ describe("renderBairesdevCv", () => {
     expect(identityMatch![1]).toContain("Product Designer");
   });
 
-  it("does NOT import tokens.css — sets inline grayscale tokens", () => {
+  it("does NOT import tokens-print.css â€” sets inline grayscale tokens", () => {
     const html = renderBairesdevCv(data);
     // bairesdev must not contain the signature warm orange #FF8964
     expect(html).not.toContain("#FF8964");
@@ -61,10 +61,10 @@ describe("renderBairesdevCv", () => {
     expect(html).toContain("Agentic Designer.");
     expect(html).toContain("15 years delivering product");
     expect(html).toContain("agents as force multiplier");
-    expect(html).not.toContain("I ship real products — and I ship the tools");
+    expect(html).not.toContain("I ship real products â€” and I ship the tools");
   });
 
-  it("renders a skills inventory section with ≥ 20 rows", () => {
+  it("renders a skills inventory section with â‰¥ 20 rows", () => {
     const html = renderBairesdevCv(data);
     expect(html).toMatch(/<section\s+class="cv-inventory/);
     const rowMatches = html.match(/class="cv-inventory__row"/g) ?? [];

@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Horizon flow Â· V2 pulido</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+/* ================================================================
+ * Tokens V11 (fieles al sistema real)
+ * ================================================================ */
+:root {
+  --v11-bg-primary: #0A0B0E;
+  --v11-bg-alt: #111318;
+  --v11-bg-elevated: #14161C;
+  --v11-bg-inset: #0D0F13;
+  --v11-text: #F4F4F5;
+  --v11-text-70: #B0B2B7;
+  --v11-text-50: #797D86;
+  --v11-text-40: #61656B;
+  --v11-accent: #FF8964;
+  --v11-accent-soft: rgba(255, 137, 100, 0.14);
+  --v11-accent-line: rgba(255, 137, 100, 0.28);
+  --v11-signal-pos: #4ADE80;
+  --v11-signal-warn: #E5A84B;
+  --v11-line: rgba(255, 255, 255, 0.08);
+  --v11-line-strong: rgba(255, 255, 255, 0.18);
+  --v11-font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Derivados para el verde (mirror de las tintas del accent) */
+  --green: var(--v11-signal-pos);
+  --green-soft: rgba(74, 222, 128, 0.14);
+  --green-line: rgba(74, 222, 128, 0.32);
+  --green-deep: #22B75C;
+}
+
+html, body {
+  margin: 0;
+  background: var(--v11-bg-primary);
+  color: var(--v11-text);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ================================================================
+ * Page wrapper (solo para el preview; la secciÃ³n real se inserta
+ * directamente en dist/landing-v11/index.html)
+ * ================================================================ */
+.page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 32px 96px;
+}
+.page__kicker {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin: 0 0 12px;
+}
+.page__title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+}
+.page__lead {
+  font-size: 14px;
+  color: var(--v11-text-70);
+  margin: 0 0 32px;
+  max-width: 820px;
+}
+.legend {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 0 0 48px;
+  padding: 14px 18px;
+  background: var(--v11-bg-alt);
+  border: 1px solid var(--v11-line);
+  border-radius: 6px;
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--v11-text-70);
+}
+.legend__swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.legend__dot--green { background: var(--v11-signal-pos); }
+.legend__dot--orange { background: var(--v11-accent); }
+.legend__dot--horizon {
+  background: transparent;
+  border: 1px dashed var(--v11-accent);
+}
+
+/* ================================================================
+ * HORIZON SECTION â€” V2 PULIDA
+ * ================================================================ */
+.v11-horizon {
+  padding: 64px 0;
+  background: var(--v11-bg-alt);
+  border-top: 1px solid var(--v11-line);
+  border-bottom: 1px solid var(--v11-line);
+}
+.v11-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.v11-horizon__eyebrow {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin: 0 0 12px;
+}
+.v11-horizon__title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 36px;
+  color: var(--v11-text);
+}
+
+/* ---- Grid + rails ---- */
+.v11-horizon__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  position: relative;
+  padding-top: 108px; /* espacio para rail de herramientas + barra de progreso */
+}
+
+/* Rail 1 Â· Tool pipeline (old vs new vs next) */
+.v11-horizon__tools {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+}
+.v11-horizon__tools-block {
+  padding: 10px 22px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-family: var(--v11-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+.v11-horizon__tools-block + .v11-horizon__tools-block {
+  border-left: 1px solid var(--v11-line);
+}
+.v11-horizon__step {
+  padding: 3px 8px;
+  border-radius: 3px;
+  background: var(--v11-bg-inset);
+  border: 1px solid var(--v11-line);
+  color: var(--v11-text-70);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.v11-horizon__arrow {
+  color: var(--v11-text-40);
+  font-weight: 500;
+}
+/* Earned tools â€” green tint (achieved, not obsolete) */
+.v11-horizon__tools-block--earned .v11-horizon__step {
+  background: var(--green-soft);
+  border-color: var(--green-line);
+  color: var(--green);
+}
+/* Investing tools â€” orange tint (live, active) */
+.v11-horizon__tools-block--investing .v11-horizon__step {
+  background: var(--v11-accent-soft);
+  border-color: var(--v11-accent-line);
+  color: var(--v11-text);
+}
+.v11-horizon__tools-block--investing .v11-horizon__arrow {
+  color: var(--v11-accent);
+}
+/* Horizon tools â€” dashed (bet) */
+.v11-horizon__tools-block--horizon .v11-horizon__step {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--v11-accent-line);
+  color: var(--v11-text-70);
+}
+
+/* Rail 2 Â· Segmented progress bar */
+.v11-horizon__bar {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+.v11-horizon__seg {
+  height: 6px;
+  border-radius: 3px;
+  position: relative;
+}
+.v11-horizon__seg--earned {
+  background: var(--green);
+  box-shadow: 0 0 0 1px var(--green-line);
+}
+.v11-horizon__seg--investing {
+  background: var(--v11-accent);
+}
+.v11-horizon__seg--horizon {
+  background: transparent;
+  border: 1px dashed var(--v11-accent);
+}
+.v11-horizon__marker {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--v11-font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  white-space: nowrap;
+  padding: 2px 8px;
+  background: var(--v11-accent-soft);
+  border: 1px solid var(--v11-accent-line);
+  border-radius: 3px;
+  font-weight: 600;
+}
+.v11-horizon__marker::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -4px;
+  border: 4px solid transparent;
+  border-top-color: var(--v11-accent);
+}
+
+/* ---- Columns ---- */
+.v11-horizon__col {
+  padding: 0 22px;
+  position: relative;
+}
+.v11-horizon__col + .v11-horizon__col {
+  border-left: 1px solid var(--v11-line);
+}
+.v11-horizon__stage {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v11-text-50);
+  margin-bottom: 22px;
+}
+.v11-horizon__col[data-stage='earned'] .v11-horizon__stage {
+  color: var(--green);
+}
+.v11-horizon__col[data-stage='investing'] .v11-horizon__stage {
+  color: var(--v11-accent);
+}
+.v11-horizon__heading {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin: 18px 0 10px;
+  color: var(--v11-text);
+}
+.v11-horizon__body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--v11-text-70);
+  margin: 0 0 16px;
+}
+
+/* ---- Chips ---- */
+.v11-horizon__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.v11-horizon__chip {
+  font-family: var(--v11-font-mono);
+  font-size: 11px;
+  padding: 4px 10px 4px 8px;
+  border-radius: 999px;
+  background: var(--v11-bg-inset);
+  color: var(--v11-text-70);
+  border: 1px solid var(--v11-line);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  line-height: 1;
+}
+
+/* Earned chips â€” ACHIEVED MILESTONES (green, checkmark, no strikethrough) */
+[data-stage='earned'] .v11-horizon__chip {
+  background: var(--green-soft);
+  border-color: var(--green-line);
+  color: var(--v11-text);
+  text-decoration: none;
+}
+[data-stage='earned'] .v11-horizon__chip::before {
+  content: "";
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--green);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.3 2.3 4.7-4.7' stroke='%230A0B0E' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 9px 9px;
+}
+
+/* Investing chips */
+[data-stage='investing'] .v11-horizon__chip {
+  background: var(--v11-accent-soft);
+  color: var(--v11-text);
+  border-color: var(--v11-accent-line);
+}
+
+/* Horizon chips */
+[data-stage='horizon'] .v11-horizon__chip[data-kind='bet'] {
+  border-style: dashed;
+  color: var(--v11-text);
+}
+.v11-horizon__bet-badge {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v11-signal-warn);
+  font-weight: 600;
+  padding: 1px 5px;
+  border: 1px solid var(--v11-signal-warn);
+  border-radius: 3px;
+  line-height: 1;
+}
+
+/* ================================================================
+ * Responsive
+ * ================================================================ */
+@media (max-width: 920px) {
+  .v11-horizon__grid {
+    grid-template-columns: 1fr;
+    padding-top: 0;
+  }
+  .v11-horizon__tools,
+  .v11-horizon__bar {
+    display: none;
+  }
+  .v11-horizon__col + .v11-horizon__col {
+    border-left: 0;
+    border-top: 1px solid var(--v11-line);
+    margin-top: 24px;
+    padding-top: 24px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <p class="page__kicker">V2 Â· pulido Â· 2026-05-12</p>
+  <h1 class="page__title">Horizon section â€” V2 polished</h1>
+  <p class="page__lead">Cambios aplicados sobre V2: (1) tool-rail literal encima (old pipeline / new pipeline / next), (2) Earned ahora es verde con checkmark â€” logros alcanzados, no tachados, (3) barra de progreso con marker "You are here". Verde elegido: <code style="color: var(--v11-signal-pos); background: var(--v11-bg-inset); padding: 1px 6px; border-radius: 3px;">#4ADE80</code> (signal-pos ya en tus tokens).</p>
+
+  <div class="legend">
+    <span class="legend__swatch"><span class="legend__dot legend__dot--green"></span>Earned Â· achieved</span>
+    <span class="legend__swatch"><span class="legend__dot legend__dot--orange"></span>Investing Â· live</span>
+    <span class="legend__swatch"><span class="legend__dot legend__dot--horizon"></span>Horizon Â· bet</span>
+  </div>
+
+  <!-- ============================================================
+       SECCIÃ“N REAL â€” pegable tal cual en dist/landing-v11/index.html
+       ============================================================ -->
+  <section class="v11-horizon" aria-labelledby="horizon-h">
+    <div class="v11-container">
+      <div class="v11-horizon__eyebrow">Direction Â· 2026</div>
+      <h2 id="horizon-h" class="v11-horizon__title">Where my hours are going</h2>
+
+      <div class="v11-horizon__grid" role="list">
+        <!-- Rail 1: tool pipeline per stage -->
+        <div class="v11-horizon__tools" aria-hidden="true">
+          <div class="v11-horizon__tools-block v11-horizon__tools-block--earned">
+            <span class="v11-horizon__step">Figma</span>
+            <span class="v11-horizon__arrow">â†’</span>
+            <span class="v11-horizon__step">DS</span>
+            <span class="v11-horizon__arrow">â†’</span>
+            <span class="v11-horizon__step">Handoff</span>
+          </div>
+          <div class="v11-horizon__tools-block v11-horizon__tools-block--investing">
+            <span class="v11-horizon__step">Hi-Fi Figma</span>
+            <span class="v11-horizon__arrow">â†’</span>
+            <span class="v11-horizon__step">Storybook</span>
+            <span class="v11-horizon__arrow">â†’</span>
+            <span class="v11-horizon__step">GitHub</span>
+          </div>
+          <div class="v11-horizon__tools-block v11-horizon__tools-block--horizon">
+            <span class="v11-horizon__step">Team</span>
+            <span class="v11-horizon__arrow">â†’</span>
+            <span class="v11-horizon__step">Agent tooling</span>
+            <span class="v11-horizon__arrow">â†’</span>
+            <span class="v11-horizon__step">Eval-driven</span>
+          </div>
+        </div>
+
+        <!-- Rail 2: segmented progress bar -->
+        <div class="v11-horizon__bar" aria-hidden="true">
+          <div class="v11-horizon__seg v11-horizon__seg--earned"></div>
+          <div class="v11-horizon__seg v11-horizon__seg--investing">
+            <span class="v11-horizon__marker">You are here</span>
+          </div>
+          <div class="v11-horizon__seg v11-horizon__seg--horizon"></div>
+        </div>
+
+        <!-- Columns -->
+        <div class="v11-horizon__col" data-stage="earned" role="listitem">
+          <div class="v11-horizon__stage">Earned Â· 2010â€“2023</div>
+          <h3 class="v11-horizon__heading">The craft I mastered, now commoditized</h3>
+          <p class="v11-horizon__body">15 years running the old pipeline: Figma â†’ design system â†’ components â†’ tokens â†’ prototypes â†’ handoff to a developer. The craft is real. The handoff is now a commodity.</p>
+          <ul class="v11-horizon__chips">
+            <li><span class="v11-horizon__chip">Figma mastery</span></li>
+            <li><span class="v11-horizon__chip">Hand-coded UI</span></li>
+            <li><span class="v11-horizon__chip">Design reviews</span></li>
+            <li><span class="v11-horizon__chip">Component libraries</span></li>
+            <li><span class="v11-horizon__chip">Style-guide PDFs</span></li>
+          </ul>
+        </div>
+
+        <div class="v11-horizon__col" data-stage="investing" role="listitem">
+          <div class="v11-horizon__stage">Investing Â· 2024â€“Now</div>
+          <h3 class="v11-horizon__heading">Where my hours go today</h3>
+          <p class="v11-horizon__body">The new pipeline: Hi-Fi Figma â†’ Cloud Storybook â†’ GitHub â†’ ready for the user. No developer handoff in the middle â€” the agents ship the code, I ship the judgment that tells them what to build.</p>
+          <ul class="v11-horizon__chips">
+            <li><span class="v11-horizon__chip">Agent orchestration</span></li>
+            <li><span class="v11-horizon__chip">MCP servers</span></li>
+            <li><span class="v11-horizon__chip">Design-system-as-skill</span></li>
+            <li><span class="v11-horizon__chip">Recursive critic loops</span></li>
+            <li><span class="v11-horizon__chip">Taste as rubric</span></li>
+          </ul>
+        </div>
+
+        <div class="v11-horizon__col" data-stage="horizon" role="listitem">
+          <div class="v11-horizon__stage">Next horizon Â· 12 mo</div>
+          <h3 class="v11-horizon__heading">What I'm walking toward</h3>
+          <p class="v11-horizon__body">Embedded in a serious product team, owning the seam between design judgment and agentic execution â€” at a scale where one person's leverage becomes a team's.</p>
+          <ul class="v11-horizon__chips">
+            <li><span class="v11-horizon__chip">Team-scale agent tooling</span></li>
+            <li><span class="v11-horizon__chip">Audited agent workflows</span></li>
+            <li><span class="v11-horizon__chip" data-kind="bet">Eval-driven UI <span class="v11-horizon__bet-badge">bet</span></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="margin-top: 64px; padding: 24px; border: 1px solid var(--v11-line); border-radius: 8px;">
+    <p style="margin: 0 0 10px; font-family: var(--v11-font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--v11-accent);">Why this green</p>
+    <p style="margin: 0 0 10px; color: var(--v11-text-70);"><code style="color: var(--v11-signal-pos); background: var(--v11-bg-inset); padding: 1px 6px; border-radius: 3px;">#4ADE80</code> is <code style="color: var(--v11-text); background: var(--v11-bg-inset); padding: 1px 6px; border-radius: 3px;">--v11-signal-pos</code> â€” ya existe en tus tokens V11 como el color de "diff additions / success". No introduce color nuevo al sistema. MatemÃ¡ticamente complementario-adyacente al naranja <code style="color: var(--v11-accent); background: var(--v11-bg-inset); padding: 1px 6px; border-radius: 3px;">#FF8964</code>: ambos tienen calidez, respiran en el fondo <code style="color: var(--v11-text); background: var(--v11-bg-inset); padding: 1px 6px; border-radius: 3px;">#0A0B0E</code>, no compiten.</p>
+    <p style="margin: 0; color: var(--v11-text-70);">Si despuÃ©s del preview lo alaboratorio, aplico los cambios a <code style="color: var(--v11-text); background: var(--v11-bg-inset); padding: 1px 6px; border-radius: 3px;">dist/landing-v11/index.html</code> + <code style="color: var(--v11-text); background: var(--v11-bg-inset); padding: 1px 6px; border-radius: 3px;">dist/landing-v11/es/index.html</code>.</p>
+  </div>
+</div>
+</body>
+</html>

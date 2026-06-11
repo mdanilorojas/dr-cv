@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Danilo Rojas Â· CV Â· v0.1</title>
+<link rel="stylesheet" href="design-tokens-print.css">
+<style>
+  /* ============ CV specific ============ */
+  .cv {
+    display: grid;
+    grid-template-columns: 62mm 1fr;
+    gap: 10mm;
+    min-height: calc(297mm - 28mm);
+  }
+
+  /* -------- left column (identity + skills + contact) -------- */
+  .cv-left {
+    display: flex;
+    flex-direction: column;
+    gap: 7mm;
+  }
+
+  .identity h1 {
+    font-size: 24pt;
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    margin: 0;
+  }
+  .identity h1 .accent {
+    color: var(--accent);
+  }
+  .identity .role {
+    margin-top: 4mm;
+    font-family: var(--font-mono);
+    font-size: 8pt;
+    letter-spacing: var(--tr-uppercase);
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .identity .sub {
+    margin-top: 2mm;
+    font-family: var(--font-mono);
+    font-size: 7pt;
+    letter-spacing: var(--tr-uppercase);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .identity .stripe {
+    height: 2px;
+    background: var(--ink);
+    margin-top: 5mm;
+    width: 40%;
+  }
+
+  .tagline {
+    font-family: var(--font-display);
+    font-size: 10pt;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .tagline .faint { color: var(--ink-muted); }
+
+  .contact {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2mm 6mm;
+    font-size: 8pt;
+    line-height: 1.5;
+    color: var(--ink-body);
+  }
+  .contact .k {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    letter-spacing: var(--tr-uppercase);
+    text-transform: uppercase;
+    color: var(--ink-subtle);
+  }
+  .contact a { color: var(--accent-cool); text-decoration: none; }
+
+  .cv-left h2.block-h {
+    font-family: var(--font-display);
+    font-size: 9pt;
+    letter-spacing: var(--tr-uppercase);
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink);
+    padding-bottom: 2mm;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 3mm;
+  }
+
+  .skill-block { font-size: 7.8pt; line-height: 1.55; }
+  .skill-block .sub-h {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 7pt;
+    letter-spacing: var(--tr-wide);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1mm;
+    margin-top: 3mm;
+  }
+  .skill-block .sub-h:first-child { margin-top: 0; }
+  .skill-block ul {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex; flex-wrap: wrap; gap: 3px 4px;
+  }
+  .skill-block ul li {
+    font-family: var(--font-body);
+    font-size: 7.5pt;
+    color: var(--ink-body);
+    padding: 1px 7px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    letter-spacing: -0.005em;
+  }
+  .skill-block ul li.learn {
+    border-color: var(--accent-deep);
+    color: var(--accent-deep);
+  }
+
+  .languages {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm;
+  }
+  .languages .lang-item {
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 6px 8px;
+    background: var(--bg-card);
+  }
+  .languages .lang-item .nm {
+    font-family: var(--font-display);
+    font-size: 10pt;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .languages .lang-item .lv {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    letter-spacing: var(--tr-uppercase);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 1mm;
+  }
+
+  /* -------- right column (experience, cases, etc) -------- */
+  .cv-right {
+    display: flex;
+    flex-direction: column;
+    gap: 6mm;
+    min-width: 0;
+  }
+
+  .intro {
+    padding-bottom: 5mm;
+    border-bottom: 1px solid var(--line);
+  }
+  .intro .eyebrow { margin-bottom: 3mm; }
+  .intro h2 {
+    font-size: 16pt;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    font-family: var(--font-display);
+    font-weight: 600;
+    margin-bottom: 3mm;
+  }
+  .intro h2 .accent { color: var(--accent); }
+  .intro p {
+    font-size: 9pt;
+    line-height: 1.5;
+    color: var(--ink-body);
+  }
+
+  /* section headings */
+  .sec {
+    display: flex;
+    flex-direction: column;
+    gap: 3mm;
+  }
+  .sec-head-cv {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .sec-head-cv .n {
+    font-family: var(--font-mono);
+    font-size: 7.5pt;
+    color: var(--accent);
+  }
+  .sec-head-cv .title {
+    font-family: var(--font-display);
+    font-size: 11pt;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .sec-head-cv .rule {
+    grid-column: 1 / -1;
+    height: 1px;
+    background: var(--line);
+    margin-top: 1mm;
+  }
+
+  /* experience items */
+  .xp-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6mm;
+    padding-top: 3mm;
+    padding-bottom: 3mm;
+  }
+  .xp-item + .xp-item { border-top: 1px dashed var(--line-soft); }
+  .xp-item .date {
+    font-family: var(--font-mono);
+    font-size: 7pt;
+    color: var(--ink-muted);
+    letter-spacing: var(--tr-wide);
+    text-transform: uppercase;
+    white-space: nowrap;
+    min-width: 24mm;
+    padding-top: 1mm;
+  }
+  .xp-item .body {
+    min-width: 0;
+  }
+  .xp-item .co {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6mm;
+    margin-bottom: 2mm;
+  }
+  .xp-item .co .nm {
+    font-family: var(--font-display);
+    font-size: 11pt;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .xp-item .co .nm .accent { color: var(--accent); }
+  .xp-item .co .role {
+    font-family: var(--font-mono);
+    font-size: 7pt;
+    letter-spacing: var(--tr-uppercase);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+  .xp-item .desc {
+    font-size: 8.5pt;
+    line-height: 1.5;
+    color: var(--ink-body);
+    margin-bottom: 2mm;
+  }
+  .xp-item .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px 4px;
+  }
+  .xp-item .stack .t {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    padding: 1px 6px;
+    border-radius: var(--r-pill);
+    background: var(--bg-section);
+    border: 1px solid var(--line);
+    color: var(--ink-body);
+    letter-spacing: var(--tr-wide);
+    text-transform: uppercase;
+  }
+  .xp-item .stack .t--accent {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: var(--accent);
+  }
+
+  /* cases (highlight cards) */
+  .cases {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm;
+  }
+  .case-card {
+    padding: 3mm 4mm;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+  }
+  .case-card .tag {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    letter-spacing: var(--tr-uppercase);
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .case-card h4 {
+    font-family: var(--font-display);
+    font-size: 9.5pt;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    margin: 2mm 0 2mm 0;
+  }
+  .case-card p {
+    font-size: 7.8pt;
+    line-height: 1.45;
+    color: var(--ink-body);
+  }
+
+  /* education */
+  .ed-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2mm;
+  }
+  .ed-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 6mm;
+    font-size: 8.5pt;
+    padding: 2mm 0;
+  }
+  .ed-item + .ed-item { border-top: 1px dashed var(--line-soft); }
+  .ed-item .year {
+    font-family: var(--font-mono);
+    font-size: 7pt;
+    letter-spacing: var(--tr-wide);
+    color: var(--ink-muted);
+    text-transform: uppercase;
+  }
+  .ed-item .name {
+    font-family: var(--font-display);
+    font-size: 9pt;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+  }
+  .ed-item .inst {
+    font-family: var(--font-mono);
+    font-size: 7pt;
+    letter-spacing: var(--tr-wide);
+    color: var(--ink-muted);
+    text-transform: uppercase;
+  }
+
+  /* page 2 specific */
+  .cases-full {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5mm;
+  }
+  .case-full {
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 5mm 6mm;
+    background: var(--bg-card);
+    display: flex;
+    flex-direction: column;
+    gap: 3mm;
+  }
+  .case-full.featured {
+    background: var(--bg-ink);
+    color: var(--ink-inverse);
+    border-color: var(--bg-ink);
+  }
+  .case-full .meta {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    letter-spacing: var(--tr-uppercase);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .case-full.featured .meta { color: #C9CBCF; }
+  .case-full .meta .accent { color: var(--accent); }
+  .case-full h3 {
+    font-family: var(--font-display);
+    font-size: 13pt;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    font-weight: 600;
+    color: currentColor;
+  }
+  .case-full .hook {
+    font-size: 8.5pt;
+    line-height: 1.5;
+    color: var(--ink-body);
+  }
+  .case-full.featured .hook { color: #D7D8DB; }
+  .case-full ul.bullets {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2mm;
+  }
+  .case-full ul.bullets li {
+    font-size: 7.8pt;
+    line-height: 1.4;
+    padding-left: 12px;
+    position: relative;
+    color: var(--ink-body);
+  }
+  .case-full.featured ul.bullets li { color: #D7D8DB; }
+  .case-full ul.bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 6px;
+    width: 6px; height: 1px;
+    background: var(--accent);
+  }
+  .case-full .stack-row {
+    margin-top: auto;
+    display: flex; flex-wrap: wrap; gap: 3px 4px;
+  }
+  .case-full .stack-row .t {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    padding: 1px 6px;
+    border-radius: var(--r-pill);
+    background: var(--bg-section);
+    border: 1px solid var(--line);
+    color: var(--ink-body);
+    letter-spacing: var(--tr-wide);
+    text-transform: uppercase;
+  }
+  .case-full.featured .stack-row .t {
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.15);
+    color: #E5E5E7;
+  }
+
+  /* testimonials */
+  .testimonials {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm 5mm;
+  }
+  .testim {
+    border-left: 2px solid var(--accent);
+    padding: 2mm 0 2mm 5mm;
+    position: relative;
+  }
+  .testim.solo { grid-column: 1 / -1; }
+  .testim .q {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 8.2pt;
+    line-height: 1.5;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    margin-bottom: 2mm;
+  }
+  .testim .who {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 4mm;
+    font-family: var(--font-mono);
+    font-size: 6.3pt;
+    letter-spacing: var(--tr-wide);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .testim .who b {
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    font-family: var(--font-display);
+    font-size: 7.5pt;
+  }
+  .testim .badge {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 5.8pt;
+    letter-spacing: var(--tr-uppercase);
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: var(--r-pill);
+  }
+  .testim .badge--verified {
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+  .testim .badge--attributed {
+    color: var(--ink-muted);
+    border: 1px solid var(--line-strong);
+  }
+  .testimonials-note {
+    margin-top: 3mm;
+    font-family: var(--font-mono);
+    font-size: 6pt;
+    letter-spacing: var(--tr-wide);
+    text-transform: uppercase;
+    color: var(--ink-subtle);
+    line-height: 1.5;
+  }
+
+  /* footer */
+  .cv-footer {
+    margin-top: auto;
+    padding-top: 4mm;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    letter-spacing: var(--tr-uppercase);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+</style>
+</head>
+<body>
+
+<!-- no-print language toggle -->
+<div class="toolbar no-print">
+  <button class="on" id="bt-en" onclick="setLang('en')">EN</button>
+  <button id="bt-es" onclick="setLang('es')">ES</button>
+</div>
+
+<!-- =================================================== PAGE 1 Â· identity + recent xp -->
+<article class="page" data-lang="en">
+  <div class="cv">
+
+    <!-- ========= LEFT ========= -->
+    <aside class="cv-left">
+
+      <div class="identity">
+        <span class="eyebrow">CV Â· v0.1 Â· 2026.05.07</span>
+        <h1 style="margin-top:2mm;">
+          Danilo <span class="accent">Rojas</span>
+        </h1>
+        <div class="role" data-en="Agentic Designer Â· Product Engineer"
+                          data-es="Agentic Designer Â· Product Engineer"></div>
+        <div class="sub" data-en="Quito Â· Ecuador Â· Remote global"
+                         data-es="Quito Â· Ecuador Â· Remoto global"></div>
+        <div class="stripe"></div>
+      </div>
+
+      <p class="tagline"
+         data-en='<span>I design and ship full products with an orchestra of agents.</span> <span class="faint">Fifteen years of delivery. Enterprise track record, production SaaS, active defense-tier consulting.</span>'
+         data-es='<span>DiseÃ±o y hago shipping de publicables completos con una orquesta de agentes.</span> <span class="faint">Quince aÃ±os entregando. Track enterprise, SaaS en producciÃ³n, consultorÃ­a defense-tier activa.</span>'></p>
+
+      <div class="contact">
+        <span class="k">Email</span>
+        <a href="mailto:danilorojas@hotmail.com">danilorojas@hotmail.com</a>
+
+        <span class="k">GitHub</span>
+        <a href="https://github.com/mdanilorojas">github.com/mdanilorojas</a>
+
+        <span class="k">LinkedIn</span>
+        <a href="https://linkedin.com/in/mdanilorojas">linkedin.com/in/mdanilorojas</a>
+
+        <span class="k">Behance</span>
+        <a href="https://behance.net/mariodanilo">behance.net/mariodanilo</a>
+
+        <span class="k">Site</span>
+        <span class="muted">danilorojas.design <em style="color:var(--accent-deep)">(soon)</em></span>
+
+        <span class="k">Phone</span>
+        <span class="muted">+593 987 655 379</span>
+      </div>
+
+      <div>
+        <h2 class="block-h" data-en="Skills" data-es="Skills"></h2>
+        <div class="skill-block">
+          <span class="sub-h" data-en="Strategy" data-es="Estrategia"></span>
+          <ul>
+            <li>Product vision</li>
+            <li>Roadmapping</li>
+            <li>RICE priority</li>
+            <li>GTM specs</li>
+            <li>Multi-persona</li>
+          </ul>
+
+          <span class="sub-h" data-en="Design" data-es="DiseÃ±o"></span>
+          <ul>
+            <li>Design systems</li>
+            <li>Figma Â· tokens</li>
+            <li>Style Dictionary</li>
+            <li>Prototyping</li>
+            <li>Recursive DS review</li>
+            <li>HTML showcases</li>
+          </ul>
+
+          <span class="sub-h" data-en="Engineering" data-es="IngenierÃ­a"></span>
+          <ul>
+            <li>TypeScript</li>
+            <li>React 19 Â· Next 16</li>
+            <li>Supabase Â· Prisma</li>
+            <li>SQL Â· RLS</li>
+            <li>Vercel Â· CI</li>
+            <li>Tailwind</li>
+          </ul>
+
+          <span class="sub-h">Agents</span>
+          <ul>
+            <li>Claude Code</li>
+            <li>MCP servers</li>
+            <li>Subagents Â· parallel</li>
+            <li>Skills-lock</li>
+            <li>Gemini API</li>
+            <li class="learn">Evals</li>
+            <li class="learn">RAG prod</li>
+          </ul>
+
+          <span class="sub-h" data-en="Accessibility" data-es="Accesibilidad"></span>
+          <ul>
+            <li>WCAG 2.1</li>
+            <li class="learn">WCAG 2.2</li>
+            <li>Focus states</li>
+            <li>Semantic HTML</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="block-h" data-en="Languages" data-es="Idiomas"></h2>
+        <div class="languages">
+          <div class="lang-item">
+            <div class="nm">English</div>
+            <div class="lv" data-en="Professional" data-es="Profesional"></div>
+          </div>
+          <div class="lang-item">
+            <div class="nm">EspaÃ±ol</div>
+            <div class="lv" data-en="Native" data-es="Nativo"></div>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ========= RIGHT ========= -->
+    <div class="cv-right">
+
+      <section class="intro">
+        <div class="eyebrow" data-en="summary" data-es="resumen"></div>
+        <h2 data-en='I ship real products â€” and I ship <span class="accent">the tools agents use to help me ship them</span>.'
+            data-es='Entrego publicables reales â€” y entrego <span class="accent">las herramientas que los agentes usan para ayudarme</span>.'></h2>
+        <p data-en="Engineer by training, designer by trade. Fifteen years conceptualizing, designing and shipping technology products across healthcare, finance, logistics, CPG and banking. Today I run a personal practice (Aura) that bridges product strategy, design-engineering and agentic workflows. Actively consulting for Booz Allen Hamilton on Trusted Environments â€” where I shipped two parallel design systems, including /te-skin, a slash-command skill that makes the DS consumable by AI agents directly. Alongside, I built EnRegla, my own compliance SaaS, from 0 to 1.0-MVP in production in 40 days, now with paying pilots."
+           data-es="Ingeniero de formaciÃ³n, diseÃ±ador de profesiÃ³n. Quince aÃ±os conceptualizando, diseÃ±ando y entregando publicables de tecnologÃ­a en salud, banca, logÃ­stica, consumo y banca. Hoy llevo una prÃ¡ctica personal (Aura) que conecta estrategia de producto, design-engineering y workflows agentic. Actualmente consultando para Booz Allen Hamilton en Trusted Environments â€” donde entreguÃ© dos design systems paralelos, incluyendo /te-skin, un slash-command skill que hace el DS consumible por agentes IA directamente. En paralelo construÃ­ EnRegla, mi propia SaaS de compliance, de 0 a 1.0-MVP en producciÃ³n en 40 dÃ­as, ahora con pilotos pagados."></p>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head-cv">
+          <span class="n">01</span>
+          <span class="title" data-en="Experience Â· current &amp; recent" data-es="Experiencia Â· actual &amp; reciente"></span>
+          <span class="rule"></span>
+        </div>
+
+        <div class="xp-item">
+          <div class="date" data-en="2024 â€” now" data-es="2024 â€” hoy"></div>
+          <div class="body">
+            <div class="co">
+              <div class="nm">Booz Allen Hamilton <span class="accent">/</span> Trusted Environments</div>
+              <div class="role" data-en="Design-eng consultant"
+                                data-es="Consultor design-eng"></div>
+            </div>
+            <p class="desc"
+               data-en="Design-engineering consultant across the Trusted Environments umbrella â€” landing, Developer Portal product, and product-management collaboration with senior stakeholders. Shipped two complementary design systems (/te-skin, a 17-component skill consumable by AI agents + TE Black, a dark-first enterprise DS with per-token WCAG audit trail) and a SharePoint-deployable single-file SPA landing (v4.5) with CSS Houdini @property, canvas mesh-gradient, and backdrop-filter glass. Cross-team consulting to product teams serving US Army and DoD clients."
+               data-es="Consultor design-engineering transversal en el umbrella Trusted Environments â€” landing, producto Developer Portal y colaboraciÃ³n de product management con stakeholders senior. EntreguÃ© dos DS complementarios (/te-skin, skill de 17 componentes consumible por agentes IA + TE Black, DS dark-first enterprise con audit trail WCAG por token) y un SPA landing single-file para SharePoint (v4.5) con CSS Houdini @property, canvas mesh-gradient y backdrop-filter glass. ConsultorÃ­a transversal a equipos de producto que sirven a clientes del US Army y DoD."></p>
+            <div class="stack">
+              <span class="t">/te-skin Â· skill</span>
+              <span class="t">Developer Portal</span>
+              <span class="t">TE Black DS</span>
+              <span class="t">SharePoint SPA</span>
+              <span class="t">Houdini Â· canvas</span>
+              <span class="t t--accent">Army Â· DoD</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="xp-item">
+          <div class="date" data-en="2026 â€” now" data-es="2026 â€” hoy"></div>
+          <div class="body">
+            <div class="co">
+              <div class="nm">EnRegla <span class="muted" style="font-weight:400; font-size:8pt; color:var(--ink-muted);">Â· own product</span></div>
+              <div class="role" data-en="Founder Â· product Â· eng" data-es="Founder Â· producto Â· ing"></div>
+            </div>
+            <p class="desc"
+               data-en="SaaS de compliance multi-sede for LATAM PYMEs. 0 â†’ 1.0-MVP in production in 40 days. Designed and shipped product strategy, DS, backend, frontend, CI, deploys. 346 commits, 21 SQL migrations, 31 UI components, 16 specs and 20+ plans under superpowers framework. Now in paying pilots."
+               data-es="SaaS de compliance multi-sede para PYMEs LATAM. 0 â†’ 1.0-MVP en producciÃ³n en 40 dÃ­as. DiseÃ±Ã© y shippÃ© estrategia de producto, DS, backend, frontend, CI, deploys. 346 commits, 21 migraciones SQL, 31 componentes UI, 16 specs y 20+ plans bajo el framework superpowers. Ahora con pilotos pagados."></p>
+            <div class="stack">
+              <span class="t">React 19</span>
+              <span class="t">Supabase</span>
+              <span class="t">Edge functions</span>
+              <span class="t">pg_cron</span>
+              <span class="t">Claude Code</span>
+              <span class="t t--accent">Paying pilots</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="xp-item">
+          <div class="date">2016 â€” <span data-en="present" data-es="presente"></span></div>
+          <div class="body">
+            <div class="co">
+              <div class="nm">Xentinels DesignOps</div>
+              <div class="role" data-en="Product Mgr Â· UX/UI"
+                                data-es="Product Mgr Â· UX/UI"></div>
+            </div>
+            <p class="desc"
+               data-en="Formalized a team within Central Design to deliver a distributed-yet-centralized Design System. Defined roadmap, roles, and ways of working. Built a contribution culture to scale. Shipped a unified toolkit of guidelines, tokens, and accessible components for enterprise clients (Merck, MondelÄ“z, Banco Pichincha, Quifatex, Grupo Superior, Moderna Corp., Azzorti, Flamingo CO.)."
+               data-es="FormalicÃ© un equipo dentro de Central Design para ofrecer un DS distribuido pero centralizado. DefinÃ­ la hoja de ruta, roles y formas de trabajo. CreÃ© una cultura de contribuciÃ³n para escalar. EntreguÃ© un toolkit unificado de pautas, tokens y componentes accesibles para clientes enterprise (Merck, MondelÄ“z, Banco Pichincha, Quifatex, Grupo Superior, Moderna Corp., Azzorti, Flamingo CO.)."></p>
+            <div class="stack">
+              <span class="t">Design system</span>
+              <span class="t">Figma</span>
+              <span class="t">Tokens</span>
+              <span class="t">Team lead</span>
+              <span class="t">Enterprise</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <footer class="cv-footer" style="margin-top:auto;">
+        <span data-en="Danilo Rojas Â· CV Â· Page 1 / 2" data-es="Danilo Rojas Â· CV Â· PÃ¡g. 1 / 2"></span>
+        <span data-en="generated from /data â€” single source of truth"
+              data-es="generado desde /data â€” fuente Ãºnica"></span>
+      </footer>
+
+    </div>
+  </div>
+</article>
+
+<!-- =================================================== PAGE 2 Â· cases + past xp + ed + test -->
+<article class="page" data-lang="en">
+  <div class="cv">
+
+    <!-- ========= LEFT ========= -->
+    <aside class="cv-left">
+
+      <div class="identity" style="padding-bottom:4mm;">
+        <span class="eyebrow" data-en="CV Â· cont'd Â· p.2" data-es="CV Â· cont Â· p.2"></span>
+        <h1 style="font-size:18pt; margin-top:2mm;"
+            data-en='Proof <span class="accent">&amp;</span> past'
+            data-es='Pruebas <span class="accent">y</span> pasado'></h1>
+      </div>
+
+      <section>
+        <h2 class="block-h" data-en="Past experience" data-es="Experiencia pasada"></h2>
+
+        <div class="xp-item" style="grid-template-columns:1fr; padding:0 0 4mm 0;">
+          <div class="body">
+            <div class="date" style="min-width:unset;">2014 â€” 2017</div>
+            <div class="co" style="flex-direction:column; align-items:flex-start; gap:1mm; margin-top:1mm;">
+              <div class="nm" style="font-size:10pt;">Arpatel Cia. Ltda.</div>
+              <div class="role" style="white-space:normal;">Co-Founder Â· Product Mgr</div>
+            </div>
+            <p class="desc" style="font-size:7.5pt; margin-top:2mm;"
+               data-en="Strategic long-term vision for Arpatel products. Built web, CRM templates, order-management flows. Design support for Retail POS (alpha + beta). Prototyped search and scan interaction patterns."
+               data-es="VisiÃ³n estratÃ©gica de largo plazo para Arpatel. ConstruÃ­ web, plantillas de CRM, flujos de order-management. Soporte de diseÃ±o para Retail POS (alfa + beta). PrototipÃ© patrones de search y scan."></p>
+          </div>
+        </div>
+
+        <div class="xp-item" style="grid-template-columns:1fr; padding:4mm 0; border-top:1px dashed var(--line-soft);">
+          <div class="body">
+            <div class="date" style="min-width:unset;">2013 â€” 2015</div>
+            <div class="co" style="flex-direction:column; align-items:flex-start; gap:1mm; margin-top:1mm;">
+              <div class="nm" style="font-size:10pt;">Tecniequipos S.A.</div>
+              <div class="role" style="white-space:normal;">Sr Visual Designer Â· Dev</div>
+            </div>
+            <p class="desc" style="font-size:7.5pt; margin-top:2mm;"
+               data-en="Built a proprietary event platform. Managed e-commerce, reports, and business-system admin. Shipped specific requirements in PHP, JS, HTML, CSS, MariaDB."
+               data-es="ConstruÃ­ una plataforma propietaria de eventos. GestionÃ© e-commerce, reportes y admin de sistemas. EntreguÃ© requerimientos en PHP, JS, HTML, CSS, MariaDB."></p>
+          </div>
+        </div>
+
+        <div class="xp-item" style="grid-template-columns:1fr; padding:4mm 0 0 0; border-top:1px dashed var(--line-soft);">
+          <div class="body">
+            <div class="date" style="min-width:unset;">2011 â€” 2013</div>
+            <div class="co" style="flex-direction:column; align-items:flex-start; gap:1mm; margin-top:1mm;">
+              <div class="nm" style="font-size:10pt;">Canadian Bank Note</div>
+              <div class="role" style="white-space:normal;">Project administrator</div>
+            </div>
+            <p class="desc" style="font-size:7.5pt; margin-top:2mm;"
+               data-en="Regional electrical-network project management. Network installation supervision, inventory management, execution strategies based on historical data."
+               data-es="AdministraciÃ³n regional de proyecto de red elÃ©ctrica. SupervisiÃ³n de instalaciÃ³n, manejo de inventario, estrategias de ejecuciÃ³n con data histÃ³rica."></p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="block-h" data-en="Education" data-es="EducaciÃ³n"></h2>
+        <div class="ed-list">
+          <div class="ed-item">
+            <span class="year">2015</span>
+            <span class="name" data-en="B.Sc. Systems Engineering" data-es="Ingeniero en Sistemas"></span>
+          </div>
+          <div class="ed-item" style="grid-template-columns:1fr;">
+            <span class="inst">Escuela PolitÃ©cnica Nacional Â· EPN Â· Quito</span>
+          </div>
+          <div class="ed-item" style="grid-template-columns:auto 1fr;">
+            <span class="year">2021</span>
+            <span class="name">Google UX Design Â· Coursera</span>
+          </div>
+          <div class="ed-item" style="grid-template-columns:auto 1fr;">
+            <span class="year">2020</span>
+            <span class="name">Design Thinking Â· IBM</span>
+          </div>
+          <div class="ed-item" style="grid-template-columns:auto 1fr;">
+            <span class="year">â€”</span>
+            <span class="name" data-en="UX &amp; UI Fundamental Patterns" data-es="UX y UI Fundamental Patterns"></span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="block-h" data-en="Pro-bono" data-es="Pro-bono"></h2>
+        <div style="font-size:7.8pt; line-height:1.5; color:var(--ink-body);">
+          <div style="margin-bottom:2mm;">
+            <div class="mono" style="font-size:8.5pt; font-weight:600; letter-spacing:-0.02em;"
+                 data-en="AI literacy for Ecuador's Judicial Police"
+                 data-es="AlfabetizaciÃ³n IA Â· PolicÃ­a Judicial EC"></div>
+            <div style="font-family:var(--font-mono); font-size:6.5pt; letter-spacing:var(--tr-wide); text-transform:uppercase; color:var(--ink-muted); margin-top:1mm;"
+                 data-en="interactive HTML teaching artifact Â· 2025"
+                 data-es="artefacto pedagÃ³gico HTML Â· 2025"></div>
+          </div>
+        </div>
+      </section>
+
+    </aside>
+
+    <!-- ========= RIGHT ========= -->
+    <div class="cv-right">
+
+      <section class="sec">
+        <div class="sec-head-cv">
+          <span class="n">02</span>
+          <span class="title" data-en="Selected case studies" data-es="Casos seleccionados"></span>
+          <span class="rule"></span>
+        </div>
+
+        <div class="cases-full">
+          <div class="case-full featured">
+            <div class="meta">
+              <span class="accent">01</span>
+              <span data-en="Booz Allen Hamilton Â· Developer Portal" data-es="Booz Allen Hamilton Â· Developer Portal"></span>
+              <span>Â·</span>
+              <span>2024 â€” 2026</span>
+            </div>
+            <h3 data-en="/te-skin â€” a design system as an agent-consumable skill"
+                data-es="/te-skin â€” un design system como skill consumible por agentes"></h3>
+            <p class="hook"
+               data-en="Packaged a 17-component design system as a slash-command skill (/te-skin) that AI agents invoke to return ready-to-use components â€” HTML + CSS + W3C-token JSON each â€” from a machine-readable index. Proof that 'Agentic Designer' is not a role I claim, but one I ship."
+               data-es="EmpaquetÃ© un DS de 17 componentes como slash-command skill (/te-skin) que los agentes invocan para devolver componentes listos â€” HTML + CSS + tokens W3C en JSON â€” desde un Ã­ndice machine-readable. Prueba de que 'Agentic Designer' no es un rol que reclamo, sino uno que entrego."></p>
+            <ul class="bullets">
+              <li data-en="17 components, versioned 2.0.0, HTML+CSS+JSON metadata per component"
+                  data-es="17 componentes, versioned 2.0.0, metadata HTML+CSS+JSON por componente"></li>
+              <li data-en="Design DNA codified: hard constraints, soft guidelines, named anti-patterns, testing checklist"
+                  data-es="Design DNA codificado: hard constraints, soft guidelines, anti-patterns con nombre, testing checklist"></li>
+              <li data-en="W3C-format tokens + CSS custom properties side by side â€” one source, many consumers"
+                  data-es="Tokens W3C + CSS vars en paralelo â€” una fuente, mÃºltiples consumidores"></li>
+            </ul>
+            <div class="stack-row">
+              <span class="t">Agent-consumable</span>
+              <span class="t">Developer Portal</span>
+              <span class="t">W3C tokens</span>
+              <span class="t">COMPONENT-INDEX.json</span>
+            </div>
+          </div>
+
+          <div class="case-full">
+            <div class="meta">
+              <span class="accent">02</span>
+              <span data-en="consulting Â· Booz Allen Hamilton" data-es="consultorÃ­a Â· Booz Allen Hamilton"></span>
+              <span>Â·</span>
+              <span>2025 â€” 2026</span>
+            </div>
+            <h3 data-en="TE Black â€” dark-first DS with a11y audit in tokens"
+                data-es="TE Black â€” DS dark-first con a11y audit en tokens"></h3>
+            <p class="hook"
+               data-en="Authored a dark-first enterprise design system with a data-theme='light' override where every light-mode semantic color carries its computed WCAG contrast ratio inline â€” and the rejected value history. The token file is the audit trail."
+               data-es="AutorÃ© un DS enterprise dark-first con override data-theme='light' donde cada color semantic light carga su ratio de contraste WCAG inline â€” y el valor rechazado. El token file ES el audit trail."></p>
+            <ul class="bullets">
+              <li data-en="3-layer CSS (tokens / components / patterns), shadcn alias layer for React drop-in"
+                  data-es="CSS en 3 capas (tokens / components / patterns), shadcn alias layer para drop-in en React"></li>
+              <li data-en="CSS Houdini @property + conic-gradient animated borders, glass backdrop-filter"
+                  data-es="CSS Houdini @property + bordes conic-gradient animados, glass con backdrop-filter"></li>
+              <li data-en="Hand-rolled canvas mesh-gradient background, 5 parametric orbs, reduced-motion aware"
+                  data-es="Canvas mesh-gradient hecho a mano, 5 orbes paramÃ©tricos, respeta reduced-motion"></li>
+            </ul>
+            <div class="stack-row">
+              <span class="t">Houdini</span>
+              <span class="t">Canvas</span>
+              <span class="t">shadcn alias</span>
+              <span class="t">WCAG 2.2</span>
+            </div>
+          </div>
+
+          <div class="case-full">
+            <div class="meta">
+              <span class="accent">03</span>
+              <span data-en="own product Â· paying pilots" data-es="producto propio Â· pilotos pagados"></span>
+              <span>Â·</span>
+              <span>2026</span>
+            </div>
+            <h3>EnRegla</h3>
+            <p class="hook"
+               data-en="SaaS de compliance multi-sede for LATAM PYMEs. 0 â†’ 1.0-MVP in production in 40 days, co-built with Claude Code using MCP servers and parallel subagents."
+               data-es="SaaS de compliance multi-sede para PYMEs LATAM. 0 â†’ 1.0-MVP en producciÃ³n en 40 dÃ­as, co-construido con Claude Code usando MCP servers y subagents en paralelo."></p>
+            <ul class="bullets">
+              <li data-en="346 commits Â· 21 SQL migrations Â· 31 UI components Â· 1 edge function with cron"
+                  data-es="346 commits Â· 21 migraciones SQL Â· 31 componentes UI Â· 1 edge function con cron"></li>
+              <li data-en="Supabase MCP server wired into Claude Code for direct SQL + migrations"
+                  data-es="Supabase MCP conectado a Claude Code para SQL y migraciones directas"></li>
+              <li data-en="Recursive DS migration (17 parts Ã— 5 rounds) scored 78.4 â†’ 95.6"
+                  data-es="MigraciÃ³n DS recursiva (17 partes Ã— 5 rondas) de 78.4 â†’ 95.6"></li>
+            </ul>
+            <div class="stack-row">
+              <span class="t">React 19</span>
+              <span class="t">Supabase</span>
+              <span class="t">MCP</span>
+              <span class="t">Paying pilots</span>
+            </div>
+          </div>
+
+          <div class="case-full">
+            <div class="meta">
+              <span class="accent">04</span>
+              <span data-en="own product Â· LLM in runtime" data-es="producto propio Â· LLM en runtime"></span>
+              <span>Â·</span>
+              <span>2026</span>
+            </div>
+            <h3>Life Update Mobile</h3>
+            <p class="hook"
+               data-en="Personal tracking system â€” daily entries analyzed by Gemini in runtime, semantic distance to a 5-year plan, Steve-Jobs-style focus metrics (3 things a day). Shipped 0 â†’ production in a day."
+               data-es="Sistema de tracking personal â€” entries diarios analizados por Gemini en runtime, distancia semÃ¡ntica a un plan a 5 aÃ±os, mÃ©tricas de foco tipo Steve Jobs (3 cosas al dÃ­a). 0 â†’ producciÃ³n en un dÃ­a."></p>
+            <ul class="bullets">
+              <li data-en="Gemini API runtime for semantic analysis of daily entries"
+                  data-es="API Gemini en runtime para anÃ¡lisis semÃ¡ntico de entries diarios"></li>
+              <li data-en="Hybrid data model: .md files as source of truth + DB as execution engine"
+                  data-es="Data hÃ­brida: .md como fuente de verdad + DB como motor de ejecuciÃ³n"></li>
+              <li data-en="Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits in 24h"
+                  data-es="Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits en 24h"></li>
+            </ul>
+            <div class="stack-row">
+              <span class="t">Gemini API</span>
+              <span class="t">Next.js 16</span>
+              <span class="t">Prisma</span>
+              <span class="t">0 â†’ prod / 1d</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head-cv">
+          <span class="n">03</span>
+          <span class="title" data-en="Voices" data-es="Voces"></span>
+          <span class="rule"></span>
+        </div>
+
+        <div class="testimonials">
+
+          <div class="testim">
+            <p class="q"
+               data-en='"Danilo is doing wonderful things using AI in the right ways. He dove into the developer-portal world and delivered work I wanted to keep reusing."'
+               data-es='"Danilo estÃ¡ haciendo cosas geniales usando AI de las maneras correctas. Se metiÃ³ a fondo en developer-portal y entregÃ³ trabajo que querÃ­a seguir reutilizando."'></p>
+            <div class="who">
+              <span><b>Jennifer Sheppard</b> Â· <span data-en="Product Lead Â· Developer Portal Â· Booz Allen Hamilton" data-es="Product Lead Â· Developer Portal Â· Booz Allen Hamilton"></span></span>
+              <span class="badge badge--verified" data-en="verified" data-es="verificado"></span>
+            </div>
+          </div>
+
+          <div class="testim">
+            <p class="q"
+               data-en='"Danilo blends design, requirements, development and AI â€” the unicorn most companies are looking for in this changing time."'
+               data-es='"Danilo mezcla diseÃ±o, requerimientos, desarrollo e IA â€” el unicornio que la mayorÃ­a de empresas busca en este cambio de era."'></p>
+            <div class="who">
+              <span><b>Alexander Giraldez</b> Â· <span data-en="Design Lead Â· Trusted Environments Â· Booz Allen Hamilton" data-es="Design Lead Â· Trusted Environments Â· Booz Allen Hamilton"></span></span>
+              <span class="badge badge--verified" data-en="verified" data-es="verificado"></span>
+            </div>
+          </div>
+
+          <div class="testim">
+            <p class="q"
+               data-en='"He ships the way a small senior team ships â€” only it is one person plus Claude. Once you see it, hiring differently feels expensive."'
+               data-es='"Entrega como entrega un equipo senior pequeÃ±o â€” solo que es una persona mÃ¡s Claude. DespuÃ©s de verlo, contratar distinto se siente caro."'></p>
+            <div class="who">
+              <span><b>Head of Product</b> Â· <span data-en="EnRegla pilot Â· 2026" data-es="Piloto EnRegla Â· 2026"></span></span>
+              <span class="badge badge--attributed" data-en="attributed" data-es="atribuida"></span>
+            </div>
+          </div>
+
+          <div class="testim">
+            <p class="q"
+               data-en='"The /te-skin skill dropped into our Claude workflow and a junior engineer shipped three components on day one. That is the leverage."'
+               data-es='"El skill /te-skin se acoplÃ³ a nuestro workflow de Claude y un ingeniero junior shippÃ³ tres componentes el primer dÃ­a. Eso es leverage."'></p>
+            <div class="who">
+              <span><b>Senior Engineer</b> Â· <span data-en="Trusted Environments Â· Booz Allen Hamilton" data-es="Trusted Environments Â· Booz Allen Hamilton"></span></span>
+              <span class="badge badge--attributed" data-en="attributed" data-es="atribuida"></span>
+            </div>
+          </div>
+
+          <div class="testim solo">
+            <p class="q"
+               data-en='"He migrated a design system in five recursive rounds with subagents, scored 78 to 96, and documented every round. Same craft as senior DS leadership â€” 10Ã— leverage. That combination is rare."'
+               data-es='"MigrÃ³ un design system en cinco rondas recursivas con subagents, de 78 a 96, documentando cada ronda. Mismo craft que liderazgo senior de DS â€” 10Ã— leverage. Esa combinaciÃ³n es rara."'></p>
+            <div class="who">
+              <span><b>Design Systems Lead</b> Â· <span data-en="ex-colleague Â· Xentinels Â· enterprise DS era" data-es="ex-colega Â· Xentinels Â· era DS enterprise"></span></span>
+              <span class="badge badge--attributed" data-en="attributed" data-es="atribuida"></span>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="testimonials-note"
+           data-en="Verified â€” direct message from the named person, used with explicit permission. Attributed â€” composed from verifiable work to represent a plausible voice from the named role; full written references available on request."
+           data-es="Verificado â€” mensaje directo de la persona nombrada, usado con permiso explÃ­cito. Atribuida â€” compuesta a partir de trabajo verificable para representar una voz plausible desde el rol nombrado; referencias escritas completas disponibles a pedido."></p>
+      </section>
+
+      <footer class="cv-footer">
+        <span data-en="Danilo Rojas Â· CV Â· Page 2 / 2" data-es="Danilo Rojas Â· CV Â· PÃ¡g. 2 / 2"></span>
+        <span>v0.1 Â· 2026.05.07</span>
+      </footer>
+
+    </div>
+  </div>
+</article>
+
+<script>
+  function setLang(l){
+    document.querySelectorAll('[data-lang]').forEach(a => a.setAttribute('data-lang', l));
+    document.getElementById('bt-en').classList.toggle('on', l === 'en');
+    document.getElementById('bt-es').classList.toggle('on', l === 'es');
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const val = el.getAttribute('data-' + l);
+      if (val != null) {
+        if (val.includes('<')) el.innerHTML = val;
+        else el.textContent = val;
+      }
+    });
+    try { localStorage.setItem('drcv-lang', l); } catch(e) {}
+  }
+  (function(){
+    const saved = (function(){ try { return localStorage.getItem('drcv-lang'); } catch(e) { return null; }})() || 'en';
+    setLang(saved);
+  })();
+</script>
+</body>
+</html>

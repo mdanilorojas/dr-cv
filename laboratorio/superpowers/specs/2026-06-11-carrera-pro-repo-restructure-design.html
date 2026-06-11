@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carrera Pro Repo Structure</title>
+<style>
+  :root { --bg:#0a0b0e; --panel:#151821; --line:#2b3140; --text:#f4f4f5; --muted:#a1a1aa; --accent:#ff8964; --green:#4ade80; --blue:#7aa2ff; --yellow:#e5a84b; --mono:"Cascadia Code",Consolas,monospace; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:Inter,"Segoe UI",system-ui,sans-serif; line-height:1.55; }
+  main { max-width:1120px; margin:0 auto; padding:44px 20px 80px; }
+  .eyebrow { font-family:var(--mono); color:var(--accent); font-size:12px; text-transform:uppercase; letter-spacing:.12em; font-weight:700; }
+  h1 { font-size:clamp(34px,5vw,60px); line-height:1; margin:10px 0 18px; }
+  h2 { margin:42px 0 14px; font-size:24px; }
+  p { color:var(--muted); margin:0 0 12px; }
+  code { font-family:var(--mono); background:rgba(255,255,255,.07); padding:.12em .35em; border-radius:4px; }
+  .hero,.card,.flow { border:1px solid var(--line); background:var(--panel); border-radius:8px; padding:18px; }
+  .hero { background:linear-gradient(180deg,rgba(255,137,100,.1),rgba(255,255,255,.03)); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; }
+  .card b { display:block; color:var(--text); margin-bottom:6px; }
+  table { width:100%; border-collapse:collapse; margin:16px 0 24px; }
+  th,td { text-align:left; vertical-align:top; border-bottom:1px solid var(--line); padding:10px 8px; }
+  th { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+  .rail { display:flex; gap:10px; align-items:center; overflow-x:auto; padding-bottom:6px; }
+  .box { min-width:132px; min-height:74px; display:grid; place-items:center; text-align:center; border:1px solid var(--line); border-left:4px solid var(--accent); background:#10131a; border-radius:8px; padding:10px; font-weight:700; }
+  .arrow { color:var(--accent); font-family:var(--mono); }
+  .ok { color:var(--green); }
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">Spec implementada - 2026-06-11</div>
+  <h1>Carrera Pro Repo Structure</h1>
+  <section class="hero">
+    <p><b>Decision:</b> este repo es una maquina de carrera hacia USD 250k/ano. Lo publicable vive dentro de la maquina; no manda la estructura.</p>
+    <p><span class="ok">Invariante:</span> la landing sigue publicandose desde <code>dist/landing-v11/</code>, incluyendo <code>/app</code> y <code>/daily</code>.</p>
+  </section>
+
+  <h2>Columna vertebral</h2>
+  <section class="flow">
+    <div class="rail">
+      <div class="box">carrera</div><div class="arrow">-&gt;</div>
+      <div class="box">career-training</div><div class="arrow">-&gt;</div>
+      <div class="box">perfil</div><div class="arrow">-&gt;</div>
+      <div class="box">publicables</div><div class="arrow">-&gt;</div>
+      <div class="box">generadores</div><div class="arrow">-&gt;</div>
+      <div class="box">dist</div>
+    </div>
+  </section>
+
+  <h2>Mapa final</h2>
+  <div class="grid">
+    <div class="card"><b>carrera/</b><p>Plan, semana, daily, decisiones.</p></div>
+    <div class="card"><b>career-training/</b><p>Training de facultades senior; fuente de /app.</p></div>
+    <div class="card"><b>perfil/</b><p>Data y assets propios.</p></div>
+    <div class="card"><b>publicables/</b><p>CV, landing, skills sheet, social.</p></div>
+    <div class="card"><b>generadores/</b><p>Codigo que genera HTML/PDF/site.</p></div>
+    <div class="card"><b>design-system/</b><p>Un sistema con targets print/web.</p></div>
+    <div class="card"><b>laboratorio/</b><p>Specs, plans, visuals, audits, exploraciones.</p></div>
+    <div class="card"><b>referencias/</b><p>Inspiracion externa read-only.</p></div>
+    <div class="card"><b>tests/</b><p>Vitest suite.</p></div>
+  </div>
+
+  <h2>Traduccion aplicada</h2>
+  <table>
+    <tr><th>Antes</th><th>Ahora</th></tr>
+    <tr><td><code>estrategia/</code></td><td><code>carrera/</code></td></tr>
+    <tr><td><code>UR_training/starting_point/</code></td><td><code>career-training/ur-assessment/</code></td></tr>
+    <tr><td><code>data/</code></td><td><code>perfil/data/</code></td></tr>
+    <tr><td><code>assets/</code></td><td><code>perfil/assets/</code></td></tr>
+    <tr><td><code>productos/</code></td><td><code>publicables/</code></td></tr>
+    <tr><td><code>generators/</code></td><td><code>generadores/</code></td></tr>
+    <tr><td><code>pruebas/</code></td><td><code>laboratorio/</code></td></tr>
+    <tr><td><code>tokens.css</code></td><td><code>tokens-print.css</code></td></tr>
+    <tr><td><code>tokens-v11.css</code></td><td><code>tokens-web.css</code></td></tr>
+  </table>
+
+  <h2>Rutas protegidas</h2>
+  <table>
+    <tr><th>URL</th><th>Fuente</th><th>Output</th></tr>
+    <tr><td><code>/app</code></td><td><code>career-training/ur-assessment/index.html</code></td><td><code>dist/landing-v11/app/index.html</code></td></tr>
+    <tr><td><code>/daily</code></td><td><code>carrera/daily/index.html</code></td><td><code>dist/landing-v11/daily/index.html</code></td></tr>
+  </table>
+</main>
+</body>
+</html>

@@ -12,7 +12,7 @@ import {
   DataLoadError,
   validateSkills,
   validatePositioning,
-} from "../generators/lib/load-data.js";
+} from "../generadores/lib/load-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { writeFileSync, unlinkSync, mkdirSync } from "node:fs";
@@ -20,7 +20,7 @@ import { writeFileSync, unlinkSync, mkdirSync } from "node:fs";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const fixtureDir = path.join(__dirname, "fixtures");
 const fixtureBadDir = path.join(__dirname, "fixtures-bad");
-const dataDir = path.join(__dirname, ".." , "data");
+const dataDir = path.join(__dirname, "..", "perfil", "data");
 
 describe("loadSkills", () => {
   it("loads and parses a minimal skills YAML file", () => {
@@ -45,7 +45,7 @@ describe("loadSkills", () => {
 });
 
 describe("loadAllData", () => {
-  it("loads the real /data/ directory without errors", () => {
+  it("loads the real /perfil/data/ directory without errors", () => {
     const data = loadAllData(dataDir);
     expect(data.identity.name).toBe("Danilo Rojas");
     expect(data.skills.byLayer.groups.length).toBeGreaterThan(0);
@@ -117,7 +117,7 @@ describe("loadCases", () => {
     expect(cases.every((c) => typeof c.slug === "string")).toBe(true);
   });
 
-  it("loads real /data/cases/*.md files", () => {
+  it("loads real /perfil/data/cases/*.md files", () => {
     const realCasesDir = path.join(dataDir, "cases");
     const cases = loadCases(realCasesDir);
     expect(cases.length).toBe(3);
@@ -127,7 +127,7 @@ describe("loadCases", () => {
 });
 
 describe("loadEducation", () => {
-  it("loads education from real /data/education.yaml", () => {
+  it("loads education from real /perfil/data/education.yaml", () => {
     const edu = loadEducation(path.join(dataDir, "education.yaml"));
     expect(edu.length).toBeGreaterThan(0);
     expect(edu[0]).toHaveProperty("name");
@@ -142,7 +142,7 @@ describe("loadEducation", () => {
 });
 
 describe("loadAttributedTestimonials", () => {
-  it("loads attributed from real /data/testimonials/attributed.yaml", () => {
+  it("loads attributed from real /perfil/data/testimonials/attributed.yaml", () => {
     const attr = loadAttributedTestimonials(
       path.join(dataDir, "testimonials", "attributed.yaml")
     );
@@ -152,7 +152,7 @@ describe("loadAttributedTestimonials", () => {
 });
 
 describe("loadCvData", () => {
-  it("loads the real /data/ directory including cases, education, and attributed", () => {
+  it("loads the real /perfil/data/ directory including cases, education, and attributed", () => {
     const cv = loadCvData(dataDir);
     expect(cv.identity.name).toBe("Danilo Rojas");
     expect(cv.cases.length).toBe(3);
@@ -164,7 +164,7 @@ describe("loadCvData", () => {
 });
 
 describe("loadLanding", () => {
-  it("loads real /data/landing.yaml with 5 tabs", () => {
+  it("loads real /perfil/data/landing.yaml with 5 tabs", () => {
     const landing = loadLanding(path.join(dataDir, "landing.yaml"));
     expect(landing.tabs).toHaveLength(5);
     const ids = landing.tabs.map((t) => t.id).sort();
@@ -232,7 +232,7 @@ describe("loadLandingData", () => {
   });
 });
 
-describe("validatePositioning — thesisBairesdev", () => {
+describe("validatePositioning â€” thesisBairesdev", () => {
   it("accepts optional thesisBairesdev.en", () => {
     const raw = {
       thesis: { en: "a", es: "b" },
@@ -256,7 +256,7 @@ describe("validatePositioning — thesisBairesdev", () => {
   });
 });
 
-describe("validateSkills — inventory", () => {
+describe("validateSkills â€” inventory", () => {
   it("accepts a non-empty inventory list", () => {
     const tmpPath = path.join(fixtureBadDir, "skills-with-inventory.yaml");
     mkdirSync(fixtureBadDir, { recursive: true });
@@ -291,10 +291,10 @@ inventory:
   });
 });
 
-describe("loadCvData — inventory round-trip", () => {
-  it("data/skills.yaml exposes a non-empty inventory", () => {
+describe("loadCvData â€” inventory round-trip", () => {
+  it("perfil/data/skills.yaml exposes a non-empty inventory", () => {
     const here = path.dirname(fileURLToPath(import.meta.url));
-    const dataDir = path.join(here, ".." , "data");
+    const dataDir = path.join(here, "..", "perfil", "data");
     const cv = loadCvData(dataDir);
     expect(cv.skills.inventory).toBeDefined();
     expect(cv.skills.inventory!.length).toBeGreaterThanOrEqual(20);
@@ -304,10 +304,10 @@ describe("loadCvData — inventory round-trip", () => {
   });
 });
 
-describe("loadCvData — thesisBairesdev round-trip", () => {
-  it("data/positioning.yaml exposes thesisBairesdev.en starting with 'Agentic Designer.'", () => {
+describe("loadCvData â€” thesisBairesdev round-trip", () => {
+  it("perfil/data/positioning.yaml exposes thesisBairesdev.en starting with 'Agentic Designer.'", () => {
     const here = path.dirname(fileURLToPath(import.meta.url));
-    const dataDir = path.join(here, ".." , "data");
+    const dataDir = path.join(here, "..", "perfil", "data");
     const cv = loadCvData(dataDir);
     expect(cv.positioning.thesisBairesdev).toBeDefined();
     expect(cv.positioning.thesisBairesdev!.en.startsWith("Agentic Designer."))

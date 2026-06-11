@@ -1,0 +1,40 @@
+# Referencias externas. No duplicar contenido, solo enlazar.
+
+repos:
+  strategy_current:
+    path: C:\dev\dr-cv\carrera
+    role: Career command center in this repo
+  strategy_after_migration:
+    path: C:\dev\dr-cv\carrera
+    role: Career command center colocated with profile, publicables, and career training
+  dr_cv:
+    path: C:\dev\dr-cv
+    role: Carrera Pro repo: portfolio, CV, skills assessment, professional identity
+  life_update_mobile:
+    path: C:\dev\life-update-mobile
+    role: Daily execution dashboard (Life to Break)
+  enregla:
+    path: C:\dev\enregla
+    role: Commercial validation experiment
+
+urls:
+  portfolio: https://danilorojas.design
+  skills_assessment: https://danilorojas.design/app
+  enregla_production: null  # TBD: validar si hay deploy activo
+
+assessment:
+  questions_file: C:\dev\dr-cv\career-training\ur-assessment\questions.md
+  answers_file: C:\dev\dr-cv\career-training\ur-assessment\answers.md
+  answers_state: C:\dev\dr-cv\career-training\ur-assessment\answers_state.json
+  local_server: http://localhost:3000
+  total_questions: 80
+  answered_as_of_2026_06_07: 16
+
+key_docs:
+  strategy_readme: README.md
+  migration_handoff: MIGRATION-HANDOFF.md
+  master_plan: docs\superpowers\specs\2026-06-07-master-plan-6months.md
+  current_week: execution\current-week.md
+  life_update_integration_plan: docs\superpowers\plans\2026-06-07-life-update-strategy-integration.md
+  market_fit_audit: C:\dev\dr-cv\laboratorio\audits\2026-06-03-product-designer-market-fit-audit.md
+  life_product_vision: C:\dev\life-update-mobile\docs\product-vision\2026-05-07-selfauthoring-five-year-plan.md

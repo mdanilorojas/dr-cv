@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { renderClientChip } from "../generators/templates/cv/components/client-chip.js";
-import type { Client } from "../generators/lib/types.js";
+import { renderClientChip } from "../generadores/templates/cv/components/client-chip.js";
+import type { Client } from "../generadores/lib/types.js";
 
 describe("renderClientChip", () => {
   const c: Client = { name: "Merck & Co.", industryEn: "Healthcare", industryEs: "Salud" };
@@ -21,15 +21,15 @@ describe("renderClientChip", () => {
   });
 });
 
-import { renderIdentityBlock } from "../generators/templates/cv/components/identity-block.js";
-import type { Identity } from "../generators/lib/types.js";
+import { renderIdentityBlock } from "../generadores/templates/cv/components/identity-block.js";
+import type { Identity } from "../generadores/lib/types.js";
 
 const identityFixture: Identity = {
   name: "Danilo Rojas",
-  role: "Agentic Designer · Product Engineer",
-  location: "Quito · Ecuador",
-  languages: "EN · ES",
-  availability: "Open to work · Remote global",
+  role: "Agentic Designer Â· Product Engineer",
+  location: "Quito Â· Ecuador",
+  languages: "EN Â· ES",
+  availability: "Open to work Â· Remote global",
   contact: {
     email: "danilorojas@hotmail.com",
     linkedin: "linkedin.com/in/mdanilorojas",
@@ -69,23 +69,23 @@ describe("renderIdentityBlock", () => {
   });
 });
 
-import { renderSummaryBlock } from "../generators/templates/cv/components/summary-block.js";
-import type { Positioning } from "../generators/lib/types.js";
+import { renderSummaryBlock } from "../generadores/templates/cv/components/summary-block.js";
+import type { Positioning } from "../generadores/lib/types.js";
 
 const positioningFixture: Positioning = {
   thesis: {
-    en: "I ship real products — and I ship the tools agents use to help me ship them.",
-    es: "Entrego productos reales — y entrego las herramientas que los agentes usan para ayudarme.",
+    en: "I ship real products â€” and I ship the tools agents use to help me ship them.",
+    es: "Entrego publicables reales â€” y entrego las herramientas que los agentes usan para ayudarme.",
   },
   tagline: {
     en: "Fifteen years of delivery.",
-    es: "Quince años entregando.",
+    es: "Quince aÃ±os entregando.",
   },
   proofNumbers: [],
 };
 
 describe("renderSummaryBlock", () => {
-  it("uses 'hello · summary' eyebrow for warm variant", () => {
+  it("uses 'hello Â· summary' eyebrow for warm variant", () => {
     const html = renderSummaryBlock(positioningFixture, { variant: "warm", lang: "en" });
     expect(html).toContain("hello");
   });
@@ -107,12 +107,12 @@ describe("renderSummaryBlock", () => {
 
   it("renders ES thesis when lang=es", () => {
     const html = renderSummaryBlock(positioningFixture, { variant: "warm", lang: "es" });
-    expect(html).toContain("Entrego productos reales");
+    expect(html).toContain("Entrego publicables reales");
   });
 });
 
-import { renderExperienceItem } from "../generators/templates/cv/components/experience-item.js";
-import type { ExperienceItem } from "../generators/lib/types.js";
+import { renderExperienceItem } from "../generadores/templates/cv/components/experience-item.js";
+import type { ExperienceItem } from "../generadores/lib/types.js";
 
 const xpFixture: ExperienceItem = {
   company: "Xentinels DesignOps",
@@ -120,7 +120,7 @@ const xpFixture: ExperienceItem = {
   startYear: 2016,
   endYear: "present",
   descriptionEn: "Led design system work across enterprise clients.",
-  descriptionEs: "Lideré trabajo de design system con clientes enterprise.",
+  descriptionEs: "LiderÃ© trabajo de design system con clientes enterprise.",
   stack: ["Design system", "Figma"],
 };
 
@@ -161,19 +161,19 @@ describe("renderExperienceItem", () => {
   });
 });
 
-import { renderCaseCard } from "../generators/templates/cv/components/case-card.js";
-import type { Case } from "../generators/lib/types.js";
+import { renderCaseCard } from "../generadores/templates/cv/components/case-card.js";
+import type { Case } from "../generadores/lib/types.js";
 
 const caseFixture: Case = {
   slug: "te-skin",
-  titleEn: "/te-skin — a design system as an agent-consumable skill",
-  titleEs: "/te-skin — un design system como skill consumible por agentes",
-  clientEn: "Booz Allen Hamilton · Developer Portal",
-  clientEs: "Booz Allen Hamilton · Developer Portal",
+  titleEn: "/te-skin â€” a design system as an agent-consumable skill",
+  titleEs: "/te-skin â€” un design system como skill consumible por agentes",
+  clientEn: "Booz Allen Hamilton Â· Developer Portal",
+  clientEs: "Booz Allen Hamilton Â· Developer Portal",
   yearStart: 2024,
   yearEnd: 2026,
   hookEn: "Packaged a 17-component design system as a slash-command skill.",
-  hookEs: "Empaqueté un DS de 17 componentes como slash-command skill.",
+  hookEs: "EmpaquetÃ© un DS de 17 componentes como slash-command skill.",
   bulletsEn: ["Bullet 1 EN", "Bullet 2 EN"],
   bulletsEs: ["Bullet 1 ES", "Bullet 2 ES"],
   stack: ["Agent", "W3C"],
@@ -192,7 +192,7 @@ describe("renderCaseCard", () => {
 
   it("renders ES content when lang=es", () => {
     const html = renderCaseCard(caseFixture, { variant: "warm", lang: "es", featured: false });
-    expect(html).toContain("Empaqueté un DS");
+    expect(html).toContain("EmpaquetÃ© un DS");
     expect(html).toContain("Bullet 1 ES");
   });
 
@@ -215,15 +215,15 @@ describe("renderCaseCard", () => {
   });
 });
 
-import { renderTestimonialItem } from "../generators/templates/cv/components/testimonial-item.js";
-import type { Testimonial, AttributedTestimonial } from "../generators/lib/types.js";
+import { renderTestimonialItem } from "../generadores/templates/cv/components/testimonial-item.js";
+import type { Testimonial, AttributedTestimonial } from "../generadores/lib/types.js";
 
 describe("renderTestimonialItem", () => {
   const verified: Testimonial = {
     quote: "A real loss for us.",
-    quoteEs: "Una pérdida de verdad.",
+    quoteEs: "Una pÃ©rdida de verdad.",
     author: "Jennifer Sheppard",
-    role: "Product Lead · Developer Portal",
+    role: "Product Lead Â· Developer Portal",
     company: "Booz Allen Hamilton",
     source: "verified",
   };
@@ -256,7 +256,7 @@ describe("renderTestimonialItem", () => {
 
   it("prefers Spanish quote when lang=es and quoteEs exists", () => {
     const html = renderTestimonialItem(verified, "es");
-    expect(html).toContain("Una pérdida de verdad");
+    expect(html).toContain("Una pÃ©rdida de verdad");
   });
 
   it("falls back to English quote when lang=es but no quoteEs", () => {
@@ -265,14 +265,14 @@ describe("renderTestimonialItem", () => {
   });
 });
 
-import { renderSkillsSidebar } from "../generators/templates/cv/components/skills-sidebar.js";
-import { renderEducationBlock } from "../generators/templates/cv/components/education-block.js";
-import type { Skills, Education } from "../generators/lib/types.js";
+import { renderSkillsSidebar } from "../generadores/templates/cv/components/skills-sidebar.js";
+import { renderEducationBlock } from "../generadores/templates/cv/components/education-block.js";
+import type { Skills, Education } from "../generadores/lib/types.js";
 
 const skillsFixture: Skills = {
   byLayer: {
     name: "Visual A",
-    axis: "axis · product layer",
+    axis: "axis Â· product layer",
     groups: [
       {
         title: "Strategy",
@@ -291,7 +291,7 @@ const skillsFixture: Skills = {
   },
   byOutcome: {
     name: "Visual B",
-    axis: "axis · outcome",
+    axis: "axis Â· outcome",
     groups: [],
   },
 };
@@ -361,11 +361,11 @@ describe("renderEducationBlock", () => {
 
   it("renders em dash for null year", () => {
     const html = renderEducationBlock(eduFixture, "en");
-    expect(html).toContain("—");
+    expect(html).toContain("\u2014");
   });
 });
 
-import { renderSkillsInventory } from "../generators/templates/cv/components/skills-inventory.js";
+import { renderSkillsInventory } from "../generadores/templates/cv/components/skills-inventory.js";
 
 describe("renderSkillsInventory", () => {
   const items = [
@@ -407,13 +407,13 @@ describe("renderSkillsInventory", () => {
   });
 });
 
-import { loadCvData } from "../generators/lib/load-data.js";
+import { loadCvData } from "../generadores/lib/load-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-describe("renderSkillsSidebar — bairesdev ordering", () => {
+describe("renderSkillsSidebar â€” bairesdev ordering", () => {
   const here = path.dirname(fileURLToPath(import.meta.url));
-  const dataDir = path.join(here, ".." , "data");
+  const dataDir = path.join(here, "..", "perfil", "data");
   const data = loadCvData(dataDir);
 
   it("puts the Agents group first for the bairesdev variant", () => {

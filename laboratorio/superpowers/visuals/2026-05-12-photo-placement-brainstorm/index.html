@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brainstorm Â· dÃ³nde encaja tu foto en la landing V11</title>
+<style>
+  :root {
+    --bg: #0A0B0E;
+    --bg-alt: #111318;
+    --bg-elev: #14161C;
+    --bg-paper: #F6F4F0;
+    --ink: #F3F0EA;
+    --ink-muted: #A7A39B;
+    --ink-dim: #6E6B64;
+    --accent: #E68A2E;
+    --accent-cool: #7AA7FF;
+    --ok: #6FC78A;
+    --warn: #E8C36A;
+    --bad: #E0625A;
+    --rule: #24272E;
+    --rule-strong: #3A3E47;
+    --serif: "Source Serif 4", Georgia, serif;
+    --sans: "Inter", -apple-system, system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.55;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 64px 32px 120px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    margin: 0 0 12px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.08;
+    margin: 0 0 16px;
+    letter-spacing: -0.015em;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(24px, 2.4vw, 32px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+  }
+  h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.005em;
+    margin: 0 0 10px;
+  }
+  p { margin: 0 0 14px; color: var(--ink); }
+  p.lead {
+    font-size: 17px;
+    color: var(--ink-muted);
+    max-width: 70ch;
+  }
+
+  hr.rule {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 72px 0;
+  }
+
+  /* ---------- Photo anatomy block ---------- */
+  .photo-intro {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 36px;
+    align-items: start;
+    margin: 40px 0 64px;
+    padding: 28px;
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+  }
+  .photo-intro img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+  }
+  .photo-intro dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 8px 18px;
+    font-size: 14px;
+  }
+  .photo-intro dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    padding-top: 3px;
+  }
+  .photo-intro dd { margin: 0; color: var(--ink); }
+
+  /* ---------- Anatomy map ---------- */
+  .anatomy {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+    margin-top: 28px;
+  }
+  .map {
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--bg-alt);
+    position: sticky;
+    top: 24px;
+    align-self: start;
+  }
+  .map__row {
+    padding: 12px 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .map__row:last-child { border-bottom: 0; }
+  .map__row[data-v="yes"] { color: var(--ok); }
+  .map__row[data-v="maybe"] { color: var(--warn); }
+  .map__row[data-v="no"] { color: var(--ink-dim); }
+  .map__dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: currentColor;
+    opacity: 0.9;
+  }
+
+  /* ---------- Zone cards ---------- */
+  .zones { display: flex; flex-direction: column; gap: 28px; }
+  .zone {
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg-alt);
+  }
+  .zone__head {
+    padding: 22px 26px 18px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .zone__title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 22px;
+    margin: 0 0 4px;
+  }
+  .zone__sub {
+    color: var(--ink-muted);
+    font-size: 13px;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .zone__verdict {
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+  }
+  .zone__verdict[data-v="yes"] { color: var(--ok); }
+  .zone__verdict[data-v="maybe"] { color: var(--warn); }
+  .zone__verdict[data-v="no"] { color: var(--bad); }
+
+  .zone__body {
+    display: grid;
+    grid-template-columns: minmax(360px, 1fr) 1fr;
+    gap: 0;
+  }
+  .zone__mock {
+    background: var(--bg-elev);
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--rule);
+    min-height: 340px;
+  }
+  .zone__reasoning {
+    padding: 26px 28px;
+  }
+  .zone__reasoning h4 {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    margin: 0 0 8px;
+  }
+  .zone__reasoning p { font-size: 14.5px; line-height: 1.55; }
+  .zone__reasoning .pro, .zone__reasoning .con {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin: 6px 0;
+    font-size: 14px;
+  }
+  .zone__reasoning .pro::before {
+    content: "+"; color: var(--ok); font-family: var(--mono); font-weight: 700; flex-shrink: 0;
+  }
+  .zone__reasoning .con::before {
+    content: "âˆ’"; color: var(--bad); font-family: var(--mono); font-weight: 700; flex-shrink: 0;
+  }
+
+  /* ---------- Mock: generic landing frame ---------- */
+  .mock {
+    width: 100%;
+    max-width: 420px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 10px;
+  }
+  .mock__nav {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink-muted);
+  }
+  .mock__nav-tabs { display: flex; gap: 12px; }
+  .mock__section {
+    padding: 16px 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .mock__section:last-child { border-bottom: 0; }
+  .mock__eyebrow {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-dim);
+    margin-bottom: 6px;
+  }
+  .mock__h1 {
+    font-family: var(--serif);
+    font-size: 14px;
+    line-height: 1.2;
+    margin: 0 0 6px;
+  }
+  .mock__h1 em { color: var(--accent); font-style: italic; }
+  .mock__p { color: var(--ink-muted); margin: 0 0 8px; font-size: 9.5px; line-height: 1.45; }
+  .mock__btnrow { display: flex; gap: 6px; }
+  .mock__btn {
+    padding: 4px 8px; border-radius: 4px;
+    font-family: var(--mono); font-size: 8px;
+  }
+  .mock__btn--p { background: var(--ink); color: var(--bg); }
+  .mock__btn--g { background: transparent; color: var(--ink); border: 1px solid var(--rule-strong); }
+
+  /* ---------- Photo treatments inside mocks ---------- */
+  .photo-base {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* A Â· Hero right (replacing artifact viewer) */
+  .treat-hero {
+    width: 140px; height: 170px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    background: #222;
+  }
+  .treat-hero img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(0.15) contrast(1.05);
+  }
+  .treat-hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,11,14,0.6), transparent 55%);
+  }
+
+  /* B Â· Hero small sidekick (next to artifact) */
+  .treat-sidekick {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid var(--rule-strong);
+  }
+  .treat-sidekick img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(0.1);
+  }
+
+  /* C Â· About/notebook portrait */
+  .treat-portrait {
+    width: 120px; height: 150px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-paper);
+    border: 1px solid #ddd;
+  }
+  .treat-portrait img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(1) contrast(1.1);
+  }
+
+  /* D Â· Contact headshot */
+  .treat-contact {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--accent);
+  }
+  .treat-contact img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(0.9) contrast(1.05);
+  }
+
+  /* E Â· OG image */
+  .treat-og {
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 1200/630;
+    background: var(--bg-alt);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    border: 1px solid var(--rule);
+  }
+  .treat-og__photo {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .treat-og__photo img { width: 100%; height: 100%; object-fit: cover; }
+  .treat-og__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .treat-og__name { font-family: var(--serif); font-size: 14px; font-weight: 600; }
+  .treat-og__role { font-family: var(--mono); font-size: 9px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .treat-og__sub { font-size: 10px; color: var(--ink-muted); margin-top: 4px; }
+
+  /* F Â· No photo (current) */
+  .treat-artifact {
+    width: 180px;
+    background: var(--bg-elev);
+    border: 1px solid var(--rule-strong);
+    border-radius: 6px;
+    padding: 10px;
+    font-family: var(--mono);
+    font-size: 8px;
+  }
+  .treat-artifact__head {
+    font-size: 7px;
+    color: var(--ink-dim);
+    margin-bottom: 6px;
+    display: flex;
+    gap: 6px;
+  }
+  .treat-artifact__paper {
+    background: var(--bg-paper);
+    color: #333;
+    padding: 12px 10px;
+    border-radius: 3px;
+    font-family: var(--serif);
+    font-size: 9px;
+    line-height: 1.3;
+  }
+  .treat-artifact__name { font-weight: 600; font-size: 11px; margin: 2px 0 4px; }
+
+  /* ---------- Recommendation strip ---------- */
+  .rec {
+    background: linear-gradient(135deg, #1A1413 0%, #231A17 100%);
+    border: 1px solid #3A2822;
+    border-radius: 18px;
+    padding: 36px 40px;
+    margin: 48px 0 0;
+  }
+  .rec__head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .rec__badge {
+    background: var(--accent);
+    color: #1A0F08;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+  .rec h2 { margin: 0; }
+  .rec__body { font-size: 15.5px; color: var(--ink); max-width: 72ch; }
+  .rec__body em { color: var(--accent); font-style: italic; }
+
+  /* ---------- User flow ---------- */
+  .flow {
+    background: var(--bg-alt);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 32px;
+    margin-top: 40px;
+  }
+  .flow__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 20px;
+  }
+  .flow__step {
+    padding: 18px 20px;
+    border-right: 1px solid var(--rule);
+    position: relative;
+  }
+  .flow__step:last-child { border-right: 0; }
+  .flow__step::after {
+    content: "â†’";
+    position: absolute;
+    right: -10px;
+    top: 22px;
+    color: var(--ink-dim);
+    font-family: var(--mono);
+    background: var(--bg-alt);
+    padding: 0 4px;
+  }
+  .flow__step:last-child::after { content: ""; }
+  .flow__n {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .flow__t { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+  .flow__d { font-size: 12.5px; color: var(--ink-muted); line-height: 1.45; }
+
+  @media (max-width: 860px) {
+    .photo-intro { grid-template-columns: 1fr; }
+    .anatomy { grid-template-columns: 1fr; }
+    .map { position: static; }
+    .zone__body { grid-template-columns: 1fr; }
+    .zone__mock { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .flow__grid { grid-template-columns: 1fr; }
+    .flow__step { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .flow__step::after { content: "â†“"; right: 50%; top: auto; bottom: -10px; transform: translateX(50%); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Brainstorm Â· 2026-05-12 Â· photo placement</p>
+  <h1>Â¿DÃ³nde encaja tu foto <em>bien</em> en la landing V11?</h1>
+  <p class="lead">Lectura de la landing actual secciÃ³n por secciÃ³n, evaluaciÃ³n honesta de cada zona candidata, y una recomendaciÃ³n con argumento. No todas las landings necesitan foto â€” la tuya tiene una tesis que puede debilitarse si se usa mal.</p>
+
+  <!-- ============ PHOTO + ANALYSIS ============ -->
+  <section class="photo-intro">
+    <img src="dr.jpeg" alt="Retrato de Danilo Rojas">
+    <div>
+      <h2 style="margin-top:0">Lectura de tu foto base</h2>
+      <p style="color:var(--ink-muted); font-size:14.5px">Retrato editorial limpio, encuadre centrado, luz lateral suave, fondo neutro gris-verde, mirada directa. Es la foto correcta para un perfil senior â€” transmite gravedad sin rigidez.</p>
+      <dl>
+        <dt>Registro</dt><dd>Editorial / enterprise â€” fits sober-enterprise y AI-forward por igual</dd>
+        <dt>Fondo</dt><dd>Limpio, recortable; admite duotonos y tratamientos sin destruir</dd>
+        <dt>Luz</dt><dd>Lateral izquierda, contrast ratio medio â€” buen hint para dark mode</dd>
+        <dt>Paleta</dt><dd>Negros dominantes + tonos cÃ¡lidos piel â†’ <strong>se alinea con la paleta Warm Huly de V11</strong></dd>
+        <dt>ExpresiÃ³n</dt><dd>Seria-directa â€” respalda la tesis "taste-first critic" del V11 R5</dd>
+        <dt>Riesgo</dt><dd>Muy "foto corporativa" estÃ¡ndar â€” el tratamiento visual hace la diferencia</dd>
+      </dl>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ ANATOMY OF LANDING ============ -->
+  <h2>AnatomÃ­a de la landing V11 actual</h2>
+  <p class="lead">La landing V11 tiene 7 secciones principales. Para cada una me pregunto: Â¿la foto <strong>refuerza</strong> el mensaje o <strong>distrae</strong> de Ã©l?</p>
+
+  <div class="anatomy">
+    <div class="map" aria-label="Resumen de zonas">
+      <div class="map__row" data-v="maybe"><span class="map__dot"></span>Hero</div>
+      <div class="map__row" data-v="no"><span class="map__dot"></span>Proof</div>
+      <div class="map__row" data-v="no"><span class="map__dot"></span>Horizon</div>
+      <div class="map__row" data-v="yes"><span class="map__dot"></span>Notebook</div>
+      <div class="map__row" data-v="no"><span class="map__dot"></span>Work</div>
+      <div class="map__row" data-v="no"><span class="map__dot"></span>Method</div>
+      <div class="map__row" data-v="yes"><span class="map__dot"></span>Contact</div>
+      <div class="map__row" data-v="yes"><span class="map__dot"></span>OG / meta</div>
+    </div>
+
+    <div class="zones">
+
+      <!-- Hero -->
+      <article class="zone">
+        <header class="zone__head">
+          <div>
+            <h3 class="zone__title">A Â· Hero â€” reemplazar el "CV artifact viewer"</h3>
+            <div class="zone__sub">PosiciÃ³n actual del mock de CV a la derecha del tÃ­tulo</div>
+          </div>
+          <span class="zone__verdict" data-v="maybe">Arriesgado</span>
+        </header>
+        <div class="zone__body">
+          <div class="zone__mock">
+            <div class="mock">
+              <div class="mock__nav">
+                <span>Danilo Rojas Â· dr</span>
+                <div class="mock__nav-tabs"><span>Notebook</span><span>Work</span><span>Contact</span></div>
+              </div>
+              <div class="mock__section" style="display:grid; grid-template-columns: 1fr auto; gap:14px; align-items:start">
+                <div>
+                  <div class="mock__eyebrow">Currently Â· Booz Allen Hamilton</div>
+                  <h1 class="mock__h1">A point of view on agentic design, <em>not a rÃ©sumÃ©.</em></h1>
+                  <p class="mock__p">Fifteen years shipping product. Last twelve months rebuilt around a Claude Code workflow.</p>
+                  <div class="mock__btnrow">
+                    <span class="mock__btn mock__btn--p">Read the notebook â†’</span>
+                    <span class="mock__btn mock__btn--g">See the work â†’</span>
+                  </div>
+                </div>
+                <div class="treat-hero"><img src="dr.jpeg" alt=""></div>
+              </div>
+            </div>
+          </div>
+          <div class="zone__reasoning">
+            <h4>Trade-off</h4>
+            <p>Sustituye el artifact viewer (el mock del PDF de CV con stream de build) por tu retrato en formato editorial vertical con overlay sutil.</p>
+            <div class="pro">La foto humaniza un hero muy cerebral. Conecta mÃ¡s rÃ¡pido con un reclutador escaneando.</div>
+            <div class="pro">Tu retrato + "point of view on agentic design" refuerza la tesis: <em>hay una persona detrÃ¡s del agente.</em></div>
+            <div class="con"><strong>Sacrificas el artifact viewer</strong> â€” y ese mock ES la demo de "yo genero mis propios artifacts con agentes". Es el strongest single visual de la tesis.</div>
+            <div class="con">Landings tech-forward con foto en hero se leen como <em>consultant page</em>, no como <em>product maker page</em>. Linear, Vercel, Anthropic â€” ninguna tiene foto en hero.</div>
+            <div class="con">Si te contratan por "profile + agents", el artifact viewer prueba el "+ agents". Tu foto solo prueba "profile".</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Hero sidekick -->
+      <article class="zone">
+        <header class="zone__head">
+          <div>
+            <h3 class="zone__title">B Â· Hero sidekick â€” avatar pequeÃ±o sobre el eyebrow</h3>
+            <div class="zone__sub">Miniatura circular al lado de "Currently Â· Booz Allen Hamilton"</div>
+          </div>
+          <span class="zone__verdict" data-v="yes">SÃ­ â€” bajo riesgo, alto retorno</span>
+        </header>
+        <div class="zone__body">
+          <div class="zone__mock">
+            <div class="mock">
+              <div class="mock__nav">
+                <span>Danilo Rojas Â· dr</span>
+                <div class="mock__nav-tabs"><span>Notebook</span><span>Work</span></div>
+              </div>
+              <div class="mock__section">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px">
+                  <div class="treat-sidekick"><img src="dr.jpeg" alt=""></div>
+                  <div class="mock__eyebrow" style="margin:0">Danilo Rojas Â· Currently at Booz Allen Hamilton</div>
+                </div>
+                <h1 class="mock__h1">A point of view on agentic design, <em>not a rÃ©sumÃ©.</em></h1>
+                <p class="mock__p">Fifteen years shipping product. Last twelve months rebuilt around a Claude Code workflow.</p>
+                <div class="mock__btnrow">
+                  <span class="mock__btn mock__btn--p">Read the notebook â†’</span>
+                  <span class="mock__btn mock__btn--g">See the work â†’</span>
+                </div>
+                <div style="margin-top:12px; padding:8px; background:var(--bg-elev); border-radius:4px; font-family:var(--mono); font-size:7px; color:var(--ink-muted)">
+                  cv-serious.en.pdf Â· generated 08 May 2026 Â· ready
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="zone__reasoning">
+            <h4>Trade-off</h4>
+            <p>Mantienes el artifact viewer (la tesis), pero aÃ±ades tu cara en un avatar 40-56px al lado del eyebrow. Similar a cÃ³mo Substack o Read.cv firman el hero.</p>
+            <div class="pro">Humaniza sin sacrificar el artifact viewer. Mantienes la tesis "profile + agents" completa.</div>
+            <div class="pro">SeÃ±al honesta: "soy una persona, este es mi CV generado por agentes" â€” el avatar firma el artifact.</div>
+            <div class="pro">Bajo costo visual â€” si no funciona, se remueve sin restructurar el hero.</div>
+            <div class="con">PequeÃ±o y fÃ¡cil de pasar por alto. No es un gesto "fuerte".</div>
+            <div class="con">Tu foto editorial merece mÃ¡s protagonismo que un avatar 56px.</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Notebook -->
+      <article class="zone">
+        <header class="zone__head">
+          <div>
+            <h3 class="zone__title">C Â· Notebook â€” byline de ensayo en secciÃ³n cream</h3>
+            <div class="zone__sub">Al inicio del ensayo "Trust is the unit of economy" â€” byline tipo revista</div>
+          </div>
+          <span class="zone__verdict" data-v="yes">SÃ­ â€” mejor fit conceptual</span>
+        </header>
+        <div class="zone__body">
+          <div class="zone__mock">
+            <div class="mock" style="background:var(--bg-paper); color:#222">
+              <div class="mock__section" style="background:var(--bg-paper); color:#222">
+                <div class="mock__eyebrow" style="color:#888">Notebook Â· essay</div>
+                <h1 class="mock__h1" style="color:#111"><em style="color:#B86A1A">Trust is the unit of economy.</em></h1>
+                <div style="display:flex; gap:14px; align-items:center; margin:14px 0; padding-top:10px; border-top:1px solid #ddd; border-bottom:1px solid #ddd; padding-bottom:10px">
+                  <div class="treat-portrait" style="width:44px; height:44px; border-radius:50%"><img src="dr.jpeg" alt="" style="filter:grayscale(1) contrast(1.15)"></div>
+                  <div style="font-family:var(--serif); font-size:10px; color:#333">
+                    <div><strong>By Danilo Rojas</strong></div>
+                    <div style="font-family:var(--mono); font-size:8px; color:#888">Agentic Designer Â· 2026-05-12</div>
+                  </div>
+                </div>
+                <p class="mock__p" style="color:#444">The hardest thing about agentic design isn't the prompt engineering. It's deciding, at every junction, whether the human reviews the diff or the agent just ships it...</p>
+              </div>
+            </div>
+          </div>
+          <div class="zone__reasoning">
+            <h4>Trade-off</h4>
+            <p>Byline tipo The New Yorker / Stratechery: tu foto en B&W pequeÃ±a antes del primer pÃ¡rrafo del ensayo, con tu nombre y fecha. Posicionas el notebook como pieza de autor.</p>
+            <div class="pro"><strong>La mejor pieza de la landing para foto</strong>: un ensayo largo SIEMPRE se beneficia del autor visible. Es convenciÃ³n de revistas serias.</div>
+            <div class="pro">La secciÃ³n tiene fondo cream â€” tu foto en B&W contrasta elegantemente sin competir con la tipografÃ­a serif.</div>
+            <div class="pro">Refuerza "taste-first critic" del V11 R5 â€” el ensayo es la pieza mÃ¡s opinativa, la foto le da peso de autor.</div>
+            <div class="pro">Gesto restrained, no decorativo â€” alineado con los anti-patterns del V11 R8.</div>
+            <div class="con">Solo vive en el notebook â€” un visitor que no llega ahÃ­ no ve tu cara.</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Contact -->
+      <article class="zone">
+        <header class="zone__head">
+          <div>
+            <h3 class="zone__title">D Â· Contact â€” headshot circular con el testimonio de Sheppard</h3>
+            <div class="zone__sub">SecciÃ³n de cierre, junto al CTA "Let's talk"</div>
+          </div>
+          <span class="zone__verdict" data-v="yes">SÃ­ â€” cierre humano</span>
+        </header>
+        <div class="zone__body">
+          <div class="zone__mock">
+            <div class="mock">
+              <div class="mock__section">
+                <div class="mock__eyebrow">Contact</div>
+                <h1 class="mock__h1">Let's talk.</h1>
+                <div style="display:flex; gap:14px; align-items:center; margin:10px 0 14px">
+                  <div class="treat-contact" style="width:60px; height:60px; border-width:1px"><img src="dr.jpeg" alt=""></div>
+                  <div style="font-size:9px; line-height:1.4">
+                    <div style="color:var(--ink)"><strong>Danilo Rojas</strong></div>
+                    <div style="color:var(--ink-muted); font-family:var(--mono); font-size:8px">Agentic Designer</div>
+                    <div style="color:var(--ink-muted); margin-top:4px">â— Available Â· reply in 1 business day</div>
+                  </div>
+                </div>
+                <div class="mock__btnrow"><span class="mock__btn mock__btn--p">Reach out â†’</span></div>
+                <div style="margin-top:12px; padding:10px; background:var(--bg-elev); border-radius:4px; font-size:8px; font-style:italic; color:var(--ink-muted); line-height:1.4; border-left:2px solid var(--accent)">
+                  "Work I wanted to keep reusing." â€” Jennifer Sheppard, Product Lead
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="zone__reasoning">
+            <h4>Trade-off</h4>
+            <p>En el bloque de contacto, un headshot circular pequeÃ±o junto al "disponible" + testimonio de Sheppard. Cierra el loop: "aquÃ­ estÃ¡ la persona que dijo esas cosas y que construyÃ³ esto."</p>
+            <div class="pro">Cerrar con cara reduce fricciÃ³n del "cold email" â€” el visitor ya tiene un rostro antes de escribirte.</div>
+            <div class="pro">Pairing natural con el testimonio de Sheppard que ya estÃ¡ ahÃ­.</div>
+            <div class="pro">Formato cÃ­rculo pequeÃ±o es la convenciÃ³n universal de "contact card" â€” zero surprise cost.</div>
+            <div class="con">Por sÃ­ solo es demasiado tarde en la pÃ¡gina (muchos no scrollean hasta contact).</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- OG -->
+      <article class="zone">
+        <header class="zone__head">
+          <div>
+            <h3 class="zone__title">E Â· OG image â€” meta-tag para LinkedIn / Twitter / Slack</h3>
+            <div class="zone__sub">og:image actual: no hay â€” queda placeholder genÃ©rico</div>
+          </div>
+          <span class="zone__verdict" data-v="yes">SÃ­ â€” crÃ­tico y ahora ausente</span>
+        </header>
+        <div class="zone__body">
+          <div class="zone__mock">
+            <div class="treat-og">
+              <div class="treat-og__photo"><img src="dr.jpeg" alt=""></div>
+              <div class="treat-og__text">
+                <div class="treat-og__role">danilorojas.design</div>
+                <div class="treat-og__name">Danilo Rojas</div>
+                <div class="treat-og__sub">A point of view on agentic design, not a rÃ©sumÃ©.</div>
+              </div>
+            </div>
+          </div>
+          <div class="zone__reasoning">
+            <h4>Trade-off</h4>
+            <p>Cuando alguien comparta tu landing en LinkedIn o Slack, se renderiza la OG image (1200Ã—630). Hoy no existe â€” se muestra un cuadro gris. Tu foto + nombre + tagline es el formato estÃ¡ndar y funciona bien.</p>
+            <div class="pro"><strong>Es el caso de uso mÃ¡s alto-leverage</strong>: literalmente cada share de tu landing en LinkedIn te muestra con foto. Cero costo en la pÃ¡gina misma.</div>
+            <div class="pro">Directamente conectado con tu caso de uso declarado ("la foto estÃ¡ en LinkedIn"). Matas dos pÃ¡jaros.</div>
+            <div class="pro">ConvenciÃ³n total â€” Twitter/LinkedIn/Slack ya entrenaron a todos a ver cara + tagline en el preview.</div>
+            <div class="con">No resuelve el "dÃ³nde va en la landing" â€” es meta.</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Proof/Work/Method â€” NO -->
+      <article class="zone">
+        <header class="zone__head">
+          <div>
+            <h3 class="zone__title">F Â· Proof / Work / Method / Horizon â€” <em>no</em></h3>
+            <div class="zone__sub">Secciones de mÃ©tricas, casos, mÃ©todo y timeline</div>
+          </div>
+          <span class="zone__verdict" data-v="no">No â€” distrae</span>
+        </header>
+        <div class="zone__body">
+          <div class="zone__mock">
+            <div class="mock">
+              <div class="mock__section">
+                <div class="mock__eyebrow">Selected work Â· 2025â€“2026</div>
+                <h1 class="mock__h1">Four ships. Four agent-built artifacts.</h1>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:10px">
+                  <div style="padding:6px; background:var(--bg-elev); border-radius:3px"><strong style="font-size:9px">EnRegla</strong><div style="font-size:8px; color:var(--ink-muted)">SaaS Â· 346 commits Â· 40d</div></div>
+                  <div style="padding:6px; background:var(--bg-elev); border-radius:3px"><strong style="font-size:9px">TE Skin</strong><div style="font-size:8px; color:var(--ink-muted)">DS skill Â· 78â†’95.6</div></div>
+                  <div style="padding:6px; background:var(--bg-elev); border-radius:3px"><strong style="font-size:9px">TE Black</strong><div style="font-size:8px; color:var(--ink-muted)">Dark-first tokens</div></div>
+                  <div style="padding:6px; background:var(--bg-elev); border-radius:3px"><strong style="font-size:9px">Life Update</strong><div style="font-size:8px; color:var(--ink-muted)">Local-first journal</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="zone__reasoning">
+            <h4>Por quÃ© no</h4>
+            <p>Estas secciones venden trabajo, nÃºmeros y mÃ©todo. El reclutador estÃ¡ evaluando <em>output</em>, no <em>persona</em>. Meter foto ahÃ­ compite con la seÃ±al.</p>
+            <div class="con"><strong>Proof</strong>: nÃºmeros. Tu cara no los hace mÃ¡s creÃ­bles â€” los diluye.</div>
+            <div class="con"><strong>Work</strong>: los 4 cases necesitan screenshots de publicables, no tu cara. Si vas a aÃ±adir imÃ¡genes ahÃ­, son de <em>EnRegla / TE Skin / TE Black</em>.</div>
+            <div class="con"><strong>Method</strong>: el plan-specimen y diff-specimen SON la demo. Tu cara distrae.</div>
+            <div class="con"><strong>Horizon</strong>: es un timeline conceptual earnedâ†’currentâ†’horizon. Foto rompe el registro.</div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ RECOMMENDATION ============ -->
+  <section class="rec">
+    <div class="rec__head">
+      <span class="rec__badge">RecomendaciÃ³n</span>
+      <h2>Tres usos, no uno. Orden por valor.</h2>
+    </div>
+    <div class="rec__body">
+      <p><strong>1 Â· OG image (E) â€” hazlo ya.</strong> Es el uso mÃ¡s alto-leverage y ahora mismo estÃ¡ vacÃ­o. Cada vez que alguien comparte tu landing en LinkedIn sin OG, pierdes seÃ±al. <em>Prioridad 1.</em></p>
+      <p><strong>2 Â· Notebook byline (C) â€” el fit conceptual perfecto.</strong> El ensayo es tu pieza mÃ¡s opinativa; la convenciÃ³n "byline de autor" le da peso editorial sin parecer ego-trip. Foto en B&W pequeÃ±a, junto al nombre y fecha. <em>Prioridad 2.</em></p>
+      <p><strong>3 Â· Contact headshot (D) â€” cierre humano.</strong> Pair con el testimonio de Sheppard que ya estÃ¡ ahÃ­. Reduce fricciÃ³n del "cold email". <em>Prioridad 3.</em></p>
+      <p style="margin-top:16px; padding-top:16px; border-top:1px solid #3A2822">
+        <strong>Lo que NO recomiendo:</strong> foto en hero reemplazando el artifact viewer (A). Ese mock ES la tesis "profile + agents". Si cambias la foto por Ã©l, vendes "consultant", no "product maker con leverage de agentes". MantÃ©n el hero como estÃ¡.
+      </p>
+      <p style="margin-top:8px">
+        <strong>Opcional (B):</strong> avatar 40px en el eyebrow del hero, si quieres humanizar sin sacrificar el artifact. Es reversible, bajo riesgo.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ USER FLOW ============ -->
+  <div class="flow">
+    <p class="eyebrow" style="margin-bottom:4px">Flujo de uso</p>
+    <h2 style="margin:0">CÃ³mo un visitor te ve a lo largo del recorrido</h2>
+    <div class="flow__grid">
+      <div class="flow__step">
+        <div class="flow__n">1 Â· Entry (share)</div>
+        <div class="flow__t">Preview en LinkedIn</div>
+        <div class="flow__d">Ve OG image: tu foto + "Danilo Rojas Â· Agentic Designer" + tagline. Primera impresiÃ³n personal.</div>
+      </div>
+      <div class="flow__step">
+        <div class="flow__n">2 Â· Hero</div>
+        <div class="flow__t">Artifact viewer (sin foto grande)</div>
+        <div class="flow__d">LeerÃ¡ la tesis y verÃ¡ el CV generÃ¡ndose en vivo. Prueba del "+ agents". Opcional: avatar 40px firma el hero.</div>
+      </div>
+      <div class="flow__step">
+        <div class="flow__n">3 Â· Notebook</div>
+        <div class="flow__t">Byline con foto B&W</div>
+        <div class="flow__d">Al abrir el ensayo, tu foto firma el texto como autor. Convierte "texto largo" en "pieza de autor opinada".</div>
+      </div>
+      <div class="flow__step">
+        <div class="flow__n">4 Â· Contact</div>
+        <div class="flow__t">Headshot circular + CTA</div>
+        <div class="flow__d">Cierre humano antes del email. El visitor ya vio tu cara 3 veces â€” sabe a quiÃ©n le estÃ¡ escribiendo.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

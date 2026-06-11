@@ -1,0 +1,159 @@
+schema_version: "life_update_execution_pack.v1"
+generated_on: "2026-06-07"
+timezone: "America/Guayaquil"
+
+week:
+  id: "week-01"
+  starts_on: "2026-06-08"
+  ends_on: "2026-06-14"
+  mode: "hybrid"
+  anchor:
+    start: "08:00"
+    end: "22:30"
+  primary_goal: "Aprender Product Design con UR Training y subir valor de mercado hacia Product Designer / AI Product Designer remoto $120k-$180k."
+  operating_phrase: "No necesito claridad total. Necesito ejecutar el siguiente movimiento correcto."
+
+investment:
+  posture: "conservative"
+  savings_usd: 12000
+  rule: "Proteger runway. Gastar solo si reduce friccion inmediata para ejecutar o conseguir mejores conversaciones laborales."
+  apple_developer:
+    decision: "pause"
+    pay_if: "Life Update se usa 7 dias seguidos como tablero real, o TestFlight/push estable desbloquea ejecucion diaria."
+
+daily_blocks:
+  - id: "startup"
+    label: "Arranque"
+    time: "08:00"
+    duration_min: 5
+    required_for_minimum_day: false
+  - id: "body"
+    label: "Cuerpo"
+    time: "08:30"
+    duration_min_minimum: 30
+    duration_min_target: 45
+    required_for_minimum_day: true
+  - id: "skills_money"
+    label: "Skills + Dinero"
+    time: "10:30"
+    duration_min_minimum: 45
+    duration_min_target: 90
+    required_for_minimum_day: true
+  - id: "project"
+    label: "Proyecto"
+    time: "16:30"
+    duration_min_max: 45
+    required_for_minimum_day: false
+  - id: "close"
+    label: "Cierre"
+    time: "21:00"
+    duration_min: 10
+    required_for_minimum_day: true
+
+notifications:
+  dose_per_day: 5
+  daily:
+    - id: "startup"
+      time: "08:00"
+      title: "Arranque"
+      body: "Hoy no necesitas claridad total, necesitas el siguiente movimiento correcto."
+      target_block: "startup"
+    - id: "body"
+      time: "08:30"
+      title: "Cuerpo primero"
+      body: "30 min. Energia antes que estrategia."
+      target_block: "body"
+    - id: "money"
+      time: "10:30"
+      title: "Skills + Dinero"
+      body: "UR Training, portfolio o aplicaciones. Esto mejora capacidad y mueve ingreso."
+      target_block: "skills_money"
+    - id: "project"
+      time: "16:30"
+      title: "Bloque proyecto"
+      body: "Maximo 45 min. Validar, no construir por ansiedad."
+      target_block: "project"
+    - id: "close"
+      time: "21:00"
+      title: "Cierre"
+      body: "Registra bloques, metricas y una linea honesta."
+      target_block: "close"
+
+minimum_viable_day:
+  required:
+    - "body"
+    - "skills_money_45_min"
+    - "close"
+  message: "Cuerpo, 45 min de Skills + Dinero y check-in. Eso cuenta."
+
+complete_day:
+  required:
+    - "body"
+    - "skills_money_90_min"
+    - "project_max_45_min"
+    - "close"
+
+fallbacks:
+  normal_day:
+    rule: "Seguir las horas base."
+  late_day:
+    trigger: "Si el dia empieza despues de 10:30."
+    action: "Hacer Cuerpo 20 min, Skills + Dinero 45-90 min, Proyecto opcional."
+  tired_day:
+    trigger: "Si energia o estres hacen inviable el dia completo."
+    action: "Hacer Cuerpo 10-20 min, Skills + Dinero 45 min y Cierre."
+  chaotic_day:
+    trigger: "Si el dia se rompe por completo."
+    action: "Cumplir solo minimum_viable_day."
+
+weekly_targets:
+  body_days_completed: 4
+  skills_money_days_completed: 4
+  ur_training_answers_rewritten: 5
+  portfolio_sections_improved: 1
+  enregla_validation_conversations_or_messages: 3
+  life_update_checkins: 7
+  ur_training_source: "C:\\dev\\dr-cv\\career-training\\ur-assessment\\questions.md"
+
+paused_for_7_days:
+  - "Nuevas features"
+  - "Self Authoring largo"
+  - "Coach complejo o modo unlimited"
+  - "Codigo nuevo de En Regla"
+  - "Optimizacion de UI que no ayude a ejecutar esta semana"
+
+use_life_update_only_for:
+  - "Recordatorios"
+  - "Check-in diario"
+  - "3 misiones o bloques del dia"
+  - "Review semanal"
+
+daily_focus:
+  monday:
+    date: "2026-06-08"
+    skills_money: "UR Training Q1-Q2 en formato senior."
+    project: "Revisar contrato week-01 y no construir features."
+  tuesday:
+    date: "2026-06-09"
+    skills_money: "Developer Portal case study: problem + users. Identificar 1 rol remoto $120k+."
+    project: "Preparar 3 contactos En Regla."
+  wednesday:
+    date: "2026-06-10"
+    skills_money: "Developer Portal case study: decisions + outcomes. Preparar update LinkedIn."
+    project: "Life Update solo check-in y observacion."
+  thursday:
+    date: "2026-06-11"
+    skills_money: "UR Training Q3-Q5 en formato senior."
+    project: "Enviar o hacer 2 conversaciones En Regla."
+  friday:
+    date: "2026-06-12"
+    skills_money: "Enviar 2 aplicaciones o mensajes de alto valor."
+    project: "Enviar o hacer 1 conversacion En Regla."
+  saturday:
+    date: "2026-06-13"
+    skills_money: "Opcional si hay energia."
+    project: "Ordenar notas 15 min."
+  sunday:
+    date: "2026-06-14"
+    skills_money: "No obligatorio."
+    project: "Weekly review 30 min y decision Apple Developer."

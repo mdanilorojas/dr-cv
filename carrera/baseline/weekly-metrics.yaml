@@ -1,0 +1,35 @@
+# Copiar cada domingo - snapshot semanal
+# Fuente operativa: Life Update
+# Fuente estrategica: docs/superpowers/specs/
+
+week_of: null  # YYYY-MM-DD (lunes)
+
+skill_track:
+  ur_training_questions_rewritten: 0
+  ur_training_total_answered: 16  # baseline 2026-06-07
+  senior_quality_answers_target: 5
+  source_questions_file: C:\dev\dr-cv\career-training\ur-assessment\questions.md
+
+income_track:
+  applications_sent: 0
+  recruiter_conversations: 0
+  interviews_scheduled: 0
+  portfolio_pieces_improved: 0
+
+enregla_validation:
+  conversations_completed: 0
+  conversations_target: 10
+  showed_real_interest: 0
+  go_no_go_threshold: 3
+
+life_update:
+  days_tracked: 0
+  block_body_completed: 0
+  block_skills_money_completed: 0
+  block_project_completed: 0
+
+health:
+  workouts_completed: 0
+  target_workouts: 4
+
+notes: ""

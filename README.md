@@ -1,118 +1,64 @@
 # dr-cv
 
-**A system that keeps itself alive — with agents.**
+Maquina de carrera de Danilo Rojas: carrera, career training, evidencia profesional, publicables y generadores para llegar a USD 250k/ano como Product Designer / AI Product Designer remoto.
 
-One source of truth, many generated deliverables: skills sheet, CVs, landing page.
+## Modelo mental
 
----
+```text
+carrera/ -> career-training/ -> perfil/ -> publicables/ -> generadores/ -> dist/
+```
 
-## What this is
+- `carrera/`: que hago ahora y por que.
+- `career-training/`: que facultades estoy entrenando.
+- `perfil/`: evidencia profesional propia (`data/` + `assets/`).
+- `publicables/`: CV, landing, skills sheet y posts.
+- `generadores/`: TypeScript que genera HTML/PDF/site.
+- `dist/`: outputs generados y raiz publicada.
 
-`dr-cv` is my personal professional identity, structured as code.
+## Publicacion
 
-Everything that describes me — skills, experience, cases, clients, testimonials — lives in `/data/` as YAML. A thin TypeScript generator reads that data and emits the artifacts clients actually see: a PDF skills sheet today, multiple CV variants and a landing page soon.
+La landing vive en `dist/landing-v11/` y se publica por GitHub Pages desde `.github/workflows/static.yml`.
 
-The thesis: I ship real products, and I ship the tools agents use to help me ship them. This repo is one of those tools.
+Rutas clave:
 
----
+- `danilorojas.design/`
+- `danilorojas.design/es/`
+- `danilorojas.design/work/*`
+- `danilorojas.design/app`
+- `danilorojas.design/daily`
 
-## Phase 1 · Skills sheet — shipped
+`/app` y `/daily` son publicas por URL directa, pero no se enlazan desde la landing principal.
+
+## Fuentes importantes
+
+| Quiero cambiar... | Editar |
+|---|---|
+| Identidad, experiencia, skills, casos | `perfil/data/` |
+| Foto y animaciones fuente | `perfil/assets/` |
+| Daily tracker | `carrera/daily/index.html` |
+| Career training app | `career-training/ur-assessment/index.html` |
+| Landing/CV generation | `generadores/` |
+| Design system activo | `design-system/` |
+| Specs, plans, exploraciones | `laboratorio/` |
+
+## Comandos
 
 ```bash
 npm install
 npm run build:skills-sheet
-```
-
-Produces:
-- `dist/skills-sheet-en.html` + `.pdf` (2 A4 pages)
-- `dist/skills-sheet-es.html` + `.pdf` (2 A4 pages)
-
-## Phase 2 · CV variants — shipped
-
-```bash
 npm run build:cvs
-```
-
-Produces 5 PDFs in `dist/cvs/`:
-- `cv-warm-{en,es}.pdf` — LinkedIn warm (Agentic Designer, featured-dark, 5 testimonials)
-- `cv-serious-{en,es}.pdf` — LinkedIn serious (accent border, verified-only testimonials)
-- `cv-bairesdev-en.pdf` — BairesDev placement (minimalist sans+mono, grayscale, no testimonials)
-
-## Phase 3 · Landing page v11 — shipped
-
-```bash
 npm run build:landing-v11
-npx http-server dist/landing-v11 -p 5174    # serve locally
+npm run build:all
+npm test
+npm run typecheck
 ```
 
-Produces:
-- `dist/landing-v11/index.html` (English)
-- `dist/landing-v11/es/index.html` (Spanish)
-- `dist/landing-v11/work/<slug>/index.html` — case detail pages (EN)
-- `dist/landing-v11/es/work/<slug>/index.html` — case detail pages (ES)
+Nota: los comandos que renderizan PDF/OG usan Puppeteer. En Codex sandbox pueden requerir ejecucion fuera del sandbox para que Chromium arranque.
 
-Edit any file under `/data/*.yaml` or `/data/landing.yaml`, rebuild, and the output reflects the change.
+## Outputs
 
----
+- `dist/skills-sheet-{en,es}.{html,pdf}`
+- `dist/cvs/*.pdf`
+- `dist/landing-v11/`
 
-## Structure
-
-Ver `CLAUDE.md` para la política completa. Resumen:
-
-```
-dr-cv/
-├── productos/               # qué sale de aquí, organizado por deliverable
-│   ├── cv/                  # CVs PDF (warm / serious / bairesdev × EN/ES)
-│   ├── skills-sheet/        # skills sheet 2 páginas A4
-│   ├── landing/             # landing v11 (danilorojas.design)
-│   └── social/              # LinkedIn, contenido hecho a mano
-│
-├── data/                    # single source of truth (YAML + cases MD)
-├── design-system/           # tokens CSS por variante
-├── generators/              # code: data → HTML/PDF
-│   ├── lib/                 # types, loader, renderers
-│   └── templates/           # pure functions: (data, lang) → html
-├── tests/                   # vitest suites
-├── assets/                  # photo, animations (copiados a dist/ en build)
-├── dist/                    # outputs generados
-│
-├── pruebas/                 # TODO lo exploratorio vive aquí
-│   ├── superpowers/         # specs, plans, visuals (brainstorming artifacts)
-│   ├── landing-exploration/ # variantes descartadas de la landing
-│   ├── prompts/             # feedback guardado del usuario
-│   └── audits/              # auditorías internas
-│
-└── referencias/             # inspiración externa (Huly, hiring, visual)
-```
-
----
-
-## Commands
-
-| Command | What it does |
-|---|---|
-| `npm install` | Install deps (Node 20+, TS, vitest, puppeteer, js-yaml) |
-| `npm run build:skills-sheet` | Regenerate `dist/skills-sheet-{en,es}.{html,pdf}` |
-| `npm run build:cvs` | Regenerate 5 CV PDFs in `dist/cvs/` |
-| `npm run build:landing-v11` | Regenerate `dist/landing-v11/` (landing + case details, EN+ES) |
-| `npm run build:all` | Run all three generators in sequence |
-| `npm test` | Run the full test suite (158 tests) |
-| `npm run typecheck` | Verify TypeScript types |
-
----
-
-## Next phases
-
-- **Phase 4+** — The "me" agent conversational interface · testimonial pipeline · auto-update agents · custom domain (`danilorojas.design`)
-
-Each phase gets its own spec + plan before code.
-
----
-
-## Positioning
-
-**Agentic Designer · Product Engineer**
-
-Fifteen years of delivery. Currently consulting at Booz Allen Hamilton on the Trusted Environments program. Building EnRegla, my own compliance SaaS, now with early paying pilots.
-
-The combination is the product.
+No editar `dist/` a mano. Editar fuentes y regenerar.

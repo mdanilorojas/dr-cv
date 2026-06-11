@@ -18,7 +18,7 @@ import type {
   EducationItem,
   AttributedTestimonial,
   CvData,
-} from "../generators/lib/types.js";
+} from "../generadores/lib/types.js";
 
 describe("data schema types", () => {
   it("Skill has name, level, optional note", () => {

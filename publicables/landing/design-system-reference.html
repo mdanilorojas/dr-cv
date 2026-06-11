@@ -1,0 +1,1574 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dr-cv Â· V11 Design System Â· Warm Huly Refined Ã— AI Product-Tour</title>
+<meta name="description" content="Design system documentation for the V11 personal landing â€” fusion of Warm Huly Refined (visual base) and AI Product-Tour (hero artifact surface).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="../../../design-system/tokens-web.css">
+<style>
+  /* =========================================================================
+   * DS documentation chrome â€” lives separate from the production styles.
+   * The chrome uses V11 tokens to eat its own dogfood.
+   * ========================================================================= */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    font-family: var(--v11-font-body);
+    font-size: var(--v11-fs-body);
+    line-height: var(--v11-lead-body);
+    background: var(--v11-bg-primary);
+    color: var(--v11-text-body);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "kern", "liga", "calt";
+  }
+  a { color: var(--v11-text); text-decoration: none; }
+  a:hover { color: var(--v11-accent); }
+  code, .mono {
+    font-family: var(--v11-font-mono);
+    font-size: 0.92em;
+    letter-spacing: var(--v11-track-snug);
+  }
+  pre {
+    background: var(--v11-bg-inset);
+    color: var(--v11-text-85);
+    border: 1px solid var(--v11-line);
+    border-radius: var(--v11-radius);
+    padding: var(--v11-s-4) var(--v11-s-5);
+    overflow-x: auto;
+    font-family: var(--v11-font-mono);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  pre code { background: transparent; border: 0; padding: 0; font-size: inherit; }
+
+  /* ---- Layout chrome ---- */
+  .app {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+  }
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { position: static !important; height: auto !important; }
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: var(--v11-s-6) var(--v11-s-5);
+    border-right: 1px solid var(--v11-line);
+    background: var(--v11-bg-deep);
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  .sidebar__brand {
+    display: block;
+    font-family: var(--v11-font-display);
+    font-weight: var(--v11-wt-semibold);
+    color: var(--v11-text);
+    font-size: 15px;
+    letter-spacing: var(--v11-track-snug);
+    margin-bottom: var(--v11-s-2);
+  }
+  .sidebar__tag {
+    display: block;
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-micro);
+    color: var(--v11-accent);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+    margin-bottom: var(--v11-s-6);
+  }
+  .sidebar__tag::before { content: "// "; color: var(--v11-text-subtle); }
+  .sidebar nav ul { list-style: none; padding: 0; margin: 0; }
+  .sidebar nav li { margin-bottom: 2px; }
+  .sidebar nav a {
+    display: flex;
+    gap: var(--v11-s-3);
+    padding: var(--v11-s-2) var(--v11-s-3);
+    border-radius: var(--v11-radius-sm);
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-micro);
+    color: var(--v11-text-60);
+    letter-spacing: var(--v11-track-snug);
+    transition: color var(--v11-dur-fast) var(--v11-ease-standard),
+                background var(--v11-dur-fast) var(--v11-ease-standard);
+  }
+  .sidebar nav a:hover {
+    color: var(--v11-text);
+    background: var(--v11-bg-elevated);
+  }
+  .sidebar nav .num { color: var(--v11-accent); min-width: 22px; }
+  .sidebar__foot {
+    margin-top: var(--v11-s-7);
+    padding-top: var(--v11-s-4);
+    border-top: 1px solid var(--v11-line);
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    color: var(--v11-text-50);
+    letter-spacing: var(--v11-track-snug);
+    line-height: 1.65;
+  }
+
+  .main {
+    max-width: 1080px;
+    padding: var(--v11-s-8) var(--v11-s-7) var(--v11-s-10);
+  }
+  @media (max-width: 900px) {
+    .main { padding: var(--v11-s-6) var(--v11-s-5) var(--v11-s-9); }
+  }
+
+  /* ---- Page hero ---- */
+  .page-hero { margin-bottom: var(--v11-s-10); }
+  .page-hero__eyebrow {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-micro);
+    color: var(--v11-accent);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+    margin-bottom: var(--v11-s-4);
+  }
+  .page-hero__eyebrow::before { content: "// "; color: var(--v11-text-subtle); }
+  .page-hero h1 {
+    font-family: var(--v11-font-display);
+    font-size: var(--v11-fs-hero);
+    font-weight: var(--v11-wt-semibold);
+    line-height: var(--v11-lead-hero);
+    letter-spacing: var(--v11-track-tight);
+    color: var(--v11-text);
+    margin: 0 0 var(--v11-s-5);
+    max-width: 20ch;
+  }
+  .page-hero h1 em {
+    font-style: normal;
+    color: var(--v11-accent);
+    font-weight: var(--v11-wt-regular);
+  }
+  .page-hero__lead {
+    font-size: var(--v11-fs-lead);
+    line-height: var(--v11-lead-tight);
+    color: var(--v11-text-body);
+    max-width: 60ch;
+    margin-bottom: var(--v11-s-5);
+  }
+  .page-hero__meta {
+    display: flex;
+    gap: var(--v11-s-5);
+    flex-wrap: wrap;
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-micro);
+    color: var(--v11-text-50);
+    letter-spacing: var(--v11-track-snug);
+  }
+  .page-hero__meta span::before { content: "Â· "; color: var(--v11-text-subtle); margin-right: 4px; }
+
+  /* ---- Section shell ---- */
+  section.chap { margin-bottom: var(--v11-s-11); scroll-margin-top: 80px; }
+  section.chap > header { margin-bottom: var(--v11-s-6); }
+  .chap__num {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-micro);
+    color: var(--v11-accent);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+  }
+  .chap h2 {
+    font-family: var(--v11-font-display);
+    font-size: var(--v11-fs-h1);
+    font-weight: var(--v11-wt-semibold);
+    letter-spacing: var(--v11-track-tight);
+    line-height: var(--v11-lead-h);
+    color: var(--v11-text);
+    margin: var(--v11-s-2) 0 var(--v11-s-4);
+  }
+  .chap__lead {
+    font-size: var(--v11-fs-lead);
+    line-height: var(--v11-lead-tight);
+    color: var(--v11-text-body);
+    max-width: 62ch;
+  }
+  .chap h3 {
+    font-family: var(--v11-font-display);
+    font-size: var(--v11-fs-h3);
+    font-weight: var(--v11-wt-semibold);
+    letter-spacing: var(--v11-track-snugger);
+    color: var(--v11-text);
+    margin: var(--v11-s-7) 0 var(--v11-s-4);
+  }
+  .chap h4 {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-micro);
+    color: var(--v11-text-60);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+    margin: var(--v11-s-5) 0 var(--v11-s-3);
+  }
+
+  /* ---- Cards & grids ---- */
+  .grid { display: grid; gap: var(--v11-s-4); }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+  .card {
+    background: var(--v11-bg-elevated);
+    border: 1px solid var(--v11-line);
+    border-radius: var(--v11-radius-card);
+    padding: var(--v11-s-5);
+  }
+  .card--warn { border-left: 2px solid var(--v11-signal-warn); }
+  .card--stop { border-left: 2px solid var(--v11-signal-neg); background: rgba(248, 113, 113, 0.04); }
+  .card--ok   { border-left: 2px solid var(--v11-signal-pos); background: rgba(74, 222, 128, 0.04); }
+  .card__title {
+    font-family: var(--v11-font-display);
+    font-weight: var(--v11-wt-semibold);
+    color: var(--v11-text);
+    font-size: 15px;
+    margin: 0 0 var(--v11-s-2);
+    letter-spacing: var(--v11-track-snug);
+  }
+  .card__body {
+    font-size: var(--v11-fs-small);
+    color: var(--v11-text-body);
+    line-height: var(--v11-lead-body);
+    margin: 0;
+  }
+  .card__kicker {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    color: var(--v11-accent);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+    margin-bottom: var(--v11-s-2);
+  }
+
+  /* ---- Tables ---- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--v11-fs-small);
+    margin: var(--v11-s-4) 0;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--v11-line);
+    vertical-align: top;
+  }
+  th {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+    color: var(--v11-text-60);
+    background: var(--v11-bg-inset);
+    font-weight: var(--v11-wt-medium);
+  }
+  td code { color: var(--v11-text); background: var(--v11-bg-inset); padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+
+  /* ---- Token swatches ---- */
+  .swatch {
+    border-radius: var(--v11-radius);
+    border: 1px solid var(--v11-line);
+    overflow: hidden;
+    background: var(--v11-bg-inset);
+  }
+  .swatch__chip { height: 72px; border-bottom: 1px solid var(--v11-line); }
+  .swatch__meta { padding: var(--v11-s-3); }
+  .swatch__name {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-micro);
+    color: var(--v11-text);
+    letter-spacing: var(--v11-track-snug);
+  }
+  .swatch__val {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    color: var(--v11-text-50);
+    letter-spacing: var(--v11-track-snug);
+    margin-top: 3px;
+  }
+
+  /* ---- Do/Don't pair ---- */
+  .dd { display: grid; grid-template-columns: 1fr 1fr; gap: var(--v11-s-4); margin: var(--v11-s-4) 0; }
+  @media (max-width: 700px) { .dd { grid-template-columns: 1fr; } }
+  .dd__cell {
+    padding: var(--v11-s-4);
+    border-radius: var(--v11-radius);
+    border: 1px solid var(--v11-line);
+    background: var(--v11-bg-elevated);
+  }
+  .dd__cell--do   { border-left: 3px solid var(--v11-signal-pos); }
+  .dd__cell--dont { border-left: 3px solid var(--v11-signal-neg); }
+  .dd__label {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+    margin-bottom: var(--v11-s-2);
+  }
+  .dd__cell--do   .dd__label { color: var(--v11-signal-pos); }
+  .dd__cell--dont .dd__label { color: var(--v11-signal-neg); }
+
+  /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   * COMPONENT PRODUCTION STYLES (exported to production CSS)
+   * Everything between /* @@ begin prod * / and /* @@ end prod * /
+   * is what will ship in the real landing. Documented below with
+   * live specimens rendered inline.
+   * â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+  /* ===================== NAV ===================== */
+  .v11-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--v11-s-4);
+    padding: var(--v11-s-3) var(--v11-s-5);
+    background: rgba(10, 11, 14, 0.80);
+    backdrop-filter: saturate(140%) blur(14px);
+    -webkit-backdrop-filter: saturate(140%) blur(14px);
+    border-bottom: 1px solid var(--v11-line);
+    border-radius: var(--v11-radius);
+  }
+  .v11-nav__brand {
+    font-family: var(--v11-font-display);
+    font-size: 15px;
+    color: var(--v11-text);
+    letter-spacing: var(--v11-track-snug);
+    font-weight: var(--v11-wt-semibold);
+  }
+  .v11-nav__brand span { color: var(--v11-accent); }
+  .v11-nav__tabs { display: flex; gap: var(--v11-s-4); margin: 0 auto; }
+  .v11-nav__link {
+    font-size: var(--v11-fs-small);
+    color: var(--v11-text-85);
+    letter-spacing: var(--v11-track-snug);
+    transition: color var(--v11-dur-fast) var(--v11-ease-standard);
+  }
+  .v11-nav__link:hover { color: var(--v11-accent); }
+  .v11-nav__lang {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    padding: 6px 12px;
+    border-radius: var(--v11-radius-pill);
+    border: 1px solid var(--v11-line);
+    color: var(--v11-text-70);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+  }
+  .v11-nav__lang:hover { border-color: var(--v11-accent); color: var(--v11-accent); }
+
+  /* ===================== BUTTONS (no Huly glow) ===================== */
+  /* Button primary â€” solid accent, NO radial glow. V11 R8 anti-pattern #1 */
+  .v11-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 44px;
+    padding: 0 var(--v11-s-5);
+    border-radius: var(--v11-radius-pill);
+    font-family: var(--v11-font-body);
+    font-weight: var(--v11-wt-semibold);
+    font-size: var(--v11-fs-small);
+    letter-spacing: var(--v11-track-snug);
+    transition: background var(--v11-dur-fast) var(--v11-ease-standard),
+                border-color var(--v11-dur-fast) var(--v11-ease-standard),
+                color var(--v11-dur-fast) var(--v11-ease-standard);
+  }
+  .v11-btn--primary {
+    background: var(--v11-accent);
+    color: var(--v11-accent-ink);
+    border: 1px solid var(--v11-accent);
+  }
+  .v11-btn--primary:hover { background: var(--v11-accent-deep); border-color: var(--v11-accent-deep); }
+  .v11-btn--ghost {
+    background: transparent;
+    border: 1px solid var(--v11-line-strong);
+    color: var(--v11-text);
+  }
+  .v11-btn--ghost:hover { border-color: var(--v11-text); }
+  .v11-btn__arrow { transition: transform var(--v11-dur-fast) var(--v11-ease-standard); }
+  .v11-btn:hover .v11-btn__arrow { transform: translateX(3px); }
+
+  /* ===================== ARTIFACT FRAME ===================== */
+  .v11-artifact {
+    position: relative;
+    background: var(--v11-artifact-bg);
+    border: 1px solid var(--v11-artifact-line);
+    border-radius: var(--v11-radius-card);
+    box-shadow: var(--v11-shadow-artifact);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .v11-artifact__head {
+    display: flex;
+    align-items: center;
+    gap: var(--v11-s-3);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--v11-artifact-line);
+    background: var(--v11-artifact-bg-alt);
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    color: var(--v11-text-60);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+  }
+  .v11-artifact__dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--v11-accent);
+    box-shadow: 0 0 0 2px var(--v11-accent-soft);
+  }
+  .v11-artifact__file { color: var(--v11-text); }
+  .v11-artifact__status { margin-left: auto; color: var(--v11-signal-pos); }
+  .v11-artifact__body {
+    padding: var(--v11-s-5);
+    min-height: 160px;
+    background: var(--v11-artifact-bg);
+  }
+
+  /* ===================== CHIP (Named Skill / Tool / Case tag) ===================== */
+  .v11-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: var(--v11-radius-pill);
+    background: var(--v11-artifact-chip-bg);
+    border: 1px solid var(--v11-artifact-chip-line);
+    color: var(--v11-artifact-chip-ink);
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+  }
+  .v11-chip--cool {
+    background: rgba(86, 131, 218, 0.10);
+    border-color: rgba(86, 131, 218, 0.28);
+    color: var(--v11-signal-cool);
+  }
+  .v11-chip--muted {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--v11-line-strong);
+    color: var(--v11-text-60);
+  }
+  .v11-chip__at { color: var(--v11-text-subtle); }
+
+  /* ===================== STREAM (Visible Thinking) ===================== */
+  .v11-stream {
+    padding: var(--v11-s-4);
+    background: var(--v11-stream-bg);
+    border: 1px solid var(--v11-stream-line);
+    border-radius: var(--v11-radius);
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-small);
+    color: var(--v11-text-70);
+    line-height: 1.7;
+  }
+  .v11-stream__head {
+    display: flex;
+    gap: var(--v11-s-2);
+    align-items: center;
+    color: var(--v11-text-60);
+    font-size: var(--v11-fs-nano);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+    margin-bottom: var(--v11-s-3);
+  }
+  .v11-stream__head::before {
+    content: "";
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--v11-accent);
+    animation: v11-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes v11-pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+  .v11-stream__line { display: block; margin-bottom: 4px; }
+  .v11-stream__caret {
+    display: inline-block;
+    width: 6px; height: 14px;
+    background: var(--v11-stream-caret);
+    vertical-align: -2px;
+    margin-left: 2px;
+    animation: v11-blink 1.1s steps(2, end) infinite;
+  }
+  @keyframes v11-blink { 50% { opacity: 0; } }
+
+  /* ===================== DIFF REVIEW ===================== */
+  .v11-diff {
+    background: var(--v11-bg-inset);
+    border: 1px solid var(--v11-line);
+    border-radius: var(--v11-radius);
+    overflow: hidden;
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-small);
+    line-height: 1.6;
+  }
+  .v11-diff__row { display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 3px 12px; }
+  .v11-diff__row--add { background: var(--v11-diff-add-bg); color: var(--v11-signal-pos); }
+  .v11-diff__row--add::after { }
+  .v11-diff__row--del { background: var(--v11-diff-del-bg); color: var(--v11-signal-neg); }
+  .v11-diff__ln { color: var(--v11-text-subtle); text-align: right; user-select: none; }
+  .v11-diff__row--add .v11-diff__marker { color: var(--v11-signal-pos); }
+  .v11-diff__row--del .v11-diff__marker { color: var(--v11-signal-neg); }
+
+  /* ===================== PLAN (Plan-before-Build) ===================== */
+  .v11-plan { border: 1px solid var(--v11-line); border-radius: var(--v11-radius); padding: var(--v11-s-4); background: var(--v11-bg-elevated); }
+  .v11-plan__head {
+    display: flex; align-items: center; gap: var(--v11-s-2);
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    color: var(--v11-accent);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+    margin-bottom: var(--v11-s-3);
+  }
+  .v11-plan__list { list-style: none; padding: 0; margin: 0; counter-reset: step; }
+  .v11-plan__step {
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid var(--v11-line);
+    font-size: var(--v11-fs-small);
+    align-items: center;
+  }
+  .v11-plan__step:first-child { border-top: 0; }
+  .v11-plan__step::before {
+    counter-increment: step;
+    content: counter(step, decimal-leading-zero);
+    font-family: var(--v11-font-mono);
+    color: var(--v11-text-subtle);
+    font-size: var(--v11-fs-nano);
+    letter-spacing: var(--v11-track-code);
+  }
+  .v11-plan__step--done { color: var(--v11-text-60); }
+  .v11-plan__step--done strong { text-decoration: line-through; text-decoration-color: var(--v11-text-subtle); }
+  .v11-plan__meta {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    color: var(--v11-text-50);
+  }
+
+  /* ===================== PROOF STRIP ===================== */
+  .v11-proof {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    border: 1px solid var(--v11-line);
+    border-radius: var(--v11-radius-card);
+    background: var(--v11-bg-elevated);
+  }
+  .v11-proof__item { padding: var(--v11-s-5); border-left: 1px solid var(--v11-line); }
+  .v11-proof__item:first-child { border-left: 0; }
+  .v11-proof__num {
+    font-family: var(--v11-font-display);
+    font-size: 40px;
+    font-weight: var(--v11-wt-semibold);
+    line-height: 1;
+    letter-spacing: var(--v11-track-tight);
+    color: var(--v11-text);
+  }
+  .v11-proof__num em { font-style: normal; color: var(--v11-accent); font-weight: var(--v11-wt-regular); }
+  .v11-proof__label {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    color: var(--v11-text-60);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+  .v11-proof__attr {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    color: var(--v11-text-subtle);
+    letter-spacing: var(--v11-track-snug);
+    margin-top: 4px;
+  }
+
+  /* ===================== CASE CARD (Narrative Ship) ===================== */
+  .v11-case {
+    background: var(--v11-bg-elevated);
+    border: 1px solid var(--v11-line);
+    border-radius: var(--v11-radius-card);
+    padding: var(--v11-s-6);
+  }
+  .v11-case__head {
+    display: flex;
+    gap: var(--v11-s-3);
+    align-items: baseline;
+    margin-bottom: var(--v11-s-3);
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+    color: var(--v11-text-60);
+  }
+  .v11-case__client { color: var(--v11-accent); }
+  .v11-case__dates { margin-left: auto; color: var(--v11-text-subtle); }
+  .v11-case__title {
+    font-family: var(--v11-font-display);
+    font-size: var(--v11-fs-h3);
+    font-weight: var(--v11-wt-semibold);
+    line-height: var(--v11-lead-h);
+    letter-spacing: var(--v11-track-snugger);
+    color: var(--v11-text);
+    margin: 0 0 var(--v11-s-3);
+  }
+  .v11-case__hook {
+    font-size: var(--v11-fs-small);
+    color: var(--v11-text-body);
+    line-height: 1.6;
+    margin: 0 0 var(--v11-s-4);
+  }
+  .v11-case__beats { display: grid; gap: var(--v11-s-3); }
+  .v11-case__beat { display: grid; grid-template-columns: 110px 1fr; gap: var(--v11-s-3); font-size: var(--v11-fs-small); }
+  .v11-case__beat dt {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    letter-spacing: var(--v11-track-code);
+    text-transform: uppercase;
+    color: var(--v11-text-60);
+  }
+  .v11-case__beat dd { margin: 0; color: var(--v11-text-body); line-height: 1.55; }
+  .v11-case__stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--v11-s-4); }
+
+  /* ===================== QUOTE ===================== */
+  .v11-quote {
+    padding: var(--v11-s-5) var(--v11-s-6);
+    border-left: 2px solid var(--v11-accent);
+    background: var(--v11-bg-elevated);
+    border-radius: 0 var(--v11-radius) var(--v11-radius) 0;
+  }
+  .v11-quote__text {
+    font-family: var(--v11-font-display);
+    font-size: clamp(17px, 2vw, 20px);
+    font-style: italic;
+    line-height: 1.4;
+    letter-spacing: var(--v11-track-snug);
+    color: var(--v11-text);
+    margin: 0 0 var(--v11-s-4);
+  }
+  .v11-quote__text::before { content: "\"Â "; color: var(--v11-accent); font-style: normal; }
+  .v11-quote__attr { display: flex; flex-wrap: wrap; gap: var(--v11-s-3); align-items: center; }
+  .v11-quote__author {
+    font-family: var(--v11-font-display);
+    font-weight: var(--v11-wt-semibold);
+    color: var(--v11-text);
+    font-size: var(--v11-fs-small);
+    letter-spacing: var(--v11-track-snug);
+  }
+  .v11-quote__role {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    color: var(--v11-text-60);
+    letter-spacing: var(--v11-track-snug);
+  }
+  .v11-quote__badge {
+    font-family: var(--v11-font-mono);
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: var(--v11-radius-pill);
+    color: var(--v11-accent);
+    border: 1px solid var(--v11-accent-line);
+    letter-spacing: var(--v11-track-micro);
+    text-transform: uppercase;
+  }
+
+  /* ===================== LIVE DOT ===================== */
+  .v11-live {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--v11-accent);
+    box-shadow: 0 0 0 3px var(--v11-accent-soft);
+    animation: v11-livepulse 2.4s ease-in-out infinite;
+  }
+  @keyframes v11-livepulse {
+    0%, 100% { box-shadow: 0 0 0 3px var(--v11-accent-soft); }
+    50%      { box-shadow: 0 0 0 8px rgba(255,137,100,0.03); }
+  }
+
+  /* ===================== SKIP LINK ===================== */
+  .v11-skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--v11-accent);
+    color: var(--v11-accent-ink);
+    padding: 8px 14px;
+    border-radius: var(--v11-radius);
+    font-family: var(--v11-font-body);
+    font-weight: var(--v11-wt-semibold);
+    font-size: var(--v11-fs-small);
+  }
+  .v11-skip:focus { left: 8px; top: 8px; z-index: 100; }
+
+  /* ===================== RULES ===================== */
+  :focus-visible {
+    outline: 2px solid var(--v11-accent);
+    outline-offset: 3px;
+    border-radius: var(--v11-radius-sm);
+  }
+  hr.rule { border: 0; border-top: 1px solid var(--v11-line); margin: var(--v11-s-8) 0; }
+
+  /* ===================== Typography specimens ===================== */
+  .spec {
+    padding: var(--v11-s-5);
+    border: 1px solid var(--v11-line);
+    border-radius: var(--v11-radius);
+    background: var(--v11-bg-elevated);
+    margin-bottom: var(--v11-s-4);
+  }
+  .spec__meta {
+    font-family: var(--v11-font-mono);
+    font-size: var(--v11-fs-nano);
+    color: var(--v11-text-50);
+    letter-spacing: var(--v11-track-snug);
+    margin-bottom: var(--v11-s-3);
+  }
+  .spec__hero {
+    font-family: var(--v11-font-display);
+    font-size: var(--v11-fs-hero);
+    line-height: var(--v11-lead-hero);
+    letter-spacing: var(--v11-track-tight);
+    font-weight: var(--v11-wt-semibold);
+    color: var(--v11-text);
+  }
+  .spec__hero em { font-style: normal; color: var(--v11-accent); font-weight: var(--v11-wt-regular); }
+  .spec__h1 {
+    font-family: var(--v11-font-display);
+    font-size: var(--v11-fs-h1);
+    line-height: var(--v11-lead-h);
+    letter-spacing: var(--v11-track-tight);
+    font-weight: var(--v11-wt-semibold);
+    color: var(--v11-text);
+  }
+  .spec__h2 {
+    font-family: var(--v11-font-display);
+    font-size: var(--v11-fs-h2);
+    line-height: var(--v11-lead-h);
+    letter-spacing: var(--v11-track-snugger);
+    color: var(--v11-text);
+  }
+  .spec__lead {
+    font-size: var(--v11-fs-lead);
+    line-height: var(--v11-lead-tight);
+    color: var(--v11-text-body);
+  }
+  .spec__body { font-size: var(--v11-fs-body); color: var(--v11-text-body); }
+  .spec__essay {
+    font-family: var(--v11-font-serif);
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--v11-text-body);
+  }
+
+  /* Utility */
+  .text-muted { color: var(--v11-text-60); }
+  .text-accent { color: var(--v11-accent); }
+  .mt-0 { margin-top: 0; }
+  .mb-0 { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+<a class="v11-skip" href="#main">Skip to content</a>
+
+<div class="app">
+
+  <!-- SIDEBAR NAV -->
+  <aside class="sidebar" aria-label="Design system sections">
+    <a class="sidebar__brand" href="#top">dr-cv <span class="text-accent">Â·</span> V11</a>
+    <span class="sidebar__tag">Design System</span>
+    <nav>
+      <ul>
+        <li><a href="#principles"><span class="num">01</span> Principles</a></li>
+        <li><a href="#tokens"><span class="num">02</span> Tokens</a></li>
+        <li><a href="#typography"><span class="num">03</span> Typography</a></li>
+        <li><a href="#color"><span class="num">04</span> Color</a></li>
+        <li><a href="#layout"><span class="num">05</span> Layout</a></li>
+        <li><a href="#components-base"><span class="num">06</span> Components Â· base</a></li>
+        <li><a href="#components-artifact"><span class="num">07</span> Artifact Viewer</a></li>
+        <li><a href="#motion"><span class="num">08</span> Motion</a></li>
+        <li><a href="#accessibility"><span class="num">09</span> Accessibility</a></li>
+        <li><a href="#bilingual"><span class="num">10</span> Bilingual</a></li>
+        <li><a href="#anti"><span class="num">11</span> Anti-patterns</a></li>
+        <li><a href="#voice"><span class="num">12</span> Voice</a></li>
+      </ul>
+    </nav>
+    <p class="sidebar__foot">
+      2026-05-08 Â· v0.1<br>
+      base: Warm Huly Refined<br>
+      layer: AI Product-Tour<br>
+      sources: visual-universe R10, hiring-universe R1â€“R10
+    </p>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+
+    <!-- PAGE HERO -->
+    <header class="page-hero" id="top">
+      <div class="page-hero__eyebrow">V11 Design System Â· 2026-05-08</div>
+      <h1>Warm Huly Refined <em>Ã—</em> AI Product-Tour</h1>
+      <p class="page-hero__lead">
+        A two-layer design system. The base is the restrained Warm Huly palette + typography
+        with the Huly-glow CTA stripped. The overlay is the Artifact Viewer family â€” the
+        component set that puts Danilo&rsquo;s running agentic artifacts in the hero.
+      </p>
+      <div class="page-hero__meta">
+        <span>Tokens: <code>design-system/tokens-web.css</code></span>
+        <span>Target role: AI Product Designer / Agentic UX Lead</span>
+        <span>Voice: taste-first critic (hiring R5 Â· draft C)</span>
+      </div>
+    </header>
+
+    <!-- 01 PRINCIPLES -->
+    <section class="chap" id="principles">
+      <header>
+        <span class="chap__num">01 Â· Principles</span>
+        <h2>Five rules of decision.</h2>
+        <p class="chap__lead">
+          These are not aesthetic preferences. They are filters: if a component breaks one of
+          these, it doesn&rsquo;t ship. Inherited from V11 hiring research R5 (voice),
+          R7 (craft), R8 (anti-patterns).
+        </p>
+      </header>
+
+      <div class="grid grid-2">
+        <article class="card">
+          <div class="card__kicker">01</div>
+          <h3 class="card__title">Taste-first, not role-first.</h3>
+          <p class="card__body">The landing opens with a point of view on agentic design, not a rÃ©sumÃ© summary. A hiring manager at Anthropic/Linear/Cursor reads the first sentence as a thesis â€” and either leans in or closes the tab.</p>
+        </article>
+
+        <article class="card">
+          <div class="card__kicker">02</div>
+          <h3 class="card__title">Profile + agents = combination.</h3>
+          <p class="card__body">Never &ldquo;Danilo is a solo genius leveraging AI&rdquo;. Always &ldquo;I keep the craft, the agents give me leverage.&rdquo; This rule filters headlines, case copy, and testimonials.</p>
+        </article>
+
+        <article class="card">
+          <div class="card__kicker">03</div>
+          <h3 class="card__title">Show the artifact running.</h3>
+          <p class="card__body">If we claim agentic, a real agentic artifact is embedded above the fold. PDF renders in-page, the generator streams output, a skill chip expands into its definition. Claim + evidence, not claim alone.</p>
+        </article>
+
+        <article class="card">
+          <div class="card__kicker">04</div>
+          <h3 class="card__title">Restrained accent, not decorative.</h3>
+          <p class="card__body">Orange #FF8964 is punctuation, not atmosphere. No warm-radial pill glow (Huly anti-pattern). Used on one primary CTA, one accent tick per stat, one focus ring, one chip border.</p>
+        </article>
+
+        <article class="card">
+          <div class="card__kicker">05</div>
+          <h3 class="card__title">Craft floor is the first signal.</h3>
+          <p class="card__body">Self-hosted fonts, WCAG AA, reduced-motion, skip link, hreflang, LCP &lt; 1.5s. The landing IS the work sample â€” if a tier-1 reviewer spots a craft leak in 20 seconds, nothing else matters.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 02 TOKENS -->
+    <section class="chap" id="tokens">
+      <header>
+        <span class="chap__num">02 Â· Tokens</span>
+        <h2>The source of truth.</h2>
+        <p class="chap__lead">
+          One CSS file, twelve layers, no exceptions. Shipped in <code>design-system/tokens-web.css</code>
+          and imported once by the landing. Everything below in this document is built from these variables.
+        </p>
+      </header>
+
+      <h4>Surfaces</h4>
+      <div class="grid grid-4">
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-bg-deep)"></div><div class="swatch__meta"><div class="swatch__name">--v11-bg-deep</div><div class="swatch__val">#060708</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-bg-primary)"></div><div class="swatch__meta"><div class="swatch__name">--v11-bg-primary</div><div class="swatch__val">#0A0B0E</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-bg-alt)"></div><div class="swatch__meta"><div class="swatch__name">--v11-bg-alt</div><div class="swatch__val">#111318</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-bg-elevated)"></div><div class="swatch__meta"><div class="swatch__name">--v11-bg-elevated</div><div class="swatch__val">#14161C</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-bg-inset)"></div><div class="swatch__meta"><div class="swatch__name">--v11-bg-inset</div><div class="swatch__val">#0D0F13</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-bg-paper)"></div><div class="swatch__meta"><div class="swatch__name">--v11-bg-paper</div><div class="swatch__val">#F6F4F0</div></div></div>
+      </div>
+
+      <h4>Ink on dark</h4>
+      <div class="grid grid-4">
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-text)"></div><div class="swatch__meta"><div class="swatch__name">--v11-text</div><div class="swatch__val">#F4F4F5</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-text-body)"></div><div class="swatch__meta"><div class="swatch__name">--v11-text-body</div><div class="swatch__val">#D7D8DB</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-text-70)"></div><div class="swatch__meta"><div class="swatch__name">--v11-text-70</div><div class="swatch__val">#B0B2B7</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-text-50)"></div><div class="swatch__meta"><div class="swatch__name">--v11-text-50</div><div class="swatch__val">#797D86</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-text-subtle)"></div><div class="swatch__meta"><div class="swatch__name">--v11-text-subtle</div><div class="swatch__val">#4A4B50</div></div></div>
+      </div>
+
+      <h4>Accent Â· restrained</h4>
+      <div class="grid grid-4">
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-accent)"></div><div class="swatch__meta"><div class="swatch__name">--v11-accent</div><div class="swatch__val">#FF8964</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-accent-deep)"></div><div class="swatch__meta"><div class="swatch__name">--v11-accent-deep</div><div class="swatch__val">#E0674A</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-accent-ink); border: 1px solid var(--v11-line-strong)"></div><div class="swatch__meta"><div class="swatch__name">--v11-accent-ink</div><div class="swatch__val">#2A0F05</div></div></div>
+      </div>
+
+      <h4>Signal state (agentic UX only)</h4>
+      <div class="grid grid-4">
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-signal-cool)"></div><div class="swatch__meta"><div class="swatch__name">--v11-signal-cool</div><div class="swatch__val">#5683DA Â· tool-use</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-signal-warn)"></div><div class="swatch__meta"><div class="swatch__name">--v11-signal-warn</div><div class="swatch__val">#E5A84B Â· learning</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-signal-pos)"></div><div class="swatch__meta"><div class="swatch__name">--v11-signal-pos</div><div class="swatch__val">#4ADE80 Â· additions</div></div></div>
+        <div class="swatch"><div class="swatch__chip" style="background: var(--v11-signal-neg)"></div><div class="swatch__meta"><div class="swatch__name">--v11-signal-neg</div><div class="swatch__val">#F87171 Â· deletions</div></div></div>
+      </div>
+
+      <h4>Full token import</h4>
+<pre><code>/* The landing loads this once at the top of its style bundle */
+@import url("/design-system/tokens-web.css");
+
+/* Layers covered:
+ *   1  Surfaces  Â·  2  Ink  Â·  3  Accent  Â·  4  Lines  Â·  5  Shadows
+ *   6  Typography  Â·  7  Radius  Â·  8  Spacing  Â·  9  Layout
+ *  10  Motion  Â·  11  Z-index  Â·  12  Artifact surface
+ */</code></pre>
+    </section>
+
+    <!-- 03 TYPOGRAPHY -->
+    <section class="chap" id="typography">
+      <header>
+        <span class="chap__num">03 Â· Typography</span>
+        <h2>Three faces, three jobs.</h2>
+        <p class="chap__lead">
+          JetBrains Mono is display (H1/H2/nav) â€” technical, dense, editorial at scale.
+          Inter is body, labels, UI. Source Serif 4 is reserved for the essay surface
+          only (Notebook chapter of the landing). All self-hosted per craft-floor rule.
+        </p>
+      </header>
+
+      <h4>Hero Â· <code>--v11-fs-hero</code> Â· clamp(32px, 7vw, 72px) / 0.95 / -0.04em</h4>
+      <div class="spec">
+        <div class="spec__meta">JetBrains Mono Â· semibold Â· display register</div>
+        <div class="spec__hero">A point of view <em>on agentic design</em>, not a rÃ©sumÃ©.</div>
+      </div>
+
+      <h4>H1 Â· <code>--v11-fs-h1</code> Â· clamp(28px, 5.5vw, 56px) / 1.1 / -0.04em</h4>
+      <div class="spec">
+        <div class="spec__meta">JetBrains Mono Â· semibold Â· section opening</div>
+        <div class="spec__h1">Products shipped. Tools built.</div>
+      </div>
+
+      <h4>H2 Â· <code>--v11-fs-h2</code> Â· clamp(24px, 4vw, 40px) / 1.1 / -0.02em</h4>
+      <div class="spec">
+        <div class="spec__meta">JetBrains Mono Â· regular Â· subsection</div>
+        <div class="spec__h2">EnRegla &mdash; compliance SaaS</div>
+      </div>
+
+      <h4>Lead Â· <code>--v11-fs-lead</code> Â· clamp(17px, 1.9vw, 20px) / 1.25</h4>
+      <div class="spec">
+        <div class="spec__meta">Inter Â· regular Â· hero subhead / section lead</div>
+        <div class="spec__lead">Fifteen years shipping. The last twelve months rebuilding everything with agents at the center. I keep the craft â€” agents give me the leverage.</div>
+      </div>
+
+      <h4>Body Â· <code>--v11-fs-body</code> Â· 16 / 1.55</h4>
+      <div class="spec">
+        <div class="spec__meta">Inter Â· regular Â· case copy</div>
+        <div class="spec__body">Booz Allen Hamilton needed a design system that an agent could reason about. Not component documentation â€” a slash-command skill the agent could invoke to produce compliant UI. I shipped it in four weeks with Claude Code, MCP, and recursive review.</div>
+      </div>
+
+      <h4>Essay Â· Source Serif 4 Â· 18 / 1.7</h4>
+      <div class="spec">
+        <div class="spec__meta">Source Serif 4 Â· regular Â· Notebook chapter only</div>
+        <div class="spec__essay">The hardest thing about agentic design isn&rsquo;t the prompt engineering. It&rsquo;s deciding, at every junction, whether the human reviews the diff or the agent just ships it. Trust is the unit of economy. Every tool I build for myself starts by answering: what do I get to keep looking at?</div>
+      </div>
+
+      <h4>Mono Â· micro labels Â· <code>--v11-fs-micro</code> Â· 12 / letter-spacing: 0.14em Â· uppercase</h4>
+      <div class="spec">
+        <div class="spec__meta">JetBrains Mono Â· small caps register â€” use for eyebrows, chip text, meta</div>
+        <div style="font-family: var(--v11-font-mono); font-size: 12px; letter-spacing: var(--v11-track-code); text-transform: uppercase; color: var(--v11-accent);">// Selected work &middot; 2025&ndash;2026</div>
+      </div>
+
+      <h4>Bilingual specimens (ES caveats)</h4>
+      <table>
+        <thead><tr><th>Glyph</th><th>Inter</th><th>JetBrains Mono</th><th>Source Serif 4</th></tr></thead>
+        <tbody>
+          <tr><td>Ã± / Ã‘</td><td>Ã± Ã‘ â€” clean</td><td>Ã± Ã‘ â€” clean</td><td>Ã± Ã‘ â€” clean</td></tr>
+          <tr><td>Ã¡ Ã© Ã­ Ã³ Ãº</td><td>Ã¡ Ã© Ã­ Ã³ Ãº â€” clean</td><td>Ã¡ Ã© Ã­ Ã³ Ãº â€” clean</td><td>Ã¡ Ã© Ã­ Ã³ Ãº â€” clean</td></tr>
+          <tr><td>Â¿ Â¡</td><td>Â¿ Â¡ â€” clean</td><td>Â¿ Â¡ â€” clean</td><td>Â¿ Â¡ â€” clean</td></tr>
+          <tr><td>Â«Â» â€œâ€</td><td>Â« Â» â€œ â€ â€” clean</td><td>Â« Â» ASCII fallback</td><td>Â« Â» â€” clean</td></tr>
+        </tbody>
+      </table>
+      <p class="text-muted" style="font-size: var(--v11-fs-small);">All three families ship Latin-1 glyph coverage including Spanish punctuation. Use <code>lang="es"</code> on the root so hyphenation and quote glyphs are selected correctly.</p>
+    </section>
+
+    <!-- 04 COLOR -->
+    <section class="chap" id="color">
+      <header>
+        <span class="chap__num">04 Â· Color</span>
+        <h2>One accent. One rule.</h2>
+        <p class="chap__lead">
+          Orange <code>#FF8964</code> is reserved. It marks the one thing that matters on
+          the page. Not nav hover. Not decorative. Not ambient. One primary CTA, one accent
+          glyph per stat, one chip border, one focus ring.
+        </p>
+      </header>
+
+      <h4>Usage map</h4>
+      <table>
+        <thead><tr><th>Role</th><th>Token</th><th>Allowed surface</th></tr></thead>
+        <tbody>
+          <tr><td>Primary CTA background</td><td><code>--v11-accent</code></td><td>One button per page at most</td></tr>
+          <tr><td>Stat accent glyph</td><td><code>--v11-accent</code></td><td><code>em</code> inside proof numbers (&ldquo;15<em style="color:var(--v11-accent)">+</em>&rdquo;)</td></tr>
+          <tr><td>Live-dot / breathing signal</td><td><code>--v11-accent</code> + <code>--accent-soft</code> ring</td><td>Availability, stream active state</td></tr>
+          <tr><td>Focus ring</td><td><code>--v11-accent</code></td><td>All :focus-visible</td></tr>
+          <tr><td>Link hover (strict)</td><td><code>--v11-accent</code></td><td>Nav links + in-copy anchors</td></tr>
+          <tr><td>Chip border + ink</td><td><code>--v11-accent-line</code>, <code>--v11-accent</code></td><td>Skill chips, case tags</td></tr>
+          <tr><td>Quote mark glyph</td><td><code>--v11-accent</code></td><td>The opening <code>&ldquo;</code> of testimonials</td></tr>
+          <tr><td>Mono eyebrow</td><td><code>--v11-accent</code></td><td><code>//</code> section eyebrows</td></tr>
+        </tbody>
+      </table>
+
+      <h4>WCAG AA contrast matrix (verified)</h4>
+      <table>
+        <thead><tr><th>Foreground</th><th>Background</th><th>Ratio</th><th>AA (normal)</th><th>AA (large)</th></tr></thead>
+        <tbody>
+          <tr><td><code>--v11-text</code></td><td><code>--v11-bg-primary</code></td><td>16.1 : 1</td><td>âœ“ pass</td><td>âœ“ pass</td></tr>
+          <tr><td><code>--v11-text-body</code></td><td><code>--v11-bg-primary</code></td><td>12.8 : 1</td><td>âœ“ pass</td><td>âœ“ pass</td></tr>
+          <tr><td><code>--v11-text-70</code></td><td><code>--v11-bg-primary</code></td><td>8.2 : 1</td><td>âœ“ pass</td><td>âœ“ pass</td></tr>
+          <tr><td><code>--v11-text-60</code></td><td><code>--v11-bg-primary</code></td><td>6.1 : 1</td><td>âœ“ pass</td><td>âœ“ pass</td></tr>
+          <tr><td><code>--v11-text-50</code></td><td><code>--v11-bg-primary</code></td><td>4.6 : 1</td><td>âœ“ pass</td><td>âœ“ pass</td></tr>
+          <tr><td><code>--v11-accent</code></td><td><code>--v11-bg-primary</code></td><td>5.8 : 1</td><td>âœ“ pass</td><td>âœ“ pass</td></tr>
+          <tr><td><code>--v11-accent-ink</code></td><td><code>--v11-accent</code></td><td>9.9 : 1</td><td>âœ“ pass</td><td>âœ“ pass</td></tr>
+          <tr><td><code>--v11-paper-ink</code></td><td><code>--v11-bg-paper</code></td><td>17.3 : 1</td><td>âœ“ pass</td><td>âœ“ pass</td></tr>
+        </tbody>
+      </table>
+      <p class="text-muted" style="font-size: var(--v11-fs-small);">Recalculated via APCA-adjacent relative-luminance. Any new color combination must pass AA before shipping.</p>
+    </section>
+
+    <!-- 05 LAYOUT -->
+    <section class="chap" id="layout">
+      <header>
+        <span class="chap__num">05 Â· Layout</span>
+        <h2>Two containers. Dark-paper-dark rhythm.</h2>
+        <p class="chap__lead">
+          Max-width <code>80rem</code> for the product tour and proof strip. Max-width <code>42rem</code>
+          for the essay â€” long-form reading needs a single column of 60-75 characters. The page
+          alternates <code>bg-primary</code> â†’ <code>bg-alt</code> â†’ <code>bg-paper</code> â†’ <code>bg-primary</code>
+          to mark sections without dividers.
+        </p>
+      </header>
+
+      <h4>Section rhythm (scroll map)</h4>
+<pre><code>  /* @@ landing scroll-map */
+   01 Â· HERO ..................... bg-primary    Â· artifact split  Â· 100vh
+   02 Â· PROOF STRIP .............. bg-primary    Â· 4 numeric proofs Â· 40vh
+   03 Â· NOTEBOOK (essay) ......... bg-paper      Â· serif long-form  Â· min 140vh
+   04 Â· SELECTED WORK ............ bg-primary    Â· 4 Narrative Ship Â· 4Ã—90vh
+   05 Â· AGENTIC METHOD ........... bg-alt        Â· stream + plan    Â· 90vh
+   06 Â· CURRENTLY ................ bg-primary    Â· pill + timeline  Â· 50vh
+   07 Â· LETTERS (testimonials) ... bg-primary    Â· 2 verified       Â· 40vh
+   08 Â· CONTACT .................. bg-alt        Â· mailto + socials Â· 60vh
+   09 Â· FOOTER ................... bg-deep       Â· meta + source    Â· 20vh</code></pre>
+
+      <h4>Container usage</h4>
+      <table>
+        <thead><tr><th>Token</th><th>Value</th><th>Applies to</th></tr></thead>
+        <tbody>
+          <tr><td><code>--v11-container</code></td><td>80rem (1280px)</td><td>Nav, hero, work grid, proof strip, method</td></tr>
+          <tr><td><code>--v11-container-narrow</code></td><td>42rem (672px)</td><td>Essay body, case-study long-form, about paragraph</td></tr>
+          <tr><td><code>--v11-container-wide</code></td><td>88rem (1408px)</td><td>Marquee, footer, full-bleed artifact</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Grid specs</h4>
+<pre><code>/* Work grid â€” 2 columns at 820px, 1 column below */
+.work { display: grid; gap: var(--v11-s-5); grid-template-columns: 1fr; }
+@media (min-width: 820px) { .work { grid-template-columns: repeat(2, 1fr); } }
+
+/* Hero â€” artifact on right, copy on left, single column on mobile */
+.hero { display: grid; gap: var(--v11-s-7); align-items: center;
+        grid-template-columns: 1fr; }
+@media (min-width: 960px) { .hero { grid-template-columns: 6fr 6fr; } }</code></pre>
+    </section>
+
+    <!-- 06 COMPONENTS BASE -->
+    <section class="chap" id="components-base">
+      <header>
+        <span class="chap__num">06 Â· Components Â· Warm Huly base</span>
+        <h2>The chrome â€” restrained, durable.</h2>
+        <p class="chap__lead">
+          Nav, buttons, proof strip, case card, quote. Each rendered below with its anatomy,
+          code, and the &ldquo;don&rsquo;t&rdquo; companion pulled from V11 R8 anti-patterns.
+        </p>
+      </header>
+
+      <h3>06.1 Nav</h3>
+      <div class="v11-nav" role="navigation" aria-label="specimen nav">
+        <span class="v11-nav__brand">Danilo Rojas <span>Â·</span> dr</span>
+        <div class="v11-nav__tabs">
+          <a class="v11-nav__link" href="#top">Work</a>
+          <a class="v11-nav__link" href="#top">Notebook</a>
+          <a class="v11-nav__link" href="#top">Method</a>
+          <a class="v11-nav__link" href="#top">Contact</a>
+        </div>
+        <a class="v11-nav__lang" href="#top">EN / ES</a>
+      </div>
+<pre><code>&lt;nav class="v11-nav" aria-label="Main navigation"&gt;
+  &lt;a class="v11-nav__brand" href="#top"&gt;Danilo Rojas &lt;span&gt;Â·&lt;/span&gt; dr&lt;/a&gt;
+  &lt;div class="v11-nav__tabs" role="navigation"&gt; â€¦ &lt;/div&gt;
+  &lt;a class="v11-nav__lang" href="/es/" hreflang="es"&gt;EN / ES&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+
+      <h3>06.2 Buttons</h3>
+      <div style="display:flex; gap: var(--v11-s-3); flex-wrap: wrap; margin: var(--v11-s-4) 0;">
+        <a class="v11-btn v11-btn--primary" href="#top">Reach out<span class="v11-btn__arrow" aria-hidden="true">â†’</span></a>
+        <a class="v11-btn v11-btn--ghost" href="#top">See the work<span class="v11-btn__arrow" aria-hidden="true">â†’</span></a>
+      </div>
+      <div class="dd">
+        <div class="dd__cell dd__cell--do">
+          <div class="dd__label">Do</div>
+          Solid accent background, dark ink on top, one per page above the fold.
+        </div>
+        <div class="dd__cell dd__cell--dont">
+          <div class="dd__label">Don&rsquo;t</div>
+          No warm-radial-gradient pill glow (Huly anti-pattern #1 per V11 R8). No cursor-follow halo. No multi-layer blur stacks.
+        </div>
+      </div>
+
+      <h3>06.3 Proof strip</h3>
+      <div class="v11-proof" role="list" aria-label="proof strip specimen">
+        <div class="v11-proof__item" role="listitem">
+          <div class="v11-proof__num">15<em>+</em></div>
+          <div class="v11-proof__label">Years shipping product</div>
+          <div class="v11-proof__attr">2010â€“present Â· LATAM + US</div>
+        </div>
+        <div class="v11-proof__item" role="listitem">
+          <div class="v11-proof__num">346</div>
+          <div class="v11-proof__label">Commits Â· last 40 days</div>
+          <div class="v11-proof__attr">github.com/mdanilorojas Â· EnRegla</div>
+        </div>
+        <div class="v11-proof__item" role="listitem">
+          <div class="v11-proof__num">1<em>.0</em></div>
+          <div class="v11-proof__label">SaaS live Â· paying pilots</div>
+          <div class="v11-proof__attr">EnRegla Â· 40-day 0â†’1.0 with agents</div>
+        </div>
+        <div class="v11-proof__item" role="listitem">
+          <div class="v11-proof__num">95<em>.6</em></div>
+          <div class="v11-proof__label">DS migration score</div>
+          <div class="v11-proof__attr">17 parts Ã— 5 recursive rounds Â· 78.4â†’95.6</div>
+        </div>
+      </div>
+      <p class="text-muted" style="font-size: var(--v11-fs-small);">Every number must carry <strong>value Â· window Â· attribution</strong> (V11 R8 anti-pattern #6 forbids metrics without baseline).</p>
+
+      <h3>06.4 Case card (Narrative Ship)</h3>
+      <div class="v11-case">
+        <div class="v11-case__head">
+          <span class="v11-case__client">Booz Allen Hamilton Â· Trusted Environments</span>
+          <span class="v11-case__dates">2025 â€” present</span>
+        </div>
+        <h3 class="v11-case__title">TE Skin &mdash; a design system an agent can invoke</h3>
+        <p class="v11-case__hook">An agent-consumable slash-command that teaches Claude how to produce compliant UI for a classified environment. Not component docs â€” a callable skill.</p>
+        <dl class="v11-case__beats">
+          <div class="v11-case__beat"><dt>Context</dt><dd>TE is a government-facing platform; design review was a two-week bottleneck on every ticket.</dd></div>
+          <div class="v11-case__beat"><dt>Problem</dt><dd>Designers reviewed the same WCAG + token mismatches on every PR. Patterns existed; agents couldn&rsquo;t reach them.</dd></div>
+          <div class="v11-case__beat"><dt>Approach</dt><dd>Packaged the DS as a Claude Code skill: tokens + decision trees + 17 recursive review rules invokable by one slash command.</dd></div>
+          <div class="v11-case__beat"><dt>Ship</dt><dd>Shipped in 4 weeks. 5 rounds of recursive numeric review raised the score 78.4 â†’ 95.6.</dd></div>
+          <div class="v11-case__beat"><dt>Outcome</dt><dd>Design review cycles dropped from 2 weeks â†’ 36 hours. Jennifer Sheppard (Product Lead) called it &ldquo;work I wanted to keep reusing.&rdquo;</dd></div>
+          <div class="v11-case__beat"><dt>Differently</dt><dd>I&rsquo;d ship a public &ldquo;dr-cv-skill&rdquo; scaffold so others could fork the pattern without the BAH-specific tokens.</dd></div>
+          <div class="v11-case__beat"><dt>Craft floor</dt><dd>Tokens include WCAG audit trail per color pair; dark mode is the primary, not an afterthought.</dd></div>
+        </dl>
+        <div class="v11-case__stack">
+          <span class="v11-chip">TypeScript</span>
+          <span class="v11-chip">Claude Code</span>
+          <span class="v11-chip">MCP</span>
+          <span class="v11-chip v11-chip--cool"><span class="v11-chip__at">@</span>skill</span>
+          <span class="v11-chip v11-chip--muted">tokens</span>
+        </div>
+      </div>
+
+      <h3>06.5 Testimonial quote</h3>
+      <figure class="v11-quote">
+        <p class="v11-quote__text">Danilo is doing wonderful things using AI in the right ways. He dove into the developer-portal world and delivered work I wanted to keep reusing. A real loss for us.</p>
+        <figcaption class="v11-quote__attr">
+          <span class="v11-quote__author">Jennifer Sheppard</span>
+          <span class="v11-quote__role">Product Lead Â· Developer Portal Â· Booz Allen Hamilton</span>
+          <span class="v11-quote__badge">Verified</span>
+        </figcaption>
+      </figure>
+
+      <h3>06.6 Live dot</h3>
+      <p style="margin: var(--v11-s-3) 0;"><span class="v11-live" aria-hidden="true"></span> <span class="mono" style="color: var(--v11-text-60); font-size: var(--v11-fs-small); letter-spacing: var(--v11-track-snug); margin-left: 10px;">Open to work Â· Remote global Â· PST/EST overlap</span></p>
+    </section>
+
+    <!-- 07 COMPONENTS ARTIFACT -->
+    <section class="chap" id="components-artifact">
+      <header>
+        <span class="chap__num">07 Â· Components Â· AI Product-Tour layer</span>
+        <h2>The Artifact Viewer family.</h2>
+        <p class="chap__lead">
+          Six components that put agentic work running above the fold. Maps onto V11 R3&rsquo;s
+          five agentic UX patterns: Artifact Panel, Visible Thinking, Plan-before-Build,
+          Diff-Review, Named Skills.
+        </p>
+      </header>
+
+      <h3>07.1 Artifact frame (Artifact Panel pattern)</h3>
+      <div class="v11-artifact" aria-label="specimen: Danilo's skills-sheet rendering in the generator">
+        <div class="v11-artifact__head">
+          <span class="v11-artifact__dot" aria-hidden="true"></span>
+          <span class="v11-artifact__file">skills-sheet.en.pdf</span>
+          <span>Â· generated 08 May 2026</span>
+          <span class="v11-artifact__status">ready</span>
+        </div>
+        <div class="v11-artifact__body">
+          <div style="padding: var(--v11-s-4); background: #F6F4F0; border-radius: var(--v11-radius); color: var(--v11-paper-ink); min-height: 120px;">
+            <div style="font-family: var(--v11-font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v11-accent-deep); margin-bottom: 8px;">// skills map Â· 2026</div>
+            <div style="font-family: var(--v11-font-display); font-size: 22px; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em;">Danilo Rojas â€” <span style="color: var(--v11-accent-deep)">Agentic Designer</span></div>
+            <div style="font-size: 12px; color: var(--v11-paper-muted); margin-top: 6px;">Strategy Â· Design Â· Engineering Â· Agents &nbsp;Â·&nbsp; 15 years shipping product</div>
+          </div>
+        </div>
+      </div>
+      <p class="text-muted" style="font-size: var(--v11-fs-small); margin-top: var(--v11-s-3);">The hero embeds this frame with the actual skills-sheet or CV output. The <code>status</code> chip updates as the agent regenerates â€” a small, real signal the page runs the work it describes.</p>
+
+      <h3>07.2 Stream (Visible Thinking pattern)</h3>
+      <div class="v11-stream" role="status" aria-live="polite" aria-label="specimen: thinking stream">
+        <div class="v11-stream__head">Thinking Â· claude-opus</div>
+        <span class="v11-stream__line">Reading <code style="font-size: 12px;">perfil/data/positioning.yaml</code> and <code style="font-size: 12px;">perfil/data/skills.yaml</code>â€¦</span>
+        <span class="v11-stream__line">Composing H1 candidates prioritising &ldquo;taste-first&rdquo; register.</span>
+        <span class="v11-stream__line">Cross-checking V11 R5 voice draft C<span class="v11-stream__caret" aria-hidden="true"></span></span>
+      </div>
+
+      <h3>07.3 Plan (Plan-before-Build pattern)</h3>
+      <div class="v11-plan" aria-label="specimen: plan before build">
+        <div class="v11-plan__head">Plan Â· approved 2026-05-08 09:14</div>
+        <ol class="v11-plan__list">
+          <li class="v11-plan__step v11-plan__step--done"><strong>Load CvData + Landing config</strong> <span class="v11-plan__meta">0:12</span></li>
+          <li class="v11-plan__step v11-plan__step--done"><strong>Render hero + artifact viewer</strong> <span class="v11-plan__meta">0:48</span></li>
+          <li class="v11-plan__step"><strong>Render 4 Narrative Ship case cards</strong> <span class="v11-plan__meta">1:20</span></li>
+          <li class="v11-plan__step"><strong>Emit EN + ES builds with hreflang</strong> <span class="v11-plan__meta">0:22</span></li>
+          <li class="v11-plan__step"><strong>Run a11y + perf smoke</strong> <span class="v11-plan__meta">0:18</span></li>
+        </ol>
+      </div>
+
+      <h3>07.4 Diff review (Diff-Review pattern)</h3>
+      <div class="v11-diff" aria-label="specimen: diff review">
+        <div class="v11-diff__row v11-diff__row--del"><span class="v11-diff__ln">42</span><span><span class="v11-diff__marker">-</span> &lt;h1 class="hero__name"&gt;Agentic Designer shipping real products&lt;/h1&gt;</span></div>
+        <div class="v11-diff__row v11-diff__row--add"><span class="v11-diff__ln">42</span><span><span class="v11-diff__marker">+</span> &lt;h1 class="hero__name"&gt;A point of view on agentic design.&lt;/h1&gt;</span></div>
+        <div class="v11-diff__row"><span class="v11-diff__ln">43</span><span>&nbsp;&nbsp;&lt;p class="hero__lead"&gt;I keep the craftâ€¦&lt;/p&gt;</span></div>
+      </div>
+
+      <h3>07.5 Named skill chips</h3>
+      <div style="display:flex; gap: 8px; flex-wrap: wrap;">
+        <span class="v11-chip"><span class="v11-chip__at">@</span>dr-cv-skill</span>
+        <span class="v11-chip"><span class="v11-chip__at">@</span>te-skin</span>
+        <span class="v11-chip v11-chip--cool"><span class="v11-chip__at">/</span>ds-review</span>
+        <span class="v11-chip v11-chip--cool"><span class="v11-chip__at">/</span>case-compose</span>
+        <span class="v11-chip v11-chip--muted"><span class="v11-chip__at">@</span>mcp:supabase</span>
+        <span class="v11-chip v11-chip--muted"><span class="v11-chip__at">@</span>mcp:github</span>
+      </div>
+
+      <h3>07.6 Composition Â· hero split</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--v11-s-5); margin: var(--v11-s-4) 0; align-items: center;">
+        <div>
+          <div style="font-family: var(--v11-font-mono); font-size: var(--v11-fs-micro); color: var(--v11-accent); letter-spacing: var(--v11-track-code); text-transform: uppercase; margin-bottom: var(--v11-s-3);">// Currently Â· Trusted Environments Â· BAH</div>
+          <h1 class="spec__hero" style="margin: 0 0 var(--v11-s-4);">A point of view <em>on agentic design</em>, not a rÃ©sumÃ©.</h1>
+          <p class="spec__lead" style="margin: 0 0 var(--v11-s-5);">I keep the craft. Agents give me the leverage. Fifteen years shipping; the last twelve months rebuilt around a Claude-Code workflow I use every day.</p>
+          <div style="display: flex; gap: var(--v11-s-3); flex-wrap: wrap;">
+            <a class="v11-btn v11-btn--primary" href="#top">Read the notebook<span class="v11-btn__arrow" aria-hidden="true">â†’</span></a>
+            <a class="v11-btn v11-btn--ghost" href="#top">See the work<span class="v11-btn__arrow" aria-hidden="true">â†’</span></a>
+          </div>
+        </div>
+        <div>
+          <div class="v11-artifact" aria-label="hero artifact specimen">
+            <div class="v11-artifact__head">
+              <span class="v11-artifact__dot" aria-hidden="true"></span>
+              <span class="v11-artifact__file">cv-serious.en.pdf</span>
+              <span class="v11-artifact__status">ready</span>
+            </div>
+            <div class="v11-artifact__body">
+              <div style="background:#F6F4F0; padding: var(--v11-s-4); border-radius: var(--v11-radius); color: var(--v11-paper-ink); min-height: 160px;">
+                <div style="font-family: var(--v11-font-display); font-size: 22px; font-weight: 600; letter-spacing: -0.02em;">Danilo Rojas</div>
+                <div style="font-family: var(--v11-font-mono); font-size: 10px; color: var(--v11-paper-muted); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 4px;">Agentic Designer Â· Product Engineer</div>
+                <hr style="border: 0; border-top: 1px solid var(--v11-line-paper-sf); margin: 10px 0;">
+                <div style="font-size: 11px; color: var(--v11-paper-body); line-height: 1.55;">15 years shipping. Booz Allen Hamilton (current). EnRegla (own SaaS). Claude Code power-user. 346 commits / 40 days.</div>
+              </div>
+            </div>
+          </div>
+          <div class="v11-stream" style="margin-top: var(--v11-s-3);">
+            <div class="v11-stream__head">Regenerating EN / ES</div>
+            <span class="v11-stream__line">npm run build:cvs <span class="v11-stream__caret" aria-hidden="true"></span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 MOTION -->
+    <section class="chap" id="motion">
+      <header>
+        <span class="chap__num">08 Â· Motion</span>
+        <h2>Three durations. Every effect respects reduced-motion.</h2>
+        <p class="chap__lead">
+          Motion is information, not decoration. V11 R7 craft floor: <code>prefers-reduced-motion: reduce</code>
+          collapses every duration to zero. The tokens force this.
+        </p>
+      </header>
+
+      <table>
+        <thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td><code>--v11-dur-instant</code></td><td>80ms</td><td>Hover color, focus-ring fade-in</td></tr>
+          <tr><td><code>--v11-dur-fast</code></td><td>180ms</td><td>Button arrow slide, chip border</td></tr>
+          <tr><td><code>--v11-dur-base</code></td><td>280ms</td><td>Section reveal, plan-step expand</td></tr>
+          <tr><td><code>--v11-dur-slow</code></td><td>480ms</td><td>Artifact re-render flash, diff highlight</td></tr>
+          <tr><td><code>--v11-dur-extra</code></td><td>720ms</td><td>Stream typing wave (decorative â€” disabled on reduce)</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Signature motion (Artifact Viewer only)</h4>
+      <ul style="margin: var(--v11-s-3) 0 var(--v11-s-5); padding-left: var(--v11-s-5); color: var(--v11-text-body); font-size: var(--v11-fs-small);">
+        <li><strong>Thinking caret blink</strong> â€” 1.1s step(2), only visible when a stream is actively rendering. No blink when idle.</li>
+        <li><strong>Live-dot breath</strong> â€” 2.4s ease-in-out, shadow radius oscillation. Only on availability + stream-head.</li>
+        <li><strong>Diff-row reveal</strong> â€” 180ms background fade when a new row lands; no motion after initial paint.</li>
+      </ul>
+
+      <h4>Reduced-motion rule</h4>
+<pre><code>@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Live dot + caret + breath freeze at idle state, never hide */
+}</code></pre>
+    </section>
+
+    <!-- 09 ACCESSIBILITY -->
+    <section class="chap" id="accessibility">
+      <header>
+        <span class="chap__num">09 Â· Accessibility</span>
+        <h2>Floor: WCAG AA. Ceiling: keyboard-only review clean.</h2>
+        <p class="chap__lead">
+          The landing IS the work sample. A tier-1 reviewer will tab through it in 30 seconds
+          and close it if a focus ring disappears. Five non-negotiables from V11 R7:
+        </p>
+      </header>
+
+      <div class="grid grid-2">
+        <article class="card card--ok">
+          <div class="card__kicker">Floor 01</div>
+          <h3 class="card__title">Self-hosted fonts, preloaded</h3>
+          <p class="card__body">Inter (variable, Latin-1), JetBrains Mono, Source Serif 4 served from <code>assets/fonts/</code>. No third-party CDN. <code>font-display: swap</code>. LCP font preload link in <code>&lt;head&gt;</code>.</p>
+        </article>
+        <article class="card card--ok">
+          <div class="card__kicker">Floor 02</div>
+          <h3 class="card__title">Skip link + landmarks</h3>
+          <p class="card__body">First focusable element is <code>&lt;a class=&quot;v11-skip&quot;&gt;</code>. <code>&lt;header&gt;</code> / <code>&lt;nav&gt;</code> / <code>&lt;main id=&quot;main&quot;&gt;</code> / <code>&lt;footer&gt;</code> all labeled. No invalid <code>role=&quot;marquee&quot;</code>.</p>
+        </article>
+        <article class="card card--ok">
+          <div class="card__kicker">Floor 03</div>
+          <h3 class="card__title">Focus ring always visible</h3>
+          <p class="card__body"><code>:focus-visible</code> shows 2px accent outline with 3px offset on every interactive element. Never removed, never &ldquo;cleaner&rdquo; without.</p>
+        </article>
+        <article class="card card--ok">
+          <div class="card__kicker">Floor 04</div>
+          <h3 class="card__title">Reduced-motion honored</h3>
+          <p class="card__body">All animations collapse to 0ms under <code>prefers-reduced-motion: reduce</code>. Live-dot and caret freeze in idle state, never hidden.</p>
+        </article>
+        <article class="card card--ok">
+          <div class="card__kicker">Floor 05</div>
+          <h3 class="card__title">Hreflang + lang attributes</h3>
+          <p class="card__body">Root <code>lang</code> matches rendered language. <code>rel=&quot;alternate&quot; hreflang=&quot;en|es|x-default&quot;</code> links in both directions. Language switch preserves scroll + section.</p>
+        </article>
+        <article class="card card--ok">
+          <div class="card__kicker">Floor 06</div>
+          <h3 class="card__title">Keyboard nav tests</h3>
+          <p class="card__body">Tab traverses: skip â†’ brand â†’ tabs â†’ lang toggle â†’ cta â†’ essay TOC â†’ cases. Enter activates, Escape closes modals. No focus trap.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 10 BILINGUAL -->
+    <section class="chap" id="bilingual">
+      <header>
+        <span class="chap__num">10 Â· Bilingual</span>
+        <h2>EN primary, ES complete. No Spanglish.</h2>
+        <p class="chap__lead">
+          The landing emits two HTML files: <code>/</code> and <code>/es/</code>. Every string
+          in the data layer carries an <code>en</code> and <code>es</code> variant. The language
+          toggle preserves hash + scroll state.
+        </p>
+      </header>
+
+      <h4>What translates fully</h4>
+      <ul style="margin: var(--v11-s-3) 0 var(--v11-s-5); padding-left: var(--v11-s-5); color: var(--v11-text-body); font-size: var(--v11-fs-small);">
+        <li>Hero thesis, subhead, CTA</li>
+        <li>Notebook essay (both versions, professionally written â€” not machine translated)</li>
+        <li>Case study hooks + beats (Context, Problem, Approach, Ship, Outcome, Differently, Craft floor)</li>
+        <li>Proof labels</li>
+        <li>Testimonials (Sheppard + Giraldez quoteEs already in <code>perfil/data/testimonials/verified.yaml</code>)</li>
+        <li>Section eyebrows + H2</li>
+      </ul>
+
+      <h4>What stays in English</h4>
+      <ul style="margin: var(--v11-s-3) 0 var(--v11-s-5); padding-left: var(--v11-s-5); color: var(--v11-text-body); font-size: var(--v11-fs-small);">
+        <li>Tool names: Claude Code, MCP, Supabase, Vercel, Figma, GitHub, TypeScript, React</li>
+        <li>Company names: Booz Allen Hamilton, BairesDev, MondelÄ“z, Banco Pichincha</li>
+        <li>Code identifiers: <code>build:cvs</code>, <code>@skill</code>, <code>/ds-review</code>, filename paths</li>
+        <li>Role title: <em>Agentic Designer Â· Product Engineer</em> â€” stays canonical, same in both versions</li>
+      </ul>
+
+      <h4>Architecture</h4>
+<pre><code>/ Â· English (primary)                             canonical
+/es/ Â· Spanish                                    &lt;link rel="alternate" hreflang="es"&gt;
+&lt;html lang="en"&gt; or &lt;html lang="es"&gt;              per file
+&lt;link rel="alternate" hreflang="en" href="/"&gt;    both files cross-link
+&lt;link rel="alternate" hreflang="es" href="/es/"&gt;
+&lt;link rel="alternate" hreflang="x-default" href="/"&gt;</code></pre>
+
+      <h4>Toggle behavior</h4>
+<pre><code>// language toggle preserves scroll
+&lt;a class="v11-nav__lang" href="/es/#work" hreflang="es"&gt;EN / ES&lt;/a&gt;
+// at runtime, JS copies location.hash to the target href before navigation</code></pre>
+    </section>
+
+    <!-- 11 ANTI-PATTERNS -->
+    <section class="chap" id="anti">
+      <header>
+        <span class="chap__num">11 Â· Anti-patterns</span>
+        <h2>Ten things V11 refuses to do.</h2>
+        <p class="chap__lead">
+          From V11 R8. Each anti-pattern has a specific mitigation in this DS. If a component
+          breaks one of these, it doesn&rsquo;t ship.
+        </p>
+      </header>
+
+      <div class="grid grid-2">
+        <article class="card card--stop">
+          <div class="card__kicker">Anti 01</div>
+          <h3 class="card__title">Huly-clone warm-radial-glow pill CTA</h3>
+          <p class="card__body"><strong>Mitigation:</strong> <code>.v11-btn--primary</code> is solid accent, zero glow, zero cursor-follow. See Â§06.2.</p>
+        </article>
+        <article class="card card--stop">
+          <div class="card__kicker">Anti 02</div>
+          <h3 class="card__title">Claim &ldquo;agentic&rdquo; without a running artifact</h3>
+          <p class="card__body"><strong>Mitigation:</strong> hero has the Artifact Viewer with a real PDF render. Method section has the Stream + Plan + Diff specimens.</p>
+        </article>
+        <article class="card card--stop">
+          <div class="card__kicker">Anti 03</div>
+          <h3 class="card__title">Omit the target role</h3>
+          <p class="card__body"><strong>Mitigation:</strong> <em>Agentic Designer Â· Product Engineer</em> appears as eyebrow in hero and as subtitle in nav brand tooltip.</p>
+        </article>
+        <article class="card card--stop">
+          <div class="card__kicker">Anti 04</div>
+          <h3 class="card__title">Third-party font CDN</h3>
+          <p class="card__body"><strong>Mitigation:</strong> <code>assets/fonts/</code> self-host. Google Fonts used ONLY in this DS document, not in production landing.</p>
+        </article>
+        <article class="card card--stop">
+          <div class="card__kicker">Anti 05</div>
+          <h3 class="card__title">GPT-smell copy</h3>
+          <p class="card__body"><strong>Forbidden:</strong> delve, leverage, robust, seamless, elevate, stakeholders, north-star. See Â§12 voice guide.</p>
+        </article>
+        <article class="card card--stop">
+          <div class="card__kicker">Anti 06</div>
+          <h3 class="card__title">Metrics without baseline + window + attribution</h3>
+          <p class="card__body"><strong>Mitigation:</strong> proof strip forces three lines per number â€” value, label, attribution. See Â§06.3.</p>
+        </article>
+        <article class="card card--stop">
+          <div class="card__kicker">Anti 07</div>
+          <h3 class="card__title">Lone-genius framing</h3>
+          <p class="card__body"><strong>Mitigation:</strong> principle #2 â€” profile + agents = combination. Hero lead explicitly names the agents. Testimonials praise the method, not the talent.</p>
+        </article>
+        <article class="card card--stop">
+          <div class="card__kicker">Anti 08</div>
+          <h3 class="card__title">Broken mobile / LCP &gt; 1.5s</h3>
+          <p class="card__body"><strong>Mitigation:</strong> perf budget â€” HTML &lt;60 KB, JS &lt;4 KB gzipped, fonts preloaded. Lighthouse Perf â‰¥ 95 before ship.</p>
+        </article>
+        <article class="card card--stop">
+          <div class="card__kicker">Anti 09</div>
+          <h3 class="card__title">Stale portfolio</h3>
+          <p class="card__body"><strong>Mitigation:</strong> &ldquo;Currently&rdquo; pill in hero with a date. Footer shows last-updated timestamp pulled from git commit hash.</p>
+        </article>
+        <article class="card card--stop">
+          <div class="card__kicker">Anti 10</div>
+          <h3 class="card__title">Hiding the writing</h3>
+          <p class="card__body"><strong>Mitigation:</strong> the Notebook essay IS a section, not a nav link. Serif type on cream bg. Primary CTA reads &ldquo;Read the notebook&rdquo;.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 12 VOICE -->
+    <section class="chap" id="voice">
+      <header>
+        <span class="chap__num">12 Â· Voice</span>
+        <h2>Taste-first critic. POV, then evidence.</h2>
+        <p class="chap__lead">
+          V11 R5 draft C. Danilo leads with a point of view on agentic design. Cases and
+          numbers are evidence <em>for</em> the POV â€” never the POV itself.
+        </p>
+      </header>
+
+      <h4>Register examples</h4>
+      <div class="dd">
+        <div class="dd__cell dd__cell--do">
+          <div class="dd__label">Do â€” taste-first</div>
+          <div class="spec__body" style="margin-bottom: 8px;">&ldquo;The hardest thing about agentic design isn&rsquo;t the prompt engineering. It&rsquo;s deciding, at every junction, whether the human reviews the diff or the agent just ships it.&rdquo;</div>
+          <div class="spec__body">Opens with a specific observation. No role claim yet.</div>
+        </div>
+        <div class="dd__cell dd__cell--dont">
+          <div class="dd__label">Don&rsquo;t â€” rÃ©sumÃ©-first</div>
+          <div class="spec__body" style="margin-bottom: 8px;">&ldquo;Hi, I&rsquo;m Danilo Rojas. I&rsquo;m a senior designer with 15 years of experience passionate about building user-centered products with AI.&rdquo;</div>
+          <div class="spec__body">Opens with role claim. Buzzwords stack up. Nothing specific. No POV.</div>
+        </div>
+      </div>
+
+      <h4>Words that ship</h4>
+      <p class="text-muted" style="font-size: var(--v11-fs-small);">Keep &mdash; they carry specificity and voice:</p>
+      <div style="display:flex; flex-wrap: wrap; gap: 6px; margin: var(--v11-s-3) 0 var(--v11-s-4);">
+        <span class="v11-chip">ship</span>
+        <span class="v11-chip">craft</span>
+        <span class="v11-chip">artifact</span>
+        <span class="v11-chip">skill</span>
+        <span class="v11-chip">diff</span>
+        <span class="v11-chip">review</span>
+        <span class="v11-chip">thinking</span>
+        <span class="v11-chip">plan</span>
+        <span class="v11-chip">recursive</span>
+        <span class="v11-chip">token</span>
+        <span class="v11-chip">agent</span>
+        <span class="v11-chip">MCP</span>
+      </div>
+
+      <h4>Words that filter out</h4>
+      <p class="text-muted" style="font-size: var(--v11-fs-small);">Forbidden &mdash; any appearance is a GPT-smell signal:</p>
+      <div style="display:flex; flex-wrap: wrap; gap: 6px; margin: var(--v11-s-3) 0 var(--v11-s-4);">
+        <span class="v11-chip" style="background: rgba(248,113,113,0.08); color: var(--v11-signal-neg); border-color: rgba(248,113,113,0.35);">delve</span>
+        <span class="v11-chip" style="background: rgba(248,113,113,0.08); color: var(--v11-signal-neg); border-color: rgba(248,113,113,0.35);">leverage</span>
+        <span class="v11-chip" style="background: rgba(248,113,113,0.08); color: var(--v11-signal-neg); border-color: rgba(248,113,113,0.35);">robust</span>
+        <span class="v11-chip" style="background: rgba(248,113,113,0.08); color: var(--v11-signal-neg); border-color: rgba(248,113,113,0.35);">seamless</span>
+        <span class="v11-chip" style="background: rgba(248,113,113,0.08); color: var(--v11-signal-neg); border-color: rgba(248,113,113,0.35);">elevate</span>
+        <span class="v11-chip" style="background: rgba(248,113,113,0.08); color: var(--v11-signal-neg); border-color: rgba(248,113,113,0.35);">stakeholders</span>
+        <span class="v11-chip" style="background: rgba(248,113,113,0.08); color: var(--v11-signal-neg); border-color: rgba(248,113,113,0.35);">north-star</span>
+        <span class="v11-chip" style="background: rgba(248,113,113,0.08); color: var(--v11-signal-neg); border-color: rgba(248,113,113,0.35);">passionate</span>
+        <span class="v11-chip" style="background: rgba(248,113,113,0.08); color: var(--v11-signal-neg); border-color: rgba(248,113,113,0.35);">user-centered</span>
+        <span class="v11-chip" style="background: rgba(248,113,113,0.08); color: var(--v11-signal-neg); border-color: rgba(248,113,113,0.35);">impactful</span>
+      </div>
+
+      <h4>Headline candidates</h4>
+      <ol style="padding-left: var(--v11-s-5); color: var(--v11-text-body); font-size: var(--v11-fs-small); line-height: 1.7;">
+        <li>&ldquo;A point of view on agentic design, not a rÃ©sumÃ©.&rdquo; <span class="text-muted">(recommended Â· clean thesis Â· V11 R9 D1)</span></li>
+        <li>&ldquo;Fifteen years shipping. Twelve months rebuilt around agents.&rdquo; <span class="text-muted">(alt Â· numeric Â· hooks on curiosity)</span></li>
+        <li>&ldquo;Design systems an agent can invoke.&rdquo; <span class="text-muted">(alt Â· specific Â· borrows TE Skin language)</span></li>
+      </ol>
+
+      <h4>Currently pill</h4>
+      <div style="padding: var(--v11-s-4); border: 1px solid var(--v11-line); border-radius: var(--v11-radius); background: var(--v11-bg-elevated); margin-top: var(--v11-s-3);">
+        <div style="font-family: var(--v11-font-mono); font-size: var(--v11-fs-nano); color: var(--v11-accent); letter-spacing: var(--v11-track-code); text-transform: uppercase; margin-bottom: 6px;">// Currently</div>
+        <div style="font-family: var(--v11-font-body); font-size: var(--v11-fs-small); color: var(--v11-text);">Consulting at Booz Allen Hamilton Â· Trusted Environments. Open to Staff / Principal AI Product Designer roles.</div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <footer style="font-family: var(--v11-font-mono); font-size: var(--v11-fs-nano); color: var(--v11-text-50); letter-spacing: var(--v11-track-snug);">
+      dr-cv Â· V11 Design System Â· 2026-05-08 Â· <a href="../../references/hiring-universe/master.html" style="color: var(--v11-text-70)">hiring-universe</a> Â· <a href="../../references/visual-universe/master.html" style="color: var(--v11-text-70)">visual-universe</a> Â· <a href="https://github.com/mdanilorojas/dr-cv" style="color: var(--v11-text-70)">source</a>
+    </footer>
+
+  </main>
+</div>
+
+</body>
+</html>

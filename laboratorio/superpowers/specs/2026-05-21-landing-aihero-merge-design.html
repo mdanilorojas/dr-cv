@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spec Â· Landing rebuild â€” aihero Ã— dr-cv v11</title>
+<link rel="stylesheet" href="../../superpowers/visuals/2026-05-21-aihero-merge/tokens-web.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--v11-font-body);
+    background: var(--v11-bg-primary);
+    color: var(--v11-text-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--v11-accent); text-decoration: none; }
+  a:hover { color: var(--v11-accent-deep); }
+  code { font-family: var(--v11-font-mono); font-size: 0.92em; color: var(--v11-text); background: var(--v11-bg-elevated); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--v11-line); }
+  pre { font-family: var(--v11-font-mono); font-size: 13px; background: var(--v11-bg-elevated); border: 1px solid var(--v11-line); border-radius: 8px; padding: 16px 20px; overflow: auto; line-height: 1.5; }
+
+  .container { max-width: 920px; margin: 0 auto; padding: 0 28px; }
+
+  /* Top bar */
+  .topbar {
+    padding: 16px 28px;
+    background: var(--v11-bg-deep);
+    border-bottom: 1px solid var(--v11-line);
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    color: var(--v11-text-60);
+    letter-spacing: 0.06em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .topbar b { color: var(--v11-text); font-weight: 600; }
+  .topbar a { color: var(--v11-accent); }
+  .topbar .tag {
+    background: rgba(229,168,75,0.15);
+    color: var(--v11-signal-warn);
+    padding: 2px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+
+  /* Title */
+  .title-block { padding: 80px 0 24px; border-bottom: 1px solid var(--v11-line-soft); margin-bottom: 48px; }
+  .title-eyebrow {
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    color: var(--v11-accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .title-h {
+    font-family: var(--v11-font-display);
+    font-weight: 600;
+    font-size: clamp(32px, 4.5vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--v11-text);
+    margin: 0 0 12px;
+  }
+  .title-meta {
+    font-family: var(--v11-font-display);
+    font-size: 13px;
+    color: var(--v11-text-60);
+    letter-spacing: -0.01em;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .title-meta b { color: var(--v11-text); font-weight: 600; }
+
+  /* Section */
+  h2 {
+    font-family: var(--v11-font-display);
+    font-weight: 600;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--v11-text);
+    margin: 64px 0 8px;
+  }
+  h2 .num {
+    color: var(--v11-accent);
+    margin-right: 12px;
+    font-weight: 500;
+  }
+  h3 {
+    font-family: var(--v11-font-display);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    color: var(--v11-text);
+    margin: 32px 0 8px;
+  }
+  h3 .pill {
+    margin-left: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--v11-accent);
+    color: var(--v11-accent-ink);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  p { margin: 0 0 16px; max-width: 70ch; }
+  ul, ol { padding-left: 22px; max-width: 70ch; }
+  ul li, ol li { margin-bottom: 6px; }
+
+  /* Why block â€” pull-quote feel */
+  .why {
+    background: var(--v11-bg-elevated);
+    border-left: 3px solid var(--v11-accent);
+    padding: 24px 28px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0 32px;
+  }
+  .why h4 {
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--v11-accent);
+    margin: 0 0 12px;
+    font-weight: 600;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 32px;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--v11-line-soft);
+    vertical-align: top;
+  }
+  th {
+    font-family: var(--v11-font-display);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--v11-text-50);
+    border-bottom: 1px solid var(--v11-line);
+    font-weight: 600;
+  }
+  tr:hover td { background: var(--v11-bg-elevated); }
+
+  /* Iteration cards */
+  .iter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0 32px;
+  }
+  @media (max-width: 880px) { .iter-grid { grid-template-columns: 1fr; } }
+  .iter {
+    border: 1px solid var(--v11-line);
+    border-radius: 12px;
+    background: var(--v11-bg-elevated);
+    padding: 24px;
+    transition: border-color 180ms, transform 180ms;
+    text-decoration: none;
+    display: block;
+  }
+  .iter:hover { border-color: var(--v11-accent); transform: translateY(-3px); }
+  .iter--target { border-color: var(--v11-accent); }
+  .iter__h {
+    font-family: var(--v11-font-display);
+    font-size: 18px;
+    color: var(--v11-text);
+    letter-spacing: -0.02em;
+    margin: 0 0 4px;
+    font-weight: 600;
+  }
+  .iter__sub {
+    font-family: var(--v11-font-display);
+    font-size: 11px;
+    color: var(--v11-accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+  .iter__sections {
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    color: var(--v11-text-70);
+    letter-spacing: 0.04em;
+    margin: 0 0 16px;
+    line-height: 1.5;
+  }
+  .iter__desc {
+    font-size: 13px;
+    color: var(--v11-text-70);
+    line-height: 1.55;
+    margin: 0 0 16px;
+  }
+  .iter__cta {
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    color: var(--v11-accent);
+    letter-spacing: 0.06em;
+  }
+
+  /* Flow diagram container */
+  .flow {
+    background: var(--v11-bg-elevated);
+    border: 1px solid var(--v11-line);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0 32px;
+    overflow-x: auto;
+  }
+  .flow svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+
+  /* Open questions */
+  .oq {
+    background: rgba(229,168,75,0.05);
+    border: 1px solid rgba(229,168,75,0.2);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .oq h4 {
+    font-family: var(--v11-font-display);
+    color: var(--v11-signal-warn);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+  .oq ol { margin: 0; padding-left: 20px; }
+  .oq li { color: var(--v11-text-body); }
+  .oq li strong { color: var(--v11-text); }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--v11-line-soft);
+    margin: 64px 0;
+  }
+
+  .footer {
+    padding: 48px 0 80px;
+    font-family: var(--v11-font-display);
+    font-size: 12px;
+    color: var(--v11-text-50);
+    letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span><b>Spec</b> Â· 2026-05-21 Â· landing rebuild â€” aihero Ã— dr-cv v11</span>
+  <span><span class="tag">Awaiting review</span></span>
+  <span>Companion to <a href="2026-05-21-landing-aihero-merge-design.md">spec.md</a></span>
+</div>
+
+<main class="container">
+
+  <header class="title-block">
+    <div class="title-eyebrow">Spec Â· v1</div>
+    <h1 class="title-h">Landing rebuild â€” aihero Ã— dr-cv v11 merge.</h1>
+    <div class="title-meta">
+      <span><b>Owner:</b> Danilo Rojas</span>
+      <span><b>Date:</b> 2026-05-21</span>
+      <span><b>Visuals:</b> <a href="../visuals/2026-05-21-aihero-merge/index.html">browse mockups â†’</a></span>
+    </div>
+  </header>
+
+  <h2><span class="num">01</span> Why this exists</h2>
+  <p>
+    The current v11 landing reads as AI-generated. Two specific issues, called out by the user:
+  </p>
+  <ol>
+    <li><strong>Density.</strong> Hero Â· Proof Â· Horizon Â· Notebook Â· Work Â· Method Â· Contact = seven sections before the page releases pressure. Nothing breathes.</li>
+    <li><strong>Decorations.</strong> Chips, badges, segmented progress bar, tool rails, glow. Decoration competes with the work for attention.</li>
+  </ol>
+
+  <div class="why">
+    <h4>Reference</h4>
+    <p style="margin:0">
+      <a href="https://www.aihero.dev/" target="_blank">aihero.dev</a> â€” centered single column, editorial rhythm, content-first composition,
+      restraint. The goal is to inherit that simplicity <em>without changing the v11 design language</em>.
+    </p>
+  </div>
+
+  <h2><span class="num">02</span> Constraints kept</h2>
+  <ul>
+    <li><strong>Tokens:</strong> <code>design-system/tokens-web.css</code> is the source. No new tokens.</li>
+    <li><strong>Type:</strong> JetBrains Mono display + Inter body stays. The mono headline is what makes the site feel like Danilo's, not someone else's editorial template.</li>
+    <li><strong>Single accent:</strong> warm orange <code>#FF8964</code> as punctuation only â€” one word in headlines, one CTA, hover states. Never as background fill, glow, or decorative chip.</li>
+    <li><strong>Dark dominant:</strong> <code>--v11-bg-primary</code> for the whole page. No paper section, no alt-band rhythm.</li>
+    <li><strong>EN + ES:</strong> language toggle in the nav.</li>
+    <li><strong>Generator-driven:</strong> still rendered from <code>perfil/data/*.yaml</code> + <code>generadores/templates/v11-landing/</code>. No hand-crafted HTML in <code>dist/</code>.</li>
+  </ul>
+
+  <h2><span class="num">03</span> What dies, what survives</h2>
+
+  <h3>Dies</h3>
+  <table>
+    <tr><th style="width:30%">Element</th><th>Why it dies</th></tr>
+    <tr><td>Tabs SPA structure</td><td>aihero is one continuous page. Tabs were where the AI-template feel started.</td></tr>
+    <tr><td>Horizon timeline</td><td>Survives in v3 only, as three quiet paragraphs. v1 + v2 cut it.</td></tr>
+    <tr><td>Notebook (paper section)</td><td>Paper-on-dark contrast band breaks the editorial single-column feel.</td></tr>
+    <tr><td>Method (current)</td><td>v3 keeps Method <em>replacing</em> Horizon; v1 + v2 fold it into hero copy.</td></tr>
+    <tr><td>Chips / badges / progress / glow</td><td>All flagged as decorative chrome. None survive.</td></tr>
+    <tr><td>Wide container (80rem)</td><td>v11 fills the screen. Merge uses 720â€“800px max-widths.</td></tr>
+  </table>
+
+  <h3>Survives</h3>
+  <ul>
+    <li>All identity copy (<code>perfil/data/identity.yaml</code>, <code>positioning.yaml</code>).</li>
+    <li>All case content (<code>perfil/data/cases/*.md</code>) â€” rendered as a vertical list, not a grid.</li>
+    <li>Real testimonials (<code>perfil/data/testimonials/verified.yaml</code>) â€” Giraldez in v2, Sheppard in v3.</li>
+    <li>The thesis line: <em>"I ship real products â€” and I ship the tools agents use to help me ship them."</em></li>
+    <li>Hero photo and byline.</li>
+  </ul>
+
+  <hr>
+
+  <h2><span class="num">04</span> Three iterations</h2>
+  <p>Three polished mockups, all built on the same merge skeleton. Each carries a different section economy.</p>
+
+  <div class="iter-grid">
+    <a class="iter" href="../visuals/2026-05-21-aihero-merge/v1-quiet.html">
+      <div class="iter__sub">v1 Â· Quiet</div>
+      <h4 class="iter__h">Hero Â· Work Â· Contact</h4>
+      <div class="iter__sections">3 sections Â· 720px column</div>
+      <p class="iter__desc">Minimum-viable rebuild. The work is the proof. Closest to a designer's personal site. Risk: a cold visitor may not have enough signal to convert.</p>
+      <div class="iter__cta">Open mockup â†’</div>
+    </a>
+    <a class="iter iter--target" href="../visuals/2026-05-21-aihero-merge/v2-balanced.html">
+      <div class="iter__sub">v2 Â· Balanced <span class="pill">Target</span></div>
+      <h4 class="iter__h">Hero Â· Proof Â· Work Â· Testimonial Â· Notes Â· Contact</h4>
+      <div class="iter__sections">6 sections Â· 760px column</div>
+      <p class="iter__desc">Recommended. Discrete proof strip absorbs old Horizon numbers. One real testimonial. Notes block keeps the site alive between deploys.</p>
+      <div class="iter__cta">Open mockup â†’</div>
+    </a>
+    <a class="iter" href="../visuals/2026-05-21-aihero-merge/v3-method-forward.html">
+      <div class="iter__sub">v3 Â· Method-forward</div>
+      <h4 class="iter__h">Hero Â· Method Â· Work Â· Testimonial Â· Contact</h4>
+      <div class="iter__sections">5 sections Â· 800px column</div>
+      <p class="iter__desc">For viewers who need to see the <em>how</em> before the <em>what</em>. Earned â†’ Investing â†’ Horizon as three quiet paragraphs.</p>
+      <div class="iter__cta">Open mockup â†’</div>
+    </a>
+  </div>
+
+  <p>
+    Side-by-side comparators:
+    <a href="../visuals/2026-05-21-aihero-merge/04-side-by-side.html">current â‡„ direction B</a> Â·
+    <a href="../visuals/2026-05-21-aihero-merge/05-three-way.html">v1 vs v2 vs v3</a>
+  </p>
+
+  <hr>
+
+  <h2><span class="num">05</span> User flow</h2>
+  <p>Single flow: cold visitor lands â†’ scans â†’ contacts. Branches by iteration are minimal.</p>
+
+  <div class="flow">
+    <svg viewBox="0 0 720 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="User flow diagram">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#FF8964"/>
+        </marker>
+        <style>
+          .lbl { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #F4F4F5; }
+          .lbl-sm { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #95979E; letter-spacing: 0.06em; }
+          .lbl-accent { fill: #FF8964; }
+          .box { fill: #14161C; stroke: rgba(255,255,255,0.08); stroke-width: 1; }
+          .box-target { fill: #14161C; stroke: #FF8964; stroke-width: 1; }
+          .pipe { stroke: #FF8964; stroke-width: 1.4; fill: none; }
+          .pipe-soft { stroke: rgba(255,255,255,0.18); stroke-width: 1; fill: none; }
+        </style>
+      </defs>
+
+      <!-- Visitor lands -->
+      <rect class="box" x="260" y="20" width="200" height="56" rx="8"/>
+      <text class="lbl-sm" x="360" y="42" text-anchor="middle">ENTRY</text>
+      <text class="lbl" x="360" y="62" text-anchor="middle">visitor lands on /</text>
+      <line class="pipe" x1="360" y1="76" x2="360" y2="120" marker-end="url(#arrow)"/>
+
+      <!-- Hero -->
+      <rect class="box" x="220" y="124" width="280" height="68" rx="8"/>
+      <text class="lbl-sm" x="360" y="146" text-anchor="middle">HERO</text>
+      <text class="lbl" x="360" y="167" text-anchor="middle">thesis Â· photo Â· byline</text>
+      <text class="lbl-sm lbl-accent" x="360" y="184" text-anchor="middle">read in one breath</text>
+      <line class="pipe" x1="360" y1="192" x2="360" y2="232" marker-end="url(#arrow)"/>
+
+      <!-- Branches by iteration -->
+      <rect class="box" x="40" y="240" width="200" height="76" rx="8"/>
+      <text class="lbl-sm" x="140" y="262" text-anchor="middle">v1 Â· QUIET</text>
+      <text class="lbl" x="140" y="284" text-anchor="middle">Work list</text>
+      <text class="lbl-sm" x="140" y="302" text-anchor="middle">3 cases Â· vertical Â· arrow on hover</text>
+
+      <rect class="box-target" x="260" y="240" width="200" height="76" rx="8"/>
+      <text class="lbl-sm lbl-accent" x="360" y="262" text-anchor="middle">v2 Â· BALANCED</text>
+      <text class="lbl" x="360" y="284" text-anchor="middle">Proof strip + Work</text>
+      <text class="lbl-sm" x="360" y="302" text-anchor="middle">15+ Â· 346 Â· 1.0 Â· 95.6</text>
+
+      <rect class="box" x="480" y="240" width="200" height="76" rx="8"/>
+      <text class="lbl-sm" x="580" y="262" text-anchor="middle">v3 Â· METHOD</text>
+      <text class="lbl" x="580" y="284" text-anchor="middle">Method + Work</text>
+      <text class="lbl-sm" x="580" y="302" text-anchor="middle">earned Â· investing Â· horizon</text>
+
+      <!-- Lines from hero -->
+      <line class="pipe-soft" x1="360" y1="232" x2="140" y2="240"/>
+      <line class="pipe" x1="360" y1="232" x2="360" y2="240" marker-end="url(#arrow)"/>
+      <line class="pipe-soft" x1="360" y1="232" x2="580" y2="240"/>
+
+      <!-- Merge to testimonial -->
+      <line class="pipe-soft" x1="140" y1="316" x2="360" y2="356"/>
+      <line class="pipe" x1="360" y1="316" x2="360" y2="356" marker-end="url(#arrow)"/>
+      <line class="pipe-soft" x1="580" y1="316" x2="360" y2="356"/>
+
+      <rect class="box" x="220" y="360" width="280" height="68" rx="8"/>
+      <text class="lbl-sm" x="360" y="382" text-anchor="middle">TESTIMONIAL Â· v2 Â· v3</text>
+      <text class="lbl" x="360" y="402" text-anchor="middle">Giraldez (v2) Â· Sheppard (v3)</text>
+      <text class="lbl-sm" x="360" y="420" text-anchor="middle">v1 skips this branch</text>
+
+      <!-- v2 also Notes -->
+      <line class="pipe" x1="360" y1="428" x2="360" y2="460" marker-end="url(#arrow)"/>
+      <rect class="box" x="220" y="464" width="280" height="60" rx="8"/>
+      <text class="lbl-sm" x="360" y="486" text-anchor="middle">NOTES Â· v2 only</text>
+      <text class="lbl" x="360" y="506" text-anchor="middle">working in public Â· 4 entries</text>
+
+      <line class="pipe" x1="360" y1="524" x2="360" y2="560" marker-end="url(#arrow)"/>
+
+      <!-- Contact -->
+      <rect class="box-target" x="220" y="564" width="280" height="68" rx="8"/>
+      <text class="lbl-sm lbl-accent" x="360" y="586" text-anchor="middle">CONTACT Â· CONVERSION</text>
+      <text class="lbl" x="360" y="606" text-anchor="middle">click email â†’ mailto opens</text>
+      <text class="lbl-sm" x="360" y="624" text-anchor="middle">depth from entry: 1 click</text>
+
+      <!-- Failure / bounce -->
+      <line class="pipe-soft" x1="500" y1="394" x2="640" y2="394"/>
+      <rect class="box" x="540" y="364" width="160" height="60" rx="8"/>
+      <text class="lbl-sm" x="620" y="386" text-anchor="middle">BOUNCE</text>
+      <text class="lbl" x="620" y="406" text-anchor="middle">visitor leaves</text>
+
+    </svg>
+  </div>
+
+  <hr>
+
+  <h2><span class="num">06</span> Architecture &amp; file plan</h2>
+
+  <h3>Generator</h3>
+  <pre><code>generadores/templates/v11-landing/index.ts
+  â”œâ”€â”€ renderHero            keep, simplify
+  â”œâ”€â”€ renderProof           DELETE (v1, v3); rewrite as renderProofStrip (v2 only)
+  â”œâ”€â”€ renderHorizon         DELETE (v1, v2); rewrite as renderMethod (v3 only)
+  â”œâ”€â”€ renderNotebook        DELETE
+  â”œâ”€â”€ renderWork            keep shape, change CSS to vertical list
+  â”œâ”€â”€ renderMethod (now)    DELETE â€” replaced by v3 renderMethod
+  â”œâ”€â”€ renderTestimonial     keep (v2, v3)
+  â”œâ”€â”€ renderNotes           NEW (v2 only)
+  â”œâ”€â”€ renderContact         simplify â€” one big email + one sub-line
+  â””â”€â”€ renderFooter          keep</code></pre>
+
+  <h3>Styles</h3>
+  <p>Strip from <code>v11-styles.ts</code>:</p>
+  <ul>
+    <li><code>.v11-section--paper</code> â€” dies with Notebook</li>
+    <li><code>.v11-horizon__*</code> â€” dies with Horizon (v3 needs new <code>.v11-method__*</code>)</li>
+    <li><code>.v11-proof-numbers__*</code> â€” dies (v2 needs new <code>.v11-proof__*</code>)</li>
+    <li>All chip / badge / glow rules</li>
+  </ul>
+  <p>Add:</p>
+  <ul>
+    <li><code>.v11-container-editorial</code> â€” <code>max-width: 760px</code></li>
+    <li>v2: <code>.v11-proof</code> â€” 4-cell grid</li>
+    <li>v3: <code>.v11-method</code> â€” 3-col grid, no chips</li>
+  </ul>
+
+  <h3>Data</h3>
+  <ul>
+    <li><code>perfil/data/landing.yaml</code> â€” drop <code>tabs:</code> block.</li>
+    <li><code>perfil/data/positioning.yaml</code> â€” keep. v2 reads <code>proofNumbers[]</code>.</li>
+    <li><code>perfil/data/horizon.yaml</code> â€” kept on disk; consumed only by v3.</li>
+  </ul>
+
+  <hr>
+
+  <h2><span class="num">07</span> Success criteria</h2>
+  <ul>
+    <li>Visitor seeing it for the first time should not type "AI generated" or "template" in their head.</li>
+    <li>Hero thesis readable in one breath, no scroll required.</li>
+    <li>Click depth to contact intent: â‰¤ 1.</li>
+    <li>Build cost: under 200 LOC of new generator code, under 400 LOC of new CSS. The merge is a <em>subtraction</em> primarily.</li>
+    <li>All <code>perfil/data/*.yaml</code> content keeps rendering â€” no copy is orphaned without an explicit decision.</li>
+    <li>Builds via existing <code>npm run build:landing-v11</code>, no new dependencies.</li>
+  </ul>
+
+  <hr>
+
+  <h2><span class="num">08</span> Open questions</h2>
+  <div class="oq">
+    <h4>Resolve before plan</h4>
+    <ol>
+      <li><strong>Notes source.</strong> v2 has a notes block. New <code>perfil/data/notes/*.md</code> directory? Or drop notes from v2 and recommend v1?</li>
+      <li><strong>Case detail pages.</strong> Current generator produces <code>/work/&lt;slug&gt;/</code> case detail. Survive (linked from each work item) or collapse into expand-on-click?</li>
+      <li><strong>Language toggle.</strong> Current SPA toggles in-place. New static page either reloads to <code>/es/</code> or keeps SPA toggle. Recommendation: static reload.</li>
+      <li><strong>Final iteration target.</strong> v2 is recommended. Plan will assume v2 unless told otherwise.</li>
+    </ol>
+  </div>
+
+  <h2><span class="num">09</span> Out of scope</h2>
+  <ul>
+    <li>Case detail page redesign (separate spec).</li>
+    <li>CV / skills sheet generadores.</li>
+    <li>Animations beyond CSS hovers.</li>
+    <li>Light-mode variant.</li>
+  </ul>
+
+  <div class="footer">
+    Spec written 2026-05-21 Â· canonical at <code>laboratorio/superpowers/specs/2026-05-21-landing-aihero-merge-design.md</code>
+  </div>
+
+</main>
+
+</body>
+</html>

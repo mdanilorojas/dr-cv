@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>v2 Â· Balanced â€” landing rebuild</title>
+<link rel="stylesheet" href="tokens-web.css">
+<style>
+/* ============================================================
+   v2 Â· Balanced  (recommended target)
+   Hero Â· Proof strip Â· Work Â· Testimonial Â· Notes Â· Contact.
+   The version with the most chance of converting clients without
+   feeling AI-templated. Discrete proof strip replaces Horizon.
+   ============================================================ */
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--v11-font-body);
+  background: var(--v11-bg-primary);
+  color: var(--v11-text-body);
+  font-size: 16px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+
+.container { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+
+.return-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--v11-bg-deep); padding: 8px 24px;
+  border-bottom: 1px solid var(--v11-line);
+  font-family: var(--v11-font-display);
+  font-size: 11px; color: var(--v11-text-60);
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.return-bar a { color: var(--v11-accent); }
+.return-bar b { color: var(--v11-accent); }
+
+/* Nav */
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 32px 0; }
+.brand {
+  font-family: var(--v11-font-display);
+  font-size: 14px; color: var(--v11-text);
+  font-weight: 600; letter-spacing: -0.01em;
+}
+.brand b { color: var(--v11-accent); }
+.nav__links { display: flex; gap: 28px; font-family: var(--v11-font-display); font-size: 13px; color: var(--v11-text-70); }
+.nav__links a:hover { color: var(--v11-accent); }
+.nav__lang {
+  font-family: var(--v11-font-display); font-size: 12px;
+  color: var(--v11-text-50); letter-spacing: 0.06em;
+}
+.nav__lang b { color: var(--v11-text); font-weight: 500; }
+
+/* Hero */
+.hero { padding: 88px 0 56px; }
+.hero__byline-row { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+.hero__avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  background-image: url('danilo.jpg');
+  background-size: cover; background-position: center;
+  border: 1px solid var(--v11-line);
+}
+.hero__byline {
+  font-family: var(--v11-font-display);
+  font-size: 13px; color: var(--v11-text-60);
+  letter-spacing: -0.01em; line-height: 1.4;
+}
+.hero__byline b { color: var(--v11-text); font-weight: 600; }
+.hero__title {
+  font-family: var(--v11-font-display);
+  font-weight: 600;
+  font-size: clamp(36px, 5.5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--v11-text);
+  margin: 0 0 28px;
+}
+.hero__title em { font-style: normal; color: var(--v11-accent); }
+.hero__lede {
+  font-size: 19px; line-height: 1.55;
+  color: var(--v11-text-70);
+  max-width: 56ch; margin: 0;
+}
+.hero__cta-row { margin-top: 40px; display: flex; gap: 24px; align-items: center; }
+.btn-primary {
+  font-family: var(--v11-font-display);
+  font-size: 14px; font-weight: 600;
+  color: var(--v11-accent-ink); background: var(--v11-accent);
+  padding: 12px 22px; border-radius: 8px;
+  letter-spacing: -0.01em; transition: background 180ms;
+}
+.btn-primary:hover { background: var(--v11-accent-deep); }
+.btn-link {
+  font-family: var(--v11-font-display);
+  font-size: 14px; color: var(--v11-text-70);
+  letter-spacing: -0.01em;
+}
+.btn-link:hover { color: var(--v11-accent); }
+
+/* Proof strip â€” replaces Horizon, replaces Proof numbers band */
+.proof {
+  margin-top: 56px;
+  padding: 24px 0;
+  border-top: 1px solid var(--v11-line-soft);
+  border-bottom: 1px solid var(--v11-line-soft);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.proof__item { display: flex; flex-direction: column; gap: 4px; }
+.proof__num {
+  font-family: var(--v11-font-display);
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: -0.03em;
+  color: var(--v11-text);
+  line-height: 1;
+}
+.proof__num span { color: var(--v11-accent); }
+.proof__lab {
+  font-family: var(--v11-font-display);
+  font-size: 11px; letter-spacing: 0.06em;
+  color: var(--v11-text-50);
+}
+@media (max-width: 600px) { .proof { grid-template-columns: repeat(2, 1fr); } }
+
+/* Section */
+.section { padding: 88px 0 32px; }
+.section__h {
+  font-family: var(--v11-font-display);
+  font-weight: 600;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.1; letter-spacing: -0.04em;
+  color: var(--v11-text); margin: 0 0 8px;
+}
+.section__h em { font-style: normal; color: var(--v11-accent); }
+.section__sub {
+  font-family: var(--v11-font-display);
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--v11-text-50); margin: 0 0 48px;
+}
+
+/* Work list */
+.work__item {
+  display: block; padding: 32px 0;
+  border-top: 1px solid var(--v11-line-soft);
+  position: relative;
+}
+.work__item:last-child { border-bottom: 1px solid var(--v11-line-soft); }
+.work__item::after {
+  content: 'â†’';
+  position: absolute; right: 4px; top: 36px;
+  font-family: var(--v11-font-display);
+  color: var(--v11-text-50);
+  font-size: 18px;
+  transition: transform 280ms, color 180ms;
+}
+.work__item:hover::after { transform: translateX(6px); color: var(--v11-accent); }
+.work__item:hover .work__title { color: var(--v11-accent); }
+.work__title {
+  font-family: var(--v11-font-display);
+  font-weight: 600; font-size: 22px;
+  letter-spacing: -0.03em; color: var(--v11-text);
+  margin: 0 0 6px; padding-right: 28px;
+  transition: color 180ms;
+}
+.work__meta {
+  font-family: var(--v11-font-display);
+  font-size: 12px; color: var(--v11-text-50);
+  letter-spacing: 0.06em; margin-bottom: 12px;
+}
+.work__desc {
+  font-size: 15px; line-height: 1.6;
+  color: var(--v11-text-70); margin: 0; max-width: 60ch;
+}
+
+/* Testimonial */
+.t-section { padding: 88px 0; }
+.testimonial { padding: 0; }
+.testimonial__mark {
+  font-family: var(--v11-font-display);
+  color: var(--v11-accent);
+  font-size: 56px; line-height: 0.7;
+  display: block; margin-bottom: 16px;
+}
+.testimonial__quote {
+  font-family: var(--v11-font-display);
+  font-weight: 500;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: var(--v11-text);
+  margin: 0 0 24px;
+}
+.testimonial__attr {
+  font-family: var(--v11-font-display);
+  font-size: 13px;
+  color: var(--v11-text-60);
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+}
+.testimonial__attr b { color: var(--v11-text); font-weight: 600; }
+
+/* Notes */
+.note {
+  padding: 18px 0;
+  border-top: 1px solid var(--v11-line-soft);
+  display: flex; gap: 20px; align-items: baseline;
+}
+.note:last-child { border-bottom: 1px solid var(--v11-line-soft); }
+.note__date {
+  font-family: var(--v11-font-display);
+  font-size: 12px; color: var(--v11-text-50);
+  letter-spacing: 0.06em;
+  flex-shrink: 0; width: 100px;
+}
+.note__title {
+  font-family: var(--v11-font-display);
+  font-weight: 500; font-size: 15px;
+  color: var(--v11-text); letter-spacing: -0.01em;
+}
+.note:hover .note__title { color: var(--v11-accent); }
+
+/* Contact */
+.contact { padding: 96px 0 64px; }
+.contact__h {
+  font-family: var(--v11-font-display);
+  font-weight: 600;
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: -0.04em;
+  color: var(--v11-text); margin: 0 0 24px;
+}
+.contact__h em { font-style: normal; color: var(--v11-accent); }
+.contact__email {
+  display: inline-block;
+  font-family: var(--v11-font-display);
+  font-size: 22px; color: var(--v11-text);
+  border-bottom: 1px solid var(--v11-text-subtle);
+  padding-bottom: 4px;
+  transition: color 180ms, border-color 180ms;
+}
+.contact__email:hover { color: var(--v11-accent); border-color: var(--v11-accent); }
+.contact__sub {
+  margin-top: 32px;
+  font-family: var(--v11-font-display);
+  font-size: 13px; color: var(--v11-text-60);
+  letter-spacing: -0.01em;
+}
+.contact__sub b { color: var(--v11-text); font-weight: 500; }
+
+.footer {
+  padding: 32px 0;
+  border-top: 1px solid var(--v11-line-soft);
+  font-family: var(--v11-font-display);
+  font-size: 12px; color: var(--v11-text-50);
+  letter-spacing: 0.06em;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.footer__right { display: flex; gap: 16px; }
+.footer__right a:hover { color: var(--v11-accent); }
+</style>
+</head>
+<body>
+
+<div class="return-bar">â† <a href="index.html">Back to hub</a> Â· v2 Â· Balanced Â· <b>Recommended target</b></div>
+
+<header>
+  <div class="container">
+    <nav class="nav">
+      <div class="brand">danilorojas<b>.</b>design</div>
+      <div class="nav__links">
+        <a>Work</a>
+        <a>Notes</a>
+        <a>About</a>
+        <a>Contact</a>
+      </div>
+      <div class="nav__lang"><b>EN</b> Â· ES</div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="hero__byline-row">
+        <div class="hero__avatar"></div>
+        <div class="hero__byline"><b>Danilo Rojas</b> â€” Designer engineer Â· Quito, Ecuador</div>
+      </div>
+      <h1 class="hero__title">
+        I ship real products â€” and I ship the tools agents use to <em>help me ship them</em>.
+      </h1>
+      <p class="hero__lede">
+        Fifteen years of delivery. Enterprise clients, production SaaS, active consulting at Booz Allen Hamilton.
+        I keep the craft; agents give me the leverage.
+      </p>
+      <div class="hero__cta-row">
+        <a class="btn-primary">Get in touch</a>
+        <a class="btn-link">See selected work â†’</a>
+      </div>
+
+      <div class="proof" aria-label="Recent numbers">
+        <div class="proof__item">
+          <div class="proof__num">15<span>+</span></div>
+          <div class="proof__lab">Years shipping product</div>
+        </div>
+        <div class="proof__item">
+          <div class="proof__num">346</div>
+          <div class="proof__lab">Commits Â· last 40 days</div>
+        </div>
+        <div class="proof__item">
+          <div class="proof__num">1<span>.0</span></div>
+          <div class="proof__lab">SaaS live in prod</div>
+        </div>
+        <div class="proof__item">
+          <div class="proof__num">95<span>.6</span></div>
+          <div class="proof__lab">DS migration score</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section__h">Selected <em>work</em>.</h2>
+      <p class="section__sub">Three projects Â· 2024 â€” 2026</p>
+
+      <a class="work__item">
+        <h3 class="work__title">EnRegla â€” compliance SaaS, 0 â†’ 1.0 in 40 days</h3>
+        <div class="work__meta">2026 Â· Own product Â· Paying pilots</div>
+        <p class="work__desc">
+          A multi-site compliance SaaS for LATAM SMBs, co-built with Claude Code in 40 days. 346 commits, 21 SQL
+          migrations, a Supabase MCP server in the loop, and a recursive DS migration that scored 78.4 â†’ 95.6.
+        </p>
+      </a>
+
+      <a class="work__item">
+        <h3 class="work__title">Trusted Environments Â· Developer Portal</h3>
+        <div class="work__meta">2024â€“2026 Â· Booz Allen Hamilton</div>
+        <p class="work__desc">
+          Two design systems shipped together: <i>/te-skin</i>, a 17-component slash-command skill agents invoke
+          inline, and TE Black, a dark-first DS with the WCAG audit written into every token.
+        </p>
+      </a>
+
+      <a class="work__item">
+        <h3 class="work__title">Life Update â€” daily tracking with an LLM in runtime</h3>
+        <div class="work__meta">2026 Â· Own product Â· 0 â†’ prod in 1 day</div>
+        <p class="work__desc">
+          Personal product for daily entries with Gemini doing semantic distance to a five-year plan. Hybrid
+          data model: markdown as source of truth, the database as execution engine.
+        </p>
+      </a>
+    </div>
+  </section>
+
+  <section class="t-section">
+    <div class="container">
+      <div class="testimonial">
+        <span class="testimonial__mark">"</span>
+        <p class="testimonial__quote">
+          Danilo blends design, requirements, development and AI â€” the unicorn most companies are looking for in
+          this changing time. A huge boon for any team.
+        </p>
+        <p class="testimonial__attr">
+          <b>Alexander Giraldez</b> Â· Design Lead, Trusted Environments<br>
+          Booz Allen Hamilton
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section__h">Recent <em>notes</em>.</h2>
+      <p class="section__sub">Working in public Â· 2026</p>
+
+      <div class="note">
+        <div class="note__date">2026-05-12</div>
+        <a class="note__title">When the BAH NDA still lets you talk</a>
+      </div>
+      <div class="note">
+        <div class="note__date">2026-05-08</div>
+        <a class="note__title">Designing tokens that agents can read</a>
+      </div>
+      <div class="note">
+        <div class="note__date">2026-04-29</div>
+        <a class="note__title">Why I rebuilt the recursive DS audit</a>
+      </div>
+      <div class="note">
+        <div class="note__date">2026-04-15</div>
+        <a class="note__title">A 40-day SaaS, by the numbers</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="container">
+      <h2 class="contact__h">Working on something <em>worth shipping</em>?</h2>
+      <a class="contact__email">danilorojas@hotmail.com</a>
+      <p class="contact__sub">
+        <b>Open for engagements.</b> Remote Â· LATAM &amp; US time zones Â· 2026 H2 onwards.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer">
+      <span>Â© 2026 Danilo Rojas Â· Quito, Ecuador</span>
+      <div class="footer__right">
+        <a>github</a><a>linkedin</a><a>behance</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

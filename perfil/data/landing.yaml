@@ -1,0 +1,32 @@
+tabs:
+  - id: overview
+    labelEn: Overview
+    labelEs: Resumen
+    visual: particles
+    default: true
+  - id: work
+    labelEn: Work
+    labelEs: Trabajo
+    visual: grid
+  - id: method
+    labelEn: Method
+    labelEs: MÃ©todo
+    visual: flow
+  - id: about
+    labelEn: About
+    labelEs: Sobre mÃ­
+    visual: timeline
+  - id: contact
+    labelEn: Contact
+    labelEs: Contacto
+    visual: signature
+
+cta:
+  en: "Let's work together"
+  es: "Trabajemos juntos"
+
+seo:
+  titleEn: "Danilo Rojas â€” Agentic Designer"
+  titleEs: "Danilo Rojas â€” DiseÃ±ador AgÃ©ntico"
+  descriptionEn: "I ship real products â€” and I ship the tools agents use to help me ship them."
+  descriptionEs: "Entrego publicables reales â€” y entrego las herramientas que los agentes usan para ayudarme."
