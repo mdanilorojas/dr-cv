@@ -36,8 +36,9 @@ Estas rutas son publicas por decision explicita, pero no deben aparecer como bot
 |---|---|---|
 | `danilorojas.design/app` | `career-training/ur-assessment/index.html` | `dist/landing-v11/app/index.html` |
 | `danilorojas.design/daily` | `carrera/daily/index.html` | `dist/landing-v11/daily/index.html` |
+| `danilorojas.design/plan` | `carrera/plan/index.html` | `dist/landing-v11/plan/index.html` |
 
-Regla: editar siempre la fuente real, nunca `dist/`. `npm run build:landing-v11` copia ambas herramientas a `dist/landing-v11/`.
+Regla: editar siempre la fuente real, nunca `dist/`. `npm run build:landing-v11` copia estas herramientas a `dist/landing-v11/`.
 
 ## Deploy
 
@@ -50,6 +51,7 @@ No cambiar estas rutas sin verificar deploy:
 - `dist/landing-v11/work/*`
 - `dist/landing-v11/app/index.html`
 - `dist/landing-v11/daily/index.html`
+- `dist/landing-v11/plan/index.html`
 - `dist/landing-v11/CNAME`
 
 ## Design system

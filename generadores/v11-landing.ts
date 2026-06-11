@@ -69,6 +69,10 @@ const handTools: Array<{ src: string; destRel: string }> = [
     src: path.join(projectRoot, "career-training", "ur-assessment", "index.html"),
     destRel: path.join("app", "index.html"),
   },
+  {
+    src: path.join(projectRoot, "carrera", "plan", "index.html"),
+    destRel: path.join("plan", "index.html"),
+  },
 ];
 
 function copyHandTools(): void {

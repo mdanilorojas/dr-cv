@@ -60,6 +60,12 @@ No ejecutar hasta que Danilo diga:
 ejecuta integracion Life Update
 ```
 
+## Plan maestro publicado
+
+[`plan/index.html`](plan/index.html) es la fuente unica de danilorojas.design/plan: el plan por compuertas G1-G5 hacia $250k. Spec canonico: `laboratorio/superpowers/specs/2026-06-11-plan-maestro-250k-design.md`. El build de la landing lo copia a `dist/landing-v11/plan/`. Ruta publica no enlazada desde la landing principal.
+
+Este plan reemplaza al plan de 6 meses (2026-06-07), que queda como referencia historica.
+
 ## Daily tracker
 
 [`daily/index.html`](daily/index.html) es la **fuente unica** del daily (danilorojas.design/daily). El build de la landing (`npm run build:landing-v11`) lo copia a `dist/landing-v11/daily/`. Editar siempre aqui, nunca en dist.
