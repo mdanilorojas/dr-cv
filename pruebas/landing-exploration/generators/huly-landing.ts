@@ -8,7 +8,7 @@ import { renderHulyLanding } from "./templates/huly-landing/index.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, "..");
 const dataDir = path.join(projectRoot, "data");
-const tokensPath = path.join(projectRoot, "design-system", "tokens-huly.css");
+const tokensPath = path.join(projectRoot, "tokens-huly.css");
 const distDir = path.join(projectRoot, "dist", "landing-huly");
 
 const MAX_HTML_BYTES = 500_000;

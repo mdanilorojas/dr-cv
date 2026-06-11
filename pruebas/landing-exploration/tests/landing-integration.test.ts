@@ -8,7 +8,7 @@ import { renderLanding } from "../generators/templates/landing/index.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, "..");
 const dataDir = path.join(projectRoot, "data");
-const tokensPath = path.join(projectRoot, "design-system", "tokens-landing.css");
+const tokensPath = path.join(projectRoot, "tokens-landing.css");
 
 describe("renderLanding — integration", () => {
   let data: ReturnType<typeof loadLandingData>;

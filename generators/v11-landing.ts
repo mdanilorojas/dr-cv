@@ -57,6 +57,32 @@ function copyAnimationAssets(): void {
   console.log(`[v11-landing] copied animation assets → ${destRoot}`);
 }
 
+// Hand-maintained, unlisted tools served alongside the landing. They are public
+// by direct URL, but intentionally not linked from the main landing.
+// Their source lives outside dist/; this copy keeps dist fully regenerable.
+const handTools: Array<{ src: string; destRel: string }> = [
+  {
+    src: path.join(projectRoot, "estrategia", "daily", "index.html"),
+    destRel: path.join("daily", "index.html"),
+  },
+  {
+    src: path.join(projectRoot, "UR_training", "starting_point", "index.html"),
+    destRel: path.join("app", "index.html"),
+  },
+];
+
+function copyHandTools(): void {
+  for (const tool of handTools) {
+    if (!existsSync(tool.src)) {
+      throw new Error(`[v11-landing] hand tool source missing: ${tool.src}`);
+    }
+    const dest = path.join(distDir, tool.destRel);
+    mkdirSync(path.dirname(dest), { recursive: true });
+    copyFileSync(tool.src, dest);
+    console.log(`[v11-landing] copied hand tool → ${dest}`);
+  }
+}
+
 async function buildOgImage(): Promise<void> {
   const photoBytes = readFileSync(photoSrc);
   const photoDataUrl = `data:image/jpeg;base64,${photoBytes.toString("base64")}`;
@@ -84,6 +110,7 @@ async function main(): Promise<void> {
 
   await copyPhoto();
   copyAnimationAssets();
+  copyHandTools();
   await buildOgImage();
 
   const ogImageUrl = `${SITE_ORIGIN}/og.png`;

@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan Maestro 6 Meses — Danilo Pro</title>
+  <style>
+    :root {
+      --bg: #0d0f13;
+      --panel: #15171e;
+      --panel2: #1c1f28;
+      --line: #272b38;
+      --text: #f0f2f7;
+      --muted: #9aa3b8;
+      --soft: #5e6880;
+      --blue: #7db1ff;
+      --green: #71d99e;
+      --yellow: #e9c46a;
+      --red: #f07178;
+      --orange: #f4a261;
+      --purple: #c77dff;
+      --teal: #4ecdc4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.6 "Segoe UI", system-ui, sans-serif;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: linear-gradient(135deg, #0d0f13 0%, #141820 100%);
+      border-bottom: 1px solid var(--line);
+      padding: 36px 28px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(125,177,255,.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+    header h1 {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 900;
+      letter-spacing: -.02em;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+    header p {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 600px;
+      margin-bottom: 22px;
+    }
+
+    /* ─── BASELINE CHIPS ─── */
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      background: var(--panel2);
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      padding: 5px 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .chip strong { color: var(--text); }
+
+    /* ─── MAIN ─── */
+    main { max-width: 1100px; margin: 0 auto; padding: 32px 20px 72px; }
+
+    /* ─── SECTION HEADER ─── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin: 44px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+    }
+
+    /* ─── TIMELINE 6M ─── */
+    .timeline-6m {
+      background: var(--panel);
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      padding: 28px;
+      margin-bottom: 8px;
+    }
+    .timeline-6m h3 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 20px;
+    }
+
+    .timeline-bar {
+      position: relative;
+      height: 52px;
+      background: var(--panel2);
+      border-radius: 99px;
+      overflow: visible;
+      margin-bottom: 18px;
+    }
+    .tl-segment {
+      position: absolute;
+      top: 0; bottom: 0;
+      border-radius: 99px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .tl-m0 { left: 0; width: 2px; background: var(--soft); border-radius: 2px; }
+    .tl-m1 { left: 0.5%; width: 49.5%; background: linear-gradient(90deg, var(--yellow), var(--orange)); color: #0d0f13; }
+    .tl-m2 { left: 50%; width: 50%; background: linear-gradient(90deg, var(--blue), var(--purple)); color: #0d0f13; }
+
+    .tl-markers {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 0 2px;
+    }
+
+    /* milestone cards row */
+    .milestone-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 4px;
+    }
+    @media (max-width: 680px) { .milestone-row { grid-template-columns: 1fr; } }
+
+    .m-card {
+      background: var(--panel2);
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 3px solid transparent;
+    }
+    .m-card.m1 { border-color: var(--yellow); }
+    .m-card.m2 { border-color: var(--blue); }
+
+    .m-card-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .m-card-header h4 { font-size: 17px; font-weight: 800; }
+    .m-card-header span { font-size: 12px; color: var(--soft); }
+
+    .m-criteria { list-style: none; }
+    .m-criteria li {
+      padding: 5px 0;
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      gap: 8px;
+    }
+    .m-criteria li .check { flex-shrink: 0; color: var(--soft); }
+
+    /* ─── WEEKLY REVIEW RITUAL ─── */
+    .ritual-box {
+      background: var(--panel);
+      border-radius: 14px;
+      border: 1px solid rgba(125,177,255,.2);
+      padding: 28px;
+    }
+    .ritual-box h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--blue);
+    }
+    .ritual-box .sub { color: var(--muted); font-size: 14px; margin-bottom: 22px; }
+
+    .ritual-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .ritual-step {
+      background: var(--panel2);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .ritual-step .num {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--blue);
+      opacity: .4;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .ritual-step p { font-size: 13px; color: var(--muted); }
+    .ritual-step strong { color: var(--text); }
+
+    /* review questions table */
+    .review-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .review-table th {
+      text-align: left;
+      padding: 8px 12px;
+      background: var(--panel2);
+      color: var(--soft);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--line);
+    }
+    .review-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      vertical-align: top;
+    }
+    .review-table tr:last-child td { border-bottom: none; }
+    .review-table td:first-child { color: var(--text); font-weight: 600; }
+    .signal { font-size: 11px; padding: 2px 8px; border-radius: 99px; display: inline-block; }
+    .signal.skills { background: rgba(233,196,106,.12); color: var(--yellow); }
+    .signal.evid { background: rgba(113,217,158,.12); color: var(--green); }
+    .signal.market { background: rgba(125,177,255,.12); color: var(--blue); }
+    .signal.val { background: rgba(244,162,97,.12); color: var(--orange); }
+    .signal.energy { background: rgba(113,217,158,.12); color: var(--green); }
+    .signal.system { background: rgba(199,125,255,.12); color: var(--purple); }
+
+    /* ─── UR TRAINING PLAN ─── */
+    .ur-periods {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .ur-period {
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 16px;
+      border: 1px solid var(--line);
+    }
+    .ur-period .period-label { font-size: 12px; color: var(--soft); margin-bottom: 6px; }
+    .ur-period .period-num { font-size: 28px; font-weight: 900; color: var(--yellow); line-height: 1; }
+    .ur-period .period-acc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    .progress-bar-wrap { margin-top: 18px; }
+    .progress-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .progress-track {
+      background: var(--panel2);
+      border-radius: 99px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--yellow), var(--orange));
+    }
+
+    /* ─── LIFE UPDATE APP ─── */
+    .app-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 640px) { .app-grid { grid-template-columns: 1fr; } }
+
+    .app-col { background: var(--panel); border-radius: 12px; padding: 20px; border: 1px solid var(--line); }
+    .app-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 14px; }
+    .app-col h4.keep { color: var(--green); }
+    .app-col h4.add { color: var(--blue); }
+    .app-col h4.note { color: var(--soft); }
+
+    .field-list { list-style: none; }
+    .field-list li {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .field-list li:last-child { border-bottom: none; }
+    .field-name { font-family: "Consolas", monospace; font-size: 12px; color: var(--green); }
+    .field-name.new { color: var(--blue); }
+    .field-desc { color: var(--muted); }
+
+    .note-box {
+      background: rgba(244,162,97,.07);
+      border: 1px solid rgba(244,162,97,.2);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+    .note-box strong { color: var(--orange); }
+
+    /* ─── SCENARIOS ─── */
+    .scenarios {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .scenario {
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--line);
+    }
+    .scenario .s-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+    .scenario .s-title { font-size: 16px; font-weight: 800; margin-bottom: 10px; }
+    .scenario ul { list-style: none; }
+    .scenario ul li { font-size: 13px; color: var(--muted); padding: 4px 0; }
+    .scenario ul li::before { content: '→ '; color: var(--soft); }
+
+    /* ─── ANTI-PATTERNS ─── */
+    .anti-list { list-style: none; }
+    .anti-list li {
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      background: rgba(240,113,120,.06);
+      border-left: 3px solid var(--red);
+      border-radius: 0 8px 8px 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ─── FRASE ─── */
+    .frase {
+      text-align: center;
+      padding: 36px 20px;
+      margin-top: 44px;
+      border-top: 1px solid var(--line);
+      font-size: 20px;
+      font-style: italic;
+      color: var(--muted);
+      letter-spacing: -.01em;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Plan Maestro · Danilo Rojas</div>
+  <h1>6 meses hacia $250k</h1>
+  <p>Product Designer / AI Product Designer remoto.<br>2026-06-07 → 2026-12-07</p>
+
+  <div class="chips">
+    <div class="chip"><strong>16</strong> / 80 UR Training completadas</div>
+    <div class="chip"><strong>$12,000</strong> USD runway</div>
+    <div class="chip"><strong>0</strong> case studies listos</div>
+    <div class="chip"><strong>0</strong> conversaciones $120k+</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ─── HORIZONTE 6 MESES ─── -->
+  <div class="section-label">Horizonte de 6 meses</div>
+
+  <div class="timeline-6m">
+    <h3>De hoy al 7 de diciembre 2026</h3>
+
+    <div class="timeline-bar">
+      <div class="tl-segment tl-m1">Milestone 1 — 90 días</div>
+      <div class="tl-segment tl-m2">Milestone 2 — días 91–180</div>
+    </div>
+    <div class="tl-markers">
+      <span>7 jun 2026</span>
+      <span>5 sep 2026</span>
+      <span>7 dic 2026</span>
+    </div>
+
+    <div class="milestone-row" style="margin-top:22px">
+      <div class="m-card m1">
+        <div class="m-card-header">
+          <h4>Milestone 1</h4>
+          <span>7 jun → 5 sep · 90 días</span>
+        </div>
+        <ul class="m-criteria">
+          <li><span class="check">□</span> 30/80 UR Training con calidad senior</li>
+          <li><span class="check">□</span> 2 case studies completos en landing</li>
+          <li><span class="check">□</span> 5 conversaciones con hiring managers $120k+</li>
+          <li><span class="check">□</span> En Regla: 10 convos + go/no-go documentado</li>
+          <li><span class="check">□</span> Cuerpo: 4x/semana por 8 semanas</li>
+          <li><span class="check">□</span> Life Update: 60+ días de uso real</li>
+        </ul>
+      </div>
+
+      <div class="m-card m2">
+        <div class="m-card-header">
+          <h4>Milestone 2</h4>
+          <span>6 sep → 7 dic · se define en sem 12</span>
+        </div>
+        <ul class="m-criteria">
+          <li><span class="check">→</span> Se detalla el domingo 2026-08-30</li>
+          <li><span class="check">→</span> Depende del resultado de M1</li>
+          <li><span class="check">→</span> Ver escenarios A, B, C al final</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── UR TRAINING ROADMAP ─── -->
+  <div class="section-label">UR Training — roadmap de preguntas</div>
+
+  <div class="ur-periods">
+    <div class="ur-period">
+      <div class="period-label">Baseline (hoy)</div>
+      <div class="period-num">16</div>
+      <div class="period-acc">de 80 respondidas</div>
+    </div>
+    <div class="ur-period">
+      <div class="period-label">Semanas 1–2</div>
+      <div class="period-num">+10</div>
+      <div class="period-acc">→ 26/80 acumuladas</div>
+    </div>
+    <div class="ur-period">
+      <div class="period-label">Semanas 3–4</div>
+      <div class="period-num">+6</div>
+      <div class="period-acc">→ 32/80 (meta M1 superada)</div>
+    </div>
+    <div class="ur-period">
+      <div class="period-label">Mes 2</div>
+      <div class="period-num">+8</div>
+      <div class="period-acc">→ 40/80</div>
+    </div>
+    <div class="ur-period">
+      <div class="period-label">Mes 3</div>
+      <div class="period-num">+8</div>
+      <div class="period-acc">→ 48/80 (meta agresiva M1)</div>
+    </div>
+  </div>
+
+  <div class="progress-bar-wrap" style="max-width:600px; margin-top:20px">
+    <div class="progress-label-row">
+      <span>Progreso actual: 16/80</span>
+      <span style="color:var(--yellow)">Meta M1: 30/80</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" style="width:20%"></div>
+    </div>
+    <div style="font-size:11px; color:var(--soft); margin-top:6px">
+      Meta M1 (línea punteada): 37.5% — Meta agresiva: 60%
+    </div>
+  </div>
+
+  <!-- ─── REVIEW SEMANAL ─── -->
+  <div class="section-label">Review semanal — protocolo dominical</div>
+
+  <div class="ritual-box">
+    <h3>Cada domingo · ~30 min</h3>
+    <div class="sub">El sistema se ajusta una vez por semana, no una vez por día. Esto evita que cada momento difícil reinicie el plan.</div>
+
+    <div class="ritual-steps">
+      <div class="ritual-step">
+        <div class="num">1</div>
+        <p>Abre <strong>Claude Code</strong> en <code style="color:var(--green);font-size:11px">C:\dev\Estrategia Danilo Pro</code></p>
+      </div>
+      <div class="ritual-step">
+        <div class="num">2</div>
+        <p>Escribe: <strong>"review semanal"</strong></p>
+      </div>
+      <div class="ritual-step">
+        <div class="num">3</div>
+        <p>Respondemos juntos las <strong>6 preguntas del review</strong></p>
+      </div>
+      <div class="ritual-step">
+        <div class="num">4</div>
+        <p>Claude actualiza la <strong>tabla Semana N+1</strong> con los ajustes</p>
+      </div>
+    </div>
+
+    <table class="review-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Pregunta</th>
+          <th>Señal que mide</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>¿UR Training produjo respuestas senior esta semana?</td>
+          <td><span class="signal skills">Skills reales</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>¿Portfolio avanzó? ¿Hay evidencia nueva?</td>
+          <td><span class="signal evid">Evidencia</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>¿Salieron aplicaciones o mensajes a recruiters?</td>
+          <td><span class="signal market">Mercado</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>¿En Regla tuvo conversaciones reales?</td>
+          <td><span class="signal val">Validación</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>¿Cuerpo: 4+ días de 5?</td>
+          <td><span class="signal energy">Energía</span></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>¿El sistema se sintió más liviano o más pesado?</td>
+          <td><span class="signal system">Sistema</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:18px; font-size:13px; color:var(--muted)">
+      <strong style="color:var(--text)">Regla:</strong> 5/6 verde → semana ganada, mantener.&nbsp;
+      3–4 verde → ajustar el punto de fricción.&nbsp;
+      &lt;3 → revisar si el sistema o la vida real es el problema.
+    </div>
+  </div>
+
+  <!-- ─── LIFE UPDATE APP ─── -->
+  <div class="section-label">Life Update — qué trackea, qué le falta</div>
+
+  <div class="app-grid">
+    <div class="app-col">
+      <h4 class="keep">Lo que ya trackea (mantener)</h4>
+      <ul class="field-list">
+        <li>
+          <span class="field-name">energy_level</span>
+          <span class="field-desc">Bienestar general del día</span>
+        </li>
+        <li>
+          <span class="field-name">stress_level</span>
+          <span class="field-desc">Presión emocional del día</span>
+        </li>
+        <li>
+          <span class="field-name">trained_today</span>
+          <span class="field-desc">→ bloque Cuerpo</span>
+        </li>
+        <li>
+          <span class="field-name">deep_work_hours</span>
+          <span class="field-desc">→ tiempo en Skills+Dinero</span>
+        </li>
+        <li>
+          <span class="field-name">quick_note</span>
+          <span class="field-desc">Nota del cierre del día</span>
+        </li>
+        <li>
+          <span class="field-name">clean_today</span>
+          <span class="field-desc">Hábito básico de orden</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="app-col">
+      <h4 class="add">Lo que falta (próximo sprint)</h4>
+      <ul class="field-list">
+        <li>
+          <span class="field-name new">ur_training_today</span>
+          <span class="field-desc">Respuestas UR senior del día</span>
+        </li>
+        <li>
+          <span class="field-name new">portfolio_progress</span>
+          <span class="field-desc">Avance en portfolio (texto libre)</span>
+        </li>
+        <li>
+          <span class="field-name new">job_applications</span>
+          <span class="field-desc">Aplicaciones enviadas hoy</span>
+        </li>
+        <li>
+          <span class="field-name new">enregla_conversations</span>
+          <span class="field-desc">Conversaciones En Regla del día</span>
+        </li>
+      </ul>
+      <div class="note-box">
+        <strong>No tocar por 7 días.</strong> Estas 4 columnas se agregan en el primer sprint post-pausa. También usar <code style="color:var(--blue);font-size:11px">weekly_entries</code> y <code style="color:var(--blue);font-size:11px">plan_snapshots</code> que ya existen en Supabase.
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ESCENARIOS M2 ─── -->
+  <div class="section-label">Escenarios Milestone 2 (se elige el 30 ago)</div>
+
+  <div class="scenarios">
+    <div class="scenario">
+      <div class="s-label" style="color:var(--green)">Escenario A</div>
+      <div class="s-title">Oferta recibida en M1</div>
+      <ul>
+        <li>Negociar términos, evaluar fit</li>
+        <li>En Regla: si go → first users; si no → cierre documentado</li>
+        <li>Life Update: mantener como tablero personal</li>
+        <li>UR Training: completar para onboarding del rol</li>
+      </ul>
+    </div>
+
+    <div class="scenario">
+      <div class="s-label" style="color:var(--yellow)">Escenario B</div>
+      <div class="s-title">Proceso avanzado, sin oferta aún</div>
+      <ul>
+        <li>Intensificar prep de entrevistas</li>
+        <li>UR Training: llegar a 60/80 senior</li>
+        <li>Portfolio: tercera pieza + refinamiento</li>
+        <li>En Regla: pausa hasta oferta</li>
+      </ul>
+    </div>
+
+    <div class="scenario">
+      <div class="s-label" style="color:var(--orange)">Escenario C</div>
+      <div class="s-title">Sin tracción de mercado</div>
+      <ul>
+        <li>Revisar posicionamiento con datos reales</li>
+        <li>Explorar roles adyacentes (UX Research, PM)</li>
+        <li>Coaching de entrevistas externo</li>
+        <li>En Regla: decisión de foco o pivote</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ─── ANTI-PATRONES ─── -->
+  <div class="section-label">Anti-patrones de los 6 meses</div>
+
+  <ul class="anti-list">
+    <li>Completar las 80 preguntas UR crudas para sentir avance — no cuenta sin calidad senior</li>
+    <li>Construir más En Regla antes de validar mercado con conversaciones</li>
+    <li>Construir más Life Update antes de usarlo sistemáticamente</li>
+    <li>Convertir la estrategia en otro proyecto infinito que necesita más planificación</li>
+    <li>Reiniciar el día porque una hora se movió</li>
+    <li>Esconder "aprender Product Design" dentro de métricas vagas de dinero</li>
+  </ul>
+
+  <div class="frase">
+    "No necesito claridad total. Necesito ejecutar el siguiente movimiento correcto."
+  </div>
+
+</main>
+</body>
+</html>

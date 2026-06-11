@@ -8,7 +8,7 @@ import { renderLanding } from "./templates/landing/index.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, "..");
 const dataDir = path.join(projectRoot, "data");
-const tokensPath = path.join(projectRoot, "design-system", "tokens-landing.css");
+const tokensPath = path.join(projectRoot, "tokens-landing.css");
 const distDir = path.join(projectRoot, "dist", "landing");
 
 const MAX_HTML_BYTES = 400_000;
