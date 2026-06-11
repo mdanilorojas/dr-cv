@@ -231,6 +231,7 @@
       display: flex;
       flex: 1;
       min-height: 0;
+      height: 0; /* Forces height calculation in Safari/WebKit */
       overflow: hidden;
       position: relative;
     }
@@ -318,6 +319,10 @@
       margin-bottom: 1rem;
     }
 
+    .section-group.collapsed .question-list {
+      display: none;
+    }
+
     .section-header {
       font-family: var(--font-mono);
       font-size: 0.65rem;
@@ -329,6 +334,30 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity var(--v11-dur-fast);
+    }
+
+    .section-header:hover {
+      opacity: 0.8;
+    }
+
+    .section-header-title-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-chevron {
+      font-size: 0.55rem;
+      transition: transform var(--v11-dur-fast) var(--v11-ease-standard);
+      display: inline-block;
+      color: var(--v11-text-50);
+    }
+
+    .section-group.collapsed .section-chevron {
+      transform: rotate(-90deg);
     }
 
     .section-badge {
@@ -956,6 +985,12 @@
         width: 320px;
         transform: translateX(0);
         box-shadow: none;
+        height: 100%;
+        max-height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
       }
 
       .close-sidebar-btn {
@@ -1221,6 +1256,16 @@
         <span class="sidebar-title">Sections</span>
         <button class="close-sidebar-btn" id="btn-close-sidebar" aria-label="Close menu">
           <i data-lucide="x" class="lucide-icon" aria-hidden="true"></i>
+        </button>
+      </div>
+      
+      <!-- Stepper de secciones para facilitar navegación en iPad/móvil -->
+      <div class="sidebar-nav-helper" style="padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--v11-line); display: flex; justify-content: space-between; gap: 8px; background: var(--v11-bg-elevated); flex-shrink: 0;">
+        <button class="btn" id="btn-prev-section" style="padding: 0.35rem 0.6rem; font-size: 0.75rem; height: 32px; flex: 1; border-radius: var(--v11-radius-sm);" title="Previous Section">
+          ← Prev Section
+        </button>
+        <button class="btn" id="btn-next-section" style="padding: 0.35rem 0.6rem; font-size: 0.75rem; height: 32px; flex: 1; border-radius: var(--v11-radius-sm);" title="Next Section">
+          Next Section →
         </button>
       </div>
       
@@ -1559,8 +1604,8 @@
       {
         id: 32,
         section: "ENGINEERING",
-        question: "Explain the difference between authentication and authorization.",
-        tips: "<h4>What they evaluate:</h4><p>Core technical literacy.</p><ul><li><strong>Authentication (AuthN):</strong> Confirming the identity of the user (e.g., \"Who are you?\" via password, email verification, or face scan).</li><li><strong>Authorization (AuthZ):</strong> Verifying the permissions of that user (e.g., \"What are you allowed to do?\" like admin rights vs. billing view).</li></ul>"
+        question: "How do you make accessibility a non-negotiable part of your process without slowing the team down?",
+        tips: "<h4>What they evaluate:</h4><p>Whether accessibility is a habit built into your system or an afterthought audit.</p><ul><li>Bake WCAG AA into the design system: contrast-safe tokens, focus states, and keyboard patterns at the component level, so every product screen inherits compliance for free.</li><li>Put accessibility criteria in the definition of done and in Storybook docs, not in a separate review phase.</li><li>Know the fundamentals hands-on: keyboard navigation, focus management, screen reader labels, reduced motion, and color-independence.</li><li>Senior signal: you can quantify it (axe/Lighthouse audits, issues prevented) and explain the business case (legal risk, market reach, SEO).</li></ul>"
       },
       {
         id: 33,
@@ -1607,8 +1652,8 @@
       {
         id: 40,
         section: "ANALYTICS",
-        question: "What analytics tools have you used?",
-        tips: "<h4>What they evaluate:</h4><p>Tooling familiarity.</p><p>State tools you have worked with across different areas: Event tracking (Amplitude, Mixpanel), Web traffic (GA4), Session replay (Hotjar, FullStory), and Data visualization (Looker, Tableau).</p>"
+        question: "Design an A/B test for a checkout redesign. What is your hypothesis, your success metric, and your guardrail metrics?",
+        tips: "<h4>What they evaluate:</h4><p>Whether you can design learning, not just screens — experimentation literacy is a hard requirement at Staff level.</p><ul><li><strong>Hypothesis format:</strong> \"We believe [change] will cause [behavior change] for [segment], measured by [metric].\"</li><li><strong>Primary metric:</strong> one, decided before launch (e.g., checkout completion rate).</li><li><strong>Guardrail metrics:</strong> what must NOT degrade — revenue per visitor, refund rate, support tickets, latency.</li><li>Know the basics of sample size, significance, and run time; know when NOT to test (low traffic, ethical issues, one-way doors).</li></ul>"
       },
       {
         id: 41,
@@ -1637,122 +1682,122 @@
       {
         id: 45,
         section: "LEADERSHIP",
-        question: "Describe your leadership style.",
-        tips: "<h4>What they evaluate:</h4><p>Self-awareness and mentorship maturity.</p><p>Describe a style that is collaborative, outcome-focused, and supportive. Emphasize setting clear goals, building psychological safety within the team, and helping junior designers grow.</p>"
+        question: "You must present a controversial design decision to executives. How do you structure that conversation?",
+        tips: "<h4>What they evaluate:</h4><p>Executive communication — the skill that separates senior from staff. Can you sell a hard decision upward?</p><ul><li>Lead with the business outcome, not the design rationale: revenue, risk, cost, time.</li><li>Present options considered, your recommendation, and the risks you accept — never a single take-it-or-leave-it.</li><li>Pre-wire: socialize with key stakeholders 1:1 before the room, so the meeting confirms rather than debates.</li><li>End with a clear decision ask and a reversibility framing (what we learn, how we roll back).</li></ul>"
       },
       {
         id: 46,
-        section: "AI",
+        section: "AI-NATIVE PRODUCT DESIGN",
         question: "How has AI changed your design process?",
         tips: "<h4>What they evaluate:</h4><p>Efficiency and adaptability.</p><p>Explain how AI acts as an assistant to accelerate generative stages: writing user scripts, synthesizing transcripts, exploring layout patterns, and writing placeholder copy. This frees you to focus on strategy and alignment.</p>"
       },
       {
         id: 47,
-        section: "AI",
-        question: "What parts of Product Design should be automated?",
-        tips: "<h4>What they evaluate:</h4><p>Pragmatic evaluation of AI capabilities.</p><p>Repetitive, mechanical tasks: layer organization, responsive layout adaptation, component asset exporting, drafting boilerplate code, and creating content variations.</p>"
+        section: "AI-NATIVE PRODUCT DESIGN",
+        question: "Which parts of Product Design should be automated — and which should never be?",
+        tips: "<h4>What they evaluate:</h4><p>Pragmatic judgment about where AI creates leverage and where human value is irreplaceable.</p><ul><li><strong>Automate:</strong> repetitive, mechanical work — layer organization, responsive adaptation, asset exporting, boilerplate code, content variations, research transcription.</li><li><strong>Never automate:</strong> generative empathy in user interviews, strategic decisions, ethical trade-offs, cross-functional relationship building, and the final quality bar.</li><li>Senior signal: you frame it as a moving boundary you re-evaluate as models improve, not a fixed list.</li></ul>"
       },
       {
         id: 48,
-        section: "AI",
-        question: "What parts should never be automated?",
-        tips: "<h4>What they evaluate:</h4><p>Strategic awareness of human value.</p><p>Generative empathy in user interviews, strategic decision-making, ethical product balances, cross-functional relationship building, and building team alignment.</p>"
+        section: "AI-NATIVE PRODUCT DESIGN",
+        question: "You are designing a feature powered by an LLM that is sometimes wrong. How does that change your UX decisions?",
+        tips: "<h4>What they evaluate:</h4><p>Designing for non-determinism — the core craft gap between classic UX and AI-native UX.</p><ul><li>Set expectations before first use: what the feature can and cannot do.</li><li>Make verification cheap: show sources, reasoning, or confidence; make output editable rather than final.</li><li>Design the failure paths as first-class: wrong answer, partial answer, refusal, timeout. Always provide undo and a manual fallback.</li><li>Capture feedback signals (accept/edit/reject) so the product learns — instrumentation is part of the design.</li></ul>"
       },
       {
         id: 49,
-        section: "INTERVIEW PERFORMANCE",
-        question: "Tell me about a design decision you strongly disagreed with and how you handled it.",
-        tips: "<h4>What they evaluate:</h4><p>Professional maturity and \"Disagree and Commit\" alignment.</p><p>Explain the context and why you disagreed (using research or metrics). Show how you supported the group's final choice anyway, helped make it successful, set up metrics to monitor performance, and iterated based on outcomes.</p>"
+        section: "AI-NATIVE PRODUCT DESIGN",
+        question: "What makes users trust — or abandon — an AI feature after the first week?",
+        tips: "<h4>What they evaluate:</h4><p>Whether you think about AI adoption as a trust curve, not a launch.</p><ul><li>Trust builds on predictability: consistent quality on a narrow scope beats erratic brilliance on a broad one.</li><li>First-run experience must deliver real value fast, with stakes low (suggestions, not actions).</li><li>Transparency and control: users keep what they can steer, abandon what surprises them.</li><li>Recovery matters more than perfection: one bad output handled gracefully (easy correction, visible improvement) builds more trust than ten silent successes.</li></ul>"
       },
       {
         id: 50,
-        section: "INTERVIEW PERFORMANCE",
-        question: "Why should we hire you instead of another Senior Product Designer?",
-        tips: "<h4>What they evaluate:</h4><p>Your unique value proposition (UVP).</p><p>Focus on your combination of skills: strategic product thinking (PM mindset), technical understanding (engineering empathy), and high-caliber interaction craftsmanship. Highlight your track record of shipping measurable business results.</p>"
+        section: "AI-NATIVE PRODUCT DESIGN",
+        question: "How do you know your AI feature is actually good — before and after shipping? Explain evals like a designer.",
+        tips: "<h4>What they evaluate:</h4><p>Eval literacy — the AI-era equivalent of usability testing, and the rarest skill among designers today.</p><ul><li><strong>Before ship:</strong> golden set of real inputs + a scoring rubric; grade outputs systematically (human review, LLM-as-judge calibrated against human judgment).</li><li><strong>Error taxonomy:</strong> classify failures (hallucination, tone, format, refusal) so fixes are targeted.</li><li><strong>After ship:</strong> acceptance rate, edit distance, retry rate, task completion, retention of the feature.</li><li>Senior signal: you treat the eval set as a living design artifact that grows with every real failure.</li></ul>"
       },
       {
         id: 51,
-        section: "CLAUDE CODE & CURSOR",
+        section: "AI-NATIVE PRODUCT DESIGN",
+        question: "You are designing an agent that can act on the user's behalf. How do you decide when it asks permission versus acting autonomously?",
+        tips: "<h4>What they evaluate:</h4><p>Agent UX — autonomy as a designed dimension, not a binary.</p><ul><li>Map actions on two axes: <strong>reversibility</strong> and <strong>blast radius</strong>. Irreversible or outward-facing actions ask; cheap, undoable ones act.</li><li>Design a trust ramp: autonomy expands with demonstrated success and explicit user opt-in, never silently.</li><li>Previews and dry-runs let the agent show intent before acting.</li><li>Every action needs an audit trail and an undo path. Permission fatigue is a failure mode too — asking for everything teaches users to click yes blindly.</li></ul>"
+      },
+      {
+        id: 52,
+        section: "AI-NATIVE PRODUCT DESIGN",
+        question: "When is chat the wrong interface for an AI product?",
+        tips: "<h4>What they evaluate:</h4><p>Interface judgment beyond the default chatbot pattern.</p><ul><li>Chat fails when: the task is structured and repeated (forms/buttons win), options are unknown to the user (no discoverability), precision matters (direct manipulation wins), or output is visual/spatial.</li><li>Strong alternatives: inline suggestions, AI-filled forms, one-click actions with preview, generative UI embedded in the existing workflow.</li><li>Senior signal: you treat the model as a capability and choose the interface per task — blended UI, not chat-by-default.</li></ul>"
+      },
+      {
+        id: 53,
+        section: "AI-NATIVE PRODUCT DESIGN",
+        question: "How do model choice, latency, and token cost change the UX of an AI feature?",
+        tips: "<h4>What they evaluate:</h4><p>Whether you design AI features inside real engineering and economic constraints.</p><ul><li>Match model tier to task: fast/cheap models for autocomplete and classification; frontier models for complex generation. The router is a UX decision.</li><li>Latency shapes the pattern: streaming for generation, optimistic UI for actions, background jobs with notification for long tasks.</li><li>Token cost shapes scope: context limits, caching, summarization — unbounded features die in production.</li><li>Design fallback behavior when the primary model fails or degrades.</li></ul>"
+      },
+      {
+        id: 54,
+        section: "CLAUDE CODE & AI TOOLING",
         question: "How would you use Claude Code in a real product design workflow without outsourcing your judgment?",
         tips: "<h4>What they evaluate:</h4><p>Your ability to use AI as leverage while keeping product judgment, taste, and accountability.</p><h4>Study later:</h4><ul><li>Claude Code workflows: repo exploration, implementation plans, diffs, tests, and review loops.</li><li>Prompting for constraints, acceptance criteria, and verification evidence.</li><li>How to keep human decision-making in discovery, prioritization, and final UX quality.</li></ul>"
       },
       {
-        id: 52,
-        section: "CLAUDE CODE & CURSOR",
-        question: "What kinds of tasks would you give to Cursor versus Claude Code?",
-        tips: "<h4>What they evaluate:</h4><p>Your practical understanding of AI coding tools and when each one fits the workflow.</p><h4>Study later:</h4><ul><li>Cursor for inline editing, local refactors, codebase navigation, and pair-programming.</li><li>Claude Code for agentic tasks, multi-file changes, verification, and repo-level execution.</li><li>How to compare tools by context window, autonomy, reviewability, and speed.</li></ul>"
-      },
-      {
-        id: 53,
-        section: "CLAUDE CODE & CURSOR",
+        id: 55,
+        section: "CLAUDE CODE & AI TOOLING",
         question: "Describe a design-to-code workflow where AI helps you move from Figma or a product idea to a working prototype.",
         tips: "<h4>What they evaluate:</h4><p>Your ability to turn design intent into executable artifacts without treating generated code as magic.</p><h4>Study later:</h4><ul><li>Figma inspection, component mapping, and responsive constraints.</li><li>Prototype stack choices: React, Tailwind, shadcn/ui, Supabase, Vercel.</li><li>Review steps: visual QA, accessibility checks, mobile screenshots, and interaction testing.</li></ul>"
       },
       {
-        id: 54,
-        section: "CLAUDE CODE & CURSOR",
+        id: 56,
+        section: "CLAUDE CODE & AI TOOLING",
         question: "How do you review AI-generated code or UI before trusting it?",
         tips: "<h4>What they evaluate:</h4><p>Your engineering empathy and your ability to prevent AI from shipping brittle product work.</p><h4>Study later:</h4><ul><li>Code review basics: readability, component boundaries, state management, error states.</li><li>Verification: typecheck, tests, lint, browser checks, and mobile viewport review.</li><li>UX review: hierarchy, affordance, accessibility, copy, empty/loading/error states.</li></ul>"
       },
       {
-        id: 55,
-        section: "CLAUDE CODE & CURSOR",
+        id: 57,
+        section: "CLAUDE CODE & AI TOOLING",
         question: "What risks appear when designers rely too heavily on AI coding tools?",
         tips: "<h4>What they evaluate:</h4><p>Your maturity around AI limitations, product risk, and professional responsibility.</p><h4>Study later:</h4><ul><li>Risks: generic interfaces, hallucinated APIs, hidden security issues, and maintainability debt.</li><li>How to preserve taste, domain understanding, and user research quality.</li><li>Governance habits: constraints, review checklists, source control, and rollback plans.</li></ul>"
       },
       {
-        id: 56,
+        id: 58,
         section: "FIGMA MCP & AI AGENTS",
         question: "What is MCP, and why does it matter for designers working with AI agents?",
         tips: "<h4>What they evaluate:</h4><p>Your ability to explain technical infrastructure in product-design language.</p><h4>Study later:</h4><ul><li>MCP as a protocol for connecting AI tools to external systems and context.</li><li>Examples: Figma, GitHub, Slack, docs, databases, analytics, and local files.</li><li>The product value: better context, fewer manual handoffs, and more auditable AI workflows.</li></ul>"
       },
       {
-        id: 57,
+        id: 59,
         section: "FIGMA MCP & AI AGENTS",
         question: "How would a Figma MCP workflow improve design-system maintenance or design-to-code handoff?",
         tips: "<h4>What they evaluate:</h4><p>Your understanding of how Figma, tokens, components, and code can become one operating system.</p><h4>Study later:</h4><ul><li>Reading component metadata, tokens, frames, variants, and naming patterns from Figma.</li><li>Mapping Figma components to React components and Storybook examples.</li><li>Detecting drift between design files and production UI.</li></ul>"
       },
       {
-        id: 58,
+        id: 60,
         section: "FIGMA MCP & AI AGENTS",
         question: "If an AI agent can inspect Figma files, what instructions and constraints would you give it?",
         tips: "<h4>What they evaluate:</h4><p>Your ability to control an autonomous workflow through precise constraints.</p><h4>Study later:</h4><ul><li>Instructions for layout, spacing, breakpoints, component reuse, naming, and accessibility.</li><li>Guardrails: do not invent missing states, do not ignore tokens, do not override system conventions.</li><li>Expected outputs: implementation plan, component inventory, risk list, and verification checklist.</li></ul>"
       },
       {
-        id: 59,
-        section: "FIGMA MCP & AI AGENTS",
-        question: "What should never be automated in a Figma-to-code workflow?",
-        tips: "<h4>What they evaluate:</h4><p>Your ability to separate mechanical translation from design judgment.</p><h4>Study later:</h4><ul><li>Human decisions: user intent, product trade-offs, prioritization, ethics, and final quality bar.</li><li>Where automation helps: repetitive markup, token mapping, component scaffolding, and screenshots.</li><li>Where automation fails: ambiguous flows, missing states, unclear hierarchy, and weak product rationale.</li></ul>"
-      },
-      {
-        id: 60,
+        id: 61,
         section: "FIGMA MCP & AI AGENTS",
         question: "How would you explain AI agents to a product team that has never used them?",
         tips: "<h4>What they evaluate:</h4><p>Your communication skill when introducing technical change to non-technical partners.</p><h4>Study later:</h4><ul><li>Agents as goal-directed assistants that can use tools, inspect context, and execute multi-step tasks.</li><li>Examples for product teams: research synthesis, prototype generation, QA support, analytics queries.</li><li>Limits: oversight, permissions, privacy, and verification.</li></ul>"
       },
       {
-        id: 61,
+        id: 62,
         section: "FRONTEND FOUNDATIONS",
         question: "Why should a product designer understand React?",
         tips: "<h4>What they evaluate:</h4><p>Your ability to collaborate beyond static mockups and reason about real product interfaces.</p><h4>Study later:</h4><ul><li>Components, props, state, composition, conditional rendering, and lifecycle basics.</li><li>How design-system components become reusable product building blocks.</li><li>Why responsive behavior, loading states, and data-driven UI change design decisions.</li></ul>"
       },
       {
-        id: 62,
+        id: 63,
         section: "FRONTEND FOUNDATIONS",
         question: "What TypeScript concepts matter most for a designer collaborating with engineers?",
         tips: "<h4>What they evaluate:</h4><p>Your technical literacy and ability to understand constraints in component APIs.</p><h4>Study later:</h4><ul><li>Types, interfaces, unions, optional properties, and enums.</li><li>How TypeScript models component variants, design tokens, and API data.</li><li>Why strong typing prevents edge-case bugs and unclear design states.</li></ul>"
       },
       {
-        id: 63,
-        section: "FRONTEND FOUNDATIONS",
-        question: "How would you decide whether to build a custom component or use shadcn/ui?",
-        tips: "<h4>What they evaluate:</h4><p>Your product judgment around speed, accessibility, maintainability, and brand expression.</p><h4>Study later:</h4><ul><li>shadcn/ui as copyable, customizable components built on Radix and Tailwind.</li><li>Use it when speed, accessibility primitives, and consistency matter.</li><li>Build custom when interaction model, brand, or domain workflow requires something specific.</li></ul>"
-      },
-      {
         id: 64,
         section: "FRONTEND FOUNDATIONS",
-        question: "When would you use Radix UI directly instead of a higher-level component library?",
-        tips: "<h4>What they evaluate:</h4><p>Your understanding of headless primitives and accessibility foundations.</p><h4>Study later:</h4><ul><li>Radix primitives: dialogs, popovers, menus, tabs, accordions, selects.</li><li>Use direct Radix when you need custom styling or behavior with accessible interaction patterns.</li><li>Understand keyboard navigation, focus management, ARIA, and composition.</li></ul>"
+        question: "How do you decide between shadcn/ui, raw Radix primitives, or a fully custom component?",
+        tips: "<h4>What they evaluate:</h4><p>Your product judgment around speed, accessibility, maintainability, and brand expression — and your grasp of the headless-primitives layer.</p><h4>Study later:</h4><ul><li>shadcn/ui (copyable components on Radix + Tailwind): default choice when speed, accessibility primitives, and consistency matter.</li><li>Raw Radix: when you need custom styling or behavior but want accessible interaction patterns (focus management, keyboard nav, ARIA) for free.</li><li>Fully custom: only when the interaction model, brand, or domain workflow demands it — and you own the accessibility bill.</li></ul>"
       },
       {
         id: 65,
@@ -1816,39 +1861,39 @@
       },
       {
         id: 75,
-        section: "PRODUCT ANALYTICS & SHIPPING",
-        question: "How do LiteLLM or model routers change the way teams design AI features?",
-        tips: "<h4>What they evaluate:</h4><p>Your awareness that AI product design includes model choice, cost, latency, and reliability.</p><h4>Study later:</h4><ul><li>Model routing, fallbacks, observability, cost control, and provider abstraction.</li><li>How UX changes when latency, confidence, hallucination risk, or fallback states vary.</li><li>Designing clear error states, confidence signals, and human override paths.</li></ul>"
-      },
-      {
-        id: 76,
         section: "PROTOTYPING, MOTION & DATA",
         question: "When would you use Framer, ProtoPie, Rive, or a coded prototype?",
         tips: "<h4>What they evaluate:</h4><p>Your ability to choose prototype fidelity based on the learning goal.</p><h4>Study later:</h4><ul><li>Framer for realistic web pages and quick interactive sites.</li><li>ProtoPie for complex device interactions, sensors, and high-fidelity flows.</li><li>Rive for production-ready motion; coded prototypes for real data, state, and responsiveness.</li></ul>"
       },
       {
-        id: 77,
+        id: 76,
         section: "PROTOTYPING, MOTION & DATA",
         question: "How would you use Recharts or D3 in a product-design context?",
         tips: "<h4>What they evaluate:</h4><p>Your understanding of data visualization as product UX, not decoration.</p><h4>Study later:</h4><ul><li>Recharts for fast, React-friendly charts with common patterns.</li><li>D3 for custom visualization, scales, layouts, and specialized interactions.</li><li>Data UX: readability, comparison, annotation, accessibility, and decision support.</li></ul>"
       },
       {
-        id: 78,
+        id: 77,
         section: "PROTOTYPING, MOTION & DATA",
-        question: "What are Bolt, Lovable, v0, Subframe, Magic Patterns, and Google Stitch useful for, and where do they fall short?",
-        tips: "<h4>What they evaluate:</h4><p>Your realistic view of AI UI generadores and no-code/low-code acceleration.</p><h4>Study later:</h4><ul><li>Use them for fast concept exploration, layout alternatives, and prototype scaffolding.</li><li>Limitations: generic outputs, weak product reasoning, inconsistent code quality, and shallow domain understanding.</li><li>How to turn generated artifacts into reviewed, maintainable product work.</li></ul>"
+        question: "An AI tool generates a full UI in seconds. Walk me through how you take it to production quality — and what your role is in that world.",
+        tips: "<h4>What they evaluate:</h4><p>Whether you have a post-generation workflow — the designer as quality bar and orchestrator, not pixel producer.</p><h4>Study later:</h4><ul><li>Audit the generated UI against the design system: tokens, components, spacing, naming — kill the generic look.</li><li>Add what generators always miss: edge cases, empty/loading/error states, real data shapes, accessibility, responsive breakpoints.</li><li>Review the code like a teammate: component boundaries, state management, maintainability.</li><li>Articulate the role shift: your value moves from producing screens to defining intent, constraints, and the quality bar.</li></ul>"
+      },
+      {
+        id: 78,
+        section: "INTERVIEW & MARKET POSITIONING",
+        question: "Walk me through one portfolio case end-to-end, as in a real interview: problem, constraints, key decisions, outcomes — and what failed or what you would do differently.",
+        tips: "<h4>What they evaluate:</h4><p>The single most common senior interview moment: can you narrate a case with business context, judgment, and honesty?</p><ul><li>Structure: business context (30s) → problem and constraints (1 min) → 2-3 pivotal decisions with the trade-offs you weighed (2 min) → quantified outcomes (30s) → honest retro (30s).</li><li>Decisions matter more than deliverables: interviewers probe \"why\" three levels deep — rehearse those layers.</li><li>The failure/retro section is a senior signal, not a weakness: owning a misstep with what you changed afterward builds more credibility than a flawless story.</li></ul>"
       },
       {
         id: 79,
-        section: "MARKET DIFFERENTIATION",
+        section: "INTERVIEW & MARKET POSITIONING",
         question: "Why is the combination of UX Designer, Design Systems, React, AI Agents, MCP, Claude Code, and Product Strategy commercially valuable?",
         tips: "<h4>What they evaluate:</h4><p>Your ability to articulate a rare market position without sounding inflated.</p><h4>Study later:</h4><ul><li>Connect the stack to business value: faster discovery, better prototypes, tighter handoff, measurable outcomes.</li><li>Explain why the combination reduces coordination cost across design, product, and engineering.</li><li>Prepare examples that prove you can operate at strategy, system, and implementation levels.</li></ul>"
       },
       {
         id: 80,
-        section: "MARKET DIFFERENTIATION",
-        question: "Pitch yourself for a role that wants a designer who can think strategically, design systems, prototype in code, and use AI-native workflows.",
-        tips: "<h4>What they evaluate:</h4><p>Your English interview narrative and your ability to make the whole profile coherent.</p><h4>Study later:</h4><ul><li>Build a 60-second version, a 2-minute version, and a deep portfolio version.</li><li>Use concrete proof: shipped products, systems improved, code prototypes, AI workflows, and metrics.</li><li>Avoid tool-listing; frame tools as evidence of better product outcomes.</li></ul>"
+        section: "INTERVIEW & MARKET POSITIONING",
+        question: "Pitch yourself: why should we hire you over another Senior Product Designer for a role that wants strategy, design systems, code prototyping, and AI-native workflows?",
+        tips: "<h4>What they evaluate:</h4><p>Your English interview narrative, your unique value proposition, and whether the whole profile is coherent.</p><h4>Study later:</h4><ul><li>Build a 60-second version, a 2-minute version, and a deep portfolio version.</li><li>UVP formula: strategic product thinking (PM mindset) + engineering empathy + AI leverage + a track record of measurable business results.</li><li>Use concrete proof: shipped products, systems improved, code prototypes, AI workflows, and metrics.</li><li>Avoid tool-listing; frame tools as evidence of better product outcomes.</li></ul>"
       }
     ];
 
@@ -1973,6 +2018,9 @@
     const btnNext = document.getElementById('btn-next');
     const btnExportMd = document.getElementById('btn-export-md');
     const btnExportJson = document.getElementById('btn-export-json');
+    
+    const btnPrevSection = document.getElementById('btn-prev-section');
+    const btnNextSection = document.getElementById('btn-next-section');
 
     // Grouping
     const sections = {};
@@ -1987,13 +2035,24 @@
       Object.keys(sections).forEach(secName => {
         const groupDiv = document.createElement('div');
         groupDiv.className = 'section-group';
+        groupDiv.setAttribute('data-section', secName);
         
         const headerDiv = document.createElement('div');
         headerDiv.className = 'section-header';
+        headerDiv.id = `sec-header-${secName.replace(/\s+/g, '-')}`;
         headerDiv.innerHTML = `
-          <span>${secName}</span>
+          <span class="section-header-title-container">
+            <span class="section-chevron">▼</span>
+            <span>${secName}</span>
+          </span>
           <span class="section-badge" id="badge-${secName.replace(/\s+/g, '-')}">0/${sections[secName].length}</span>
         `;
+        
+        // Toggle collapse on click
+        headerDiv.addEventListener('click', () => {
+          groupDiv.classList.toggle('collapsed');
+        });
+        
         groupDiv.appendChild(headerDiv);
         
         const qList = document.createElement('ul');
@@ -2153,8 +2212,31 @@
         viewEditor.style.display = 'flex';
         
         const q = questions[idx];
+        
+        // Expand the parent section group if it's collapsed
+        const groupDiv = document.querySelector(`.section-group[data-section="${q.section}"]`);
+        if (groupDiv) {
+          groupDiv.classList.remove('collapsed');
+        }
+
         const activeItem = document.getElementById(`q-item-${q.id}`);
-        if (activeItem) activeItem.classList.add('active');
+        if (activeItem) {
+          activeItem.classList.add('active');
+          // Auto-scroll the active question item into view inside the menu
+          const menu = document.querySelector('.sidebar-menu');
+          if (menu) {
+            const itemHeight = activeItem.offsetHeight;
+            const menuHeight = menu.offsetHeight;
+            const itemTop = activeItem.getBoundingClientRect().top - menu.getBoundingClientRect().top + menu.scrollTop;
+            
+            if (itemTop < menu.scrollTop || (itemTop + itemHeight) > (menu.scrollTop + menuHeight)) {
+              menu.scrollTo({
+                top: itemTop - (menuHeight / 2) + (itemHeight / 2),
+                behavior: 'smooth'
+              });
+            }
+          }
+        }
         
         breadcrumbSec.textContent = q.section;
         breadcrumbQue.textContent = `Q${q.id}`;
@@ -2214,6 +2296,66 @@
       closeMobileSidebar();
     });
     btnStart.addEventListener('click', () => selectQuestion(0));
+    
+    // Eventos del stepper de secciones
+    btnPrevSection.addEventListener('click', () => {
+      const sectionKeys = Object.keys(sections);
+      let currentSec = "";
+      if (currentQuestionIdx >= 0) {
+        currentSec = questions[currentQuestionIdx].section;
+      }
+      
+      const idx = sectionKeys.indexOf(currentSec);
+      if (idx > 0) {
+        const prevSec = sectionKeys[idx - 1];
+        const targetQ = sections[prevSec][0];
+        selectQuestion(targetQ.id - 1);
+        
+        const menu = document.querySelector('.sidebar-menu');
+        const targetHeader = document.getElementById(`sec-header-${prevSec.replace(/\s+/g, '-')}`);
+        if (menu && targetHeader) {
+          const topPos = targetHeader.getBoundingClientRect().top - menu.getBoundingClientRect().top + menu.scrollTop;
+          menu.scrollTo({ top: topPos, behavior: 'smooth' });
+        }
+      } else if (idx === 0 || currentQuestionIdx === -1) {
+        selectQuestion(-1);
+        const menu = document.querySelector('.sidebar-menu');
+        if (menu) menu.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    btnNextSection.addEventListener('click', () => {
+      const sectionKeys = Object.keys(sections);
+      let currentSec = "";
+      if (currentQuestionIdx >= 0) {
+        currentSec = questions[currentQuestionIdx].section;
+      }
+      
+      const idx = sectionKeys.indexOf(currentSec);
+      if (currentSec === "" || idx === -1) {
+        const nextSec = sectionKeys[0];
+        const targetQ = sections[nextSec][0];
+        selectQuestion(targetQ.id - 1);
+        
+        const menu = document.querySelector('.sidebar-menu');
+        const targetHeader = document.getElementById(`sec-header-${nextSec.replace(/\s+/g, '-')}`);
+        if (menu && targetHeader) {
+          const topPos = targetHeader.getBoundingClientRect().top - menu.getBoundingClientRect().top + menu.scrollTop;
+          menu.scrollTo({ top: topPos, behavior: 'smooth' });
+        }
+      } else if (idx < sectionKeys.length - 1) {
+        const nextSec = sectionKeys[idx + 1];
+        const targetQ = sections[nextSec][0];
+        selectQuestion(targetQ.id - 1);
+        
+        const menu = document.querySelector('.sidebar-menu');
+        const targetHeader = document.getElementById(`sec-header-${nextSec.replace(/\s+/g, '-')}`);
+        if (menu && targetHeader) {
+          const topPos = targetHeader.getBoundingClientRect().top - menu.getBoundingClientRect().top + menu.scrollTop;
+          menu.scrollTo({ top: topPos, behavior: 'smooth' });
+        }
+      }
+    });
     
     btnPrev.addEventListener('click', () => {
       if (currentQuestionIdx > 0) selectQuestion(currentQuestionIdx - 1);
