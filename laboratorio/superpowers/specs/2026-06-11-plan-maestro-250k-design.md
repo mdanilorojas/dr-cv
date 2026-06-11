@@ -21,7 +21,7 @@ La escalera es real, no un salto: ~$60k (BairesDev) → ~$100k (escalón) → $2
 | Activo | Estado verificado |
 |---|---|
 | Ingreso | BairesDev $5k/mes, bench top talent pool, reassignment en curso. Estable. |
-| UR Training | 30/80 respuestas crudas en `answers_state.json`. **0 auditadas con rúbrica senior.** |
+| UR Training | 30/96 respuestas crudas en `answers_state.json`. **0 auditadas con rúbrica senior.** |
 | Portfolio | 0 casos publicados. Drafts: Developer Portal (BAH), Life Update Mobile (README). |
 | Landing/CV | v11 deployada en danilorojas.design. Funcional, sin casos élite. |
 | Inglés | Insuficiente para entrevista senior (autoevaluación honesta). |
@@ -48,9 +48,9 @@ G1 DIAGNÓSTICO → G2 TRAINING POR BLOQUES → G3 DOMINIO PROBADO
 
 ### G1 — Diagnóstico completo
 
-- **Trabajo:** auditar las 30 respuestas existentes con rúbrica senior; responder las 50 restantes por bloques temáticos; auditar todo. En paralelo (esfuerzo bajo): documento de investigación LLC/cobro US — jurisdicción, costos, banco, impuestos Ecuador, alternativas tipo Deel. Solo investigación, cero trámites.
+- **Trabajo:** auditar las 30 respuestas existentes con rúbrica senior; responder las 66 restantes por bloques temáticos; auditar todo. En paralelo (esfuerzo bajo): documento de investigación LLC/cobro US — jurisdicción, costos, banco, impuestos Ecuador, alternativas tipo Deel. Solo investigación, cero trámites.
 - **Rúbrica:** contexto → decisión → tradeoff → evidencia → cierre. En inglés. Score por respuesta.
-- **Criterio de salida:** 80/80 auditadas + matriz de gaps (skill × severidad) + calibración de escenarios de tiempo + orden de bloques para G2.
+- **Criterio de salida:** 96/96 auditadas + matriz de gaps (skill × severidad) + calibración de escenarios de tiempo + orden de bloques para G2.
 - **Verificador:** IA con rúbrica (Claude).
 
 ### G2 — Training por bloques (loop repetible, ~5 bloques)

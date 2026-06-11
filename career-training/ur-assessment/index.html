@@ -231,7 +231,6 @@
       display: flex;
       flex: 1;
       min-height: 0;
-      height: 0; /* Forces height calculation in Safari/WebKit */
       overflow: hidden;
       position: relative;
     }
@@ -983,6 +982,7 @@
       .sidebar {
         position: static;
         width: 320px;
+        flex: 0 0 320px;
         transform: translateX(0);
         box-shadow: none;
         height: 100%;
@@ -1240,7 +1240,7 @@
     </div>
     
     <div class="progress-widget">
-      <span class="progress-label" id="progress-text">0 / 80 Completed (0%)</span>
+      <span class="progress-label" id="progress-text">0 / 96 Completed (0%)</span>
       <div class="progress-bar-container">
         <div class="progress-bar-fill" id="progress-bar"></div>
       </div>
@@ -1289,7 +1289,7 @@
         <div class="welcome-hero">
           <h1 class="hero-title">Senior Product Designer <span class="hero-accent">Training</span></h1>
           <p class="hero-subtitle">
-            This self-assessment is the baseline of your current skills. By answering these 80 questions in English, you will map your strengths and weaknesses to construct your personalized path toward rare senior roles combining <strong>UX, product strategy, design systems, frontend, and AI-native workflows</strong>.
+            This self-assessment is the baseline of your current skills. By answering these 96 questions in English, you will map your strengths and weaknesses to construct your personalized path toward rare senior roles combining <strong>UX, product strategy, design systems, frontend, and AI-native workflows</strong>.
           </p>
         </div>
         
@@ -1297,7 +1297,7 @@
           <div class="goal-stats-row">
             <div class="goal-stat">
               <span class="goal-stat-label">Assessment Progress</span>
-              <span class="goal-stat-value" id="overview-progress-count">0 / 80</span>
+              <span class="goal-stat-value" id="overview-progress-count">0 / 96</span>
             </div>
             <div class="goal-stat">
               <span class="goal-stat-label">Salary Target</span>
@@ -1413,7 +1413,7 @@
   </div>
 
   <script>
-    // 80 Questions Data with US Interview Tips
+    // 96 Questions Data with US Interview Tips
     const questions = [
       {
         id: 1,
@@ -1894,6 +1894,102 @@
         section: "INTERVIEW & MARKET POSITIONING",
         question: "Pitch yourself: why should we hire you over another Senior Product Designer for a role that wants strategy, design systems, code prototyping, and AI-native workflows?",
         tips: "<h4>What they evaluate:</h4><p>Your English interview narrative, your unique value proposition, and whether the whole profile is coherent.</p><h4>Study later:</h4><ul><li>Build a 60-second version, a 2-minute version, and a deep portfolio version.</li><li>UVP formula: strategic product thinking (PM mindset) + engineering empathy + AI leverage + a track record of measurable business results.</li><li>Use concrete proof: shipped products, systems improved, code prototypes, AI workflows, and metrics.</li><li>Avoid tool-listing; frame tools as evidence of better product outcomes.</li></ul>"
+      },
+      {
+        id: 81,
+        section: "BUSINESS ACUMEN",
+        question: "How does the business model (subscription, usage-based, marketplace, enterprise contract) change your design decisions?",
+        tips: "<h4>What they evaluate:</h4><p>Whether you design for how the product makes money — the clearest divider between senior and staff.</p><ul><li>Subscription: retention and habit loops dominate; churn moments are design surfaces.</li><li>Usage-based: friction in the value action is lost revenue; cost visibility builds trust.</li><li>Marketplace: two-sided trust, liquidity, and matching quality outweigh visual polish.</li><li>Enterprise: admin experience, permissions, compliance, and the demo path are first-class UX.</li><li>Senior signal: you ask \"how do we make money?\" before opening Figma.</li></ul>"
+      },
+      {
+        id: 82,
+        section: "BUSINESS ACUMEN",
+        question: "A PM asks you to estimate the ROI of redesigning onboarding. How do you build the case?",
+        tips: "<h4>What they evaluate:</h4><p>Whether you can speak the language that funds design work.</p><ul><li>Baseline: current activation rate, volume of signups, value per activated user.</li><li>Estimate lift honestly as a range (benchmark studies, past experiments), never a point promise.</li><li>Math: signups × lift × value per user vs. cost of the work — show the break-even lift.</li><li>De-risk: propose a scoped experiment first; commit to measuring after launch.</li></ul>"
+      },
+      {
+        id: 83,
+        section: "BUSINESS ACUMEN",
+        question: "In B2B, the buyer is not the user. How does that change your design process?",
+        tips: "<h4>What they evaluate:</h4><p>B2B product maturity — critical for enterprise contracts where $250k roles live.</p><ul><li>Map three personas: economic buyer, admin, end user — they have conflicting needs and different definitions of success.</li><li>The sales demo is a UX surface: what convinces in 15 minutes differs from what retains in month 6.</li><li>Mine CS tickets and sales-call recordings as research; security/compliance checklists are features, not paperwork.</li><li>Win condition: design that makes the champion look good internally.</li></ul>"
+      },
+      {
+        id: 84,
+        section: "CRAFT & QUALITY BAR",
+        question: "What is your quality bar, and how do you enforce it across a team without becoming a bottleneck?",
+        tips: "<h4>What they evaluate:</h4><p>Staff-level scope: raising quality through systems and culture, not through personal review of every screen.</p><ul><li>Make the bar explicit: documented principles with annotated exemplars of \"good\" — not vibes.</li><li>Encode it: design-system guardrails, linted tokens, accessibility checks, definition of done.</li><li>Scale it: critique cadence, office hours, and teaching moments instead of gatekeeping approvals.</li><li>Senior signal: you can name what you let slide and why (quality budget, not perfectionism).</li></ul>"
+      },
+      {
+        id: 85,
+        section: "CRAFT & QUALITY BAR",
+        question: "Critique a dense dashboard: how do you evaluate typography, hierarchy, and spacing?",
+        tips: "<h4>What they evaluate:</h4><p>Raw visual craft — the skill AI tools commoditize worst and interviews still test hardest.</p><ul><li>Hierarchy first: can you answer the user's top question in 5 seconds? Scan path should follow importance, not layout accident.</li><li>Typography: a deliberate scale (not 14 arbitrary sizes), weight and color carrying hierarchy before size.</li><li>Spacing: consistent rhythm from a base unit; density is a choice per audience, not a default.</li><li>Tables/numbers: alignment, tabular figures, comparison affordances — dashboards are reading instruments.</li></ul>"
+      },
+      {
+        id: 86,
+        section: "CRAFT & QUALITY BAR",
+        question: "When is polish worth delaying a ship — and when is it not?",
+        tips: "<h4>What they evaluate:</h4><p>Judgment about craft as an investment, not a religion.</p><ul><li>Worth it: first-run experiences, acquisition surfaces, brand-defining moments, anything hard to change later (onboarding flows, information architecture).</li><li>Not worth it: internal tools, validated-learning experiments, reversible surfaces behind flags.</li><li>Frame as risk: what does shipping rough cost (trust, support load) vs. what does delay cost (learning, market timing)?</li></ul>"
+      },
+      {
+        id: 87,
+        section: "CRITIQUE & MENTORING",
+        question: "How do you run a design critique that produces better work instead of consensus mush?",
+        tips: "<h4>What they evaluate:</h4><p>Facilitation craft — critiques are where quality culture lives or dies.</p><ul><li>The presenter frames: what stage is this, what feedback do I need, what is already decided.</li><li>Separate problems from solutions: critics name what fails and why; the owner decides the fix.</li><li>Written pre-reads kill meeting theater; silent review first prevents anchoring on the loudest voice.</li><li>One decision owner, stated upfront. Critique informs; it does not vote.</li></ul>"
+      },
+      {
+        id: 88,
+        section: "CRITIQUE & MENTORING",
+        question: "How do you mentor a junior designer in the AI era, when tools now do what juniors used to do?",
+        tips: "<h4>What they evaluate:</h4><p>Whether you can grow people, and whether you understand how AI changes the learning ladder.</p><ul><li>The old ladder (production work → judgment) is broken: AI does the production. Teach judgment directly: critique AI output together, ask \"what's wrong with this?\"</li><li>Protect fundamentals: typography, hierarchy, research depth — the skills that let you evaluate what AI produces.</li><li>Give real ownership of small surfaces with visible stakes, not polished-deck exercises.</li></ul>"
+      },
+      {
+        id: 89,
+        section: "REMOTE & ASYNC OPERATING",
+        question: "Remote-first companies run on writing. What written artifacts do you produce, and what makes them effective?",
+        tips: "<h4>What they evaluate:</h4><p>Written communication is THE core skill of high-paid remote roles.</p><ul><li>Artifacts: design docs (context → options → recommendation), decision logs, async walkthroughs (Loom + written summary), RFC-style proposals.</li><li>Effective = scannable: executive summary first, headings that carry the argument, explicit asks with deadlines.</li><li>Write so a reader in another timezone can act without a meeting — that is the test.</li></ul>"
+      },
+      {
+        id: 90,
+        section: "REMOTE & ASYNC OPERATING",
+        question: "As a remote contractor in a different country, how do you build trust with a US team in the first 90 days?",
+        tips: "<h4>What they evaluate:</h4><p>Whether you can escape the \"offshore resource\" frame and operate as a peer.</p><ul><li>Ship a visible win in week 1-2, however small — momentum beats onboarding theater.</li><li>Proactive status: nobody should ever ask \"what is he working on?\" Overcommunicate by default.</li><li>Guarantee overlap hours and state them; respond predictably within them.</li><li>Act at the level above your contract: propose, document, flag risks — initiative is what reframes you from vendor to teammate.</li></ul>"
+      },
+      {
+        id: 91,
+        section: "REMOTE & ASYNC OPERATING",
+        question: "How do you stay visible and influential in a remote org without being in the room?",
+        tips: "<h4>What they evaluate:</h4><p>Remote influence — promotions and renewals go to people the org can see.</p><ul><li>Demo culture: show working artifacts in public channels, not status text.</li><li>Write things people reference: the person whose doc gets linked owns the narrative.</li><li>Keep a deliberate 1:1 map: skip-levels, adjacent PMs/engineers — relationships do not form by accident remotely.</li><li>Narrate outcomes quarterly: a one-pager of shipped impact, in business terms.</li></ul>"
+      },
+      {
+        id: 92,
+        section: "NEGOTIATION & COMPENSATION",
+        question: "You get an offer for $180k. You want $250k. Walk me through your negotiation.",
+        tips: "<h4>What they evaluate:</h4><p>Whether you negotiate with leverage and data or with hope.</p><ul><li>Never react in the call: thank, confirm enthusiasm, ask for time.</li><li>Counter with market data (levels.fyi, Glassdoor ranges for the level) + your evidence of differentiated value.</li><li>BATNA is the real lever: a competing process — even an early one — changes everything. Negotiate total comp (base, equity, bonus, start date), not just base.</li><li>Script the silence: state your number, stop talking.</li></ul>"
+      },
+      {
+        id: 93,
+        section: "NEGOTIATION & COMPENSATION",
+        question: "Contractor B2B versus full-time employee for a US company: how do you evaluate which to take?",
+        tips: "<h4>What they evaluate:</h4><p>Sophistication about how international compensation actually works.</p><ul><li>Rate math: a contractor rate should be ~1.4-1.6× the equivalent salary (no benefits, no PTO, self-funded taxes and gear).</li><li>Structure: B2B via your own LLC = control and deductions, but you own compliance, invoicing, and gaps between contracts.</li><li>Read the contract: IP assignment, termination notice, non-compete scope, payment terms (net-30 vs net-60).</li><li>Stability vs ceiling: employee = floor; contractor = ceiling. Choose per life stage, not ideology.</li></ul>"
+      },
+      {
+        id: 94,
+        section: "NEGOTIATION & COMPENSATION",
+        question: "How do you handle a lowball offer without killing the relationship?",
+        tips: "<h4>What they evaluate:</h4><p>Composure and reframing under pressure.</p><ul><li>Assume process, not insult: \"Help me understand how the number was set\" opens data you can work with.</li><li>Reframe the level: a lowball often means they slotted you junior — re-anchor on scope and evidence, not on the number.</li><li>Ask what would justify the top of the band; convert vague praise into concrete criteria.</li><li>Know your walkaway before the call, and decline warmly — markets are small and recruiters move companies.</li></ul>"
+      },
+      {
+        id: 95,
+        section: "ETHICS & JUDGMENT",
+        question: "A stakeholder wants to ship an AI feature you believe is harmful or privacy-invasive. What do you do?",
+        tips: "<h4>What they evaluate:</h4><p>Whether you have a line, and whether you can defend it professionally instead of dramatically.</p><ul><li>Name the harm concretely: who is affected, how, with what probability — vague discomfort persuades nobody.</li><li>Bring evidence and alternatives: a safer design that meets the same business goal beats a veto.</li><li>Escalate through the right channel with a written record; document your dissent if overruled.</li><li>Senior signal: you can articulate where your personal red line is — and that you have one.</li></ul>"
+      },
+      {
+        id: 96,
+        section: "ETHICS & JUDGMENT",
+        question: "A client asks for dark patterns to boost conversion. How do you respond?",
+        tips: "<h4>What they evaluate:</h4><p>Commercial ethics under revenue pressure — a classic consulting and product test.</p><ul><li>Translate the risk to business language: churn, refunds, support load, regulatory exposure (FTC dark-pattern enforcement, GDPR consent rules), brand damage.</li><li>Offer the honest alternative: urgency from real scarcity, clarity that converts by reducing anxiety — ethical persuasion outperforms tricks on LTV.</li><li>Show the data: dark patterns inflate the metric being watched while corroding the ones that matter.</li><li>If forced: state your position in writing and decide if it crosses your line.</li></ul>"
       }
     ];
 

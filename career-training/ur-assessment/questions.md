@@ -1,5 +1,5 @@
 # Senior Product Designer Technical Assessment Questions
-**Version 4.0** — 2026-06-11. Q1-30 unchanged from v3.0 (answers preserved). Q31-80 restructured against the Staff/Principal $250k bar: cut tool trivia, expanded AI-native product design, added accessibility, experimentation, and executive communication.
+**Version 4.1** — 2026-06-11. 96 questions. Q1-30 unchanged from v3.0 (answers preserved). Q31-80 restructured against the Staff/Principal $250k bar. Q81-96 added: the count follows coverage, not a round number — business acumen, craft, mentoring, remote operating, negotiation, and ethics were missing entirely.
 
 ## SECTION 1: PRODUCT THINKING
 * **Question 1:** Your product's conversion rate drops by 15% over the last quarter. Walk me through your first 48 hours.
@@ -115,6 +115,34 @@
 * **Question 79:** Why is the combination of UX Designer, Design Systems, React, AI Agents, MCP, Claude Code, and Product Strategy commercially valuable?
 * **Question 80:** Pitch yourself: why should we hire you over another Senior Product Designer for a role that wants strategy, design systems, code prototyping, and AI-native workflows?
 
+## SECTION 18: BUSINESS ACUMEN
+* **Question 81:** How does the business model (subscription, usage-based, marketplace, enterprise contract) change your design decisions?
+* **Question 82:** A PM asks you to estimate the ROI of redesigning onboarding. How do you build the case?
+* **Question 83:** In B2B, the buyer is not the user. How does that change your design process?
+
+## SECTION 19: CRAFT & QUALITY BAR
+* **Question 84:** What is your quality bar, and how do you enforce it across a team without becoming a bottleneck?
+* **Question 85:** Critique a dense dashboard: how do you evaluate typography, hierarchy, and spacing?
+* **Question 86:** When is polish worth delaying a ship — and when is it not?
+
+## SECTION 20: CRITIQUE & MENTORING
+* **Question 87:** How do you run a design critique that produces better work instead of consensus mush?
+* **Question 88:** How do you mentor a junior designer in the AI era, when tools now do what juniors used to do?
+
+## SECTION 21: REMOTE & ASYNC OPERATING
+* **Question 89:** Remote-first companies run on writing. What written artifacts do you produce, and what makes them effective?
+* **Question 90:** As a remote contractor in a different country, how do you build trust with a US team in the first 90 days?
+* **Question 91:** How do you stay visible and influential in a remote org without being in the room?
+
+## SECTION 22: NEGOTIATION & COMPENSATION
+* **Question 92:** You get an offer for $180k. You want $250k. Walk me through your negotiation.
+* **Question 93:** Contractor B2B versus full-time employee for a US company: how do you evaluate which to take?
+* **Question 94:** How do you handle a lowball offer without killing the relationship?
+
+## SECTION 23: ETHICS & JUDGMENT
+* **Question 95:** A stakeholder wants to ship an AI feature you believe is harmful or privacy-invasive. What do you do?
+* **Question 96:** A client asks for dark patterns to boost conversion. How do you respond?
+
 ---
 
 ## Changelog v3.0 → v4.0
@@ -138,3 +166,14 @@
 - Q48-Q53 AI-native product design: non-determinism UX, trust curves, evals, agent autonomy/permissions, chat-as-wrong-interface, cost/latency as design constraint. AI fluency carries a +56% wage premium; the old set had only 3 generic AI questions.
 - Q77 AI-generated UI to production quality (the designer's post-generation role).
 - Q78 end-to-end case walkthrough with failure retro (the most common senior interview moment).
+
+## Changelog v4.0 → v4.1 (80 → 96)
+
+The 80 cap was an inherited anchor, not a coverage decision. Whole areas required by the $250k path were missing:
+
+- **Q81-83 Business acumen** — business models shaping design, ROI cases, B2B buyer≠user. Staff roles fund design work with business language.
+- **Q84-86 Craft & quality bar** — visual judgment, typography/hierarchy critique, polish-vs-ship tradeoffs. Zero craft questions existed; it is what AI commoditizes worst and interviews still test.
+- **Q87-88 Critique & mentoring** — running crits, mentoring in the AI era. Classic Staff signals.
+- **Q89-91 Remote & async operating** — written artifacts, building trust as a foreign contractor in 90 days, remote visibility. The target role is remote US; writing is the core skill.
+- **Q92-94 Negotiation & compensation** — negotiating to $250k, contractor-vs-employee math (LLC path), handling lowballs. Gate G5 is literally a negotiation; the set had zero questions on it.
+- **Q95-96 Ethics & judgment** — harmful AI features, dark patterns. Senior interviews probe for a professional red line.
