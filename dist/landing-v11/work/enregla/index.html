@@ -42,68 +42,70 @@
 
 :root {
   /* ─────────────────────────────────────────────────────────────
-   * 1 · SURFACE (dark-dominant)
+   * 1 · SURFACE (light editorial — cream paper)
    * ───────────────────────────────────────────────────────────── */
-  --v11-bg-deep:        #060708;   /* OLED-adjacent deepest */
-  --v11-bg-primary:     #0A0B0E;   /* page background (warm-huly base) */
-  --v11-bg-alt:         #111318;   /* section alt (for dark/dark-alt rhythm) */
-  --v11-bg-paper:       #F6F4F0;   /* cream section for contrast chapters */
-  --v11-bg-elevated:    #14161C;   /* card surface on dark */
-  --v11-bg-elevated-2:  #1C1F27;   /* toolbar / nested surface */
-  --v11-bg-inset:       #0D0F13;   /* code / inputs / embed wells */
+  --v11-bg-deep:        #EFE8DA;   /* deepest warm tone */
+  --v11-bg-primary:     #F6F1E7;   /* cream paper — page background */
+  --v11-bg-alt:         #FBF8F1;   /* section alt */
+  --v11-bg-paper:       #FFFFFF;   /* elevated reading card */
+  --v11-bg-elevated:    #FFFFFF;   /* card surface */
+  --v11-bg-elevated-2:  #F3ECDD;   /* toolbar / nested surface */
+  --v11-bg-inset:       #F0E9DA;   /* code / inputs / embed wells */
 
   /* ─────────────────────────────────────────────────────────────
-   * 2 · INK (on dark)
+   * 2 · INK (on cream — dark-text scale)
    * ───────────────────────────────────────────────────────────── */
-  --v11-text:           #F4F4F5;   /* primary on dark */
-  --v11-text-body:      #D7D8DB;
-  --v11-text-85:        #C9CBCF;
-  --v11-text-70:        #B0B2B7;
-  --v11-text-60:        #95979E;
-  --v11-text-50:        #797D86;
-  --v11-text-40:        #61656B;
-  --v11-text-subtle:    #4A4B50;
+  --v11-text:           #1C1A17;   /* primary ink on cream */
+  --v11-text-body:      #2C2925;
+  --v11-text-85:        #3A3630;
+  --v11-text-70:        #57514A;
+  --v11-text-60:        #6B645A;
+  --v11-text-50:        #837B70;
+  --v11-text-40:        #9A9286;
+  --v11-text-subtle:    #B6AD9F;
 
-  /* Ink on cream (paper sections) */
-  --v11-paper-ink:      #0B0C0E;
-  --v11-paper-body:     #303236;
-  --v11-paper-muted:    #4A4B50;
-  --v11-paper-subtle:   #797D86;
+  /* Ink on paper-white (elevated reading cards) */
+  --v11-paper-ink:      #1C1A17;
+  --v11-paper-body:     #2C2925;
+  --v11-paper-muted:    #57514A;
+  --v11-paper-subtle:   #837B70;
 
   /* ─────────────────────────────────────────────────────────────
    * 3 · ACCENT · restrained (V11 R8 — NO glow, punctuation only)
    * ───────────────────────────────────────────────────────────── */
-  --v11-accent:         #FF8964;   /* warm orange — used as punctuation */
-  --v11-accent-ink:     #2A0F05;   /* dark ink on accent bg */
-  --v11-accent-deep:    #E0674A;   /* hover / active state */
-  --v11-accent-soft:    rgba(255, 137, 100, 0.14);
-  --v11-accent-ring:    rgba(255, 137, 100, 0.35);
-  --v11-accent-line:    rgba(255, 137, 100, 0.28);
+  --v11-accent:         #D9663F;   /* terracotta — punctuation; AA on cream */
+  --v11-accent-ink:     #FFF6F1;   /* light ink on accent bg */
+  --v11-accent-deep:    #C2542F;   /* hover / active state */
+  --v11-accent-soft:    rgba(217, 102, 63, 0.10);
+  --v11-accent-ring:    rgba(217, 102, 63, 0.40);
+  --v11-accent-line:    rgba(217, 102, 63, 0.30);
 
   /* Secondary signal — used only for agentic UX state:
      Visible Thinking / Plan-before-Build / Diff-Review additions */
-  --v11-signal-cool:    #5683DA;   /* tool-use / plan state */
-  --v11-signal-warn:    #E5A84B;   /* caution / learning-level */
-  --v11-signal-pos:     #4ADE80;   /* diff additions / success */
-  --v11-signal-neg:     #F87171;   /* diff deletions / errors */
+  --v11-signal-cool:    #3A66B8;   /* tool-use / plan state — AA on cream */
+  --v11-signal-warn:    #B57614;   /* caution / learning-level — AA on cream */
+  --v11-signal-pos:     #2E844A;   /* diff additions / success — AA on cream */
+  --v11-signal-neg:     #C23B3B;   /* diff deletions / errors — AA on cream */
 
   /* ─────────────────────────────────────────────────────────────
-   * 4 · LINES & DIVIDERS
+   * 4 · LINES & DIVIDERS (warm hairlines on cream)
    * ───────────────────────────────────────────────────────────── */
-  --v11-line:           rgba(255, 255, 255, 0.08);
-  --v11-line-strong:    rgba(255, 255, 255, 0.18);
-  --v11-line-soft:      rgba(255, 255, 255, 0.04);
-  --v11-line-paper:     #E5E2DA;
-  --v11-line-paper-sf:  #EFECE4;
+  --v11-line:           #DAD2C3;   /* warm hairline */
+  --v11-line-strong:    rgba(28, 26, 23, 0.18);
+  --v11-line-soft:      rgba(28, 26, 23, 0.06);
+  --v11-line-paper:     #DAD2C3;
+  --v11-line-paper-sf:  #ECE5D7;
 
   /* ─────────────────────────────────────────────────────────────
-   * 5 · ELEVATION (shadows — muted, Huly-derived)
+   * 5 · ELEVATION (shadows — subtle dark-on-light)
    * ───────────────────────────────────────────────────────────── */
-  --v11-shadow-card:        0 6px 25px rgba(0, 0, 0, 0.50);
-  --v11-shadow-card-hover:  0 14px 30px rgba(0, 0, 0, 0.80);
-  --v11-shadow-float:       0 10px 20px rgba(0, 0, 0, 0.50);
-  --v11-shadow-artifact:    0 16px 40px rgba(0, 0, 0, 0.45),
-                            0 2px 0 rgba(255, 255, 255, 0.04) inset;
+  --v11-shadow-card:        0 1px 2px rgba(28, 26, 23, 0.05),
+                            0 6px 16px rgba(28, 26, 23, 0.07);
+  --v11-shadow-card-hover:  0 2px 4px rgba(28, 26, 23, 0.07),
+                            0 14px 28px rgba(28, 26, 23, 0.12);
+  --v11-shadow-float:       0 8px 20px rgba(28, 26, 23, 0.10);
+  --v11-shadow-artifact:    0 12px 32px rgba(28, 26, 23, 0.10),
+                            0 1px 0 rgba(255, 255, 255, 0.60) inset;
 
   /* ─────────────────────────────────────────────────────────────
    * 6 · TYPOGRAPHY (self-hosted per V11 R7)
@@ -216,27 +218,27 @@
    * artifacts Danilo's workflow produces. These are not "effects" —
    * they're product-UI tokens because the landing embeds running UI.
    * ───────────────────────────────────────────────────────────── */
-  --v11-artifact-bg:          #111318;
-  --v11-artifact-bg-alt:      #16181F;
-  --v11-artifact-line:        rgba(255, 255, 255, 0.10);
-  --v11-artifact-line-strong: rgba(255, 255, 255, 0.20);
-  --v11-artifact-glow:        rgba(255, 137, 100, 0.08);
+  --v11-artifact-bg:          #FFFFFF;
+  --v11-artifact-bg-alt:      #FBF8F1;
+  --v11-artifact-line:        rgba(28, 26, 23, 0.10);
+  --v11-artifact-line-strong: rgba(28, 26, 23, 0.20);
+  --v11-artifact-glow:        rgba(217, 102, 63, 0.10);
   /* used at 1px border on focused artifact frames, not hero glow */
 
-  --v11-artifact-chip-bg:     rgba(255, 137, 100, 0.12);
+  --v11-artifact-chip-bg:     rgba(217, 102, 63, 0.10);
   --v11-artifact-chip-ink:    var(--v11-accent);
   --v11-artifact-chip-line:   var(--v11-accent-line);
 
   /* Stream UI (Visible Thinking / Plan-before-Build) */
-  --v11-stream-bg:            rgba(255, 255, 255, 0.025);
-  --v11-stream-line:          rgba(255, 255, 255, 0.06);
+  --v11-stream-bg:            rgba(28, 26, 23, 0.03);
+  --v11-stream-line:          rgba(28, 26, 23, 0.07);
   --v11-stream-caret:         var(--v11-accent);
 
-  /* Diff-Review state tokens */
-  --v11-diff-add-bg:          rgba(74, 222, 128, 0.08);
-  --v11-diff-add-line:        rgba(74, 222, 128, 0.25);
-  --v11-diff-del-bg:          rgba(248, 113, 113, 0.08);
-  --v11-diff-del-line:        rgba(248, 113, 113, 0.25);
+  /* Diff-Review state tokens — tuned for light surfaces */
+  --v11-diff-add-bg:          rgba(46, 132, 74, 0.10);
+  --v11-diff-add-line:        rgba(46, 132, 74, 0.30);
+  --v11-diff-del-bg:          rgba(194, 59, 59, 0.10);
+  --v11-diff-del-line:        rgba(194, 59, 59, 0.30);
 }
 
 /* Reduced motion overrides */
@@ -251,6 +253,16 @@
 }
 
 
+/* ============== self-hosted fonts (V11 R7) ============== */
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/inter-400.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url("/assets/fonts/inter-500.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url("/assets/fonts/inter-600.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:700;font-display:swap;src:url("/assets/fonts/inter-700.woff2") format("woff2");}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/jetbrains-mono-400.woff2") format("woff2");}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:500;font-display:swap;src:url("/assets/fonts/jetbrains-mono-500.woff2") format("woff2");}
+@font-face{font-family:"Source Serif 4";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/source-serif-4-400.woff2") format("woff2");}
+@font-face{font-family:"Source Serif 4";font-style:normal;font-weight:600;font-display:swap;src:url("/assets/fonts/source-serif-4-600.woff2") format("woff2");}
+@font-face{font-family:"Source Serif 4";font-style:italic;font-weight:400;font-display:swap;src:url("/assets/fonts/source-serif-4-400-italic.woff2") format("woff2");}
 /* ============== reset + base ============== */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -346,7 +358,7 @@ img { max-width: 100%; display: block; }
 }
 .v11-nav__lang:hover { border-color: var(--v11-accent); color: var(--v11-accent); }
 
-/* ============== BUTTONS (V11 R8 #1 compliant â€” no glow) ============== */
+/* ============== BUTTONS (V11 R8 #1 compliant — no glow) ============== */
 .v11-btn {
   display: inline-flex;
   align-items: center;
@@ -443,15 +455,21 @@ img { max-width: 100%; display: block; }
   align-items: center;
   position: relative;
 }
-.v11-hero__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--v11-s-7);
-  align-items: center;
+.v11-hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 18ch;
 }
-@media (min-width: 960px) {
-  .v11-hero__grid { grid-template-columns: 6fr 6fr; }
+.v11-hero__kicker {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-micro);
+  color: var(--v11-text-60);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  margin-bottom: var(--v11-s-5);
 }
+.v11-hero__kicker span { color: var(--v11-accent); margin: 0 6px; }
 .v11-hero__byline {
   display: flex;
   align-items: center;
@@ -638,6 +656,30 @@ img { max-width: 100%; display: block; }
 }
 @keyframes v11-blink { 50% { opacity: 0; } }
 
+/* ============== TRUST STRIP ============== */
+.v11-trust {
+  padding: clamp(28px, 4vw, 44px) 0;
+  border-top: 1px solid var(--v11-line);
+  border-bottom: 1px solid var(--v11-line);
+}
+.v11-trust__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 4px;
+}
+.v11-trust__item {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-micro);
+  letter-spacing: var(--v11-track-snug);
+  color: var(--v11-text-60);
+}
+.v11-trust__sep {
+  color: var(--v11-text-subtle);
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-micro);
+}
+
 /* ============== PROOF STRIP ============== */
 .v11-proof {
   display: grid;
@@ -685,72 +727,39 @@ img { max-width: 100%; display: block; }
   margin-top: 4px;
 }
 
-/* ============== NOTEBOOK (essay) ============== */
-.v11-notebook {
-  max-width: var(--v11-container-narrow);
-  margin: 0 auto;
+/* ============== NOTES (POV) ============== */
+.v11-notes {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 6vw, 72px);
+  margin-top: var(--v11-s-7);
 }
-.v11-notebook h2.v11-h1 { color: var(--v11-paper-ink); }
-.v11-notebook__essay {
+.v11-note {
+  display: block;
+  max-width: 64ch;
+}
+.v11-note__idx {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  letter-spacing: var(--v11-track-code);
+  color: var(--v11-paper-muted);
+  margin-bottom: var(--v11-s-3);
+}
+.v11-note__title {
+  font-family: var(--v11-font-serif);
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--v11-paper-ink);
+  margin: 0 0 var(--v11-s-3);
+}
+.v11-note__body {
   font-family: var(--v11-font-serif);
   font-size: 18px;
   line-height: 1.7;
   color: var(--v11-paper-body);
-}
-.v11-notebook__essay p { margin: 0 0 var(--v11-s-5); }
-.v11-notebook__essay em { color: var(--v11-accent-deep); font-style: italic; }
-.v11-notebook__toc {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--v11-s-3);
-  padding: var(--v11-s-4);
-  background: rgba(11, 12, 14, 0.04);
-  border-radius: var(--v11-radius);
-  margin: var(--v11-s-5) 0;
-  font-family: var(--v11-font-mono);
-  font-size: var(--v11-fs-nano);
-  letter-spacing: var(--v11-track-code);
-  text-transform: uppercase;
-  color: var(--v11-paper-muted);
-}
-.v11-notebook__toc a { color: var(--v11-paper-ink); }
-.v11-notebook__toc a:hover { color: var(--v11-accent-deep); }
-.v11-notebook__byline {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: var(--v11-s-5) 0 var(--v11-s-6);
-  padding: var(--v11-s-4) 0;
-  border-top: 1px solid rgba(11, 12, 14, 0.12);
-  border-bottom: 1px solid rgba(11, 12, 14, 0.12);
-}
-.v11-notebook__byline-photo {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  object-fit: cover;
-  filter: grayscale(1) contrast(1.05);
-  flex-shrink: 0;
-  display: block;
-}
-.v11-notebook__byline-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.v11-notebook__byline-name {
-  font-family: var(--v11-font-serif);
-  font-size: 15px;
-  color: var(--v11-paper-ink);
-  letter-spacing: -0.005em;
-}
-.v11-notebook__byline-name strong { font-weight: 600; }
-.v11-notebook__byline-sub {
-  font-family: var(--v11-font-mono);
-  font-size: var(--v11-fs-nano);
-  letter-spacing: var(--v11-track-code);
-  text-transform: uppercase;
-  color: var(--v11-paper-muted);
+  margin: 0;
 }
 
 /* ============== WORK / CASE CARDS ============== */
@@ -759,7 +768,7 @@ img { max-width: 100%; display: block; }
   grid-template-columns: 1fr;
   gap: var(--v11-s-6);
 }
-/* V3 Â· Magazine sidebar â€” editorial case card.
+/* V3 · Magazine sidebar — editorial case card.
  * Grid: [ meta sidebar | content (text + optional animation) ].
  * One case per row, full-width. */
 .v11-case {
@@ -779,7 +788,7 @@ img { max-width: 100%; display: block; }
     gap: var(--v11-s-5);
   }
 }
-/* Meta sidebar â€” client, years, stack (vertical chips). */
+/* Meta sidebar — client, years, stack (vertical chips). */
 .v11-case__meta-col {
   display: flex;
   flex-direction: column;
@@ -841,7 +850,7 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--v11-line-strong);
   background: transparent;
 }
-/* Content column â€” title/hook/bullets with optional animation aside. */
+/* Content column — title/hook/bullets with optional animation aside. */
 .v11-case__content {
   display: grid;
   grid-template-columns: 1.1fr minmax(0, 1fr);
@@ -1115,102 +1124,6 @@ img { max-width: 100%; display: block; }
   outline: none;
 }
 
-/* ============== CHIPS (Named Skills) ============== */
-.v11-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: var(--v11-radius-pill);
-  background: var(--v11-artifact-chip-bg);
-  border: 1px solid var(--v11-artifact-chip-line);
-  color: var(--v11-artifact-chip-ink);
-  font-family: var(--v11-font-mono);
-  font-size: var(--v11-fs-nano);
-  letter-spacing: var(--v11-track-code);
-  text-transform: uppercase;
-}
-.v11-chip--cool {
-  background: rgba(86, 131, 218, 0.10);
-  border-color: rgba(86, 131, 218, 0.28);
-  color: var(--v11-signal-cool);
-}
-.v11-chip--muted {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: var(--v11-line-strong);
-  color: var(--v11-text-60);
-}
-.v11-chip__at { color: var(--v11-text-subtle); }
-
-/* ============== METHOD section ============== */
-.v11-method {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--v11-s-5);
-  margin: var(--v11-s-5) 0;
-}
-@media (min-width: 820px) {
-  .v11-method { grid-template-columns: 1fr 1fr; align-items: start; }
-}
-.v11-plan {
-  border: 1px solid var(--v11-line);
-  border-radius: var(--v11-radius);
-  padding: var(--v11-s-4);
-  background: var(--v11-bg-elevated);
-}
-.v11-plan__head {
-  display: flex; align-items: center; gap: var(--v11-s-2);
-  font-family: var(--v11-font-mono);
-  font-size: var(--v11-fs-nano);
-  color: var(--v11-accent);
-  letter-spacing: var(--v11-track-code);
-  text-transform: uppercase;
-  margin-bottom: var(--v11-s-3);
-}
-.v11-plan__list { list-style: none; padding: 0; margin: 0; counter-reset: v11step; }
-.v11-plan__step {
-  display: grid;
-  grid-template-columns: 24px 1fr auto;
-  gap: 12px;
-  padding: 10px 0;
-  border-top: 1px solid var(--v11-line);
-  font-size: var(--v11-fs-small);
-  align-items: center;
-  color: var(--v11-text-body);
-}
-.v11-plan__step:first-child { border-top: 0; }
-.v11-plan__step::before {
-  counter-increment: v11step;
-  content: counter(v11step, decimal-leading-zero);
-  font-family: var(--v11-font-mono);
-  color: var(--v11-text-subtle);
-  font-size: var(--v11-fs-nano);
-  letter-spacing: var(--v11-track-code);
-}
-.v11-plan__step--done { color: var(--v11-text-60); }
-.v11-plan__step--done strong { text-decoration: line-through; text-decoration-color: var(--v11-text-subtle); }
-.v11-plan__meta { font-family: var(--v11-font-mono); font-size: var(--v11-fs-nano); color: var(--v11-text-50); }
-
-.v11-diff {
-  background: var(--v11-bg-inset);
-  border: 1px solid var(--v11-line);
-  border-radius: var(--v11-radius);
-  overflow: hidden;
-  font-family: var(--v11-font-mono);
-  font-size: var(--v11-fs-small);
-  line-height: 1.6;
-}
-.v11-diff__row {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  gap: 12px;
-  padding: 3px 12px;
-  color: var(--v11-text-70);
-}
-.v11-diff__row--add { background: var(--v11-diff-add-bg); color: var(--v11-signal-pos); }
-.v11-diff__row--del { background: var(--v11-diff-del-bg); color: var(--v11-signal-neg); }
-.v11-diff__ln { color: var(--v11-text-subtle); text-align: right; user-select: none; }
-
 /* ============== QUOTE ============== */
 .v11-quote {
   padding: var(--v11-s-5) var(--v11-s-6);
@@ -1402,7 +1315,7 @@ img { max-width: 100%; display: block; }
   color: var(--v11-text);
 }
 
-/* Progress bar â€” segmented rail sits ABOVE tool rail and columns */
+/* Progress bar — segmented rail sits ABOVE tool rail and columns */
 .v11-horizon__progress {
   position: relative;
   display: grid;
@@ -1454,7 +1367,7 @@ img { max-width: 100%; display: block; }
   border-top-color: var(--v11-accent);
 }
 
-/* Tool rail â€” neutral monochrome pills, canonical tool inventory */
+/* Tool rail — neutral monochrome pills, canonical tool inventory */
 .v11-horizon__tools {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -1491,7 +1404,7 @@ img { max-width: 100%; display: block; }
   font-weight: 500;
 }
 
-/* Main grid â€” stage labels â†’ headings â†’ body â†’ content chips */
+/* Main grid — stage labels → headings → body → content chips */
 .v11-horizon__grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -1565,7 +1478,7 @@ a.v11-horizon__chip:focus-visible {
   box-shadow: 0 0 0 3px var(--v11-accent-ring);
 }
 
-/* Earned chips â€” achieved milestones (green pill + inline check glyph) */
+/* Earned chips — achieved milestones (green pill + inline check glyph) */
 [data-horizon-col='earned'] .v11-horizon__chip {
   background: rgba(74, 222, 128, 0.14);
   border-color: rgba(74, 222, 128, 0.32);
@@ -1652,19 +1565,19 @@ a.v11-horizon__chip:focus-visible {
   }
   .v11-horizon__col:last-child::after { display: none; }
 
-  /* Earned â€” solid green (achieved) */
+  /* Earned — solid green (achieved) */
   .v11-horizon__col[data-horizon-col='earned']::before {
     background: var(--v11-signal-pos);
     border-color: var(--v11-signal-pos);
     box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.22);
   }
-  /* Investing â€” orange + pulsing ring (in progress) */
+  /* Investing — orange + pulsing ring (in progress) */
   .v11-horizon__col[data-emphasis="true"]::before {
     background: var(--v11-accent);
     border-color: var(--v11-accent);
     animation: v11-horizon-pulse 2s ease-out infinite;
   }
-  /* Horizon â€” dashed outline gray (future) */
+  /* Horizon — dashed outline gray (future) */
   .v11-horizon__col[data-horizon-col='horizon']::before {
     background: transparent;
     border: 1px dashed var(--v11-text-50);
@@ -1686,8 +1599,62 @@ a.v11-horizon__chip:focus-visible {
   }
 }
 
+/* ============== METHOD ============== */
+.v11-method__note {
+  max-width: 62ch;
+  margin: var(--v11-s-3) 0 var(--v11-s-4);
+  color: var(--v11-text-60);
+}
 
-/* ============== ANIMATIONS â€” picture-in-picture ============== */
+/* ============== ABOUT ============== */
+.v11-about__cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--v11-s-5);
+  margin-top: var(--v11-s-5);
+  padding-top: var(--v11-s-5);
+  border-top: 1px solid var(--v11-line);
+}
+.v11-about__label {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-micro);
+  letter-spacing: var(--v11-track-snug);
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin-bottom: var(--v11-s-3);
+}
+.v11-about__clients {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 2px;
+  line-height: 1.8;
+}
+.v11-about__client {
+  font-size: var(--v11-fs-micro);
+  color: var(--v11-text-60);
+}
+.v11-about__client-sep {
+  color: var(--v11-text-subtle);
+}
+.v11-about__edu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.v11-about__edu-item {
+  font-size: var(--v11-fs-micro);
+  color: var(--v11-text-60);
+}
+.v11-about__edu-name { color: var(--v11-text-60); }
+.v11-about__edu-inst,
+.v11-about__edu-year { color: var(--v11-text-subtle); }
+
+
+/* ============== ANIMATIONS — picture-in-picture ============== */
 .v11-anim {
   width: 100%;
   aspect-ratio: 820 / 500;
@@ -1918,7 +1885,7 @@ a.v11-horizon__chip:focus-visible {
   font-family: var(--v11-font-mono, ui-monospace, monospace);
 }
 
-/* ============== PLAYING STATE â€” only runs when in viewport ============== */
+/* ============== PLAYING STATE — only runs when in viewport ============== */
 .v11-anim.is-playing .v11-anim__shot--1 {
   animation: v11-anim-bg1-fade 1400ms ease forwards 1000ms;
 }
@@ -2029,7 +1996,7 @@ a.v11-horizon__chip:focus-visible {
 @keyframes v11-anim-tag-show-keep { to { opacity: 1; transform: translateX(0); } }
 @keyframes v11-anim-tag-hide { to { opacity: 0; transform: translateX(-6px); } }
 
-/* Reduced motion â€” show final frame, no animation */
+/* Reduced motion — show final frame, no animation */
 @media (prefers-reduced-motion: reduce) {
   .v11-anim__shot--1,
   .v11-anim__shot--2,
@@ -2079,11 +2046,12 @@ a.v11-horizon__chip:focus-visible {
 <a class="v11-skip" href="#main">Skip to content</a>
 <nav class="v11-nav" aria-label="Main navigation">
   <div class="v11-nav__inner">
-    <a href="/" class="v11-nav__brand">Danilo Rojas<span class="v11-nav__brand-sep">Â·</span>dr</a>
+    <a href="/" class="v11-nav__brand">Danilo Rojas<span class="v11-nav__brand-sep">·</span>dr</a>
     <div class="v11-nav__tabs">
-      <a class="v11-nav__link" href="/#notebook">Notebook</a>
+      <a class="v11-nav__link" href="/#notes">Notes</a>
       <a class="v11-nav__link" href="/#work">Work</a>
       <a class="v11-nav__link" href="/#method">Method</a>
+      <a class="v11-nav__link" href="/#about">About</a>
       <a class="v11-nav__link" href="/#contact">Contact</a>
     </div>
     <a class="v11-nav__lang" href="/es/work/enregla/" hreflang="es" aria-label="View in Spanish">EN / ES</a>
@@ -2115,7 +2083,7 @@ a.v11-horizon__chip:focus-visible {
   <iframe
     class="v11-anim-frame__iframe"
     src="../../assets/animations/gallery/animations-enregla/alt-1-screenshot-to-animation-en.html"
-    title="EnRegla â€” screenshot to live animation"
+    title="EnRegla — screenshot to live animation"
     loading="lazy"
     sandbox="allow-scripts allow-same-origin"
     referrerpolicy="no-referrer"
@@ -2127,11 +2095,11 @@ a.v11-horizon__chip:focus-visible {
           <ul class="v11-case-detail__bullets"><li>346 commits · 21 SQL migrations · 31 UI components · 1 edge function with cron</li><li>Supabase MCP server wired into Claude Code for direct SQL + migrations</li><li>Recursive DS migration (17 parts × 5 rounds) scored 78.4 → 95.6</li></ul>
           <dl class="v11-case-detail__beats">
     <div class="v11-case-detail__beat"><dt>Context</dt><dd>LATAM SMB compliance. Multi-site reporting was done in spreadsheets, manually, every month. Nobody owned the data model.</dd></div>
-    <div class="v11-case-detail__beat"><dt>Problem</dt><dd>Existing tools priced out SMBs or required a sysadmin to deploy. Nothing shipped as a 40-day 0â†’1.0.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Problem</dt><dd>Existing tools priced out SMBs or required a sysadmin to deploy. Nothing shipped as a 40-day 0→1.0.</dd></div>
     <div class="v11-case-detail__beat"><dt>Approach</dt><dd>Built the SaaS as a co-author exercise with Claude Code. Supabase MCP server in the loop for SQL + migrations. Parallel subagents on UI, data model, edge functions.</dd></div>
     <div class="v11-case-detail__beat"><dt>Ship</dt><dd>346 commits in 40 days. 21 SQL migrations, 31 UI components, 1 edge function with cron. Live with paying pilots.</dd></div>
-    <div class="v11-case-detail__beat"><dt>Outcome</dt><dd>DS migration ran 5 recursive rounds scoring 78.4 â†’ 95.6. First pilots reporting monthly compliance in minutes instead of days.</dd></div>
-    <div class="v11-case-detail__beat"><dt>Differently</dt><dd>Next time I write the MCP servers before the schema. The agent kept proposing columns it couldn&#39;t write back â€” half the recursion was plumbing.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Outcome</dt><dd>DS migration ran 5 recursive rounds scoring 78.4 → 95.6. First pilots reporting monthly compliance in minutes instead of days.</dd></div>
+    <div class="v11-case-detail__beat"><dt>Differently</dt><dd>Next time I write the MCP servers before the schema. The agent kept proposing columns it couldn&#39;t write back — half the recursion was plumbing.</dd></div>
     <div class="v11-case-detail__beat"><dt>Craft floor</dt><dd>RLS on every table. Type-safe Supabase client. Dark-mode primary with per-token WCAG trail. 0 hand-edited SQL in prod.</dd></div>
   </dl>
           <a class="v11-case-detail__next" href="/work/developer-portal/">Next case · Developer Portal — design system + dark-first DS, shipped as agent-consumable skill →</a>
@@ -2143,7 +2111,7 @@ a.v11-horizon__chip:focus-visible {
   <div class="v11-container">
     <div class="v11-section__eyebrow">Contact</div>
     <h2 id="contact-h" class="v11-h1">Let&#39;s talk.</h2>
-    <p class="v11-lead">Direct email is the fastest path. I reply within one business day. Open to Staff / Principal AI Product Designer roles.</p>
+    <p class="v11-lead">Direct email is the fastest path. I reply within one business day.</p>
 
     <div class="v11-contact">
       <div class="v11-contact__headline">
@@ -2152,7 +2120,7 @@ a.v11-horizon__chip:focus-visible {
       </div>
       <a class="v11-btn v11-btn--primary" href="mailto:danilorojas@hotmail.com" style="align-self:flex-start">
         Reach out
-        <span class="v11-btn__arrow" aria-hidden="true">â†’</span>
+        <span class="v11-btn__arrow" aria-hidden="true">→</span>
       </a>
       <div class="v11-contact__email-row">
         <span class="v11-contact__email">danilorojas@hotmail.com</span>
@@ -2184,7 +2152,7 @@ a.v11-horizon__chip:focus-visible {
   <blockquote class="v11-quote__text">Danilo is doing wonderful things using AI in the right ways. He dove into the developer-portal world and delivered work I wanted to keep reusing. A real loss for us.</blockquote>
   <figcaption class="v11-quote__attr">
     <span class="v11-quote__author">Jennifer Sheppard</span>
-    <span class="v11-quote__role">Product Lead · Developer Portal Â· Booz Allen Hamilton</span>
+    <span class="v11-quote__role">Product Lead · Developer Portal · Booz Allen Hamilton</span>
     <span class="v11-quote__badge">Verified</span>
   </figcaption>
 </figure></div>
@@ -2193,7 +2161,7 @@ a.v11-horizon__chip:focus-visible {
 </main>
 <footer class="v11-footer">
   <div class="v11-footer__inner">
-    <span>Built by Danilo Rojas Â· source on github.com/mdanilorojas Â· updated 2026-05-08</span>
+    <span>Built by Danilo Rojas · source on github.com/mdanilorojas · updated 2026-06-15</span>
     <div style="display:flex; gap:16px; flex-wrap:wrap;">
       <a href="https://github.com/mdanilorojas/dr-cv">github.com/mdanilorojas</a>
       <a href="mailto:danilorojas@hotmail.com">danilorojas@hotmail.com</a>
@@ -2283,7 +2251,7 @@ a.v11-horizon__chip:focus-visible {
 <script>
 (function(){
   // CSS injected into each animation iframe to strip captions, labels,
-  // hints, and sibling callouts â€” only the UI stage (.window / .phone)
+  // hints, and sibling callouts — only the UI stage (.window / .phone)
   // should render. Also removes stage padding and body centering so the
   // iframe content box hugs the animation's intrinsic size.
   var EMBED_CSS = [
@@ -2310,7 +2278,7 @@ a.v11-horizon__chip:focus-visible {
       (doc.head || doc.documentElement).appendChild(style);
     }
 
-    // Measure the primary stage element â€” fall back to body if absent.
+    // Measure the primary stage element — fall back to body if absent.
     var target = doc.querySelector('.window')
               || doc.querySelector('.phone-wrap')
               || doc.querySelector('.stage')
