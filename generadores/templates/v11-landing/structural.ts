@@ -177,8 +177,9 @@ export function renderStructuralLanding(
   const seoDesc = t(lang, landing.seo.descriptionEn, landing.seo.descriptionEs);
   const selfHref = lang === "en" ? "/" : "/es/";
   const altHref = lang === "en" ? "/es/" : "/";
-  // Relative lang-toggle target so it works under file:// and deploy (meta tags keep absolute altHref).
-  const altRel = lang === "en" ? "es/" : "../";
+  // Relative lang-toggle target. Point at the explicit index.html file (not the
+  // directory) so file:// loads the page instead of showing a folder listing.
+  const altRel = lang === "en" ? "es/index.html" : "../index.html";
   const altLang = lang === "en" ? "es" : "en";
 
   const navLinks = [
@@ -195,8 +196,24 @@ export function renderStructuralLanding(
   const photoHref = assets.photoHref;
 
   const trust = (lang === "en" ? positioning.trustStrip?.en : positioning.trustStrip?.es) ?? [];
-  const trustRow = trust.map((s) => `<span class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors cursor-default">${escapeHtml(s)}</span>`)
-    .join(`<span class="text-system-line">·</span>`);
+  // Official sites for the trust-strip orgs (keyed by both EN and ES labels).
+  const TRUST_LINKS: Record<string, string> = {
+    "FAA": "https://www.faa.gov/",
+    "DoD": "https://www.defense.gov/",
+    "VA": "https://www.va.gov/",
+    "Booz Allen Hamilton": "https://www.boozallen.com/",
+    "Pichincha Bank": "https://www.pichincha.com/",
+    "Banco Pichincha": "https://www.pichincha.com/",
+    "Rappi": "https://www.rappi.com/",
+    "Juan Valdez": "https://www.juanvaldez.com/",
+  };
+  const trustRow = trust.map((s) => {
+    const url = TRUST_LINKS[s];
+    const cls = "font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors";
+    return url
+      ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="${cls} no-underline">${escapeHtml(s)}</a>`
+      : `<span class="${cls} cursor-default">${escapeHtml(s)}</span>`;
+  }).join(`<span class="text-system-line">·</span>`);
 
   const proof = positioning.proofNumbers.map((p) => {
     const unit = p.unit ? `<span class="text-system-dim">${escapeHtml(p.unit)}</span>` : "";
