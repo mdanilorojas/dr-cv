@@ -21,8 +21,8 @@ describe("landing redesign", () => {
   const es = html("es");
 
   it("renders the new hero line", () => {
-    expect(en).toContain("complex systems");
-    expect(es).toContain("sistemas complejos");
+    expect(en).toContain("complex, regulated environments");
+    expect(es).toContain("entornos complejos y regulados");
   });
 
   it("renders the text-only trust strip", () => {
