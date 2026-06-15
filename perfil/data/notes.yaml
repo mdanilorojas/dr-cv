@@ -1,0 +1,10 @@
+- slug: teams-do-not-lack-solutions
+  titleEn: "Most teams do not lack solutions."
+  titleEs: "A la mayoría de los equipos no les faltan soluciones."
+  bodyEn: "Teams rarely fail for lack of ideas, UI options, or tools. They fail because the problem was misdiagnosed, the constraints were never made explicit, or they shipped around the real decision. Good design reduces ambiguity before it produces screens."
+  bodyEs: "Los equipos rara vez fallan por falta de ideas, opciones de UI o herramientas. Fallan porque el problema se diagnosticó mal, las restricciones nunca se hicieron explícitas, o entregaron alrededor de la decisión real. El buen diseño reduce la ambigüedad antes de producir pantallas."
+- slug: handoff-judgment-disappears
+  titleEn: "Handoff is where judgment disappears."
+  titleEs: "El handoff es donde desaparece el juicio."
+  bodyEn: "Traditional handoff turns product decisions into artifacts and asks another team to reconstruct the intent later — that gap is where waste lives. The answer isn't designers pretending to be engineers; it's making judgment executable through systems, rubrics, and agents."
+  bodyEs: "El handoff tradicional convierte decisiones de producto en artefactos y le pide a otro equipo reconstruir la intención después — ese hueco es donde vive el desperdicio. La respuesta no es diseñadores fingiendo ser ingenieros; es hacer el juicio ejecutable mediante sistemas, rúbricas y agentes."
