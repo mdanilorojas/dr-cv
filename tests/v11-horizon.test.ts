@@ -23,22 +23,27 @@ beforeAll(() => {
 });
 
 describe("v11 horizon timeline â€” placement", () => {
-  it("renders after hero and before notebook in EN", () => {
+  it("renders after hero and inside method (after notes) in EN", () => {
     const heroIdx = htmlEn.indexOf('id="top"');
+    const notesIdx = htmlEn.indexOf('id="notes"');
+    const methodIdx = htmlEn.indexOf('id="method"');
     const horizonIdx = htmlEn.indexOf('class="v11-horizon"');
-    const notebookIdx = htmlEn.indexOf('id="notebook"');
     expect(heroIdx).toBeGreaterThan(-1);
-    expect(horizonIdx).toBeGreaterThan(heroIdx);
-    expect(notebookIdx).toBeGreaterThan(horizonIdx);
+    expect(notesIdx).toBeGreaterThan(heroIdx);
+    // Method (which contains the horizon) comes after notes.
+    expect(methodIdx).toBeGreaterThan(notesIdx);
+    expect(horizonIdx).toBeGreaterThan(methodIdx);
   });
 
-  it("renders after hero and before notebook in ES", () => {
+  it("renders after hero and inside method (after notes) in ES", () => {
     const heroIdx = htmlEs.indexOf('id="top"');
+    const notesIdx = htmlEs.indexOf('id="notes"');
+    const methodIdx = htmlEs.indexOf('id="method"');
     const horizonIdx = htmlEs.indexOf('class="v11-horizon"');
-    const notebookIdx = htmlEs.indexOf('id="notebook"');
     expect(heroIdx).toBeGreaterThan(-1);
-    expect(horizonIdx).toBeGreaterThan(heroIdx);
-    expect(notebookIdx).toBeGreaterThan(horizonIdx);
+    expect(notesIdx).toBeGreaterThan(heroIdx);
+    expect(methodIdx).toBeGreaterThan(notesIdx);
+    expect(horizonIdx).toBeGreaterThan(methodIdx);
   });
 });
 
@@ -66,14 +71,14 @@ describe("v11 horizon timeline â€” investing chips are links", () => {
 });
 
 describe("v11 horizon timeline â€” horizon column composition", () => {
-  it("horizon column has exactly 2 evidence chips + 1 bet chip", () => {
+  it("horizon column has exactly 2 evidence chips + 2 bet chips", () => {
     const col = extractColumn(htmlEn, "horizon");
     const chips = extractChips(col);
-    expect(chips.length).toBe(3);
+    expect(chips.length).toBe(4);
     const evidence = chips.filter((c) => c.includes('data-kind="evidence"'));
     const bets = chips.filter((c) => c.includes('data-kind="bet"'));
     expect(evidence.length).toBe(2);
-    expect(bets.length).toBe(1);
+    expect(bets.length).toBe(2);
   });
 
   it("bet chip has no href and has a visible bet badge", () => {

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Career OS — App Dashboard" description="Operative-cockpit dashboard: sidebar shell, stat row, skill clusters and a live AI artifact." -->
+<helmet>
+<script src="./ds-base.js"></script>
+</helmet>
+<div style="display:flex; height:100vh; font-family:var(--font-sans); background:var(--bg); color:var(--text-primary); letter-spacing:-0.011em">
+  <aside style="width:240px; flex-shrink:0; background:var(--sidebar-bg); border-right:1px solid var(--border); display:flex; flex-direction:column">
+    <div style="display:flex; align-items:center; gap:12px; padding:16px 20px; height:57px; border-bottom:1px solid var(--border)">
+      <img src="../../assets/dr-monogram.svg" width="30" height="30" alt="" />
+      <div>
+        <div style="font-weight:600; letter-spacing:-0.02em; font-size:14px">Career OS</div>
+        <div style="font-family:var(--font-mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-faint)">danilorojas.design</div>
+      </div>
+    </div>
+    <nav style="padding:16px 12px; display:flex; flex-direction:column; gap:2px">
+      <div style="font-family:var(--font-mono); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint); padding:0 12px 8px">Workspace</div>
+      <div style="position:relative; display:flex; align-items:center; gap:12px; padding:8px 12px; border-radius:8px; font-size:14px; font-weight:500; background:var(--primary-soft); color:var(--primary-soft-text)">Dashboard</div>
+      <div style="display:flex; align-items:center; gap:12px; padding:8px 12px; border-radius:8px; font-size:14px; font-weight:500; color:var(--text-secondary)">Diagnostic</div>
+      <div style="display:flex; align-items:center; gap:12px; padding:8px 12px; border-radius:8px; font-size:14px; font-weight:500; color:var(--text-secondary)">Skill graph</div>
+      <div style="font-family:var(--font-mono); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint); padding:16px 12px 8px">Program</div>
+      <div style="display:flex; align-items:center; gap:12px; padding:8px 12px; border-radius:8px; font-size:14px; font-weight:500; color:var(--text-secondary)">Learning path</div>
+      <div style="display:flex; align-items:center; gap:12px; padding:8px 12px; border-radius:8px; font-size:14px; font-weight:500; color:var(--text-secondary)">AI mentor</div>
+      <div style="display:flex; align-items:center; gap:12px; padding:8px 12px; border-radius:8px; font-size:14px; font-weight:500; color:var(--text-secondary)">Projects</div>
+    </nav>
+  </aside>
+
+  <main style="flex:1; display:flex; flex-direction:column; min-width:0">
+    <div style="display:flex; align-items:center; gap:16px; height:57px; padding:0 24px; border-bottom:1px solid var(--border); background:var(--topbar-bg)">
+      <div style="font-weight:600; font-size:14px">Dashboard</div>
+      <div style="margin-left:auto; display:flex; align-items:center; gap:12px">
+        <x-import component-from-global-scope="AuraDesignSystem_58f91b.Badge" variant="success" dot="true" hint-size="86px,24px">on track</x-import>
+        <x-import component-from-global-scope="AuraDesignSystem_58f91b.Avatar" src="../../assets/photo/danilo.jpg" alt="Danilo Rojas" hint-size="32px,32px"></x-import>
+      </div>
+    </div>
+
+    <div style="flex:1; overflow-y:auto">
+      <div style="padding:24px; border-bottom:1px solid var(--border)">
+        <div style="font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted)">// objective</div>
+        <div style="font-size:31px; font-weight:600; letter-spacing:-0.03em; margin-top:8px; line-height:1.1">Earn $250,000 / year as a Product Designer</div>
+        <div style="font-size:16px; color:var(--text-muted); margin-top:6px">Banked value is climbing. Two clusters still gate the number.</div>
+      </div>
+
+      <div style="padding:24px; display:flex; flex-direction:column; gap:24px">
+        <div style="display:flex; gap:16px">
+          <div style="flex:1; background:var(--surface); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow-sm); padding:20px">
+            <div style="font-size:14px; color:var(--text-muted)">Market value · banked</div>
+            <div style="font-family:var(--font-mono); font-size:24px; font-weight:500; letter-spacing:-0.03em; margin-top:6px; font-variant-numeric:tabular-nums">$182,400</div>
+            <div style="font-size:14px; color:var(--success); margin-top:6px">▲ 12% vs Q1</div>
+          </div>
+          <div style="flex:1; background:var(--surface); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow-sm); padding:20px">
+            <div style="font-size:14px; color:var(--text-muted)">Gap to objective</div>
+            <div style="font-family:var(--font-mono); font-size:24px; font-weight:500; letter-spacing:-0.03em; margin-top:6px; font-variant-numeric:tabular-nums">$67,600</div>
+            <div style="font-size:14px; color:var(--danger); margin-top:6px">▼ closing</div>
+          </div>
+          <div style="flex:1; background:var(--surface); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow-sm); padding:20px">
+            <div style="font-size:14px; color:var(--text-muted)">Mastered clusters</div>
+            <div style="font-family:var(--font-mono); font-size:24px; font-weight:500; letter-spacing:-0.03em; margin-top:6px; font-variant-numeric:tabular-nums">9 / 14</div>
+            <div style="font-size:14px; color:var(--success); margin-top:6px">▲ +2</div>
+          </div>
+          <div style="flex:1; background:var(--surface); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow-sm); padding:20px">
+            <div style="font-size:14px; color:var(--text-muted)">Diagnostic score</div>
+            <div style="font-family:var(--font-mono); font-size:24px; font-weight:500; letter-spacing:-0.03em; margin-top:6px; font-variant-numeric:tabular-nums">78</div>
+            <div style="font-size:14px; color:var(--text-muted); margin-top:6px">— senior rubric</div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:24px; align-items:start">
+          <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow-sm); overflow:hidden">
+            <div style="display:flex; align-items:center; gap:12px; padding:16px 20px; border-bottom:1px solid var(--border)">
+              <div>
+                <div style="font-size:16px; font-weight:600; letter-spacing:-0.02em">Skill clusters</div>
+                <div style="font-size:13px; color:var(--text-muted); margin-top:2px">Graded from prose, ranked by market value</div>
+              </div>
+              <div style="margin-left:auto">
+                <x-import component-from-global-scope="AuraDesignSystem_58f91b.Badge" mono="true" hint-size="70px,24px">14 total</x-import>
+              </div>
+            </div>
+            <div style="padding:8px 20px 16px">
+              <div style="display:flex; align-items:center; padding:10px 0; border-bottom:1px solid var(--border-subtle)">
+                <div style="flex:1; font-size:14px; color:var(--text-secondary)">Prototyping &amp; craft</div>
+                <x-import component-from-global-scope="AuraDesignSystem_58f91b.Mastery" level="mastered" hint-size="96px,22px"></x-import>
+                <div style="width:90px; text-align:right; font-family:var(--font-mono); font-size:13px; color:var(--text-primary); font-variant-numeric:tabular-nums">$88,500</div>
+              </div>
+              <div style="display:flex; align-items:center; padding:10px 0; border-bottom:1px solid var(--border-subtle)">
+                <div style="flex:1; font-size:14px; color:var(--text-secondary)">Visual systems</div>
+                <x-import component-from-global-scope="AuraDesignSystem_58f91b.Mastery" level="mastered" hint-size="96px,22px"></x-import>
+                <div style="width:90px; text-align:right; font-family:var(--font-mono); font-size:13px; color:var(--text-primary); font-variant-numeric:tabular-nums">$51,900</div>
+              </div>
+              <div style="display:flex; align-items:center; padding:10px 0; border-bottom:1px solid var(--border-subtle)">
+                <div style="flex:1; font-size:14px; color:var(--text-secondary)">Systems thinking</div>
+                <x-import component-from-global-scope="AuraDesignSystem_58f91b.Mastery" level="developing" hint-size="96px,22px"></x-import>
+                <div style="width:90px; text-align:right; font-family:var(--font-mono); font-size:13px; color:var(--text-primary); font-variant-numeric:tabular-nums">$42,000</div>
+              </div>
+              <div style="display:flex; align-items:center; padding:10px 0">
+                <div style="flex:1; font-size:14px; color:var(--text-secondary)">Stakeholder craft</div>
+                <x-import component-from-global-scope="AuraDesignSystem_58f91b.Mastery" level="gap" hint-size="96px,22px"></x-import>
+                <div style="width:90px; text-align:right; font-family:var(--font-mono); font-size:13px; color:var(--text-primary); font-variant-numeric:tabular-nums">$0</div>
+              </div>
+            </div>
+          </div>
+
+          <x-import component-from-global-scope="AuraDesignSystem_58f91b.Artifact" file="learning-path.md" meta="generated 14 Jun 2026" status="ready" hint-size="100%,300px">
+            <x-import component-from-global-scope="AuraDesignSystem_58f91b.Stream" hint-size="100%,60px">Ranking gaps by market value · stakeholder-craft is the highest-leverage move</x-import>
+            <div style="margin-top:14px">
+              <x-import component-from-global-scope="AuraDesignSystem_58f91b.EmbedWell" kind="MD" title="Next learning path" meta="6 steps · ~3 weeks" hint-size="100%,80px"></x-import>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap">
+              <x-import component-from-global-scope="AuraDesignSystem_58f91b.SkillChip" hint-size="120px,24px">prose-grader</x-import>
+              <x-import component-from-global-scope="AuraDesignSystem_58f91b.SkillChip" hint-size="120px,24px">market-value</x-import>
+            </div>
+          </x-import>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+</body>
+</html>

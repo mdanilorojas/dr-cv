@@ -55,6 +55,6 @@ describe("renderWarmCv", () => {
 
   it("generates ES version with Spanish thesis", () => {
     const html = renderWarmCv(data, "es", tokensCss);
-    expect(html).toContain("Entrego publicables reales");
+    expect(html).toContain("Dieciocho años en producto");
   });
 });

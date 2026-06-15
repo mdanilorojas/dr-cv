@@ -1,0 +1,228 @@
+/* =========================================================================
+ * Aura Design System · colors_and_type.css  (codename dr-cv V11)
+ * "Warm Huly Refined + AI Product-Tour"
+ *
+ * Single source of truth for color + type:
+ *   Layer 1 — raw brand tokens (--v11-*).  CANONICAL. Do not redesign.
+ *   Layer 2 — semantic alias layer (what components consume). Ships dark + light.
+ *   Base    — element resets + base typography.
+ *
+ * Hard rules: no warm-radial-glow CTA pill; no gradients/neon/glow; accent is
+ * punctuation only (fills / hairline rings / carets / chips). Two themes, one
+ * source of truth — light EXTENDS the same semantic names.
+ * ========================================================================= */
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * LAYER 1 · RAW BRAND TOKENS — source of truth (lift verbatim, never round)
+ * ───────────────────────────────────────────────────────────────────────── */
+:root {
+  /* 1 · SURFACE (dark-dominant) */
+  --v11-bg-deep:        #060708;
+  --v11-bg-primary:     #0A0B0E;
+  --v11-bg-alt:         #111318;
+  --v11-bg-paper:       #F6F4F0;   /* cream chapter */
+  --v11-bg-elevated:    #14161C;
+  --v11-bg-elevated-2:  #1C1F27;
+  --v11-bg-inset:       #0D0F13;
+
+  /* 2 · INK on dark */
+  --v11-text:        #F4F4F5;
+  --v11-text-body:   #D7D8DB;
+  --v11-text-85:     #C9CBCF;
+  --v11-text-70:     #B0B2B7;
+  --v11-text-60:     #95979E;
+  --v11-text-50:     #797D86;
+  --v11-text-40:     #61656B;
+  --v11-text-subtle: #4A4B50;
+  /* ink on cream */
+  --v11-paper-ink:    #0B0C0E;
+  --v11-paper-body:   #303236;
+  --v11-paper-muted:  #4A4B50;
+  --v11-paper-subtle: #797D86;
+
+  /* 3 · ACCENT — restrained, punctuation only (NO glow) */
+  --v11-accent:      #FF8964;
+  --v11-accent-ink:  #2A0F05;
+  --v11-accent-deep: #E0674A;
+  --v11-accent-soft: rgba(255,137,100,0.14);
+  --v11-accent-ring: rgba(255,137,100,0.35);
+  --v11-accent-line: rgba(255,137,100,0.28);
+  /* secondary signals — agentic UX state only */
+  --v11-signal-cool: #5683DA;  /* tool-use / plan */
+  --v11-signal-warn: #E5A84B;  /* caution / learning-level */
+  --v11-signal-pos:  #4ADE80;  /* diff additions / success */
+  --v11-signal-neg:  #F87171;  /* diff deletions / error */
+
+  /* 4 · LINES */
+  --v11-line:          rgba(255,255,255,0.08);
+  --v11-line-strong:   rgba(255,255,255,0.18);
+  --v11-line-soft:     rgba(255,255,255,0.04);
+  --v11-line-paper:    #E5E2DA;
+  --v11-line-paper-sf: #EFECE4;
+
+  /* 5 · ELEVATION (muted, Huly-derived) */
+  --v11-shadow-card:       0 6px 25px rgba(0,0,0,.50);
+  --v11-shadow-card-hover: 0 14px 30px rgba(0,0,0,.80);
+  --v11-shadow-float:      0 10px 20px rgba(0,0,0,.50);
+  --v11-shadow-artifact:   0 16px 40px rgba(0,0,0,.45), 0 2px 0 rgba(255,255,255,.04) inset;
+
+  /* 6 · TYPE (self-hosted variable fonts) */
+  --v11-font-body:    'Inter','Helvetica Neue',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --v11-font-display: 'JetBrains Mono','SF Mono',Menlo,Consolas,ui-monospace,monospace;
+  --v11-font-mono:    'JetBrains Mono','SF Mono',Menlo,Consolas,ui-monospace,monospace;
+  --v11-font-serif:   'Source Serif 4','Source Serif Pro',Georgia,'Times New Roman',serif; /* essay only */
+  /* fluid scale */
+  --v11-fs-hero: clamp(32px,7vw,72px); /* @kind font */
+  --v11-fs-h1:   clamp(28px,5.5vw,56px); /* @kind font */
+  --v11-fs-h2:   clamp(24px,4vw,40px); /* @kind font */
+  --v11-fs-h3:   clamp(20px,2.8vw,28px); /* @kind font */
+  --v11-fs-lead: clamp(17px,1.9vw,20px); /* @kind font */
+  --v11-fs-body: 16px; /* @kind font */ --v11-fs-small: 14px; /* @kind font */
+  --v11-fs-micro: 12px; /* @kind font */ --v11-fs-nano: 11px; /* @kind font */
+  /* tracking */
+  --v11-track-snug:-0.01em; /* @kind font */ --v11-track-snugger:-0.02em; /* @kind font */ --v11-track-tight:-0.04em; /* @kind font */
+  --v11-track-tighter:-0.05em; /* @kind font */ --v11-track-loose:0.08em; /* @kind font */ --v11-track-code:0.14em; /* @kind font */ --v11-track-micro:0.16em; /* @kind font */
+  /* leading */
+  --v11-lead-hero:0.95; /* @kind font */ --v11-lead-h:1.1; /* @kind font */ --v11-lead-tight:1.25; /* @kind font */ --v11-lead-body:1.55; /* @kind font */ --v11-lead-loose:1.7; /* @kind font */
+  /* weight */
+  --v11-wt-regular:400; /* @kind font */ --v11-wt-medium:500; /* @kind font */ --v11-wt-semibold:600; /* @kind font */ --v11-wt-bold:700; /* @kind font */
+
+  /* 7 · RADIUS */
+  --v11-radius-none:0; --v11-radius-sm:4px; --v11-radius:8px; --v11-radius-card:12px;
+  --v11-radius-lg:16px; --v11-radius-xl:24px; --v11-radius-pill:9999px;
+
+  /* 8 · SPACING (4-base) */
+  --v11-s-0:0; /* @kind spacing */ --v11-s-1:4px; --v11-s-2:8px; --v11-s-3:12px; --v11-s-4:16px; --v11-s-5:24px;
+  --v11-s-6:32px; --v11-s-7:48px; --v11-s-8:64px; --v11-s-9:80px; --v11-s-10:96px; --v11-s-11:128px; --v11-s-12:160px;
+
+  /* 9 · LAYOUT */
+  --v11-container:80rem; /* @kind spacing */ --v11-container-narrow:42rem; /* @kind spacing */ --v11-container-wide:88rem; /* @kind spacing */
+  --v11-pad-x:clamp(20px,4vw,32px); /* @kind spacing */
+
+  /* 10 · MOTION */
+  --v11-ease-standard:cubic-bezier(0.22,0.61,0.36,1); /* @kind other */
+  --v11-ease-in:cubic-bezier(0.4,0,1,1); /* @kind other */
+  --v11-ease-out:cubic-bezier(0,0,0.2,1); /* @kind other */
+  --v11-ease-emphasize:cubic-bezier(0.2,0,0,1); /* @kind other */
+  --v11-dur-instant:80ms; /* @kind other */ --v11-dur-fast:180ms; /* @kind other */ --v11-dur-base:280ms; /* @kind other */ --v11-dur-slow:480ms; /* @kind other */ --v11-dur-extra:720ms; /* @kind other */
+
+  /* 11 · Z-INDEX */
+  --v11-z-base:0; /* @kind other */ --v11-z-raised:1; /* @kind other */ --v11-z-nav:50; /* @kind other */ --v11-z-toast:60; /* @kind other */ --v11-z-modal:70; /* @kind other */ --v11-z-hint:80; /* @kind other */
+
+  /* 12 · ARTIFACT SURFACE (the AI Product-Tour layer — product UI, not effects) */
+  --v11-artifact-bg:#111318; --v11-artifact-bg-alt:#16181F;
+  --v11-artifact-line:rgba(255,255,255,0.10); --v11-artifact-line-strong:rgba(255,255,255,0.20);
+  --v11-artifact-glow:rgba(255,137,100,0.08); /* 1px focused-frame border, NOT hero glow */
+  --v11-artifact-chip-bg:rgba(255,137,100,0.12); --v11-artifact-chip-ink:var(--v11-accent); --v11-artifact-chip-line:var(--v11-accent-line);
+  --v11-stream-bg:rgba(255,255,255,0.025); --v11-stream-line:rgba(255,255,255,0.06); --v11-stream-caret:var(--v11-accent);
+  --v11-diff-add-bg:rgba(74,222,128,0.08); --v11-diff-add-line:rgba(74,222,128,0.25);
+  --v11-diff-del-bg:rgba(248,113,113,0.08); --v11-diff-del-line:rgba(248,113,113,0.25);
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --v11-dur-instant:0ms; /* @kind other */ --v11-dur-fast:0ms; /* @kind other */ --v11-dur-base:0ms; /* @kind other */ --v11-dur-slow:0ms; /* @kind other */ --v11-dur-extra:0ms; /* @kind other */ }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * LAYER 2 · SEMANTIC ALIAS LAYER — what components actually consume.
+ * Every name maps to a --v11-* token with the literal as fallback, so a
+ * surface renders even if Layer 1 is absent. Ships dark (default) + light.
+ * ───────────────────────────────────────────────────────────────────────── */
+:root {
+  --font-sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono','SF Mono',Menlo,Consolas,ui-monospace,monospace;
+  --font-serif:var(--v11-font-serif,'Source Serif 4',Georgia,serif);
+  /* app type scale */
+  --fs-xs:.6875rem; /* @kind font */ --fs-sm:.75rem; /* @kind font */ --fs-md:.8125rem; /* @kind font */ --fs-base:.875rem; /* @kind font */ --fs-lg:1rem; /* @kind font */
+  --fs-xl:1.25rem; /* @kind font */ --fs-2xl:1.5rem; /* @kind font */ --fs-3xl:1.9375rem; /* @kind font */ --fs-4xl:2.75rem; /* @kind font */ --fs-5xl:4rem; /* @kind font */
+  --fw-regular:400; /* @kind font */ --fw-medium:500; /* @kind font */ --fw-semibold:600; /* @kind font */ --fw-bold:700; /* @kind font */
+  --lh-tight:1.06; /* @kind font */ --lh-snug:1.22; /* @kind font */ --lh-base:1.5; /* @kind font */ --lh-normal:1.62; /* @kind font */
+  --tracking-tight:-0.03em; /* @kind font */ --tracking-base:-0.011em; /* @kind font */ --tracking-wide:0.02em; /* @kind font */ --tracking-eyebrow:0.15em; /* @kind font */
+  /* spacing / radii / motion */
+  --s-1:.25rem; --s-2:.5rem; --s-3:.75rem; --s-4:1rem; --s-5:1.25rem; --s-6:1.5rem; --s-8:2rem;
+  --s-10:2.5rem; --s-12:3rem; --s-16:4rem; --s-20:5rem; --s-24:6rem;
+  --r-sm:4px; --r-md:8px; --r-lg:12px; --r-xl:16px; --r-2xl:24px; --r-full:9999px;
+  --ease:cubic-bezier(0.22,0.61,0.36,1); /* @kind other */ --ease-out:cubic-bezier(0,0,0.2,1); /* @kind other */
+  --dur-fast:180ms; /* @kind other */ --dur-base:280ms; /* @kind other */ --dur-slow:480ms; /* @kind other */
+  /* brand (theme-invariant) */
+  --accent:var(--v11-accent,#FF8964); --accent-hover:var(--v11-accent-deep,#E0674A); --accent-ink:var(--v11-accent-ink,#2A0F05);
+  --brand-secondary:#26221C;
+  --signal-cool:#5683DA; --signal-warn:#E5A84B; --signal-pos:#4ADE80; --signal-neg:#F87171;
+  --viz-1:#FF8964; --viz-2:#5683DA; --viz-3:#E5A84B; --viz-4:#4ADE80; --viz-5:#9B8AFB;
+}
+:root, [data-theme="dark"] {
+  --bg:var(--v11-bg-primary,#0A0B0E); --bg-deep:var(--v11-bg-deep,#060708);
+  --surface:var(--v11-bg-elevated,#14161C); --surface-subtle:var(--v11-bg-inset,#0D0F13);
+  --surface-hover:var(--v11-bg-elevated-2,#1C1F27); --surface-elevated:var(--v11-artifact-bg-alt,#16181F);
+  --text-primary:var(--v11-text,#F4F4F5); --text-secondary:var(--v11-text-70,#B0B2B7);
+  --text-muted:var(--v11-text-50,#797D86); --text-faint:var(--v11-text-40,#61656B); --text-inverse:var(--v11-paper-ink,#0B0C0E);
+  --border:var(--v11-line,rgba(255,255,255,.08)); --border-subtle:var(--v11-line-soft,rgba(255,255,255,.045)); --border-strong:var(--v11-line-strong,rgba(255,255,255,.18));
+  --primary:var(--v11-accent,#FF8964); --primary-hover:var(--v11-accent-deep,#E0674A);
+  --primary-soft:var(--v11-accent-soft,rgba(255,137,100,.13)); --primary-soft-text:var(--v11-accent,#FF8964); --on-primary:var(--v11-accent-ink,#2A0F05);
+  --success:#4ADE80; --success-soft:rgba(74,222,128,.12); --success-text:#6EE79B;
+  --warning:#E5A84B; --warning-soft:rgba(229,168,75,.13); --warning-text:#F0C27E;
+  --danger:#F87171; --danger-soft:rgba(248,113,113,.12); --danger-text:#F89B9B;
+  --info:#5683DA; --info-soft:rgba(86,131,218,.14); --info-text:#8FB0EA;
+  /* mastery scale */
+  --m-mastered:#4ADE80;   --m-mastered-bg:rgba(74,222,128,.12);
+  --m-proficient:#5683DA; --m-proficient-bg:rgba(86,131,218,.14);
+  --m-developing:#E5A84B; --m-developing-bg:rgba(229,168,75,.13);
+  --m-novice:#9AA0A8;     --m-novice-bg:rgba(255,255,255,.06);
+  --m-gap:#F87171;        --m-gap-bg:rgba(248,113,113,.12);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.4); --shadow-md:0 6px 25px rgba(0,0,0,.5); --shadow-lg:0 14px 30px rgba(0,0,0,.7);
+  --shadow-overlay:0 28px 64px -18px rgba(0,0,0,.8); --scrim:rgba(3,5,8,.66);
+  --sidebar-bg:#0D0F13; --topbar-bg:rgba(10,11,14,.82);
+}
+[data-theme="light"] {
+  --bg:#F6F4F0; --bg-deep:#ECE9E2; --surface:#FFFFFF; --surface-subtle:#F1EEE8; --surface-hover:#F4F1EB; --surface-elevated:#FFFFFF;
+  --text-primary:#0B0C0E; --text-secondary:#4A4B50; --text-muted:#797D86; --text-faint:#9AA0A8; --text-inverse:#F4F4F5;
+  --border:#E5E2DA; --border-subtle:#EFECE4; --border-strong:#D6D2C8;
+  --primary:#D9663F; --primary-hover:#BF4F2C; --primary-soft:rgba(217,102,63,.10); --primary-soft-text:#B14A28; --on-primary:#FFFFFF;
+  --success:#1F9D57; --success-soft:rgba(31,157,87,.12); --success-text:#157A42;
+  --warning:#B7791F; --warning-soft:rgba(183,121,31,.12); --warning-text:#8A5A14;
+  --danger:#D14343; --danger-soft:rgba(209,67,67,.10); --danger-text:#A82F2F;
+  --info:#3F6FC4; --info-soft:rgba(63,111,196,.12); --info-text:#2F569E;
+  --m-mastered:#1F9D57; --m-mastered-bg:rgba(31,157,87,.12);
+  --m-proficient:#3F6FC4; --m-proficient-bg:rgba(63,111,196,.12);
+  --m-developing:#B7791F; --m-developing-bg:rgba(183,121,31,.12);
+  --m-novice:#797D86;     --m-novice-bg:rgba(11,12,14,.05);
+  --m-gap:#D14343;        --m-gap-bg:rgba(209,67,67,.10);
+  --viz-1:#D9663F; --viz-2:#3F6FC4; --viz-3:#B7791F; --viz-4:#1F9D57; --viz-5:#7A5AF0;
+  --shadow-sm:0 1px 2px rgba(11,12,14,.07); --shadow-md:0 6px 20px -6px rgba(11,12,14,.12); --shadow-lg:0 16px 36px -10px rgba(11,12,14,.16);
+  --shadow-overlay:0 28px 60px -18px rgba(11,12,14,.24); --scrim:rgba(40,38,33,.4);
+  --sidebar-bg:#FFFFFF; --topbar-bg:rgba(246,244,240,.86);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * BASE · element resets + base typography
+ * ───────────────────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  letter-spacing: var(--tracking-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern","liga","calt";
+}
+::selection { background: var(--v11-accent-soft); color: var(--text-primary); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-sm); }
+
+h1,h2,h3,h4,h5 { margin: 0; color: var(--text-primary); font-weight: var(--fw-semibold); letter-spacing: var(--tracking-tight); line-height: var(--lh-tight); }
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+hr { border: 0; border-top: 1px solid var(--border); margin: var(--s-6) 0; }
+code, kbd, samp { font-family: var(--font-mono); font-size: 0.9em; }
+small { font-size: var(--fs-sm); }
+img { max-width: 100%; display: block; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: var(--r-full); }
+em, i, cite { font-style: italic; }
+
+/* Tabular numerals for all metrics (brand rule) */
+.tabular, .stat, [data-tabular] { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }

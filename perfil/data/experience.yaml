@@ -1,22 +1,22 @@
 current:
   - company: "Booz Allen Hamilton"
     role: "Design-engineering consultant"
-    startYear: 2024
+    startYear: 2022
     endYear: present
     highlight: true
-    badge: "Army Â· DoD"
-    descriptionEn: "Design-engineering across the Trusted Environments umbrella â€” landing, Developer Portal product, and PM collaboration. Two parallel DS (/te-skin as agent-consumable skill + TE Black dark-first w/ a11y audit in tokens). SharePoint SPA. Cross-team consulting to Army/DoD product teams."
-    descriptionEs: "Design-engineering en Trusted Environments â€” landing, producto Developer Portal y colaboraciÃ³n PM. Dos DS paralelos (/te-skin como skill consumible por agentes + TE Black dark-first con audit a11y en tokens). SPA SharePoint. ConsultorÃ­a transversal a equipos Army/DoD."
-    stack: ["/te-skin", "Developer Portal", "TE Black DS", "SharePoint SPA", "Houdini", "Army Â· DoD"]
+    badge: "Army · DoD"
+    descriptionEn: "Design-engineering across the Trusted Environments umbrella — landing, a Developer Portal product, and PM collaboration. Two parallel design systems (/te-skin as an agent-consumable skill + TE Black, dark-first with accessibility audited into the tokens). SharePoint SPA. Cross-team consulting to Army/DoD product teams, plus small support projects for the FAA, the DoD, and the VA veterans benefits/payment system."
+    descriptionEs: "Design-engineering en Trusted Environments — landing, producto Developer Portal y colaboración con PM. Dos design systems paralelos (/te-skin como skill consumible por agentes + TE Black, dark-first con accesibilidad auditada en los tokens). SPA en SharePoint. Consultoría transversal a equipos Army/DoD, más pequeños proyectos de apoyo para la FAA, el DoD y el sistema de beneficios/pagos a veteranos (VA)."
+    stack: ["/te-skin", "Developer Portal", "TE Black DS", "SharePoint SPA", "User personas", "FAA · DoD · VA"]
 
-  - company: "EnRegla"
-    role: "Founder Â· product Â· engineering"
+  - company: "Compliance SaaS · LATAM (independent)"
+    role: "Founder · product & design"
     startYear: 2026
     endYear: present
     highlight: true
     badge: "paying pilots"
-    descriptionEn: "SaaS de compliance multi-sede for LATAM SMBs. 0 â†’ 1.0-MVP in production in 40 days. 346 commits, 21 SQL migrations, 31 UI components, 1 edge function with cron, DS migration 17-parts Ã— 5 recursive rounds (78.4 â†’ 95.6)."
-    descriptionEs: "SaaS de compliance multi-sede para PYMES LATAM. 0 â†’ 1.0-MVP en producciÃ³n en 40 dÃ­as. 346 commits, 21 migraciones SQL, 31 componentes UI, 1 edge function con cron, migraciÃ³n DS 17-partes Ã— 5 rondas (78.4 â†’ 95.6)."
+    descriptionEn: "Founded a multi-site compliance SaaS for LATAM SMBs. 0 → 1.0 MVP in production in 40 days: 346 commits, 21 SQL migrations, 31 UI components, 1 edge function with cron, a 17-part design-system migration across 5 recursive review rounds (78.4 → 95.6)."
+    descriptionEs: "Fundé un SaaS de compliance multi-sede para PYMES LATAM. 0 → 1.0 MVP en producción en 40 días: 346 commits, 21 migraciones SQL, 31 componentes UI, 1 edge function con cron, migración de design system de 17 partes × 5 rondas recursivas (78.4 → 95.6)."
     stack: ["React 19", "Supabase", "Claude Code", "MCP", "RLS"]
 
 past:
@@ -24,16 +24,16 @@ past:
     role: "Product Manager / UX-UI Designer"
     startYear: 2016
     endYear: present
-    descriptionEn: "Formalized a team within Central Design to deliver a distributed-yet-centralized Design System. Defined the roadmap, roles, responsibilities and ways of working. Built a contribution culture to scale. Delivered a unified set of guidelines, tokens and accessible components for enterprise clients (Merck, MondelÄ“z, Banco Pichincha, Quifatex, Grupo Superior, Moderna Corp., Azzorti, Flamingo CO.)."
-    descriptionEs: "FormalicÃ© un equipo dentro de Central Design para ofrecer un DS distribuido pero centralizado. DefinÃ­ la hoja de ruta, roles, responsabilidades y formas de trabajo. CreÃ© una cultura de contribuciÃ³n para escalar. EntreguÃ© un toolkit unificado de pautas, tokens y componentes accesibles para clientes enterprise (Merck, MondelÄ“z, Banco Pichincha, Quifatex, Grupo Superior, Moderna Corp., Azzorti, Flamingo CO.)."
+    descriptionEn: "Formalized a team within Central Design to deliver a distributed-yet-centralized Design System. Defined the roadmap, roles, responsibilities and ways of working. Built a contribution culture to scale. Delivered a unified set of guidelines, tokens and accessible components for enterprise clients (Merck, Mondelēz, Banco Pichincha, Quifatex, Grupo Superior, Moderna Corp., Azzorti, Flamingo CO.)."
+    descriptionEs: "Formalicé un equipo dentro de Central Design para ofrecer un DS distribuido pero centralizado. Definí la hoja de ruta, roles, responsabilidades y formas de trabajo. Creé una cultura de contribución para escalar. Entregué un toolkit unificado de pautas, tokens y componentes accesibles para clientes enterprise (Merck, Mondelēz, Banco Pichincha, Quifatex, Grupo Superior, Moderna Corp., Azzorti, Flamingo CO.)."
     stack: ["Design system", "Figma", "Tokens", "Team lead", "Enterprise"]
 
   - company: "Arpatel Cia. Ltda."
-    role: "Co-Founder Â· Product Manager"
+    role: "Co-Founder · Product Manager"
     startYear: 2014
     endYear: 2017
     descriptionEn: "Strategic long-term vision for Arpatel's products. Built the web site, CRM templates, and order-management flows. Provided design support for a Retail POS experience (alpha + beta). Prototyped search and scan interaction patterns."
-    descriptionEs: "VisiÃ³n estratÃ©gica de largo plazo para los publicables de Arpatel. ConstruÃ­ el sitio web, plantillas de CRM y flujos de order-management. Soporte de diseÃ±o para la experiencia de Retail POS (alfa + beta). PrototipÃ© patrones de search y scan."
+    descriptionEs: "Visión estratégica de largo plazo para los productos de Arpatel. Construí el sitio web, plantillas de CRM y flujos de order-management. Soporte de diseño para la experiencia de Retail POS (alfa + beta). Prototipé patrones de search y scan."
     stack: ["Retail POS", "CRM", "Prototyping", "Strategy"]
 
   - company: "Tecniequipos S.A."
@@ -41,13 +41,13 @@ past:
     startYear: 2013
     endYear: 2015
     descriptionEn: "Developed a proprietary event platform. Managed e-commerce, reports and business-system administration. Delivered specific requirements in PHP, JavaScript, HTML, CSS and MariaDB."
-    descriptionEs: "DesarrollÃ© una plataforma propietaria de eventos. GestionÃ© e-commerce, reportes y admin de sistemas. EntreguÃ© requerimientos especÃ­ficos en PHP, JavaScript, HTML, CSS y MariaDB."
-    stack: ["PHP", "JavaScript", "MariaDB", "HTML Â· CSS"]
+    descriptionEs: "Desarrollé una plataforma propietaria de eventos. Gestioné e-commerce, reportes y admin de sistemas. Entregué requerimientos específicos en PHP, JavaScript, HTML, CSS y MariaDB."
+    stack: ["PHP", "JavaScript", "MariaDB", "HTML · CSS"]
 
   - company: "Canadian Bank Note"
     role: "Project Administrator"
     startYear: 2011
     endYear: 2013
     descriptionEn: "Administered a regional electrical-network project. Supervised network installation and inventory management. Designed project-execution strategies based on historical data."
-    descriptionEs: "AdministrÃ© un proyecto de red elÃ©ctrica a nivel regional. SupervisÃ© la instalaciÃ³n de redes y el manejo de inventarios. DiseÃ±Ã© estrategias de ejecuciÃ³n de proyectos en base a datos histÃ³ricos."
+    descriptionEs: "Administré un proyecto de red eléctrica a nivel regional. Supervisé la instalación de redes y el manejo de inventarios. Diseñé estrategias de ejecución de proyectos en base a datos históricos."
     stack: ["Project mgmt", "Operations"]

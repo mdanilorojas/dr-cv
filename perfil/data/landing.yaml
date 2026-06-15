@@ -10,11 +10,11 @@ tabs:
     visual: grid
   - id: method
     labelEn: Method
-    labelEs: MÃ©todo
+    labelEs: Método
     visual: flow
   - id: about
     labelEn: About
-    labelEs: Sobre mÃ­
+    labelEs: Sobre mí
     visual: timeline
   - id: contact
     labelEn: Contact
@@ -26,7 +26,7 @@ cta:
   es: "Trabajemos juntos"
 
 seo:
-  titleEn: "Danilo Rojas â€” Agentic Designer"
-  titleEs: "Danilo Rojas â€” DiseÃ±ador AgÃ©ntico"
-  descriptionEn: "I ship real products â€” and I ship the tools agents use to help me ship them."
-  descriptionEs: "Entrego publicables reales â€” y entrego las herramientas que los agentes usan para ayudarme."
+  titleEn: "Danilo Rojas — Senior Product Designer"
+  titleEs: "Danilo Rojas — Diseñador de Producto Senior"
+  descriptionEn: "Eighteen years designing products. Senior UX judgment, enterprise-grade compliance documentation, and AI as leverage — not costume."
+  descriptionEs: "Dieciocho años diseñando productos. Juicio UX senior, documentación de compliance enterprise-grade, e IA como leverage — no como disfraz."

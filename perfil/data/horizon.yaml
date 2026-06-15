@@ -39,9 +39,9 @@ columns:
     tools: ["Hi-Fi Figma", "Storybook", "GitHub"]
     chips:
       - label: { en: "Agent orchestration",     es: "Orquestación de agentes" }
-        href: "#case-enregla"
+        href: "#case-developer-portal"
       - label: { en: "MCP servers",             es: "MCP servers" }
-        href: "#case-enregla"
+        href: "#case-life-update-mobile"
       - label: { en: "Design-system-as-skill",  es: "Design-system-as-skill" }
         href: "#case-developer-portal"
       - label: { en: "Recursive critic loops",  es: "Loops de crítico recursivos" }
@@ -61,11 +61,13 @@ columns:
       es: "Embebido en un equipo de producto serio, dueño de la costura entre juicio de diseño y ejecución agéntica — a una escala donde el leverage de una persona se convierte en el del equipo."
     tools: ["Team", "Agent tooling", "Eval-driven"]
     chips:
-      - label: { en: "Team-scale agent tooling", es: "Tooling a escala de equipo" }
-        href: "https://github.com/mdanilorojas/dr-cv"
-        kind: evidence
+      - label: { en: "Agent-native product UX",  es: "UX de producto agéntico" }
+        kind: bet
+      - label: { en: "Eval-driven UI",           es: "UI dirigida por evals" }
+        kind: bet
       - label: { en: "Audited agent workflows",  es: "Workflows de agentes auditados" }
         href: "https://github.com/mdanilorojas/dr-cv"
         kind: evidence
-      - label: { en: "Eval-driven UI",           es: "UI dirigida por evals" }
-        kind: bet
+      - label: { en: "Team-scale agent tooling", es: "Tooling a escala de equipo" }
+        href: "https://github.com/mdanilorojas/dr-cv"
+        kind: evidence

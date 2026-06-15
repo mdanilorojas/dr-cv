@@ -1,0 +1,44 @@
+<!-- @dsCard group="Components" viewport="700x360" name="Artifact · Frame / Stream / Plan / Diff / SkillChip" subtitle="The signature AI Product-Tour surfaces — product UI, not effects" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{padding:22px;background:var(--bg)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}.row{display:flex;gap:8px;margin-top:14px}</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { Artifact, EmbedWell, Stream, PlanSteps, DiffReview, SkillChip } = window.AuraDesignSystem_58f91b;
+function Demo() {
+  return (
+    <div className="grid">
+      <Artifact file="cv-serious.en.pdf" meta="generated 14 Jun 2026" status="ready">
+        <EmbedWell kind="PDF" title="Danilo Rojas — CV" meta="2 pages · 184 KB" />
+        <div style={{marginTop:14}}><Stream>Reading prose grader output for systems-thinking cluster</Stream></div>
+      </Artifact>
+      <Artifact file="plan.diff" status="3 changes">
+        <PlanSteps steps={[
+          {label:'Diagnose skill gaps from prose', done:true},
+          {label:'Rank by market value', done:true},
+          {label:'Generate learning path'},
+        ]} />
+        <div style={{marginTop:14}}>
+          <DiffReview rows={[
+            {type:'add', text:'banked_value += 42000'},
+            {type:'del', text:'gap: stakeholder_craft'},
+          ]} />
+        </div>
+        <div className="row"><SkillChip>diff-review</SkillChip><SkillChip>prose-grader</SkillChip></div>
+      </Artifact>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body>
+</html>

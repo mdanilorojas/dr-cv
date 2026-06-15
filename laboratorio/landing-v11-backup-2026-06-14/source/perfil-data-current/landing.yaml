@@ -1,0 +1,32 @@
+tabs:
+  - id: overview
+    labelEn: Overview
+    labelEs: Resumen
+    visual: particles
+    default: true
+  - id: work
+    labelEn: Work
+    labelEs: Trabajo
+    visual: grid
+  - id: method
+    labelEn: Method
+    labelEs: Método
+    visual: flow
+  - id: about
+    labelEn: About
+    labelEs: Sobre mí
+    visual: timeline
+  - id: contact
+    labelEn: Contact
+    labelEs: Contacto
+    visual: signature
+
+cta:
+  en: "Let's work together"
+  es: "Trabajemos juntos"
+
+seo:
+  titleEn: "Danilo Rojas — Senior Product Designer"
+  titleEs: "Danilo Rojas — Diseñador de Producto Senior"
+  descriptionEn: "Eighteen years designing products. Senior UX judgment, enterprise-grade compliance documentation, and AI as leverage — not costume."
+  descriptionEs: "Dieciocho años diseñando productos. Juicio UX senior, documentación de compliance enterprise-grade, e IA como leverage — no como disfraz."

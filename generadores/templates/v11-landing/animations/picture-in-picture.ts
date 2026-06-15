@@ -8,7 +8,7 @@
  *   The v11-script observes it with IntersectionObserver and toggles
  *   `is-playing` to start/stop CSS animations.
  *
- * Copy is anonymized â€” no real client branding.
+ * Copy is anonymized — no real client branding.
  */
 
 interface PipAnimationInput {
@@ -32,7 +32,7 @@ export function renderPipAnimation(input: PipAnimationInput): string {
     )
     .join("");
   const tags = SCENES
-    .map((s) => `<div class="v11-anim__tag v11-anim__tag--t${s.i}">${escape(s.tag)} â†’</div>`)
+    .map((s) => `<div class="v11-anim__tag v11-anim__tag--t${s.i}">${escape(s.tag)} →</div>`)
     .join("");
   return `<div class="v11-anim v11-anim--pip" data-animate="pip" data-anim-slug="${escape(slug)}" aria-hidden="true">
   <div class="v11-anim__frame">
@@ -101,7 +101,7 @@ function escape(s: string): string {
  * can start/stop them without touching individual animations.
  */
 export const pipAnimationCss = /* css */ `
-/* ============== ANIMATIONS â€” picture-in-picture ============== */
+/* ============== ANIMATIONS — picture-in-picture ============== */
 .v11-anim {
   width: 100%;
   aspect-ratio: 820 / 500;
@@ -332,7 +332,7 @@ export const pipAnimationCss = /* css */ `
   font-family: var(--v11-font-mono, ui-monospace, monospace);
 }
 
-/* ============== PLAYING STATE â€” only runs when in viewport ============== */
+/* ============== PLAYING STATE — only runs when in viewport ============== */
 .v11-anim.is-playing .v11-anim__shot--1 {
   animation: v11-anim-bg1-fade 1400ms ease forwards 1000ms;
 }
@@ -443,7 +443,7 @@ export const pipAnimationCss = /* css */ `
 @keyframes v11-anim-tag-show-keep { to { opacity: 1; transform: translateX(0); } }
 @keyframes v11-anim-tag-hide { to { opacity: 0; transform: translateX(-6px); } }
 
-/* Reduced motion â€” show final frame, no animation */
+/* Reduced motion — show final frame, no animation */
 @media (prefers-reduced-motion: reduce) {
   .v11-anim__shot--1,
   .v11-anim__shot--2,

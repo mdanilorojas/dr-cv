@@ -1,0 +1,348 @@
+/* =====================================================================
+   dr-cv · design tokens (light system derived from huly.io)
+   ---------------------------------------------------------------------
+   Huly is dark-mode dominant. For printable A4 documents (skills sheet,
+   CV) we run it in light-mode while keeping:
+     · Monospace display font (JetBrains Mono as open-source esbuild sub)
+     · Inter body
+     · Warm accent orange (#FF8964) as single live color
+     · Cool blue accent (#5683DA) used sparingly for links
+     · Tight letter-spacing on headings (-0.04em / -0.05em)
+     · Huly's neutrality discipline — one accent at a time
+   ===================================================================== */
+
+:root {
+  /* ---- surface (LIGHT) ----------------------------------------- */
+  --bg-paper:        #FAFAF7;   /* page background — warm white */
+  --bg-section:      #F2F0EA;   /* alternate band */
+  --bg-card:         #FFFFFF;   /* raised surface */
+  --bg-ink:          #0B0C0E;   /* inverted dark for accent sections */
+  --bg-ink-2:        #18191B;
+
+  /* ---- text --------------------------------------------------- */
+  --ink:             #0B0C0E;   /* primary text */
+  --ink-body:        #303236;   /* body copy */
+  --ink-muted:       #61656B;   /* secondary */
+  --ink-subtle:      #95979E;   /* tertiary / captions */
+  --ink-inverse:     #FAFAF7;   /* text on dark sections */
+
+  /* ---- accents ------------------------------------------------- */
+  --accent:          #FF8964;   /* warm orange — unique live color */
+  --accent-deep:     #CD3100;   /* press / active */
+  --accent-ink:      #5A250A;   /* text on warm accent backgrounds */
+  --accent-cool:     #5683DA;   /* cool blue — links only */
+
+  /* ---- lines / rules ------------------------------------------ */
+  --line:            #E3E1DA;
+  --line-strong:     #C9C7BF;
+  --line-soft:       #ECEAE3;
+
+  /* ---- warm glow (signature element) -------------------------- */
+  --glow-1: #FFFFF5;
+  --glow-2: #FFAA81;
+  --glow-3: #FFDA9F;
+
+  /* ---- elevation --------------------------------------------- */
+  --shadow-card:       0 1px 2px rgba(11,12,14,.06), 0 4px 10px rgba(11,12,14,.06);
+  --shadow-card-lift:  0 4px 16px rgba(11,12,14,.10);
+  --shadow-inset:      inset 0 0 0 1px var(--line);
+
+  /* ---- radius ------------------------------------------------- */
+  --r-pill: 9999px;
+  --r-sm:   6px;
+  --r-md:   10px;
+  --r-lg:   12px;
+
+  /* ---- typography -------------------------------------------- */
+  --font-body:    "Inter", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-display: "JetBrains Mono", "Geist Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  --font-mono:    "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+
+  /* scale reduced for A4 — huly's 84px won't fit print */
+  --fs-display: 36pt;  /* hero-ish, name on CV */
+  --fs-h1:      22pt;
+  --fs-h2:      14pt;
+  --fs-h3:      11pt;
+  --fs-body:    9.5pt;
+  --fs-small:   8.5pt;
+  --fs-micro:   7pt;
+  --fs-caption: 7.5pt;
+
+  /* ---- tracking --------------------------------------------- */
+  --tr-snug:    -0.01em;
+  --tr-snugger: -0.02em;
+  --tr-tight:   -0.03em;
+  --tr-tighter: -0.04em;
+  --tr-wide:     0.08em;
+  --tr-uppercase:0.12em;
+
+  /* ---- leading --------------------------------------------- */
+  --lh-display: 0.92;
+  --lh-heading: 1.05;
+  --lh-body:    1.45;
+  --lh-tight:   1.2;
+
+  /* ---- motion (for screen preview — not printed) ---------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 180ms;
+  --dur-med:  280ms;
+
+  /* ---- A4 --------------------------------------------------- */
+  --a4-w: 210mm;
+  --a4-h: 297mm;
+  --a4-pad: 14mm;
+}
+
+/* =====================================================================
+   base
+   ===================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background: #e8e5de;  /* screen only — gray around pages */
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "kern", "liga", "calt", "ss01";
+  font-variant-numeric: tabular-nums;
+}
+
+/* =====================================================================
+   page (A4)
+   ===================================================================== */
+.page {
+  width: var(--a4-w);
+  min-height: var(--a4-h);
+  margin: 24px auto;
+  background: var(--bg-paper);
+  color: var(--ink);
+  padding: var(--a4-pad);
+  box-shadow: 0 4px 24px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.06);
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+}
+.page:last-of-type { page-break-after: auto; }
+
+/* subtle huly-esque line-bg texture, muy sutil */
+.page::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(
+      92deg,
+      transparent 0 48px,
+      rgba(255,137,100,.025) 48px 49px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+.page > * { position: relative; z-index: 1; }
+
+@media print {
+  body { background: var(--bg-paper); }
+  .page {
+    margin: 0; box-shadow: none;
+    width: var(--a4-w); min-height: var(--a4-h);
+  }
+  .no-print { display: none !important; }
+  @page { size: A4; margin: 0; }
+}
+
+/* =====================================================================
+   typography helpers
+   ===================================================================== */
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: var(--tr-tighter);
+  line-height: var(--lh-heading);
+}
+h1 { font-size: var(--fs-h1); letter-spacing: -0.045em; line-height: var(--lh-display); }
+h2 { font-size: var(--fs-h2); letter-spacing: var(--tr-tighter); }
+h3 { font-size: var(--fs-h3); letter-spacing: var(--tr-tight); }
+
+p { margin: 0; }
+
+.mono { font-family: var(--font-mono); font-feature-settings: "ss01", "cv01"; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: var(--tr-uppercase);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.muted   { color: var(--ink-muted); }
+.subtle  { color: var(--ink-subtle); }
+.tight   { letter-spacing: var(--tr-tight); }
+.tighter { letter-spacing: var(--tr-tighter); }
+
+/* =====================================================================
+   rules + dividers
+   ===================================================================== */
+.rule {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+  margin: 0;
+}
+.rule-strong { background: var(--ink); height: 2px; }
+.rule-accent { background: var(--accent); height: 2px; }
+
+/* =====================================================================
+   pills + chips
+   ===================================================================== */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1.4;
+  background: var(--bg-section);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.pill--ink {
+  background: var(--bg-ink);
+  color: var(--ink-inverse);
+  border-color: var(--bg-ink);
+}
+.pill--accent {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.pill--outline {
+  background: transparent;
+  color: var(--ink-body);
+  border-color: var(--line-strong);
+}
+.pill--dot::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+}
+
+/* =====================================================================
+   cards
+   ===================================================================== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 12px 14px;
+}
+.card--ink {
+  background: var(--bg-ink);
+  color: var(--ink-inverse);
+  border-color: var(--bg-ink);
+}
+
+/* =====================================================================
+   CTA pill — warm glow signature
+   ===================================================================== */
+.cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  background: radial-gradient(ellipse at 50% 50%,
+              var(--glow-1) 0%,
+              var(--glow-2) 40%,
+              var(--glow-3) 70%);
+  color: var(--accent-ink);
+  border: 1px solid rgba(255,137,100,.5);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.6) inset,
+    0 2px 12px rgba(255,137,100,.3);
+  text-decoration: none;
+}
+
+/* =====================================================================
+   section heading pattern (huly-style)
+   ===================================================================== */
+.sec-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.sec-head__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.sec-head__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  letter-spacing: var(--tr-tighter);
+  line-height: 1;
+}
+.sec-head__rule {
+  justify-self: stretch;
+  height: 1px;
+  background: var(--line);
+  margin-left: 8px;
+  align-self: center;
+}
+
+/* =====================================================================
+   screen-only toolbar (no-print)
+   ===================================================================== */
+.toolbar {
+  position: fixed;
+  top: 14px; right: 18px;
+  z-index: 99;
+  display: inline-flex; gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 4px;
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+}
+.toolbar button {
+  all: unset;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  color: var(--ink-muted);
+  transition: background var(--dur-fast) var(--ease-standard),
+              color var(--dur-fast) var(--ease-standard);
+}
+.toolbar button.on {
+  background: var(--ink);
+  color: var(--ink-inverse);
+}
+.toolbar button:hover { color: var(--ink); }
+.toolbar button.on:hover { color: var(--ink-inverse); }

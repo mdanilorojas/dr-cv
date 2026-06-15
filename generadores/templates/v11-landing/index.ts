@@ -10,7 +10,7 @@ import type {
   HorizonChip,
 } from "../../lib/types.js";
 import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
-import { V11_STYLES } from "./v11-styles.js";
+import { V11_STYLES, FAVICON_TAG } from "./v11-styles.js";
 import { V11_SCRIPT } from "./v11-script.js";
 import { renderPipAnimation, pipAnimationCss } from "./animations/picture-in-picture.js";
 import {
@@ -24,7 +24,7 @@ import {
  * Hand-authored beats per case in the Narrative Ship format
  * (Context, Problem, Approach, Ship, Outcome, Differently, Craft).
  * Keyed by case slug. These live here because they are copy,
- * not data â€” V11 R4 + R8 demand verbatim attribution.
+ * not data — V11 R4 + R8 demand verbatim attribution.
  */
 interface CaseBeats {
   context: { en: string; es: string };
@@ -37,94 +37,94 @@ interface CaseBeats {
 }
 
 const CASE_BEATS: Record<string, CaseBeats> = {
-  enregla: {
-    context: {
-      en: "LATAM SMB compliance. Multi-site reporting was done in spreadsheets, manually, every month. Nobody owned the data model.",
-      es: "Compliance para PYMES LATAM. Los reportes multi-sede se hacÃ­an en hojas de cÃ¡lculo, a mano, cada mes. Nadie era dueÃ±o del modelo de datos.",
-    },
-    problem: {
-      en: "Existing tools priced out SMBs or required a sysadmin to deploy. Nothing shipped as a 40-day 0â†’1.0.",
-      es: "Las herramientas existentes eran caras para PYMES o requerÃ­an un sysadmin para desplegarse. Nada shippeaba como un 40-day 0â†’1.0.",
-    },
-    approach: {
-      en: "Built the SaaS as a co-author exercise with Claude Code. Supabase MCP server in the loop for SQL + migrations. Parallel subagents on UI, data model, edge functions.",
-      es: "ConstruÃ­ el SaaS como ejercicio de co-autorÃ­a con Claude Code. Supabase MCP en el loop para SQL + migraciones. Subagentes en paralelo en UI, modelo de datos, edge functions.",
-    },
-    ship: {
-      en: "346 commits in 40 days. 21 SQL migrations, 31 UI components, 1 edge function with cron. Live with paying pilots.",
-      es: "346 commits en 40 dÃ­as. 21 migraciones SQL, 31 componentes UI, 1 edge function con cron. En producciÃ³n con pilotos pagados.",
-    },
-    outcome: {
-      en: "DS migration ran 5 recursive rounds scoring 78.4 â†’ 95.6. First pilots reporting monthly compliance in minutes instead of days.",
-      es: "La migraciÃ³n DS corriÃ³ 5 rondas recursivas, puntuando 78.4 â†’ 95.6. Los primeros pilotos reportan compliance mensual en minutos en lugar de dÃ­as.",
-    },
-    differently: {
-      en: "Next time I write the MCP servers before the schema. The agent kept proposing columns it couldn't write back â€” half the recursion was plumbing.",
-      es: "La prÃ³xima vez escribo los MCP servers antes del schema. El agente seguÃ­a proponiendo columnas que no podÃ­a escribir â€” la mitad de la recursiÃ³n fue plomerÃ­a.",
-    },
-    craft: {
-      en: "RLS on every table. Type-safe Supabase client. Dark-mode primary with per-token WCAG trail. 0 hand-edited SQL in prod.",
-      es: "RLS en cada tabla. Cliente Supabase type-safe. Dark-mode primario con trazabilidad WCAG por token. 0 SQL hand-edited en prod.",
-    },
-  },
   "developer-portal": {
     context: {
-      en: "Booz Allen Hamilton Â· Developer Portal â€” a government-facing platform where two design systems run side by side: /te-skin (the component library) and TE Black (the dark-first palette). Design review was a two-week bottleneck on every ticket and existing components washed out under 12-hour mission lighting.",
-      es: "Booz Allen Hamilton Â· Developer Portal â€” plataforma government-facing donde dos design systems corren en paralelo: /te-skin (la librerÃ­a de componentes) y TE Black (la paleta dark-first). La revisiÃ³n de diseÃ±o era un cuello de botella de dos semanas y los componentes existentes se lavaban bajo iluminaciÃ³n de misiÃ³n de 12 horas.",
+      en: "Booz Allen Hamilton's government-facing Developer Portal ran on two design systems side by side. Design review was a two-week bottleneck on every ticket, and the existing UI washed out under the low light operators actually worked in.",
+      es: "El Developer Portal government-facing de Booz Allen Hamilton corría sobre dos design systems en paralelo. La revisión de diseño era un cuello de botella de dos semanas por ticket, y la UI existente se lavaba bajo la poca luz en la que los operadores realmente trabajaban.",
     },
     problem: {
-      en: "Designers reviewed the same WCAG + token mismatches on every PR. The DS existed as Figma â€” the agents couldn't reach it. And dark mode was treated as a theme even though operators on the platform lived in it.",
-      es: "Los diseÃ±adores revisaban los mismos desajustes WCAG + tokens en cada PR. El DS existÃ­a en Figma â€” los agentes no lo alcanzaban. Y dark era tratado como un tema, pese a que los operadores de la plataforma vivÃ­an ahÃ­.",
+      en: "Teams re-reviewed the same accessibility and token mismatches on every release. The design system lived only in Figma, so engineering kept rebuilding it by hand. And dark mode was treated as an afterthought even though operators lived in it.",
+      es: "Los equipos revisaban una y otra vez los mismos desajustes de accesibilidad y tokens en cada release. El design system vivía solo en Figma, así que ingeniería lo reconstruía a mano. Y el dark mode se trataba como un extra, pese a que los operadores vivían en él.",
     },
     approach: {
-      en: "Packaged the DS as a Claude Code slash-command skill (/te-skin). Tokens + decision trees + 17 recursive review rules invokable inline. In parallel, authored TE Black: dark-primary palette with the per-token WCAG audit written into the definition itself, not a downstream lint.",
-      es: "EmpaquetÃ© el DS como slash-command skill para Claude Code (/te-skin). Tokens + Ã¡rboles de decisiÃ³n + 17 reglas recursivas invocables inline. En paralelo, autorÃ© TE Black: paleta dark-primaria con auditorÃ­a WCAG por token escrita en la definiciÃ³n, no en un lint downstream.",
+      en: "I made the system dark-first and wrote the accessibility decision into each token — every color carries the contrast ratio it passed. Then I packaged the components and rules as a spec engineering (and their agents) could consume directly, instead of interpreting a Figma file.",
+      es: "Hice el sistema dark-first y escribí la decisión de accesibilidad dentro de cada token — cada color carga la ratio de contraste que aprobó. Luego empaqueté los componentes y las reglas como un spec que ingeniería (y sus agentes) podían consumir directo, en vez de interpretar un Figma.",
     },
     ship: {
-      en: "Shipped in four weeks. Two-agent workflow: one proposes UI, one runs recursive review. Five rounds raised the score 78.4 â†’ 95.6. Tokens expose wcag.normal and wcag.large ratios for every ink-on-surface pair; component library migrated in the same PR as the tokens.",
-      es: "Shippeado en cuatro semanas. Workflow de dos agentes: uno propone UI, otro corre revisiÃ³n recursiva. Cinco rondas subieron el score 78.4 â†’ 95.6. Los tokens exponen ratios wcag.normal y wcag.large para cada par ink-on-surface; librerÃ­a migrada en la misma PR que los tokens.",
+      en: "A dark-first design system: 17 components with states, usage rules, and anti-patterns, plus tokens that expose their WCAG ratio for every ink-on-surface pair. Delivered as a handoff engineering builds straight from.",
+      es: "Un design system dark-first: 17 componentes con estados, reglas de uso y anti-patterns, más tokens que exponen su ratio WCAG para cada par ink-on-surface. Entregado como handoff del que ingeniería construye directo.",
     },
     outcome: {
-      en: "Design review cycles dropped from 2 weeks â†’ 36 hours. Every contrast pair provably â‰¥ 4.5:1, and operators stopped reporting dim text in weekly retros. Jennifer Sheppard, Product Lead, called it \\\"work I wanted to keep reusing.\\\"",
-      es: "Los ciclos de revisiÃ³n cayeron de 2 semanas â†’ 36 horas. Cada par de contraste probadamente â‰¥ 4.5:1, y los operadores dejaron de reportar texto apagado en los retros semanales. Jennifer Sheppard, Product Lead, lo llamÃ³ \\\"work I wanted to keep reusing.\\\"",
+      en: "Design review dropped from two weeks to under two days. Every contrast pair provably ≥ 4.5:1, and operators stopped reporting dim text in retros. Jennifer Sheppard, the Product Lead, called it work she wanted to keep reusing.",
+      es: "La revisión de diseño bajó de dos semanas a menos de dos días. Cada par de contraste probadamente ≥ 4.5:1, y los operadores dejaron de reportar texto apagado en los retros. Jennifer Sheppard, la Product Lead, lo llamó trabajo que quería seguir reutilizando.",
     },
     differently: {
-      en: "I would ship a public skill scaffold first and publish the audit trail as a CI gate. The client-specific tokens should have been a layer, not the base; and a failed WCAG ratio should fail the build, not rely on convention.",
-      es: "ShippearÃ­a primero un scaffold pÃºblico del skill y publicarÃ­a la trazabilidad como gate de CI. Los tokens especÃ­ficos del cliente debieron ser una capa, no la base; y una ratio WCAG fallada deberÃ­a romper el build, no confiar en la convenciÃ³n.",
+      en: "I'd separate the client-specific tokens from the base as a clean layer from day one, and make a failed contrast ratio block the release instead of relying on review to catch it.",
+      es: "Separaría los tokens específicos del cliente de la base como una capa limpia desde el día uno, y haría que una ratio de contraste fallida bloquee el release en vez de confiar en la revisión.",
     },
     craft: {
-      en: "WCAG audit trail stored per token. Dark-mode primary. Tokens in CSS + JSON + Figma library in sync. Skill idempotent under re-invocation. APCA-adjacent luminance verified. No manual edits in the generated output.",
-      es: "Trazabilidad WCAG guardada por token. Dark-mode primario. Tokens en CSS + JSON + librerÃ­a Figma sincronizados. Skill idempotente bajo re-invocaciÃ³n. Luminancia APCA-adjacent verificada. Sin edits manuales en el output generado.",
+      en: "Accessibility decided per token, not linted after. Dark mode as the primary, not a theme. The same system in design and in code, so nothing drifts between them.",
+      es: "Accesibilidad decidida por token, no linteada después. Dark mode como primario, no como tema. El mismo sistema en diseño y en código, para que nada se desincronice.",
+    },
+  },
+  "juan-valdez": {
+    context: {
+      en: "Juan Valdez — Colombia's flagship coffee brand — needed its mobile app designed as a real product, not a set of disconnected screens.",
+      es: "Juan Valdez — la marca insignia de café de Colombia — necesitaba su app mobile diseñada como un producto real, no como un set de pantallas sueltas.",
+    },
+    problem: {
+      en: "The product had to feel unmistakably Juan Valdez while staying simple enough for a broad, everyday audience — and it needed a system underneath so it could grow without falling apart.",
+      es: "El producto tenía que sentirse inconfundiblemente Juan Valdez sin dejar de ser simple para una audiencia amplia y cotidiana — y necesitaba un sistema debajo para crecer sin romperse.",
+    },
+    approach: {
+      en: "I designed the full UI across the core flows and built a reusable design system — components, type scale, color, and spacing — so every screen stayed consistent and the brand carried through end to end.",
+      es: "Diseñé toda la UI de los flujos core y armé un design system reutilizable — componentes, escala tipográfica, color y spacing — para que cada pantalla quedara consistente y la marca se sostuviera de punta a punta.",
+    },
+    ship: {
+      en: "A complete, brand-led mobile UI and the design system behind it, delivered to engineering as a clean, spec'd handoff.",
+      es: "Una UI mobile completa y brand-led, con el design system detrás, entregada a ingeniería como un handoff limpio y especificado.",
+    },
+    outcome: {
+      en: "A coherent product surface engineering could build from directly, with a system that keeps new screens on-brand and consistent.",
+      es: "Una superficie de producto coherente de la que ingeniería podía construir directo, con un sistema que mantiene las pantallas nuevas on-brand y consistentes.",
+    },
+    differently: {
+      en: "I'd pair the design system with a living component doc from the start, so the handoff stays in sync as the app evolves.",
+      es: "Emparejaría el design system con una doc de componentes viva desde el inicio, para que el handoff siga sincronizado a medida que la app evoluciona.",
+    },
+    craft: {
+      en: "One system, brand-true. Type, color, and spacing decided once and reused everywhere. Screens designed to hand off, not to admire in isolation.",
+      es: "Un solo sistema, fiel a la marca. Tipografía, color y spacing decididos una vez y reusados en todo. Pantallas diseñadas para entregar, no para admirar aisladas.",
     },
   },
   "life-update-mobile": {
     context: {
-      en: "A personal product â€” a tracking app that uses Gemini at runtime to summarize what I wrote this week.",
-      es: "Un producto personal â€” una app de tracking que usa Gemini en runtime para resumir lo que escribÃ­ esta semana.",
+      en: "A personal product: a focus app that scores what you write each day against where you say you want to be in five years.",
+      es: "Un producto personal: una app de foco que evalúa lo que escribes cada día contra dónde dices querer estar en cinco años.",
     },
     problem: {
-      en: "Every journal-AI app I'd tried either stored my text on someone else's server or refused to run without internet. I wanted local-first + LLM on demand.",
-      es: "Cada app de journal-AI que habÃ­a probado o guardaba mi texto en el servidor de otro o se negaba a correr sin internet. QuerÃ­a local-first + LLM on demand.",
+      en: "Most journaling apps either bury you in features or never tell you whether today actually moved you toward what matters.",
+      es: "La mayoría de las apps de journaling o te entierran en features o nunca te dicen si el día de hoy realmente te acercó a lo que importa.",
     },
     approach: {
-      en: "Local SQLite store, plain-text journal. Summarization is opt-in: tap a week, send it to Gemini, cache the result.",
-      es: "Almacenamiento SQLite local, journal en texto plano. La resumciÃ³n es opt-in: tocas una semana, se envÃ­a a Gemini, se cachea el resultado.",
+      en: "I designed the product around one idea — three priorities a day — and designed the AI behavior: each entry is read in plain language and placed by semantic distance from a long-term plan.",
+      es: "Diseñé el producto alrededor de una idea — tres prioridades al día — y diseñé el comportamiento de la IA: cada entrada se lee en lenguaje claro y se ubica por distancia semántica respecto a un plan de largo plazo.",
     },
     ship: {
-      en: "Single binary build. No auth server. Gemini API key ships with the user, not the app.",
-      es: "Build de un solo binario. Sin servidor de auth. La API key de Gemini la tiene el usuario, no la app.",
+      en: "A working MVP: daily entry, AI-scored focus, and a simple read on whether the week pointed at the plan.",
+      es: "Un MVP funcional: entrada diaria, foco scoreado por IA, y una lectura simple de si la semana apuntó al plan.",
     },
     outcome: {
-      en: "Shipped private for my own use. Three friends asked to install it. Weekly summaries in 4 seconds.",
-      es: "Shippeado privado para uso propio. Tres amigos pidieron instalarlo. ResÃºmenes semanales en 4 segundos.",
+      en: "Shipped and used daily. It proved the core idea — that an AI read of a short daily entry can keep attention on a long-term plan.",
+      es: "Shippeado y usado a diario. Probó la idea central — que una lectura por IA de una entrada diaria corta puede mantener la atención en un plan de largo plazo.",
     },
     differently: {
-      en: "I would put the prompt on the Settings page. Right now it's hidden â€” advanced users want to see it and I was being overly protective.",
-      es: "PondrÃ­a el prompt en la pÃ¡gina de Settings. Ahora estÃ¡ oculto â€” los usuarios avanzados quieren verlo y yo estaba siendo sobreprotector.",
+      en: "I'd surface the AI's reasoning in the UI, not hide it — people trust a focus score more when they can see why.",
+      es: "Mostraría el razonamiento de la IA en la UI, no lo escondería — la gente confía más en un score de foco cuando puede ver el porqué.",
     },
     craft: {
-      en: "No analytics. No telemetry. No account. Bundle under 8 MB. Works airplane-mode except the summary action.",
-      es: "Sin analytics. Sin telemetrÃ­a. Sin cuenta. Bundle bajo 8 MB. Funciona en modo aviÃ³n excepto la acciÃ³n de resumen.",
+      en: "One decision per day, not a dashboard. The AI explains in plain language. Designed so the product, not the model, is what you feel.",
+      es: "Una decisión por día, no un dashboard. La IA explica en lenguaje claro. Diseñado para que sientas el producto, no el modelo.",
     },
   },
 };
@@ -144,58 +144,24 @@ function splitName(name: string): { first: string; last: string } {
 }
 
 function yearRange(startYear: number, endYear: number | "present", lang: Lang): string {
-  if (endYear === "present") return `${startYear} â€” ${lang === "en" ? "Present" : "presente"}`;
+  if (endYear === "present") return `${startYear} — ${lang === "en" ? "Present" : "presente"}`;
   if (startYear === endYear) return String(startYear);
-  return `${startYear} â€” ${endYear}`;
+  return `${startYear} — ${endYear}`;
 }
 
-/* ============== copy (V11 R5 draft C â€” taste-first critic) ============== */
+/* ============== copy (V11 R5 draft C — taste-first critic) ============== */
 
 const COPY = {
-  // Hero
-  hero: {
-    eyebrowEn: "Currently Â· Booz Allen Hamilton Â· Trusted Environments",
-    eyebrowEs: "Actualmente Â· Booz Allen Hamilton Â· Trusted Environments",
-    titleEn: "A point of view on agentic design,",
-    titleEs: "Un punto de vista sobre diseÃ±o agÃ©ntico,",
-    titleEmEn: "not a rÃ©sumÃ©.",
-    titleEmEs: "no un currÃ­culum.",
-    subEn: "Fifteen years shipping product. The last twelve months rebuilt around a Claude Code workflow I use every day. I keep the craft â€” agents give me the leverage.",
-    subEs: "Quince aÃ±os entregando producto. Los Ãºltimos doce meses reconstruidos alrededor de un workflow Claude Code que uso cada dÃ­a. Yo pongo el craft â€” los agentes dan el apalancamiento.",
-    ctaPrimaryEn: "Read the notebook",
-    ctaPrimaryEs: "Ver el notebook",
-    ctaGhostEn: "See the work",
-    ctaGhostEs: "Ver el trabajo",
-  },
   // Proof
   proofHeadingEn: "Evidence, not adjectives.",
   proofHeadingEs: "Evidencia, no adjetivos.",
-  // Notebook
-  notebook: {
-    eyebrowEn: "Notebook Â· essay",
-    eyebrowEs: "Notebook Â· ensayo",
-    titleEn: "Trust is the unit of economy.",
-    titleEs: "La confianza es la unidad econÃ³mica.",
-    tocEn: "1 Â· The diff is the contract  /  2 Â· Skills, not prompts  /  3 Â· What I still won't let the agent do",
-    tocEs: "1 Â· El diff es el contrato  /  2 Â· Skills, no prompts  /  3 Â· Lo que todavÃ­a no le dejo al agente",
-    bodyEn: [
-      "The hardest thing about agentic design isn't the prompt engineering. It's deciding, at every junction, whether the human reviews the diff or the agent just ships it. <em>Trust is the unit of economy.</em> Every tool I build for myself starts by answering one question: what do I get to keep looking at?",
-      "The teams shipping real agentic work in 2026 aren't the ones with the cleverest prompts. They're the ones that put the diff at the center. Claude Code is the prototype: every mutation proposed, reviewable, rejectable. The UX work is hiding the machinery when the trust is earned â€” not pretending the machinery isn't there.",
-      "I didn't start my career building for agents. I spent fifteen years shipping product for humans. The combination is the work now â€” profile plus agents â€” and it's not a productivity story. It's a <em>taste</em> story. The agent will propose a hundred things; picking the six that should ship is the skill.",
-    ],
-    bodyEs: [
-      "Lo mÃ¡s difÃ­cil del diseÃ±o agÃ©ntico no es la ingenierÃ­a de prompts. Es decidir, en cada uniÃ³n, si el humano revisa el diff o el agente simplemente lo shipea. <em>La confianza es la unidad econÃ³mica.</em> Cada herramienta que construyo para mÃ­ empieza respondiendo una pregunta: Â¿quÃ© me toca seguir mirando?",
-      "Los equipos que estÃ¡n shipeando trabajo agÃ©ntico real en 2026 no son los que tienen los prompts mÃ¡s ingeniosos. Son los que ponen el diff al centro. Claude Code es el prototipo: toda mutaciÃ³n propuesta, revisable, rechazable. El trabajo de UX es esconder la generadores cuando la confianza se ganÃ³ â€” no pretender que la generadores no estÃ¡ ahÃ­.",
-      "No empecÃ© mi carrera construyendo para agentes. PasÃ© quince aÃ±os entregando producto para humanos. La combinaciÃ³n es el trabajo ahora â€” perfil mÃ¡s agentes â€” y no es una historia de productividad. Es una historia de <em>gusto</em>. El agente propondrÃ¡ cien cosas; elegir las seis que deben shipearse es la skill.",
-    ],
-  },
   work: {
-    eyebrowEn: "Selected work Â· 2025â€“2026",
-    eyebrowEs: "Trabajo seleccionado Â· 2025â€“2026",
-    titleEn: "Three ships. Three agent-built artifacts.",
-    titleEs: "Tres ships. Tres artefactos construidos con agentes.",
-    leadEn: "Everything below was built with agents at the center of the workflow. The craft floor is mine â€” the leverage is the combination.",
-    leadEs: "Todo lo de abajo fue construido con agentes al centro del workflow. El craft floor es mÃ­o â€” el apalancamiento es la combinaciÃ³n.",
+    eyebrowEn: "Selected work",
+    eyebrowEs: "Trabajo seleccionado",
+    titleEn: "Three products. Designed to the handoff.",
+    titleEs: "Tres productos. Diseñados hasta el handoff.",
+    leadEn: "Each one taken from problem to a build engineering can run with — design systems, product flows, and the AI behavior, spec'd and ready. I take the design as far as it goes; engineering takes it further.",
+    leadEs: "Cada uno llevado del problema a un build con el que ingeniería puede arrancar — design systems, flujos de producto y el comportamiento de la IA, especificados y listos. Llevo el diseño hasta donde llega; ingeniería lo lleva más lejos.",
     beatsEn: {
       context: "Context",
       problem: "Problem",
@@ -208,14 +174,14 @@ const COPY = {
     beatsEs: {
       context: "Contexto",
       problem: "Problema",
-      approach: "AproximaciÃ³n",
+      approach: "Aproximación",
       ship: "Ship",
       outcome: "Resultado",
-      differently: "Lo cambiarÃ­a",
+      differently: "Lo cambiaría",
       craft: "Craft floor",
     },
     caseCtaEn: "How this shipped",
-    caseCtaEs: "CÃ³mo se shippeÃ³",
+    caseCtaEs: "Cómo se shippeó",
     caseBackEn: "Back to work",
     caseBackEs: "Volver al trabajo",
     caseNextEn: "Next case",
@@ -223,19 +189,33 @@ const COPY = {
   },
   method: {
     eyebrowEn: "Method",
-    eyebrowEs: "MÃ©todo",
-    titleEn: "Profile plus agents. Diff as the contract.",
-    titleEs: "Perfil mÃ¡s agentes. El diff como contrato.",
-    leadEn: "I plan before I build. I review every diff. I package skills, not prompts. The agent proposes; I decide.",
-    leadEs: "Planifico antes de construir. Reviso cada diff. Empaqueto skills, no prompts. El agente propone; yo decido.",
+    eyebrowEs: "Método",
+    titleEn: "How I work.",
+    titleEs: "Cómo trabajo.",
+    philosophyEn: "My work sits between user needs, business constraints, and execution.",
+    philosophyEs: "Mi trabajo vive entre las necesidades del usuario, las restricciones del negocio y la ejecución.",
+    leadEn: "I keep a running map of what I have earned, what I am investing in now, and what I am betting on next. It is how I keep improving without losing the craft floor.",
+    leadEs: "Mantengo un mapa vivo de lo que he ganado, en qué estoy invirtiendo ahora y a qué le estoy apostando después. Así sigo mejorando sin perder el craft floor.",
+  },
+  about: {
+    eyebrowEn: "About",
+    eyebrowEs: "Sobre mí",
+    titleEn: "A long way to the surface.",
+    titleEs: "Un camino largo hasta la superficie.",
+    bioEn: "I started in databases and backend, moved to frontend, then to UI, then to UX — eighteen years in product, fifteen in design. The path means I design with the whole system in mind, not just the screen. At Booz Allen Hamilton I carried that into government and compliance work for the FAA, the DoD, and the VA, where the rigor of the documentation matters as much as the interface.",
+    bioEs: "Empecé en bases de datos y backend, pasé a frontend, luego a UI, luego a UX — dieciocho años en producto, quince en diseño. El camino significa que diseño pensando en todo el sistema, no solo en la pantalla. En Booz Allen Hamilton llevé eso a trabajo de gobierno y compliance para la FAA, el DoD y el VA, donde el rigor de la documentación importa tanto como la interfaz.",
+    clientsLabelEn: "Clients",
+    clientsLabelEs: "Clientes",
+    educationLabelEn: "Education",
+    educationLabelEs: "Educación",
   },
   contact: {
     eyebrowEn: "Contact",
     eyebrowEs: "Contacto",
     titleEn: "Let's talk.",
     titleEs: "Hablemos.",
-    leadEn: "Direct email is the fastest path. I reply within one business day. Open to Staff / Principal AI Product Designer roles.",
-    leadEs: "Email directo es el camino mÃ¡s rÃ¡pido. Respondo en un dÃ­a hÃ¡bil. Abierto a roles Staff / Principal AI Product Designer.",
+    leadEn: "Direct email is the fastest path. I reply within one business day.",
+    leadEs: "Email directo es el camino más rápido. Respondo en un día hábil.",
     copyLabelEn: "Copy email",
     copyLabelEs: "Copiar email",
     copiedLabelEn: "Copied",
@@ -255,24 +235,26 @@ interface NavOpts {
   langHrefOverride?: string;
 }
 function renderNav(identity: Identity, lang: Lang, opts: NavOpts): string {
+  const notesLabel = lang === "en" ? "Notes" : "Notas";
   const workLabel = lang === "en" ? "Work" : "Trabajo";
-  const notebookLabel = lang === "en" ? "Notebook" : "Notebook";
-  const methodLabel = lang === "en" ? "Method" : "MÃ©todo";
+  const methodLabel = lang === "en" ? "Method" : "Método";
+  const aboutLabel = lang === "en" ? "About" : "Sobre mí";
   const contactLabel = lang === "en" ? "Contact" : "Contacto";
   const defaultLangHref = lang === "en" ? "/es/" : "/";
   const langHref = opts.langHrefOverride ?? defaultLangHref;
   const langCode = lang === "en" ? "EN / ES" : "ES / EN";
   const langAria = lang === "en" ? "View in Spanish" : "View in English";
-  const navAria = lang === "en" ? "Main navigation" : "NavegaciÃ³n principal";
+  const navAria = lang === "en" ? "Main navigation" : "Navegación principal";
   const brandHref = opts.homeHref === "" ? "#top" : opts.homeHref;
 
   return `<nav class="v11-nav" aria-label="${escapeHtml(navAria)}">
   <div class="v11-nav__inner">
-    <a href="${escapeHtml(brandHref)}" class="v11-nav__brand">${escapeHtml(identity.name)}<span class="v11-nav__brand-sep">Â·</span>dr</a>
+    <a href="${escapeHtml(brandHref)}" class="v11-nav__brand">${escapeHtml(identity.name)}<span class="v11-nav__brand-sep">·</span>dr</a>
     <div class="v11-nav__tabs">
-      <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#notebook">${escapeHtml(notebookLabel)}</a>
+      <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#notes">${escapeHtml(notesLabel)}</a>
       <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#work">${escapeHtml(workLabel)}</a>
       <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#method">${escapeHtml(methodLabel)}</a>
+      <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#about">${escapeHtml(aboutLabel)}</a>
       <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#contact">${escapeHtml(contactLabel)}</a>
     </div>
     <a class="v11-nav__lang" href="${escapeHtml(langHref)}" hreflang="${lang === "en" ? "es" : "en"}" aria-label="${escapeHtml(langAria)}">${escapeHtml(langCode)}</a>
@@ -282,82 +264,48 @@ function renderNav(identity: Identity, lang: Lang, opts: NavOpts): string {
 
 /* ============== HERO (AI Product-Tour layer) ============== */
 
-function renderHero(identity: Identity, positioning: Positioning, lang: Lang, photoHref: string): string {
-  const { first, last } = splitName(identity.name);
-  const eyebrow = lang === "en" ? COPY.hero.eyebrowEn : COPY.hero.eyebrowEs;
-  const title = lang === "en" ? COPY.hero.titleEn : COPY.hero.titleEs;
-  const titleEm = lang === "en" ? COPY.hero.titleEmEn : COPY.hero.titleEmEs;
-  const sub = lang === "en" ? COPY.hero.subEn : COPY.hero.subEs;
-  const ctaPrimary = lang === "en" ? COPY.hero.ctaPrimaryEn : COPY.hero.ctaPrimaryEs;
-  const ctaGhost = lang === "en" ? COPY.hero.ctaGhostEn : COPY.hero.ctaGhostEs;
-
-  const artifactFile = lang === "en" ? "cv-serious.en.pdf" : "cv-serious.es.pdf";
-  const artifactStatus = lang === "en" ? "ready" : "listo";
-  const streamHead = lang === "en" ? "Regenerating EN / ES" : "Regenerando EN / ES";
-  const roleCanonical = "Agentic Designer Â· Product Engineer";
-  const artifactMeta = lang === "en" ? "generated 08 May 2026" : "generado 08 May 2026";
-
-  const shortThesis = lang === "en"
-    ? "15 years shipping. Booz Allen Hamilton (current). EnRegla (own SaaS). Claude Code power-user. 346 commits Â· 40 days."
-    : "15 aÃ±os entregando. Booz Allen Hamilton (actual). EnRegla (SaaS propio). Claude Code power-user. 346 commits Â· 40 dÃ­as.";
-
-  const avatarAlt = lang === "en"
-    ? `Portrait of ${identity.name}`
-    : `Retrato de ${identity.name}`;
+function renderHero(
+  identity: Identity,
+  positioning: Positioning,
+  landing: Landing,
+  lang: Lang,
+): string {
+  const heroLine = lang === "en"
+    ? positioning.heroLine?.en ?? positioning.thesis.en
+    : positioning.heroLine?.es ?? positioning.thesis.es;
+  const cta = lang === "en" ? landing.cta.en : landing.cta.es;
 
   return `<section id="top" class="v11-hero" aria-label="Hero">
   <div class="v11-container">
-    <div class="v11-hero__grid">
-      <div>
-        <div class="v11-hero__byline">
-          <img class="v11-hero__avatar" src="${escapeHtml(photoHref)}" alt="${escapeHtml(avatarAlt)}" width="110" height="110" loading="eager" decoding="async">
-          <div class="v11-hero__eyebrow">${escapeHtml(eyebrow)}</div>
-        </div>
-        <h1 class="v11-hero__title">${escapeHtml(title)} <em>${escapeHtml(titleEm)}</em></h1>
-        <p class="v11-hero__sub">${escapeHtml(sub)}</p>
-        <div class="v11-hero__actions">
-          <a class="v11-btn v11-btn--primary" href="#notebook">
-            ${escapeHtml(ctaPrimary)}
-            <span class="v11-btn__arrow" aria-hidden="true">â†’</span>
-          </a>
-          <a class="v11-btn v11-btn--ghost" href="#work">
-            ${escapeHtml(ctaGhost)}
-            <span class="v11-btn__arrow" aria-hidden="true">â†’</span>
-          </a>
-        </div>
-        <span class="v11-hero__availability">
-          <span class="v11-live" aria-hidden="true"></span>
-          ${escapeHtml(identity.availability)}
-        </span>
+    <div class="v11-hero__inner">
+      <div class="v11-hero__kicker">${escapeHtml(identity.name)} <span aria-hidden="true">·</span> ${escapeHtml(identity.role)}</div>
+      <h1 class="v11-hero__title">${escapeHtml(heroLine)}</h1>
+      <div class="v11-hero__actions">
+        <a class="v11-btn v11-btn--primary" href="#contact">
+          ${escapeHtml(cta)}
+          <span class="v11-btn__arrow" aria-hidden="true">→</span>
+        </a>
       </div>
-
-      <div>
-        <div class="v11-artifact" aria-label="Generated CV artifact preview">
-          <div class="v11-artifact__head">
-            <span class="v11-artifact__dot" aria-hidden="true"></span>
-            <span class="v11-artifact__file">${escapeHtml(artifactFile)}</span>
-            <span>Â· ${escapeHtml(artifactMeta)}</span>
-            <span class="v11-artifact__status">${escapeHtml(artifactStatus)}</span>
-          </div>
-          <div class="v11-artifact__body">
-            <div class="v11-artifact-paper">
-              <div class="v11-artifact-paper__kicker">// ${escapeHtml(roleCanonical)}</div>
-              <div class="v11-artifact-paper__name">${escapeHtml(first)} <span>${escapeHtml(last)}</span></div>
-              <div class="v11-artifact-paper__meta">${escapeHtml(identity.location)} Â· ${escapeHtml(identity.languages)}</div>
-              <hr class="v11-artifact-paper__hr">
-              <div class="v11-artifact-paper__body">${escapeHtml(shortThesis)}</div>
-            </div>
-          </div>
-        </div>
-        <div class="v11-stream" role="status" aria-live="polite">
-          <div class="v11-stream__head">${escapeHtml(streamHead)}</div>
-          <span class="v11-stream__line">npm run build:cvs</span>
-          <span class="v11-stream__line">[cv] wrote dist/cvs/cv-warm-en.pdf</span>
-          <span class="v11-stream__line">[cv] wrote dist/cvs/cv-serious-en.pdf<span class="v11-stream__caret" aria-hidden="true"></span></span>
-        </div>
-      </div>
+      <span class="v11-hero__availability">
+        <span class="v11-live" aria-hidden="true"></span>
+        ${escapeHtml(identity.availability)}
+      </span>
     </div>
   </div>
+</section>`;
+}
+
+/* ============== TRUST STRIP ============== */
+
+function renderTrustStrip(positioning: Positioning, lang: Lang): string {
+  const items = lang === "en" ? positioning.trustStrip?.en : positioning.trustStrip?.es;
+  if (!items || items.length === 0) return "";
+  const label = lang === "en" ? "Trusted by teams at" : "Trabajo para equipos en";
+  const row = items
+    .map((s) => `<span class="v11-trust__item">${escapeHtml(s)}</span>`)
+    .join('<span class="v11-trust__sep" aria-hidden="true"> · </span>');
+  return `<section class="v11-trust" aria-label="${escapeHtml(label)}">
+  <div class="v11-container"><div class="v11-trust__row">${row}</div></div>
 </section>`;
 }
 
@@ -367,44 +315,15 @@ function renderProof(positioning: Positioning, lang: Lang): string {
   const heading = lang === "en" ? COPY.proofHeadingEn : COPY.proofHeadingEs;
   const eyebrow = lang === "en" ? "// Evidence" : "// Evidencia";
 
-  // Proof items â€” value Â· label Â· attribution (V11 R8 #6)
-  const items = [
-    {
-      num: "15<em>+</em>",
-      labelEn: "Years shipping product",
-      labelEs: "AÃ±os shippeando producto",
-      attrEn: "2010â€“present Â· LATAM + US enterprise",
-      attrEs: "2010â€“actualidad Â· LATAM + US enterprise",
-    },
-    {
-      num: "346",
-      labelEn: "Commits Â· last 40 days",
-      labelEs: "Commits Â· 40 Ãºltimos dÃ­as",
-      attrEn: "github.com/mdanilorojas Â· EnRegla",
-      attrEs: "github.com/mdanilorojas Â· EnRegla",
-    },
-    {
-      num: "1<em>.0</em>",
-      labelEn: "SaaS live Â· paying pilots",
-      labelEs: "SaaS en producciÃ³n Â· pilotos pagados",
-      attrEn: "EnRegla Â· 0â†’1.0 in 40 days with agents",
-      attrEs: "EnRegla Â· 0â†’1.0 en 40 dÃ­as con agentes",
-    },
-    {
-      num: "95<em>.6</em>",
-      labelEn: "DS migration score",
-      labelEs: "Score migraciÃ³n DS",
-      attrEn: "17 parts Ã— 5 rounds Â· 78.4â†’95.6 Â· TE Skin",
-      attrEs: "17 partes Ã— 5 rondas Â· 78.4â†’95.6 Â· TE Skin",
-    },
-  ];
-
-  const cards = items.map((it) => `
+  const cards = positioning.proofNumbers.map((it) => {
+    const unit = it.unit ? `<em>${escapeHtml(it.unit)}</em>` : "";
+    const label = lang === "en" ? it.labelEn : it.labelEs;
+    return `
       <div class="v11-proof__item" role="listitem">
-        <div class="v11-proof__num">${it.num}</div>
-        <div class="v11-proof__label">${escapeHtml(lang === "en" ? it.labelEn : it.labelEs)}</div>
-        <div class="v11-proof__attr">${escapeHtml(lang === "en" ? it.attrEn : it.attrEs)}</div>
-      </div>`).join("");
+        <div class="v11-proof__num">${escapeHtml(it.value)}${unit}</div>
+        <div class="v11-proof__label">${escapeHtml(label)}</div>
+      </div>`;
+  }).join("");
 
   return `<section class="v11-section" aria-labelledby="proof-h">
   <div class="v11-container">
@@ -417,38 +336,26 @@ ${cards}
 </section>`;
 }
 
-/* ============== NOTEBOOK ============== */
+/* ============== NOTES (POV) ============== */
 
-function renderNotebook(identity: Identity, lang: Lang, photoHref: string): string {
-  const eyebrow = lang === "en" ? COPY.notebook.eyebrowEn : COPY.notebook.eyebrowEs;
-  const title = lang === "en" ? COPY.notebook.titleEn : COPY.notebook.titleEs;
-  const toc = lang === "en" ? COPY.notebook.tocEn : COPY.notebook.tocEs;
-  const paragraphs = lang === "en" ? COPY.notebook.bodyEn : COPY.notebook.bodyEs;
-
-  const paragraphsHtml = paragraphs.map((p) => `<p>${p}</p>`).join("\n");
-
-  const bylineByLabel = lang === "en" ? "By" : "Por";
-  const bylineRole = lang === "en" ? "Agentic Designer" : "DiseÃ±ador AgÃ©ntico";
-  const bylineDate = "2026-05-12";
-  const avatarAlt = lang === "en"
-    ? `Portrait of ${identity.name}`
-    : `Retrato de ${identity.name}`;
-
-  return `<section id="notebook" class="v11-section v11-section--paper" aria-labelledby="notebook-h">
-  <div class="v11-container-narrow v11-notebook">
+function renderNotes(data: LandingData, lang: Lang): string {
+  if (data.notes.length === 0) return "";
+  const eyebrow = lang === "en" ? "Notes" : "Notas";
+  const items = data.notes.map((n, i) => {
+    const title = lang === "en" ? n.titleEn : n.titleEs;
+    const body = lang === "en" ? n.bodyEn : n.bodyEs;
+    const idx = String(i + 1).padStart(2, "0");
+    return `<article class="v11-note" data-reveal>
+    <div class="v11-note__idx">${idx}</div>
+    <h3 class="v11-note__title">${escapeHtml(title)}</h3>
+    <p class="v11-note__body">${escapeHtml(body)}</p>
+  </article>`;
+  }).join("\n");
+  return `<section id="notes" class="v11-section v11-section--paper" aria-labelledby="notes-h">
+  <div class="v11-container">
     <div class="v11-section__eyebrow">${escapeHtml(eyebrow)}</div>
-    <h2 id="notebook-h" class="v11-h1">${escapeHtml(title)}</h2>
-    <div class="v11-notebook__toc">${escapeHtml(toc)}</div>
-    <figure class="v11-notebook__byline">
-      <img class="v11-notebook__byline-photo" src="${escapeHtml(photoHref)}" alt="${escapeHtml(avatarAlt)}" width="52" height="52" loading="lazy" decoding="async">
-      <figcaption class="v11-notebook__byline-meta">
-        <span class="v11-notebook__byline-name">${escapeHtml(bylineByLabel)} <strong>${escapeHtml(identity.name)}</strong></span>
-        <span class="v11-notebook__byline-sub">${escapeHtml(bylineRole)} Â· ${escapeHtml(bylineDate)}</span>
-      </figcaption>
-    </figure>
-    <div class="v11-notebook__essay">
-${paragraphsHtml}
-    </div>
+    <h2 id="notes-h" class="v11-h1">${lang === "en" ? "The writing is evidence of judgment." : "La escritura es evidencia de juicio."}</h2>
+    <div class="v11-notes">${items}</div>
   </div>
 </section>`;
 }
@@ -476,7 +383,7 @@ function renderHorizonChip(
   if (columnId === "horizon" && chip.kind === "bet") {
     const aria = lang === "en"
       ? escapeHtml(`${label}. Declared bet, no evidence yet.`)
-      : escapeHtml(`${label}. Apuesta declarada, sin evidencia aÃºn.`);
+      : escapeHtml(`${label}. Apuesta declarada, sin evidencia aún.`);
     const betLabel = lang === "en" ? "bet" : "apuesta";
     return `<li><span class="v11-horizon__chip" data-kind="bet" aria-label="${aria}">${labelSafe} <span class="v11-horizon__bet-badge">${escapeHtml(betLabel)}</span></span></li>`;
   }
@@ -504,7 +411,7 @@ function renderHorizonColumn(col: HorizonColumn, lang: Lang): string {
 }
 
 function renderHorizonProgress(columns: HorizonColumn[], lang: Lang): string {
-  const youAreHere = lang === "en" ? "You are here" : "EstÃ¡s aquÃ­";
+  const youAreHere = lang === "en" ? "You are here" : "Estás aquí";
   const segs = columns
     .map((col) => {
       const marker = col.emphasis
@@ -524,7 +431,7 @@ function renderHorizonTools(columns: HorizonColumn[]): string {
       const tools = col.tools ?? [];
       const parts: string[] = [];
       tools.forEach((t, idx) => {
-        if (idx > 0) parts.push(`<span class="v11-horizon__arrow">â†’</span>`);
+        if (idx > 0) parts.push(`<span class="v11-horizon__arrow">→</span>`);
         parts.push(`<span class="v11-horizon__tool">${escapeHtml(t)}</span>`);
       });
       return `<div class="v11-horizon__tools-block" data-tools-for="${escapeHtml(col.id)}">${parts.join("")}</div>`;
@@ -555,7 +462,7 @@ ${columns}
 /* ============== WORK ============== */
 
 export function sortedCases(cases: Case[]): Case[] {
-  const order = ["enregla", "developer-portal", "life-update-mobile"];
+  const order = ["developer-portal", "juan-valdez", "life-update-mobile"];
   return [...cases].sort((a, b) => {
     const ia = order.indexOf(a.slug);
     const ib = order.indexOf(b.slug);
@@ -589,9 +496,9 @@ function renderCase(c: Case, lang: Lang, basePath: string): string {
   const bullets = lang === "en" ? c.bulletsEn : c.bulletsEs;
   const cta = lang === "en" ? COPY.work.caseCtaEn : COPY.work.caseCtaEs;
 
-  // Labels for the editorial sidebar (V3 Â· Magazine)
+  // Labels for the editorial sidebar (V3 · Magazine)
   const labelClient = lang === "en" ? "Client" : "Cliente";
-  const labelYears = lang === "en" ? "Years" : "AÃ±os";
+  const labelYears = lang === "en" ? "Years" : "Años";
   const labelStack = lang === "en" ? "Stack" : "Stack";
 
   const stackChips = c.stack
@@ -611,7 +518,7 @@ function renderCase(c: Case, lang: Lang, basePath: string): string {
 
   const detailHref = `${basePath}work/${encodeURIComponent(c.slug)}/`;
 
-  // Editorial sidebar â€” client / years / stack (vertical chips).
+  // Editorial sidebar — client / years / stack (vertical chips).
   const metaCol = `<aside class="v11-case__meta-col">
   <div class="v11-case__meta-block">
     <div class="v11-case__meta-label">${escapeHtml(labelClient)}</div>
@@ -632,7 +539,7 @@ function renderCase(c: Case, lang: Lang, basePath: string): string {
   <h3 class="v11-case__title">${escapeHtml(title)}</h3>
   <p class="v11-case__hook">${escapeHtml(hook)}</p>
   ${bulletsHtml}
-  <a class="v11-case__cta" href="${escapeHtml(detailHref)}">${escapeHtml(cta)}<span class="v11-case__cta-arrow" aria-hidden="true">â†’</span></a>
+  <a class="v11-case__cta" href="${escapeHtml(detailHref)}">${escapeHtml(cta)}<span class="v11-case__cta-arrow" aria-hidden="true">→</span></a>
 </div>`;
 
   // Inner content grid: text left, animation right (or full-width text if no anim).
@@ -673,7 +580,7 @@ ${cases}
 
 function renderTestimonial(t: Testimonial, lang: Lang): string {
   const quote = lang === "es" && t.quoteEs ? t.quoteEs : t.quote;
-  const company = t.company ? ` Â· ${escapeHtml(t.company)}` : "";
+  const company = t.company ? ` · ${escapeHtml(t.company)}` : "";
   const badge = lang === "en" ? "Verified" : "Verificado";
   return `<figure class="v11-quote">
   <blockquote class="v11-quote__text">${escapeHtml(quote)}</blockquote>
@@ -688,30 +595,8 @@ function renderTestimonial(t: Testimonial, lang: Lang): string {
 function renderMethod(data: LandingData, lang: Lang): string {
   const eyebrow = lang === "en" ? COPY.method.eyebrowEn : COPY.method.eyebrowEs;
   const title = lang === "en" ? COPY.method.titleEn : COPY.method.titleEs;
+  const philosophy = lang === "en" ? COPY.method.philosophyEn : COPY.method.philosophyEs;
   const lead = lang === "en" ? COPY.method.leadEn : COPY.method.leadEs;
-
-  const planHeadEn = "Plan Â· approved Â· dr-cv-v11";
-  const planHeadEs = "Plan Â· aprobado Â· dr-cv-v11";
-  const planSteps = lang === "en"
-    ? [
-        { body: "Load CvData + Landing config", meta: "0:12", done: true },
-        { body: "Render hero + artifact viewer", meta: "0:48", done: true },
-        { body: "Render 4 Narrative Ship cases", meta: "1:20", done: true },
-        { body: "Emit EN + ES with hreflang", meta: "0:22", done: false },
-        { body: "Run a11y + perf smoke", meta: "0:18", done: false },
-      ]
-    : [
-        { body: "Cargar CvData + Landing config", meta: "0:12", done: true },
-        { body: "Renderizar hero + artifact viewer", meta: "0:48", done: true },
-        { body: "Renderizar 4 cases Narrative Ship", meta: "1:20", done: true },
-        { body: "Emitir EN + ES con hreflang", meta: "0:22", done: false },
-        { body: "Correr smoke a11y + perf", meta: "0:18", done: false },
-      ];
-
-  const stepsHtml = planSteps.map((s) => {
-    const cls = s.done ? " v11-plan__step--done" : "";
-    return `<li class="v11-plan__step${cls}"><strong>${escapeHtml(s.body)}</strong> <span class="v11-plan__meta">${escapeHtml(s.meta)}</span></li>`;
-  }).join("\n");
 
   const giraldez = data.testimonials.find((t) => t.author.includes("Giraldez")) ?? data.testimonials[0];
 
@@ -719,34 +604,54 @@ function renderMethod(data: LandingData, lang: Lang): string {
   <div class="v11-container">
     <div class="v11-section__eyebrow">${escapeHtml(eyebrow)}</div>
     <h2 id="method-h" class="v11-h1">${escapeHtml(title)}</h2>
-    <p class="v11-lead">${escapeHtml(lead)}</p>
+    <p class="v11-lead">${escapeHtml(philosophy)}</p>
+    <p class="v11-method__note">${escapeHtml(lead)}</p>
 
-    <div class="v11-method">
-      <div class="v11-plan" aria-label="plan before build specimen">
-        <div class="v11-plan__head">${escapeHtml(lang === "en" ? planHeadEn : planHeadEs)}</div>
-        <ol class="v11-plan__list">
-${stepsHtml}
-        </ol>
-      </div>
-
-      <div class="v11-diff" aria-label="diff review specimen">
-        <div class="v11-diff__row v11-diff__row--del"><span class="v11-diff__ln">42</span><span>- &lt;h1&gt;Agentic Designer shipping real products&lt;/h1&gt;</span></div>
-        <div class="v11-diff__row v11-diff__row--add"><span class="v11-diff__ln">42</span><span>+ &lt;h1&gt;A point of view on agentic design.&lt;/h1&gt;</span></div>
-        <div class="v11-diff__row"><span class="v11-diff__ln">43</span><span>&nbsp;&nbsp;&lt;p&gt;I keep the craftâ€¦&lt;/p&gt;</span></div>
-        <div class="v11-diff__row v11-diff__row--add"><span class="v11-diff__ln">44</span><span>+ &lt;div data-v11-skill="@te-skin"&gt;â€¦&lt;/div&gt;</span></div>
-      </div>
-    </div>
-
-    <div style="display:flex; gap:8px; flex-wrap:wrap; margin: 0 0 32px;">
-      <span class="v11-chip"><span class="v11-chip__at">@</span>dr-cv-skill</span>
-      <span class="v11-chip"><span class="v11-chip__at">@</span>te-skin</span>
-      <span class="v11-chip v11-chip--cool"><span class="v11-chip__at">/</span>ds-review</span>
-      <span class="v11-chip v11-chip--cool"><span class="v11-chip__at">/</span>case-compose</span>
-      <span class="v11-chip v11-chip--muted"><span class="v11-chip__at">@</span>mcp:supabase</span>
-      <span class="v11-chip v11-chip--muted"><span class="v11-chip__at">@</span>mcp:github</span>
-    </div>
+${renderHorizon(data.horizon, lang)}
 
     ${giraldez ? renderTestimonial(giraldez, lang) : ""}
+  </div>
+</section>`;
+}
+
+/* ============== ABOUT ============== */
+
+function renderAbout(data: LandingData, lang: Lang): string {
+  const eyebrow = lang === "en" ? COPY.about.eyebrowEn : COPY.about.eyebrowEs;
+  const title = lang === "en" ? COPY.about.titleEn : COPY.about.titleEs;
+  const bio = lang === "en" ? COPY.about.bioEn : COPY.about.bioEs;
+  const clientsLabel = lang === "en" ? COPY.about.clientsLabelEn : COPY.about.clientsLabelEs;
+  const educationLabel = lang === "en" ? COPY.about.educationLabelEn : COPY.about.educationLabelEs;
+
+  const clientsRow = data.clients
+    .map((c) => `<span class="v11-about__client">${escapeHtml(c.name)}</span>`)
+    .join('<span class="v11-about__client-sep" aria-hidden="true"> · </span>');
+
+  const educationItems = data.education
+    .map((e) => {
+      const year = e.year !== null ? ` <span class="v11-about__edu-year">· ${escapeHtml(String(e.year))}</span>` : "";
+      return `<li class="v11-about__edu-item"><span class="v11-about__edu-name">${escapeHtml(e.name)}</span> <span class="v11-about__edu-inst">· ${escapeHtml(e.institution)}</span>${year}</li>`;
+    })
+    .join("\n      ");
+
+  return `<section id="about" class="v11-section" aria-labelledby="about-h">
+  <div class="v11-container">
+    <div class="v11-section__eyebrow">${escapeHtml(eyebrow)}</div>
+    <h2 id="about-h" class="v11-h1">${escapeHtml(title)}</h2>
+    <p class="v11-lead">${escapeHtml(bio)}</p>
+
+    <div class="v11-about__cols">
+      <div class="v11-about__block">
+        <div class="v11-about__label">${escapeHtml(clientsLabel)}</div>
+        <div class="v11-about__clients">${clientsRow}</div>
+      </div>
+      <div class="v11-about__block">
+        <div class="v11-about__label">${escapeHtml(educationLabel)}</div>
+        <ul class="v11-about__edu">
+      ${educationItems}
+        </ul>
+      </div>
+    </div>
   </div>
 </section>`;
 }
@@ -793,7 +698,7 @@ function renderContact(data: LandingData, lang: Lang): string {
       </div>
       <a class="v11-btn v11-btn--primary" href="mailto:${escapeHtml(c.email)}" style="align-self:flex-start">
         ${escapeHtml(cta)}
-        <span class="v11-btn__arrow" aria-hidden="true">â†’</span>
+        <span class="v11-btn__arrow" aria-hidden="true">→</span>
       </a>
       <div class="v11-contact__email-row">
         <span class="v11-contact__email">${escapeHtml(c.email)}</span>
@@ -819,9 +724,9 @@ function renderContact(data: LandingData, lang: Lang): string {
 
 function renderFooter(identity: Identity, lang: Lang): string {
   const text = lang === "en"
-    ? `Built by ${identity.name} Â· source on ${identity.contact.github ?? "GitHub"} Â· updated 2026-05-08`
-    : `Hecho por ${identity.name} Â· cÃ³digo en ${identity.contact.github ?? "GitHub"} Â· actualizado 2026-05-08`;
-  const dsLabel = lang === "en" ? "Design System V11" : "Sistema de DiseÃ±o V11";
+    ? `Built by ${identity.name} · source on ${identity.contact.github ?? "GitHub"} · updated 2026-06-15`
+    : `Hecho por ${identity.name} · código en ${identity.contact.github ?? "GitHub"} · actualizado 2026-06-15`;
+  const dsLabel = lang === "en" ? "Design System V11" : "Sistema de Diseño V11";
   return `<footer class="v11-footer">
   <div class="v11-footer__inner">
     <span>${escapeHtml(text)}</span>
@@ -849,19 +754,13 @@ export function renderV11Landing(
   tokensCss: string,
   assets: V11LandingAssets,
 ): string {
-  const seoTitle = lang === "en"
-    ? "Danilo Rojas â€” Agentic Designer Â· Product Engineer"
-    : "Danilo Rojas â€” DiseÃ±ador AgÃ©ntico Â· Product Engineer";
-  const seoDesc = lang === "en"
-    ? "A point of view on agentic design, not a rÃ©sumÃ©. Fifteen years shipping product; the last year rebuilt around agents. Available for Staff / Principal AI Product Designer roles."
-    : "Un punto de vista sobre diseÃ±o agÃ©ntico, no un currÃ­culum. Quince aÃ±os entregando producto; el Ãºltimo aÃ±o reconstruido alrededor de agentes. Abierto a roles Staff / Principal AI Product Designer.";
+  const seoTitle = lang === "en" ? data.landing.seo.titleEn : data.landing.seo.titleEs;
+  const seoDesc = lang === "en" ? data.landing.seo.descriptionEn : data.landing.seo.descriptionEs;
   const altLang = lang === "en" ? "es" : "en";
   const altHref = lang === "en" ? "/es/" : "/";
   const selfHref = lang === "en" ? "/" : "/es/";
   const skipLabel = lang === "en" ? "Skip to content" : "Saltar al contenido";
-  const ogAlt = lang === "en"
-    ? `Danilo Rojas â€” Agentic Designer`
-    : `Danilo Rojas â€” DiseÃ±ador AgÃ©ntico`;
+  const ogAlt = `${data.identity.name} — ${data.identity.role}`;
 
   return `<!doctype html>
 <html lang="${lang}">
@@ -882,13 +781,11 @@ export function renderV11Landing(
 <meta name="twitter:title" content="${escapeHtml(seoTitle)}">
 <meta name="twitter:description" content="${escapeHtml(seoDesc)}">
 <meta name="twitter:image" content="${escapeHtml(assets.ogImageUrl)}">
+${FAVICON_TAG}
 <link rel="canonical" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${lang}" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${altLang}" href="https://danilorojas.design${altHref}">
 <link rel="alternate" hreflang="x-default" href="https://danilorojas.design/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap">
 <style>
 ${tokensCss}
 ${V11_STYLES}
@@ -900,12 +797,13 @@ ${iframeAnimationCss}
 <a class="v11-skip" href="#main">${escapeHtml(skipLabel)}</a>
 ${renderNav(data.identity, lang, { homeHref: "" })}
 <main id="main">
-${renderHero(data.identity, data.positioning, lang, assets.photoHref)}
+${renderHero(data.identity, data.positioning, data.landing, lang)}
+${renderTrustStrip(data.positioning, lang)}
 ${renderProof(data.positioning, lang)}
-${renderHorizon(data.horizon, lang)}
-${renderNotebook(data.identity, lang, assets.photoHref)}
+${renderNotes(data, lang)}
 ${renderWork(data, lang, "")}
 ${renderMethod(data, lang)}
+${renderAbout(data, lang)}
 ${renderContact(data, lang)}
 </main>
 ${renderFooter(data.identity, lang)}

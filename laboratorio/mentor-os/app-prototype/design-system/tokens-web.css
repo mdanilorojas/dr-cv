@@ -1,0 +1,225 @@
+/* =========================================================================
+ * dr-cv · V11 tokens · Warm Huly Refined + AI Product-Tour
+ *
+ * Base: Warm Huly Refined (forked from tokens-huly.css, stripped of the
+ * pill-radial-glow CTA which V11 R8 marked as anti-pattern #1).
+ * Layer: AI Product-Tour (artifact surfaces — PDF embed, generator
+ * live-preview, stream UI, plan-before-build, diff-review, named skills).
+ *
+ * Sources this token set resolves:
+ * - V11 R5 — Taste-first critic voice → restrained accent, not decorative
+ * - V11 R7 — Craft floors → self-hosted fonts, WCAG AA contrast
+ * - V11 R8 — Anti-patterns → NO warm-radial-glow pill
+ * - V11 R9 — Direction = Notebook + proof-strip graft
+ * - Visual-universe R10 — Warm Huly palette verdict
+ * ========================================================================= */
+
+:root {
+  /* ─────────────────────────────────────────────────────────────
+   * 1 · SURFACE (dark-dominant)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-bg-deep:        #060708;   /* OLED-adjacent deepest */
+  --v11-bg-primary:     #0A0B0E;   /* page background (warm-huly base) */
+  --v11-bg-alt:         #111318;   /* section alt (for dark/dark-alt rhythm) */
+  --v11-bg-paper:       #F6F4F0;   /* cream section for contrast chapters */
+  --v11-bg-elevated:    #14161C;   /* card surface on dark */
+  --v11-bg-elevated-2:  #1C1F27;   /* toolbar / nested surface */
+  --v11-bg-inset:       #0D0F13;   /* code / inputs / embed wells */
+
+  /* ─────────────────────────────────────────────────────────────
+   * 2 · INK (on dark)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-text:           #F4F4F5;   /* primary on dark */
+  --v11-text-body:      #D7D8DB;
+  --v11-text-85:        #C9CBCF;
+  --v11-text-70:        #B0B2B7;
+  --v11-text-60:        #95979E;
+  --v11-text-50:        #797D86;
+  --v11-text-40:        #61656B;
+  --v11-text-subtle:    #4A4B50;
+
+  /* Ink on cream (paper sections) */
+  --v11-paper-ink:      #0B0C0E;
+  --v11-paper-body:     #303236;
+  --v11-paper-muted:    #4A4B50;
+  --v11-paper-subtle:   #797D86;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 3 · ACCENT · restrained (V11 R8 — NO glow, punctuation only)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-accent:         #FF8964;   /* warm orange — used as punctuation */
+  --v11-accent-ink:     #2A0F05;   /* dark ink on accent bg */
+  --v11-accent-deep:    #E0674A;   /* hover / active state */
+  --v11-accent-soft:    rgba(255, 137, 100, 0.14);
+  --v11-accent-ring:    rgba(255, 137, 100, 0.35);
+  --v11-accent-line:    rgba(255, 137, 100, 0.28);
+
+  /* Secondary signal — used only for agentic UX state:
+     Visible Thinking / Plan-before-Build / Diff-Review additions */
+  --v11-signal-cool:    #5683DA;   /* tool-use / plan state */
+  --v11-signal-warn:    #E5A84B;   /* caution / learning-level */
+  --v11-signal-pos:     #4ADE80;   /* diff additions / success */
+  --v11-signal-neg:     #F87171;   /* diff deletions / errors */
+
+  /* ─────────────────────────────────────────────────────────────
+   * 4 · LINES & DIVIDERS
+   * ───────────────────────────────────────────────────────────── */
+  --v11-line:           rgba(255, 255, 255, 0.08);
+  --v11-line-strong:    rgba(255, 255, 255, 0.18);
+  --v11-line-soft:      rgba(255, 255, 255, 0.04);
+  --v11-line-paper:     #E5E2DA;
+  --v11-line-paper-sf:  #EFECE4;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 5 · ELEVATION (shadows — muted, Huly-derived)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-shadow-card:        0 6px 25px rgba(0, 0, 0, 0.50);
+  --v11-shadow-card-hover:  0 14px 30px rgba(0, 0, 0, 0.80);
+  --v11-shadow-float:       0 10px 20px rgba(0, 0, 0, 0.50);
+  --v11-shadow-artifact:    0 16px 40px rgba(0, 0, 0, 0.45),
+                            0 2px 0 rgba(255, 255, 255, 0.04) inset;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 6 · TYPOGRAPHY (self-hosted per V11 R7)
+   * Variable fonts, Latin-1 subset — load via @font-face in styles,
+   * not via Google Fonts CDN.
+   * ───────────────────────────────────────────────────────────── */
+  --v11-font-body:     'Inter', 'Helvetica Neue', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --v11-font-display:  'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+  --v11-font-mono:     'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+  --v11-font-serif:    'Source Serif 4', 'Source Serif Pro', Georgia, 'Times New Roman', serif;
+    /* serif reserved for long-form essay surface (R9 Notebook thesis) */
+
+  /* Scale — clamp-based for responsive.
+     H1 hero: 72px desktop, 32px mobile (V11 R7 signature recommendation). */
+  --v11-fs-hero:       clamp(32px, 7vw, 72px);
+  --v11-fs-h1:         clamp(28px, 5.5vw, 56px);
+  --v11-fs-h2:         clamp(24px, 4vw, 40px);
+  --v11-fs-h3:         clamp(20px, 2.8vw, 28px);
+  --v11-fs-lead:       clamp(17px, 1.9vw, 20px);
+  --v11-fs-body:       16px;
+  --v11-fs-small:      14px;
+  --v11-fs-micro:      12px;
+  --v11-fs-nano:       11px;
+
+  /* Tracking */
+  --v11-track-snug:     -0.01em;
+  --v11-track-snugger:  -0.02em;
+  --v11-track-tight:    -0.04em;
+  --v11-track-tighter:  -0.05em;
+  --v11-track-loose:     0.08em;
+  --v11-track-code:      0.14em;
+  --v11-track-micro:     0.16em;
+
+  /* Leading */
+  --v11-lead-hero:    0.95;     /* H1 hero — tight */
+  --v11-lead-h:       1.1;
+  --v11-lead-tight:   1.25;
+  --v11-lead-body:    1.55;
+  --v11-lead-loose:   1.7;      /* essay body */
+
+  /* Weight */
+  --v11-wt-regular:   400;
+  --v11-wt-medium:    500;
+  --v11-wt-semibold:  600;
+  --v11-wt-bold:      700;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 7 · RADIUS
+   * ───────────────────────────────────────────────────────────── */
+  --v11-radius-none:   0;
+  --v11-radius-sm:     4px;
+  --v11-radius:        8px;
+  --v11-radius-card:   12px;
+  --v11-radius-lg:     16px;
+  --v11-radius-xl:     24px;
+  --v11-radius-pill:   9999px;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 8 · SPACING scale (4-base)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-s-0:   0;
+  --v11-s-1:   4px;
+  --v11-s-2:   8px;
+  --v11-s-3:   12px;
+  --v11-s-4:   16px;
+  --v11-s-5:   24px;
+  --v11-s-6:   32px;
+  --v11-s-7:   48px;
+  --v11-s-8:   64px;
+  --v11-s-9:   80px;
+  --v11-s-10:  96px;
+  --v11-s-11:  128px;
+  --v11-s-12:  160px;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 9 · LAYOUT
+   * ───────────────────────────────────────────────────────────── */
+  --v11-container:         80rem;   /* 1280 */
+  --v11-container-narrow:  42rem;   /* 672 — essay body width */
+  --v11-container-wide:    88rem;
+  --v11-pad-x:             clamp(20px, 4vw, 32px);
+
+  /* ─────────────────────────────────────────────────────────────
+   * 10 · MOTION (V11 R7 reduced-motion respected)
+   * ───────────────────────────────────────────────────────────── */
+  --v11-ease-standard:   cubic-bezier(0.22, 0.61, 0.36, 1);
+  --v11-ease-in:         cubic-bezier(0.4, 0, 1, 1);
+  --v11-ease-out:        cubic-bezier(0, 0, 0.2, 1);
+  --v11-ease-emphasize:  cubic-bezier(0.2, 0, 0, 1);
+
+  --v11-dur-instant:  80ms;
+  --v11-dur-fast:     180ms;
+  --v11-dur-base:     280ms;
+  --v11-dur-slow:     480ms;
+  --v11-dur-extra:    720ms;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 11 · Z-INDEX
+   * ───────────────────────────────────────────────────────────── */
+  --v11-z-base:    0;
+  --v11-z-raised:  1;
+  --v11-z-nav:     50;
+  --v11-z-toast:   60;
+  --v11-z-modal:   70;
+  --v11-z-hint:    80;
+
+  /* ─────────────────────────────────────────────────────────────
+   * 12 · ARTIFACT SURFACE (AI Product-Tour layer)
+   * Tokens specific to the signature hero + in-page embeds of
+   * artifacts Danilo's workflow produces. These are not "effects" —
+   * they're product-UI tokens because the landing embeds running UI.
+   * ───────────────────────────────────────────────────────────── */
+  --v11-artifact-bg:          #111318;
+  --v11-artifact-bg-alt:      #16181F;
+  --v11-artifact-line:        rgba(255, 255, 255, 0.10);
+  --v11-artifact-line-strong: rgba(255, 255, 255, 0.20);
+  --v11-artifact-glow:        rgba(255, 137, 100, 0.08);
+  /* used at 1px border on focused artifact frames, not hero glow */
+
+  --v11-artifact-chip-bg:     rgba(255, 137, 100, 0.12);
+  --v11-artifact-chip-ink:    var(--v11-accent);
+  --v11-artifact-chip-line:   var(--v11-accent-line);
+
+  /* Stream UI (Visible Thinking / Plan-before-Build) */
+  --v11-stream-bg:            rgba(255, 255, 255, 0.025);
+  --v11-stream-line:          rgba(255, 255, 255, 0.06);
+  --v11-stream-caret:         var(--v11-accent);
+
+  /* Diff-Review state tokens */
+  --v11-diff-add-bg:          rgba(74, 222, 128, 0.08);
+  --v11-diff-add-line:        rgba(74, 222, 128, 0.25);
+  --v11-diff-del-bg:          rgba(248, 113, 113, 0.08);
+  --v11-diff-del-line:        rgba(248, 113, 113, 0.25);
+}
+
+/* Reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --v11-dur-instant: 0ms;
+    --v11-dur-fast:    0ms;
+    --v11-dur-base:    0ms;
+    --v11-dur-slow:    0ms;
+    --v11-dur-extra:   0ms;
+  }
+}

@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juan Valdez — app mobile y design system · Danilo Rojas</title>
+<meta name="description" content="Diseño UI end-to-end para la app mobile de Juan Valdez Colombia — toda la superficie de producto y un design system reutilizable. Entregué las pantallas, los flujos y el sistema, y le pasé a ingeniería un build limpio y especificado.">
+<meta property="og:title" content="Juan Valdez — app mobile y design system · Danilo Rojas">
+<meta property="og:description" content="Diseño UI end-to-end para la app mobile de Juan Valdez Colombia — toda la superficie de producto y un design system reutilizable. Entregué las pantallas, los flujos y el sistema, y le pasé a ingeniería un build limpio y especificado.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://danilorojas.design/es/work/juan-valdez/">
+<meta property="og:image" content="https://danilorojas.design/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://danilorojas.design/og.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%23030303%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2252%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-size%3D%2238%22%20font-weight%3D%22600%22%20fill%3D%22%23EDEDED%22%20letter-spacing%3D%22-1%22%3Edr%3C%2Ftext%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2216%22%20r%3D%222%22%20fill%3D%22%233B82F6%22%2F%3E%3C%2Fsvg%3E">
+<link rel="canonical" href="https://danilorojas.design/es/work/juan-valdez/">
+<link rel="alternate" hreflang="es" href="https://danilorojas.design/es/work/juan-valdez/">
+<link rel="alternate" hreflang="en" href="https://danilorojas.design/work/juan-valdez/">
+<link rel="alternate" hreflang="x-default" href="https://danilorojas.design/work/juan-valdez/">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { darkMode:'class', theme:{ extend:{
+  fontFamily:{ sans:['Inter','sans-serif'], mono:['JetBrains Mono','monospace'], serif:['Source Serif 4','serif'] },
+  colors:{ system:{ bg:'#030303', surface:'#0a0a0a', line:'rgba(255,255,255,0.08)', lineHover:'rgba(255,255,255,0.25)', text:'#ededed', dim:'#8a8a8a', accent:'#ffffff' } },
+  animation:{ 'spin-slow':'spin 12s linear infinite', 'pulse-slow':'pulse 4s cubic-bezier(0.4,0,0.6,1) infinite' }
+} } }
+</script>
+<style>
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/inter-400.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url("/assets/fonts/inter-500.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url("/assets/fonts/inter-600.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:700;font-display:swap;src:url("/assets/fonts/inter-700.woff2") format("woff2");}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/jetbrains-mono-400.woff2") format("woff2");}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:500;font-display:swap;src:url("/assets/fonts/jetbrains-mono-500.woff2") format("woff2");}
+@font-face{font-family:"Source Serif 4";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/source-serif-4-400.woff2") format("woff2");}
+@font-face{font-family:"Source Serif 4";font-style:normal;font-weight:600;font-display:swap;src:url("/assets/fonts/source-serif-4-600.woff2") format("woff2");}
+@font-face{font-family:"Source Serif 4";font-style:italic;font-weight:400;font-display:swap;src:url("/assets/fonts/source-serif-4-400-italic.woff2") format("woff2");}
+
+:root { --mouse-x: 50%; --mouse-y: 50%; }
+body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+.bg-grid { position:fixed; inset:0; z-index:-1;
+  background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size:80px 80px; background-position:center top;
+  mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%); }
+.mouse-glow { position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.04), transparent 40%); }
+.structural-border { border:1px solid rgba(255,255,255,0.08); position:relative; transition:border-color .4s ease, background-color .4s ease; }
+.structural-border:hover { border-color: rgba(255,255,255,0.25); }
+.crosshair { position:absolute; width:13px; height:13px; pointer-events:none; transition:transform .5s cubic-bezier(.4,0,.2,1); }
+.structural-border:hover .crosshair { transform:scale(1.5) rotate(90deg); opacity:.8; }
+.crosshair::before, .crosshair::after { content:''; position:absolute; background-color:#8a8a8a; opacity:.5; }
+.crosshair::before { top:6px; left:0; width:13px; height:1px; }
+.crosshair::after { top:0; left:6px; width:1px; height:13px; }
+.ch-tl{top:-7px;left:-7px;} .ch-tr{top:-7px;right:-7px;} .ch-bl{bottom:-7px;left:-7px;} .ch-br{bottom:-7px;right:-7px;}
+.reveal { opacity:0; transform:translateY(20px); transition:all .8s cubic-bezier(.16,1,.3,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.delay-100{transition-delay:100ms;} .delay-200{transition-delay:200ms;}
+.tech-label { position:absolute; background:#030303; padding:0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:.1em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.08); z-index:10; }
+.metric-card { background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); transition: background-color .4s ease, box-shadow .4s ease; }
+.metric-card:hover { background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
+@media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} }
+
+.v11-anim-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--v11-anim-ratio, 880 / 620);
+  border-radius: var(--v11-radius-card, 10px);
+  overflow: hidden;
+  border: 1px solid var(--v11-line);
+  background: var(--v11-bg-inset, #0D0F13);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+}
+.v11-anim-frame__iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  display: block;
+  background: transparent;
+  transform-origin: top left;
+  transform: scale(var(--v11-anim-scale, 1));
+  /* fallback while JS hasn't measured yet */
+  pointer-events: auto;
+}
+</style>
+</head>
+<body class="relative overflow-x-hidden selection:bg-white selection:text-black min-h-screen flex flex-col font-sans">
+
+<a class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:bg-white focus:text-black focus:px-3 focus:py-1 focus:text-sm" href="#main">Saltar al contenido</a>
+<div class="bg-grid"></div>
+<div class="mouse-glow" id="mouseGlow"></div>
+
+<nav class="fixed top-0 w-full z-50 border-b border-system-line bg-system-bg/80 backdrop-blur-md">
+  <div class="w-full flex justify-between items-center h-14 px-4 sm:px-8 max-w-[1400px] mx-auto">
+    <a href="../../" class="font-sans font-medium tracking-tight text-[15px] text-white no-underline">Danilo Rojas <span class="text-system-dim font-mono ml-1">· dr</span></a>
+    <div class="flex items-center h-full">
+      <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase"><a href="../../#notes" class="text-system-dim hover:text-white transition-colors">Notas</a><a href="../../#work" class="text-system-dim hover:text-white transition-colors">Trabajo</a><a href="../../#method" class="text-system-dim hover:text-white transition-colors">Método</a><a href="../../#about" class="text-system-dim hover:text-white transition-colors">Sobre mí</a><a href="../../#contact" class="text-system-dim hover:text-white transition-colors">Contacto</a></div>
+      <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
+        <a href="../../../work/juan-valdez/" hreflang="en" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">ES<span class="text-system-dim/50">/EN</span></a>
+        <div class="flex items-center space-x-2 group cursor-help" title="Un humano corriendo el loop que corren los agentes — orquestando, evaluando, acumulando">
+          <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Humano_Acumulando</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="h-[1px] bg-white w-0 absolute bottom-0 left-0" id="scrollProgress"></div>
+</nav>
+
+<main id="main" class="flex-grow pt-28 pb-20 px-4 sm:px-8 relative z-10 flex flex-col items-center">
+
+  <div class="w-full max-w-5xl mb-6 reveal">
+    <a href="../../#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">← Volver al trabajo</a>
+  </div>
+
+  <div class="w-full max-w-5xl relative reveal">
+    <div class="structural-border p-8 sm:p-12 md:p-16 relative overflow-hidden bg-system-surface/30 backdrop-blur-sm">
+      <div class="font-mono text-[10px] text-system-dim uppercase tracking-widest mb-6 flex flex-wrap gap-x-3 gap-y-1">
+        <span class="text-white">Juan Valdez · Product / UI Designer</span><span class="text-system-line">//</span><span>2023</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1] text-white max-w-4xl">Juan Valdez — app mobile y design system</h1>
+      <p class="mt-8 text-base md:text-lg text-system-dim font-light leading-relaxed max-w-2xl">Diseño UI end-to-end para la app mobile de Juan Valdez Colombia — toda la superficie de producto y un design system reutilizable. Entregué las pantallas, los flujos y el sistema, y le pasé a ingeniería un build limpio y especificado.</p>
+      <div class="mt-10 flex flex-wrap gap-2"><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Mobile UI</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Design system</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Figma</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Brand-led</span></div>
+    </div>
+    <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+    <div class="tech-label -top-2 left-10">PROJECT_FILE // 02</div>
+  </div>
+
+  
+  <section class="w-full max-w-5xl mt-24 reveal">
+    <div class="border-b border-system-line pb-4 mb-8 flex items-end justify-between">
+      <h2 class="text-xl md:text-2xl font-light text-system-accent">Lo que lideré.</h2>
+      <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">SCOPE // 02</span>
+    </div>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4"><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Diseño UI completo de los flujos core mobile</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Design system reutilizable: componentes, escala tipográfica, color, spacing</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Diseño de producto brand-led para audiencia CPG / retail nacional</li></ul>
+  </section>
+  <section class="w-full max-w-5xl mt-24 reveal">
+    <div class="border-b border-system-line pb-4 mb-8 flex items-end justify-between">
+      <h2 class="text-xl md:text-2xl font-light text-system-accent">Cómo se entregó.</h2>
+      <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">DOC // NARRATIVE</span>
+    </div>
+    <dl class="border-b border-system-line">
+      <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
+      <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Contexto</dt>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Juan Valdez — la marca insignia de café de Colombia — necesitaba su app mobile diseñada como un producto real, no como un set de pantallas sueltas.</dd>
+    </div>
+      <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
+      <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Problema</dt>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">El producto tenía que sentirse inconfundiblemente Juan Valdez sin dejar de ser simple para una audiencia amplia y cotidiana — y necesitaba un sistema debajo para crecer sin romperse.</dd>
+    </div>
+      <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
+      <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Aproximación</dt>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Diseñé toda la UI de los flujos core y armé un design system reutilizable — componentes, escala tipográfica, color y spacing — para que cada pantalla quedara consistente y la marca se sostuviera de punta a punta.</dd>
+    </div>
+      <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
+      <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Ship</dt>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Una UI mobile completa y brand-led, con el design system detrás, entregada a ingeniería como un handoff limpio y especificado.</dd>
+    </div>
+      <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
+      <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Resultado</dt>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Una superficie de producto coherente de la que ingeniería podía construir directo, con un sistema que mantiene las pantallas nuevas on-brand y consistentes.</dd>
+    </div>
+      <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
+      <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Lo cambiaría</dt>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Emparejaría el design system con una doc de componentes viva desde el inicio, para que el handoff siga sincronizado a medida que la app evoluciona.</dd>
+    </div>
+      <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
+      <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Craft floor</dt>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Un solo sistema, fiel a la marca. Tipografía, color y spacing decididos una vez y reusados en todo. Pantallas diseñadas para entregar, no para admirar aisladas.</dd>
+    </div>
+    </dl>
+  </section>
+  <a class="group structural-border mt-16 p-8 md:p-10 flex items-center justify-between bg-system-surface/20 no-underline reveal max-w-5xl w-full relative" href="../../work/life-update-mobile/index.html">
+    <div class="crosshair ch-tr"></div><div class="crosshair ch-br"></div>
+    <div>
+      <div class="font-mono text-[10px] text-system-dim uppercase tracking-widest mb-2">Siguiente caso</div>
+      <div class="text-xl md:text-2xl font-light text-white">Life Update — app de foco con IA</div>
+    </div>
+    <svg class="w-6 h-6 text-system-dim group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+
+  <footer id="contact" class="w-full max-w-5xl mt-32 pt-16 pb-8">
+    <div class="structural-border p-8 md:p-16 reveal relative bg-[#050505]">
+      <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      <div class="tech-label -top-2 left-10">SYS: INITIALIZE_CONNECTION</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div>
+          <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">Contacto</span>
+          <h2 class="text-3xl md:text-4xl font-light mb-4 text-white">Hablemos.</h2>
+          <p class="text-system-dim font-light mb-8 max-w-md">Email directo es el camino más rápido. Respondo en un día hábil.</p>
+          <div class="space-y-6">
+            <button id="emailBtn" type="button" class="group relative px-6 py-3 bg-white text-black font-mono text-[11px] tracking-widest uppercase inline-flex items-center">
+              <span class="relative z-10 mr-2">danilorojas@hotmail.com</span>
+              <svg class="relative z-10 w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+            <div id="copyMsg" class="h-4 text-[10px] font-mono text-green-500 opacity-0 transition-opacity">Email copiado al portapapeles.</div>
+          </div>
+        </div>
+        <div class="flex flex-col justify-end">
+          <div class="border border-system-line p-1 bg-system-bg">
+            <div class="border border-system-line/50 p-6 relative">
+              <div class="font-mono text-[10px] text-system-dim mb-4 uppercase flex justify-between"><span>Terminal.exe</span><span>v11.0</span></div>
+              <div class="font-mono text-xs text-system-dim space-y-2">
+                <div>&gt; Diagnóstico del sistema... <span class="text-green-500">OK</span></div>
+                <div>&gt; Cargando perfil... <span class="text-green-500">100%</span></div>
+                <div class="text-white">&gt; Open to work · Remote global</div>
+                <div>&gt; Esperando handshake_</div>
+                <div class="animate-pulse w-2 h-4 bg-white mt-2 inline-block"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-12 flex flex-col md:flex-row justify-between items-start md:items-center font-mono text-[10px] text-system-dim uppercase tracking-widest reveal delay-200 gap-4">
+      <div>Hecho por Danilo Rojas · Actualizado 2026-06-15</div>
+      <div class="flex space-x-6"><a href="https://linkedin.com/in/mdanilorojas" rel="noopener" target="_blank" class="hover:text-white transition-colors">LinkedIn</a><a href="https://github.com/mdanilorojas" rel="noopener" target="_blank" class="hover:text-white transition-colors">GitHub</a><a href="https://behance.net/mariodanilo" rel="noopener" target="_blank" class="hover:text-white transition-colors">Behance</a></div>
+    </div>
+  </footer>
+
+</main>
+<script>document.addEventListener('DOMContentLoaded',function(){
+var root=document.documentElement;
+document.addEventListener('mousemove',function(ev){root.style.setProperty('--mouse-x',ev.clientX+'px');root.style.setProperty('--mouse-y',ev.clientY+'px');});
+var sp=document.getElementById('scrollProgress');
+window.addEventListener('scroll',function(){var t=document.documentElement.scrollTop;var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;sp.style.width=(t/h*100)+'%';},{passive:true});
+var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var els=document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window && !rm){var io=new IntersectionObserver(function(en,ob){en.forEach(function(x){if(!x.isIntersecting)return;x.target.classList.add('active');ob.unobserve(x.target);});},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});els.forEach(function(el){io.observe(el);});}
+else{els.forEach(function(el){el.classList.add('active');});}
+setTimeout(function(){els.forEach(function(el){if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('active');});},100);
+var btn=document.getElementById('emailBtn');var msg=document.getElementById('copyMsg');
+if(btn){btn.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText('danilorojas@hotmail.com').then(function(){if(msg){msg.style.opacity='1';setTimeout(function(){msg.style.opacity='0';},2000);}});});}
+});</script>
+<script>
+(function(){
+  // CSS injected into each animation iframe to strip captions, labels,
+  // hints, and sibling callouts — only the UI stage (.window / .phone)
+  // should render. Also removes stage padding and body centering so the
+  // iframe content box hugs the animation's intrinsic size.
+  var EMBED_CSS = [
+    'html, body { margin:0 !important; padding:0 !important; min-height:0 !important; background:transparent !important; display:block !important; place-items:initial !important; }',
+    '.stage { padding:0 !important; gap:0 !important; grid-template-columns:auto !important; display:block !important; text-align:left !important; }',
+    '.caption, .alt-label, .hint, .callouts { display:none !important; }',
+    /* keep only the primary visual (window OR phone-wrap) */
+    '.window { margin:0 !important; }',
+    '.phone-wrap { margin:0 !important; }'
+  ].join('\n');
+
+  function fitOne(wrapper){
+    var iframe = wrapper.querySelector('iframe');
+    if (!iframe) return;
+    var doc;
+    try { doc = iframe.contentDocument; } catch(_){ return; }
+    if (!doc || !doc.body) return;
+
+    // Inject embed CSS once.
+    if (!doc.getElementById('v11-embed-style')) {
+      var style = doc.createElement('style');
+      style.id = 'v11-embed-style';
+      style.textContent = EMBED_CSS;
+      (doc.head || doc.documentElement).appendChild(style);
+    }
+
+    // Measure the primary stage element — fall back to body if absent.
+    var target = doc.querySelector('.window')
+              || doc.querySelector('.phone-wrap')
+              || doc.querySelector('.stage')
+              || doc.body;
+    var rect = target.getBoundingClientRect();
+    var naturalW = Math.max(1, Math.round(rect.width));
+    var naturalH = Math.max(1, Math.round(rect.height));
+
+    // Size the iframe to the measured natural box so no scrollbars appear.
+    iframe.style.width  = naturalW + 'px';
+    iframe.style.height = naturalH + 'px';
+    iframe.setAttribute('width', String(naturalW));
+    iframe.setAttribute('height', String(naturalH));
+
+    // Update aspect ratio on wrapper so it reserves the right height.
+    wrapper.style.setProperty('--v11-anim-ratio', naturalW + ' / ' + naturalH);
+
+    // Apply scale to fit wrapper width.
+    var w = wrapper.clientWidth;
+    if (!w) return;
+    var scale = w / naturalW;
+    wrapper.style.setProperty('--v11-anim-scale', String(scale));
+  }
+
+  function fitAll(){
+    var wrappers = document.querySelectorAll('[data-anim-fit]');
+    for (var i = 0; i < wrappers.length; i++) fitOne(wrappers[i]);
+  }
+
+  // Hook each iframe's load so we inject + measure as soon as its doc is ready.
+  document.querySelectorAll('[data-anim-fit] iframe').forEach(function(iframe){
+    iframe.addEventListener('load', function(){
+      var wrapper = iframe.closest('[data-anim-fit]');
+      if (wrapper) fitOne(wrapper);
+    });
+    // If already loaded (cache), run now.
+    try { if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+      var wrapper = iframe.closest('[data-anim-fit]');
+      if (wrapper) fitOne(wrapper);
+    }} catch(_){}
+  });
+
+  fitAll();
+  window.addEventListener('resize', fitAll, { passive: true });
+  window.addEventListener('load', fitAll);
+  if (typeof ResizeObserver !== 'undefined') {
+    var ro = new ResizeObserver(fitAll);
+    document.querySelectorAll('[data-anim-fit]').forEach(function(el){ ro.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>

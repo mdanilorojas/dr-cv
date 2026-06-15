@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aura · Kitchen Sink</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { padding: 0; }
+  .ks-bar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 16px; padding: 14px 32px; background: var(--topbar-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .ks-bar h1 { font-family: var(--font-mono); font-size: 14px; letter-spacing: -0.01em; }
+  .ks-bar .eyebrow { margin-left: auto; }
+  .ks-wrap { max-width: 1080px; margin: 0 auto; padding: 40px 32px 120px; display: flex; flex-direction: column; gap: 48px; }
+  section h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-faint); font-weight: 600; margin-bottom: 18px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+</style>
+</head>
+<body>
+<div class="ks-bar">
+  <h1>Aura · kitchen sink</h1>
+  <span class="eyebrow" id="themeName">dark</span>
+  <button class="btn btn--sm" id="toggle">Toggle theme</button>
+</div>
+<div class="ks-wrap">
+
+  <section><h2>Buttons</h2>
+    <div class="row">
+      <button class="btn btn--primary">Primary</button>
+      <button class="btn btn--accent">Accent</button>
+      <button class="btn btn--secondary">Secondary</button>
+      <button class="btn btn--ghost">Ghost</button>
+      <button class="btn btn--danger">Danger</button>
+      <button class="btn" disabled>Disabled</button>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn btn--primary btn--sm">Small</button>
+      <button class="btn btn--primary">Base</button>
+      <button class="btn btn--primary btn--lg">Large</button>
+      <button class="btn btn--icon">+</button>
+    </div>
+  </section>
+
+  <section><h2>Badges · Mastery</h2>
+    <div class="row">
+      <span class="badge">neutral</span>
+      <span class="badge badge--primary">primary</span>
+      <span class="badge badge--success">success</span>
+      <span class="badge badge--warning">warning</span>
+      <span class="badge badge--danger">danger</span>
+      <span class="badge badge--info">info</span>
+      <span class="badge badge--dot badge--success">live</span>
+      <span class="badge badge--mono">v11.r10</span>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <span class="mastery mastery--mastered">Mastered</span>
+      <span class="mastery mastery--proficient">Proficient</span>
+      <span class="mastery mastery--developing">Developing</span>
+      <span class="mastery mastery--novice">Novice</span>
+      <span class="mastery mastery--gap">Gap</span>
+    </div>
+  </section>
+
+  <section><h2>Cards</h2>
+    <div class="grid2">
+      <div class="card">
+        <div class="card__header"><div><div class="card__title">Market value</div><div class="card__sub">Banked over 90 days</div></div><span class="badge badge--mono card__trailing">USD</span></div>
+        <div class="card__body"><div class="stat"><div class="stat__label">Target income</div><div class="stat__value">$250,000</div><span class="delta delta--up">▲ 12% vs Q1</span></div></div>
+      </div>
+      <div class="ai-surface">
+        <span class="ai-tag">AI authored</span>
+        <p style="margin-top:12px; color:var(--text-secondary); font-size:14px;">Your prose grader flagged a <strong style="color:var(--text-primary)">systems-thinking</strong> gap. Suggested learning path attached.</p>
+      </div>
+    </div>
+  </section>
+
+  <section><h2>Progress · Confidence · Tabs</h2>
+    <div class="grid2">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="progress"><div class="progress__fill" style="width:64%"></div></div>
+        <div class="progress progress--lg"><div class="progress__fill progress__fill--cool" style="width:40%"></div></div>
+        <div class="row"><span class="confidence confidence--high"><i class="confidence__bar"></i><i class="confidence__bar"></i><i class="confidence__bar"></i></span><span class="confidence confidence--medium"><i class="confidence__bar"></i><i class="confidence__bar"></i><i class="confidence__bar"></i></span><span class="confidence confidence--low"><i class="confidence__bar"></i><i class="confidence__bar"></i><i class="confidence__bar"></i></span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="tabs"><button class="tab tab--active">Overview</button><button class="tab">Gaps</button><button class="tab">Path</button></div>
+        <div class="segmented"><button class="segmented__item segmented__item--active">Dark</button><button class="segmented__item">Light</button><button class="segmented__item">Auto</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section><h2>Inputs</h2>
+    <div class="grid3">
+      <div class="field"><label class="field-label">Objective</label><input class="input" value="$250,000 / year"><span class="field-help">Outcome-first, always.</span></div>
+      <div class="field"><label class="field-label">Skill cluster</label><select class="select"><option>Systems thinking</option><option>Prototyping</option></select></div>
+      <div class="field"><label class="field-label">Notes</label><textarea class="textarea">Prose grader output…</textarea></div>
+    </div>
+    <div class="row" style="margin-top:16px">
+      <div class="search" style="width:260px"><svg class="search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input class="input" placeholder="Search skills…"></div>
+      <label class="switch"><input type="checkbox" checked><span class="switch__track"></span></label>
+      <span class="kbd">⌘</span><span class="kbd">K</span>
+    </div>
+  </section>
+
+  <section><h2>Table</h2>
+    <div class="card" style="overflow:hidden">
+      <table class="table">
+        <thead><tr><th>Skill</th><th>Mastery</th><th class="num">Banked value</th></tr></thead>
+        <tbody>
+          <tr><td>Systems thinking</td><td><span class="mastery mastery--developing">Developing</span></td><td class="num">$42,000</td></tr>
+          <tr><td>Prototyping</td><td><span class="mastery mastery--mastered">Mastered</span></td><td class="num">$88,500</td></tr>
+          <tr><td>Stakeholder craft</td><td><span class="mastery mastery--gap">Gap</span></td><td class="num">$0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section><h2>Artifact surfaces (signature)</h2>
+    <div class="grid2">
+      <div class="artifact">
+        <div class="artifact__head"><span class="artifact__dot"></span><span class="artifact__file">cv-serious.en.pdf</span><span>· generated 14 Jun 2026</span><span class="artifact__status">ready</span></div>
+        <div class="artifact__body">
+          <div class="embed-well"><div class="embed-well__icon">PDF</div><div><div style="color:var(--text-primary);font-weight:600;font-size:14px">Danilo Rojas — CV</div><div style="color:var(--text-muted);font-size:12px;font-family:var(--font-mono)">2 pages · 184 KB</div></div></div>
+          <div class="stream" style="margin-top:14px">Reading prose grader output for systems-thinking cluster<span class="stream__caret"></span></div>
+        </div>
+      </div>
+      <div class="artifact">
+        <div class="artifact__head"><span class="artifact__dot"></span><span class="artifact__file">plan.diff</span><span class="artifact__status">3 changes</span></div>
+        <div class="artifact__body">
+          <div class="plan" style="margin-bottom:14px">
+            <div class="plan__step plan__step--done"><span class="plan__marker">✓</span> Diagnose skill gaps from prose</div>
+            <div class="plan__step plan__step--done"><span class="plan__marker">✓</span> Rank by market value</div>
+            <div class="plan__step"><span class="plan__marker">3</span> Generate learning path</div>
+          </div>
+          <div class="diff">
+            <div class="diff__row diff__row--add"><span class="diff__sign">+</span>banked_value += 42000</div>
+            <div class="diff__row diff__row--del"><span class="diff__sign">−</span>gap: stakeholder_craft</div>
+          </div>
+          <div class="row" style="margin-top:14px"><span class="skill-chip">diff-review</span><span class="skill-chip">prose-grader</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section><h2>Alerts · Toast · Tooltip · Skeleton</h2>
+    <div class="grid2">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="alert alert--info"><span class="alert__bar"></span><div><div class="alert__title">Diagnostic ready</div>Your prose was graded against the senior rubric.</div></div>
+        <div class="alert alert--success"><span class="alert__bar"></span><div><div class="alert__title">Banked</div>+$42,000 added to market value.</div></div>
+        <div class="alert alert--warning"><span class="alert__bar"></span><div><div class="alert__title">Learning level</div>One cluster is still developing.</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="toast"><span class="toast__dot"></span>Learning path generated · 6 steps</div>
+        <span class="tooltip">Mastery is graded from prose, not multiple choice.</span>
+        <div class="skeleton" style="height:14px;width:80%"></div>
+        <div class="skeleton" style="height:14px;width:60%"></div>
+      </div>
+    </div>
+  </section>
+
+  <section><h2>Avatars · Breadcrumb · Empty state</h2>
+    <div class="grid2">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="row"><span class="avatar">DR</span><span class="avatar avatar--lg">DR</span><div class="avatar-group"><span class="avatar">DR</span><span class="avatar">JS</span><span class="avatar">AI</span></div></div>
+        <nav class="breadcrumb"><a href="#">Career OS</a><span class="breadcrumb__sep">/</span><a href="#">Diagnostic</a><span class="breadcrumb__sep">/</span><span class="breadcrumb__current">Systems thinking</span></nav>
+      </div>
+      <div class="card"><div class="empty-state"><div class="empty-state__icon">∅</div><div class="empty-state__title">No gaps detected</div><div class="empty-state__desc">Every skill cluster is at or above proficient.</div></div></div>
+    </div>
+  </section>
+
+  <section><h2>Essay surface (notebook)</h2>
+    <div class="card card--pad">
+      <div class="eyebrow" style="margin-bottom:12px">thesis · 01</div>
+      <div class="essay essay--dark essay--dropcap"><p>A point of view on agentic design, not a résumé. Fifteen years shipping product, the last twelve months rebuilt around a daily Claude Code workflow. The craft stays; agents supply the leverage.</p></div>
+    </div>
+  </section>
+
+</div>
+<script>
+  const root = document.documentElement, name = document.getElementById('themeName');
+  document.getElementById('toggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next); name.textContent = next;
+  });
+</script>
+</body>
+</html>

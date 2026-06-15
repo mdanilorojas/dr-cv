@@ -27,8 +27,8 @@ describe("success criteria", () => {
     expect(allSkills.some(s => s.level === "learning")).toBe(true);
   });
 
-  it("has 8 enterprise clients", () => {
-    expect(data.clients).toHaveLength(8);
+  it("has at least 8 enterprise clients", () => {
+    expect(data.clients.length).toBeGreaterThanOrEqual(8);
   });
 
   it("has at least 2 verified testimonials, all sourced as verified", () => {

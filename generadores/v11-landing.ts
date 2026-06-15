@@ -1,9 +1,10 @@
-import { readFileSync, mkdirSync, copyFileSync, readdirSync, statSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadLandingData } from "./lib/load-data.js";
 import { renderV11Landing } from "./templates/v11-landing/index.js";
+import { renderStructuralLanding } from "./templates/v11-landing/structural.js";
 import { renderCaseDetailPage } from "./templates/v11-landing/case-detail.js";
 import { renderOgCardHtml } from "./templates/v11-landing/og-card.js";
 import { renderOgImage } from "./lib/render-og.js";
@@ -57,6 +58,19 @@ function copyAnimationAssets(): void {
   console.log(`[v11-landing] copied animation assets -> ${destRoot}`);
 }
 
+function copyFonts(): void {
+  const src = path.join(projectRoot, "perfil", "assets", "fonts");
+  if (!existsSync(src)) return;
+  const destRoot = path.join(distDir, "assets", "fonts");
+  mkdirSync(destRoot, { recursive: true });
+  for (const entry of readdirSync(src)) {
+    const fromPath = path.join(src, entry);
+    if (statSync(fromPath).isDirectory()) continue;
+    copyFileSync(fromPath, path.join(destRoot, entry));
+  }
+  console.log(`[v11-landing] copied fonts -> ${destRoot}`);
+}
+
 // Hand-maintained, unlisted tools served alongside the landing. They are public
 // by direct URL, but intentionally not linked from the main landing.
 // Their source lives outside dist/; this copy keeps dist fully regenerable.
@@ -87,15 +101,32 @@ function copyHandTools(): void {
   }
 }
 
-async function buildOgImage(): Promise<void> {
+function writeFavicon(): void {
+  const svg = `<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="12" fill="#030303"/>
+  <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle"
+        font-family="Inter, Arial, sans-serif" font-size="38" font-weight="600"
+        fill="#EDEDED" letter-spacing="-1">
+    dr
+  </text>
+  <circle cx="48" cy="16" r="2" fill="#3B82F6"/>
+</svg>
+`;
+  const dest = path.join(distDir, "favicon.svg");
+  writeFileSync(dest, svg, "utf8");
+  console.log(`[v11-landing] wrote favicon -> ${dest}`);
+}
+
+async function buildOgImage(data: ReturnType<typeof loadLandingData>): Promise<void> {
   const photoBytes = readFileSync(photoSrc);
   const photoDataUrl = `data:image/jpeg;base64,${photoBytes.toString("base64")}`;
   const cardHtml = renderOgCardHtml({
     photoDataUrl,
-    name: "Danilo Rojas",
-    role: "Agentic Designer Â· Product Engineer",
-    tagline: "A point of view on agentic design, not a rÃ©sumÃ©.",
+    name: data.identity.name,
+    role: data.identity.role,
+    tagline: data.positioning.heroLine?.en ?? data.positioning.thesis.en,
     domain: "danilorojas.design",
+    availability: data.identity.availability,
   });
   const outputPath = path.join(distDir, "og.png");
   await renderOgImage({ html: cardHtml, outputPath });
@@ -114,21 +145,23 @@ async function main(): Promise<void> {
 
   await copyPhoto();
   copyAnimationAssets();
+  copyFonts();
   copyHandTools();
-  await buildOgImage();
+  writeFavicon();
+  await buildOgImage(data);
 
   const ogImageUrl = `${SITE_ORIGIN}/og.png`;
 
   await emit(
     "index.html",
-    renderV11Landing(data, "en", tokensCss, {
+    renderStructuralLanding(data, "en", tokensCss, {
       photoHref: "assets/photo/danilo.jpg",
       ogImageUrl,
     }),
   );
   await emit(
     path.join("es", "index.html"),
-    renderV11Landing(data, "es", tokensCss, {
+    renderStructuralLanding(data, "es", tokensCss, {
       photoHref: "../assets/photo/danilo.jpg",
       ogImageUrl,
     }),

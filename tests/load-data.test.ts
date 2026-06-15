@@ -12,6 +12,8 @@ import {
   DataLoadError,
   validateSkills,
   validatePositioning,
+  loadNotes,
+  validateNotes,
 } from "../generadores/lib/load-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -122,7 +124,7 @@ describe("loadCases", () => {
     const cases = loadCases(realCasesDir);
     expect(cases.length).toBe(3);
     const slugs = cases.map((c) => c.slug).sort();
-    expect(slugs).toEqual(["developer-portal", "enregla", "life-update-mobile"]);
+    expect(slugs).toEqual(["developer-portal", "juan-valdez", "life-update-mobile"]);
   });
 });
 
@@ -305,14 +307,60 @@ describe("loadCvData â€” inventory round-trip", () => {
 });
 
 describe("loadCvData â€” thesisBairesdev round-trip", () => {
-  it("perfil/data/positioning.yaml exposes thesisBairesdev.en starting with 'Agentic Designer.'", () => {
+  it("perfil/data/positioning.yaml exposes thesisBairesdev.en starting with 'Senior Product Designer.'", () => {
     const here = path.dirname(fileURLToPath(import.meta.url));
     const dataDir = path.join(here, "..", "perfil", "data");
     const cv = loadCvData(dataDir);
     expect(cv.positioning.thesisBairesdev).toBeDefined();
-    expect(cv.positioning.thesisBairesdev!.en.startsWith("Agentic Designer."))
+    expect(cv.positioning.thesisBairesdev!.en.startsWith("Senior Product Designer."))
       .toBe(true);
-    expect(cv.positioning.thesisBairesdev!.en).toContain("15 years");
-    expect(cv.positioning.thesisBairesdev!.en).toContain("agents as force multiplier");
+    expect(cv.positioning.thesisBairesdev!.en).toContain("18 years");
+    expect(cv.positioning.thesisBairesdev!.en).toContain("AI as leverage");
+  });
+});
+
+describe("validateNotes", () => {
+  it("parses a list of notes", () => {
+    const notes = validateNotes([
+      { slug: "a", titleEn: "T", titleEs: "T", bodyEn: "B", bodyEs: "B" },
+    ]);
+    expect(notes).toHaveLength(1);
+    expect(notes[0].slug).toBe("a");
+  });
+  it("rejects a note missing a field", () => {
+    expect(() => validateNotes([{ slug: "a", titleEn: "T" }])).toThrow(/titleEs/);
+  });
+  it("loadNotes throws DataLoadError on a malformed file", () => {
+    mkdirSync(fixtureBadDir, { recursive: true });
+    const tmpPath = path.join(fixtureBadDir, "bad-notes.yaml");
+    writeFileSync(tmpPath, "- slug: a\n  titleEn: T\n");
+    try {
+      expect(() => loadNotes(tmpPath)).toThrow(DataLoadError);
+    } finally {
+      unlinkSync(tmpPath);
+    }
+  });
+});
+
+describe("validatePositioning trustStrip + heroLine", () => {
+  it("accepts trustStrip and heroLine when present", () => {
+    const p = validatePositioning({
+      thesis: { en: "x", es: "x" },
+      tagline: { en: "x", es: "x" },
+      heroLine: { en: "h", es: "h" },
+      trustStrip: { en: ["A", "B"], es: ["A", "B"] },
+      proofNumbers: [{ value: "1", labelEn: "L", labelEs: "L" }],
+    });
+    expect(p.heroLine?.en).toBe("h");
+    expect(p.trustStrip?.es).toEqual(["A", "B"]);
+  });
+  it("omits them when absent", () => {
+    const p = validatePositioning({
+      thesis: { en: "x", es: "x" },
+      tagline: { en: "x", es: "x" },
+      proofNumbers: [{ value: "1", labelEn: "L", labelEs: "L" }],
+    });
+    expect(p.heroLine).toBeUndefined();
+    expect(p.trustStrip).toBeUndefined();
   });
 });

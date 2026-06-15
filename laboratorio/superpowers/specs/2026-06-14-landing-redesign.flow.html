@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Landing redesign — flow & narrative model</title>
+<style>
+  :root{
+    --paper:#F6F1E7; --ink:#1C1A17; --muted:#6B645A; --line:#DAD2C3;
+    --accent:#D9663F; --card:#FBF8F1;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --serif:"Source Serif 4",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+       line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:64px 24px 120px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;
+           text-transform:uppercase;color:var(--accent)}
+  h1{font-size:42px;line-height:1.05;letter-spacing:-.02em;margin:.4em 0 .2em;font-weight:680}
+  h2{font-size:13px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;
+     color:var(--muted);margin:56px 0 16px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  .lede{font-family:var(--serif);font-size:20px;color:#2c2925;margin:.6em 0 0}
+  p{color:#2c2925}
+  .meta{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+  th,td{text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  td b{font-weight:640}
+  .flow{display:flex;flex-direction:column;gap:0;margin-top:8px}
+  .node{background:var(--card);border:1px solid var(--line);border-radius:10px;
+        padding:14px 16px;position:relative}
+  .node .k{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+  .node .v{font-size:15px;margin-top:2px}
+  .arrow{align-self:center;color:var(--muted);font-size:18px;line-height:1;padding:6px 0}
+  .branch{display:flex;gap:12px}
+  .branch .node{flex:1}
+  .tag{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--muted);
+       border:1px solid var(--line);border-radius:999px;padding:2px 8px;margin:2px 4px 0 0}
+  .accentbar{height:3px;width:54px;background:var(--accent);border-radius:2px;margin:18px 0 0}
+  footer{margin-top:80px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">Spec companion · 14 Jun 2026</div>
+  <h1>Landing redesign</h1>
+  <div class="accentbar"></div>
+  <p class="lede">Single-column editorial. Lead with thinking. Judgment over costume.</p>
+  <p class="meta">Canonical: 2026-06-14-landing-redesign.md · Scope: landing + CV · Light editorial, dark optional later</p>
+
+  <h2>Visitor flow — what a recruiter does</h2>
+  <div class="flow">
+    <div class="node"><div class="k">1 · Hero</div><div class="v">"Designing products for complex systems, regulated environments, and teams that need to move faster." → first impression</div></div>
+    <div class="arrow">↓</div>
+    <div class="node"><div class="k">2 · Trust strip</div><div class="v">FAA · DoD · VA · Booz Allen Hamilton · Pichincha Bank · Rappi · Juan Valdez — text only, no logos → trust in seconds</div></div>
+    <div class="arrow">↓</div>
+    <div class="node"><div class="k">3 · Proof</div><div class="v">18+ building products · 15 in design · 4 yrs FAA/DoD/VA · 50+ initiatives → credibility</div></div>
+    <div class="arrow">↓</div>
+    <div class="node"><div class="k">4 · Notes / POV</div><div class="v">Evaluates <b>thinking</b> — extraordinary, short, concrete, his. The analyzable signal.</div></div>
+    <div class="arrow">↓</div>
+    <div class="branch">
+      <div class="node"><div class="k">5 · Selected work</div><div class="v">Decisions + outcomes, not screenshots</div></div>
+      <div class="node"><div class="k">6 · Method + About</div><div class="v">Continuous improvement (past/present/future) + the arc DBA→UX, gov/compliance rigor</div></div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="node"><div class="k">7 · Contact</div><div class="v">Copy email → reaches out</div></div>
+  </div>
+
+  <h2>Narrative model — from the ten best → to Danilo</h2>
+  <table>
+    <thead><tr><th>Section</th><th>Narrative intent</th><th>Best move</th></tr></thead>
+    <tbody>
+      <tr><td><b>Hero</b></td><td>Manifesto, not pitch. The hero line, big type, few words.</td><td>Rauno</td></tr>
+      <tr><td><b>Trust strip</b></td><td>Text-only credential row, no logos. Trust in seconds.</td><td>common to the best</td></tr>
+      <tr><td><b>Proof</b></td><td>Specificity = credibility. Quiet mono labels.</td><td>Jim Nielsen</td></tr>
+      <tr><td><b>Notes / POV</b></td><td>The moat. Short, extraordinary, concrete, his.</td><td>Rauno · Emil · Jim</td></tr>
+      <tr><td><b>Selected work</b></td><td>3–4 cases as decisions + outcomes.</td><td>Emil · Brian Lovin</td></tr>
+      <tr><td><b>Method</b></td><td>Judgment + AI leverage + continuous-improvement system.</td><td>van Schneider</td></tr>
+      <tr><td><b>About</b></td><td>The arc as a story; tight bio, not a CV.</td><td>editorial bio</td></tr>
+      <tr><td><b>Contact</b></td><td>Copy-to-clipboard, restraint.</td><td>Rauno</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Voice & direction</h2>
+  <p>First person, calm, declarative, lowercase-leaning. Show with specificity, not adjectives. One accent, lots of space.</p>
+  <div>
+    <span class="tag">light editorial</span><span class="tag">single column</span>
+    <span class="tag">type-led</span><span class="tag">one accent · #D9663F</span>
+    <span class="tag">no particles</span><span class="tag">self-hosted fonts</span>
+    <span class="tag">reduced-motion safe</span><span class="tag">judgment over costume</span>
+  </div>
+
+  <h2>Out of scope</h2>
+  <p>MentorOS / <code>/app</code> v2 · the dark app cockpit · net-new case-study content (interviewed separately in Paso 3) · anything referencing the private $250k goal (internal only).</p>
+
+  <footer>Backup of the old landing: laboratorio/landing-v11-backup-2026-06-14/</footer>
+</div>
+</body>
+</html>

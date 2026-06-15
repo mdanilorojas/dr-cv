@@ -1,0 +1,18 @@
+/* =========================================================================
+ * Aura Design System · Fonts (dr-cv V11)
+ *
+ * Three families, per V11 R7 craft floor:
+ *   · Inter         — UI / body (sans)
+ *   · JetBrains Mono — display headings, metadata, code, mono pills
+ *   · Source Serif 4 — long-form essay surface ONLY (landing notebook)
+ *
+ * NOTE ON SELF-HOSTING: the brand canon calls for self-hosted, Latin-subset
+ * variable fonts (no CDN in prod). This file currently loads from the Google
+ * Fonts CDN so previews render reliably in this environment. To ship truly
+ * self-hosted: drop the woff2 binaries into assets/fonts/ and replace the
+ * @import below with @font-face rules pointing at those local files. The
+ * font stacks in colors_and_type.css already name the families, so no other
+ * change is needed. (Flagged to the user — see README "Caveats".)
+ * ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap');

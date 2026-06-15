@@ -16,68 +16,70 @@
 
 :root {
   /* ─────────────────────────────────────────────────────────────
-   * 1 · SURFACE (dark-dominant)
+   * 1 · SURFACE (light editorial — cream paper)
    * ───────────────────────────────────────────────────────────── */
-  --v11-bg-deep:        #060708;   /* OLED-adjacent deepest */
-  --v11-bg-primary:     #0A0B0E;   /* page background (warm-huly base) */
-  --v11-bg-alt:         #111318;   /* section alt (for dark/dark-alt rhythm) */
-  --v11-bg-paper:       #F6F4F0;   /* cream section for contrast chapters */
-  --v11-bg-elevated:    #14161C;   /* card surface on dark */
-  --v11-bg-elevated-2:  #1C1F27;   /* toolbar / nested surface */
-  --v11-bg-inset:       #0D0F13;   /* code / inputs / embed wells */
+  --v11-bg-deep:        #EFE8DA;   /* deepest warm tone */
+  --v11-bg-primary:     #F6F1E7;   /* cream paper — page background */
+  --v11-bg-alt:         #FBF8F1;   /* section alt */
+  --v11-bg-paper:       #FFFFFF;   /* elevated reading card */
+  --v11-bg-elevated:    #FFFFFF;   /* card surface */
+  --v11-bg-elevated-2:  #F3ECDD;   /* toolbar / nested surface */
+  --v11-bg-inset:       #F0E9DA;   /* code / inputs / embed wells */
 
   /* ─────────────────────────────────────────────────────────────
-   * 2 · INK (on dark)
+   * 2 · INK (on cream — dark-text scale)
    * ───────────────────────────────────────────────────────────── */
-  --v11-text:           #F4F4F5;   /* primary on dark */
-  --v11-text-body:      #D7D8DB;
-  --v11-text-85:        #C9CBCF;
-  --v11-text-70:        #B0B2B7;
-  --v11-text-60:        #95979E;
-  --v11-text-50:        #797D86;
-  --v11-text-40:        #61656B;
-  --v11-text-subtle:    #4A4B50;
+  --v11-text:           #1C1A17;   /* primary ink on cream */
+  --v11-text-body:      #2C2925;
+  --v11-text-85:        #3A3630;
+  --v11-text-70:        #57514A;
+  --v11-text-60:        #6B645A;
+  --v11-text-50:        #837B70;
+  --v11-text-40:        #9A9286;
+  --v11-text-subtle:    #B6AD9F;
 
-  /* Ink on cream (paper sections) */
-  --v11-paper-ink:      #0B0C0E;
-  --v11-paper-body:     #303236;
-  --v11-paper-muted:    #4A4B50;
-  --v11-paper-subtle:   #797D86;
+  /* Ink on paper-white (elevated reading cards) */
+  --v11-paper-ink:      #1C1A17;
+  --v11-paper-body:     #2C2925;
+  --v11-paper-muted:    #57514A;
+  --v11-paper-subtle:   #837B70;
 
   /* ─────────────────────────────────────────────────────────────
    * 3 · ACCENT · restrained (V11 R8 — NO glow, punctuation only)
    * ───────────────────────────────────────────────────────────── */
-  --v11-accent:         #FF8964;   /* warm orange — used as punctuation */
-  --v11-accent-ink:     #2A0F05;   /* dark ink on accent bg */
-  --v11-accent-deep:    #E0674A;   /* hover / active state */
-  --v11-accent-soft:    rgba(255, 137, 100, 0.14);
-  --v11-accent-ring:    rgba(255, 137, 100, 0.35);
-  --v11-accent-line:    rgba(255, 137, 100, 0.28);
+  --v11-accent:         #D9663F;   /* terracotta — punctuation; AA on cream */
+  --v11-accent-ink:     #FFF6F1;   /* light ink on accent bg */
+  --v11-accent-deep:    #C2542F;   /* hover / active state */
+  --v11-accent-soft:    rgba(217, 102, 63, 0.10);
+  --v11-accent-ring:    rgba(217, 102, 63, 0.40);
+  --v11-accent-line:    rgba(217, 102, 63, 0.30);
 
   /* Secondary signal — used only for agentic UX state:
      Visible Thinking / Plan-before-Build / Diff-Review additions */
-  --v11-signal-cool:    #5683DA;   /* tool-use / plan state */
-  --v11-signal-warn:    #E5A84B;   /* caution / learning-level */
-  --v11-signal-pos:     #4ADE80;   /* diff additions / success */
-  --v11-signal-neg:     #F87171;   /* diff deletions / errors */
+  --v11-signal-cool:    #3A66B8;   /* tool-use / plan state — AA on cream */
+  --v11-signal-warn:    #B57614;   /* caution / learning-level — AA on cream */
+  --v11-signal-pos:     #2E844A;   /* diff additions / success — AA on cream */
+  --v11-signal-neg:     #C23B3B;   /* diff deletions / errors — AA on cream */
 
   /* ─────────────────────────────────────────────────────────────
-   * 4 · LINES & DIVIDERS
+   * 4 · LINES & DIVIDERS (warm hairlines on cream)
    * ───────────────────────────────────────────────────────────── */
-  --v11-line:           rgba(255, 255, 255, 0.08);
-  --v11-line-strong:    rgba(255, 255, 255, 0.18);
-  --v11-line-soft:      rgba(255, 255, 255, 0.04);
-  --v11-line-paper:     #E5E2DA;
-  --v11-line-paper-sf:  #EFECE4;
+  --v11-line:           #DAD2C3;   /* warm hairline */
+  --v11-line-strong:    rgba(28, 26, 23, 0.18);
+  --v11-line-soft:      rgba(28, 26, 23, 0.06);
+  --v11-line-paper:     #DAD2C3;
+  --v11-line-paper-sf:  #ECE5D7;
 
   /* ─────────────────────────────────────────────────────────────
-   * 5 · ELEVATION (shadows — muted, Huly-derived)
+   * 5 · ELEVATION (shadows — subtle dark-on-light)
    * ───────────────────────────────────────────────────────────── */
-  --v11-shadow-card:        0 6px 25px rgba(0, 0, 0, 0.50);
-  --v11-shadow-card-hover:  0 14px 30px rgba(0, 0, 0, 0.80);
-  --v11-shadow-float:       0 10px 20px rgba(0, 0, 0, 0.50);
-  --v11-shadow-artifact:    0 16px 40px rgba(0, 0, 0, 0.45),
-                            0 2px 0 rgba(255, 255, 255, 0.04) inset;
+  --v11-shadow-card:        0 1px 2px rgba(28, 26, 23, 0.05),
+                            0 6px 16px rgba(28, 26, 23, 0.07);
+  --v11-shadow-card-hover:  0 2px 4px rgba(28, 26, 23, 0.07),
+                            0 14px 28px rgba(28, 26, 23, 0.12);
+  --v11-shadow-float:       0 8px 20px rgba(28, 26, 23, 0.10);
+  --v11-shadow-artifact:    0 12px 32px rgba(28, 26, 23, 0.10),
+                            0 1px 0 rgba(255, 255, 255, 0.60) inset;
 
   /* ─────────────────────────────────────────────────────────────
    * 6 · TYPOGRAPHY (self-hosted per V11 R7)
@@ -92,8 +94,8 @@
 
   /* Scale — clamp-based for responsive.
      H1 hero: 72px desktop, 32px mobile (V11 R7 signature recommendation). */
-  --v11-fs-hero:       clamp(32px, 7vw, 72px);
-  --v11-fs-h1:         clamp(28px, 5.5vw, 56px);
+  --v11-fs-hero:       clamp(26px, 3.4vw, 42px);
+  --v11-fs-h1:         clamp(22px, 2.6vw, 30px);
   --v11-fs-h2:         clamp(24px, 4vw, 40px);
   --v11-fs-h3:         clamp(20px, 2.8vw, 28px);
   --v11-fs-lead:       clamp(17px, 1.9vw, 20px);
@@ -190,27 +192,27 @@
    * artifacts Danilo's workflow produces. These are not "effects" —
    * they're product-UI tokens because the landing embeds running UI.
    * ───────────────────────────────────────────────────────────── */
-  --v11-artifact-bg:          #111318;
-  --v11-artifact-bg-alt:      #16181F;
-  --v11-artifact-line:        rgba(255, 255, 255, 0.10);
-  --v11-artifact-line-strong: rgba(255, 255, 255, 0.20);
-  --v11-artifact-glow:        rgba(255, 137, 100, 0.08);
+  --v11-artifact-bg:          #FFFFFF;
+  --v11-artifact-bg-alt:      #FBF8F1;
+  --v11-artifact-line:        rgba(28, 26, 23, 0.10);
+  --v11-artifact-line-strong: rgba(28, 26, 23, 0.20);
+  --v11-artifact-glow:        rgba(217, 102, 63, 0.10);
   /* used at 1px border on focused artifact frames, not hero glow */
 
-  --v11-artifact-chip-bg:     rgba(255, 137, 100, 0.12);
+  --v11-artifact-chip-bg:     rgba(217, 102, 63, 0.10);
   --v11-artifact-chip-ink:    var(--v11-accent);
   --v11-artifact-chip-line:   var(--v11-accent-line);
 
   /* Stream UI (Visible Thinking / Plan-before-Build) */
-  --v11-stream-bg:            rgba(255, 255, 255, 0.025);
-  --v11-stream-line:          rgba(255, 255, 255, 0.06);
+  --v11-stream-bg:            rgba(28, 26, 23, 0.03);
+  --v11-stream-line:          rgba(28, 26, 23, 0.07);
   --v11-stream-caret:         var(--v11-accent);
 
-  /* Diff-Review state tokens */
-  --v11-diff-add-bg:          rgba(74, 222, 128, 0.08);
-  --v11-diff-add-line:        rgba(74, 222, 128, 0.25);
-  --v11-diff-del-bg:          rgba(248, 113, 113, 0.08);
-  --v11-diff-del-line:        rgba(248, 113, 113, 0.25);
+  /* Diff-Review state tokens — tuned for light surfaces */
+  --v11-diff-add-bg:          rgba(46, 132, 74, 0.10);
+  --v11-diff-add-line:        rgba(46, 132, 74, 0.30);
+  --v11-diff-del-bg:          rgba(194, 59, 59, 0.10);
+  --v11-diff-del-line:        rgba(194, 59, 59, 0.30);
 }
 
 /* Reduced motion overrides */

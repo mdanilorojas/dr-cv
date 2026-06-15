@@ -1,0 +1,26 @@
+thesis:
+  en: "Eighteen years in product, fifteen in design. Senior UX judgment, enterprise-grade compliance documentation, and the flexibility to learn any domain and ship into it — AI as leverage, not costume."
+  es: "Dieciocho años en producto, quince en diseño. Juicio UX senior, documentación de compliance enterprise-grade, y la flexibilidad de aprender cualquier dominio y entregar en él — IA como leverage, no como disfraz."
+tagline:
+  en: "From DBA to UX — I learned the whole stack to design for it. I analyze, learn, ship, and align to whatever the project needs."
+  es: "De DBA a UX — aprendí el stack entero para diseñar sobre él. Analizo, aprendo, entrego y me alineo a lo que el proyecto necesite."
+proofNumbers:
+  - value: "18"
+    unit: "+"
+    labelEn: "Years in product · 15 in design"
+    labelEs: "Años en producto · 15 en diseño"
+  - value: "4"
+    labelEn: "Years inside a DoD contractor · compliance"
+    labelEs: "Años en un contratista DoD · compliance"
+  - value: "1"
+    unit: ".0"
+    labelEn: "Compliance SaaS shipped 0→1"
+    labelEs: "SaaS de compliance 0→1"
+  - value: "95"
+    unit: ".6"
+    labelEn: "DS migration score"
+    labelEs: "Score migración DS"
+
+thesisBairesdev:
+  en: "Senior Product Designer. 18 years shipping product — UX judgment, enterprise compliance documentation, AI as leverage."
+  es: "Diseñador de Producto Senior. 18 años entregando producto — juicio UX, documentación de compliance enterprise, IA como leverage."

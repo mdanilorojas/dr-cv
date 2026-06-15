@@ -1,26 +1,25 @@
 ---
 slug: life-update-mobile
-titleEn: "Life Update Mobile — Gemini API in runtime"
-titleEs: "Life Update Mobile — API Gemini en runtime"
-clientEn: "own product · LLM in runtime"
-clientEs: "producto propio · LLM en runtime"
+titleEn: "Life Update — AI focus app"
+titleEs: "Life Update — app de foco con IA"
+clientEn: "Personal product · Design + AI"
+clientEs: "Producto personal · Diseño + IA"
 yearStart: 2026
 yearEnd: 2026
-hookEn: "Personal tracking system — daily entries analyzed by Gemini in runtime, semantic distance to a 5-year plan, Steve-Jobs-style focus metrics (3 things a day). Shipped 0 → production in a day."
-hookEs: "Sistema de tracking personal — entries diarios analizados por Gemini en runtime, distancia semántica a un plan a 5 años, métricas de foco tipo Steve Jobs (3 cosas al día). 0 → producción en un día."
+hookEn: "A personal focus app: write a daily entry, get it scored against your 5-year plan in plain language — three priorities a day, nothing more. I designed the product and the AI behavior, then shipped the MVP to prove it."
+hookEs: "Una app personal de foco: escribes una entrada diaria y se evalúa contra tu plan a 5 años en lenguaje claro — tres prioridades al día, nada más. Diseñé el producto y el comportamiento de la IA, y shippeé el MVP para probarlo."
 bulletsEn:
-  - "Gemini API runtime for semantic analysis of daily entries"
-  - "Hybrid data model: .md files as source of truth + DB as execution engine"
-  - "Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits in 24h"
+  - "Product + interaction design for AI-scored daily focus"
+  - "Designed the AI behavior: semantic distance from each entry to a long-term plan"
+  - "Shipped a working MVP to validate the concept end-to-end"
 bulletsEs:
-  - "API Gemini en runtime para análisis semántico de entries diarios"
-  - "Data híbrida: .md como fuente de verdad + DB como motor de ejecución"
-  - "Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits en 24h"
+  - "Product + interaction design para foco diario scoreado por IA"
+  - "Diseñé el comportamiento de la IA: distancia semántica de cada entrada al plan de largo plazo"
+  - "Shippeé un MVP funcional para validar el concepto end-to-end"
 stack:
-  - "Gemini API"
-  - "Next.js 16"
-  - "Prisma"
-  - "0 → prod / 1d"
+  - "Product design"
+  - "AI / LLM behavior"
+  - "0→1 MVP"
 featured: false
 ---
 
