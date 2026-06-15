@@ -61,8 +61,11 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 .tech-label { position:absolute; background:#030303; padding:0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:.1em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.08); z-index:10; }
 .metric-card { background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); transition: background-color .4s ease, box-shadow .4s ease; }
 .metric-card:hover { background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+.status-glyph{ overflow:visible; }
+.status-hint{ border-bottom:1px dashed rgba(255,255,255,.22); padding-bottom:2px; transition:border-color .35s ease; }
+.group:hover .status-hint{ border-color:rgba(255,255,255,.85); }
 ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
-@media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} }
+@media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} .status-glyph animateMotion, .status-glyph animate{ display:none; } }
 </style>
 </head>
 <body class="relative overflow-x-hidden selection:bg-white selection:text-black min-h-screen flex flex-col font-sans">
@@ -77,9 +80,16 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
       <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase"><a href="#notes" class="text-system-dim hover:text-white transition-colors">Notes</a><a href="#work" class="text-system-dim hover:text-white transition-colors">Work</a><a href="#method" class="text-system-dim hover:text-white transition-colors">Method</a><a href="#about" class="text-system-dim hover:text-white transition-colors">About</a><a href="#contact" class="text-system-dim hover:text-white transition-colors">Contact</a></div>
       <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
         <a href="es/" hreflang="es" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">EN<span class="text-system-dim/50">/ES</span></a>
-        <div class="flex items-center space-x-2 group cursor-help" title="A human running the loop agents run — orchestrating, evaluating, compounding">
-          <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
-          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Human_Compounding</span>
+        <div id="statusBadge" class="flex items-center space-x-2 group cursor-help" title="A human running the loop agents run — orchestrating, evaluating, compounding">
+          <svg class="status-glyph text-system-dim group-hover:text-white transition-colors" width="21" height="21" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+  <circle cx="20" cy="20" r="2" fill="currentColor"/>
+  <g fill="currentColor">
+    <circle r="1.3" opacity="0"><animateMotion path="M 36 20 Q 28 12 20 20" dur="8s" begin="statusBadge.mouseover" end="statusBadge.mouseout" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="statusBadge.mouseover" end="statusBadge.mouseout" repeatCount="indefinite"/></circle>
+    <circle r="1.3" opacity="0"><animateMotion path="M 20 4 Q 28 12 20 20" dur="8s" begin="statusBadge.mouseover-2.6s" end="statusBadge.mouseout" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="statusBadge.mouseover-2.6s" end="statusBadge.mouseout" repeatCount="indefinite"/></circle>
+    <circle r="1.3" opacity="0"><animateMotion path="M 4 20 Q 12 28 20 20" dur="8s" begin="statusBadge.mouseover-5.3s" end="statusBadge.mouseout" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="statusBadge.mouseover-5.3s" end="statusBadge.mouseout" repeatCount="indefinite"/></circle>
+  </g>
+</svg>
+          <span class="status-hint font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Human_Compounding</span>
         </div>
       </div>
     </div>
@@ -200,9 +210,8 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
    </div></div>
   <div class="flex-grow">
     <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>Booz Allen Hamilton · Senior Product Designer</span><span>2026</span></div>
-    <h3 class="text-lg text-white font-medium mb-2">Developer Portal design system</h3>
-    <p class="text-xs text-system-dim mb-4 font-light leading-relaxed">A dark-first design system for a government-facing developer platform. I defined the tokens, components, and accessibility rules so every team ships consistent, WCAG-compliant UI — packaged so engineering can pull ready-to-use components without redesigning anything.</p>
-    <ul class="text-sm text-system-dim space-y-2 mb-6 font-light"><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Dark-first design system with WCAG contrast decided and documented per token</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> 17 production components with states, usage rules, and named anti-patterns</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Handoff spec engineering builds from directly — design DNA, constraints, checklists</li></ul>
+    <h3 class="text-lg text-white font-medium mb-3">Developer Portal design system</h3>
+    <p class="text-sm text-system-dim mb-6 font-light leading-relaxed">Dark-first design system for a government platform — accessible by default, built for engineering to use off the shelf.</p>
   </div>
   <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
     <span class="text-xs font-mono uppercase tracking-widest">How this shipped</span>
@@ -217,9 +226,8 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
    </div></div>
   <div class="flex-grow">
     <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>Juan Valdez · Product / UI Designer</span><span>2023</span></div>
-    <h3 class="text-lg text-white font-medium mb-2">Juan Valdez mobile app &amp; design system</h3>
-    <p class="text-xs text-system-dim mb-4 font-light leading-relaxed">End-to-end UI design for Juan Valdez&#39;s Colombia mobile app — the full product surface and a reusable design system. I delivered the screens, the flows, and the system, then handed engineering a clean, spec&#39;d build.</p>
-    <ul class="text-sm text-system-dim space-y-2 mb-6 font-light"><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Complete UI design across the core mobile flows</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Reusable design system: components, type scale, color, spacing</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Brand-led product design for a national CPG / retail audience</li></ul>
+    <h3 class="text-lg text-white font-medium mb-3">Juan Valdez mobile app &amp; design system</h3>
+    <p class="text-sm text-system-dim mb-6 font-light leading-relaxed">End-to-end mobile UI and a reusable design system for Juan Valdez Colombia — designed, then handed off clean.</p>
   </div>
   <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
     <span class="text-xs font-mono uppercase tracking-widest">How this shipped</span>
@@ -232,9 +240,8 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
    </div></div>
   <div class="flex-grow">
     <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>Personal product · Design + AI</span><span>2026</span></div>
-    <h3 class="text-lg text-white font-medium mb-2">Life Update — AI focus app</h3>
-    <p class="text-xs text-system-dim mb-4 font-light leading-relaxed">A personal focus app: write a daily entry, get it scored against your 5-year plan in plain language — three priorities a day, nothing more. I designed the product and the AI behavior, then shipped the MVP to prove it.</p>
-    <ul class="text-sm text-system-dim space-y-2 mb-6 font-light"><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Product + interaction design for AI-scored daily focus</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Designed the AI behavior: semantic distance from each entry to a long-term plan</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Shipped a working MVP to validate the concept end-to-end</li></ul>
+    <h3 class="text-lg text-white font-medium mb-3">Life Update — AI focus app</h3>
+    <p class="text-sm text-system-dim mb-6 font-light leading-relaxed">Personal focus app — your day scored against your 5-year plan. I designed the product and the AI, then shipped the MVP.</p>
   </div>
   <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
     <span class="text-xs font-mono uppercase tracking-widest">How this shipped</span>

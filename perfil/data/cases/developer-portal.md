@@ -6,8 +6,8 @@ clientEn: "Booz Allen Hamilton · Senior Product Designer"
 clientEs: "Booz Allen Hamilton · Senior Product Designer"
 yearStart: 2024
 yearEnd: 2026
-hookEn: "A dark-first design system for a government-facing developer platform. I defined the tokens, components, and accessibility rules so every team ships consistent, WCAG-compliant UI — packaged so engineering can pull ready-to-use components without redesigning anything."
-hookEs: "Un design system dark-first para una plataforma de developers government-facing. Definí los tokens, componentes y reglas de accesibilidad para que cada equipo entregue UI consistente y conforme a WCAG — empaquetado para que ingeniería tome componentes listos sin rediseñar nada."
+hookEn: "Dark-first design system for a government platform — accessible by default, built for engineering to use off the shelf."
+hookEs: "Design system dark-first para una plataforma government — accesible por defecto, listo para que ingeniería lo use directo."
 bulletsEn:
   - "Dark-first design system with WCAG contrast decided and documented per token"
   - "17 production components with states, usage rules, and named anti-patterns"

@@ -6,8 +6,8 @@ clientEn: "Personal product · Design + AI"
 clientEs: "Producto personal · Diseño + IA"
 yearStart: 2026
 yearEnd: 2026
-hookEn: "A personal focus app: write a daily entry, get it scored against your 5-year plan in plain language — three priorities a day, nothing more. I designed the product and the AI behavior, then shipped the MVP to prove it."
-hookEs: "Una app personal de foco: escribes una entrada diaria y se evalúa contra tu plan a 5 años en lenguaje claro — tres prioridades al día, nada más. Diseñé el producto y el comportamiento de la IA, y shippeé el MVP para probarlo."
+hookEn: "Personal focus app — your day scored against your 5-year plan. I designed the product and the AI, then shipped the MVP."
+hookEs: "App personal de foco — tu día evaluado contra tu plan a 5 años. Diseñé el producto y la IA, y shippeé el MVP."
 bulletsEn:
   - "Product + interaction design for AI-scored daily focus"
   - "Designed the AI behavior: semantic distance from each entry to a long-term plan"

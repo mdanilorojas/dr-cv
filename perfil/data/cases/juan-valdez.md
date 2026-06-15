@@ -6,8 +6,8 @@ clientEn: "Juan Valdez · Product / UI Designer"
 clientEs: "Juan Valdez · Product / UI Designer"
 yearStart: 2023
 yearEnd: 2023
-hookEn: "End-to-end UI design for Juan Valdez's Colombia mobile app — the full product surface and a reusable design system. I delivered the screens, the flows, and the system, then handed engineering a clean, spec'd build."
-hookEs: "Diseño UI end-to-end para la app mobile de Juan Valdez Colombia — toda la superficie de producto y un design system reutilizable. Entregué las pantallas, los flujos y el sistema, y le pasé a ingeniería un build limpio y especificado."
+hookEn: "End-to-end mobile UI and a reusable design system for Juan Valdez Colombia — designed, then handed off clean."
+hookEs: "UI mobile end-to-end y un design system reutilizable para Juan Valdez Colombia — diseñado y entregado limpio."
 bulletsEn:
   - "Complete UI design across the core mobile flows"
   - "Reusable design system: components, type scale, color, spacing"

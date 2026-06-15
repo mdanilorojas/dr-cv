@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Status dot — subtle / slow</title>
+<style>
+  *{box-sizing:border-box;}
+  body{ margin:0; background:#030303; color:#ededed; font-family:Inter,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  .bg-grid{ position:fixed; inset:0; z-index:-1;
+    background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size:80px 80px; }
+  .wrap{ max-width:760px; margin:0 auto; padding:56px 24px 96px; }
+  h1{ font-weight:300; font-size:20px; }
+  .sub{ color:#8a8a8a; font-size:13px; font-weight:300; margin:4px 0 8px; }
+  .row{ display:flex; align-items:center; gap:20px; padding:18px 20px; margin-top:22px;
+    border:1px solid rgba(255,255,255,0.08); background:#070708; }
+  .badge{ display:flex; align-items:center; gap:8px; margin-left:auto; }
+  .badge .txt{ font-family:'JetBrains Mono',ui-monospace,monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:#8a8a8a; }
+  .dotwrap{ position:relative; width:14px; height:14px; display:flex; align-items:center; justify-content:center; }
+  .dot{ width:6px; height:6px; border-radius:50%; background:#3b82f6; position:relative; z-index:2; }
+  .label{ font-size:12px; color:#8a8a8a; font-weight:300; min-width:210px; }
+  .label b{ color:#fff; font-weight:500; }
+
+  /* ===== A · Slow breath (solo opacidad, sin escala) — 6s ===== */
+  .a .dot{ box-shadow:0 0 5px rgba(59,130,246,.5); animation:fade 6s ease-in-out infinite; }
+  @keyframes fade{ 0%,100%{ opacity:.35 } 50%{ opacity:1 } }
+
+  /* ===== B · Slow glow (halo respira, punto quieto) — 7s ===== */
+  .b .dot{ animation:glow 7s ease-in-out infinite; }
+  @keyframes glow{
+    0%,100%{ box-shadow:0 0 3px rgba(59,130,246,.4); }
+    50%{ box-shadow:0 0 10px rgba(59,130,246,.85); } }
+
+  /* ===== C · Micro-breath (escala apenas 1 → 1.08) — 8s ===== */
+  .c .dot{ box-shadow:0 0 5px rgba(59,130,246,.55); animation:micro 8s cubic-bezier(.4,0,.6,1) infinite; }
+  @keyframes micro{ 0%,100%{ transform:scale(1); opacity:.55 } 50%{ transform:scale(1.08); opacity:1 } }
+
+  /* ===== D · Single slow ripple (un anillo, lento, raro) — 9s ===== */
+  .d .dot{ box-shadow:0 0 5px rgba(59,130,246,.6); }
+  .d .ring{ position:absolute; inset:0; margin:auto; width:6px; height:6px; border-radius:50%;
+    border:1px solid rgba(59,130,246,.5); animation:slowripple 9s ease-out infinite; }
+  @keyframes slowripple{
+    0%{ transform:scale(1); opacity:.6 }
+    40%{ opacity:0 }
+    100%{ transform:scale(3); opacity:0 } }
+
+  /* ===== E · Drift (opacidad lenta + halo, desfasados) — 10s ===== */
+  .e .dot{ animation:fade2 10s ease-in-out infinite, glow2 10s ease-in-out infinite; }
+  @keyframes fade2{ 0%,100%{ opacity:.4 } 50%{ opacity:.95 } }
+  @keyframes glow2{ 0%,100%{ box-shadow:0 0 3px rgba(59,130,246,.35) } 60%{ box-shadow:0 0 9px rgba(59,130,246,.8) } }
+
+  @media(prefers-reduced-motion:reduce){ *{animation:none!important;} }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="wrap">
+  <h1>Status dot — versión sutil / lenta</h1>
+  <p class="sub">Europeo, mínimo, casi imperceptible. Nada late ni salta. Mira fijo unos segundos.</p>
+
+  <div class="row a">
+    <span class="label"><b>A · Slow breath</b> · 6s<br>solo opacidad, cero escala.</span>
+    <div class="badge"><span class="txt">Human_Compounding</span><div class="dotwrap"><div class="dot"></div></div></div>
+  </div>
+  <div class="row b">
+    <span class="label"><b>B · Slow glow</b> · 7s<br>el halo respira, punto quieto.</span>
+    <div class="badge"><span class="txt">Human_Compounding</span><div class="dotwrap"><div class="dot"></div></div></div>
+  </div>
+  <div class="row c">
+    <span class="label"><b>C · Micro-breath</b> · 8s<br>escala apenas 1 → 1.08.</span>
+    <div class="badge"><span class="txt">Human_Compounding</span><div class="dotwrap"><div class="dot"></div></div></div>
+  </div>
+  <div class="row d">
+    <span class="label"><b>D · Single slow ripple</b> · 9s<br>un anillo lento, esporádico.</span>
+    <div class="badge"><span class="txt">Human_Compounding</span><div class="dotwrap"><span class="ring"></span><div class="dot"></div></div></div>
+  </div>
+  <div class="row e">
+    <span class="label"><b>E · Drift</b> · 10s<br>opacidad + halo desfasados.</span>
+    <div class="badge"><span class="txt">Human_Compounding</span><div class="dotwrap"><div class="dot"></div></div></div>
+  </div>
+</div>
+</body>
+</html>

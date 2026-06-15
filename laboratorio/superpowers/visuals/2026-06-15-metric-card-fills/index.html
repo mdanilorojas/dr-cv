@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metric card fills — 3 opciones</title>
+<style>
+  :root{ --line:rgba(255,255,255,0.08); }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:#030303; color:#ededed; font-family:Inter,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  .bg-grid{ position:fixed; inset:0; z-index:-1;
+    background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size:80px 80px; background-position:center top; }
+  .wrap{ max-width:1100px; margin:0 auto; padding:48px 24px 96px; }
+  h1{ font-weight:300; font-size:20px; letter-spacing:-.01em; }
+  .sub{ color:#8a8a8a; font-size:13px; font-weight:300; margin:4px 0 40px; }
+  .opt{ margin-top:52px; }
+  .opt-head{ display:flex; align-items:center; gap:16px; margin-bottom:18px; }
+  .opt-name{ font-family:'JetBrains Mono',ui-monospace,monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#fff; }
+  .opt-note{ font-size:12px; color:#8a8a8a; font-weight:300; }
+  .opt-rule{ flex:1; height:1px; background:var(--line); }
+  .grid{ display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-left:1px solid var(--line); }
+  .card{ border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:32px; min-height:160px; display:flex; flex-direction:column; justify-content:center; position:relative; transition: background-color .4s ease, box-shadow .4s ease; }
+  .val{ font-size:44px; font-weight:300; letter-spacing:-.03em; color:#fff; margin-bottom:8px; line-height:1; position:relative; z-index:2; }
+  .val small{ color:#8a8a8a; font-size:22px; }
+  .lbl{ font-family:'JetBrains Mono',ui-monospace,monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:#8a8a8a; line-height:1.5; position:relative; z-index:2; }
+  @media (max-width:760px){ .grid{ grid-template-columns:repeat(2,1fr);} }
+
+  /* crosshair — same as the real site (ch-br) */
+  .crosshair{ position:absolute; width:13px; height:13px; pointer-events:none; z-index:3; transition:transform .5s cubic-bezier(.4,0,.2,1); }
+  .card:hover .crosshair{ transform:scale(1.5) rotate(90deg); opacity:.8; }
+  .crosshair::before,.crosshair::after{ content:''; position:absolute; background:#8a8a8a; opacity:.5; }
+  .crosshair::before{ top:6px; left:0; width:13px; height:1px; }
+  .crosshair::after{ top:0; left:6px; width:1px; height:13px; }
+  .ch-br{ bottom:-7px; right:-7px; }
+
+  /* grain layer (z-index 1, under text) */
+  .grain-layer{ position:absolute; inset:0; pointer-events:none; z-index:1; mix-blend-mode:overlay; }
+
+  /* ===== ACTUAL — luz de esquina ===== */
+  .cur{ background-color:#070708;
+    background-image:
+      radial-gradient(130% 130% at 0% 0%, rgba(255,255,255,0.08), transparent 55%),
+      linear-gradient(160deg, rgba(255,255,255,0.05), transparent 45%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); }
+
+  /* ===== A — PLANO LIMPIO: sólido, sin grano, sin gradiente ===== */
+  .a{ background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); }
+  .a:hover{ background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+
+  /* ===== B — VIGNETTE marcado: bordes oscuros, centro lifteado ===== */
+  .b{ background-color:#101014;
+    background-image: radial-gradient(110% 80% at 50% 45%, rgba(255,255,255,0.06) 0%, transparent 40%, rgba(0,0,0,0.65) 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); }
+  .b:hover{ background-color:#16161b; }
+
+  /* ===== C — GRANO huly visible: textura fuerte + sheen arriba ===== */
+  .c{ background-color:#0b0b0e;
+    background-image: linear-gradient(180deg, rgba(255,255,255,0.05), transparent 30%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); }
+  .c .grain-layer{ opacity:.9;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
+    background-size:160px 160px; }
+  .c:hover{ background-color:#111116; }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="wrap">
+  <h1>The math behind the craft — fills de las metric cards</h1>
+  <p class="sub">bg-grid del sitio detrás · crosshair en esquina inf-der (igual que el sitio) · hover para ver animación. Ahora sí distintas.</p>
+
+  <section class="opt">
+    <div class="opt-head"><span class="opt-name" style="color:#8a8a8a">Actual</span><span class="opt-note">luz de esquina top-left — lo que quieres cambiar</span><span class="opt-rule"></span></div>
+    <div class="grid">
+      <div class="card cur"><div class="crosshair ch-br"></div><div class="val">18</div><div class="lbl">Meses al<br>nuevo pipeline</div></div>
+      <div class="card cur"><div class="crosshair ch-br"></div><div class="val">1,545</div><div class="lbl">Commits<br>con agentes</div></div>
+      <div class="card cur"><div class="crosshair ch-br"></div><div class="val">346</div><div class="lbl">SQL<br>migrations</div></div>
+      <div class="card cur"><div class="crosshair ch-br"></div><div class="val">95.6<small>%</small></div><div class="lbl">Eval score<br>DS migration</div></div>
+    </div>
+  </section>
+
+  <section class="opt">
+    <div class="opt-head"><span class="opt-name">Opción A — Plano limpio</span><span class="opt-note">sólido parejo, sin grano, sin gradiente. Mínimo.</span><span class="opt-rule"></span></div>
+    <div class="grid">
+      <div class="card a"><div class="crosshair ch-br"></div><div class="val">18</div><div class="lbl">Meses al<br>nuevo pipeline</div></div>
+      <div class="card a"><div class="crosshair ch-br"></div><div class="val">1,545</div><div class="lbl">Commits<br>con agentes</div></div>
+      <div class="card a"><div class="crosshair ch-br"></div><div class="val">346</div><div class="lbl">SQL<br>migrations</div></div>
+      <div class="card a"><div class="crosshair ch-br"></div><div class="val">95.6<small>%</small></div><div class="lbl">Eval score<br>DS migration</div></div>
+    </div>
+  </section>
+
+  <section class="opt">
+    <div class="opt-head"><span class="opt-name">Opción B — Vignette</span><span class="opt-note">bordes oscuros, centro lifteado. Profundidad sin dirección.</span><span class="opt-rule"></span></div>
+    <div class="grid">
+      <div class="card b"><div class="crosshair ch-br"></div><div class="val">18</div><div class="lbl">Meses al<br>nuevo pipeline</div></div>
+      <div class="card b"><div class="crosshair ch-br"></div><div class="val">1,545</div><div class="lbl">Commits<br>con agentes</div></div>
+      <div class="card b"><div class="crosshair ch-br"></div><div class="val">346</div><div class="lbl">SQL<br>migrations</div></div>
+      <div class="card b"><div class="crosshair ch-br"></div><div class="val">95.6<small>%</small></div><div class="lbl">Eval score<br>DS migration</div></div>
+    </div>
+  </section>
+
+  <section class="opt">
+    <div class="opt-head"><span class="opt-name">Opción C — Grano huly</span><span class="opt-note">textura visible + sheen arriba. Texturizado moderno.</span><span class="opt-rule"></span></div>
+    <div class="grid">
+      <div class="card c"><div class="grain-layer"></div><div class="crosshair ch-br"></div><div class="val">18</div><div class="lbl">Meses al<br>nuevo pipeline</div></div>
+      <div class="card c"><div class="grain-layer"></div><div class="crosshair ch-br"></div><div class="val">1,545</div><div class="lbl">Commits<br>con agentes</div></div>
+      <div class="card c"><div class="grain-layer"></div><div class="crosshair ch-br"></div><div class="val">346</div><div class="lbl">SQL<br>migrations</div></div>
+      <div class="card c"><div class="grain-layer"></div><div class="crosshair ch-br"></div><div class="val">95.6<small>%</small></div><div class="lbl">Eval score<br>DS migration</div></div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
