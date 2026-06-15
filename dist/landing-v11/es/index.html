@@ -61,8 +61,15 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 .tech-label { position:absolute; background:#030303; padding:0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:.1em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.08); z-index:10; }
 .metric-card { background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); transition: background-color .4s ease, box-shadow .4s ease; }
 .metric-card:hover { background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+.status-beat { animation: beat 1.6s ease-in-out infinite; }
+@keyframes beat {
+  0%,100%{ transform:scale(1); box-shadow:0 0 6px rgba(59,130,246,.6); }
+  12%{ transform:scale(1.5); box-shadow:0 0 12px rgba(59,130,246,1); }
+  24%{ transform:scale(1); }
+  36%{ transform:scale(1.35); box-shadow:0 0 10px rgba(59,130,246,.9); }
+  50%{ transform:scale(1); } }
 ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
-@media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} }
+@media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} .status-beat{animation:none;} }
 </style>
 </head>
 <body class="relative overflow-x-hidden selection:bg-white selection:text-black min-h-screen flex flex-col font-sans">
@@ -78,7 +85,7 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
       <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
         <a href="../" hreflang="en" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">ES<span class="text-system-dim/50">/EN</span></a>
         <div class="flex items-center space-x-2 group cursor-help" title="Un humano corriendo el loop que corren los agentes — orquestando, evaluando, acumulando">
-          <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+          <div class="status-beat w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
           <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Humano_Acumulando</span>
         </div>
       </div>

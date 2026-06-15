@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Status dot motion — Human_Compounding</title>
+<style>
+  *{box-sizing:border-box;}
+  body{ margin:0; background:#030303; color:#ededed; font-family:Inter,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  .bg-grid{ position:fixed; inset:0; z-index:-1;
+    background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size:80px 80px; }
+  .wrap{ max-width:760px; margin:0 auto; padding:56px 24px 96px; }
+  h1{ font-weight:300; font-size:20px; }
+  .sub{ color:#8a8a8a; font-size:13px; font-weight:300; margin:4px 0 8px; }
+
+  /* mock header bar like the real nav */
+  .row{ display:flex; align-items:center; gap:20px; padding:18px 20px; margin-top:22px;
+    border:1px solid rgba(255,255,255,0.08); background:#070708; }
+  .row .name{ font-family:'JetBrains Mono',ui-monospace,monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#fff; min-width:120px; }
+  .badge{ display:flex; align-items:center; gap:8px; margin-left:auto; }
+  .badge .txt{ font-family:'JetBrains Mono',ui-monospace,monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:#8a8a8a; }
+  .dotwrap{ position:relative; width:14px; height:14px; display:flex; align-items:center; justify-content:center; }
+  .dot{ width:6px; height:6px; border-radius:50%; background:#3b82f6; position:relative; z-index:2; }
+
+  /* ===== A · Heartbeat (lub-dub) ===== */
+  .a .dot{ animation:beat 1.6s ease-in-out infinite; box-shadow:0 0 8px rgba(59,130,246,.8); }
+  @keyframes beat{
+    0%,100%{ transform:scale(1); box-shadow:0 0 6px rgba(59,130,246,.6);}
+    12%{ transform:scale(1.5); box-shadow:0 0 12px rgba(59,130,246,1);}
+    24%{ transform:scale(1);}
+    36%{ transform:scale(1.35); box-shadow:0 0 10px rgba(59,130,246,.9);}
+    50%{ transform:scale(1);}
+  }
+
+  /* ===== B · Compounding ripple (rings expand outward) ===== */
+  .b .dot{ box-shadow:0 0 8px rgba(59,130,246,.8); }
+  .b .ring{ position:absolute; inset:0; margin:auto; width:6px; height:6px; border-radius:50%;
+    border:1px solid rgba(59,130,246,.7); animation:ripple 2.2s ease-out infinite; }
+  .b .ring:nth-child(2){ animation-delay:.7s; }
+  .b .ring:nth-child(3){ animation-delay:1.4s; }
+  @keyframes ripple{
+    0%{ transform:scale(1); opacity:.8; }
+    100%{ transform:scale(4.5); opacity:0; }
+  }
+
+  /* ===== C · Breathing glow (calm always-on) ===== */
+  .c .dot{ animation:breathe 2.6s ease-in-out infinite; }
+  @keyframes breathe{
+    0%,100%{ box-shadow:0 0 4px rgba(59,130,246,.5); transform:scale(.9);}
+    50%{ box-shadow:0 0 14px rgba(59,130,246,1); transform:scale(1.15);}
+  }
+
+  /* ===== D · Heartbeat + ripple (combo) ===== */
+  .d .dot{ animation:beat 1.6s ease-in-out infinite; box-shadow:0 0 8px rgba(59,130,246,.8); }
+  .d .ring{ position:absolute; inset:0; margin:auto; width:6px; height:6px; border-radius:50%;
+    border:1px solid rgba(59,130,246,.6); animation:ripple 2.4s ease-out infinite; }
+  .d .ring:nth-child(2){ animation-delay:1.2s; }
+
+  /* ===== E · Compounding stack (bar ticks up, resets — growth) ===== */
+  .e .dot{ box-shadow:0 0 6px rgba(59,130,246,.7); animation:tickglow 3s steps(1) infinite; }
+  @keyframes tickglow{ 0%{opacity:.4} 33%{opacity:.7} 66%{opacity:1} 100%{opacity:.4} }
+  .e .bars{ position:absolute; left:50%; bottom:-14px; transform:translateX(-50%); display:flex; gap:2px; align-items:flex-end; height:10px; }
+  .e .bars i{ width:2px; background:#3b82f6; opacity:.5; animation:grow 3s ease-in-out infinite; }
+  .e .bars i:nth-child(1){ height:3px; animation-delay:0s; }
+  .e .bars i:nth-child(2){ height:6px; animation-delay:.4s; }
+  .e .bars i:nth-child(3){ height:9px; animation-delay:.8s; }
+  @keyframes grow{ 0%,100%{ transform:scaleY(.3); opacity:.4 } 50%{ transform:scaleY(1); opacity:1 } }
+
+  .label{ font-size:12px; color:#8a8a8a; font-weight:300; min-width:170px; }
+  .label b{ color:#fff; font-weight:500; }
+  @media(prefers-reduced-motion:reduce){ *{animation:none!important;} }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="wrap">
+  <h1>Status dot — motion options</h1>
+  <p class="sub">El icono al lado de <b style="color:#ccc">Human_Compounding</b>. Máquina = spinner; humano = pulso/crecimiento.</p>
+  <p class="sub">Analogía: corres el mismo loop que un agente, pero estás vivo. Elige A–E.</p>
+
+  <div class="row a">
+    <span class="label"><b>A · Heartbeat</b><br>late lub-dub. Vivo, humano.</span>
+    <div class="badge"><span class="txt">Human_Compounding</span><div class="dotwrap"><div class="dot"></div></div></div>
+  </div>
+
+  <div class="row b">
+    <span class="label"><b>B · Compounding ripple</b><br>anillos crecen hacia afuera.</span>
+    <div class="badge"><span class="txt">Human_Compounding</span><div class="dotwrap"><span class="ring"></span><span class="ring"></span><span class="ring"></span><div class="dot"></div></div></div>
+  </div>
+
+  <div class="row c">
+    <span class="label"><b>C · Breathing glow</b><br>respira. Calmo, always-on.</span>
+    <div class="badge"><span class="txt">Human_Compounding</span><div class="dotwrap"><div class="dot"></div></div></div>
+  </div>
+
+  <div class="row d">
+    <span class="label"><b>D · Heartbeat + ripple</b><br>late y además irradia.</span>
+    <div class="badge"><span class="txt">Human_Compounding</span><div class="dotwrap"><span class="ring"></span><span class="ring"></span><div class="dot"></div></div></div>
+  </div>
+
+  <div class="row e">
+    <span class="label"><b>E · Compounding stack</b><br>barritas suben (interés compuesto).</span>
+    <div class="badge"><span class="txt">Human_Compounding</span><div class="dotwrap"><div class="bars"><i></i><i></i><i></i></div><div class="dot"></div></div></div>
+  </div>
+</div>
+</body>
+</html>
