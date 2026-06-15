@@ -781,6 +781,7 @@ export function renderV11Landing(
 <meta name="twitter:title" content="${escapeHtml(seoTitle)}">
 <meta name="twitter:description" content="${escapeHtml(seoDesc)}">
 <meta name="twitter:image" content="${escapeHtml(assets.ogImageUrl)}">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="canonical" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${lang}" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${altLang}" href="https://danilorojas.design${altHref}">

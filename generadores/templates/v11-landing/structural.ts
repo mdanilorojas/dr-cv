@@ -249,6 +249,7 @@ export function renderStructuralLanding(
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="${escapeHtml(assets.ogImageUrl)}">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="canonical" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${lang}" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${altLang}" href="https://danilorojas.design${altHref}">

@@ -1,4 +1,4 @@
-import { readFileSync, mkdirSync, copyFileSync, readdirSync, statSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -101,6 +101,22 @@ function copyHandTools(): void {
   }
 }
 
+function writeFavicon(): void {
+  const svg = `<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="12" fill="#030303"/>
+  <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle"
+        font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600"
+        fill="#EDEDED" letter-spacing="-1">
+    dr
+  </text>
+  <circle cx="48" cy="16" r="2" fill="#3B82F6"/>
+</svg>
+`;
+  const dest = path.join(distDir, "favicon.svg");
+  writeFileSync(dest, svg, "utf8");
+  console.log(`[v11-landing] wrote favicon -> ${dest}`);
+}
+
 async function buildOgImage(data: ReturnType<typeof loadLandingData>): Promise<void> {
   const photoBytes = readFileSync(photoSrc);
   const photoDataUrl = `data:image/jpeg;base64,${photoBytes.toString("base64")}`;
@@ -131,6 +147,7 @@ async function main(): Promise<void> {
   copyAnimationAssets();
   copyFonts();
   copyHandTools();
+  writeFavicon();
   await buildOgImage(data);
 
   const ogImageUrl = `${SITE_ORIGIN}/og.png`;
