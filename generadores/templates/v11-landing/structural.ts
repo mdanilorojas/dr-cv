@@ -330,7 +330,7 @@ ${FAVICON_TAG}
 
   <section class="w-full max-w-6xl mt-12 reveal">
     <div class="py-6 border-y border-system-line/50 flex flex-wrap justify-center items-center gap-x-8 gap-y-4 px-4 bg-system-surface/10">
-      <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest hidden md:block mr-4">${t(lang, "Trusted by //", "Trabajan conmigo //")}</span>
+      <span class="font-mono font-medium text-[10px] text-white uppercase tracking-widest hidden md:block mr-4">${t(lang, "Trusted by //", "Trabajan conmigo //")}</span>
       ${trustRow}
     </div>
   </section>
