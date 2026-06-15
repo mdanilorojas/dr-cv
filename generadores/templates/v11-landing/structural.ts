@@ -87,10 +87,10 @@ const t = (lang: Lang, en: string, es: string): string => (lang === "en" ? en : 
 
 /* abstract per-card SVG graphics, cycled by index */
 const CARD_GRAPHICS: string[] = [
-  `<div class="w-2/3 h-2/3 grid grid-cols-3 gap-1 p-1 border border-system-line/50 group-hover:border-system-line transition-colors">
-     <div class="bg-system-line/30 group-hover:bg-white/10 transition-colors"></div><div class="bg-system-line/10"></div><div class="bg-system-line/30 group-hover:bg-white/10 transition-colors"></div>
-     <div class="bg-system-line/10"></div><div class="bg-system-line/50 group-hover:bg-white/20 transition-colors"></div><div class="bg-system-line/10"></div>
-     <div class="bg-system-line/30 group-hover:bg-white/10 transition-colors"></div><div class="bg-system-line/10"></div><div class="bg-system-line/30 group-hover:bg-white/10 transition-colors"></div>
+  `<div class="w-2/3 h-2/3 grid grid-cols-3 gap-1 p-1 border border-system-line/20 group-hover:border-white/30 transition-colors duration-500">
+     <div class="bg-white/[0.02] group-hover:bg-white/15 transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/[0.06] transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/15 transition-colors duration-500"></div>
+     <div class="bg-white/[0.02] group-hover:bg-white/[0.06] transition-colors duration-500"></div><div class="bg-white/[0.03] group-hover:bg-white/25 transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/[0.06] transition-colors duration-500"></div>
+     <div class="bg-white/[0.02] group-hover:bg-white/15 transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/[0.06] transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/15 transition-colors duration-500"></div>
    </div>`,
   `<div class="w-16 h-16 rounded-full border border-system-line relative flex items-center justify-center group-hover:border-white/30 transition-colors">
      <div class="w-2 h-2 bg-white/50 rounded-full"></div>

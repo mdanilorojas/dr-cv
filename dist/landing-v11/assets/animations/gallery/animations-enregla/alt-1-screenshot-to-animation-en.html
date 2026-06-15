@@ -44,7 +44,6 @@
   .shot {
     position: absolute; inset: 0;
     background: url("../stills-enregla/03-dashboard.png") center top/cover no-repeat;
-    filter: brightness(0.45) saturate(0.55) grayscale(0.25);
     transition: opacity 600ms ease, filter 600ms ease;
   }
 
@@ -81,7 +80,7 @@
   .status-stack span::before { content: "› "; color: var(--brand); }
   .status-stack span.done::before { content: "✓ "; color: var(--green); }
 
-  .window:hover .shot { filter: brightness(1.08) saturate(1.05) grayscale(0); }
+  .window:hover .shot { filter: blur(4px) brightness(0.7); }
   .window:hover .sheet { bottom: 0; }
 
   .window:hover .status-stack .s1 { animation: show 700ms ease 500ms both; }
@@ -102,7 +101,7 @@
 <body>
   <div class="stage">
     <div class="caption">EnRegla · Alt 01 — Screenshot + sheet</div>
-    <div class="alt-label">The real dashboard lights up · a compliance sheet rises</div>
+    <div class="alt-label">The real dashboard blurs · a compliance sheet rises</div>
 
     <div class="window">
       <div class="chrome">
@@ -137,7 +136,7 @@
       </div>
     </div>
 
-    <div class="hint">hover · compliance happens over the live dashboard</div>
+    <div class="hint">hover · compliance happens over the real dashboard</div>
   </div>
 </body>
 </html>
