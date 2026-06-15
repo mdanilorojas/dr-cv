@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadLandingData } from "./lib/load-data.js";
 import { renderV11Landing } from "./templates/v11-landing/index.js";
+import { renderStructuralLanding } from "./templates/v11-landing/structural.js";
 import { renderCaseDetailPage } from "./templates/v11-landing/case-detail.js";
 import { renderOgCardHtml } from "./templates/v11-landing/og-card.js";
 import { renderOgImage } from "./lib/render-og.js";
@@ -136,14 +137,14 @@ async function main(): Promise<void> {
 
   await emit(
     "index.html",
-    renderV11Landing(data, "en", tokensCss, {
+    renderStructuralLanding(data, "en", tokensCss, {
       photoHref: "assets/photo/danilo.jpg",
       ogImageUrl,
     }),
   );
   await emit(
     path.join("es", "index.html"),
-    renderV11Landing(data, "es", tokensCss, {
+    renderStructuralLanding(data, "es", tokensCss, {
       photoHref: "../assets/photo/danilo.jpg",
       ogImageUrl,
     }),

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danilo Rojas | Structural Product Designer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@100;300;400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        serif: ['Source Serif 4', 'serif'],
+                    },
+                    colors: {
+                        system: {
+                            bg: '#030303',
+                            surface: '#0a0a0a',
+                            line: 'rgba(255, 255, 255, 0.08)',
+                            lineHover: 'rgba(255, 255, 255, 0.25)',
+                            text: '#ededed',
+                            dim: '#8a8a8a',
+                            accent: '#ffffff'
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --mouse-x: 50%;
+            --mouse-y: 50%;
+        }
+
+        body {
+            background-color: #030303;
+            color: #ededed;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Interactive Grid Background */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                linear-gradient(to right, var(--line-color, rgba(255,255,255,0.04)) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--line-color, rgba(255,255,255,0.04)) 1px, transparent 1px);
+            background-size: 80px 80px;
+            background-position: center top;
+            mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+        }
+
+        /* Mouse Glow Effect */
+        .mouse-glow {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(
+                600px circle at var(--mouse-x) var(--mouse-y),
+                rgba(255,255,255,0.04),
+                transparent 40%
+            );
+            pointer-events: none;
+        }
+
+        /* Structural Borders & Interactions */
+        .structural-border {
+            border: 1px solid theme('colors.system.line');
+            position: relative;
+            transition: border-color 0.4s ease, background-color 0.4s ease;
+        }
+        .structural-border:hover {
+            border-color: theme('colors.system.lineHover');
+        }
+
+        /* Crosshairs (The Blueprint Marks) */
+        .crosshair {
+            position: absolute;
+            width: 13px;
+            height: 13px;
+            pointer-events: none;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .structural-border:hover .crosshair {
+            transform: scale(1.5) rotate(90deg);
+            opacity: 0.8;
+        }
+
+        .crosshair::before, .crosshair::after {
+            content: '';
+            position: absolute;
+            background-color: theme('colors.system.dim');
+            opacity: 0.5;
+        }
+        .crosshair::before { top: 6px; left: 0; width: 13px; height: 1px; }
+        .crosshair::after { top: 0; left: 6px; width: 1px; height: 13px; }
+
+        .ch-tl { top: -7px; left: -7px; }
+        .ch-tr { top: -7px; right: -7px; }
+        .ch-bl { bottom: -7px; left: -7px; }
+        .ch-br { bottom: -7px; right: -7px; }
+
+        /* Motion utility classes for JavaScript */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+
+        /* Tech Label styling */
+        .tech-label {
+            position: absolute;
+            background: #030303;
+            padding: 0 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: theme('colors.system.dim');
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: 1px solid theme('colors.system.line');
+            z-index: 10;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #030303; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+</head>
+<body class="relative overflow-x-hidden selection:bg-white selection:text-black min-h-screen flex flex-col">
+
+    <div class="bg-grid"></div>
+    <div class="mouse-glow" id="mouseGlow"></div>
+
+    <nav class="fixed top-0 w-full z-50 border-b border-system-line bg-system-bg/80 backdrop-blur-md">
+        <div class="w-full flex justify-between items-center h-14 px-4 sm:px-8 max-w-[1400px] mx-auto">
+
+            <!-- Left: Logo -->
+            <div class="flex items-center space-x-6 h-full">
+                <div class="font-sans font-medium tracking-tight text-[15px] text-white">Danilo Rojas <span class="text-system-dim font-mono ml-1">· dr</span></div>
+            </div>
+
+            <!-- Right: Links & Status -->
+            <div class="flex items-center h-full">
+                <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase">
+                    <a href="#notes" class="text-system-dim hover:text-white transition-colors">Notes</a>
+                    <a href="#work" class="text-system-dim hover:text-white transition-colors">Work</a>
+                    <a href="#method" class="text-system-dim hover:text-white transition-colors">Method</a>
+                    <a href="#about" class="text-system-dim hover:text-white transition-colors">About</a>
+                    <a href="#contact" class="text-system-dim hover:text-white transition-colors">Contact</a>
+                </div>
+
+                <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
+                    <div class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">EN<span class="text-system-dim/50">/ES</span></div>
+
+                    <div class="flex items-center space-x-2 group cursor-help" title="Continuous learning and system optimization in progress">
+                        <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+                        <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Sys_Iterating</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- Progress Bar Line -->
+        <div class="h-[1px] bg-white w-0 absolute bottom-0 left-0" id="scrollProgress"></div>
+    </nav>
+
+    <main class="flex-grow pt-28 pb-20 px-4 sm:px-8 relative z-10 flex flex-col items-center">
+
+        <!-- Scaffolding Container -->
+        <div class="w-full max-w-6xl relative mt-10 sm:mt-16">
+
+            <div class="structural-border p-8 sm:p-16 md:p-24 reveal relative overflow-hidden bg-system-surface/30 backdrop-blur-sm">
+                <!-- Crosshairs -->
+                <div class="crosshair ch-tl"></div>
+                <div class="crosshair ch-tr"></div>
+                <div class="crosshair ch-bl"></div>
+                <div class="crosshair ch-br"></div>
+
+                <div class="tech-label -top-2 left-10">MOD: 01 // CORE_SYSTEM</div>
+
+                <div class="max-w-4xl relative z-10">
+                    <div class="font-mono text-[11px] text-system-dim mb-6 tracking-widest uppercase flex items-center">
+                        <span class="w-4 h-[1px] bg-system-dim mr-3"></span>
+                        Danilo Rojas · Product & Systems Designer
+                    </div>
+
+                    <h1 class="text-4xl sm:text-6xl md:text-[5.5rem] font-light tracking-tighter leading-[1.05] mb-10 text-system-accent">
+                        Product design <br class="hidden md:block" />                        <span class="text-system-dim">for complex, <br class="hidden sm:block" />regulated environments.</span>
+                    </h1>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-6 mt-12">
+                        <a href="#contact" class="group relative px-6 py-3 bg-white text-black font-medium text-sm tracking-wide overflow-hidden inline-block text-center border border-white hover:bg-transparent hover:text-white transition-colors">
+                            <span class="relative z-10">Let's work together</span>
+                        </a>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 rounded-full border border-green-500/50 flex items-center justify-center">
+                                <div class="w-1 h-1 bg-green-500 rounded-full animate-pulse-slow"></div>
+                            </div>
+                            <span class="text-xs font-mono text-system-dim uppercase tracking-widest">Open to work · Remote global</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Abstract Technical Graphic (Right side) -->
+                <div class="absolute -right-20 top-1/2 -translate-y-1/2 opacity-10 hidden lg:block pointer-events-none select-none">
+                    <svg width="600" height="600" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.1" class="animate-spin-slow">
+                        <circle cx="50" cy="50" r="48" stroke-dasharray="1 3" />
+                        <circle cx="50" cy="50" r="35" />
+                        <rect x="25" y="25" width="50" height="50" transform="rotate(45 50 50)" />
+                        <path d="M 50 0 L 50 100 M 0 50 L 100 50" stroke-dasharray="0.5 2" />
+                        <circle cx="50" cy="50" r="10" fill="currentColor" opacity="0.1"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Extending Grid Lines -->
+            <div class="absolute top-0 bottom-0 left-1/4 w-[1px] bg-system-line -z-10 hidden md:block"></div>
+        </div>
+
+        <section class="w-full max-w-6xl mt-12 reveal">
+            <div class="py-6 border-y border-system-line/50 flex flex-wrap justify-center items-center gap-x-8 gap-y-4 px-4 bg-system-surface/10">
+                <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest hidden md:block mr-4">Trusted By //</span>
+                <span class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors cursor-default">FAA</span>
+                <span class="text-system-line">·</span>
+                <span class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors cursor-default">DoD</span>
+                <span class="text-system-line">·</span>
+                <span class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors cursor-default">VA</span>
+                <span class="text-system-line">·</span>
+                <span class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors cursor-default">Booz Allen Hamilton</span>
+                <span class="text-system-line">·</span>
+                <span class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors cursor-default">Pichincha Bank</span>
+                <span class="text-system-line">·</span>
+                <span class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors cursor-default">Rappi</span>
+                <span class="text-system-line">·</span>
+                <span class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors cursor-default">Juan Valdez</span>
+            </div>
+        </section>
+
+        <section class="w-full max-w-6xl mt-24 reveal">
+            <div class="mb-8 flex items-center justify-between">
+                <h2 class="text-xl font-light text-system-accent">Evidence, not adjectives.</h2>
+                <div class="h-[1px] flex-grow bg-system-line mx-6 hidden md:block"></div>
+                <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">DAT // Metrics</span>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 border-t border-l border-system-line">
+                <!-- Stat 1 -->
+                <div class="structural-border border-t-0 border-l-0 p-8 flex flex-col justify-center min-h-[160px]">
+                    <div class="crosshair ch-br"></div>
+                    <div class="text-4xl md:text-5xl font-light text-white mb-2 tracking-tighter">18+</div>
+                    <div class="font-mono text-[10px] text-system-dim uppercase tracking-wider leading-relaxed">Years building<br>products</div>
+                </div>
+                <!-- Stat 2 -->
+                <div class="structural-border border-t-0 border-l-0 p-8 flex flex-col justify-center min-h-[160px]">
+                    <div class="crosshair ch-br hidden md:block"></div>
+                    <div class="text-4xl md:text-5xl font-light text-white mb-2 tracking-tighter">15</div>
+                    <div class="font-mono text-[10px] text-system-dim uppercase tracking-wider leading-relaxed">Years in<br>design</div>
+                </div>
+                <!-- Stat 3 -->
+                <div class="structural-border border-t-0 border-l-0 p-8 flex flex-col justify-center min-h-[160px]">
+                    <div class="crosshair ch-br"></div>
+                    <div class="text-4xl md:text-5xl font-light text-white mb-2 tracking-tighter">4</div>
+                    <div class="font-mono text-[10px] text-system-dim uppercase tracking-wider leading-relaxed">Years supporting FAA,<br>DoD & VA programs</div>
+                </div>
+                <!-- Stat 4 -->
+                <div class="structural-border border-t-0 border-l-0 p-8 flex flex-col justify-center min-h-[160px]">
+                    <div class="crosshair ch-br"></div>
+                    <div class="text-4xl md:text-5xl font-light text-white mb-2 tracking-tighter">50+</div>
+                    <div class="font-mono text-[10px] text-system-dim uppercase tracking-wider leading-relaxed">Product initiatives<br>delivered</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="notes" class="w-full max-w-6xl mt-32 pt-16 reveal relative">
+            <!-- Background structural line -->
+            <div class="absolute left-[24px] md:left-[40px] top-0 bottom-0 w-[1px] bg-system-line/50 -z-10"></div>
+
+            <div class="mb-16 pl-0 md:pl-24">
+                <h2 class="text-2xl md:text-4xl font-serif italic text-system-accent font-light max-w-2xl leading-tight">
+                    "The writing is evidence of judgment."
+                </h2>
+                <div class="mt-4 font-mono text-[10px] text-system-dim tracking-widest uppercase">DOC // Philosophy</div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 pl-6 md:pl-24 relative">
+
+                <!-- Note 01 -->
+                <article class="relative">
+                    <div class="absolute -left-6 md:-left-24 top-1 font-mono text-[10px] text-system-dim bg-system-bg py-1">01</div>
+                    <h3 class="text-lg font-medium text-white mb-4">Most teams do not lack solutions.</h3>
+                    <p class="text-system-dim text-sm md:text-base font-light leading-relaxed">
+                        Teams rarely fail for lack of ideas, UI options, or tools. They fail because the problem was misdiagnosed, the constraints were never made explicit, or they shipped around the real decision. Good design reduces ambiguity before it produces screens.
+                    </p>
+                </article>
+
+                <!-- Note 02 -->
+                <article class="relative">
+                    <div class="absolute -left-6 md:-left-24 top-1 font-mono text-[10px] text-system-dim bg-system-bg py-1">02</div>
+                    <h3 class="text-lg font-medium text-white mb-4">Handoff is where judgment disappears.</h3>
+                    <p class="text-system-dim text-sm md:text-base font-light leading-relaxed">
+                        Traditional handoff turns product decisions into artifacts and asks another team to reconstruct the intent later — that gap is where waste lives. The answer isn't designers pretending to be engineers; it's making judgment executable through systems, rubrics, and agents.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+        <section id="work" class="w-full max-w-6xl mt-32 pt-16">
+            <div class="flex justify-between items-end border-b border-system-line pb-4 mb-12 reveal">
+                <div>
+                    <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">Selected work · 2025–2026</span>
+                    <h2 class="text-2xl md:text-3xl font-light text-system-accent">Shipped frameworks. <br class="md:hidden"/>Agent-driven execution.</h2>
+                </div>
+            </div>
+
+            <p class="text-system-dim max-w-2xl mb-16 font-light leading-relaxed reveal delay-100">
+                Everything below was built with agents at the center of the workflow. The craft floor is mine — the leverage is the combination.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Case 1: EnRegla -->
+                <div class="structural-border p-6 flex flex-col group reveal cursor-pointer bg-system-surface/20">
+                    <div class="crosshair ch-tl"></div>
+                    <div class="crosshair ch-tr"></div>
+                    <div class="crosshair ch-bl"></div>
+                    <div class="crosshair ch-br"></div>
+
+                    <div class="aspect-video border border-system-line mb-6 relative overflow-hidden flex items-center justify-center bg-[#050505]">
+                        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGgyMHYyMEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0wIDE5LjVoMjBWMGgtMSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=')] opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                        <!-- Abstract Grid Graphic -->
+                        <div class="w-2/3 h-2/3 grid grid-cols-3 gap-1 p-1 border border-system-line/50 group-hover:border-system-line transition-colors">
+                            <div class="bg-system-line/30 group-hover:bg-white/10 transition-colors"></div>
+                            <div class="bg-system-line/10"></div>
+                            <div class="bg-system-line/30 group-hover:bg-white/10 transition-colors"></div>
+                            <div class="bg-system-line/10"></div>
+                            <div class="bg-system-line/50 group-hover:bg-white/20 transition-colors"></div>
+                            <div class="bg-system-line/10"></div>
+                            <div class="bg-system-line/30 group-hover:bg-white/10 transition-colors"></div>
+                            <div class="bg-system-line/10"></div>
+                            <div class="bg-system-line/30 group-hover:bg-white/10 transition-colors"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex-grow">
+                        <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between">
+                            <span>EnRegla</span>
+                            <span>2025</span>
+                        </div>
+                        <h3 class="text-lg text-white font-medium mb-2">Compliance SaaS</h3>
+                        <p class="text-xs text-system-dim mb-4 font-mono">0 → 1.0-MVP in 40 days</p>
+
+                        <ul class="text-sm text-system-dim space-y-2 mb-6 font-light">
+                            <li class="flex items-start"><span class="mr-2 text-system-line hover:text-white">→</span> Architecture & Data modeling</li>
+                            <li class="flex items-start"><span class="mr-2 text-system-line hover:text-white">→</span> Agentic UI generation</li>
+                            <li class="flex items-start"><span class="mr-2 text-system-line hover:text-white">→</span> Go-to-market execution</li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
+                        <span class="text-xs font-mono uppercase tracking-widest">How this shipped</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </div>
+
+                <!-- Case 2: Dev Portal -->
+                <div class="structural-border p-6 flex flex-col group reveal delay-100 cursor-pointer bg-system-surface/20">
+                    <div class="crosshair ch-tr"></div>
+                    <div class="crosshair ch-bl"></div>
+
+                    <div class="aspect-video border border-system-line mb-6 relative overflow-hidden flex items-center justify-center bg-[#050505]">
+                         <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGgyMHYyMEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0wIDE5LjVoMjBWMGgtMSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=')] opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                         <!-- Abstract Node Graphic -->
+                         <div class="w-16 h-16 rounded-full border border-system-line relative flex items-center justify-center group-hover:border-white/30 transition-colors">
+                             <div class="w-2 h-2 bg-white/50 rounded-full"></div>
+                             <div class="absolute -left-8 top-1/2 w-8 h-[1px] bg-system-line"></div>
+                             <div class="absolute -right-8 top-1/2 w-8 h-[1px] bg-system-line"></div>
+                             <div class="absolute left-1/2 -top-8 h-8 w-[1px] bg-system-line"></div>
+                             <div class="absolute left-1/2 -bottom-8 h-8 w-[1px] bg-system-line"></div>
+                         </div>
+                    </div>
+
+                    <div class="flex-grow">
+                        <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between">
+                            <span>Booz Allen Hamilton</span>
+                            <span>2026</span>
+                        </div>
+                        <h3 class="text-lg text-white font-medium mb-2">Developer Portal</h3>
+                        <p class="text-xs text-system-dim mb-4 font-mono">Two design systems · WCAG</p>
+
+                        <ul class="text-sm text-system-dim space-y-2 mb-6 font-light">
+                            <li class="flex items-start"><span class="mr-2 text-system-line hover:text-white">→</span> Dark-first thematic architecture</li>
+                            <li class="flex items-start"><span class="mr-2 text-system-line hover:text-white">→</span> Component standardization</li>
+                            <li class="flex items-start"><span class="mr-2 text-system-line hover:text-white">→</span> Cross-functional engineering handoff</li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
+                        <span class="text-xs font-mono uppercase tracking-widest">How this shipped</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </div>
+
+                <!-- Case 3: Mobile App -->
+                <div class="structural-border p-6 flex flex-col group reveal delay-200 cursor-pointer bg-system-surface/20">
+                    <div class="crosshair ch-tr"></div>
+                    <div class="crosshair ch-br"></div>
+
+                    <div class="aspect-video border border-system-line mb-6 relative overflow-hidden flex items-center justify-center bg-[#050505]">
+                         <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGgyMHYyMEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0wIDE5LjVoMjBWMGgtMSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=')] opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                         <!-- Abstract Pulse Graphic -->
+                         <div class="w-12 h-20 border border-system-line rounded-sm relative flex items-center justify-center group-hover:border-white/30 transition-colors">
+                             <div class="w-full h-[1px] bg-system-line absolute top-3"></div>
+                             <div class="w-4 h-4 bg-white/10 rounded-full animate-pulse-slow"></div>
+                             <div class="w-1/2 h-[1px] bg-system-line absolute bottom-2 rounded-full"></div>
+                         </div>
+                    </div>
+
+                    <div class="flex-grow">
+                        <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between">
+                            <span>Personal Platform</span>
+                            <span>2026</span>
+                        </div>
+                        <h3 class="text-lg text-white font-medium mb-2">Life-update Mobile</h3>
+                        <p class="text-xs text-system-dim mb-4 font-mono">Gemini in runtime</p>
+
+                        <ul class="text-sm text-system-dim space-y-2 mb-6 font-light">
+                            <li class="flex items-start"><span class="mr-2 text-system-line hover:text-white">→</span> Native app architecture</li>
+                            <li class="flex items-start"><span class="mr-2 text-system-line hover:text-white">→</span> Real-time LLM integration</li>
+                            <li class="flex items-start"><span class="mr-2 text-system-line hover:text-white">→</span> Minimalist interaction models</li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
+                        <span class="text-xs font-mono uppercase tracking-widest">How this shipped</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="method" class="w-full max-w-6xl mt-32 pt-16 reveal">
+            <div class="border-b border-system-line pb-4 mb-12">
+                <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">Method</span>
+                <h2 class="text-2xl md:text-3xl font-light text-system-accent">How I work.</h2>
+            </div>
+
+            <div class="mb-16">
+                <p class="text-xl md:text-2xl text-white font-light max-w-3xl mb-6 leading-relaxed">
+                    My work sits between user needs, business constraints, and execution.
+                </p>
+                <p class="text-system-dim font-light max-w-2xl leading-relaxed">
+                    I keep a running map of what I have earned, what I am investing in now, and what I am betting on next. It is how I keep improving without losing the craft floor.
+                </p>
+            </div>
+
+            <div class="space-y-8 relative">
+                <!-- Vertical timeline line -->
+                <div class="absolute left-[7.5px] top-2 bottom-2 w-[1px] bg-system-line hidden md:block"></div>
+
+                <!-- Phase 1 -->
+                <div class="relative pl-0 md:pl-10 group">
+                    <div class="hidden md:block absolute left-[4px] top-2 w-2 h-2 rounded-full bg-system-surface border border-system-dim group-hover:bg-white transition-colors"></div>
+                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 mb-3">
+                        <h3 class="text-lg font-medium text-white min-w-[120px]">Earned</h3>
+                        <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest">2010–2023 // The craft I mastered, now systematized.</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Figma mastery</span>
+                        <span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Hand-coded UI</span>
+                        <span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Design reviews</span>
+                        <span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Component libraries</span>
+                        <span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Style-guide PDFs</span>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="relative pl-0 md:pl-10 group">
+                    <div class="hidden md:block absolute left-[4px] top-2 w-2 h-2 rounded-full bg-system-surface border border-system-dim group-hover:bg-blue-500 transition-colors shadow-[0_0_8px_rgba(59,130,246,0)] group-hover:shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
+                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 mb-3">
+                        <h3 class="text-lg font-medium text-white min-w-[120px]">Investing</h3>
+                        <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest text-blue-400">2024–Now // Where my hours go today.</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="border border-blue-900/30 px-3 py-1.5 text-[11px] font-mono text-blue-100 bg-blue-900/10">Agent orchestration</span>
+                        <span class="border border-blue-900/30 px-3 py-1.5 text-[11px] font-mono text-blue-100 bg-blue-900/10">MCP servers</span>
+                        <span class="border border-blue-900/30 px-3 py-1.5 text-[11px] font-mono text-blue-100 bg-blue-900/10">Design-system-as-skill</span>
+                        <span class="border border-blue-900/30 px-3 py-1.5 text-[11px] font-mono text-blue-100 bg-blue-900/10">Recursive critic loops</span>
+                        <span class="border border-blue-900/30 px-3 py-1.5 text-[11px] font-mono text-blue-100 bg-blue-900/10">Taste as rubric</span>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="relative pl-0 md:pl-10 group">
+                    <div class="hidden md:block absolute left-[4px] top-2 w-2 h-2 rounded-full bg-system-surface border border-system-dim group-hover:border-white border-dashed transition-colors"></div>
+                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 mb-3">
+                        <h3 class="text-lg font-medium text-system-dim min-w-[120px]">Next horizon</h3>
+                        <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest opacity-50">12 mo // What I'm walking toward.</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 opacity-50">
+                        <span class="border border-system-line/30 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-transparent border-dashed">Team-scale agent tooling</span>
+                        <span class="border border-system-line/30 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-transparent border-dashed">Audited agent workflows</span>
+                        <span class="border border-system-line/30 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-transparent border-dashed">Eval-driven UI</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial -->
+            <div class="mt-16 structural-border p-6 md:p-8 bg-system-surface/10 max-w-4xl relative">
+                <div class="crosshair ch-br"></div>
+                <div class="font-serif italic text-lg md:text-xl text-system-dim mb-4 leading-relaxed">
+                    "Danilo doesn't just push pixels; he architects systems that solve the underlying business problem before a single line of code is written."
+                </div>
+                <div class="flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-system-dim">
+                    <div class="w-1 h-1 bg-white rounded-full"></div>
+                    <span>Giraldez</span>
+                    <span class="text-system-line">|</span>
+                    <span class="text-[9px] border border-system-line/50 px-1.5 py-0.5">Verified</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="w-full max-w-6xl mt-32 pt-16 reveal">
+            <div class="border-b border-system-line pb-4 mb-12">
+                <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">About</span>
+                <h2 class="text-2xl md:text-3xl font-light text-system-accent">A long way to the surface.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <!-- Bio -->
+                <div>
+                    <p class="text-system-dim font-light leading-relaxed mb-6">
+                        I started in databases and backend, moved to frontend, then to UI, then to UX — eighteen years in product, fifteen in design. The path means I design with the whole system in mind, not just the screen.
+                    </p>
+                    <p class="text-system-dim font-light leading-relaxed">
+                        At Booz Allen Hamilton I carried that into government and compliance work for the FAA, the DoD, and the VA, where the rigor of the documentation matters as much as the interface.
+                    </p>
+                </div>
+
+                <!-- Specs -->
+                <div class="space-y-12">
+                    <!-- Clients -->
+                    <div>
+                        <div class="font-mono text-[10px] text-white uppercase tracking-widest mb-4 border-b border-system-line/50 pb-2">Select Clients & Partners</div>
+                        <p class="text-sm text-system-dim font-light leading-relaxed">
+                            Merck & Co. · Mondelēz Intl. · Banco Pichincha · Quifatex · Grupo Superior · Moderna Corp. · Azzorti · Flamingo CO. · Produbanco · Mefia · Juan Valdez
+                        </p>
+                    </div>
+
+                    <!-- Education -->
+                    <div>
+                        <div class="font-mono text-[10px] text-white uppercase tracking-widest mb-4 border-b border-system-line/50 pb-2">Education & Certifications</div>
+                        <ul class="text-sm text-system-dim font-light space-y-3">
+                            <li class="flex justify-between items-baseline">
+                                <span>B.Sc. Systems Engineering</span>
+                                <span class="font-mono text-[10px] tracking-widest">EPN · 2015</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span>Google UX Design Certificate</span>
+                                <span class="font-mono text-[10px] tracking-widest">Coursera · 2021</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span>Design Thinking</span>
+                                <span class="font-mono text-[10px] tracking-widest">IBM · 2020</span>
+                            </li>
+                            <li class="flex justify-between items-baseline">
+                                <span>UX & UI Fundamental Patterns</span>
+                                <span class="font-mono text-[10px] tracking-widest">Independent</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="contact" class="w-full max-w-6xl mt-32 pt-16 pb-8">
+            <div class="structural-border p-8 md:p-16 reveal relative bg-[#050505]">
+                <div class="crosshair ch-tl"></div>
+                <div class="crosshair ch-tr"></div>
+                <div class="crosshair ch-bl"></div>
+                <div class="crosshair ch-br"></div>
+                <div class="tech-label -top-2 left-10">SYS: INITIALIZE_CONNECTION</div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">Contact</span>
+                        <h2 class="text-3xl md:text-4xl font-light mb-4">Let's talk.</h2>
+                        <p class="text-system-dim font-light mb-8 max-w-md">
+                            Direct email is the fastest path. I reply within one business day.
+                        </p>
+
+                        <div class="space-y-6">
+                            <button onclick="copyEmail()" id="emailBtn" class="group relative px-6 py-3 bg-white text-black font-mono text-[11px] tracking-widest uppercase overflow-hidden inline-flex items-center">
+                                <span class="relative z-10 mr-2">hello@danilorojas.design</span>
+                                <svg class="relative z-10 w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                <div class="absolute inset-0 bg-gray-200 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></div>
+                            </button>
+                            <div id="copyMsg" class="h-4 text-[10px] font-mono text-green-500 opacity-0 transition-opacity">Email copied to clipboard.</div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col justify-end">
+                        <div class="border border-system-line p-1 bg-system-bg">
+                            <div class="border border-system-line/50 p-6 relative">
+                                <div class="font-mono text-[10px] text-system-dim mb-4 uppercase flex justify-between">
+                                    <span>Terminal.exe</span>
+                                    <span>v11.0</span>
+                                </div>
+                                <div class="font-mono text-xs text-system-dim space-y-2">
+                                    <div>> System diagnostics... <span class="text-green-500">OK</span></div>
+                                    <div>> Loading profile... <span class="text-green-500">100%</span></div>
+                                    <div class="text-white">> Availability: Open to work</div>
+                                    <div class="text-white">> Mode: Remote global</div>
+                                    <div>> Awaiting handshake_</div>
+                                    <div class="animate-pulse w-2 h-4 bg-white mt-2 inline-block"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meta Footer -->
+            <div class="mt-12 flex flex-col md:flex-row justify-between items-start md:items-center font-mono text-[10px] text-system-dim uppercase tracking-widest reveal delay-200 gap-4">
+                <div>Built by Danilo Rojas · Updated 2026-06-15</div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-white transition-colors">LinkedIn</a>
+                    <a href="#" class="hover:text-white transition-colors">GitHub Repo</a>
+                    <a href="#" class="hover:text-white transition-colors">Behance</a>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // 1. Mouse Glow Tracking
+        document.addEventListener('DOMContentLoaded', () => {
+            const root = document.documentElement;
+            document.addEventListener('mousemove', (e) => {
+                root.style.setProperty('--mouse-x', `${e.clientX}px`);
+                root.style.setProperty('--mouse-y', `${e.clientY}px`);
+            });
+
+            // 2. Scroll Progress Bar
+            const scrollProgress = document.getElementById('scrollProgress');
+            window.addEventListener('scroll', () => {
+                const totalScroll = document.documentElement.scrollTop;
+                const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scroll = `${totalScroll / windowHeight * 100}%`;
+                scrollProgress.style.width = scroll;
+            });
+
+            // 3. Intersection Observer for 'Reveal' animations
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+            revealElements.forEach(el => revealOnScroll.observe(el));
+
+            setTimeout(() => {
+                revealElements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if(rect.top < window.innerHeight) el.classList.add('active');
+                });
+            }, 100);
+        });
+
+        // 4. Copy Email Function
+        function copyEmail() {
+            const email = "hello@danilorojas.design";
+            const msg = document.getElementById('copyMsg');
+            navigator.clipboard.writeText(email).then(() => {
+                msg.style.opacity = '1';
+                setTimeout(() => { msg.style.opacity = '0'; }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
