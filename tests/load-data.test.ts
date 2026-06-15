@@ -12,6 +12,8 @@ import {
   DataLoadError,
   validateSkills,
   validatePositioning,
+  loadNotes,
+  validateNotes,
 } from "../generadores/lib/load-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -314,5 +316,41 @@ describe("loadCvData â€” thesisBairesdev round-trip", () => {
       .toBe(true);
     expect(cv.positioning.thesisBairesdev!.en).toContain("18 years");
     expect(cv.positioning.thesisBairesdev!.en).toContain("AI as leverage");
+  });
+});
+
+describe("validateNotes", () => {
+  it("parses a list of notes", () => {
+    const notes = validateNotes([
+      { slug: "a", titleEn: "T", titleEs: "T", bodyEn: "B", bodyEs: "B" },
+    ]);
+    expect(notes).toHaveLength(1);
+    expect(notes[0].slug).toBe("a");
+  });
+  it("rejects a note missing a field", () => {
+    expect(() => validateNotes([{ slug: "a", titleEn: "T" }])).toThrow();
+  });
+});
+
+describe("validatePositioning trustStrip + heroLine", () => {
+  it("accepts trustStrip and heroLine when present", () => {
+    const p = validatePositioning({
+      thesis: { en: "x", es: "x" },
+      tagline: { en: "x", es: "x" },
+      heroLine: { en: "h", es: "h" },
+      trustStrip: { en: ["A", "B"], es: ["A", "B"] },
+      proofNumbers: [{ value: "1", labelEn: "L", labelEs: "L" }],
+    });
+    expect(p.heroLine?.en).toBe("h");
+    expect(p.trustStrip?.es).toEqual(["A", "B"]);
+  });
+  it("omits them when absent", () => {
+    const p = validatePositioning({
+      thesis: { en: "x", es: "x" },
+      tagline: { en: "x", es: "x" },
+      proofNumbers: [{ value: "1", labelEn: "L", labelEs: "L" }],
+    });
+    expect(p.heroLine).toBeUndefined();
+    expect(p.trustStrip).toBeUndefined();
   });
 });

@@ -17,24 +17,28 @@ export interface Identity {
 
 // ============= POSITIONING =============
 export interface Positioning {
-  thesis: {
-    en: string;
-    es: string;
-  };
-  tagline: {
-    en: string;
-    es: string;
-  };
-  thesisBairesdev?: {
-    en: string;
-  };
+  thesis: { en: string; es: string };
+  tagline: { en: string; es: string };
+  heroLine?: { en: string; es: string };
+  trustStrip?: { en: string[]; es: string[] };
+  thesisBairesdev?: { en: string };
   proofNumbers: Array<{
-    value: string;      // e.g. "346"
-    unit?: string;      // e.g. "+" or ".0"
+    value: string;
+    unit?: string;
     labelEn: string;
     labelEs: string;
   }>;
 }
+
+// ============= NOTES (POV) =============
+export interface Note {
+  slug: string;
+  titleEn: string;
+  titleEs: string;
+  bodyEn: string;
+  bodyEs: string;
+}
+export type Notes = Note[];
 
 // ============= SKILLS =============
 export interface Skill {
@@ -208,4 +212,5 @@ export interface HorizonSection {
 export interface LandingData extends CvData {
   landing: Landing;
   horizon: HorizonSection;
+  notes: Notes;
 }

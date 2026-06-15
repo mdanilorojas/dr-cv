@@ -21,6 +21,8 @@ import type {
   HorizonSection,
   HorizonColumn,
   HorizonChip,
+  Note,
+  Notes,
 } from "./types.js";
 
 export class DataLoadError extends Error {
@@ -146,6 +148,22 @@ export function validatePositioning(raw: unknown): Positioning {
       en: requireString(tbo.en, "positioning.thesisBairesdev.en"),
     };
   }
+  let heroLine: Positioning["heroLine"] = undefined;
+  if (o.heroLine !== undefined && o.heroLine !== null) {
+    const hl = requireObject(o.heroLine, "positioning.heroLine");
+    heroLine = {
+      en: requireString(hl.en, "positioning.heroLine.en"),
+      es: requireString(hl.es, "positioning.heroLine.es"),
+    };
+  }
+  let trustStrip: Positioning["trustStrip"] = undefined;
+  if (o.trustStrip !== undefined && o.trustStrip !== null) {
+    const ts = requireObject(o.trustStrip, "positioning.trustStrip");
+    trustStrip = {
+      en: requireArray(ts.en, "positioning.trustStrip.en", (s, i) => requireString(s, `positioning.trustStrip.en[${i}]`)),
+      es: requireArray(ts.es, "positioning.trustStrip.es", (s, i) => requireString(s, `positioning.trustStrip.es[${i}]`)),
+    };
+  }
   return {
     thesis: {
       en: requireString(th.en, "positioning.thesis.en"),
@@ -155,6 +173,8 @@ export function validatePositioning(raw: unknown): Positioning {
       en: requireString(tg.en, "positioning.tagline.en"),
       es: requireString(tg.es, "positioning.tagline.es"),
     },
+    heroLine,
+    trustStrip,
     thesisBairesdev,
     proofNumbers: requireArray(o.proofNumbers, "positioning.proofNumbers", (p, i) => {
       const po = requireObject(p, `positioning.proofNumbers[${i}]`);
@@ -449,7 +469,9 @@ export function loadLandingData(dataDir: string): LandingData {
   const cv = loadCvData(dataDir);
   const landing = loadLanding(path.join(dataDir, "landing.yaml"));
   const horizon = loadHorizon(path.join(dataDir, "horizon.yaml"));
-  return { ...cv, landing, horizon };
+  const notesPath = path.join(dataDir, "notes.yaml");
+  const notes = existsSync(notesPath) ? loadNotes(notesPath) : [];
+  return { ...cv, landing, horizon, notes };
 }
 
 // ============= HORIZON VALIDATION =============
@@ -511,4 +533,22 @@ function validateHorizon(raw: unknown): HorizonSection {
 
 export function loadHorizon(filePath: string): HorizonSection {
   return loadYaml(filePath, validateHorizon);
+}
+
+// ============= NOTES VALIDATION =============
+export function validateNotes(raw: unknown): Note[] {
+  return requireArray(raw, "notes", (n, i) => {
+    const o = requireObject(n, `notes[${i}]`);
+    return {
+      slug: requireString(o.slug, `notes[${i}].slug`),
+      titleEn: requireString(o.titleEn, `notes[${i}].titleEn`),
+      titleEs: requireString(o.titleEs, `notes[${i}].titleEs`),
+      bodyEn: requireString(o.bodyEn, `notes[${i}].bodyEn`),
+      bodyEs: requireString(o.bodyEs, `notes[${i}].bodyEs`),
+    };
+  });
+}
+
+export function loadNotes(filePath: string): Note[] {
+  return loadYaml(filePath, validateNotes);
 }
