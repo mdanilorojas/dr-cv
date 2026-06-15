@@ -5,8 +5,14 @@ tagline:
   en: "From DBA to UX — I learned the whole stack to design for it. I analyze, learn, ship, and align to whatever the project needs."
   es: "De DBA a UX — aprendí el stack entero para diseñar sobre él. Analizo, aprendo, entrego y me alineo a lo que el proyecto necesite."
 heroLine:
-  en: "Designing products for complex systems, regulated environments, and teams that need to move faster."
-  es: "Diseñando productos para sistemas complejos, entornos regulados y equipos que necesitan moverse más rápido."
+  en: "I design products for complex, regulated environments."
+  es: "Diseño productos para entornos complejos y regulados."
+heroEmphasis:
+  en: "complex, regulated environments."
+  es: "entornos complejos y regulados."
+heroSub:
+  en: "Mapping the coordinates where engineering meets human craft."
+  es: "Mapeando las coordenadas donde la ingeniería se encuentra con el craft humano."
 trustStrip:
   en: ["FAA", "DoD", "VA", "Booz Allen Hamilton", "Pichincha Bank", "Rappi", "Juan Valdez"]
   es: ["FAA", "DoD", "VA", "Booz Allen Hamilton", "Banco Pichincha", "Rappi", "Juan Valdez"]

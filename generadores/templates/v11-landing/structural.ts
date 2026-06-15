@@ -172,6 +172,9 @@ export function renderStructuralLanding(
   ].map(([h, l]) => `<a href="${h}" class="text-system-dim hover:text-white transition-colors">${escapeHtml(l)}</a>`).join("");
 
   const heroLine = t(lang, positioning.heroLine?.en ?? positioning.thesis.en, positioning.heroLine?.es ?? positioning.thesis.es);
+  const heroEmph = positioning.heroEmphasis ? t(lang, positioning.heroEmphasis.en, positioning.heroEmphasis.es) : heroLine;
+  const heroSub = positioning.heroSub ? t(lang, positioning.heroSub.en, positioning.heroSub.es) : "";
+  const photoHref = assets.photoHref;
 
   const trust = (lang === "en" ? positioning.trustStrip?.en : positioning.trustStrip?.es) ?? [];
   const trustRow = trust.map((s) => `<span class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors cursor-default">${escapeHtml(s)}</span>`)
@@ -282,16 +285,26 @@ export function renderStructuralLanding(
     <div class="structural-border p-8 sm:p-16 md:p-24 reveal relative overflow-hidden bg-system-surface/30 backdrop-blur-sm">
       <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
       <div class="tech-label -top-2 left-10">MOD: 01 // CORE_SYSTEM</div>
-      <div class="max-w-4xl relative z-10">
-        <div class="font-mono text-[11px] text-system-dim mb-6 tracking-widest uppercase flex items-center">
-          <span class="w-4 h-[1px] bg-system-dim mr-3"></span>${escapeHtml(identity.name)} · ${escapeHtml(identity.role)}
+      <div class="max-w-4xl relative z-10 pt-4">
+        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-system-line mb-8 p-1 bg-system-surface/80 backdrop-blur-md flex items-center justify-center relative group">
+          <div class="w-full h-full rounded-full bg-system-bg border border-system-line/50 overflow-hidden flex items-center justify-center relative">
+            <img src="${escapeHtml(photoHref)}" alt="${escapeHtml(identity.name)}" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
+          </div>
+          <div class="absolute -inset-2 border border-system-line/30 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-[spin_4s_linear_infinite] transition-opacity duration-500"></div>
         </div>
-        <h1 class="text-4xl sm:text-5xl md:text-[4.5rem] font-light tracking-tighter leading-[1.06] mb-10 text-system-accent max-w-3xl">${escapeHtml(heroLine)}</h1>
+        <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.16] mb-8 text-system-dim max-w-5xl">
+          <span class="text-white font-medium">${escapeHtml(t(lang, "I'm", "Soy"))} ${escapeHtml(identity.name)}.</span><br>
+          ${escapeHtml(t(lang, "I design products for", "Diseño productos para"))} <span class="text-white">${escapeHtml(heroEmph)}</span>
+        </h1>
+        ${heroSub ? `<div class="flex items-center gap-4 mb-10">
+          <div class="w-8 h-[1px] bg-system-dim/50 hidden sm:block"></div>
+          <p class="text-base md:text-lg text-system-dim font-sans font-light tracking-wide max-w-2xl leading-relaxed">${escapeHtml(heroSub)}</p>
+        </div>` : ""}
         <div class="flex flex-col sm:flex-row sm:items-center gap-6 mt-12">
           <a href="#contact" class="group relative px-6 py-3 bg-white text-black font-medium text-sm tracking-wide inline-block text-center border border-white hover:bg-transparent hover:text-white transition-colors no-underline">${escapeHtml(t(lang, landing.cta.en, landing.cta.es))}</a>
           <div class="flex items-center space-x-2">
             <div class="w-2 h-2 rounded-full border border-green-500/50 flex items-center justify-center"><div class="w-1 h-1 bg-green-500 rounded-full animate-pulse-slow"></div></div>
-            <span class="text-xs font-mono text-system-dim uppercase tracking-widest">${escapeHtml(identity.availability)}</span>
+            <span class="text-xs font-mono text-system-dim uppercase tracking-widest">${escapeHtml(t(lang, "Remote global", "Remoto global"))}</span>
           </div>
         </div>
       </div>
@@ -315,7 +328,7 @@ export function renderStructuralLanding(
 
   <section class="w-full max-w-6xl mt-24 reveal">
     <div class="mb-8 flex items-center justify-between">
-      <h2 class="text-xl font-light text-system-accent">${escapeHtml(t(lang, V11_COPY.proofHeadingEn, V11_COPY.proofHeadingEs))}</h2>
+      <h2 class="text-xl md:text-2xl font-light text-system-accent">${escapeHtml(t(lang, "The math behind the craft.", "La matemática detrás del craft."))}</h2>
       <div class="h-[1px] flex-grow bg-system-line mx-6 hidden md:block"></div>
       <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">DAT // Metrics</span>
     </div>

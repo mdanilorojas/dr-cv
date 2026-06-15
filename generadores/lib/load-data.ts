@@ -155,6 +155,17 @@ export function validatePositioning(raw: unknown): Positioning {
       es: requireString(hl.es, "positioning.heroLine.es"),
     };
   }
+  const bilingualOpt = (key: "heroEmphasis" | "heroSub") => {
+    const v = (o as Record<string, unknown>)[key];
+    if (v === undefined || v === null) return undefined;
+    const obj = requireObject(v, `positioning.${key}`);
+    return {
+      en: requireString(obj.en, `positioning.${key}.en`),
+      es: requireString(obj.es, `positioning.${key}.es`),
+    };
+  };
+  const heroEmphasis = bilingualOpt("heroEmphasis");
+  const heroSub = bilingualOpt("heroSub");
   let trustStrip: Positioning["trustStrip"] = undefined;
   if (o.trustStrip !== undefined && o.trustStrip !== null) {
     const ts = requireObject(o.trustStrip, "positioning.trustStrip");
@@ -173,6 +184,8 @@ export function validatePositioning(raw: unknown): Positioning {
       es: requireString(tg.es, "positioning.tagline.es"),
     },
     heroLine,
+    heroEmphasis,
+    heroSub,
     trustStrip,
     thesisBairesdev,
     proofNumbers: requireArray(o.proofNumbers, "positioning.proofNumbers", (p, i) => {

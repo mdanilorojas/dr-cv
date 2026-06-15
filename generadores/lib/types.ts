@@ -20,6 +20,8 @@ export interface Positioning {
   thesis: { en: string; es: string };
   tagline: { en: string; es: string };
   heroLine?: { en: string; es: string };
+  heroEmphasis?: { en: string; es: string };
+  heroSub?: { en: string; es: string };
   trustStrip?: { en: string[]; es: string[] };
   thesisBairesdev?: { en: string };
   proofNumbers: Array<{
