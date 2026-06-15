@@ -206,15 +206,21 @@ img { max-width: 100%; display: block; }
   align-items: center;
   position: relative;
 }
-.v11-hero__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--v11-s-7);
-  align-items: center;
+.v11-hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 18ch;
 }
-@media (min-width: 960px) {
-  .v11-hero__grid { grid-template-columns: 6fr 6fr; }
+.v11-hero__kicker {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-micro);
+  color: var(--v11-text-60);
+  letter-spacing: var(--v11-track-code);
+  text-transform: uppercase;
+  margin-bottom: var(--v11-s-5);
 }
+.v11-hero__kicker span { color: var(--v11-accent); margin: 0 6px; }
 .v11-hero__byline {
   display: flex;
   align-items: center;
@@ -401,6 +407,30 @@ img { max-width: 100%; display: block; }
 }
 @keyframes v11-blink { 50% { opacity: 0; } }
 
+/* ============== TRUST STRIP ============== */
+.v11-trust {
+  padding: clamp(28px, 4vw, 44px) 0;
+  border-top: 1px solid var(--v11-line);
+  border-bottom: 1px solid var(--v11-line);
+}
+.v11-trust__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 4px;
+}
+.v11-trust__item {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-micro);
+  letter-spacing: var(--v11-track-snug);
+  color: var(--v11-text-60);
+}
+.v11-trust__sep {
+  color: var(--v11-text-subtle);
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-micro);
+}
+
 /* ============== PROOF STRIP ============== */
 .v11-proof {
   display: grid;
@@ -448,72 +478,39 @@ img { max-width: 100%; display: block; }
   margin-top: 4px;
 }
 
-/* ============== NOTEBOOK (essay) ============== */
-.v11-notebook {
-  max-width: var(--v11-container-narrow);
-  margin: 0 auto;
+/* ============== NOTES (POV) ============== */
+.v11-notes {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 6vw, 72px);
+  margin-top: var(--v11-s-7);
 }
-.v11-notebook h2.v11-h1 { color: var(--v11-paper-ink); }
-.v11-notebook__essay {
+.v11-note {
+  display: block;
+  max-width: 64ch;
+}
+.v11-note__idx {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-nano);
+  letter-spacing: var(--v11-track-code);
+  color: var(--v11-paper-muted);
+  margin-bottom: var(--v11-s-3);
+}
+.v11-note__title {
+  font-family: var(--v11-font-serif);
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--v11-paper-ink);
+  margin: 0 0 var(--v11-s-3);
+}
+.v11-note__body {
   font-family: var(--v11-font-serif);
   font-size: 18px;
   line-height: 1.7;
   color: var(--v11-paper-body);
-}
-.v11-notebook__essay p { margin: 0 0 var(--v11-s-5); }
-.v11-notebook__essay em { color: var(--v11-accent-deep); font-style: italic; }
-.v11-notebook__toc {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--v11-s-3);
-  padding: var(--v11-s-4);
-  background: rgba(11, 12, 14, 0.04);
-  border-radius: var(--v11-radius);
-  margin: var(--v11-s-5) 0;
-  font-family: var(--v11-font-mono);
-  font-size: var(--v11-fs-nano);
-  letter-spacing: var(--v11-track-code);
-  text-transform: uppercase;
-  color: var(--v11-paper-muted);
-}
-.v11-notebook__toc a { color: var(--v11-paper-ink); }
-.v11-notebook__toc a:hover { color: var(--v11-accent-deep); }
-.v11-notebook__byline {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: var(--v11-s-5) 0 var(--v11-s-6);
-  padding: var(--v11-s-4) 0;
-  border-top: 1px solid rgba(11, 12, 14, 0.12);
-  border-bottom: 1px solid rgba(11, 12, 14, 0.12);
-}
-.v11-notebook__byline-photo {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  object-fit: cover;
-  filter: grayscale(1) contrast(1.05);
-  flex-shrink: 0;
-  display: block;
-}
-.v11-notebook__byline-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.v11-notebook__byline-name {
-  font-family: var(--v11-font-serif);
-  font-size: 15px;
-  color: var(--v11-paper-ink);
-  letter-spacing: -0.005em;
-}
-.v11-notebook__byline-name strong { font-weight: 600; }
-.v11-notebook__byline-sub {
-  font-family: var(--v11-font-mono);
-  font-size: var(--v11-fs-nano);
-  letter-spacing: var(--v11-track-code);
-  text-transform: uppercase;
-  color: var(--v11-paper-muted);
+  margin: 0;
 }
 
 /* ============== WORK / CASE CARDS ============== */

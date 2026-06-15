@@ -152,43 +152,9 @@ function yearRange(startYear: number, endYear: number | "present", lang: Lang): 
 /* ============== copy (V11 R5 draft C â€” taste-first critic) ============== */
 
 const COPY = {
-  // Hero
-  hero: {
-    eyebrowEn: "Currently Â· Booz Allen Hamilton Â· Trusted Environments",
-    eyebrowEs: "Actualmente Â· Booz Allen Hamilton Â· Trusted Environments",
-    titleEn: "A point of view on agentic design,",
-    titleEs: "Un punto de vista sobre diseÃ±o agÃ©ntico,",
-    titleEmEn: "not a rÃ©sumÃ©.",
-    titleEmEs: "no un currÃ­culum.",
-    subEn: "Fifteen years shipping product. The last twelve months rebuilt around a Claude Code workflow I use every day. I keep the craft â€” agents give me the leverage.",
-    subEs: "Quince aÃ±os entregando producto. Los Ãºltimos doce meses reconstruidos alrededor de un workflow Claude Code que uso cada dÃ­a. Yo pongo el craft â€” los agentes dan el apalancamiento.",
-    ctaPrimaryEn: "Read the notebook",
-    ctaPrimaryEs: "Ver el notebook",
-    ctaGhostEn: "See the work",
-    ctaGhostEs: "Ver el trabajo",
-  },
   // Proof
   proofHeadingEn: "Evidence, not adjectives.",
   proofHeadingEs: "Evidencia, no adjetivos.",
-  // Notebook
-  notebook: {
-    eyebrowEn: "Notebook Â· essay",
-    eyebrowEs: "Notebook Â· ensayo",
-    titleEn: "Trust is the unit of economy.",
-    titleEs: "La confianza es la unidad econÃ³mica.",
-    tocEn: "1 Â· The diff is the contract  /  2 Â· Skills, not prompts  /  3 Â· What I still won't let the agent do",
-    tocEs: "1 Â· El diff es el contrato  /  2 Â· Skills, no prompts  /  3 Â· Lo que todavÃ­a no le dejo al agente",
-    bodyEn: [
-      "The hardest thing about agentic design isn't the prompt engineering. It's deciding, at every junction, whether the human reviews the diff or the agent just ships it. <em>Trust is the unit of economy.</em> Every tool I build for myself starts by answering one question: what do I get to keep looking at?",
-      "The teams shipping real agentic work in 2026 aren't the ones with the cleverest prompts. They're the ones that put the diff at the center. Claude Code is the prototype: every mutation proposed, reviewable, rejectable. The UX work is hiding the machinery when the trust is earned â€” not pretending the machinery isn't there.",
-      "I didn't start my career building for agents. I spent fifteen years shipping product for humans. The combination is the work now â€” profile plus agents â€” and it's not a productivity story. It's a <em>taste</em> story. The agent will propose a hundred things; picking the six that should ship is the skill.",
-    ],
-    bodyEs: [
-      "Lo mÃ¡s difÃ­cil del diseÃ±o agÃ©ntico no es la ingenierÃ­a de prompts. Es decidir, en cada uniÃ³n, si el humano revisa el diff o el agente simplemente lo shipea. <em>La confianza es la unidad econÃ³mica.</em> Cada herramienta que construyo para mÃ­ empieza respondiendo una pregunta: Â¿quÃ© me toca seguir mirando?",
-      "Los equipos que estÃ¡n shipeando trabajo agÃ©ntico real en 2026 no son los que tienen los prompts mÃ¡s ingeniosos. Son los que ponen el diff al centro. Claude Code es el prototipo: toda mutaciÃ³n propuesta, revisable, rechazable. El trabajo de UX es esconder la generadores cuando la confianza se ganÃ³ â€” no pretender que la generadores no estÃ¡ ahÃ­.",
-      "No empecÃ© mi carrera construyendo para agentes. PasÃ© quince aÃ±os entregando producto para humanos. La combinaciÃ³n es el trabajo ahora â€” perfil mÃ¡s agentes â€” y no es una historia de productividad. Es una historia de <em>gusto</em>. El agente propondrÃ¡ cien cosas; elegir las seis que deben shipearse es la skill.",
-    ],
-  },
   work: {
     eyebrowEn: "Selected work Â· 2025â€“2026",
     eyebrowEs: "Trabajo seleccionado Â· 2025â€“2026",
@@ -282,82 +248,48 @@ function renderNav(identity: Identity, lang: Lang, opts: NavOpts): string {
 
 /* ============== HERO (AI Product-Tour layer) ============== */
 
-function renderHero(identity: Identity, positioning: Positioning, lang: Lang, photoHref: string): string {
-  const { first, last } = splitName(identity.name);
-  const eyebrow = lang === "en" ? COPY.hero.eyebrowEn : COPY.hero.eyebrowEs;
-  const title = lang === "en" ? COPY.hero.titleEn : COPY.hero.titleEs;
-  const titleEm = lang === "en" ? COPY.hero.titleEmEn : COPY.hero.titleEmEs;
-  const sub = lang === "en" ? COPY.hero.subEn : COPY.hero.subEs;
-  const ctaPrimary = lang === "en" ? COPY.hero.ctaPrimaryEn : COPY.hero.ctaPrimaryEs;
-  const ctaGhost = lang === "en" ? COPY.hero.ctaGhostEn : COPY.hero.ctaGhostEs;
-
-  const artifactFile = lang === "en" ? "cv-serious.en.pdf" : "cv-serious.es.pdf";
-  const artifactStatus = lang === "en" ? "ready" : "listo";
-  const streamHead = lang === "en" ? "Regenerating EN / ES" : "Regenerando EN / ES";
-  const roleCanonical = "Agentic Designer Â· Product Engineer";
-  const artifactMeta = lang === "en" ? "generated 08 May 2026" : "generado 08 May 2026";
-
-  const shortThesis = lang === "en"
-    ? "15 years shipping. Booz Allen Hamilton (current). EnRegla (own SaaS). Claude Code power-user. 346 commits Â· 40 days."
-    : "15 aÃ±os entregando. Booz Allen Hamilton (actual). EnRegla (SaaS propio). Claude Code power-user. 346 commits Â· 40 dÃ­as.";
-
-  const avatarAlt = lang === "en"
-    ? `Portrait of ${identity.name}`
-    : `Retrato de ${identity.name}`;
+function renderHero(
+  identity: Identity,
+  positioning: Positioning,
+  landing: Landing,
+  lang: Lang,
+): string {
+  const heroLine = lang === "en"
+    ? positioning.heroLine?.en ?? positioning.thesis.en
+    : positioning.heroLine?.es ?? positioning.thesis.es;
+  const cta = lang === "en" ? landing.cta.en : landing.cta.es;
 
   return `<section id="top" class="v11-hero" aria-label="Hero">
   <div class="v11-container">
-    <div class="v11-hero__grid">
-      <div>
-        <div class="v11-hero__byline">
-          <img class="v11-hero__avatar" src="${escapeHtml(photoHref)}" alt="${escapeHtml(avatarAlt)}" width="110" height="110" loading="eager" decoding="async">
-          <div class="v11-hero__eyebrow">${escapeHtml(eyebrow)}</div>
-        </div>
-        <h1 class="v11-hero__title">${escapeHtml(title)} <em>${escapeHtml(titleEm)}</em></h1>
-        <p class="v11-hero__sub">${escapeHtml(sub)}</p>
-        <div class="v11-hero__actions">
-          <a class="v11-btn v11-btn--primary" href="#notebook">
-            ${escapeHtml(ctaPrimary)}
-            <span class="v11-btn__arrow" aria-hidden="true">â†’</span>
-          </a>
-          <a class="v11-btn v11-btn--ghost" href="#work">
-            ${escapeHtml(ctaGhost)}
-            <span class="v11-btn__arrow" aria-hidden="true">â†’</span>
-          </a>
-        </div>
-        <span class="v11-hero__availability">
-          <span class="v11-live" aria-hidden="true"></span>
-          ${escapeHtml(identity.availability)}
-        </span>
+    <div class="v11-hero__inner">
+      <div class="v11-hero__kicker">${escapeHtml(identity.name)} <span aria-hidden="true">Â·</span> ${escapeHtml(identity.role)}</div>
+      <h1 class="v11-hero__title">${escapeHtml(heroLine)}</h1>
+      <div class="v11-hero__actions">
+        <a class="v11-btn v11-btn--primary" href="#contact">
+          ${escapeHtml(cta)}
+          <span class="v11-btn__arrow" aria-hidden="true">â†’</span>
+        </a>
       </div>
-
-      <div>
-        <div class="v11-artifact" aria-label="Generated CV artifact preview">
-          <div class="v11-artifact__head">
-            <span class="v11-artifact__dot" aria-hidden="true"></span>
-            <span class="v11-artifact__file">${escapeHtml(artifactFile)}</span>
-            <span>Â· ${escapeHtml(artifactMeta)}</span>
-            <span class="v11-artifact__status">${escapeHtml(artifactStatus)}</span>
-          </div>
-          <div class="v11-artifact__body">
-            <div class="v11-artifact-paper">
-              <div class="v11-artifact-paper__kicker">// ${escapeHtml(roleCanonical)}</div>
-              <div class="v11-artifact-paper__name">${escapeHtml(first)} <span>${escapeHtml(last)}</span></div>
-              <div class="v11-artifact-paper__meta">${escapeHtml(identity.location)} Â· ${escapeHtml(identity.languages)}</div>
-              <hr class="v11-artifact-paper__hr">
-              <div class="v11-artifact-paper__body">${escapeHtml(shortThesis)}</div>
-            </div>
-          </div>
-        </div>
-        <div class="v11-stream" role="status" aria-live="polite">
-          <div class="v11-stream__head">${escapeHtml(streamHead)}</div>
-          <span class="v11-stream__line">npm run build:cvs</span>
-          <span class="v11-stream__line">[cv] wrote dist/cvs/cv-warm-en.pdf</span>
-          <span class="v11-stream__line">[cv] wrote dist/cvs/cv-serious-en.pdf<span class="v11-stream__caret" aria-hidden="true"></span></span>
-        </div>
-      </div>
+      <span class="v11-hero__availability">
+        <span class="v11-live" aria-hidden="true"></span>
+        ${escapeHtml(identity.availability)}
+      </span>
     </div>
   </div>
+</section>`;
+}
+
+/* ============== TRUST STRIP ============== */
+
+function renderTrustStrip(positioning: Positioning, lang: Lang): string {
+  const items = lang === "en" ? positioning.trustStrip?.en : positioning.trustStrip?.es;
+  if (!items || items.length === 0) return "";
+  const label = lang === "en" ? "Trusted by teams at" : "Trabajo para equipos en";
+  const row = items
+    .map((s) => `<span class="v11-trust__item">${escapeHtml(s)}</span>`)
+    .join('<span class="v11-trust__sep" aria-hidden="true"> Â· </span>');
+  return `<section class="v11-trust" aria-label="${escapeHtml(label)}">
+  <div class="v11-container"><div class="v11-trust__row">${row}</div></div>
 </section>`;
 }
 
@@ -367,44 +299,15 @@ function renderProof(positioning: Positioning, lang: Lang): string {
   const heading = lang === "en" ? COPY.proofHeadingEn : COPY.proofHeadingEs;
   const eyebrow = lang === "en" ? "// Evidence" : "// Evidencia";
 
-  // Proof items â€” value Â· label Â· attribution (V11 R8 #6)
-  const items = [
-    {
-      num: "15<em>+</em>",
-      labelEn: "Years shipping product",
-      labelEs: "AÃ±os shippeando producto",
-      attrEn: "2010â€“present Â· LATAM + US enterprise",
-      attrEs: "2010â€“actualidad Â· LATAM + US enterprise",
-    },
-    {
-      num: "346",
-      labelEn: "Commits Â· last 40 days",
-      labelEs: "Commits Â· 40 Ãºltimos dÃ­as",
-      attrEn: "github.com/mdanilorojas Â· EnRegla",
-      attrEs: "github.com/mdanilorojas Â· EnRegla",
-    },
-    {
-      num: "1<em>.0</em>",
-      labelEn: "SaaS live Â· paying pilots",
-      labelEs: "SaaS en producciÃ³n Â· pilotos pagados",
-      attrEn: "EnRegla Â· 0â†’1.0 in 40 days with agents",
-      attrEs: "EnRegla Â· 0â†’1.0 en 40 dÃ­as con agentes",
-    },
-    {
-      num: "95<em>.6</em>",
-      labelEn: "DS migration score",
-      labelEs: "Score migraciÃ³n DS",
-      attrEn: "17 parts Ã— 5 rounds Â· 78.4â†’95.6 Â· TE Skin",
-      attrEs: "17 partes Ã— 5 rondas Â· 78.4â†’95.6 Â· TE Skin",
-    },
-  ];
-
-  const cards = items.map((it) => `
+  const cards = positioning.proofNumbers.map((it) => {
+    const unit = it.unit ? `<em>${escapeHtml(it.unit)}</em>` : "";
+    const label = lang === "en" ? it.labelEn : it.labelEs;
+    return `
       <div class="v11-proof__item" role="listitem">
-        <div class="v11-proof__num">${it.num}</div>
-        <div class="v11-proof__label">${escapeHtml(lang === "en" ? it.labelEn : it.labelEs)}</div>
-        <div class="v11-proof__attr">${escapeHtml(lang === "en" ? it.attrEn : it.attrEs)}</div>
-      </div>`).join("");
+        <div class="v11-proof__num">${escapeHtml(it.value)}${unit}</div>
+        <div class="v11-proof__label">${escapeHtml(label)}</div>
+      </div>`;
+  }).join("");
 
   return `<section class="v11-section" aria-labelledby="proof-h">
   <div class="v11-container">
@@ -417,38 +320,26 @@ ${cards}
 </section>`;
 }
 
-/* ============== NOTEBOOK ============== */
+/* ============== NOTES (POV) ============== */
 
-function renderNotebook(identity: Identity, lang: Lang, photoHref: string): string {
-  const eyebrow = lang === "en" ? COPY.notebook.eyebrowEn : COPY.notebook.eyebrowEs;
-  const title = lang === "en" ? COPY.notebook.titleEn : COPY.notebook.titleEs;
-  const toc = lang === "en" ? COPY.notebook.tocEn : COPY.notebook.tocEs;
-  const paragraphs = lang === "en" ? COPY.notebook.bodyEn : COPY.notebook.bodyEs;
-
-  const paragraphsHtml = paragraphs.map((p) => `<p>${p}</p>`).join("\n");
-
-  const bylineByLabel = lang === "en" ? "By" : "Por";
-  const bylineRole = lang === "en" ? "Agentic Designer" : "DiseÃ±ador AgÃ©ntico";
-  const bylineDate = "2026-05-12";
-  const avatarAlt = lang === "en"
-    ? `Portrait of ${identity.name}`
-    : `Retrato de ${identity.name}`;
-
-  return `<section id="notebook" class="v11-section v11-section--paper" aria-labelledby="notebook-h">
-  <div class="v11-container-narrow v11-notebook">
+function renderNotes(data: LandingData, lang: Lang): string {
+  if (data.notes.length === 0) return "";
+  const eyebrow = lang === "en" ? "Notes" : "Notas";
+  const items = data.notes.map((n, i) => {
+    const title = lang === "en" ? n.titleEn : n.titleEs;
+    const body = lang === "en" ? n.bodyEn : n.bodyEs;
+    const idx = String(i + 1).padStart(2, "0");
+    return `<article class="v11-note" data-reveal>
+    <div class="v11-note__idx">${idx}</div>
+    <h3 class="v11-note__title">${escapeHtml(title)}</h3>
+    <p class="v11-note__body">${escapeHtml(body)}</p>
+  </article>`;
+  }).join("\n");
+  return `<section id="notes" class="v11-section v11-section--paper" aria-labelledby="notes-h">
+  <div class="v11-container-narrow">
     <div class="v11-section__eyebrow">${escapeHtml(eyebrow)}</div>
-    <h2 id="notebook-h" class="v11-h1">${escapeHtml(title)}</h2>
-    <div class="v11-notebook__toc">${escapeHtml(toc)}</div>
-    <figure class="v11-notebook__byline">
-      <img class="v11-notebook__byline-photo" src="${escapeHtml(photoHref)}" alt="${escapeHtml(avatarAlt)}" width="52" height="52" loading="lazy" decoding="async">
-      <figcaption class="v11-notebook__byline-meta">
-        <span class="v11-notebook__byline-name">${escapeHtml(bylineByLabel)} <strong>${escapeHtml(identity.name)}</strong></span>
-        <span class="v11-notebook__byline-sub">${escapeHtml(bylineRole)} Â· ${escapeHtml(bylineDate)}</span>
-      </figcaption>
-    </figure>
-    <div class="v11-notebook__essay">
-${paragraphsHtml}
-    </div>
+    <h2 id="notes-h" class="v11-h1">${lang === "en" ? "The writing is evidence of judgment." : "La escritura es evidencia de juicio."}</h2>
+    <div class="v11-notes">${items}</div>
   </div>
 </section>`;
 }
@@ -849,19 +740,13 @@ export function renderV11Landing(
   tokensCss: string,
   assets: V11LandingAssets,
 ): string {
-  const seoTitle = lang === "en"
-    ? "Danilo Rojas â€” Agentic Designer Â· Product Engineer"
-    : "Danilo Rojas â€” DiseÃ±ador AgÃ©ntico Â· Product Engineer";
-  const seoDesc = lang === "en"
-    ? "A point of view on agentic design, not a rÃ©sumÃ©. Fifteen years shipping product; the last year rebuilt around agents. Available for Staff / Principal AI Product Designer roles."
-    : "Un punto de vista sobre diseÃ±o agÃ©ntico, no un currÃ­culum. Quince aÃ±os entregando producto; el Ãºltimo aÃ±o reconstruido alrededor de agentes. Abierto a roles Staff / Principal AI Product Designer.";
+  const seoTitle = lang === "en" ? data.landing.seo.titleEn : data.landing.seo.titleEs;
+  const seoDesc = lang === "en" ? data.landing.seo.descriptionEn : data.landing.seo.descriptionEs;
   const altLang = lang === "en" ? "es" : "en";
   const altHref = lang === "en" ? "/es/" : "/";
   const selfHref = lang === "en" ? "/" : "/es/";
   const skipLabel = lang === "en" ? "Skip to content" : "Saltar al contenido";
-  const ogAlt = lang === "en"
-    ? `Danilo Rojas â€” Agentic Designer`
-    : `Danilo Rojas â€” DiseÃ±ador AgÃ©ntico`;
+  const ogAlt = `${data.identity.name} â€” ${data.identity.role}`;
 
   return `<!doctype html>
 <html lang="${lang}">
@@ -897,10 +782,11 @@ ${iframeAnimationCss}
 <a class="v11-skip" href="#main">${escapeHtml(skipLabel)}</a>
 ${renderNav(data.identity, lang, { homeHref: "" })}
 <main id="main">
-${renderHero(data.identity, data.positioning, lang, assets.photoHref)}
+${renderHero(data.identity, data.positioning, data.landing, lang)}
+${renderTrustStrip(data.positioning, lang)}
 ${renderProof(data.positioning, lang)}
 ${renderHorizon(data.horizon, lang)}
-${renderNotebook(data.identity, lang, assets.photoHref)}
+${renderNotes(data, lang)}
 ${renderWork(data, lang, "")}
 ${renderMethod(data, lang)}
 ${renderContact(data, lang)}
