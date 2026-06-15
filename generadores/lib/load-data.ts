@@ -22,7 +22,6 @@ import type {
   HorizonColumn,
   HorizonChip,
   Note,
-  Notes,
 } from "./types.js";
 
 export class DataLoadError extends Error {

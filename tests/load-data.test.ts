@@ -328,7 +328,17 @@ describe("validateNotes", () => {
     expect(notes[0].slug).toBe("a");
   });
   it("rejects a note missing a field", () => {
-    expect(() => validateNotes([{ slug: "a", titleEn: "T" }])).toThrow();
+    expect(() => validateNotes([{ slug: "a", titleEn: "T" }])).toThrow(/titleEs/);
+  });
+  it("loadNotes throws DataLoadError on a malformed file", () => {
+    mkdirSync(fixtureBadDir, { recursive: true });
+    const tmpPath = path.join(fixtureBadDir, "bad-notes.yaml");
+    writeFileSync(tmpPath, "- slug: a\n  titleEn: T\n");
+    try {
+      expect(() => loadNotes(tmpPath)).toThrow(DataLoadError);
+    } finally {
+      unlinkSync(tmpPath);
+    }
   });
 });
 
