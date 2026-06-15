@@ -44,6 +44,14 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 .reveal.active { opacity:1; transform:translateY(0); }
 .delay-100{transition-delay:100ms;} .delay-200{transition-delay:200ms;}
 .tech-label { position:absolute; background:#030303; padding:0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:.1em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.08); z-index:10; }
+.metric-card { background-color:#070708;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"),
+    radial-gradient(130% 130% at 0% 0%, rgba(255,255,255,0.07), transparent 55%),
+    linear-gradient(160deg, rgba(255,255,255,0.045), transparent 45%);
+  background-size:140px 140px, auto, auto; background-blend-mode:overlay, normal, normal;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); transition: background-color .4s ease, box-shadow .4s ease; }
+.metric-card:hover { background-color:#0c0c0e; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
 ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
 @media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} }
 `;
@@ -184,7 +192,7 @@ export function renderStructuralLanding(
   const proof = positioning.proofNumbers.map((p) => {
     const unit = p.unit ? `<span class="text-system-dim">${escapeHtml(p.unit)}</span>` : "";
     const label = escapeHtml(t(lang, p.labelEn, p.labelEs));
-    return `<div class="structural-border border-t-0 border-l-0 p-8 flex flex-col justify-center min-h-[160px]">
+    return `<div class="structural-border metric-card border-t-0 border-l-0 p-8 flex flex-col justify-center min-h-[160px]">
     <div class="crosshair ch-br"></div>
     <div class="text-4xl md:text-5xl font-light text-white mb-2 tracking-tighter">${escapeHtml(p.value)}${unit}</div>
     <div class="font-mono text-[10px] text-system-dim uppercase tracking-wider leading-relaxed">${label}</div>
