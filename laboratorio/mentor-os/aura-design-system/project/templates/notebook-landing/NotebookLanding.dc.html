@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Notebook Landing" description="Designer's notebook landing: mono thesis hero, live artifact embed, cream essay chapter and an outcome-first CTA." -->
+<helmet>
+<script src="./ds-base.js"></script>
+</helmet>
+<div style="font-family:var(--font-sans); background:var(--bg); color:var(--text-primary)">
+  <nav style="position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:20px; padding:16px 48px; background:var(--topbar-bg); border-bottom:1px solid var(--border)">
+    <img src="../../assets/dr-monogram.svg" width="30" height="30" alt="" />
+    <span style="font-weight:600; letter-spacing:-0.02em">Danilo Rojas</span>
+    <div style="display:flex; gap:22px; margin-left:auto; align-items:center">
+      <a href="#thesis" style="font-size:14px; color:var(--text-secondary)">Thesis</a>
+      <a href="#artifact" style="font-size:14px; color:var(--text-secondary)">The artifact</a>
+      <x-import component-from-global-scope="AuraDesignSystem_58f91b.Button" variant="primary" size="sm" hint-size="120px,28px">Read the case</x-import>
+    </div>
+  </nav>
+
+  <section style="max-width:1080px; margin:0 auto; padding:96px 48px">
+    <div style="display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center">
+      <div>
+        <div style="font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:18px">// product designer · 15 years</div>
+        <h1 style="font-family:var(--font-mono); font-size:clamp(28px,5.5vw,56px); line-height:1.04; letter-spacing:-0.04em; margin:0 0 22px">A point of view on agentic design — not a résumé.</h1>
+        <p style="font-family:var(--font-serif); font-size:20px; line-height:1.6; color:var(--text-body); max-width:38rem; margin:0 0 28px">The craft stays. Agents supply the leverage. This is the working method behind one number — <strong style="color:var(--text-primary)">$250,000 / year</strong> — rebuilt around a daily Claude Code workflow.</p>
+        <div style="display:flex; gap:12px; align-items:center">
+          <x-import component-from-global-scope="AuraDesignSystem_58f91b.Button" variant="primary" size="lg" hint-size="150px,44px">Read the case</x-import>
+          <x-import component-from-global-scope="AuraDesignSystem_58f91b.Button" variant="accent" size="lg" hint-size="170px,44px">Run the diagnostic</x-import>
+        </div>
+      </div>
+      <x-import component-from-global-scope="AuraDesignSystem_58f91b.Artifact" file="cv-serious.en.pdf" meta="generated 14 Jun 2026" status="ready" hint-size="100%,330px">
+        <x-import component-from-global-scope="AuraDesignSystem_58f91b.EmbedWell" kind="PDF" title="Danilo Rojas — CV" meta="2 pages · 184 KB" hint-size="100%,80px"></x-import>
+        <div style="margin-top:14px">
+          <x-import component-from-global-scope="AuraDesignSystem_58f91b.Stream" hint-size="100%,50px">Tailoring narrative to the senior product-design rubric</x-import>
+        </div>
+        <div style="margin-top:14px">
+          <x-import component-from-global-scope="AuraDesignSystem_58f91b.PlanSteps" steps="{{ heroPlan }}" hint-size="100%,90px"></x-import>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap">
+          <x-import component-from-global-scope="AuraDesignSystem_58f91b.SkillChip" hint-size="100px,24px">cv-tailor</x-import>
+          <x-import component-from-global-scope="AuraDesignSystem_58f91b.SkillChip" hint-size="110px,24px">diff-review</x-import>
+        </div>
+      </x-import>
+    </div>
+  </section>
+
+  <section style="background:var(--v11-bg-paper); color:var(--v11-paper-body)" id="thesis">
+    <div style="max-width:46rem; margin:0 auto; padding:96px 48px">
+      <div style="font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--v11-paper-subtle); margin-bottom:20px">// thesis · 01</div>
+      <div style="font-family:var(--font-serif); font-size:20px; line-height:1.7; color:var(--v11-paper-body); max-width:42rem">
+        <p style="margin:0 0 24px"><span style="font-size:3.4em; line-height:0.8; float:left; padding:4px 10px 0 0; font-weight:700; color:var(--v11-accent-deep)">M</span>ost portfolios argue from output — screens, shots, the polished final frame. This one argues from method. Fifteen years of shipping taught me that taste is necessary and no longer sufficient; the differentiated work now lives in how you run the loop.</p>
+        <p style="margin:0 0 24px">For the last twelve months I have rebuilt that loop around agents: plan before build, visible thinking, diff-review every change, name the skills I reach for. The artifacts on this page are not screenshots. They are the actual surfaces I work inside, embedded live.</p>
+        <p style="margin:0">The objective is deliberately a number. <strong style="color:var(--v11-paper-ink)">$250,000 a year as a Product Designer</strong> — because a number can be diagnosed, ranked, and closed. Everything else is decoration.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1080px; margin:0 auto; padding:96px 48px" id="artifact">
+    <div style="font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:16px">// the artifact · live</div>
+    <h2 style="font-family:var(--font-mono); font-size:clamp(24px,4vw,40px); letter-spacing:-0.04em; margin:0 0 14px">Grading prose, not picking answers.</h2>
+    <p style="font-family:var(--font-serif); font-size:19px; line-height:1.65; color:var(--text-body); max-width:40rem; margin:0 0 36px">The diagnostic reads what you write and scores it against the senior rubric, then shows its work — the same surfaces, embedded in the essay.</p>
+    <x-import component-from-global-scope="AuraDesignSystem_58f91b.Artifact" file="grade.run" meta="streaming" status="thinking" hint-size="100%,280px">
+      <x-import component-from-global-scope="AuraDesignSystem_58f91b.Stream" hint-size="100%,50px">Reading for system boundaries · 2 strong tradeoffs · 1 missing second-order effect</x-import>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px">
+        <x-import component-from-global-scope="AuraDesignSystem_58f91b.PlanSteps" steps="{{ gradePlan }}" hint-size="100%,90px"></x-import>
+        <x-import component-from-global-scope="AuraDesignSystem_58f91b.DiffReview" rows="{{ gradeDiff }}" hint-size="100%,90px"></x-import>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; margin-top:16px">
+        <x-import component-from-global-scope="AuraDesignSystem_58f91b.Mastery" level="proficient" hint-size="96px,22px"></x-import>
+        <x-import component-from-global-scope="AuraDesignSystem_58f91b.SkillChip" hint-size="120px,24px">prose-grader</x-import>
+      </div>
+    </x-import>
+  </section>
+
+  <section style="border-top:1px solid var(--border)">
+    <div style="max-width:40rem; margin:0 auto; padding:96px 48px; text-align:center">
+      <div style="display:flex; justify-content:center; margin-bottom:22px">
+        <x-import component-from-global-scope="AuraDesignSystem_58f91b.Avatar" src="../../assets/photo/danilo.jpg" alt="Danilo Rojas" size="lg" hint-size="48px,48px"></x-import>
+      </div>
+      <h2 style="font-family:var(--font-mono); font-size:clamp(24px,4vw,40px); letter-spacing:-0.04em; margin:0 0 16px">Diagnose your own gap.</h2>
+      <p style="font-family:var(--font-serif); font-size:19px; color:var(--text-body); margin:0 0 28px">Ten minutes of prose. One ranked learning path. No multiple choice.</p>
+      <div style="display:flex; gap:12px; justify-content:center">
+        <x-import component-from-global-scope="AuraDesignSystem_58f91b.Button" variant="primary" size="lg" hint-size="170px,44px">Run the diagnostic</x-import>
+        <x-import component-from-global-scope="AuraDesignSystem_58f91b.Button" variant="ghost" size="lg" hint-size="140px,44px">Read the thesis</x-import>
+      </div>
+      <div style="margin-top:40px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-faint)">danilorojas.design · career training os</div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      heroPlan: [
+        { label: 'Read role + rubric', done: true },
+        { label: 'Select highest-value proof', done: true },
+        { label: 'Render PDF', done: false },
+      ],
+      gradePlan: [
+        { label: 'Parse response for evidence', done: true },
+        { label: 'Score against rubric', done: true },
+        { label: 'Locate highest-leverage gap', done: false },
+      ],
+      gradeDiff: [
+        { type: 'add', text: 'mastery: developing → proficient' },
+        { type: 'add', text: 'banked_value += 18,000' },
+        { type: 'del', text: 'name the second-order effect' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

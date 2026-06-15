@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design hierarchy &amp; precedence — MentorOS × Aura · dr-cv V11</title>
+<!-- Fonts: max-compatibility system stack, no network dependency (de momento). -->
+<style>
+  /* dr-cv V11 / Aura tokens — lifted verbatim (Layer 1 + the slice of Layer 2 this page uses) */
+  :root{
+    --v11-bg-primary:#0A0B0E; --v11-bg-deep:#060708; --v11-bg-elevated:#14161C; --v11-bg-elevated-2:#1C1F27; --v11-bg-inset:#0D0F13;
+    --v11-text:#F4F4F5; --v11-text-70:#B0B2B7; --v11-text-50:#797D86; --v11-text-40:#61656B;
+    --v11-accent:#FF8964; --v11-accent-deep:#E0674A; --v11-accent-soft:rgba(255,137,100,.14); --v11-accent-ring:rgba(255,137,100,.35); --v11-accent-line:rgba(255,137,100,.28);
+    --signal-cool:#5683DA; --signal-pos:#4ADE80; --signal-warn:#E5A84B; --signal-neg:#F87171;
+    --line:rgba(255,255,255,.08); --line-soft:rgba(255,255,255,.045); --line-strong:rgba(255,255,255,.18);
+    --font-sans:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --font-mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
+    --shadow-card:0 6px 25px rgba(0,0,0,.5);
+    --r-md:8px; --r-lg:12px; --r-xl:16px; --r-full:9999px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--v11-bg-primary);color:var(--v11-text);font-family:var(--font-sans);font-size:15px;line-height:1.55;letter-spacing:-.011em;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:56px 24px 96px}
+  .eyebrow{font-family:var(--font-mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--v11-text-50)}
+  h1{font-size:34px;line-height:1.06;letter-spacing:-.03em;font-weight:600;margin:10px 0 8px}
+  h2{font-size:13px;font-family:var(--font-mono);font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--v11-text-50);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  .lead{font-size:18px;color:var(--v11-text-70);max-width:60ch;text-wrap:pretty}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .pill{font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:var(--v11-text-70);background:var(--v11-bg-elevated);border:1px solid var(--line);border-radius:var(--r-full);padding:5px 11px}
+  .pill .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--signal-pos);margin-right:7px;vertical-align:middle}
+
+  /* precedence ladder */
+  .ladder{display:flex;flex-direction:column;gap:14px;margin:6px 0}
+  .rung{position:relative;background:var(--v11-bg-elevated);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px 18px 22px;box-shadow:var(--shadow-card)}
+  .rung::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:var(--r-full);background:var(--rail,var(--line-strong))}
+  .rung.apex{--rail:var(--v11-accent);border-color:var(--v11-accent-line)}
+  .rung.s2{--rail:var(--signal-cool)}
+  .rung.s3{--rail:var(--v11-text-40)}
+  .rung-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .rank{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--v11-text-50);font-variant-numeric:tabular-nums}
+  .rung h3{margin:0;font-size:17px;letter-spacing:-.02em;font-weight:600}
+  .tag{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.12em;padding:3px 8px;border-radius:var(--r-full);border:1px solid var(--v11-accent-line);color:var(--v11-accent);background:var(--v11-accent-soft)}
+  .tag.cool{border-color:rgba(86,131,218,.35);color:#8FB0EA;background:rgba(86,131,218,.12)}
+  .tag.mute{border-color:var(--line-strong);color:var(--v11-text-50);background:transparent}
+  .rung p{margin:9px 0 0;color:var(--v11-text-70);font-size:14px;max-width:64ch}
+  .between{display:flex;justify-content:center;margin:-2px 0}
+  .between::before{content:"";width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:9px solid var(--v11-text-40)}
+
+  /* decision-flow diagram */
+  .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin-top:8px}
+  .node{flex:1;min-width:150px;background:var(--v11-bg-inset);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px}
+  .node .k{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--v11-text-50);margin-bottom:6px}
+  .node .v{font-size:14px;color:var(--v11-text);line-height:1.4}
+  .node.win{border-color:var(--v11-accent-line);background:var(--v11-accent-soft)}
+  .arrow{display:flex;align-items:center;flex:0 0 auto}
+  .arrow::before{content:"";width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:9px solid var(--v11-accent)}
+  @media(max-width:680px){.arrow{transform:rotate(90deg)}.flow{flex-direction:column}}
+
+  table{width:100%;border-collapse:collapse;margin-top:6px;font-size:14px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  th{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--v11-text-50);font-weight:600}
+  td .grp{font-weight:600}
+  .note{background:var(--v11-bg-inset);border:1px solid var(--line);border-left:3px solid var(--v11-accent);border-radius:var(--r-md);padding:14px 16px;margin-top:18px;font-size:14px;color:var(--v11-text-70)}
+  .note b{color:var(--v11-text)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--v11-bg-elevated);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px}
+  .card h4{margin:0 0 8px;font-size:15px;letter-spacing:-.02em}
+  .card p{margin:0;color:var(--v11-text-70);font-size:14px}
+  .yes{color:var(--signal-pos)} .maybe{color:var(--signal-warn)} .no{color:var(--signal-neg)}
+  ol{padding-left:20px;color:var(--v11-text-70)} ol li{margin:7px 0} ol li b{color:var(--v11-text)}
+  code{font-family:var(--font-mono);font-size:.86em;color:var(--v11-accent);background:var(--v11-accent-soft);padding:1px 6px;border-radius:4px}
+  footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);color:var(--v11-text-40);font-family:var(--font-mono);font-size:11px;letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">// decision record · dr-cv V11</div>
+  <h1>Design hierarchy &amp; precedence</h1>
+  <p class="lead">Structure comes from MentorOS, looks come from Aura, and dark mode outranks both. Fixed now — while it is cheap — so future conflicts resolve without re-litigation.</p>
+  <div class="meta">
+    <span class="pill"><span class="dot"></span>Active</span>
+    <span class="pill">14 Jun 2026</span>
+    <span class="pill">Owner · Danilo Rojas</span>
+    <span class="pill">Governs app · web · internal tools</span>
+  </div>
+
+  <h2>The precedence ladder — highest wins</h2>
+  <div class="ladder">
+    <div class="rung apex">
+      <div class="rung-top"><span class="rank">01</span><h3>Dark mode</h3><span class="tag">supreme</span></div>
+      <p>The default and the single highest-priority constraint. Overrides everything, including structure. Light mode extends the same semantic tokens — it never re-themes into a different brand; the accent only deepens to terracotta <code>#D9663F</code> to hold AA contrast on cream.</p>
+    </div>
+    <div class="between"></div>
+    <div class="rung s2">
+      <div class="rung-top"><span class="rank">02</span><h3>MentorOS — structure &amp; hierarchy</h3><span class="tag cool">source of truth</span></div>
+      <p>Information architecture: navigation, the screen set, grouping, the <code>window.DATA</code> contract, the flows. When MentorOS and the design system disagree about structure, MentorOS wins — and the decision is pushed <em>into</em> the design system.</p>
+    </div>
+    <div class="between"></div>
+    <div class="rung s3">
+      <div class="rung-top"><span class="rank">03</span><h3>Aura — visual language</h3><span class="tag mute">in service</span></div>
+      <p>Tokens, color, type, spacing, radii, shadows, motion, components, and the signature artifact surfaces (embed · stream · plan · diff · skill-chip). Aura dresses the structure MentorOS defines; it does not redefine it.</p>
+    </div>
+  </div>
+
+  <h2>How a structural conflict resolves</h2>
+  <div class="flow">
+    <div class="node"><div class="k">MentorOS proposes</div><div class="v">A navigation / screen structure</div></div>
+    <div class="arrow"></div>
+    <div class="node"><div class="k">Aura disagrees?</div><div class="v">Its template suggests a different shape</div></div>
+    <div class="arrow"></div>
+    <div class="node win"><div class="k">Resolve toward</div><div class="v"><b>MentorOS wins</b> — structure holds</div></div>
+    <div class="arrow"></div>
+    <div class="node"><div class="k">Then</div><div class="v">Push the decision into Aura; the DS updates to match</div></div>
+  </div>
+  <div class="note">Hard exception: if the disagreement touches <b>dark mode</b>, rung 01 wins before this flow even runs. Dark is non-negotiable.</div>
+
+  <h2>The canonical structure MentorOS owns</h2>
+  <table>
+    <thead><tr><th>Group</th><th>Items</th></tr></thead>
+    <tbody>
+      <tr><td class="grp">Daily</td><td>Today · Coach</td></tr>
+      <tr><td class="grp">Learn</td><td>Dashboard · Diagnostic · Learning Journey · AI Mentor · Skill Graph</td></tr>
+      <tr><td class="grp">Apply</td><td>Projects · Analytics</td></tr>
+      <tr><td class="grp">Workspace</td><td>Design Process · Settings</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><b>Worked example.</b> Aura's <code>career-os-app</code> template ships a different nav (Workspace + Program). That is a structural disagreement, so MentorOS's four groups (Daily / Learn / Apply / Workspace) are canonical; the Aura template gets updated to match, not the reverse.</div>
+
+  <h2>Two standing guardrails</h2>
+  <div class="grid2">
+    <div class="card">
+      <h4>No handwritten sans in interfaces</h4>
+      <p><span class="no">UI · never.</span> &nbsp;<span class="maybe">CV · maybe.</span> &nbsp;<span class="maybe">Blog background · candidate only.</span><br><br>Aura's stack stays Inter (UI/body) · JetBrains Mono (display/meta) · Source Serif 4 (essay only). This guardrail keeps a script face out of load-bearing UI text as the system grows.</p>
+    </div>
+    <div class="card">
+      <h4>The design system prioritizes UIs first</h4>
+      <p>App and product surfaces get built and polished <span class="yes">before</span> marketing, landing, or print. When the polish budget is scarce, the app kit wins. App-first ordering on top of Aura's two-surface split.</p>
+    </div>
+  </div>
+
+  <h2>Naming — so nobody gets confused later</h2>
+  <ol>
+    <li><b>"The new design system" = Aura</b> (codename dr-cv V11). Built from the repo's canonical <code>design-system/tokens-web.css</code> — same source of truth as the live landing.</li>
+    <li><b>EnRegla is superseded.</b> The embedded <code>_ds/enregla-…</code> system is dropped. On record: "dr-cv tokens only. No EnRegla." Kept for provenance only.</li>
+    <li><b>MentorOS = Career Training OS = Career OS.</b> Same app. "MentorOS" is the prototype; "Career OS" is the in-product brand string.</li>
+  </ol>
+
+  <h2>Gating — why not today</h2>
+  <p class="lead" style="font-size:15px">Parked until both gates clear: the <b style="color:var(--v11-text)">assessment answers</b> are still being filled (the diagnostic's real content), and <b style="color:var(--v11-text)">Aura</b> is still being refined. Path from here in <code>plans/2026-06-14-mentor-os-activation.md</code>.</p>
+
+  <footer>dr-cv V11 · companion to 2026-06-14-design-hierarchy-decision-record.md · dark is the default</footer>
+</div>
+</body>
+</html>

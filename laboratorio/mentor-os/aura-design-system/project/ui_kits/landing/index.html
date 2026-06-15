@@ -1,0 +1,191 @@
+<!-- @dsCard group="Landing" viewport="1280x900" name="danilorojas.design — landing kit" subtitle="Notebook thesis + artifact hero + proof strip + CTA" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Danilo Rojas — Product Designer</title>
+<link rel="icon" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../styles.css">
+<script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  body { margin: 0; }
+  .lp-nav { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 20px; padding: 16px clamp(20px,5vw,64px); background: var(--topbar-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .lp-nav__links { display: flex; gap: 22px; margin-left: auto; }
+  .lp-nav__links a { font-size: 14px; color: var(--text-secondary); }
+  .lp-nav__links a:hover { color: var(--text-primary); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 clamp(20px,5vw,64px); }
+  .section { padding: clamp(56px,9vw,112px) 0; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  .paper { background: var(--v11-bg-paper); color: var(--v11-paper-body); }
+  .proof { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
+  .proof__cell { background: var(--bg); padding: 28px 24px; }
+  @media (max-width: 860px){ .hero-grid{ grid-template-columns: 1fr; } .proof{ grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+const { Button, Badge, Mastery, Artifact, EmbedWell, Stream, PlanSteps, DiffReview, SkillChip, Avatar } = window.AuraDesignSystem_58f91b;
+
+function Nav() {
+  return (
+    <nav className="lp-nav">
+      <img src="../../assets/dr-monogram.svg" width="30" height="30" alt="" />
+      <span style={{ fontWeight: 600, letterSpacing: '-.02em' }}>Danilo Rojas</span>
+      <div className="lp-nav__links">
+        <a href="#thesis">Thesis</a>
+        <a href="#proof">Proof</a>
+        <a href="#artifact">The artifact</a>
+        <Button variant="primary" size="sm">Read the case</Button>
+      </div>
+    </nav>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="section">
+      <div className="wrap hero-grid">
+        <div>
+          <div className="eyebrow" style={{ marginBottom: 18 }}>product designer · 15 years</div>
+          <h1 style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--v11-fs-h1)', lineHeight: 1.04, letterSpacing: '-.04em', marginBottom: 22 }}>
+            A point of view on agentic design — not a résumé.
+          </h1>
+          <p style={{ fontFamily: 'var(--font-serif)', fontSize: 20, lineHeight: 1.6, color: 'var(--text-body)', maxWidth: '38rem', marginBottom: 28 }}>
+            The craft stays. Agents supply the leverage. This is the working method behind one number — <strong style={{ color: 'var(--text-primary)' }}>$250,000 / year</strong> — rebuilt around a daily Claude Code workflow.
+          </p>
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            <Button variant="primary" size="lg">Read the case</Button>
+            <Button variant="accent" size="lg">Run the diagnostic</Button>
+          </div>
+        </div>
+        <Artifact file="cv-serious.en.pdf" meta="generated 14 Jun 2026" status="ready">
+          <EmbedWell kind="PDF" title="Danilo Rojas — CV" meta="2 pages · 184 KB" />
+          <div style={{ marginTop: 14 }}>
+            <Stream>Tailoring narrative to the senior product-design rubric</Stream>
+          </div>
+          <div style={{ marginTop: 14 }}>
+            <PlanSteps steps={[
+              { label: 'Read role + rubric', done: true },
+              { label: 'Select highest-value proof', done: true },
+              { label: 'Render PDF', done: false },
+            ]} />
+          </div>
+          <div style={{ display: 'flex', gap: 8, marginTop: 14, flexWrap: 'wrap' }}>
+            <SkillChip>cv-tailor</SkillChip><SkillChip>diff-review</SkillChip>
+          </div>
+        </Artifact>
+      </div>
+    </section>
+  );
+}
+
+function Proof() {
+  const cells = [
+    { v: '$250,000', l: 'objective · per year' },
+    { v: '15 yrs', l: 'shipping product' },
+    { v: '14', l: 'skill clusters mapped' },
+    { v: 'daily', l: 'agentic workflow' },
+  ];
+  return (
+    <section className="section" id="proof" style={{ paddingTop: 0 }}>
+      <div className="wrap">
+        <div className="proof">
+          {cells.map((c, i) => (
+            <div className="proof__cell" key={i}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 30, fontWeight: 600, letterSpacing: '-.03em', color: 'var(--text-primary)' }}>{c.v}</div>
+              <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 6 }}>{c.l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Thesis() {
+  return (
+    <section className="section paper" id="thesis">
+      <div className="wrap" style={{ maxWidth: '46rem' }}>
+        <div className="eyebrow" style={{ color: 'var(--v11-paper-subtle)', marginBottom: 20 }}>thesis · 01</div>
+        <div className="essay essay--dropcap" style={{ color: 'var(--v11-paper-body)', maxWidth: '42rem' }}>
+          <p style={{ marginBottom: 24 }}>Most portfolios argue from output — screens, shots, the polished final frame. This one argues from method. Fifteen years of shipping taught me that taste is necessary and no longer sufficient; the differentiated work now lives in how you run the loop.</p>
+          <p style={{ marginBottom: 24 }}>For the last twelve months I have rebuilt that loop around agents: plan before build, visible thinking, diff-review every change, name the skills I reach for. The artifacts on this page are not screenshots. They are the actual surfaces I work inside, embedded live.</p>
+          <p style={{ margin: 0 }}>The objective is deliberately a number. <strong style={{ color: 'var(--v11-paper-ink)' }}>$250,000 a year as a Product Designer</strong> — because a number can be diagnosed, ranked, and closed. Everything else is decoration.</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ArtifactSection() {
+  return (
+    <section className="section" id="artifact">
+      <div className="wrap">
+        <div className="eyebrow" style={{ marginBottom: 16 }}>the artifact · live</div>
+        <h2 style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--v11-fs-h2)', letterSpacing: '-.04em', marginBottom: 14 }}>Grading prose, not picking answers.</h2>
+        <p style={{ fontFamily: 'var(--font-serif)', fontSize: 19, lineHeight: 1.65, color: 'var(--text-body)', maxWidth: '40rem', marginBottom: 36 }}>
+          The diagnostic reads what you write and scores it against the senior rubric, then shows its work — the same surfaces, embedded in the essay.
+        </p>
+        <Artifact file="grade.run" meta="streaming" status="thinking">
+          <Stream>Reading for system boundaries · 2 strong tradeoffs · 1 missing second-order effect</Stream>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 16 }}>
+            <PlanSteps steps={[
+              { label: 'Parse response for evidence', done: true },
+              { label: 'Score against rubric', done: true },
+              { label: 'Locate highest-leverage gap', done: false },
+            ]} />
+            <DiffReview rows={[
+              { type: 'add', text: 'mastery: developing → proficient' },
+              { type: 'add', text: 'banked_value += 18,000' },
+              { type: 'del', text: 'name the second-order effect' },
+            ]} />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16 }}>
+            <Mastery level="proficient" /><SkillChip>prose-grader</SkillChip>
+          </div>
+        </Artifact>
+      </div>
+    </section>
+  );
+}
+
+function CTA() {
+  return (
+    <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
+      <div className="wrap" style={{ textAlign: 'center', maxWidth: '40rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 22 }}>
+          <Avatar src="../../assets/photo/danilo.jpg" alt="Danilo Rojas" size="lg" />
+        </div>
+        <h2 style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--v11-fs-h2)', letterSpacing: '-.04em', marginBottom: 16 }}>Diagnose your own gap.</h2>
+        <p style={{ fontFamily: 'var(--font-serif)', fontSize: 19, color: 'var(--text-body)', marginBottom: 28 }}>
+          Ten minutes of prose. One ranked learning path. No multiple choice.
+        </p>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+          <Button variant="primary" size="lg">Run the diagnostic</Button>
+          <Button variant="ghost" size="lg">Read the thesis</Button>
+        </div>
+        <div style={{ marginTop: 40, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+          danilorojas.design · career training os
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Landing() {
+  return (
+    <div>
+      <Nav /><Hero /><Proof /><Thesis /><ArtifactSection /><CTA />
+    </div>
+  );
+}
+function mount(){ if(window.AuraDesignSystem_58f91b){ ReactDOM.createRoot(document.getElementById('root')).render(<Landing/>); } else { setTimeout(mount, 40); } }
+mount();
+</script>
+</body>
+</html>

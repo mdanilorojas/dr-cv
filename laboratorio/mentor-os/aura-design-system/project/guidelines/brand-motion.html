@@ -1,0 +1,21 @@
+<!-- @dsCard group="Brand" viewport="700x170" name="Motion — durations × eases" subtitle="Transform-only entrances; reduced-motion respected" -->
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;padding:24px;background:var(--bg)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.chip{font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);border:1px solid var(--border);border-radius:8px;padding:8px 12px;background:var(--surface)}
+.chip b{color:var(--accent);font-weight:500}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--accent);margin-right:8px;animation:slide 1.4s var(--ease) infinite alternate}
+@keyframes slide{to{transform:translateX(60px)}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+.note{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);margin-top:14px}</style></head>
+<body>
+<div class="row">
+<span class="chip">instant <b>80ms</b></span>
+<span class="chip">fast <b>180ms</b></span>
+<span class="chip">base <b>280ms</b></span>
+<span class="chip">slow <b>480ms</b></span>
+<span class="chip">standard <b>cubic-bezier(.22,.61,.36,1)</b></span>
+</div>
+<div style="margin-top:18px;height:9px;display:flex;align-items:center"><span class="dot"></span><span style="font-family:var(--font-mono);font-size:10px;color:var(--text-faint)">transform-only · 280ms · standard ease</span></div>
+<div class="note">Entrances animate transform/opacity only — never layout. All durations collapse to 0ms under prefers-reduced-motion.</div>
+</body></html>

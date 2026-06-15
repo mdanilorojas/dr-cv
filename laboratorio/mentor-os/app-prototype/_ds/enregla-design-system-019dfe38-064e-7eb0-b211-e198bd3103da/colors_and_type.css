@@ -1,0 +1,310 @@
+/**
+ * EnRegla Design System - Colors & Typography
+ *
+ * Brand: "Preciso, Confiable, Protector"
+ * Light mode only (daytime office use).
+ *
+ * Two voices live in this system:
+ *  - APP (enregla repo):     softer, rounded, shadcn-flavored, blue/emerald
+ *  - LANDING (enregla-landing): editorial, hard-edge (no rounding), navy + signal-orange,
+ *    JetBrains-Mono labels with monospace metadata
+ *
+ * Both inherit the same brand palette. Choose the surface variables that match
+ * the surface you're designing for.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* ============================================================
+   * TYPOGRAPHY
+   * ============================================================ */
+  --font-sans:    'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Inter', 'DM Sans', -apple-system, sans-serif;       /* tighter, used by landing */
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Type scale — Perfect Fourth (1.33) for app UI */
+  --font-size-xs:   0.75rem;   /* 12 - captions, metadata */
+  --font-size-sm:   0.875rem;  /* 14 - secondary, labels */
+  --font-size-base: 1rem;      /* 16 - body, inputs */
+  --font-size-lg:   1.125rem;  /* 18 - emphasis */
+  --font-size-xl:   1.33rem;   /* 21 - card titles */
+  --font-size-2xl:  1.77rem;   /* 28 - section headings */
+  --font-size-3xl:  2.37rem;   /* 38 - page headings */
+  --font-size-4xl:  3.5rem;    /* 56 - hero */
+  --font-size-5xl:  4.5rem;    /* 72 - display */
+
+  --font-weight-normal:   400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+  --font-weight-black:    800;
+
+  --line-height-tight:   1.05;   /* hero, display */
+  --line-height-snug:    1.2;    /* headings */
+  --line-height-base:    1.4;    /* labels */
+  --line-height-normal:  1.6;    /* body */
+  --line-height-relaxed: 1.75;   /* long-form */
+
+  --tracking-tighter: -0.04em;   /* hero display */
+  --tracking-tight:   -0.025em;  /* headings */
+  --tracking-base:    -0.015em;  /* body */
+  --tracking-wide:    0.04em;    /* small caps utility labels */
+  --tracking-widest:  0.18em;    /* eyebrow uppercase */
+
+  /* ============================================================
+   * BRAND COLORS  — pulled directly from app + landing source
+   * ============================================================ */
+  /* Defense / signal — the action color */
+  --brand-defense:        #FF5A1F;     /* app token */
+  --brand-defense-bold:   #E65100;     /* landing primary CTA */
+  --brand-defense-hover:  #BF360C;     /* landing CTA hover */
+
+  /* Shield / safe — the "you're covered" color */
+  --brand-shield:         #10B981;     /* app token (emerald) */
+  --brand-shield-bold:    #047857;     /* landing emerald (deeper) */
+
+  /* Ink — the deep navy of the landing & footer */
+  --brand-ink:            #0A1128;     /* landing primary text + dark sections */
+  --brand-ink-deep:       #050A18;     /* terminal block on landing */
+  --brand-ink-darkest:    #030712;     /* footer */
+  --legal-ink:            #09090B;     /* app body text */
+
+  /* Paper — the off-white the app & landing both use */
+  --legal-paper:          #FAFAFA;     /* app surface base */
+  --landing-paper:        #F6F7F9;     /* landing surface */
+
+  /* ============================================================
+   * UI COLORS — APP (deep blue lineage)
+   * ============================================================ */
+  --color-primary:        #1E3A8A;
+  --color-primary-hover:  #1E40AF;
+  --color-secondary:      #64748B;
+  --color-secondary-hover:#475569;
+  --color-accent:         #0EA5E9;
+  --color-accent-hover:   #0284C7;
+
+  /* ============================================================
+   * SEMANTIC — success / warning / danger / info
+   * ============================================================ */
+  --color-success:        #059669;
+  --color-success-bg:     #D1FAE5;
+  --color-success-border: #A7F3D0;
+
+  --color-warning:        #D97706;
+  --color-warning-bg:     #FEF3C7;
+  --color-warning-border: #FDE68A;
+
+  --color-danger:         #DC2626;
+  --color-danger-bg:      #FEE2E2;
+  --color-danger-border:  #FECACA;
+
+  --color-info:           #0284C7;
+  --color-info-bg:        #E0F2FE;
+  --color-info-border:    #BAE6FD;
+
+  /* ============================================================
+   * RISK LEVELS  (compliance-specific — Críitico / Alto / Medio / Bajo)
+   * ============================================================ */
+  --risk-critico:        #EF4444;
+  --risk-critico-text:   #991B1B;
+  --risk-critico-bg:     #FEE2E2;
+  --risk-critico-border: #FCA5A5;
+
+  --risk-alto:           #F97316;
+  --risk-alto-text:      #9A3412;
+  --risk-alto-bg:        #FFF7ED;
+  --risk-alto-border:    #FDBA74;
+
+  --risk-medio:          #EAB308;
+  --risk-medio-text:     #713F12;
+  --risk-medio-bg:       #FEFCE8;
+  --risk-medio-border:   #FDE047;
+
+  --risk-bajo:           #22C55E;
+  --risk-bajo-text:      #14532D;
+  --risk-bajo-bg:        #DCFCE7;
+  --risk-bajo-border:    #86EFAC;
+
+  /* ============================================================
+   * PERMIT STATUS  (vigente / por-vencer / vencido / en-tramite / no-registrado)
+   * ============================================================ */
+  --status-vigente:        #059669;
+  --status-vigente-text:   #065F46;
+  --status-vigente-bg:     #D1FAE5;
+  --status-vigente-border: #6EE7B7;
+
+  --status-por-vencer:        #D97706;
+  --status-por-vencer-text:   #9A3412;
+  --status-por-vencer-bg:     #FFF7ED;
+  --status-por-vencer-border: #FDBA74;
+
+  --status-vencido:        #DC2626;
+  --status-vencido-text:   #991B1B;
+  --status-vencido-bg:     #FEE2E2;
+  --status-vencido-border: #FCA5A5;
+
+  --status-en-tramite:        #0284C7;
+  --status-en-tramite-text:   #075985;
+  --status-en-tramite-bg:     #E0F2FE;
+  --status-en-tramite-border: #7DD3FC;
+
+  --status-no-registrado:        #94A3B8;
+  --status-no-registrado-text:   #475569;
+  --status-no-registrado-bg:     #F1F5F9;
+  --status-no-registrado-border: #94A3B8;
+
+  /* ============================================================
+   * NEUTRALS — slate scale used across both surfaces
+   * ============================================================ */
+  --slate-50:  #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-300: #CBD5E1;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1E293B;
+  --slate-900: #0F172A;
+  --slate-950: #020617;
+
+  /* ============================================================
+   * SURFACE & TEXT — used by app
+   * ============================================================ */
+  --surface-base:     var(--legal-paper);    /* page background */
+  --surface-raised:   #FFFFFF;               /* cards */
+  --surface-overlay:  #FFFFFF;               /* modals, popovers */
+  --surface-muted:    #F8FAFC;               /* subtle fills */
+
+  --border-default:   #E5E7EB;
+  --border-strong:    #CBD5E1;
+
+  --text-primary:     #1E293B;
+  --text-secondary:   #64748B;
+  --text-muted:       #94A3B8;
+  --text-inverse:     #FFFFFF;
+
+  /* ============================================================
+   * SPACING — 4pt base
+   * ============================================================ */
+  --space-1:  0.25rem;   /* 4 */
+  --space-2:  0.5rem;    /* 8 */
+  --space-3:  0.75rem;   /* 12 */
+  --space-4:  1rem;      /* 16 */
+  --space-5:  1.25rem;   /* 20 */
+  --space-6:  1.5rem;    /* 24 */
+  --space-8:  2rem;      /* 32 */
+  --space-10: 2.5rem;    /* 40 */
+  --space-12: 3rem;      /* 48 */
+  --space-16: 4rem;      /* 64 */
+  --space-24: 6rem;      /* 96 */
+
+  /* ============================================================
+   * RADII — app rounds, landing does not
+   * ============================================================ */
+  --radius-none: 0;            /* landing: hard edges */
+  --radius-sm:   0.25rem;      /* 4 */
+  --radius-md:   0.375rem;     /* 6 — default app input/button */
+  --radius-lg:   0.5rem;       /* 8 — app cards */
+  --radius-xl:   0.75rem;      /* 12 */
+  --radius-2xl:  1rem;
+  --radius-full: 9999px;
+
+  /* ============================================================
+   * SHADOWS — minimal, never decorative
+   * ============================================================ */
+  --shadow-xs: 0 1px 0 0 rgba(0,0,0,.04);
+  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,.10), 0 2px 4px -2px rgba(0,0,0,.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.10), 0 4px 6px -4px rgba(0,0,0,.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,.10), 0 8px 10px -6px rgba(0,0,0,.04);
+  --shadow-card: 0 1px 2px 0 rgba(0,0,0,.05);
+  --shadow-overlay: 0 24px 48px -12px rgba(10,17,40,.18);
+
+  /* ============================================================
+   * MOTION
+   * ============================================================ */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);   /* landing reveal curve */
+  --duration-fast:   150ms;
+  --duration-base:   200ms;
+  --duration-slow:   300ms;
+  --duration-reveal: 800ms;
+}
+
+/* ============================================================
+ * SEMANTIC ELEMENT STYLES
+ * Apply to plain elements when used inside .ds-prose or .enregla-app.
+ * ============================================================ */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--surface-base);
+  color: var(--text-primary);
+  font-feature-settings: 'kern' 1;
+  letter-spacing: var(--tracking-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+.h-display {
+  font-family: var(--font-display);
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--tracking-tighter);
+  color: var(--brand-ink);
+}
+.h1 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--tracking-tighter);
+  color: var(--brand-ink);
+}
+.h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--brand-ink);
+}
+.h3 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--tracking-tight);
+}
+.h4 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+}
+.eyebrow {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--text-secondary);
+}
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-secondary);
+}
+.body {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+}
+.body-sm {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--text-secondary);
+}
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}

@@ -283,8 +283,6 @@ export function renderStructuralLanding(
 
   <div class="w-full max-w-6xl relative mt-10 sm:mt-16">
     <div class="structural-border p-8 sm:p-16 md:p-24 reveal relative overflow-hidden bg-system-surface/30 backdrop-blur-sm">
-      <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
-      <div class="tech-label -top-2 left-10">MOD: 01 // CORE_SYSTEM</div>
       <div class="max-w-4xl relative z-10 pt-4">
         <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-system-line mb-8 p-1 bg-system-surface/80 backdrop-blur-md flex items-center justify-center relative group">
           <div class="w-full h-full rounded-full bg-system-bg border border-system-line/50 overflow-hidden flex items-center justify-center relative">
@@ -316,6 +314,8 @@ export function renderStructuralLanding(
         </svg>
       </div>
     </div>
+    <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+    <div class="tech-label -top-2 left-10">PRODUCT DESIGN · AGENTIC WORKFLOWS</div>
     <div class="absolute top-0 bottom-0 left-1/4 w-[1px] bg-system-line -z-10 hidden md:block"></div>
   </div>
 

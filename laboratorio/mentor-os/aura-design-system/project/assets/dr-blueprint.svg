@@ -1,0 +1,26 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Danilo Rojas monogram — construction drawing">
+  <defs>
+    
+  </defs>
+  
+  <rect width="320" height="320" fill="#F6F4F0"></rect>
+  
+  <rect x="80" y="80" width="160" height="160" class="ink" stroke-width="1" fill="none"></rect>
+  <circle cx="160" cy="160" r="80" class="con" stroke-width="1" fill="none"></circle>
+  
+  <line x1="80" y1="160" x2="240" y2="160" class="con" stroke-width="1"></line>
+  <line x1="160" y1="80" x2="160" y2="240" class="con" stroke-width="1"></line>
+  <line x1="179" y1="80" x2="179" y2="240" class="con" stroke-width="1"></line>
+  
+  <text x="160" y="170" text-anchor="middle" dominant-baseline="central" font-family="&#39;JetBrains Mono&#39;,monospace" font-size="92" font-weight="700" letter-spacing="-5" fill="#0B0C0E">DR</text>
+  
+  <circle cx="179" cy="160" r="3.5" fill="#E0674A"></circle>
+  
+  <path d="M80 60 H240" class="ink" stroke-width=".75"></path>
+  <path d="M80 56 V64 M240 56 V64" class="ink" stroke-width=".75"></path>
+  <text x="160" y="52" text-anchor="middle" class="cota">φ · 1.618</text>
+  <path d="M260 80 V240" class="ink" stroke-width=".75"></path>
+  <path d="M256 80 H264 M256 240 H264" class="ink" stroke-width=".75"></path>
+  <text x="280" y="163" text-anchor="middle" class="cota" transform="rotate(90 280 160)">160 UNITS</text>
+  <text x="84" y="252" class="cota">// the vitruvian modulor · v11</text>
+</svg>

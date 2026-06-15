@@ -62,9 +62,9 @@ img { max-width: 100%; display: block; }
 .v11-nav {
   position: sticky; top: 0; z-index: var(--v11-z-nav);
   padding: var(--v11-s-3) 0;
-  background: rgba(10, 11, 14, 0.80);
-  backdrop-filter: saturate(140%) blur(14px);
-  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  background: rgba(246, 241, 231, 0.82);
+  backdrop-filter: saturate(120%) blur(14px);
+  -webkit-backdrop-filter: saturate(120%) blur(14px);
   border-bottom: 1px solid transparent;
   transition: border-color var(--v11-dur-fast) var(--v11-ease-standard);
 }
@@ -177,11 +177,11 @@ img { max-width: 100%; display: block; }
 .v11-section--paper .v11-section__eyebrow::before { color: var(--v11-paper-subtle); }
 
 .v11-h1 {
-  font-family: var(--v11-font-display);
+  font-family: var(--v11-font-body);
   font-size: var(--v11-fs-h1);
   font-weight: var(--v11-wt-semibold);
-  line-height: var(--v11-lead-h);
-  letter-spacing: var(--v11-track-tight);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   color: var(--v11-text);
   margin: 0 0 var(--v11-s-5);
 }
@@ -199,18 +199,15 @@ img { max-width: 100%; display: block; }
 
 /* ============== HERO ============== */
 .v11-hero {
-  min-height: 100vh;
-  padding-top: clamp(100px, 14vw, 180px);
-  padding-bottom: clamp(80px, 10vw, 140px);
-  display: flex;
-  align-items: center;
+  padding-top: clamp(72px, 11vw, 132px);
+  padding-bottom: clamp(56px, 8vw, 100px);
   position: relative;
 }
 .v11-hero__inner {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  max-width: 18ch;
+  max-width: 40ch;
 }
 .v11-hero__kicker {
   font-family: var(--v11-font-mono);
@@ -250,14 +247,14 @@ img { max-width: 100%; display: block; }
 }
 .v11-hero__byline .v11-hero__eyebrow::before { content: ""; }
 .v11-hero__title {
-  font-family: var(--v11-font-display);
+  font-family: var(--v11-font-body);
   font-size: var(--v11-fs-hero);
-  font-weight: var(--v11-wt-semibold);
-  line-height: var(--v11-lead-hero);
-  letter-spacing: var(--v11-track-tight);
+  font-weight: var(--v11-wt-medium);
+  line-height: 1.18;
+  letter-spacing: -0.015em;
   color: var(--v11-text);
-  margin: 0 0 var(--v11-s-5);
-  max-width: 18ch;
+  margin: 0 0 var(--v11-s-6);
+  max-width: 26ch;
 }
 .v11-hero__title em {
   font-style: normal;

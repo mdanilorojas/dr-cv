@@ -1,0 +1,19 @@
+<!-- @dsCard group="Brand" viewport="700x200" name="Two themes, one source of truth" subtitle="Dark default + light extension; accent shifts to terracotta on cream" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;display:grid;grid-template-columns:1fr 1fr}
+.pane{padding:22px;min-height:156px}
+.eyebrow{margin-bottom:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.t{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:.1em}</style></head>
+<body>
+<div class="pane" data-theme="dark" style="background:var(--bg)">
+  <div class="t">data-theme="dark" · default</div>
+  <div class="row"><button class="btn btn--primary">Primary</button><span class="badge badge--success" >AA</span><span class="mastery mastery--mastered">Mastered</span></div>
+  <div style="margin-top:14px"><span class="skill-chip">named-skill</span></div>
+</div>
+<div class="pane" data-theme="light" style="background:var(--bg)">
+  <div class="t">data-theme="light" · extends</div>
+  <div class="row"><button class="btn btn--primary">Primary</button><span class="badge badge--success">AA</span><span class="mastery mastery--mastered">Mastered</span></div>
+  <div style="margin-top:14px"><span class="skill-chip">named-skill</span></div>
+</div>
+</body></html>

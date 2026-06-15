@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Career Training OS — Integration Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0A0B0E; --bg-deep:#060708; --alt:#111318; --card:#14161C; --card2:#1C1F27; --inset:#0D0F13;
+    --text:#F4F4F5; --body:#D7D8DB; --t70:#B0B2B7; --t50:#797D86; --t40:#61656B;
+    --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.18); --linesoft:rgba(255,255,255,.045);
+    --accent:#FF8964; --accent-ink:#2A0F05; --accent-soft:rgba(255,137,100,.12); --accent-line:rgba(255,137,100,.28);
+    --cool:#5683DA; --warn:#E5A84B; --pos:#4ADE80; --neg:#F87171;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,monospace; --sans:'Inter',system-ui,sans-serif; --serif:'Source Serif 4',Georgia,serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,4vw,40px);}
+  a{color:var(--accent);text-decoration:none;}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--t50);}
+  .accent{color:var(--accent);}
+  code,.mono{font-family:var(--mono);}
+
+  /* header */
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0d0f14,var(--bg));}
+  .hero{padding:clamp(56px,9vw,104px) 0 clamp(40px,6vw,64px);}
+  .hero h1{font-size:clamp(34px,6vw,64px);line-height:1.02;letter-spacing:-.04em;margin:18px 0 0;font-weight:700;}
+  .hero h1 em{font-style:normal;color:var(--accent);}
+  .hero p{font-size:clamp(17px,2vw,20px);color:var(--t70);max-width:62ch;margin:20px 0 0;line-height:1.6;}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;color:var(--body);background:var(--card);border:1px solid var(--line);border-radius:9999px;padding:6px 13px;}
+  .chip .dot{width:7px;height:7px;border-radius:50%;}
+  .chip.ok .dot{background:var(--pos);} .chip.todo .dot{background:var(--warn);} .chip.x .dot{background:var(--neg);}
+
+  section{padding:clamp(44px,7vw,80px) 0;border-bottom:1px solid var(--linesoft);}
+  .shead{display:flex;align-items:baseline;gap:14px;margin-bottom:34px;}
+  .snum{font-family:var(--mono);font-size:13px;color:var(--accent);border:1px solid var(--accent-line);border-radius:7px;padding:4px 9px;flex:none;}
+  .shead h2{font-size:clamp(24px,3.4vw,36px);letter-spacing:-.03em;margin:0;font-weight:700;}
+  .shead p{margin:6px 0 0;color:var(--t70);font-size:15px;}
+
+  /* flow rail */
+  .rail{display:grid;gap:0;position:relative;}
+  .step{display:grid;grid-template-columns:46px 1fr;gap:20px;padding-bottom:30px;position:relative;}
+  .step:not(:last-child)::before{content:"";position:absolute;left:22px;top:46px;bottom:-4px;width:2px;background:linear-gradient(180deg,var(--accent-line),var(--line));}
+  .node{width:46px;height:46px;border-radius:12px;background:var(--card);border:1px solid var(--accent-line);display:grid;place-items:center;font-family:var(--mono);font-size:15px;font-weight:600;color:var(--accent);flex:none;}
+  .scard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;}
+  .scard h3{margin:0 0 6px;font-size:18px;letter-spacing:-.02em;}
+  .scard .role{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .scard p{margin:0;color:var(--t70);font-size:14.5px;line-height:1.6;}
+  .scard .data{margin-top:12px;display:flex;flex-wrap:wrap;gap:7px;}
+  .tag{font-family:var(--mono);font-size:11px;color:var(--body);background:var(--inset);border:1px solid var(--line);border-radius:6px;padding:4px 8px;}
+  .tag.src{color:var(--cool);border-color:rgba(86,131,218,.3);}
+
+  /* data-flow grid */
+  .map{display:grid;grid-template-columns:1fr;gap:14px;}
+  .row{display:grid;grid-template-columns:1fr 30px 1fr;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+  .row .from{font-family:var(--mono);font-size:13px;color:var(--cool);word-break:break-word;}
+  .row .arr{color:var(--accent);text-align:center;font-size:18px;}
+  .row .to{font-size:14px;color:var(--text);}
+  .row .to small{display:block;color:var(--t50);font-size:12.5px;font-family:var(--mono);margin-top:2px;}
+  @media(max-width:640px){.row{grid-template-columns:1fr;gap:4px;}.row .arr{text-align:left;transform:rotate(90deg);width:18px;}}
+
+  /* two-col */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:760px){.cols{grid-template-columns:1fr;}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;}
+  .panel.warn{border-color:rgba(229,168,75,.3);background:linear-gradient(180deg,rgba(229,168,75,.05),var(--card));}
+  .panel.good{border-color:rgba(74,222,128,.25);}
+  .panel h3{margin:0 0 4px;font-size:16px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px;}
+  .panel h3 .ic{width:9px;height:9px;border-radius:50%;}
+  .panel ul{margin:12px 0 0;padding-left:18px;color:var(--t70);font-size:14px;line-height:1.7;}
+  .panel ul li{margin-bottom:5px;}
+  .panel code{background:var(--inset);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px;color:var(--body);}
+
+  pre{background:var(--bg-deep);border:1px solid var(--line);border-radius:12px;padding:18px 20px;overflow:auto;font-family:var(--mono);font-size:13px;line-height:1.7;color:var(--body);margin:0;}
+  pre .c{color:var(--t40);} pre .k{color:var(--accent);} pre .s{color:var(--pos);}
+
+  .decisions{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:760px){.decisions{grid-template-columns:1fr;}}
+  .dec{background:var(--card);border:1px solid var(--line);border-left:2px solid var(--accent);border-radius:10px;padding:15px 18px;}
+  .dec b{display:block;font-size:14.5px;margin-bottom:3px;}
+  .dec span{color:var(--t70);font-size:13.5px;}
+
+  footer{padding:40px 0 64px;color:var(--t50);font-size:13px;font-family:var(--mono);}
+  .label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--t50);margin:0 0 14px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap hero">
+    <div class="eyebrow">dr-cv · career-training · /app v2 · integration flow</div>
+    <h1>Career Training OS<br><em>one app, one number: $250k.</em></h1>
+    <p>A prose diagnostic that scores how you actually answer — substance, structure, English, diction — then prices every skill and builds the study program that closes the gap to a senior remote Product Designer salary. This is the companion to <span class="mono accent">career-training-os-integration.md</span>: the user flow and the data flow, at a glance.</p>
+    <div class="meta">
+      <span class="chip ok"><span class="dot"></span>UI complete</span>
+      <span class="chip ok"><span class="dot"></span>Reskinned · dr-cv V11 tokens</span>
+      <span class="chip ok"><span class="dot"></span>Prose grader live (Claude)</span>
+      <span class="chip todo"><span class="dot"></span>Server route · Supabase · Vercel</span>
+      <span class="chip x"><span class="dot"></span>No login — public</span>
+    </div>
+  </div>
+</header>
+
+<!-- USER FLOW -->
+<section>
+  <div class="wrap">
+    <div class="shead">
+      <span class="snum">A</span>
+      <div><h2>The user flow</h2><p>What Danilo does, end to end — the loop that turns 96 answers into market value.</p></div>
+    </div>
+    <div class="rail">
+      <div class="step">
+        <div class="node">1</div>
+        <div class="scard">
+          <div class="role">Register the objective</div>
+          <h3>Set the number</h3>
+          <p>$250k/year as a Product Designer. Baseline market value, target role, and deadline are stored once and shown on every screen as the north star.</p>
+          <div class="data"><span class="tag src">master-goals.md</span><span class="tag">objective</span><span class="tag">incomeGoal</span></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="node">2</div>
+        <div class="scard">
+          <div class="role">Take the diagnostic · prose</div>
+          <h3>Answer 96 questions in your own words</h3>
+          <p>Each question maps to one skill. You type the answer the way you'd say it in an interview — no multiple choice. Claude scores it on four dimensions and returns a number, a one-line critique, and a diction note on your English.</p>
+          <div class="data"><span class="tag src">questions.md (96)</span><span class="tag src">answers_state.json</span><span class="tag">→ /api/score</span></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="node">3</div>
+        <div class="scard">
+          <div class="role">Scores set levels</div>
+          <h3>Skills fill in poco a poco</h3>
+          <p>One or more questions determine each skill's level — gap → novice → developing → proficient → mastered. The chips fill as you pass. Every level banks a fraction of that skill's dollar value into your live market number.</p>
+          <div class="data"><span class="tag src">skills.yaml</span><span class="tag">level</span><span class="tag">skillBanked()</span></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="node">4</div>
+        <div class="scard">
+          <div class="role">Generate the study program</div>
+          <h3>Gaps become an ordered roadmap</h3>
+          <p>Failed and untested questions are priced as "locked value." The program orders modules by the money each unlocks, prerequisites first — so you always study the thing that moves the number most.</p>
+          <div class="data"><span class="tag">skillUpside()</span><span class="tag">prereq DAG</span><span class="tag">Journey</span></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="node">5</div>
+        <div class="scard">
+          <div class="role">Learn → re-answer → level up</div>
+          <h3>Close the loop</h3>
+          <p>After studying, re-answer the question. A higher score levels the skill up, banks more value, and the dashboard's market number climbs toward $250k. Repeat until the gap is zero.</p>
+          <div class="data"><span class="tag src">Supabase · attempts</span><span class="tag">incomeCurrent ↑</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA FLOW -->
+<section>
+  <div class="wrap">
+    <div class="shead">
+      <span class="snum">B</span>
+      <div><h2>The data flow</h2><p>Seed data in the app ⟶ real sources in the repo. The shapes are the contract; only the values change.</p></div>
+    </div>
+    <p class="label">repo source &nbsp;→&nbsp; app contract (window.DATA)</p>
+    <div class="map">
+      <div class="row">
+        <div class="from">carrera/execution/master-goals.md</div><div class="arr">→</div>
+        <div class="to">learner.objective · incomeGoal · targetRole<small>the $250k north star</small></div>
+      </div>
+      <div class="row">
+        <div class="from">perfil/data/skills.yaml</div><div class="arr">→</div>
+        <div class="to">skills[] — level · prereqs · $ value<small>byLayer / byOutcome → clusters · chips</small></div>
+      </div>
+      <div class="row">
+        <div class="from">career-training/ur-assessment/questions.md</div><div class="arr">→</div>
+        <div class="to">assessment.questions[] — prompt · cues · skill<small>23 sections = the skill clusters</small></div>
+      </div>
+      <div class="row">
+        <div class="from">ur-assessment/senior_product_designer_assessment.md</div><div class="arr">→</div>
+        <div class="to">question.model<small>reference answer the grader compares against</small></div>
+      </div>
+      <div class="row">
+        <div class="from">ur-assessment/answers_state.json</div><div class="arr">→</div>
+        <div class="to">your saved answers<small>diagnostic opens pre-populated & scorable</small></div>
+      </div>
+      <div class="row">
+        <div class="from">design-system/tokens-web.css</div><div class="arr">→</div>
+        <div class="to">styles/tokens.css (alias layer)<small>one palette across app + landing</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE GRADER -->
+<section>
+  <div class="wrap">
+    <div class="shead">
+      <span class="snum">C</span>
+      <div><h2>The prose grader</h2><p>In canvas it runs on the preview helper. In production it moves behind a server route — the key never touches the browser.</p></div>
+    </div>
+    <div class="cols">
+      <div class="panel">
+        <p class="label" style="margin-bottom:10px;">Canvas (now)</p>
+        <pre><span class="c">// screen-assessment.jsx · ExamRunner.score()</span>
+<span class="k">const</span> raw = <span class="k">await</span> window.claude
+  .complete(prompt);
+<span class="c">// → {substance, structure,</span>
+<span class="c">//    english, concision,</span>
+<span class="c">//    overall, feedback, diction}</span></pre>
+      </div>
+      <div class="panel good">
+        <p class="label" style="margin-bottom:10px;">Production (Vercel)</p>
+        <pre><span class="k">const</span> r = <span class="k">await</span> fetch(<span class="s">'/api/score'</span>, {
+  method: <span class="s">'POST'</span>,
+  body: JSON.stringify({ answer, q })
+}).then(r => r.json());
+<span class="c">// api/score.ts → Anthropic SDK</span>
+<span class="c">// ANTHROPIC_API_KEY server-only</span></pre>
+      </div>
+    </div>
+    <div style="margin-top:16px;" class="panel">
+      <h3><span class="ic" style="background:var(--accent)"></span>Four dimensions — the reason it's prose, not multiple choice</h3>
+      <ul>
+        <li><b style="color:var(--text)">Substance</b> (.45) — is the answer correct, complete, senior-level?</li>
+        <li><b style="color:var(--text)">Structure</b> (.20) — claim → why → trade-off, well reasoned?</li>
+        <li><b style="color:var(--text)">English</b> (.20) — fluency, grammar, natural phrasing for a US/EU room.</li>
+        <li><b style="color:var(--text)">Concision</b> (.15) — says it tightly, no padding.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HANDOFF -->
+<section>
+  <div class="wrap">
+    <div class="shead">
+      <span class="snum">D</span>
+      <div><h2>Claude Code handoff</h2><p>What to wire when this bundle lands in the repo. Full detail in the spec §4–§7.</p></div>
+    </div>
+    <div class="cols">
+      <div class="panel">
+        <h3><span class="ic" style="background:var(--pos)"></span>Done in this bundle</h3>
+        <ul>
+          <li>Reskin → <code>tokens-web.css</code> (aliased, single source)</li>
+          <li>Persona → Danilo Rojas, Product Designer</li>
+          <li>Diagnostic → prose + Claude 4-dimension scoring</li>
+          <li>Brand → "Career OS · danilorojas.design"</li>
+          <li>No login · dark-dominant default</li>
+        </ul>
+      </div>
+      <div class="panel warn">
+        <h3><span class="ic" style="background:var(--warn)"></span>To wire on desktop</h3>
+        <ul>
+          <li>Land at <code>career-training/career-training-os/</code>, rename to <code>index.html</code></li>
+          <li>Replace 3 seed blocks in <code>data.jsx</code> with repo data</li>
+          <li>Stand up <code>api/score.ts</code> · swap the fetch</li>
+          <li>Supabase tables · persist attempts</li>
+          <li><code>build:app</code> → <code>dist/landing-v11/app/</code> · deploy on Vercel</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DECISIONS -->
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <div class="shead">
+      <span class="snum">E</span>
+      <div><h2>Decisions on record</h2><p>Settled — carried straight into the build.</p></div>
+    </div>
+    <div class="decisions">
+      <div class="dec"><b>Prose, not multiple-choice</b><span>The LLM scores how Danilo communicates — the real hireable signal — not just correctness.</span></div>
+      <div class="dec"><b>No login</b><span>The app is public. Single owner, fixed profile, append-only attempt log.</span></div>
+      <div class="dec"><b>dr-cv tokens only</b><span>No EnRegla. <code style="font-family:var(--mono);color:var(--body)">tokens-web.css</code> is the source of truth for the whole palette.</span></div>
+      <div class="dec"><b>One objective: $250k</b><span>The money framing is the spine. If a feature doesn't move the number, it doesn't ship.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">career-training-os-integration · companion to the canonical spec · dr-cv</div>
+</footer>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" fill="#0A0B0E"/>
+    <rect x="30" y="30" width="40" height="40" rx="8" fill="none" stroke="#FF8964" stroke-width="3"/>
+    <path d="M40 50 L47 57 L62 42" fill="none" stroke="#FF8964" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</template>
+
+</body>
+</html>

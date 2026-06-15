@@ -1,0 +1,39 @@
+<!-- @dsCard group="Components" viewport="700x300" name="Feedback · Alert / Toast / Tooltip / Progress / Skeleton" subtitle="Inline callouts, notifications, progress tracks and loaders" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{padding:22px;background:var(--bg)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.stack{display:flex;flex-direction:column;gap:12px}</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { Alert, Toast, Tooltip, ProgressBar, Skeleton } = window.AuraDesignSystem_58f91b;
+function Demo() {
+  return (
+    <div className="grid">
+      <div className="stack">
+        <Alert variant="info" title="Diagnostic ready">Graded against the senior rubric.</Alert>
+        <Alert variant="success" title="Banked">+$42,000 added to market value.</Alert>
+        <Alert variant="warning" title="Learning level">One cluster is still developing.</Alert>
+      </div>
+      <div className="stack">
+        <Toast>Learning path generated · 6 steps</Toast>
+        <Tooltip>Mastery is graded from prose, not multiple choice.</Tooltip>
+        <ProgressBar value={64} />
+        <ProgressBar value={40} lg tone="cool" />
+        <Skeleton width="80%" />
+        <Skeleton width="60%" />
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body>
+</html>

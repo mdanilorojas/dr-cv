@@ -1,0 +1,20 @@
+<!-- @dsCard group="Spacing" viewport="700x150" name="Radii & shadow ladder" subtitle="sm → pill corner radii; card / float / overlay elevation" -->
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;padding:24px;background:var(--bg);display:flex;gap:24px;align-items:center}
+.row{display:flex;gap:12px;align-items:flex-end}
+.box{width:56px;height:56px;background:var(--surface);border:1px solid var(--border-strong);display:flex;align-items:flex-end;justify-content:center;font-family:var(--font-mono);font-size:9px;color:var(--text-muted);padding-bottom:4px}
+.sh{width:70px;height:56px;background:var(--surface);border-radius:10px}</style></head>
+<body>
+<div class="row">
+<div class="box" style="border-radius:4px">4</div>
+<div class="box" style="border-radius:8px">8</div>
+<div class="box" style="border-radius:12px">12</div>
+<div class="box" style="border-radius:16px">16</div>
+<div class="box" style="border-radius:9999px">pill</div>
+</div>
+<div class="row">
+<div class="sh" style="box-shadow:var(--shadow-sm)"></div>
+<div class="sh" style="box-shadow:var(--shadow-md)"></div>
+<div class="sh" style="box-shadow:var(--shadow-lg)"></div>
+</div>
+</body></html>

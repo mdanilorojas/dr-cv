@@ -352,7 +352,7 @@ function renderNotes(data: LandingData, lang: Lang): string {
   </article>`;
   }).join("\n");
   return `<section id="notes" class="v11-section v11-section--paper" aria-labelledby="notes-h">
-  <div class="v11-container-narrow">
+  <div class="v11-container">
     <div class="v11-section__eyebrow">${escapeHtml(eyebrow)}</div>
     <h2 id="notes-h" class="v11-h1">${lang === "en" ? "The writing is evidence of judgment." : "La escritura es evidencia de juicio."}</h2>
     <div class="v11-notes">${items}</div>
@@ -635,7 +635,7 @@ function renderAbout(data: LandingData, lang: Lang): string {
     .join("\n      ");
 
   return `<section id="about" class="v11-section" aria-labelledby="about-h">
-  <div class="v11-container-narrow">
+  <div class="v11-container">
     <div class="v11-section__eyebrow">${escapeHtml(eyebrow)}</div>
     <h2 id="about-h" class="v11-h1">${escapeHtml(title)}</h2>
     <p class="v11-lead">${escapeHtml(bio)}</p>

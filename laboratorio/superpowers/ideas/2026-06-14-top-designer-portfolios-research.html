@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The 10 best UI-designer portfolios in the world — research · dr-cv</title>
+<!-- Fonts: max-compatibility system stack, no network dependency (de momento). Light theme = consuming Aura's light tokens + the research finding. -->
+<style>
+  /* Aura design system — LIGHT theme tokens (lifted verbatim) + system-font swap */
+  :root{
+    --bg:#F6F4F0; --bg-deep:#ECE9E2; --surface:#FFFFFF; --surface-subtle:#F1EEE8; --surface-hover:#F4F1EB;
+    --ink:#0B0C0E; --body:#303236; --muted:#4A4B50; --faint:#797D86; --faint2:#9AA0A8;
+    --line:#E5E2DA; --line-soft:#EFECE4; --line-strong:#D6D2C8;
+    --accent:#D9663F; --accent-hover:#BF4F2C; --accent-soft:rgba(217,102,63,.10); --accent-line:rgba(217,102,63,.28); --on-accent:#FFFFFF;
+    --pos:#1F9D57; --pos-soft:rgba(31,157,87,.12);
+    --darkchip:#1C1F27; --darkchip-ink:#F4F4F5;
+    --shadow-sm:0 1px 2px rgba(11,12,14,.07); --shadow-md:0 6px 20px -6px rgba(11,12,14,.12); --shadow-lg:0 16px 36px -10px rgba(11,12,14,.16);
+    --font-sans:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --font-mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
+    --r-sm:6px; --r-md:10px; --r-lg:14px; --r-xl:20px; --r-full:9999px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.55;letter-spacing:-.011em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  .wrap{max-width:1000px;margin:0 auto;padding:64px 24px 110px}
+  .eyebrow{font-family:var(--font-mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--accent)}
+  h1{font-size:clamp(32px,5.2vw,52px);line-height:1.04;letter-spacing:-.035em;font-weight:600;margin:14px 0 0;max-width:18ch;text-wrap:balance}
+  .lead{font-size:clamp(17px,2vw,21px);color:var(--body);max-width:64ch;margin-top:18px;text-wrap:pretty}
+  .lead b{color:var(--ink)}
+  .method{font-size:13.5px;color:var(--muted);max-width:70ch;margin-top:16px;border-left:3px solid var(--accent-line);padding:6px 0 6px 14px}
+  h2{font-size:12px;font-family:var(--font-mono);font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--faint);margin:64px 0 20px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+
+  /* data strip */
+  .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
+  @media(max-width:760px){.strip{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px 18px;box-shadow:var(--shadow-sm)}
+  .stat .n{font-family:var(--font-mono);font-size:26px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .stat .n .sub{font-size:14px;color:var(--faint);font-weight:500}
+  .stat .k{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.35}
+
+  /* theme split bar */
+  .splitbar{display:flex;height:14px;border-radius:var(--r-full);overflow:hidden;border:1px solid var(--line);margin:6px 0 4px}
+  .splitbar .l{background:var(--accent);} .splitbar .d{background:var(--darkchip);}
+  .splitlabels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+
+  /* designer cards */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  .card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 20px 18px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:box-shadow .18s,border-color .18s}
+  .card:hover{box-shadow:var(--shadow-md);border-color:var(--line-strong)}
+  .card .rank{position:absolute;top:18px;right:20px;font-family:var(--font-mono);font-size:12px;color:var(--faint2);font-variant-numeric:tabular-nums}
+  .card .name{font-size:19px;font-weight:600;letter-spacing:-.02em}
+  .card .role{font-size:13px;color:var(--muted);margin-top:3px;line-height:1.4}
+  .badges{display:flex;gap:7px;margin:13px 0 12px;flex-wrap:wrap}
+  .badge{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;padding:4px 9px;border-radius:var(--r-full);border:1px solid var(--line-strong);color:var(--muted)}
+  .badge.light{border-color:var(--accent-line);color:var(--accent);background:var(--accent-soft)}
+  .badge.dark{background:var(--darkchip);color:var(--darkchip-ink);border-color:var(--darkchip)}
+  .sig{font-size:14px;color:var(--body);line-height:1.5}
+  .sig .lab{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);display:block;margin-bottom:3px}
+  .why{font-size:13.5px;color:var(--muted);line-height:1.5;margin-top:11px;padding-top:11px;border-top:1px solid var(--line-soft)}
+  .visit{margin-top:14px}
+  .visit a{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12.5px;font-weight:600;letter-spacing:.02em;color:var(--accent);border:1px solid var(--accent-line);background:var(--accent-soft);border-radius:var(--r-full);padding:7px 14px;transition:background .15s,color .15s}
+  .visit a:hover{background:var(--accent);color:var(--on-accent)}
+  .visit .dom{color:var(--faint);font-weight:500}
+  .visit a:hover .dom{color:var(--on-accent)}
+
+  /* patterns */
+  .pat{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.pat{grid-template-columns:1fr}}
+  .pcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px}
+  .pcard .pn{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-variant-numeric:tabular-nums}
+  .pcard h4{margin:5px 0 5px;font-size:15.5px;letter-spacing:-.015em}
+  .pcard p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.5}
+
+  /* rethink */
+  .tension{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--r-md);padding:18px 20px;margin-bottom:22px}
+  .tension b{color:var(--ink)}
+  .surfaces{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+  @media(max-width:760px){.surfaces{grid-template-columns:1fr}}
+  .surf{border-radius:var(--r-lg);padding:18px 20px;border:1px solid var(--line)}
+  .surf.lighty{background:var(--surface)}
+  .surf.darky{background:var(--darkchip);border-color:var(--darkchip);color:var(--darkchip-ink)}
+  .surf .st{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+  .surf.lighty .st{color:var(--accent)} .surf.darky .st{color:#FF8964}
+  .surf h4{margin:0 0 6px;font-size:17px;letter-spacing:-.02em}
+  .surf p{margin:0;font-size:13.5px;line-height:1.5}
+  .surf.lighty p{color:var(--muted)} .surf.darky p{color:#B0B2B7}
+  ol.rec{padding-left:20px;margin:0} ol.rec li{margin:11px 0;color:var(--body);font-size:14.5px;line-height:1.55} ol.rec li b{color:var(--ink)}
+  .net{font-size:15px;color:var(--ink);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-md);padding:16px 18px;margin-top:20px}
+
+  code{font-family:var(--font-mono);font-size:.85em;color:var(--accent-hover);background:var(--accent-soft);padding:1px 6px;border-radius:5px}
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .srcs a{font-family:var(--font-mono);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:var(--r-full);padding:5px 11px}
+  .srcs a:hover{color:var(--accent);border-color:var(--accent-line)}
+  footer{margin-top:70px;padding-top:18px;border-top:1px solid var(--line);color:var(--faint);font-family:var(--font-mono);font-size:11px;letter-spacing:.04em}
+  a{color:inherit;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">// research · 14 jun 2026 · dr-cv</div>
+  <h1>The 10 best UI-designer portfolios in the world</h1>
+  <p class="lead">Your hunch was right: the most admired personal sites in design <b>skew strongly light.</b> Of the ten, <b>eight are light-dominant</b>, and most of those still ship a dark <i>toggle</i> — dark is an option, not the identity. The two that commit to dark are the course/product sellers, not the craft portfolios.</p>
+  <p class="method">Method — curated from designer-portfolio roundups (Awwwards, Muzli, Bestfolios, Adham Dannaway's own list), the "design engineer" canon (ui.land, Maggie Appleton), and direct fetches of each live site. Theme is best-effort; the links are here so you confirm by eye.</p>
+
+  <div class="strip">
+    <div class="stat"><div class="n">8<span class="sub"> / 10</span></div><div class="k">Light-dominant. Cream/white canvas, one restrained accent.</div></div>
+    <div class="stat"><div class="n">~6</div><div class="k">Ship a dark <i>toggle</i> — dark offered, not worn as identity.</div></div>
+    <div class="stat"><div class="n">9</div><div class="k">Recurring traits — all type-led, restrained, writing-forward.</div></div>
+    <div class="stat"><div class="n">1</div><div class="k">Aura rule challenged — global "dark is supreme" is the minority here.</div></div>
+  </div>
+  <div style="margin-top:18px">
+    <div class="splitbar"><div class="l" style="width:80%"></div><div class="d" style="width:20%"></div></div>
+    <div class="splitlabels"><span>light — 8</span><span>dark — 2</span></div>
+  </div>
+
+  <h2>The ten</h2>
+  <div class="grid">
+
+    <div class="card"><span class="rank">01</span>
+      <div class="name">Rauno Freiberg</div>
+      <div class="role">Design engineer (Vercel) · the UI-craft reference</div>
+      <div class="badges"><span class="badge light">Light</span><span class="badge">System sans + mono</span><span class="badge">Index / craft</span></div>
+      <div class="sig"><span class="lab">Signature</span>Manifesto voice ("Make it fast. Make it beautiful."), mono micro-labels, <i>Craft</i> + <i>Devouring Details</i>. Restraint is the flex.</div>
+      <div class="why">Why it's great — the near-empty canvas radiates confidence; every pixel earns its place.</div>
+      <div class="visit"><a href="https://rauno.me" target="_blank" rel="noopener">Visit <span class="dom">rauno.me</span></a></div>
+    </div>
+
+    <div class="card"><span class="rank">02</span>
+      <div class="name">Paco Coursey</div>
+      <div class="role">Design engineer (Linear) · <code>cmdk</code>, <code>vaul</code></div>
+      <div class="badges"><span class="badge dark">Dark / toggle</span><span class="badge">⌘K menu</span><span class="badge">Single column</span></div>
+      <div class="sig"><span class="lab">Signature</span>Ships the command menu he's known for; author of "perfect dark mode"; a <i>Now</i> section that shows the person.</div>
+      <div class="why">Why it's great — minimal and intentional; the interface details are the portfolio.</div>
+      <div class="visit"><a href="https://paco.me" target="_blank" rel="noopener">Visit <span class="dom">paco.me</span></a></div>
+    </div>
+
+    <div class="card"><span class="rank">03</span>
+      <div class="name">Emil Kowalski</div>
+      <div class="role">Design engineer (Linear, Vercel) · Sonner, Vaul, animations.dev</div>
+      <div class="badges"><span class="badge light">Light</span><span class="badge">Editorial</span><span class="badge">Writing-forward</span></div>
+      <div class="sig"><span class="lab">Signature</span>Projects flow into essays on motion and taste; the page demonstrates the animation principles he teaches.</div>
+      <div class="why">Why it's great — calm, legible, and self-proving: the craft is on the page, not described.</div>
+      <div class="visit"><a href="https://emilkowal.ski" target="_blank" rel="noopener">Visit <span class="dom">emilkowal.ski</span></a></div>
+    </div>
+
+    <div class="card"><span class="rank">04</span>
+      <div class="name">Brian Lovin</div>
+      <div class="role">Product designer (GitHub, Campsite) · Staff Design</div>
+      <div class="badges"><span class="badge light">Light</span><span class="badge">OS / app shell</span><span class="badge">Deep content</span></div>
+      <div class="sig"><span class="lab">Signature</span>The portfolio rendered as a desktop product — sidebar, panes, writing, bookmarks, AMA.</div>
+      <div class="why">Why it's great — "my portfolio is a product." The format itself is the proof of skill.</div>
+      <div class="visit"><a href="https://brianlovin.com" target="_blank" rel="noopener">Visit <span class="dom">brianlovin.com</span></a></div>
+    </div>
+
+    <div class="card"><span class="rank">05</span>
+      <div class="name">Tobias van Schneider</div>
+      <div class="role">Creative director (ex-Spotify) · Semplice, DESK</div>
+      <div class="badges"><span class="badge light">Light · bold</span><span class="badge">Big type</span><span class="badge">Storytelling</span></div>
+      <div class="sig"><span class="lab">Signature</span>Confident editorial — large type, generous color, a strong personal voice that leads with story over credentials.</div>
+      <div class="why">Why it's great — proof that "light" needn't mean timid; personality is the differentiator.</div>
+      <div class="visit"><a href="https://vanschneider.com" target="_blank" rel="noopener">Visit <span class="dom">vanschneider.com</span></a></div>
+    </div>
+
+    <div class="card"><span class="rank">06</span>
+      <div class="name">Adham Dannaway</div>
+      <div class="role">Product designer + front-end developer</div>
+      <div class="badges"><span class="badge light">Light</span><span class="badge">Split hero</span><span class="badge">Systems-focused</span></div>
+      <div class="sig"><span class="lab">Signature</span>The iconic split portrait: one half flat-illustrated <b>designer</b>, one half code-styled <code>&lt;coder&gt;</code>.</div>
+      <div class="why">Why it's great — one memorable idea, executed once, remembered for a decade.</div>
+      <div class="visit"><a href="https://www.adhamdannaway.com" target="_blank" rel="noopener">Visit <span class="dom">adhamdannaway.com</span></a></div>
+    </div>
+
+    <div class="card"><span class="rank">07</span>
+      <div class="name">Meng To</div>
+      <div class="role">Design+Code founder · SwiftUI / Figma educator</div>
+      <div class="badges"><span class="badge dark">Dark</span><span class="badge">Product-grade</span><span class="badge">Polished</span></div>
+      <div class="sig"><span class="lab">Signature</span>Glossy, deep surfaces — closer to a polished SaaS landing than a humble portfolio, because he sells courses.</div>
+      <div class="why">Why it's great — shows how far dark + craft can go when the goal is conversion.</div>
+      <div class="visit"><a href="https://www.mengto.com" target="_blank" rel="noopener">Visit <span class="dom">mengto.com</span></a></div>
+    </div>
+
+    <div class="card"><span class="rank">08</span>
+      <div class="name">Tobias Ahlin</div>
+      <div class="role">Design engineer (GitHub, ex-Spotify) · SpinKit, Mona Sans</div>
+      <div class="badges"><span class="badge light">Light</span><span class="badge">Live specimens</span><span class="badge">CSS / motion</span></div>
+      <div class="sig"><span class="lab">Signature</span>Writing on CSS, animation and brand with <i>live motion specimens</i> embedded right in the page.</div>
+      <div class="why">Why it's great — teaches by demonstration; the page animates the very ideas it explains.</div>
+      <div class="visit"><a href="https://tobiasahlin.com" target="_blank" rel="noopener">Visit <span class="dom">tobiasahlin.com</span></a></div>
+    </div>
+
+    <div class="card"><span class="rank">09</span>
+      <div class="name">Jim Nielsen</div>
+      <div class="role">Designer-who-codes · web-craft writer (IndieWeb)</div>
+      <div class="badges"><span class="badge light">Light</span><span class="badge">Blog-forward</span><span class="badge">Near-zero JS</span></div>
+      <div class="sig"><span class="lab">Signature</span>Minimal markup, ferociously fast, deeply typographic. The anti-spectacle that wins on substance and speed.</div>
+      <div class="why">Why it's great — performance and accessibility treated as part of the aesthetic.</div>
+      <div class="visit"><a href="https://www.jim-nielsen.com" target="_blank" rel="noopener">Visit <span class="dom">jim-nielsen.com</span></a></div>
+    </div>
+
+    <div class="card"><span class="rank">10</span>
+      <div class="name">Lynn Fisher</div>
+      <div class="role">Web designer · annual full-site redesigns, CSS art</div>
+      <div class="badges"><span class="badge light">Light · playful</span><span class="badge">CSS art</span><span class="badge">Reinvented yearly</span></div>
+      <div class="sig"><span class="lab">Signature</span>A brand-new identity every single year — the redesign <i>is</i> the portfolio.</div>
+      <div class="why">Why it's great — the craft of the page itself, rebuilt annually, is the whole argument.</div>
+      <div class="visit"><a href="https://lynnandtonic.com" target="_blank" rel="noopener">Visit <span class="dom">lynnandtonic.com</span></a></div>
+    </div>
+
+  </div>
+
+  <h2>What makes them wonderful</h2>
+  <div class="pat">
+    <div class="pcard"><div class="pn">01</div><h4>Restraint as the flex</h4><p>Whitespace, few elements, content-first. The empty space signals confidence.</p></div>
+    <div class="pcard"><div class="pn">02</div><h4>Typography is the system</h4><p>One excellent sans does the heavy lifting; mono micro-labels for metadata; serif when there's reading. Type, not decoration.</p></div>
+    <div class="pcard"><div class="pn">03</div><h4>The site is the proof</h4><p>Especially for design engineers — the craft of the page demonstrates the skill. Show, don't list.</p></div>
+    <div class="pcard"><div class="pn">04</div><h4>A point of view, written</h4><p>Now-pages, field notes, essays, manifestos. Bodies of thought, not galleries. The writing is the moat.</p></div>
+    <div class="pcard"><div class="pn">05</div><h4>Micro-interactions with taste</h4><p>⌘K palettes, copy-to-clipboard, restrained meaningful motion. Never decorative loops.</p></div>
+    <div class="pcard"><div class="pn">06</div><h4>Web-native: fast + accessible</h4><p>Performance, a11y and keyboard support are part of the aesthetic. Light, system fonts, minimal JS.</p></div>
+    <div class="pcard"><div class="pn">07</div><h4>Light + one restrained accent</h4><p>Off-white canvases, a single accent, dark offered as a toggle — not the identity. Eight of ten.</p></div>
+    <div class="pcard"><div class="pn">08</div><h4>Editorial / notebook shape</h4><p>Long-form thinking plus a few signature projects — not twenty exhaustive case studies.</p></div>
+    <div class="pcard"><div class="pn">09</div><h4>One memorable signature</h4><p>Adham's split, Brian's OS-shell, Lynn's annual redesign. A single hook you remember.</p></div>
+  </div>
+
+  <h2>Replanteamiento — what this means for Aura</h2>
+  <div class="tension">
+    <b>The central tension.</b> Aura today is dark-dominant with a warm accent, and our decision record says <b>"dark is supreme."</b> The reference set says the opposite for the <b>portfolio / landing</b> surface: light wins. But Aura already runs <b>two surfaces</b> — a dark app cockpit and a light notebook essay. The research doesn't break Aura; it <b>re-weights</b> it.
+  </div>
+
+  <div class="surfaces">
+    <div class="surf lighty"><div class="st">// landing · portfolio</div><h4>Go light by default</h4><p>The danilorojas.design front door: cream paper, restrained terracotta accent, dark as a toggle. Matches the world's best — and your instinct.</p></div>
+    <div class="surf darky"><div class="st">// app · mentor cockpit</div><h4>Dark stays defensible</h4><p>The <code style="background:rgba(255,137,100,.12);color:#FF8964">/app</code> tool: dashboards and NOC-style cockpits legitimately go dark (Linear, the design-engineer cockpit).</p></div>
+  </div>
+
+  <ol class="rec">
+    <li><b>Split the theme decision by surface.</b> Reframe "dark is supreme" into <b>"dark for the product, light editorial for the portfolio."</b> A decision for you to make, captured for the record.</li>
+    <li><b>Make typography the spine.</b> Aura already names Inter + JetBrains Mono + Source Serif — double down: mono micro-labels, a serif reading measure, one exceptional sans. And <b>self-host them</b> (the CDN dependency is exactly what produced the "caracteres extraños").</li>
+    <li><b>Buy whitespace, cut components.</b> The best sites are sparse. The portfolio should be the opposite of the dense app kit — big margins, few elements.</li>
+    <li><b>Lead with a point of view.</b> Build a field-notes / essays surface, not just case studies. The writing is the moat for the $250,000 positioning.</li>
+    <li><b>Keep one signature — we already have it.</b> The AI <b>artifact surfaces</b> (embed / stream / plan / diff / skill-chip) and the polished-draftsman / blueprint concept are Aura's memorable hook. That's our "Adham split." Protect it.</li>
+    <li><b>Micro-interactions with restraint.</b> ⌘K, copy-to-clipboard, transform-only entrances, reduced-motion honored. Aura's motion rules already say this; the research confirms it.</li>
+  </ol>
+
+  <div class="net"><b>Net:</b> the research supports most of Aura's instincts — restraint, type-led, one accent, no glow or gradients, a signature artifact layer — and challenges exactly one: global dark. Proposed resolution: <b>light portfolio, dark app.</b> Decide, then push it into Aura.</div>
+
+  <h2>Sources</h2>
+  <div class="srcs">
+    <a href="https://www.adhamdannaway.com/blog/web-design/design-portfolio-inspiration" target="_blank" rel="noopener">adhamdannaway · inspiration list</a>
+    <a href="https://muz.li/blog/top-100-most-creative-and-unique-portfolio-websites-of-2025/" target="_blank" rel="noopener">Muzli · top 100</a>
+    <a href="https://www.awwwards.com/websites/winner_category_portfolio/" target="_blank" rel="noopener">Awwwards · portfolio winners</a>
+    <a href="https://www.bestfolios.com/" target="_blank" rel="noopener">Bestfolios</a>
+    <a href="https://maggieappleton.com/design-engineers" target="_blank" rel="noopener">Maggie Appleton · design engineers</a>
+    <a href="https://ui.land/interviews/rauno-freiberg" target="_blank" rel="noopener">ui.land · Rauno</a>
+    <a href="https://ui.land/interviews/paco-coursey" target="_blank" rel="noopener">ui.land · Paco</a>
+  </div>
+
+  <footer>dr-cv · research companion to 2026-06-14-top-designer-portfolios-research.md · built light, on Aura's light tokens, system fonts · finding: light portfolio, dark app</footer>
+</div>
+</body>
+</html>
