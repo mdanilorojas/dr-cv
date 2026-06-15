@@ -57,6 +57,19 @@ function copyAnimationAssets(): void {
   console.log(`[v11-landing] copied animation assets -> ${destRoot}`);
 }
 
+function copyFonts(): void {
+  const src = path.join(projectRoot, "perfil", "assets", "fonts");
+  if (!existsSync(src)) return;
+  const destRoot = path.join(distDir, "assets", "fonts");
+  mkdirSync(destRoot, { recursive: true });
+  for (const entry of readdirSync(src)) {
+    const fromPath = path.join(src, entry);
+    if (statSync(fromPath).isDirectory()) continue;
+    copyFileSync(fromPath, path.join(destRoot, entry));
+  }
+  console.log(`[v11-landing] copied fonts -> ${destRoot}`);
+}
+
 // Hand-maintained, unlisted tools served alongside the landing. They are public
 // by direct URL, but intentionally not linked from the main landing.
 // Their source lives outside dist/; this copy keeps dist fully regenerable.
@@ -114,6 +127,7 @@ async function main(): Promise<void> {
 
   await copyPhoto();
   copyAnimationAssets();
+  copyFonts();
   copyHandTools();
   await buildOgImage();
 
