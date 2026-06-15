@@ -10,7 +10,7 @@ import { FAVICON_TAG } from "./v11-styles.js";
  * Tailwind Play CDN for utilities (v1); self-hosted fonts; custom CSS below.
  * ========================================================================== */
 
-const FONT_FACES = `
+export const FONT_FACES = `
 @font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/inter-400.woff2") format("woff2");}
 @font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url("/assets/fonts/inter-500.woff2") format("woff2");}
 @font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url("/assets/fonts/inter-600.woff2") format("woff2");}
@@ -22,7 +22,7 @@ const FONT_FACES = `
 @font-face{font-family:"Source Serif 4";font-style:italic;font-weight:400;font-display:swap;src:url("/assets/fonts/source-serif-4-400-italic.woff2") format("woff2");}
 `;
 
-const CUSTOM_CSS = `
+export const CUSTOM_CSS = `
 :root { --mouse-x: 50%; --mouse-y: 50%; }
 body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 .bg-grid { position:fixed; inset:0; z-index:-1;
@@ -48,7 +48,7 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 @media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} }
 `;
 
-const TW_CONFIG = `
+export const TW_CONFIG = `
 tailwind.config = { darkMode:'class', theme:{ extend:{
   fontFamily:{ sans:['Inter','sans-serif'], mono:['JetBrains Mono','monospace'], serif:['Source Serif 4','serif'] },
   colors:{ system:{ bg:'#030303', surface:'#0a0a0a', line:'rgba(255,255,255,0.08)', lineHover:'rgba(255,255,255,0.25)', text:'#ededed', dim:'#8a8a8a', accent:'#ffffff' } },
@@ -56,7 +56,7 @@ tailwind.config = { darkMode:'class', theme:{ extend:{
 } } }
 `;
 
-function runtimeScript(email: string): string {
+export function runtimeScript(email: string): string {
   const e = email.replace(/'/g, "\\'");
   return [
     "document.addEventListener('DOMContentLoaded',function(){",
