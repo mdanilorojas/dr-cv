@@ -190,18 +190,32 @@ const COPY = {
   method: {
     eyebrowEn: "Method",
     eyebrowEs: "MÃ©todo",
-    titleEn: "Profile plus agents. Diff as the contract.",
-    titleEs: "Perfil mÃ¡s agentes. El diff como contrato.",
-    leadEn: "I plan before I build. I review every diff. I package skills, not prompts. The agent proposes; I decide.",
-    leadEs: "Planifico antes de construir. Reviso cada diff. Empaqueto skills, no prompts. El agente propone; yo decido.",
+    titleEn: "How I work.",
+    titleEs: "CÃ³mo trabajo.",
+    philosophyEn: "My work sits between user needs, business constraints, and execution.",
+    philosophyEs: "Mi trabajo vive entre las necesidades del usuario, las restricciones del negocio y la ejecuciÃ³n.",
+    leadEn: "I keep a running map of what I have earned, what I am investing in now, and what I am betting on next. It is how I keep improving without losing the craft floor.",
+    leadEs: "Mantengo un mapa vivo de lo que he ganado, en quÃ© estoy invirtiendo ahora y a quÃ© le estoy apostando despuÃ©s. AsÃ­ sigo mejorando sin perder el craft floor.",
+  },
+  about: {
+    eyebrowEn: "About",
+    eyebrowEs: "Sobre mÃ­",
+    titleEn: "A long way to the surface.",
+    titleEs: "Un camino largo hasta la superficie.",
+    bioEn: "I started in databases and backend, moved to frontend, then to UI, then to UX â€” eighteen years in product, fifteen in design. The path means I design with the whole system in mind, not just the screen. At Booz Allen Hamilton I carried that into government and compliance work for the FAA, the DoD, and the VA, where the rigor of the documentation matters as much as the interface.",
+    bioEs: "EmpecÃ© en bases de datos y backend, pasÃ© a frontend, luego a UI, luego a UX â€” dieciocho aÃ±os en producto, quince en diseÃ±o. El camino significa que diseÃ±o pensando en todo el sistema, no solo en la pantalla. En Booz Allen Hamilton llevÃ© eso a trabajo de gobierno y compliance para la FAA, el DoD y el VA, donde el rigor de la documentaciÃ³n importa tanto como la interfaz.",
+    clientsLabelEn: "Clients",
+    clientsLabelEs: "Clientes",
+    educationLabelEn: "Education",
+    educationLabelEs: "EducaciÃ³n",
   },
   contact: {
     eyebrowEn: "Contact",
     eyebrowEs: "Contacto",
     titleEn: "Let's talk.",
     titleEs: "Hablemos.",
-    leadEn: "Direct email is the fastest path. I reply within one business day. Open to Staff / Principal AI Product Designer roles.",
-    leadEs: "Email directo es el camino mÃ¡s rÃ¡pido. Respondo en un dÃ­a hÃ¡bil. Abierto a roles Staff / Principal AI Product Designer.",
+    leadEn: "Direct email is the fastest path. I reply within one business day.",
+    leadEs: "Email directo es el camino mÃ¡s rÃ¡pido. Respondo en un dÃ­a hÃ¡bil.",
     copyLabelEn: "Copy email",
     copyLabelEs: "Copiar email",
     copiedLabelEn: "Copied",
@@ -221,9 +235,10 @@ interface NavOpts {
   langHrefOverride?: string;
 }
 function renderNav(identity: Identity, lang: Lang, opts: NavOpts): string {
+  const notesLabel = lang === "en" ? "Notes" : "Notas";
   const workLabel = lang === "en" ? "Work" : "Trabajo";
-  const notebookLabel = lang === "en" ? "Notebook" : "Notebook";
   const methodLabel = lang === "en" ? "Method" : "MÃ©todo";
+  const aboutLabel = lang === "en" ? "About" : "Sobre mÃ­";
   const contactLabel = lang === "en" ? "Contact" : "Contacto";
   const defaultLangHref = lang === "en" ? "/es/" : "/";
   const langHref = opts.langHrefOverride ?? defaultLangHref;
@@ -236,9 +251,10 @@ function renderNav(identity: Identity, lang: Lang, opts: NavOpts): string {
   <div class="v11-nav__inner">
     <a href="${escapeHtml(brandHref)}" class="v11-nav__brand">${escapeHtml(identity.name)}<span class="v11-nav__brand-sep">Â·</span>dr</a>
     <div class="v11-nav__tabs">
-      <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#notebook">${escapeHtml(notebookLabel)}</a>
+      <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#notes">${escapeHtml(notesLabel)}</a>
       <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#work">${escapeHtml(workLabel)}</a>
       <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#method">${escapeHtml(methodLabel)}</a>
+      <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#about">${escapeHtml(aboutLabel)}</a>
       <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#contact">${escapeHtml(contactLabel)}</a>
     </div>
     <a class="v11-nav__lang" href="${escapeHtml(langHref)}" hreflang="${lang === "en" ? "es" : "en"}" aria-label="${escapeHtml(langAria)}">${escapeHtml(langCode)}</a>
@@ -579,30 +595,8 @@ function renderTestimonial(t: Testimonial, lang: Lang): string {
 function renderMethod(data: LandingData, lang: Lang): string {
   const eyebrow = lang === "en" ? COPY.method.eyebrowEn : COPY.method.eyebrowEs;
   const title = lang === "en" ? COPY.method.titleEn : COPY.method.titleEs;
+  const philosophy = lang === "en" ? COPY.method.philosophyEn : COPY.method.philosophyEs;
   const lead = lang === "en" ? COPY.method.leadEn : COPY.method.leadEs;
-
-  const planHeadEn = "Plan Â· approved Â· dr-cv-v11";
-  const planHeadEs = "Plan Â· aprobado Â· dr-cv-v11";
-  const planSteps = lang === "en"
-    ? [
-        { body: "Load CvData + Landing config", meta: "0:12", done: true },
-        { body: "Render hero + artifact viewer", meta: "0:48", done: true },
-        { body: "Render 4 Narrative Ship cases", meta: "1:20", done: true },
-        { body: "Emit EN + ES with hreflang", meta: "0:22", done: false },
-        { body: "Run a11y + perf smoke", meta: "0:18", done: false },
-      ]
-    : [
-        { body: "Cargar CvData + Landing config", meta: "0:12", done: true },
-        { body: "Renderizar hero + artifact viewer", meta: "0:48", done: true },
-        { body: "Renderizar 4 cases Narrative Ship", meta: "1:20", done: true },
-        { body: "Emitir EN + ES con hreflang", meta: "0:22", done: false },
-        { body: "Correr smoke a11y + perf", meta: "0:18", done: false },
-      ];
-
-  const stepsHtml = planSteps.map((s) => {
-    const cls = s.done ? " v11-plan__step--done" : "";
-    return `<li class="v11-plan__step${cls}"><strong>${escapeHtml(s.body)}</strong> <span class="v11-plan__meta">${escapeHtml(s.meta)}</span></li>`;
-  }).join("\n");
 
   const giraldez = data.testimonials.find((t) => t.author.includes("Giraldez")) ?? data.testimonials[0];
 
@@ -610,34 +604,54 @@ function renderMethod(data: LandingData, lang: Lang): string {
   <div class="v11-container">
     <div class="v11-section__eyebrow">${escapeHtml(eyebrow)}</div>
     <h2 id="method-h" class="v11-h1">${escapeHtml(title)}</h2>
-    <p class="v11-lead">${escapeHtml(lead)}</p>
+    <p class="v11-lead">${escapeHtml(philosophy)}</p>
+    <p class="v11-method__note">${escapeHtml(lead)}</p>
 
-    <div class="v11-method">
-      <div class="v11-plan" aria-label="plan before build specimen">
-        <div class="v11-plan__head">${escapeHtml(lang === "en" ? planHeadEn : planHeadEs)}</div>
-        <ol class="v11-plan__list">
-${stepsHtml}
-        </ol>
-      </div>
-
-      <div class="v11-diff" aria-label="diff review specimen">
-        <div class="v11-diff__row v11-diff__row--del"><span class="v11-diff__ln">42</span><span>- &lt;h1&gt;Agentic Designer shipping real products&lt;/h1&gt;</span></div>
-        <div class="v11-diff__row v11-diff__row--add"><span class="v11-diff__ln">42</span><span>+ &lt;h1&gt;A point of view on agentic design.&lt;/h1&gt;</span></div>
-        <div class="v11-diff__row"><span class="v11-diff__ln">43</span><span>&nbsp;&nbsp;&lt;p&gt;I keep the craftâ€¦&lt;/p&gt;</span></div>
-        <div class="v11-diff__row v11-diff__row--add"><span class="v11-diff__ln">44</span><span>+ &lt;div data-v11-skill="@te-skin"&gt;â€¦&lt;/div&gt;</span></div>
-      </div>
-    </div>
-
-    <div style="display:flex; gap:8px; flex-wrap:wrap; margin: 0 0 32px;">
-      <span class="v11-chip"><span class="v11-chip__at">@</span>dr-cv-skill</span>
-      <span class="v11-chip"><span class="v11-chip__at">@</span>te-skin</span>
-      <span class="v11-chip v11-chip--cool"><span class="v11-chip__at">/</span>ds-review</span>
-      <span class="v11-chip v11-chip--cool"><span class="v11-chip__at">/</span>case-compose</span>
-      <span class="v11-chip v11-chip--muted"><span class="v11-chip__at">@</span>mcp:supabase</span>
-      <span class="v11-chip v11-chip--muted"><span class="v11-chip__at">@</span>mcp:github</span>
-    </div>
+${renderHorizon(data.horizon, lang)}
 
     ${giraldez ? renderTestimonial(giraldez, lang) : ""}
+  </div>
+</section>`;
+}
+
+/* ============== ABOUT ============== */
+
+function renderAbout(data: LandingData, lang: Lang): string {
+  const eyebrow = lang === "en" ? COPY.about.eyebrowEn : COPY.about.eyebrowEs;
+  const title = lang === "en" ? COPY.about.titleEn : COPY.about.titleEs;
+  const bio = lang === "en" ? COPY.about.bioEn : COPY.about.bioEs;
+  const clientsLabel = lang === "en" ? COPY.about.clientsLabelEn : COPY.about.clientsLabelEs;
+  const educationLabel = lang === "en" ? COPY.about.educationLabelEn : COPY.about.educationLabelEs;
+
+  const clientsRow = data.clients
+    .map((c) => `<span class="v11-about__client">${escapeHtml(c.name)}</span>`)
+    .join('<span class="v11-about__client-sep" aria-hidden="true"> Â· </span>');
+
+  const educationItems = data.education
+    .map((e) => {
+      const year = e.year !== null ? ` <span class="v11-about__edu-year">Â· ${escapeHtml(String(e.year))}</span>` : "";
+      return `<li class="v11-about__edu-item"><span class="v11-about__edu-name">${escapeHtml(e.name)}</span> <span class="v11-about__edu-inst">Â· ${escapeHtml(e.institution)}</span>${year}</li>`;
+    })
+    .join("\n      ");
+
+  return `<section id="about" class="v11-section" aria-labelledby="about-h">
+  <div class="v11-container-narrow">
+    <div class="v11-section__eyebrow">${escapeHtml(eyebrow)}</div>
+    <h2 id="about-h" class="v11-h1">${escapeHtml(title)}</h2>
+    <p class="v11-lead">${escapeHtml(bio)}</p>
+
+    <div class="v11-about__cols">
+      <div class="v11-about__block">
+        <div class="v11-about__label">${escapeHtml(clientsLabel)}</div>
+        <div class="v11-about__clients">${clientsRow}</div>
+      </div>
+      <div class="v11-about__block">
+        <div class="v11-about__label">${escapeHtml(educationLabel)}</div>
+        <ul class="v11-about__edu">
+      ${educationItems}
+        </ul>
+      </div>
+    </div>
   </div>
 </section>`;
 }
@@ -710,8 +724,8 @@ function renderContact(data: LandingData, lang: Lang): string {
 
 function renderFooter(identity: Identity, lang: Lang): string {
   const text = lang === "en"
-    ? `Built by ${identity.name} Â· source on ${identity.contact.github ?? "GitHub"} Â· updated 2026-05-08`
-    : `Hecho por ${identity.name} Â· cÃ³digo en ${identity.contact.github ?? "GitHub"} Â· actualizado 2026-05-08`;
+    ? `Built by ${identity.name} Â· source on ${identity.contact.github ?? "GitHub"} Â· updated 2026-06-15`
+    : `Hecho por ${identity.name} Â· cÃ³digo en ${identity.contact.github ?? "GitHub"} Â· actualizado 2026-06-15`;
   const dsLabel = lang === "en" ? "Design System V11" : "Sistema de DiseÃ±o V11";
   return `<footer class="v11-footer">
   <div class="v11-footer__inner">
@@ -785,10 +799,10 @@ ${renderNav(data.identity, lang, { homeHref: "" })}
 ${renderHero(data.identity, data.positioning, data.landing, lang)}
 ${renderTrustStrip(data.positioning, lang)}
 ${renderProof(data.positioning, lang)}
-${renderHorizon(data.horizon, lang)}
 ${renderNotes(data, lang)}
 ${renderWork(data, lang, "")}
 ${renderMethod(data, lang)}
+${renderAbout(data, lang)}
 ${renderContact(data, lang)}
 </main>
 ${renderFooter(data.identity, lang)}

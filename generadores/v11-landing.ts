@@ -100,15 +100,16 @@ function copyHandTools(): void {
   }
 }
 
-async function buildOgImage(): Promise<void> {
+async function buildOgImage(data: ReturnType<typeof loadLandingData>): Promise<void> {
   const photoBytes = readFileSync(photoSrc);
   const photoDataUrl = `data:image/jpeg;base64,${photoBytes.toString("base64")}`;
   const cardHtml = renderOgCardHtml({
     photoDataUrl,
-    name: "Danilo Rojas",
-    role: "Agentic Designer Â· Product Engineer",
-    tagline: "A point of view on agentic design, not a rÃ©sumÃ©.",
+    name: data.identity.name,
+    role: data.identity.role,
+    tagline: data.positioning.heroLine?.en ?? data.positioning.thesis.en,
     domain: "danilorojas.design",
+    availability: data.identity.availability,
   });
   const outputPath = path.join(distDir, "og.png");
   await renderOgImage({ html: cardHtml, outputPath });
@@ -129,7 +130,7 @@ async function main(): Promise<void> {
   copyAnimationAssets();
   copyFonts();
   copyHandTools();
-  await buildOgImage();
+  await buildOgImage(data);
 
   const ogImageUrl = `${SITE_ORIGIN}/og.png`;
 

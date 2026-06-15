@@ -12,10 +12,13 @@ export interface OgCardInput {
   role: string;
   tagline: string;
   domain: string;
+  /** Short availability line for the footer bar (role-neutral). */
+  availability?: string;
 }
 
 export function renderOgCardHtml(input: OgCardInput): string {
   const { photoDataUrl, name, role, tagline, domain } = input;
+  const availability = input.availability ?? "Available for work";
   return `<!doctype html>
 <html>
 <head>
@@ -158,7 +161,7 @@ export function renderOgCardHtml(input: OgCardInput): string {
     </div>
   </div>
   <div class="bar">
-    <span class="left"><span class="dot"></span>Available · Staff / Principal AI Product Designer</span>
+    <span class="left"><span class="dot"></span>${escapeHtml(availability)}</span>
     <span>dr-cv · V11</span>
   </div>
 </body>

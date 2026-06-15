@@ -23,22 +23,27 @@ beforeAll(() => {
 });
 
 describe("v11 horizon timeline â€” placement", () => {
-  it("renders after hero and before notebook in EN", () => {
+  it("renders after hero and inside method (after notes) in EN", () => {
     const heroIdx = htmlEn.indexOf('id="top"');
+    const notesIdx = htmlEn.indexOf('id="notes"');
+    const methodIdx = htmlEn.indexOf('id="method"');
     const horizonIdx = htmlEn.indexOf('class="v11-horizon"');
-    const notebookIdx = htmlEn.indexOf('id="notebook"');
     expect(heroIdx).toBeGreaterThan(-1);
-    expect(horizonIdx).toBeGreaterThan(heroIdx);
-    expect(notebookIdx).toBeGreaterThan(horizonIdx);
+    expect(notesIdx).toBeGreaterThan(heroIdx);
+    // Method (which contains the horizon) comes after notes.
+    expect(methodIdx).toBeGreaterThan(notesIdx);
+    expect(horizonIdx).toBeGreaterThan(methodIdx);
   });
 
-  it("renders after hero and before notebook in ES", () => {
+  it("renders after hero and inside method (after notes) in ES", () => {
     const heroIdx = htmlEs.indexOf('id="top"');
+    const notesIdx = htmlEs.indexOf('id="notes"');
+    const methodIdx = htmlEs.indexOf('id="method"');
     const horizonIdx = htmlEs.indexOf('class="v11-horizon"');
-    const notebookIdx = htmlEs.indexOf('id="notebook"');
     expect(heroIdx).toBeGreaterThan(-1);
-    expect(horizonIdx).toBeGreaterThan(heroIdx);
-    expect(notebookIdx).toBeGreaterThan(horizonIdx);
+    expect(notesIdx).toBeGreaterThan(heroIdx);
+    expect(methodIdx).toBeGreaterThan(notesIdx);
+    expect(horizonIdx).toBeGreaterThan(methodIdx);
   });
 });
 

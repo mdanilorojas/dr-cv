@@ -875,102 +875,6 @@ img { max-width: 100%; display: block; }
   outline: none;
 }
 
-/* ============== CHIPS (Named Skills) ============== */
-.v11-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: var(--v11-radius-pill);
-  background: var(--v11-artifact-chip-bg);
-  border: 1px solid var(--v11-artifact-chip-line);
-  color: var(--v11-artifact-chip-ink);
-  font-family: var(--v11-font-mono);
-  font-size: var(--v11-fs-nano);
-  letter-spacing: var(--v11-track-code);
-  text-transform: uppercase;
-}
-.v11-chip--cool {
-  background: rgba(86, 131, 218, 0.10);
-  border-color: rgba(86, 131, 218, 0.28);
-  color: var(--v11-signal-cool);
-}
-.v11-chip--muted {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: var(--v11-line-strong);
-  color: var(--v11-text-60);
-}
-.v11-chip__at { color: var(--v11-text-subtle); }
-
-/* ============== METHOD section ============== */
-.v11-method {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--v11-s-5);
-  margin: var(--v11-s-5) 0;
-}
-@media (min-width: 820px) {
-  .v11-method { grid-template-columns: 1fr 1fr; align-items: start; }
-}
-.v11-plan {
-  border: 1px solid var(--v11-line);
-  border-radius: var(--v11-radius);
-  padding: var(--v11-s-4);
-  background: var(--v11-bg-elevated);
-}
-.v11-plan__head {
-  display: flex; align-items: center; gap: var(--v11-s-2);
-  font-family: var(--v11-font-mono);
-  font-size: var(--v11-fs-nano);
-  color: var(--v11-accent);
-  letter-spacing: var(--v11-track-code);
-  text-transform: uppercase;
-  margin-bottom: var(--v11-s-3);
-}
-.v11-plan__list { list-style: none; padding: 0; margin: 0; counter-reset: v11step; }
-.v11-plan__step {
-  display: grid;
-  grid-template-columns: 24px 1fr auto;
-  gap: 12px;
-  padding: 10px 0;
-  border-top: 1px solid var(--v11-line);
-  font-size: var(--v11-fs-small);
-  align-items: center;
-  color: var(--v11-text-body);
-}
-.v11-plan__step:first-child { border-top: 0; }
-.v11-plan__step::before {
-  counter-increment: v11step;
-  content: counter(v11step, decimal-leading-zero);
-  font-family: var(--v11-font-mono);
-  color: var(--v11-text-subtle);
-  font-size: var(--v11-fs-nano);
-  letter-spacing: var(--v11-track-code);
-}
-.v11-plan__step--done { color: var(--v11-text-60); }
-.v11-plan__step--done strong { text-decoration: line-through; text-decoration-color: var(--v11-text-subtle); }
-.v11-plan__meta { font-family: var(--v11-font-mono); font-size: var(--v11-fs-nano); color: var(--v11-text-50); }
-
-.v11-diff {
-  background: var(--v11-bg-inset);
-  border: 1px solid var(--v11-line);
-  border-radius: var(--v11-radius);
-  overflow: hidden;
-  font-family: var(--v11-font-mono);
-  font-size: var(--v11-fs-small);
-  line-height: 1.6;
-}
-.v11-diff__row {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  gap: 12px;
-  padding: 3px 12px;
-  color: var(--v11-text-70);
-}
-.v11-diff__row--add { background: var(--v11-diff-add-bg); color: var(--v11-signal-pos); }
-.v11-diff__row--del { background: var(--v11-diff-del-bg); color: var(--v11-signal-neg); }
-.v11-diff__ln { color: var(--v11-text-subtle); text-align: right; user-select: none; }
-
 /* ============== QUOTE ============== */
 .v11-quote {
   padding: var(--v11-s-5) var(--v11-s-6);
@@ -1445,4 +1349,58 @@ a.v11-horizon__chip:focus-visible {
     box-shadow: 0 0 0 3px rgba(255, 137, 100, 0.28);
   }
 }
+
+/* ============== METHOD ============== */
+.v11-method__note {
+  max-width: 62ch;
+  margin: var(--v11-s-3) 0 var(--v11-s-4);
+  color: var(--v11-text-60);
+}
+
+/* ============== ABOUT ============== */
+.v11-about__cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--v11-s-5);
+  margin-top: var(--v11-s-5);
+  padding-top: var(--v11-s-5);
+  border-top: 1px solid var(--v11-line);
+}
+.v11-about__label {
+  font-family: var(--v11-font-mono);
+  font-size: var(--v11-fs-micro);
+  letter-spacing: var(--v11-track-snug);
+  text-transform: uppercase;
+  color: var(--v11-accent);
+  margin-bottom: var(--v11-s-3);
+}
+.v11-about__clients {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 2px;
+  line-height: 1.8;
+}
+.v11-about__client {
+  font-size: var(--v11-fs-micro);
+  color: var(--v11-text-60);
+}
+.v11-about__client-sep {
+  color: var(--v11-text-subtle);
+}
+.v11-about__edu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.v11-about__edu-item {
+  font-size: var(--v11-fs-micro);
+  color: var(--v11-text-60);
+}
+.v11-about__edu-name { color: var(--v11-text-60); }
+.v11-about__edu-inst,
+.v11-about__edu-year { color: var(--v11-text-subtle); }
 `;
