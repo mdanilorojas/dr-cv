@@ -15,7 +15,7 @@ import { escapeHtml, type Lang } from "../../skills-sheet-page-1.js";
 interface AnimationSource {
   /** Folder under assets/animations/gallery/. */
   folder: string;
-  /** HTML filename prefix â€” "-en.html" / "-es.html" is appended. */
+  /** HTML filename prefix — "-en.html" / "-es.html" is appended. */
   filePrefix: string;
   /**
    * Natural width/height of the animation's stage in pixels.
@@ -35,24 +35,24 @@ const ANIMATION_BY_SLUG: Record<string, AnimationSource> = {
     filePrefix: "alt-1-screenshot-to-animation",
     naturalWidth: 820,
     naturalHeight: 640,
-    titleEn: "EnRegla â€” screenshot to live animation",
-    titleEs: "EnRegla â€” screenshot a animaciÃ³n en vivo",
+    titleEn: "EnRegla — screenshot to live animation",
+    titleEs: "EnRegla — screenshot a animación en vivo",
   },
   "life-update-mobile": {
     folder: "animations-life-update",
     filePrefix: "alt-4-live-annotation",
     naturalWidth: 780,
     naturalHeight: 800,
-    titleEn: "Life Update Mobile â€” live annotation",
-    titleEs: "Life Update Mobile â€” anotaciÃ³n en vivo",
+    titleEn: "Life Update Mobile — live annotation",
+    titleEs: "Life Update Mobile — anotación en vivo",
   },
   "developer-portal": {
     folder: "animations-te",
     filePrefix: "alt-2-picture-in-picture",
     naturalWidth: 920,
     naturalHeight: 660,
-    titleEn: "Developer Portal â€” picture in picture",
-    titleEs: "Developer Portal â€” picture in picture",
+    titleEn: "Developer Portal — picture in picture",
+    titleEs: "Developer Portal — picture in picture",
   },
 };
 
@@ -120,7 +120,7 @@ export const iframeAnimationCss = `
 export const iframeAnimationScript = `
 (function(){
   // CSS injected into each animation iframe to strip captions, labels,
-  // hints, and sibling callouts â€” only the UI stage (.window / .phone)
+  // hints, and sibling callouts — only the UI stage (.window / .phone)
   // should render. Also removes stage padding and body centering so the
   // iframe content box hugs the animation's intrinsic size.
   var EMBED_CSS = [
@@ -147,7 +147,7 @@ export const iframeAnimationScript = `
       (doc.head || doc.documentElement).appendChild(style);
     }
 
-    // Measure the primary stage element â€” fall back to body if absent.
+    // Measure the primary stage element — fall back to body if absent.
     var target = doc.querySelector('.window')
               || doc.querySelector('.phone-wrap')
               || doc.querySelector('.stage')

@@ -24,7 +24,7 @@ import {
  * Hand-authored beats per case in the Narrative Ship format
  * (Context, Problem, Approach, Ship, Outcome, Differently, Craft).
  * Keyed by case slug. These live here because they are copy,
- * not data â€” V11 R4 + R8 demand verbatim attribution.
+ * not data — V11 R4 + R8 demand verbatim attribution.
  */
 interface CaseBeats {
   context: { en: string; es: string };
@@ -40,27 +40,27 @@ const CASE_BEATS: Record<string, CaseBeats> = {
   enregla: {
     context: {
       en: "LATAM SMB compliance. Multi-site reporting was done in spreadsheets, manually, every month. Nobody owned the data model.",
-      es: "Compliance para PYMES LATAM. Los reportes multi-sede se hacÃ­an en hojas de cÃ¡lculo, a mano, cada mes. Nadie era dueÃ±o del modelo de datos.",
+      es: "Compliance para PYMES LATAM. Los reportes multi-sede se hacían en hojas de cálculo, a mano, cada mes. Nadie era dueño del modelo de datos.",
     },
     problem: {
-      en: "Existing tools priced out SMBs or required a sysadmin to deploy. Nothing shipped as a 40-day 0â†’1.0.",
-      es: "Las herramientas existentes eran caras para PYMES o requerÃ­an un sysadmin para desplegarse. Nada shippeaba como un 40-day 0â†’1.0.",
+      en: "Existing tools priced out SMBs or required a sysadmin to deploy. Nothing shipped as a 40-day 0→1.0.",
+      es: "Las herramientas existentes eran caras para PYMES o requerían un sysadmin para desplegarse. Nada shippeaba como un 40-day 0→1.0.",
     },
     approach: {
       en: "Built the SaaS as a co-author exercise with Claude Code. Supabase MCP server in the loop for SQL + migrations. Parallel subagents on UI, data model, edge functions.",
-      es: "ConstruÃ­ el SaaS como ejercicio de co-autorÃ­a con Claude Code. Supabase MCP en el loop para SQL + migraciones. Subagentes en paralelo en UI, modelo de datos, edge functions.",
+      es: "Construí el SaaS como ejercicio de co-autoría con Claude Code. Supabase MCP en el loop para SQL + migraciones. Subagentes en paralelo en UI, modelo de datos, edge functions.",
     },
     ship: {
       en: "346 commits in 40 days. 21 SQL migrations, 31 UI components, 1 edge function with cron. Live with paying pilots.",
-      es: "346 commits en 40 dÃ­as. 21 migraciones SQL, 31 componentes UI, 1 edge function con cron. En producciÃ³n con pilotos pagados.",
+      es: "346 commits en 40 días. 21 migraciones SQL, 31 componentes UI, 1 edge function con cron. En producción con pilotos pagados.",
     },
     outcome: {
-      en: "DS migration ran 5 recursive rounds scoring 78.4 â†’ 95.6. First pilots reporting monthly compliance in minutes instead of days.",
-      es: "La migraciÃ³n DS corriÃ³ 5 rondas recursivas, puntuando 78.4 â†’ 95.6. Los primeros pilotos reportan compliance mensual en minutos en lugar de dÃ­as.",
+      en: "DS migration ran 5 recursive rounds scoring 78.4 → 95.6. First pilots reporting monthly compliance in minutes instead of days.",
+      es: "La migración DS corrió 5 rondas recursivas, puntuando 78.4 → 95.6. Los primeros pilotos reportan compliance mensual en minutos en lugar de días.",
     },
     differently: {
-      en: "Next time I write the MCP servers before the schema. The agent kept proposing columns it couldn't write back â€” half the recursion was plumbing.",
-      es: "La prÃ³xima vez escribo los MCP servers antes del schema. El agente seguÃ­a proponiendo columnas que no podÃ­a escribir â€” la mitad de la recursiÃ³n fue plomerÃ­a.",
+      en: "Next time I write the MCP servers before the schema. The agent kept proposing columns it couldn't write back — half the recursion was plumbing.",
+      es: "La próxima vez escribo los MCP servers antes del schema. El agente seguía proponiendo columnas que no podía escribir — la mitad de la recursión fue plomería.",
     },
     craft: {
       en: "RLS on every table. Type-safe Supabase client. Dark-mode primary with per-token WCAG trail. 0 hand-edited SQL in prod.",
@@ -69,46 +69,46 @@ const CASE_BEATS: Record<string, CaseBeats> = {
   },
   "developer-portal": {
     context: {
-      en: "Booz Allen Hamilton Â· Developer Portal â€” a government-facing platform where two design systems run side by side: /te-skin (the component library) and TE Black (the dark-first palette). Design review was a two-week bottleneck on every ticket and existing components washed out under 12-hour mission lighting.",
-      es: "Booz Allen Hamilton Â· Developer Portal â€” plataforma government-facing donde dos design systems corren en paralelo: /te-skin (la librerÃ­a de componentes) y TE Black (la paleta dark-first). La revisiÃ³n de diseÃ±o era un cuello de botella de dos semanas y los componentes existentes se lavaban bajo iluminaciÃ³n de misiÃ³n de 12 horas.",
+      en: "Booz Allen Hamilton · Developer Portal — a government-facing platform where two design systems run side by side: /te-skin (the component library) and TE Black (the dark-first palette). Design review was a two-week bottleneck on every ticket and existing components washed out under 12-hour mission lighting.",
+      es: "Booz Allen Hamilton · Developer Portal — plataforma government-facing donde dos design systems corren en paralelo: /te-skin (la librería de componentes) y TE Black (la paleta dark-first). La revisión de diseño era un cuello de botella de dos semanas y los componentes existentes se lavaban bajo iluminación de misión de 12 horas.",
     },
     problem: {
-      en: "Designers reviewed the same WCAG + token mismatches on every PR. The DS existed as Figma â€” the agents couldn't reach it. And dark mode was treated as a theme even though operators on the platform lived in it.",
-      es: "Los diseÃ±adores revisaban los mismos desajustes WCAG + tokens en cada PR. El DS existÃ­a en Figma â€” los agentes no lo alcanzaban. Y dark era tratado como un tema, pese a que los operadores de la plataforma vivÃ­an ahÃ­.",
+      en: "Designers reviewed the same WCAG + token mismatches on every PR. The DS existed as Figma — the agents couldn't reach it. And dark mode was treated as a theme even though operators on the platform lived in it.",
+      es: "Los diseñadores revisaban los mismos desajustes WCAG + tokens en cada PR. El DS existía en Figma — los agentes no lo alcanzaban. Y dark era tratado como un tema, pese a que los operadores de la plataforma vivían ahí.",
     },
     approach: {
       en: "Packaged the DS as a Claude Code slash-command skill (/te-skin). Tokens + decision trees + 17 recursive review rules invokable inline. In parallel, authored TE Black: dark-primary palette with the per-token WCAG audit written into the definition itself, not a downstream lint.",
-      es: "EmpaquetÃ© el DS como slash-command skill para Claude Code (/te-skin). Tokens + Ã¡rboles de decisiÃ³n + 17 reglas recursivas invocables inline. En paralelo, autorÃ© TE Black: paleta dark-primaria con auditorÃ­a WCAG por token escrita en la definiciÃ³n, no en un lint downstream.",
+      es: "Empaqueté el DS como slash-command skill para Claude Code (/te-skin). Tokens + árboles de decisión + 17 reglas recursivas invocables inline. En paralelo, autoré TE Black: paleta dark-primaria con auditoría WCAG por token escrita en la definición, no en un lint downstream.",
     },
     ship: {
-      en: "Shipped in four weeks. Two-agent workflow: one proposes UI, one runs recursive review. Five rounds raised the score 78.4 â†’ 95.6. Tokens expose wcag.normal and wcag.large ratios for every ink-on-surface pair; component library migrated in the same PR as the tokens.",
-      es: "Shippeado en cuatro semanas. Workflow de dos agentes: uno propone UI, otro corre revisiÃ³n recursiva. Cinco rondas subieron el score 78.4 â†’ 95.6. Los tokens exponen ratios wcag.normal y wcag.large para cada par ink-on-surface; librerÃ­a migrada en la misma PR que los tokens.",
+      en: "Shipped in four weeks. Two-agent workflow: one proposes UI, one runs recursive review. Five rounds raised the score 78.4 → 95.6. Tokens expose wcag.normal and wcag.large ratios for every ink-on-surface pair; component library migrated in the same PR as the tokens.",
+      es: "Shippeado en cuatro semanas. Workflow de dos agentes: uno propone UI, otro corre revisión recursiva. Cinco rondas subieron el score 78.4 → 95.6. Los tokens exponen ratios wcag.normal y wcag.large para cada par ink-on-surface; librería migrada en la misma PR que los tokens.",
     },
     outcome: {
-      en: "Design review cycles dropped from 2 weeks â†’ 36 hours. Every contrast pair provably â‰¥ 4.5:1, and operators stopped reporting dim text in weekly retros. Jennifer Sheppard, Product Lead, called it \\\"work I wanted to keep reusing.\\\"",
-      es: "Los ciclos de revisiÃ³n cayeron de 2 semanas â†’ 36 horas. Cada par de contraste probadamente â‰¥ 4.5:1, y los operadores dejaron de reportar texto apagado en los retros semanales. Jennifer Sheppard, Product Lead, lo llamÃ³ \\\"work I wanted to keep reusing.\\\"",
+      en: "Design review cycles dropped from 2 weeks → 36 hours. Every contrast pair provably â‰¥ 4.5:1, and operators stopped reporting dim text in weekly retros. Jennifer Sheppard, Product Lead, called it \\\"work I wanted to keep reusing.\\\"",
+      es: "Los ciclos de revisión cayeron de 2 semanas → 36 horas. Cada par de contraste probadamente â‰¥ 4.5:1, y los operadores dejaron de reportar texto apagado en los retros semanales. Jennifer Sheppard, Product Lead, lo llamó \\\"work I wanted to keep reusing.\\\"",
     },
     differently: {
       en: "I would ship a public skill scaffold first and publish the audit trail as a CI gate. The client-specific tokens should have been a layer, not the base; and a failed WCAG ratio should fail the build, not rely on convention.",
-      es: "ShippearÃ­a primero un scaffold pÃºblico del skill y publicarÃ­a la trazabilidad como gate de CI. Los tokens especÃ­ficos del cliente debieron ser una capa, no la base; y una ratio WCAG fallada deberÃ­a romper el build, no confiar en la convenciÃ³n.",
+      es: "Shippearía primero un scaffold público del skill y publicaría la trazabilidad como gate de CI. Los tokens específicos del cliente debieron ser una capa, no la base; y una ratio WCAG fallada debería romper el build, no confiar en la convención.",
     },
     craft: {
       en: "WCAG audit trail stored per token. Dark-mode primary. Tokens in CSS + JSON + Figma library in sync. Skill idempotent under re-invocation. APCA-adjacent luminance verified. No manual edits in the generated output.",
-      es: "Trazabilidad WCAG guardada por token. Dark-mode primario. Tokens en CSS + JSON + librerÃ­a Figma sincronizados. Skill idempotente bajo re-invocaciÃ³n. Luminancia APCA-adjacent verificada. Sin edits manuales en el output generado.",
+      es: "Trazabilidad WCAG guardada por token. Dark-mode primario. Tokens en CSS + JSON + librería Figma sincronizados. Skill idempotente bajo re-invocación. Luminancia APCA-adjacent verificada. Sin edits manuales en el output generado.",
     },
   },
   "life-update-mobile": {
     context: {
-      en: "A personal product â€” a tracking app that uses Gemini at runtime to summarize what I wrote this week.",
-      es: "Un producto personal â€” una app de tracking que usa Gemini en runtime para resumir lo que escribÃ­ esta semana.",
+      en: "A personal product — a tracking app that uses Gemini at runtime to summarize what I wrote this week.",
+      es: "Un producto personal — una app de tracking que usa Gemini en runtime para resumir lo que escribí esta semana.",
     },
     problem: {
       en: "Every journal-AI app I'd tried either stored my text on someone else's server or refused to run without internet. I wanted local-first + LLM on demand.",
-      es: "Cada app de journal-AI que habÃ­a probado o guardaba mi texto en el servidor de otro o se negaba a correr sin internet. QuerÃ­a local-first + LLM on demand.",
+      es: "Cada app de journal-AI que había probado o guardaba mi texto en el servidor de otro o se negaba a correr sin internet. Quería local-first + LLM on demand.",
     },
     approach: {
       en: "Local SQLite store, plain-text journal. Summarization is opt-in: tap a week, send it to Gemini, cache the result.",
-      es: "Almacenamiento SQLite local, journal en texto plano. La resumciÃ³n es opt-in: tocas una semana, se envÃ­a a Gemini, se cachea el resultado.",
+      es: "Almacenamiento SQLite local, journal en texto plano. La resumción es opt-in: tocas una semana, se envía a Gemini, se cachea el resultado.",
     },
     ship: {
       en: "Single binary build. No auth server. Gemini API key ships with the user, not the app.",
@@ -116,15 +116,15 @@ const CASE_BEATS: Record<string, CaseBeats> = {
     },
     outcome: {
       en: "Shipped private for my own use. Three friends asked to install it. Weekly summaries in 4 seconds.",
-      es: "Shippeado privado para uso propio. Tres amigos pidieron instalarlo. ResÃºmenes semanales en 4 segundos.",
+      es: "Shippeado privado para uso propio. Tres amigos pidieron instalarlo. Resúmenes semanales en 4 segundos.",
     },
     differently: {
-      en: "I would put the prompt on the Settings page. Right now it's hidden â€” advanced users want to see it and I was being overly protective.",
-      es: "PondrÃ­a el prompt en la pÃ¡gina de Settings. Ahora estÃ¡ oculto â€” los usuarios avanzados quieren verlo y yo estaba siendo sobreprotector.",
+      en: "I would put the prompt on the Settings page. Right now it's hidden — advanced users want to see it and I was being overly protective.",
+      es: "Pondría el prompt en la página de Settings. Ahora está oculto — los usuarios avanzados quieren verlo y yo estaba siendo sobreprotector.",
     },
     craft: {
       en: "No analytics. No telemetry. No account. Bundle under 8 MB. Works airplane-mode except the summary action.",
-      es: "Sin analytics. Sin telemetrÃ­a. Sin cuenta. Bundle bajo 8 MB. Funciona en modo aviÃ³n excepto la acciÃ³n de resumen.",
+      es: "Sin analytics. Sin telemetría. Sin cuenta. Bundle bajo 8 MB. Funciona en modo avión excepto la acción de resumen.",
     },
   },
 };
@@ -144,24 +144,24 @@ function splitName(name: string): { first: string; last: string } {
 }
 
 function yearRange(startYear: number, endYear: number | "present", lang: Lang): string {
-  if (endYear === "present") return `${startYear} â€” ${lang === "en" ? "Present" : "presente"}`;
+  if (endYear === "present") return `${startYear} — ${lang === "en" ? "Present" : "presente"}`;
   if (startYear === endYear) return String(startYear);
-  return `${startYear} â€” ${endYear}`;
+  return `${startYear} — ${endYear}`;
 }
 
-/* ============== copy (V11 R5 draft C â€” taste-first critic) ============== */
+/* ============== copy (V11 R5 draft C — taste-first critic) ============== */
 
 const COPY = {
   // Proof
   proofHeadingEn: "Evidence, not adjectives.",
   proofHeadingEs: "Evidencia, no adjetivos.",
   work: {
-    eyebrowEn: "Selected work Â· 2025â€“2026",
-    eyebrowEs: "Trabajo seleccionado Â· 2025â€“2026",
+    eyebrowEn: "Selected work · 2025–2026",
+    eyebrowEs: "Trabajo seleccionado · 2025–2026",
     titleEn: "Three ships. Three agent-built artifacts.",
     titleEs: "Tres ships. Tres artefactos construidos con agentes.",
-    leadEn: "Everything below was built with agents at the center of the workflow. The craft floor is mine â€” the leverage is the combination.",
-    leadEs: "Todo lo de abajo fue construido con agentes al centro del workflow. El craft floor es mÃ­o â€” el apalancamiento es la combinaciÃ³n.",
+    leadEn: "Everything below was built with agents at the center of the workflow. The craft floor is mine — the leverage is the combination.",
+    leadEs: "Todo lo de abajo fue construido con agentes al centro del workflow. El craft floor es mío — el apalancamiento es la combinación.",
     beatsEn: {
       context: "Context",
       problem: "Problem",
@@ -174,14 +174,14 @@ const COPY = {
     beatsEs: {
       context: "Contexto",
       problem: "Problema",
-      approach: "AproximaciÃ³n",
+      approach: "Aproximación",
       ship: "Ship",
       outcome: "Resultado",
-      differently: "Lo cambiarÃ­a",
+      differently: "Lo cambiaría",
       craft: "Craft floor",
     },
     caseCtaEn: "How this shipped",
-    caseCtaEs: "CÃ³mo se shippeÃ³",
+    caseCtaEs: "Cómo se shippeó",
     caseBackEn: "Back to work",
     caseBackEs: "Volver al trabajo",
     caseNextEn: "Next case",
@@ -189,25 +189,25 @@ const COPY = {
   },
   method: {
     eyebrowEn: "Method",
-    eyebrowEs: "MÃ©todo",
+    eyebrowEs: "Método",
     titleEn: "How I work.",
-    titleEs: "CÃ³mo trabajo.",
+    titleEs: "Cómo trabajo.",
     philosophyEn: "My work sits between user needs, business constraints, and execution.",
-    philosophyEs: "Mi trabajo vive entre las necesidades del usuario, las restricciones del negocio y la ejecuciÃ³n.",
+    philosophyEs: "Mi trabajo vive entre las necesidades del usuario, las restricciones del negocio y la ejecución.",
     leadEn: "I keep a running map of what I have earned, what I am investing in now, and what I am betting on next. It is how I keep improving without losing the craft floor.",
-    leadEs: "Mantengo un mapa vivo de lo que he ganado, en quÃ© estoy invirtiendo ahora y a quÃ© le estoy apostando despuÃ©s. AsÃ­ sigo mejorando sin perder el craft floor.",
+    leadEs: "Mantengo un mapa vivo de lo que he ganado, en qué estoy invirtiendo ahora y a qué le estoy apostando después. Así sigo mejorando sin perder el craft floor.",
   },
   about: {
     eyebrowEn: "About",
-    eyebrowEs: "Sobre mÃ­",
+    eyebrowEs: "Sobre mí",
     titleEn: "A long way to the surface.",
     titleEs: "Un camino largo hasta la superficie.",
-    bioEn: "I started in databases and backend, moved to frontend, then to UI, then to UX â€” eighteen years in product, fifteen in design. The path means I design with the whole system in mind, not just the screen. At Booz Allen Hamilton I carried that into government and compliance work for the FAA, the DoD, and the VA, where the rigor of the documentation matters as much as the interface.",
-    bioEs: "EmpecÃ© en bases de datos y backend, pasÃ© a frontend, luego a UI, luego a UX â€” dieciocho aÃ±os en producto, quince en diseÃ±o. El camino significa que diseÃ±o pensando en todo el sistema, no solo en la pantalla. En Booz Allen Hamilton llevÃ© eso a trabajo de gobierno y compliance para la FAA, el DoD y el VA, donde el rigor de la documentaciÃ³n importa tanto como la interfaz.",
+    bioEn: "I started in databases and backend, moved to frontend, then to UI, then to UX — eighteen years in product, fifteen in design. The path means I design with the whole system in mind, not just the screen. At Booz Allen Hamilton I carried that into government and compliance work for the FAA, the DoD, and the VA, where the rigor of the documentation matters as much as the interface.",
+    bioEs: "Empecé en bases de datos y backend, pasé a frontend, luego a UI, luego a UX — dieciocho años en producto, quince en diseño. El camino significa que diseño pensando en todo el sistema, no solo en la pantalla. En Booz Allen Hamilton llevé eso a trabajo de gobierno y compliance para la FAA, el DoD y el VA, donde el rigor de la documentación importa tanto como la interfaz.",
     clientsLabelEn: "Clients",
     clientsLabelEs: "Clientes",
     educationLabelEn: "Education",
-    educationLabelEs: "EducaciÃ³n",
+    educationLabelEs: "Educación",
   },
   contact: {
     eyebrowEn: "Contact",
@@ -215,7 +215,7 @@ const COPY = {
     titleEn: "Let's talk.",
     titleEs: "Hablemos.",
     leadEn: "Direct email is the fastest path. I reply within one business day.",
-    leadEs: "Email directo es el camino mÃ¡s rÃ¡pido. Respondo en un dÃ­a hÃ¡bil.",
+    leadEs: "Email directo es el camino más rápido. Respondo en un día hábil.",
     copyLabelEn: "Copy email",
     copyLabelEs: "Copiar email",
     copiedLabelEn: "Copied",
@@ -237,19 +237,19 @@ interface NavOpts {
 function renderNav(identity: Identity, lang: Lang, opts: NavOpts): string {
   const notesLabel = lang === "en" ? "Notes" : "Notas";
   const workLabel = lang === "en" ? "Work" : "Trabajo";
-  const methodLabel = lang === "en" ? "Method" : "MÃ©todo";
-  const aboutLabel = lang === "en" ? "About" : "Sobre mÃ­";
+  const methodLabel = lang === "en" ? "Method" : "Método";
+  const aboutLabel = lang === "en" ? "About" : "Sobre mí";
   const contactLabel = lang === "en" ? "Contact" : "Contacto";
   const defaultLangHref = lang === "en" ? "/es/" : "/";
   const langHref = opts.langHrefOverride ?? defaultLangHref;
   const langCode = lang === "en" ? "EN / ES" : "ES / EN";
   const langAria = lang === "en" ? "View in Spanish" : "View in English";
-  const navAria = lang === "en" ? "Main navigation" : "NavegaciÃ³n principal";
+  const navAria = lang === "en" ? "Main navigation" : "Navegación principal";
   const brandHref = opts.homeHref === "" ? "#top" : opts.homeHref;
 
   return `<nav class="v11-nav" aria-label="${escapeHtml(navAria)}">
   <div class="v11-nav__inner">
-    <a href="${escapeHtml(brandHref)}" class="v11-nav__brand">${escapeHtml(identity.name)}<span class="v11-nav__brand-sep">Â·</span>dr</a>
+    <a href="${escapeHtml(brandHref)}" class="v11-nav__brand">${escapeHtml(identity.name)}<span class="v11-nav__brand-sep">·</span>dr</a>
     <div class="v11-nav__tabs">
       <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#notes">${escapeHtml(notesLabel)}</a>
       <a class="v11-nav__link" href="${escapeHtml(opts.homeHref)}#work">${escapeHtml(workLabel)}</a>
@@ -278,12 +278,12 @@ function renderHero(
   return `<section id="top" class="v11-hero" aria-label="Hero">
   <div class="v11-container">
     <div class="v11-hero__inner">
-      <div class="v11-hero__kicker">${escapeHtml(identity.name)} <span aria-hidden="true">Â·</span> ${escapeHtml(identity.role)}</div>
+      <div class="v11-hero__kicker">${escapeHtml(identity.name)} <span aria-hidden="true">·</span> ${escapeHtml(identity.role)}</div>
       <h1 class="v11-hero__title">${escapeHtml(heroLine)}</h1>
       <div class="v11-hero__actions">
         <a class="v11-btn v11-btn--primary" href="#contact">
           ${escapeHtml(cta)}
-          <span class="v11-btn__arrow" aria-hidden="true">â†’</span>
+          <span class="v11-btn__arrow" aria-hidden="true">→</span>
         </a>
       </div>
       <span class="v11-hero__availability">
@@ -303,7 +303,7 @@ function renderTrustStrip(positioning: Positioning, lang: Lang): string {
   const label = lang === "en" ? "Trusted by teams at" : "Trabajo para equipos en";
   const row = items
     .map((s) => `<span class="v11-trust__item">${escapeHtml(s)}</span>`)
-    .join('<span class="v11-trust__sep" aria-hidden="true"> Â· </span>');
+    .join('<span class="v11-trust__sep" aria-hidden="true"> · </span>');
   return `<section class="v11-trust" aria-label="${escapeHtml(label)}">
   <div class="v11-container"><div class="v11-trust__row">${row}</div></div>
 </section>`;
@@ -383,7 +383,7 @@ function renderHorizonChip(
   if (columnId === "horizon" && chip.kind === "bet") {
     const aria = lang === "en"
       ? escapeHtml(`${label}. Declared bet, no evidence yet.`)
-      : escapeHtml(`${label}. Apuesta declarada, sin evidencia aÃºn.`);
+      : escapeHtml(`${label}. Apuesta declarada, sin evidencia aún.`);
     const betLabel = lang === "en" ? "bet" : "apuesta";
     return `<li><span class="v11-horizon__chip" data-kind="bet" aria-label="${aria}">${labelSafe} <span class="v11-horizon__bet-badge">${escapeHtml(betLabel)}</span></span></li>`;
   }
@@ -411,7 +411,7 @@ function renderHorizonColumn(col: HorizonColumn, lang: Lang): string {
 }
 
 function renderHorizonProgress(columns: HorizonColumn[], lang: Lang): string {
-  const youAreHere = lang === "en" ? "You are here" : "EstÃ¡s aquÃ­";
+  const youAreHere = lang === "en" ? "You are here" : "Estás aquí";
   const segs = columns
     .map((col) => {
       const marker = col.emphasis
@@ -431,7 +431,7 @@ function renderHorizonTools(columns: HorizonColumn[]): string {
       const tools = col.tools ?? [];
       const parts: string[] = [];
       tools.forEach((t, idx) => {
-        if (idx > 0) parts.push(`<span class="v11-horizon__arrow">â†’</span>`);
+        if (idx > 0) parts.push(`<span class="v11-horizon__arrow">→</span>`);
         parts.push(`<span class="v11-horizon__tool">${escapeHtml(t)}</span>`);
       });
       return `<div class="v11-horizon__tools-block" data-tools-for="${escapeHtml(col.id)}">${parts.join("")}</div>`;
@@ -496,9 +496,9 @@ function renderCase(c: Case, lang: Lang, basePath: string): string {
   const bullets = lang === "en" ? c.bulletsEn : c.bulletsEs;
   const cta = lang === "en" ? COPY.work.caseCtaEn : COPY.work.caseCtaEs;
 
-  // Labels for the editorial sidebar (V3 Â· Magazine)
+  // Labels for the editorial sidebar (V3 · Magazine)
   const labelClient = lang === "en" ? "Client" : "Cliente";
-  const labelYears = lang === "en" ? "Years" : "AÃ±os";
+  const labelYears = lang === "en" ? "Years" : "Años";
   const labelStack = lang === "en" ? "Stack" : "Stack";
 
   const stackChips = c.stack
@@ -518,7 +518,7 @@ function renderCase(c: Case, lang: Lang, basePath: string): string {
 
   const detailHref = `${basePath}work/${encodeURIComponent(c.slug)}/`;
 
-  // Editorial sidebar â€” client / years / stack (vertical chips).
+  // Editorial sidebar — client / years / stack (vertical chips).
   const metaCol = `<aside class="v11-case__meta-col">
   <div class="v11-case__meta-block">
     <div class="v11-case__meta-label">${escapeHtml(labelClient)}</div>
@@ -539,7 +539,7 @@ function renderCase(c: Case, lang: Lang, basePath: string): string {
   <h3 class="v11-case__title">${escapeHtml(title)}</h3>
   <p class="v11-case__hook">${escapeHtml(hook)}</p>
   ${bulletsHtml}
-  <a class="v11-case__cta" href="${escapeHtml(detailHref)}">${escapeHtml(cta)}<span class="v11-case__cta-arrow" aria-hidden="true">â†’</span></a>
+  <a class="v11-case__cta" href="${escapeHtml(detailHref)}">${escapeHtml(cta)}<span class="v11-case__cta-arrow" aria-hidden="true">→</span></a>
 </div>`;
 
   // Inner content grid: text left, animation right (or full-width text if no anim).
@@ -580,7 +580,7 @@ ${cases}
 
 function renderTestimonial(t: Testimonial, lang: Lang): string {
   const quote = lang === "es" && t.quoteEs ? t.quoteEs : t.quote;
-  const company = t.company ? ` Â· ${escapeHtml(t.company)}` : "";
+  const company = t.company ? ` · ${escapeHtml(t.company)}` : "";
   const badge = lang === "en" ? "Verified" : "Verificado";
   return `<figure class="v11-quote">
   <blockquote class="v11-quote__text">${escapeHtml(quote)}</blockquote>
@@ -625,12 +625,12 @@ function renderAbout(data: LandingData, lang: Lang): string {
 
   const clientsRow = data.clients
     .map((c) => `<span class="v11-about__client">${escapeHtml(c.name)}</span>`)
-    .join('<span class="v11-about__client-sep" aria-hidden="true"> Â· </span>');
+    .join('<span class="v11-about__client-sep" aria-hidden="true"> · </span>');
 
   const educationItems = data.education
     .map((e) => {
-      const year = e.year !== null ? ` <span class="v11-about__edu-year">Â· ${escapeHtml(String(e.year))}</span>` : "";
-      return `<li class="v11-about__edu-item"><span class="v11-about__edu-name">${escapeHtml(e.name)}</span> <span class="v11-about__edu-inst">Â· ${escapeHtml(e.institution)}</span>${year}</li>`;
+      const year = e.year !== null ? ` <span class="v11-about__edu-year">· ${escapeHtml(String(e.year))}</span>` : "";
+      return `<li class="v11-about__edu-item"><span class="v11-about__edu-name">${escapeHtml(e.name)}</span> <span class="v11-about__edu-inst">· ${escapeHtml(e.institution)}</span>${year}</li>`;
     })
     .join("\n      ");
 
@@ -698,7 +698,7 @@ function renderContact(data: LandingData, lang: Lang): string {
       </div>
       <a class="v11-btn v11-btn--primary" href="mailto:${escapeHtml(c.email)}" style="align-self:flex-start">
         ${escapeHtml(cta)}
-        <span class="v11-btn__arrow" aria-hidden="true">â†’</span>
+        <span class="v11-btn__arrow" aria-hidden="true">→</span>
       </a>
       <div class="v11-contact__email-row">
         <span class="v11-contact__email">${escapeHtml(c.email)}</span>
@@ -724,9 +724,9 @@ function renderContact(data: LandingData, lang: Lang): string {
 
 function renderFooter(identity: Identity, lang: Lang): string {
   const text = lang === "en"
-    ? `Built by ${identity.name} Â· source on ${identity.contact.github ?? "GitHub"} Â· updated 2026-06-15`
-    : `Hecho por ${identity.name} Â· cÃ³digo en ${identity.contact.github ?? "GitHub"} Â· actualizado 2026-06-15`;
-  const dsLabel = lang === "en" ? "Design System V11" : "Sistema de DiseÃ±o V11";
+    ? `Built by ${identity.name} · source on ${identity.contact.github ?? "GitHub"} · updated 2026-06-15`
+    : `Hecho por ${identity.name} · código en ${identity.contact.github ?? "GitHub"} · actualizado 2026-06-15`;
+  const dsLabel = lang === "en" ? "Design System V11" : "Sistema de Diseño V11";
   return `<footer class="v11-footer">
   <div class="v11-footer__inner">
     <span>${escapeHtml(text)}</span>
@@ -760,7 +760,7 @@ export function renderV11Landing(
   const altHref = lang === "en" ? "/es/" : "/";
   const selfHref = lang === "en" ? "/" : "/es/";
   const skipLabel = lang === "en" ? "Skip to content" : "Saltar al contenido";
-  const ogAlt = `${data.identity.name} â€” ${data.identity.role}`;
+  const ogAlt = `${data.identity.name} — ${data.identity.role}`;
 
   return `<!doctype html>
 <html lang="${lang}">

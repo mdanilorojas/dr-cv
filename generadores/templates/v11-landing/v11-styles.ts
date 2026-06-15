@@ -1,5 +1,5 @@
 /**
- * V11 production styles â€” extracted from publicables/landing/design-system-reference.html
+ * V11 production styles — extracted from publicables/landing/design-system-reference.html
  * Imports design-system/tokens-web.css via the orchestrator concat.
  * No Huly-glow CTA (V11 R8 #1). Self-hosted fonts (V11 R7).
  */
@@ -109,7 +109,7 @@ img { max-width: 100%; display: block; }
 }
 .v11-nav__lang:hover { border-color: var(--v11-accent); color: var(--v11-accent); }
 
-/* ============== BUTTONS (V11 R8 #1 compliant â€” no glow) ============== */
+/* ============== BUTTONS (V11 R8 #1 compliant — no glow) ============== */
 .v11-btn {
   display: inline-flex;
   align-items: center;
@@ -519,7 +519,7 @@ img { max-width: 100%; display: block; }
   grid-template-columns: 1fr;
   gap: var(--v11-s-6);
 }
-/* V3 Â· Magazine sidebar â€” editorial case card.
+/* V3 · Magazine sidebar — editorial case card.
  * Grid: [ meta sidebar | content (text + optional animation) ].
  * One case per row, full-width. */
 .v11-case {
@@ -539,7 +539,7 @@ img { max-width: 100%; display: block; }
     gap: var(--v11-s-5);
   }
 }
-/* Meta sidebar â€” client, years, stack (vertical chips). */
+/* Meta sidebar — client, years, stack (vertical chips). */
 .v11-case__meta-col {
   display: flex;
   flex-direction: column;
@@ -601,7 +601,7 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--v11-line-strong);
   background: transparent;
 }
-/* Content column â€” title/hook/bullets with optional animation aside. */
+/* Content column — title/hook/bullets with optional animation aside. */
 .v11-case__content {
   display: grid;
   grid-template-columns: 1.1fr minmax(0, 1fr);
@@ -1066,7 +1066,7 @@ img { max-width: 100%; display: block; }
   color: var(--v11-text);
 }
 
-/* Progress bar â€” segmented rail sits ABOVE tool rail and columns */
+/* Progress bar — segmented rail sits ABOVE tool rail and columns */
 .v11-horizon__progress {
   position: relative;
   display: grid;
@@ -1118,7 +1118,7 @@ img { max-width: 100%; display: block; }
   border-top-color: var(--v11-accent);
 }
 
-/* Tool rail â€” neutral monochrome pills, canonical tool inventory */
+/* Tool rail — neutral monochrome pills, canonical tool inventory */
 .v11-horizon__tools {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -1155,7 +1155,7 @@ img { max-width: 100%; display: block; }
   font-weight: 500;
 }
 
-/* Main grid â€” stage labels â†’ headings â†’ body â†’ content chips */
+/* Main grid — stage labels → headings → body → content chips */
 .v11-horizon__grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -1229,7 +1229,7 @@ a.v11-horizon__chip:focus-visible {
   box-shadow: 0 0 0 3px var(--v11-accent-ring);
 }
 
-/* Earned chips â€” achieved milestones (green pill + inline check glyph) */
+/* Earned chips — achieved milestones (green pill + inline check glyph) */
 [data-horizon-col='earned'] .v11-horizon__chip {
   background: rgba(74, 222, 128, 0.14);
   border-color: rgba(74, 222, 128, 0.32);
@@ -1316,19 +1316,19 @@ a.v11-horizon__chip:focus-visible {
   }
   .v11-horizon__col:last-child::after { display: none; }
 
-  /* Earned â€” solid green (achieved) */
+  /* Earned — solid green (achieved) */
   .v11-horizon__col[data-horizon-col='earned']::before {
     background: var(--v11-signal-pos);
     border-color: var(--v11-signal-pos);
     box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.22);
   }
-  /* Investing â€” orange + pulsing ring (in progress) */
+  /* Investing — orange + pulsing ring (in progress) */
   .v11-horizon__col[data-emphasis="true"]::before {
     background: var(--v11-accent);
     border-color: var(--v11-accent);
     animation: v11-horizon-pulse 2s ease-out infinite;
   }
-  /* Horizon â€” dashed outline gray (future) */
+  /* Horizon — dashed outline gray (future) */
   .v11-horizon__col[data-horizon-col='horizon']::before {
     background: transparent;
     border: 1px dashed var(--v11-text-50);
