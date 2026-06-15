@@ -47,18 +47,22 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 .metric-card { background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); transition: background-color .4s ease, box-shadow .4s ease; }
 .metric-card:hover { background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
 .status-glyph{ overflow:visible; }
+.status-hint{ border-bottom:1px dashed rgba(255,255,255,.22); padding-bottom:2px; transition:border-color .35s ease; }
+.group:hover .status-hint{ border-color:rgba(255,255,255,.85); }
 ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
 @media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} .status-glyph animateMotion, .status-glyph animate{ display:none; } }
 `;
 
 /* Status glyph — "accretion": particles spiral into a nucleus (compounding).
- * Grey, ~21px (30% larger than the old 16px dot), brightens to white on hover. */
+ * Grey, ~21px, brightens to white on hover. At rest only the nucleus shows;
+ * particles animate ONLY while the badge (#statusBadge) is hovered — SMIL
+ * begins on mouseover, ends on mouseout, so the rest state is clean (no JS). */
 export const STATUS_GLYPH = `<svg class="status-glyph text-system-dim group-hover:text-white transition-colors" width="21" height="21" viewBox="0 0 40 40" fill="none" aria-hidden="true">
   <circle cx="20" cy="20" r="2" fill="currentColor"/>
   <g fill="currentColor">
-    <circle r="1.3"><animateMotion path="M 36 20 Q 28 12 20 20" dur="8s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" repeatCount="indefinite"/></circle>
-    <circle r="1.3"><animateMotion path="M 20 4 Q 28 12 20 20" dur="8s" begin="-2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="-2.6s" repeatCount="indefinite"/></circle>
-    <circle r="1.3"><animateMotion path="M 4 20 Q 12 28 20 20" dur="8s" begin="-5.3s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="-5.3s" repeatCount="indefinite"/></circle>
+    <circle r="1.3" opacity="0"><animateMotion path="M 36 20 Q 28 12 20 20" dur="8s" begin="statusBadge.mouseover" end="statusBadge.mouseout" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="statusBadge.mouseover" end="statusBadge.mouseout" repeatCount="indefinite"/></circle>
+    <circle r="1.3" opacity="0"><animateMotion path="M 20 4 Q 28 12 20 20" dur="8s" begin="statusBadge.mouseover-2.6s" end="statusBadge.mouseout" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="statusBadge.mouseover-2.6s" end="statusBadge.mouseout" repeatCount="indefinite"/></circle>
+    <circle r="1.3" opacity="0"><animateMotion path="M 4 20 Q 12 28 20 20" dur="8s" begin="statusBadge.mouseover-5.3s" end="statusBadge.mouseout" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="statusBadge.mouseover-5.3s" end="statusBadge.mouseout" repeatCount="indefinite"/></circle>
   </g>
 </svg>`;
 
@@ -116,17 +120,14 @@ function renderCaseCard(c: Case, i: number, lang: Lang, delay: string): string {
   const client = escapeHtml(t(lang, c.clientEn, c.clientEs));
   const title = escapeHtml(t(lang, c.titleEn, c.titleEs));
   const hook = escapeHtml(t(lang, c.hookEn, c.hookEs));
-  const bullets = (lang === "en" ? c.bulletsEn : c.bulletsEs).slice(0, 3)
-    .map((b) => `<li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> ${escapeHtml(b)}</li>`).join("");
   const cta = escapeHtml(t(lang, V11_COPY.work.caseCtaEn, V11_COPY.work.caseCtaEs));
   return `<a href="work/${escapeHtml(c.slug)}/index.html" class="structural-border p-6 flex flex-col group reveal ${delay} bg-system-surface/20 no-underline">
   <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
   <div class="aspect-video border border-system-line mb-6 relative overflow-hidden flex items-center justify-center bg-[#050505]">${CARD_GRAPHICS[i % CARD_GRAPHICS.length]}</div>
   <div class="flex-grow">
     <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>${client}</span><span>${escapeHtml(yr(c))}</span></div>
-    <h3 class="text-lg text-white font-medium mb-2">${title}</h3>
-    <p class="text-xs text-system-dim mb-4 font-light leading-relaxed">${hook}</p>
-    <ul class="text-sm text-system-dim space-y-2 mb-6 font-light">${bullets}</ul>
+    <h3 class="text-lg text-white font-medium mb-3">${title}</h3>
+    <p class="text-sm text-system-dim mb-6 font-light leading-relaxed">${hook}</p>
   </div>
   <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
     <span class="text-xs font-mono uppercase tracking-widest">${cta}</span>
@@ -275,9 +276,9 @@ ${FAVICON_TAG}
       <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase">${navLinks}</div>
       <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
         <a href="${altRel}" hreflang="${altLang}" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">${lang === "en" ? "EN" : "ES"}<span class="text-system-dim/50">/${lang === "en" ? "ES" : "EN"}</span></a>
-        <div class="flex items-center space-x-2 group cursor-help" title="${escapeHtml(sysTitle)}">
+        <div id="statusBadge" class="flex items-center space-x-2 group cursor-help" title="${escapeHtml(sysTitle)}">
           ${STATUS_GLYPH}
-          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">${escapeHtml(sysIterating)}</span>
+          <span class="status-hint font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">${escapeHtml(sysIterating)}</span>
         </div>
       </div>
     </div>
