@@ -44,14 +44,8 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 .reveal.active { opacity:1; transform:translateY(0); }
 .delay-100{transition-delay:100ms;} .delay-200{transition-delay:200ms;}
 .tech-label { position:absolute; background:#030303; padding:0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:.1em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.08); z-index:10; }
-.metric-card { background-color:#070708;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"),
-    radial-gradient(130% 130% at 0% 0%, rgba(255,255,255,0.07), transparent 55%),
-    linear-gradient(160deg, rgba(255,255,255,0.045), transparent 45%);
-  background-size:140px 140px, auto, auto; background-blend-mode:overlay, normal, normal;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); transition: background-color .4s ease, box-shadow .4s ease; }
-.metric-card:hover { background-color:#0c0c0e; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+.metric-card { background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); transition: background-color .4s ease, box-shadow .4s ease; }
+.metric-card:hover { background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
 ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
 @media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} }
 `;
@@ -170,6 +164,8 @@ export function renderStructuralLanding(
   const seoDesc = t(lang, landing.seo.descriptionEn, landing.seo.descriptionEs);
   const selfHref = lang === "en" ? "/" : "/es/";
   const altHref = lang === "en" ? "/es/" : "/";
+  // Relative lang-toggle target so it works under file:// and deploy (meta tags keep absolute altHref).
+  const altRel = lang === "en" ? "es/" : "../";
   const altLang = lang === "en" ? "es" : "en";
 
   const navLinks = [
@@ -227,8 +223,8 @@ export function renderStructuralLanding(
       return `<a href="${escapeHtml(href)}" rel="noopener" target="_blank" class="hover:text-white transition-colors">${escapeHtml(label)}</a>`;
     }).join("");
 
-  const sysIterating = t(lang, "Sys_Iterating", "Sys_Iterando");
-  const sysTitle = t(lang, "Continuous learning and system optimization in progress", "Aprendizaje continuo y optimización del sistema en progreso");
+  const sysIterating = t(lang, "Human_Compounding", "Humano_Acumulando");
+  const sysTitle = t(lang, "A human running the loop agents run — orchestrating, evaluating, compounding", "Un humano corriendo el loop que corren los agentes — orquestando, evaluando, acumulando");
 
   return `<!doctype html>
 <html lang="${lang}" class="scroll-smooth">
@@ -266,7 +262,7 @@ ${FAVICON_TAG}
     <div class="flex items-center h-full">
       <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase">${navLinks}</div>
       <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
-        <a href="${altHref}" hreflang="${altLang}" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">${lang === "en" ? "EN" : "ES"}<span class="text-system-dim/50">/${lang === "en" ? "ES" : "EN"}</span></a>
+        <a href="${altRel}" hreflang="${altLang}" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">${lang === "en" ? "EN" : "ES"}<span class="text-system-dim/50">/${lang === "en" ? "ES" : "EN"}</span></a>
         <div class="flex items-center space-x-2 group cursor-help" title="${escapeHtml(sysTitle)}">
           <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
           <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">${escapeHtml(sysIterating)}</span>

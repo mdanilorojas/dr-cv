@@ -59,14 +59,8 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 .reveal.active { opacity:1; transform:translateY(0); }
 .delay-100{transition-delay:100ms;} .delay-200{transition-delay:200ms;}
 .tech-label { position:absolute; background:#030303; padding:0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:.1em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.08); z-index:10; }
-.metric-card { background-color:#070708;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"),
-    radial-gradient(130% 130% at 0% 0%, rgba(255,255,255,0.07), transparent 55%),
-    linear-gradient(160deg, rgba(255,255,255,0.045), transparent 45%);
-  background-size:140px 140px, auto, auto; background-blend-mode:overlay, normal, normal;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); transition: background-color .4s ease, box-shadow .4s ease; }
-.metric-card:hover { background-color:#0c0c0e; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+.metric-card { background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); transition: background-color .4s ease, box-shadow .4s ease; }
+.metric-card:hover { background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
 ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
 @media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} }
 </style>
@@ -82,10 +76,10 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
     <div class="flex items-center h-full">
       <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase"><a href="#notes" class="text-system-dim hover:text-white transition-colors">Notes</a><a href="#work" class="text-system-dim hover:text-white transition-colors">Work</a><a href="#method" class="text-system-dim hover:text-white transition-colors">Method</a><a href="#about" class="text-system-dim hover:text-white transition-colors">About</a><a href="#contact" class="text-system-dim hover:text-white transition-colors">Contact</a></div>
       <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
-        <a href="/es/" hreflang="es" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">EN<span class="text-system-dim/50">/ES</span></a>
-        <div class="flex items-center space-x-2 group cursor-help" title="Continuous learning and system optimization in progress">
+        <a href="es/" hreflang="es" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">EN<span class="text-system-dim/50">/ES</span></a>
+        <div class="flex items-center space-x-2 group cursor-help" title="A human running the loop agents run — orchestrating, evaluating, compounding">
           <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
-          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Sys_Iterating</span>
+          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Human_Compounding</span>
         </div>
       </div>
     </div>
@@ -192,12 +186,12 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
   <section id="work" class="w-full max-w-6xl mt-32 pt-16">
     <div class="flex justify-between items-end border-b border-system-line pb-4 mb-12 reveal">
       <div>
-        <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">Selected work · 2025–2026</span>
-        <h2 class="text-2xl md:text-3xl font-light text-system-accent">Three ships. Three agent-built artifacts.</h2>
+        <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">Selected work</span>
+        <h2 class="text-2xl md:text-3xl font-light text-system-accent">Three products. Designed to the handoff.</h2>
       </div>
     </div>
-    <p class="text-system-dim max-w-2xl mb-16 font-light leading-relaxed reveal delay-100">Everything below was built with agents at the center of the workflow. The craft floor is mine — the leverage is the combination.</p>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6"><a href="work/enregla/index.html" class="structural-border p-6 flex flex-col group reveal  bg-system-surface/20 no-underline">
+    <p class="text-system-dim max-w-2xl mb-16 font-light leading-relaxed reveal delay-100">Each one taken from problem to a build engineering can run with — design systems, product flows, and the AI behavior, spec&#39;d and ready. I take the design as far as it goes; engineering takes it further.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6"><a href="work/developer-portal/index.html" class="structural-border p-6 flex flex-col group reveal  bg-system-surface/20 no-underline">
   <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
   <div class="aspect-video border border-system-line mb-6 relative overflow-hidden flex items-center justify-center bg-[#050505]"><div class="w-2/3 h-2/3 grid grid-cols-3 gap-1 p-1 border border-system-line/20 group-hover:border-white/30 transition-colors duration-500">
      <div class="bg-white/[0.02] group-hover:bg-white/15 transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/[0.06] transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/15 transition-colors duration-500"></div>
@@ -205,16 +199,16 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
      <div class="bg-white/[0.02] group-hover:bg-white/15 transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/[0.06] transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/15 transition-colors duration-500"></div>
    </div></div>
   <div class="flex-grow">
-    <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>own product · paying pilots</span><span>2026</span></div>
-    <h3 class="text-lg text-white font-medium mb-2">EnRegla — compliance SaaS, 0 → 1.0-MVP in 40 days</h3>
-    <p class="text-xs text-system-dim mb-4 font-light leading-relaxed">SaaS de compliance multi-sede for LATAM SMBs. 0 → 1.0-MVP in production in 40 days, co-built with Claude Code using MCP servers and parallel subagents.</p>
-    <ul class="text-sm text-system-dim space-y-2 mb-6 font-light"><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> 346 commits · 21 SQL migrations · 31 UI components · 1 edge function with cron</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Supabase MCP server wired into Claude Code for direct SQL + migrations</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Recursive DS migration (17 parts × 5 rounds) scored 78.4 → 95.6</li></ul>
+    <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>Booz Allen Hamilton · Senior Product Designer</span><span>2026</span></div>
+    <h3 class="text-lg text-white font-medium mb-2">Developer Portal design system</h3>
+    <p class="text-xs text-system-dim mb-4 font-light leading-relaxed">A dark-first design system for a government-facing developer platform. I defined the tokens, components, and accessibility rules so every team ships consistent, WCAG-compliant UI — packaged so engineering can pull ready-to-use components without redesigning anything.</p>
+    <ul class="text-sm text-system-dim space-y-2 mb-6 font-light"><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Dark-first design system with WCAG contrast decided and documented per token</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> 17 production components with states, usage rules, and named anti-patterns</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Handoff spec engineering builds from directly — design DNA, constraints, checklists</li></ul>
   </div>
   <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
     <span class="text-xs font-mono uppercase tracking-widest">How this shipped</span>
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </div>
-</a><a href="work/developer-portal/index.html" class="structural-border p-6 flex flex-col group reveal delay-100 bg-system-surface/20 no-underline">
+</a><a href="work/juan-valdez/index.html" class="structural-border p-6 flex flex-col group reveal delay-100 bg-system-surface/20 no-underline">
   <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
   <div class="aspect-video border border-system-line mb-6 relative overflow-hidden flex items-center justify-center bg-[#050505]"><div class="w-16 h-16 rounded-full border border-system-line relative flex items-center justify-center group-hover:border-white/30 transition-colors">
      <div class="w-2 h-2 bg-white/50 rounded-full"></div>
@@ -222,10 +216,10 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
      <div class="absolute left-1/2 -top-8 h-8 w-[1px] bg-system-line"></div><div class="absolute left-1/2 -bottom-8 h-8 w-[1px] bg-system-line"></div>
    </div></div>
   <div class="flex-grow">
-    <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>Booz Allen Hamilton · Developer Portal</span><span>2026</span></div>
-    <h3 class="text-lg text-white font-medium mb-2">Developer Portal — design system + dark-first DS, shipped as agent-consumable skill</h3>
-    <p class="text-xs text-system-dim mb-4 font-light leading-relaxed">Two intertwined design systems for a government-facing developer platform: /te-skin, a 17-component slash-command skill that agents invoke to return ready-to-use HTML + CSS + W3C tokens; and TE Black, a dark-first enterprise DS where every semantic color carries its WCAG audit inline. Packaged, versioned, agent-ready.</p>
-    <ul class="text-sm text-system-dim space-y-2 mb-6 font-light"><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> /te-skin — 17 components, versioned 2.0.0, HTML + CSS + JSON metadata per component</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> TE Black — dark-first DS with WCAG ratio stored inline with every token, rejected values kept as audit trail</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> 3-layer CSS (tokens / components / patterns), shadcn alias layer for React drop-in, Houdini + canvas mesh-gradient backgrounds</li></ul>
+    <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>Juan Valdez · Product / UI Designer</span><span>2023</span></div>
+    <h3 class="text-lg text-white font-medium mb-2">Juan Valdez mobile app &amp; design system</h3>
+    <p class="text-xs text-system-dim mb-4 font-light leading-relaxed">End-to-end UI design for Juan Valdez&#39;s Colombia mobile app — the full product surface and a reusable design system. I delivered the screens, the flows, and the system, then handed engineering a clean, spec&#39;d build.</p>
+    <ul class="text-sm text-system-dim space-y-2 mb-6 font-light"><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Complete UI design across the core mobile flows</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Reusable design system: components, type scale, color, spacing</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Brand-led product design for a national CPG / retail audience</li></ul>
   </div>
   <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
     <span class="text-xs font-mono uppercase tracking-widest">How this shipped</span>
@@ -237,10 +231,10 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
      <div class="w-full h-[1px] bg-system-line absolute top-3"></div><div class="w-4 h-4 bg-white/10 rounded-full animate-pulse-slow"></div><div class="w-1/2 h-[1px] bg-system-line absolute bottom-2 rounded-full"></div>
    </div></div>
   <div class="flex-grow">
-    <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>own product · LLM in runtime</span><span>2026</span></div>
-    <h3 class="text-lg text-white font-medium mb-2">Life Update Mobile — Gemini API in runtime</h3>
-    <p class="text-xs text-system-dim mb-4 font-light leading-relaxed">Personal tracking system — daily entries analyzed by Gemini in runtime, semantic distance to a 5-year plan, Steve-Jobs-style focus metrics (3 things a day). Shipped 0 → production in a day.</p>
-    <ul class="text-sm text-system-dim space-y-2 mb-6 font-light"><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Gemini API runtime for semantic analysis of daily entries</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Hybrid data model: .md files as source of truth + DB as execution engine</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits in 24h</li></ul>
+    <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>Personal product · Design + AI</span><span>2026</span></div>
+    <h3 class="text-lg text-white font-medium mb-2">Life Update — AI focus app</h3>
+    <p class="text-xs text-system-dim mb-4 font-light leading-relaxed">A personal focus app: write a daily entry, get it scored against your 5-year plan in plain language — three priorities a day, nothing more. I designed the product and the AI behavior, then shipped the MVP to prove it.</p>
+    <ul class="text-sm text-system-dim space-y-2 mb-6 font-light"><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Product + interaction design for AI-scored daily focus</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Designed the AI behavior: semantic distance from each entry to a long-term plan</li><li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> Shipped a working MVP to validate the concept end-to-end</li></ul>
   </div>
   <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
     <span class="text-xs font-mono uppercase tracking-widest">How this shipped</span>

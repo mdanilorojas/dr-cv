@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Life Update Mobile — Gemini API in runtime · Danilo Rojas</title>
-<meta name="description" content="Personal tracking system — daily entries analyzed by Gemini in runtime, semantic distance to a 5-year plan, Steve-Jobs-style focus metrics (3 things a day). Shipped 0 → production in a day.">
-<meta property="og:title" content="Life Update Mobile — Gemini API in runtime · Danilo Rojas">
-<meta property="og:description" content="Personal tracking system — daily entries analyzed by Gemini in runtime, semantic distance to a 5-year plan, Steve-Jobs-style focus metrics (3 things a day). Shipped 0 → production in a day.">
+<title>Life Update — AI focus app · Danilo Rojas</title>
+<meta name="description" content="A personal focus app: write a daily entry, get it scored against your 5-year plan in plain language — three priorities a day, nothing more. I designed the product and the AI behavior, then shipped the MVP to prove it.">
+<meta property="og:title" content="Life Update — AI focus app · Danilo Rojas">
+<meta property="og:description" content="A personal focus app: write a daily entry, get it scored against your 5-year plan in plain language — three priorities a day, nothing more. I designed the product and the AI behavior, then shipped the MVP to prove it.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://danilorojas.design/work/life-update-mobile/">
 <meta property="og:image" content="https://danilorojas.design/og.png">
@@ -59,14 +59,8 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 .reveal.active { opacity:1; transform:translateY(0); }
 .delay-100{transition-delay:100ms;} .delay-200{transition-delay:200ms;}
 .tech-label { position:absolute; background:#030303; padding:0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:.1em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.08); z-index:10; }
-.metric-card { background-color:#070708;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"),
-    radial-gradient(130% 130% at 0% 0%, rgba(255,255,255,0.07), transparent 55%),
-    linear-gradient(160deg, rgba(255,255,255,0.045), transparent 45%);
-  background-size:140px 140px, auto, auto; background-blend-mode:overlay, normal, normal;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); transition: background-color .4s ease, box-shadow .4s ease; }
-.metric-card:hover { background-color:#0c0c0e; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+.metric-card { background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); transition: background-color .4s ease, box-shadow .4s ease; }
+.metric-card:hover { background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
 ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
 @media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} }
 
@@ -102,14 +96,14 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 
 <nav class="fixed top-0 w-full z-50 border-b border-system-line bg-system-bg/80 backdrop-blur-md">
   <div class="w-full flex justify-between items-center h-14 px-4 sm:px-8 max-w-[1400px] mx-auto">
-    <a href="/" class="font-sans font-medium tracking-tight text-[15px] text-white no-underline">Danilo Rojas <span class="text-system-dim font-mono ml-1">· dr</span></a>
+    <a href="../../" class="font-sans font-medium tracking-tight text-[15px] text-white no-underline">Danilo Rojas <span class="text-system-dim font-mono ml-1">· dr</span></a>
     <div class="flex items-center h-full">
-      <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase"><a href="/#notes" class="text-system-dim hover:text-white transition-colors">Notes</a><a href="/#work" class="text-system-dim hover:text-white transition-colors">Work</a><a href="/#method" class="text-system-dim hover:text-white transition-colors">Method</a><a href="/#about" class="text-system-dim hover:text-white transition-colors">About</a><a href="/#contact" class="text-system-dim hover:text-white transition-colors">Contact</a></div>
+      <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase"><a href="../../#notes" class="text-system-dim hover:text-white transition-colors">Notes</a><a href="../../#work" class="text-system-dim hover:text-white transition-colors">Work</a><a href="../../#method" class="text-system-dim hover:text-white transition-colors">Method</a><a href="../../#about" class="text-system-dim hover:text-white transition-colors">About</a><a href="../../#contact" class="text-system-dim hover:text-white transition-colors">Contact</a></div>
       <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
-        <a href="/es/work/life-update-mobile/" hreflang="es" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">EN<span class="text-system-dim/50">/ES</span></a>
-        <div class="flex items-center space-x-2 group cursor-help" title="Continuous learning and system optimization in progress">
+        <a href="../../es/work/life-update-mobile/" hreflang="es" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">EN<span class="text-system-dim/50">/ES</span></a>
+        <div class="flex items-center space-x-2 group cursor-help" title="A human running the loop agents run — orchestrating, evaluating, compounding">
           <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
-          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Sys_Iterating</span>
+          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Human_Compounding</span>
         </div>
       </div>
     </div>
@@ -120,17 +114,17 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 <main id="main" class="flex-grow pt-28 pb-20 px-4 sm:px-8 relative z-10 flex flex-col items-center">
 
   <div class="w-full max-w-5xl mb-6 reveal">
-    <a href="/#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">← Back to work</a>
+    <a href="../../#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">← Back to work</a>
   </div>
 
   <div class="w-full max-w-5xl relative reveal">
     <div class="structural-border p-8 sm:p-12 md:p-16 relative overflow-hidden bg-system-surface/30 backdrop-blur-sm">
       <div class="font-mono text-[10px] text-system-dim uppercase tracking-widest mb-6 flex flex-wrap gap-x-3 gap-y-1">
-        <span class="text-white">own product · LLM in runtime</span><span class="text-system-line">//</span><span>2026</span>
+        <span class="text-white">Personal product · Design + AI</span><span class="text-system-line">//</span><span>2026</span>
       </div>
-      <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1] text-white max-w-4xl">Life Update Mobile — Gemini API in runtime</h1>
-      <p class="mt-8 text-base md:text-lg text-system-dim font-light leading-relaxed max-w-2xl">Personal tracking system — daily entries analyzed by Gemini in runtime, semantic distance to a 5-year plan, Steve-Jobs-style focus metrics (3 things a day). Shipped 0 → production in a day.</p>
-      <div class="mt-10 flex flex-wrap gap-2"><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Gemini API</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Next.js 16</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Prisma</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">0 → prod / 1d</span></div>
+      <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1] text-white max-w-4xl">Life Update — AI focus app</h1>
+      <p class="mt-8 text-base md:text-lg text-system-dim font-light leading-relaxed max-w-2xl">A personal focus app: write a daily entry, get it scored against your 5-year plan in plain language — three priorities a day, nothing more. I designed the product and the AI behavior, then shipped the MVP to prove it.</p>
+      <div class="mt-10 flex flex-wrap gap-2"><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Product design</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">AI / LLM behavior</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">0→1 MVP</span></div>
     </div>
     <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
     <div class="tech-label -top-2 left-10">PROJECT_FILE // 03</div>
@@ -160,7 +154,7 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
       <h2 class="text-xl md:text-2xl font-light text-system-accent">What I owned.</h2>
       <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">SCOPE // 03</span>
     </div>
-    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4"><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Gemini API runtime for semantic analysis of daily entries</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Hybrid data model: .md files as source of truth + DB as execution engine</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits in 24h</li></ul>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4"><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Product + interaction design for AI-scored daily focus</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Designed the AI behavior: semantic distance from each entry to a long-term plan</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Shipped a working MVP to validate the concept end-to-end</li></ul>
   </section>
   <section class="w-full max-w-5xl mt-24 reveal">
     <div class="border-b border-system-line pb-4 mb-8 flex items-end justify-between">
@@ -170,31 +164,31 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
     <dl class="border-b border-system-line">
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Context</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">A personal product — a tracking app that uses Gemini at runtime to summarize what I wrote this week.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">A personal product: a focus app that scores what you write each day against where you say you want to be in five years.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Problem</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Every journal-AI app I&#39;d tried either stored my text on someone else&#39;s server or refused to run without internet. I wanted local-first + LLM on demand.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Most journaling apps either bury you in features or never tell you whether today actually moved you toward what matters.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Approach</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Local SQLite store, plain-text journal. Summarization is opt-in: tap a week, send it to Gemini, cache the result.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">I designed the product around one idea — three priorities a day — and designed the AI behavior: each entry is read in plain language and placed by semantic distance from a long-term plan.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Ship</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Single binary build. No auth server. Gemini API key ships with the user, not the app.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">A working MVP: daily entry, AI-scored focus, and a simple read on whether the week pointed at the plan.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Outcome</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Shipped private for my own use. Three friends asked to install it. Weekly summaries in 4 seconds.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Shipped and used daily. It proved the core idea — that an AI read of a short daily entry can keep attention on a long-term plan.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Differently</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">I would put the prompt on the Settings page. Right now it&#39;s hidden — advanced users want to see it and I was being overly protective.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">I&#39;d surface the AI&#39;s reasoning in the UI, not hide it — people trust a focus score more when they can see why.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Craft floor</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">No analytics. No telemetry. No account. Bundle under 8 MB. Works airplane-mode except the summary action.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">One decision per day, not a dashboard. The AI explains in plain language. Designed so the product, not the model, is what you feel.</dd>
     </div>
     </dl>
   </section>

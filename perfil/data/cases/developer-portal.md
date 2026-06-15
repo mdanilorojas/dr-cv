@@ -1,30 +1,31 @@
 ---
 slug: developer-portal
-titleEn: "Developer Portal — design system + dark-first DS, shipped as agent-consumable skill"
-titleEs: "Developer Portal — design system + DS dark-first, entregado como skill consumible por agentes"
-clientEn: "Booz Allen Hamilton · Developer Portal"
-clientEs: "Booz Allen Hamilton · Developer Portal"
+titleEn: "Developer Portal design system"
+titleEs: "Developer Portal — design system"
+clientEn: "Booz Allen Hamilton · Senior Product Designer"
+clientEs: "Booz Allen Hamilton · Senior Product Designer"
 yearStart: 2024
 yearEnd: 2026
-hookEn: "Two intertwined design systems for a government-facing developer platform: /te-skin, a 17-component slash-command skill that agents invoke to return ready-to-use HTML + CSS + W3C tokens; and TE Black, a dark-first enterprise DS where every semantic color carries its WCAG audit inline. Packaged, versioned, agent-ready."
-hookEs: "Dos design systems entrelazados para una plataforma de developers gov-facing: /te-skin, skill slash-command de 17 componentes que los agentes invocan para devolver HTML + CSS + tokens W3C listos; y TE Black, DS enterprise dark-first donde cada color semantic carga su auditoría WCAG inline. Empaquetado, versionado, listo para agentes."
+hookEn: "A dark-first design system for a government-facing developer platform. I defined the tokens, components, and accessibility rules so every team ships consistent, WCAG-compliant UI — packaged so engineering can pull ready-to-use components without redesigning anything."
+hookEs: "Un design system dark-first para una plataforma de developers government-facing. Definí los tokens, componentes y reglas de accesibilidad para que cada equipo entregue UI consistente y conforme a WCAG — empaquetado para que ingeniería tome componentes listos sin rediseñar nada."
 bulletsEn:
-  - "/te-skin — 17 components, versioned 2.0.0, HTML + CSS + JSON metadata per component"
-  - "TE Black — dark-first DS with WCAG ratio stored inline with every token, rejected values kept as audit trail"
-  - "3-layer CSS (tokens / components / patterns), shadcn alias layer for React drop-in, Houdini + canvas mesh-gradient backgrounds"
-  - "Design DNA codified: hard constraints, soft guidelines, named anti-patterns, testing checklist"
+  - "Dark-first design system with WCAG contrast decided and documented per token"
+  - "17 production components with states, usage rules, and named anti-patterns"
+  - "Handoff spec engineering builds from directly — design DNA, constraints, checklists"
 bulletsEs:
-  - "/te-skin — 17 componentes, versionado 2.0.0, metadata HTML + CSS + JSON por componente"
-  - "TE Black — DS dark-first con ratio WCAG guardado inline en cada token; los valores rechazados quedan como audit trail"
-  - "CSS en 3 capas (tokens / components / patterns), shadcn alias para drop-in en React, backgrounds Houdini + canvas mesh-gradient"
-  - "Design DNA codificado: hard constraints, soft guidelines, anti-patterns con nombre, testing checklist"
+  - "Design system dark-first con contraste WCAG decidido y documentado por token"
+  - "17 componentes de producción con estados, reglas de uso y anti-patterns nombrados"
+  - "Handoff spec del que ingeniería construye directo — design DNA, constraints, checklists"
 stack:
-  - "Agent-consumable"
-  - "Developer Portal"
-  - "W3C tokens"
-  - "Houdini · WCAG 2.2"
+  - "Design system"
+  - "Accessibility"
+  - "Component library"
+  - "Design tokens"
 featured: true
 animation: developer-portal
 ---
 
-Landing narrative goes here. This case fuses /te-skin (the agent-consumable component skill) with TE Black (the dark-first DS with accessibility audit built into tokens). Both ship as part of the same Developer Portal umbrella.
+Landing narrative goes here. A dark-first design system for a government-facing
+developer platform: a packaged component library and a token set where every
+semantic color carries the WCAG contrast it passed. Designed to be handed off —
+engineering and their agents build from the spec, not from a Figma file.

@@ -39,9 +39,9 @@ columns:
     tools: ["Hi-Fi Figma", "Storybook", "GitHub"]
     chips:
       - label: { en: "Agent orchestration",     es: "Orquestación de agentes" }
-        href: "#case-enregla"
+        href: "#case-developer-portal"
       - label: { en: "MCP servers",             es: "MCP servers" }
-        href: "#case-enregla"
+        href: "#case-life-update-mobile"
       - label: { en: "Design-system-as-skill",  es: "Design-system-as-skill" }
         href: "#case-developer-portal"
       - label: { en: "Recursive critic loops",  es: "Loops de crítico recursivos" }

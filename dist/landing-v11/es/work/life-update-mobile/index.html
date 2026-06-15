@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Life Update Mobile — API Gemini en runtime · Danilo Rojas</title>
-<meta name="description" content="Sistema de tracking personal — entries diarios analizados por Gemini en runtime, distancia semántica a un plan a 5 años, métricas de foco tipo Steve Jobs (3 cosas al día). 0 → producción en un día.">
-<meta property="og:title" content="Life Update Mobile — API Gemini en runtime · Danilo Rojas">
-<meta property="og:description" content="Sistema de tracking personal — entries diarios analizados por Gemini en runtime, distancia semántica a un plan a 5 años, métricas de foco tipo Steve Jobs (3 cosas al día). 0 → producción en un día.">
+<title>Life Update — app de foco con IA · Danilo Rojas</title>
+<meta name="description" content="Una app personal de foco: escribes una entrada diaria y se evalúa contra tu plan a 5 años en lenguaje claro — tres prioridades al día, nada más. Diseñé el producto y el comportamiento de la IA, y shippeé el MVP para probarlo.">
+<meta property="og:title" content="Life Update — app de foco con IA · Danilo Rojas">
+<meta property="og:description" content="Una app personal de foco: escribes una entrada diaria y se evalúa contra tu plan a 5 años en lenguaje claro — tres prioridades al día, nada más. Diseñé el producto y el comportamiento de la IA, y shippeé el MVP para probarlo.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://danilorojas.design/es/work/life-update-mobile/">
 <meta property="og:image" content="https://danilorojas.design/og.png">
@@ -59,14 +59,8 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 .reveal.active { opacity:1; transform:translateY(0); }
 .delay-100{transition-delay:100ms;} .delay-200{transition-delay:200ms;}
 .tech-label { position:absolute; background:#030303; padding:0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:.1em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.08); z-index:10; }
-.metric-card { background-color:#070708;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"),
-    radial-gradient(130% 130% at 0% 0%, rgba(255,255,255,0.07), transparent 55%),
-    linear-gradient(160deg, rgba(255,255,255,0.045), transparent 45%);
-  background-size:140px 140px, auto, auto; background-blend-mode:overlay, normal, normal;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); transition: background-color .4s ease, box-shadow .4s ease; }
-.metric-card:hover { background-color:#0c0c0e; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+.metric-card { background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); transition: background-color .4s ease, box-shadow .4s ease; }
+.metric-card:hover { background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
 ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
 @media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} }
 
@@ -102,14 +96,14 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 
 <nav class="fixed top-0 w-full z-50 border-b border-system-line bg-system-bg/80 backdrop-blur-md">
   <div class="w-full flex justify-between items-center h-14 px-4 sm:px-8 max-w-[1400px] mx-auto">
-    <a href="/es/" class="font-sans font-medium tracking-tight text-[15px] text-white no-underline">Danilo Rojas <span class="text-system-dim font-mono ml-1">· dr</span></a>
+    <a href="../../" class="font-sans font-medium tracking-tight text-[15px] text-white no-underline">Danilo Rojas <span class="text-system-dim font-mono ml-1">· dr</span></a>
     <div class="flex items-center h-full">
-      <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase"><a href="/es/#notes" class="text-system-dim hover:text-white transition-colors">Notas</a><a href="/es/#work" class="text-system-dim hover:text-white transition-colors">Trabajo</a><a href="/es/#method" class="text-system-dim hover:text-white transition-colors">Método</a><a href="/es/#about" class="text-system-dim hover:text-white transition-colors">Sobre mí</a><a href="/es/#contact" class="text-system-dim hover:text-white transition-colors">Contacto</a></div>
+      <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase"><a href="../../#notes" class="text-system-dim hover:text-white transition-colors">Notas</a><a href="../../#work" class="text-system-dim hover:text-white transition-colors">Trabajo</a><a href="../../#method" class="text-system-dim hover:text-white transition-colors">Método</a><a href="../../#about" class="text-system-dim hover:text-white transition-colors">Sobre mí</a><a href="../../#contact" class="text-system-dim hover:text-white transition-colors">Contacto</a></div>
       <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
-        <a href="/work/life-update-mobile/" hreflang="en" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">ES<span class="text-system-dim/50">/EN</span></a>
-        <div class="flex items-center space-x-2 group cursor-help" title="Aprendizaje continuo y optimización del sistema en progreso">
+        <a href="../../../work/life-update-mobile/" hreflang="en" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">ES<span class="text-system-dim/50">/EN</span></a>
+        <div class="flex items-center space-x-2 group cursor-help" title="Un humano corriendo el loop que corren los agentes — orquestando, evaluando, acumulando">
           <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
-          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Sys_Iterando</span>
+          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Humano_Acumulando</span>
         </div>
       </div>
     </div>
@@ -120,17 +114,17 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 <main id="main" class="flex-grow pt-28 pb-20 px-4 sm:px-8 relative z-10 flex flex-col items-center">
 
   <div class="w-full max-w-5xl mb-6 reveal">
-    <a href="/es/#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">← Volver al trabajo</a>
+    <a href="../../#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">← Volver al trabajo</a>
   </div>
 
   <div class="w-full max-w-5xl relative reveal">
     <div class="structural-border p-8 sm:p-12 md:p-16 relative overflow-hidden bg-system-surface/30 backdrop-blur-sm">
       <div class="font-mono text-[10px] text-system-dim uppercase tracking-widest mb-6 flex flex-wrap gap-x-3 gap-y-1">
-        <span class="text-white">producto propio · LLM en runtime</span><span class="text-system-line">//</span><span>2026</span>
+        <span class="text-white">Producto personal · Diseño + IA</span><span class="text-system-line">//</span><span>2026</span>
       </div>
-      <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1] text-white max-w-4xl">Life Update Mobile — API Gemini en runtime</h1>
-      <p class="mt-8 text-base md:text-lg text-system-dim font-light leading-relaxed max-w-2xl">Sistema de tracking personal — entries diarios analizados por Gemini en runtime, distancia semántica a un plan a 5 años, métricas de foco tipo Steve Jobs (3 cosas al día). 0 → producción en un día.</p>
-      <div class="mt-10 flex flex-wrap gap-2"><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Gemini API</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Next.js 16</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Prisma</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">0 → prod / 1d</span></div>
+      <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1] text-white max-w-4xl">Life Update — app de foco con IA</h1>
+      <p class="mt-8 text-base md:text-lg text-system-dim font-light leading-relaxed max-w-2xl">Una app personal de foco: escribes una entrada diaria y se evalúa contra tu plan a 5 años en lenguaje claro — tres prioridades al día, nada más. Diseñé el producto y el comportamiento de la IA, y shippeé el MVP para probarlo.</p>
+      <div class="mt-10 flex flex-wrap gap-2"><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Product design</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">AI / LLM behavior</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">0→1 MVP</span></div>
     </div>
     <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
     <div class="tech-label -top-2 left-10">PROJECT_FILE // 03</div>
@@ -160,7 +154,7 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
       <h2 class="text-xl md:text-2xl font-light text-system-accent">Lo que lideré.</h2>
       <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">SCOPE // 03</span>
     </div>
-    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4"><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>API Gemini en runtime para análisis semántico de entries diarios</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Data híbrida: .md como fuente de verdad + DB como motor de ejecución</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Next.js 16 + NextAuth v5 + Prisma + Supabase, 20 commits en 24h</li></ul>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4"><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Product + interaction design para foco diario scoreado por IA</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Diseñé el comportamiento de la IA: distancia semántica de cada entrada al plan de largo plazo</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Shippeé un MVP funcional para validar el concepto end-to-end</li></ul>
   </section>
   <section class="w-full max-w-5xl mt-24 reveal">
     <div class="border-b border-system-line pb-4 mb-8 flex items-end justify-between">
@@ -170,31 +164,31 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
     <dl class="border-b border-system-line">
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Contexto</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Un producto personal — una app de tracking que usa Gemini en runtime para resumir lo que escribí esta semana.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Un producto personal: una app de foco que evalúa lo que escribes cada día contra dónde dices querer estar en cinco años.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Problema</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Cada app de journal-AI que había probado o guardaba mi texto en el servidor de otro o se negaba a correr sin internet. Quería local-first + LLM on demand.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">La mayoría de las apps de journaling o te entierran en features o nunca te dicen si el día de hoy realmente te acercó a lo que importa.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Aproximación</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Almacenamiento SQLite local, journal en texto plano. La resumción es opt-in: tocas una semana, se envía a Gemini, se cachea el resultado.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Diseñé el producto alrededor de una idea — tres prioridades al día — y diseñé el comportamiento de la IA: cada entrada se lee en lenguaje claro y se ubica por distancia semántica respecto a un plan de largo plazo.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Ship</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Build de un solo binario. Sin servidor de auth. La API key de Gemini la tiene el usuario, no la app.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Un MVP funcional: entrada diaria, foco scoreado por IA, y una lectura simple de si la semana apuntó al plan.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Resultado</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Shippeado privado para uso propio. Tres amigos pidieron instalarlo. Resúmenes semanales en 4 segundos.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Shippeado y usado a diario. Probó la idea central — que una lectura por IA de una entrada diaria corta puede mantener la atención en un plan de largo plazo.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Lo cambiaría</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Pondría el prompt en la página de Settings. Ahora está oculto — los usuarios avanzados quieren verlo y yo estaba siendo sobreprotector.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Mostraría el razonamiento de la IA en la UI, no lo escondería — la gente confía más en un score de foco cuando puede ver el porqué.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Craft floor</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Sin analytics. Sin telemetría. Sin cuenta. Bundle bajo 8 MB. Funciona en modo avión excepto la acción de resumen.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Una decisión por día, no un dashboard. La IA explica en lenguaje claro. Diseñado para que sientas el producto, no el modelo.</dd>
     </div>
     </dl>
   </section>

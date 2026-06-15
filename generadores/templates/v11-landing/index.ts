@@ -37,94 +37,94 @@ interface CaseBeats {
 }
 
 const CASE_BEATS: Record<string, CaseBeats> = {
-  enregla: {
-    context: {
-      en: "LATAM SMB compliance. Multi-site reporting was done in spreadsheets, manually, every month. Nobody owned the data model.",
-      es: "Compliance para PYMES LATAM. Los reportes multi-sede se hacían en hojas de cálculo, a mano, cada mes. Nadie era dueño del modelo de datos.",
-    },
-    problem: {
-      en: "Existing tools priced out SMBs or required a sysadmin to deploy. Nothing shipped as a 40-day 0→1.0.",
-      es: "Las herramientas existentes eran caras para PYMES o requerían un sysadmin para desplegarse. Nada shippeaba como un 40-day 0→1.0.",
-    },
-    approach: {
-      en: "Built the SaaS as a co-author exercise with Claude Code. Supabase MCP server in the loop for SQL + migrations. Parallel subagents on UI, data model, edge functions.",
-      es: "Construí el SaaS como ejercicio de co-autoría con Claude Code. Supabase MCP en el loop para SQL + migraciones. Subagentes en paralelo en UI, modelo de datos, edge functions.",
-    },
-    ship: {
-      en: "346 commits in 40 days. 21 SQL migrations, 31 UI components, 1 edge function with cron. Live with paying pilots.",
-      es: "346 commits en 40 días. 21 migraciones SQL, 31 componentes UI, 1 edge function con cron. En producción con pilotos pagados.",
-    },
-    outcome: {
-      en: "DS migration ran 5 recursive rounds scoring 78.4 → 95.6. First pilots reporting monthly compliance in minutes instead of days.",
-      es: "La migración DS corrió 5 rondas recursivas, puntuando 78.4 → 95.6. Los primeros pilotos reportan compliance mensual en minutos en lugar de días.",
-    },
-    differently: {
-      en: "Next time I write the MCP servers before the schema. The agent kept proposing columns it couldn't write back — half the recursion was plumbing.",
-      es: "La próxima vez escribo los MCP servers antes del schema. El agente seguía proponiendo columnas que no podía escribir — la mitad de la recursión fue plomería.",
-    },
-    craft: {
-      en: "RLS on every table. Type-safe Supabase client. Dark-mode primary with per-token WCAG trail. 0 hand-edited SQL in prod.",
-      es: "RLS en cada tabla. Cliente Supabase type-safe. Dark-mode primario con trazabilidad WCAG por token. 0 SQL hand-edited en prod.",
-    },
-  },
   "developer-portal": {
     context: {
-      en: "Booz Allen Hamilton · Developer Portal — a government-facing platform where two design systems run side by side: /te-skin (the component library) and TE Black (the dark-first palette). Design review was a two-week bottleneck on every ticket and existing components washed out under 12-hour mission lighting.",
-      es: "Booz Allen Hamilton · Developer Portal — plataforma government-facing donde dos design systems corren en paralelo: /te-skin (la librería de componentes) y TE Black (la paleta dark-first). La revisión de diseño era un cuello de botella de dos semanas y los componentes existentes se lavaban bajo iluminación de misión de 12 horas.",
+      en: "Booz Allen Hamilton's government-facing Developer Portal ran on two design systems side by side. Design review was a two-week bottleneck on every ticket, and the existing UI washed out under the low light operators actually worked in.",
+      es: "El Developer Portal government-facing de Booz Allen Hamilton corría sobre dos design systems en paralelo. La revisión de diseño era un cuello de botella de dos semanas por ticket, y la UI existente se lavaba bajo la poca luz en la que los operadores realmente trabajaban.",
     },
     problem: {
-      en: "Designers reviewed the same WCAG + token mismatches on every PR. The DS existed as Figma — the agents couldn't reach it. And dark mode was treated as a theme even though operators on the platform lived in it.",
-      es: "Los diseñadores revisaban los mismos desajustes WCAG + tokens en cada PR. El DS existía en Figma — los agentes no lo alcanzaban. Y dark era tratado como un tema, pese a que los operadores de la plataforma vivían ahí.",
+      en: "Teams re-reviewed the same accessibility and token mismatches on every release. The design system lived only in Figma, so engineering kept rebuilding it by hand. And dark mode was treated as an afterthought even though operators lived in it.",
+      es: "Los equipos revisaban una y otra vez los mismos desajustes de accesibilidad y tokens en cada release. El design system vivía solo en Figma, así que ingeniería lo reconstruía a mano. Y el dark mode se trataba como un extra, pese a que los operadores vivían en él.",
     },
     approach: {
-      en: "Packaged the DS as a Claude Code slash-command skill (/te-skin). Tokens + decision trees + 17 recursive review rules invokable inline. In parallel, authored TE Black: dark-primary palette with the per-token WCAG audit written into the definition itself, not a downstream lint.",
-      es: "Empaqueté el DS como slash-command skill para Claude Code (/te-skin). Tokens + árboles de decisión + 17 reglas recursivas invocables inline. En paralelo, autoré TE Black: paleta dark-primaria con auditoría WCAG por token escrita en la definición, no en un lint downstream.",
+      en: "I made the system dark-first and wrote the accessibility decision into each token — every color carries the contrast ratio it passed. Then I packaged the components and rules as a spec engineering (and their agents) could consume directly, instead of interpreting a Figma file.",
+      es: "Hice el sistema dark-first y escribí la decisión de accesibilidad dentro de cada token — cada color carga la ratio de contraste que aprobó. Luego empaqueté los componentes y las reglas como un spec que ingeniería (y sus agentes) podían consumir directo, en vez de interpretar un Figma.",
     },
     ship: {
-      en: "Shipped in four weeks. Two-agent workflow: one proposes UI, one runs recursive review. Five rounds raised the score 78.4 → 95.6. Tokens expose wcag.normal and wcag.large ratios for every ink-on-surface pair; component library migrated in the same PR as the tokens.",
-      es: "Shippeado en cuatro semanas. Workflow de dos agentes: uno propone UI, otro corre revisión recursiva. Cinco rondas subieron el score 78.4 → 95.6. Los tokens exponen ratios wcag.normal y wcag.large para cada par ink-on-surface; librería migrada en la misma PR que los tokens.",
+      en: "A dark-first design system: 17 components with states, usage rules, and anti-patterns, plus tokens that expose their WCAG ratio for every ink-on-surface pair. Delivered as a handoff engineering builds straight from.",
+      es: "Un design system dark-first: 17 componentes con estados, reglas de uso y anti-patterns, más tokens que exponen su ratio WCAG para cada par ink-on-surface. Entregado como handoff del que ingeniería construye directo.",
     },
     outcome: {
-      en: "Design review cycles dropped from 2 weeks → 36 hours. Every contrast pair provably â‰¥ 4.5:1, and operators stopped reporting dim text in weekly retros. Jennifer Sheppard, Product Lead, called it \\\"work I wanted to keep reusing.\\\"",
-      es: "Los ciclos de revisión cayeron de 2 semanas → 36 horas. Cada par de contraste probadamente â‰¥ 4.5:1, y los operadores dejaron de reportar texto apagado en los retros semanales. Jennifer Sheppard, Product Lead, lo llamó \\\"work I wanted to keep reusing.\\\"",
+      en: "Design review dropped from two weeks to under two days. Every contrast pair provably ≥ 4.5:1, and operators stopped reporting dim text in retros. Jennifer Sheppard, the Product Lead, called it work she wanted to keep reusing.",
+      es: "La revisión de diseño bajó de dos semanas a menos de dos días. Cada par de contraste probadamente ≥ 4.5:1, y los operadores dejaron de reportar texto apagado en los retros. Jennifer Sheppard, la Product Lead, lo llamó trabajo que quería seguir reutilizando.",
     },
     differently: {
-      en: "I would ship a public skill scaffold first and publish the audit trail as a CI gate. The client-specific tokens should have been a layer, not the base; and a failed WCAG ratio should fail the build, not rely on convention.",
-      es: "Shippearía primero un scaffold público del skill y publicaría la trazabilidad como gate de CI. Los tokens específicos del cliente debieron ser una capa, no la base; y una ratio WCAG fallada debería romper el build, no confiar en la convención.",
+      en: "I'd separate the client-specific tokens from the base as a clean layer from day one, and make a failed contrast ratio block the release instead of relying on review to catch it.",
+      es: "Separaría los tokens específicos del cliente de la base como una capa limpia desde el día uno, y haría que una ratio de contraste fallida bloquee el release en vez de confiar en la revisión.",
     },
     craft: {
-      en: "WCAG audit trail stored per token. Dark-mode primary. Tokens in CSS + JSON + Figma library in sync. Skill idempotent under re-invocation. APCA-adjacent luminance verified. No manual edits in the generated output.",
-      es: "Trazabilidad WCAG guardada por token. Dark-mode primario. Tokens en CSS + JSON + librería Figma sincronizados. Skill idempotente bajo re-invocación. Luminancia APCA-adjacent verificada. Sin edits manuales en el output generado.",
+      en: "Accessibility decided per token, not linted after. Dark mode as the primary, not a theme. The same system in design and in code, so nothing drifts between them.",
+      es: "Accesibilidad decidida por token, no linteada después. Dark mode como primario, no como tema. El mismo sistema en diseño y en código, para que nada se desincronice.",
+    },
+  },
+  "juan-valdez": {
+    context: {
+      en: "Juan Valdez — Colombia's flagship coffee brand — needed its mobile app designed as a real product, not a set of disconnected screens.",
+      es: "Juan Valdez — la marca insignia de café de Colombia — necesitaba su app mobile diseñada como un producto real, no como un set de pantallas sueltas.",
+    },
+    problem: {
+      en: "The product had to feel unmistakably Juan Valdez while staying simple enough for a broad, everyday audience — and it needed a system underneath so it could grow without falling apart.",
+      es: "El producto tenía que sentirse inconfundiblemente Juan Valdez sin dejar de ser simple para una audiencia amplia y cotidiana — y necesitaba un sistema debajo para crecer sin romperse.",
+    },
+    approach: {
+      en: "I designed the full UI across the core flows and built a reusable design system — components, type scale, color, and spacing — so every screen stayed consistent and the brand carried through end to end.",
+      es: "Diseñé toda la UI de los flujos core y armé un design system reutilizable — componentes, escala tipográfica, color y spacing — para que cada pantalla quedara consistente y la marca se sostuviera de punta a punta.",
+    },
+    ship: {
+      en: "A complete, brand-led mobile UI and the design system behind it, delivered to engineering as a clean, spec'd handoff.",
+      es: "Una UI mobile completa y brand-led, con el design system detrás, entregada a ingeniería como un handoff limpio y especificado.",
+    },
+    outcome: {
+      en: "A coherent product surface engineering could build from directly, with a system that keeps new screens on-brand and consistent.",
+      es: "Una superficie de producto coherente de la que ingeniería podía construir directo, con un sistema que mantiene las pantallas nuevas on-brand y consistentes.",
+    },
+    differently: {
+      en: "I'd pair the design system with a living component doc from the start, so the handoff stays in sync as the app evolves.",
+      es: "Emparejaría el design system con una doc de componentes viva desde el inicio, para que el handoff siga sincronizado a medida que la app evoluciona.",
+    },
+    craft: {
+      en: "One system, brand-true. Type, color, and spacing decided once and reused everywhere. Screens designed to hand off, not to admire in isolation.",
+      es: "Un solo sistema, fiel a la marca. Tipografía, color y spacing decididos una vez y reusados en todo. Pantallas diseñadas para entregar, no para admirar aisladas.",
     },
   },
   "life-update-mobile": {
     context: {
-      en: "A personal product — a tracking app that uses Gemini at runtime to summarize what I wrote this week.",
-      es: "Un producto personal — una app de tracking que usa Gemini en runtime para resumir lo que escribí esta semana.",
+      en: "A personal product: a focus app that scores what you write each day against where you say you want to be in five years.",
+      es: "Un producto personal: una app de foco que evalúa lo que escribes cada día contra dónde dices querer estar en cinco años.",
     },
     problem: {
-      en: "Every journal-AI app I'd tried either stored my text on someone else's server or refused to run without internet. I wanted local-first + LLM on demand.",
-      es: "Cada app de journal-AI que había probado o guardaba mi texto en el servidor de otro o se negaba a correr sin internet. Quería local-first + LLM on demand.",
+      en: "Most journaling apps either bury you in features or never tell you whether today actually moved you toward what matters.",
+      es: "La mayoría de las apps de journaling o te entierran en features o nunca te dicen si el día de hoy realmente te acercó a lo que importa.",
     },
     approach: {
-      en: "Local SQLite store, plain-text journal. Summarization is opt-in: tap a week, send it to Gemini, cache the result.",
-      es: "Almacenamiento SQLite local, journal en texto plano. La resumción es opt-in: tocas una semana, se envía a Gemini, se cachea el resultado.",
+      en: "I designed the product around one idea — three priorities a day — and designed the AI behavior: each entry is read in plain language and placed by semantic distance from a long-term plan.",
+      es: "Diseñé el producto alrededor de una idea — tres prioridades al día — y diseñé el comportamiento de la IA: cada entrada se lee en lenguaje claro y se ubica por distancia semántica respecto a un plan de largo plazo.",
     },
     ship: {
-      en: "Single binary build. No auth server. Gemini API key ships with the user, not the app.",
-      es: "Build de un solo binario. Sin servidor de auth. La API key de Gemini la tiene el usuario, no la app.",
+      en: "A working MVP: daily entry, AI-scored focus, and a simple read on whether the week pointed at the plan.",
+      es: "Un MVP funcional: entrada diaria, foco scoreado por IA, y una lectura simple de si la semana apuntó al plan.",
     },
     outcome: {
-      en: "Shipped private for my own use. Three friends asked to install it. Weekly summaries in 4 seconds.",
-      es: "Shippeado privado para uso propio. Tres amigos pidieron instalarlo. Resúmenes semanales en 4 segundos.",
+      en: "Shipped and used daily. It proved the core idea — that an AI read of a short daily entry can keep attention on a long-term plan.",
+      es: "Shippeado y usado a diario. Probó la idea central — que una lectura por IA de una entrada diaria corta puede mantener la atención en un plan de largo plazo.",
     },
     differently: {
-      en: "I would put the prompt on the Settings page. Right now it's hidden — advanced users want to see it and I was being overly protective.",
-      es: "Pondría el prompt en la página de Settings. Ahora está oculto — los usuarios avanzados quieren verlo y yo estaba siendo sobreprotector.",
+      en: "I'd surface the AI's reasoning in the UI, not hide it — people trust a focus score more when they can see why.",
+      es: "Mostraría el razonamiento de la IA en la UI, no lo escondería — la gente confía más en un score de foco cuando puede ver el porqué.",
     },
     craft: {
-      en: "No analytics. No telemetry. No account. Bundle under 8 MB. Works airplane-mode except the summary action.",
-      es: "Sin analytics. Sin telemetría. Sin cuenta. Bundle bajo 8 MB. Funciona en modo avión excepto la acción de resumen.",
+      en: "One decision per day, not a dashboard. The AI explains in plain language. Designed so the product, not the model, is what you feel.",
+      es: "Una decisión por día, no un dashboard. La IA explica en lenguaje claro. Diseñado para que sientas el producto, no el modelo.",
     },
   },
 };
@@ -156,12 +156,12 @@ const COPY = {
   proofHeadingEn: "Evidence, not adjectives.",
   proofHeadingEs: "Evidencia, no adjetivos.",
   work: {
-    eyebrowEn: "Selected work · 2025–2026",
-    eyebrowEs: "Trabajo seleccionado · 2025–2026",
-    titleEn: "Three ships. Three agent-built artifacts.",
-    titleEs: "Tres ships. Tres artefactos construidos con agentes.",
-    leadEn: "Everything below was built with agents at the center of the workflow. The craft floor is mine — the leverage is the combination.",
-    leadEs: "Todo lo de abajo fue construido con agentes al centro del workflow. El craft floor es mío — el apalancamiento es la combinación.",
+    eyebrowEn: "Selected work",
+    eyebrowEs: "Trabajo seleccionado",
+    titleEn: "Three products. Designed to the handoff.",
+    titleEs: "Tres productos. Diseñados hasta el handoff.",
+    leadEn: "Each one taken from problem to a build engineering can run with — design systems, product flows, and the AI behavior, spec'd and ready. I take the design as far as it goes; engineering takes it further.",
+    leadEs: "Cada uno llevado del problema a un build con el que ingeniería puede arrancar — design systems, flujos de producto y el comportamiento de la IA, especificados y listos. Llevo el diseño hasta donde llega; ingeniería lo lleva más lejos.",
     beatsEn: {
       context: "Context",
       problem: "Problem",
@@ -462,7 +462,7 @@ ${columns}
 /* ============== WORK ============== */
 
 export function sortedCases(cases: Case[]): Case[] {
-  const order = ["enregla", "developer-portal", "life-update-mobile"];
+  const order = ["developer-portal", "juan-valdez", "life-update-mobile"];
   return [...cases].sort((a, b) => {
     const ia = order.indexOf(a.slug);
     const ib = order.indexOf(b.slug);

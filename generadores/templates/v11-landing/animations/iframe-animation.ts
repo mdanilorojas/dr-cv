@@ -30,14 +30,6 @@ interface AnimationSource {
 }
 
 const ANIMATION_BY_SLUG: Record<string, AnimationSource> = {
-  "enregla": {
-    folder: "animations-enregla",
-    filePrefix: "alt-1-screenshot-to-animation",
-    naturalWidth: 820,
-    naturalHeight: 640,
-    titleEn: "EnRegla — screenshot to live animation",
-    titleEs: "EnRegla — screenshot a animación en vivo",
-  },
   "life-update-mobile": {
     folder: "animations-life-update",
     filePrefix: "alt-4-live-annotation",

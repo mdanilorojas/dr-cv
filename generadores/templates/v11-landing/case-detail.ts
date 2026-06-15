@@ -52,9 +52,13 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
   const next = idx >= 0 && idx < sorted.length - 1 ? sorted[idx + 1] : null;
   const fileNo = String((idx >= 0 ? idx : 0) + 1).padStart(2, "0");
 
-  const homeHref = lang === "en" ? "/" : "/es/";
+  // Absolute paths — used ONLY in canonical/og/alternate meta tags.
   const altHref = lang === "en" ? `/es/work/${c.slug}/` : `/work/${c.slug}/`;
   const selfHref = lang === "en" ? `/work/${c.slug}/` : `/es/work/${c.slug}/`;
+  // Relative paths — used for in-page navigation so links work under file:// and deploy.
+  // Case pages live two levels deep (work/<slug>/ and es/work/<slug>/).
+  const homeRel = "../../";
+  const altRel = lang === "en" ? `../../es/work/${c.slug}/` : `../../../work/${c.slug}/`;
   const altLang = lang === "en" ? "es" : "en";
 
   const stackChips = c.stack
@@ -68,7 +72,7 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
     ["#method", t(lang, "Method", "Método")],
     ["#about", t(lang, "About", "Sobre mí")],
     ["#contact", t(lang, "Contact", "Contacto")],
-  ].map(([h, l]) => `<a href="${homeHref}${h}" class="text-system-dim hover:text-white transition-colors">${escapeHtml(l)}</a>`).join("");
+  ].map(([h, l]) => `<a href="${homeRel}${h}" class="text-system-dim hover:text-white transition-colors">${escapeHtml(l)}</a>`).join("");
 
   // Picture-in-picture demo (live two levels deep → basePath back to dist root).
   const animBasePath = lang === "en" ? "../../" : "../../../";
@@ -120,7 +124,7 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
     : "";
 
   const nextBlock = next
-    ? `<a class="group structural-border mt-16 p-8 md:p-10 flex items-center justify-between bg-system-surface/20 no-underline reveal max-w-5xl w-full relative" href="${homeHref}work/${encodeURIComponent(next.slug)}/index.html">
+    ? `<a class="group structural-border mt-16 p-8 md:p-10 flex items-center justify-between bg-system-surface/20 no-underline reveal max-w-5xl w-full relative" href="${homeRel}work/${encodeURIComponent(next.slug)}/index.html">
     <div class="crosshair ch-tr"></div><div class="crosshair ch-br"></div>
     <div>
       <div class="font-mono text-[10px] text-system-dim uppercase tracking-widest mb-2">${escapeHtml(nextLabel)}</div>
@@ -133,8 +137,8 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
   const seoTitle = `${title} · ${identity.name}`;
   const seoDesc = hook;
   const skipLabel = t(lang, "Skip to content", "Saltar al contenido");
-  const sysIterating = t(lang, "Sys_Iterating", "Sys_Iterando");
-  const sysTitle = t(lang, "Continuous learning and system optimization in progress", "Aprendizaje continuo y optimización del sistema en progreso");
+  const sysIterating = t(lang, "Human_Compounding", "Humano_Acumulando");
+  const sysTitle = t(lang, "A human running the loop agents run — orchestrating, evaluating, compounding", "Un humano corriendo el loop que corren los agentes — orquestando, evaluando, acumulando");
 
   const socials = ([["LinkedIn", contact.linkedin], ["GitHub", contact.github], ["Behance", contact.behance]] as Array<[string, string | undefined]>)
     .filter((s): s is [string, string] => typeof s[1] === "string")
@@ -176,11 +180,11 @@ ${FAVICON_TAG}
 
 <nav class="fixed top-0 w-full z-50 border-b border-system-line bg-system-bg/80 backdrop-blur-md">
   <div class="w-full flex justify-between items-center h-14 px-4 sm:px-8 max-w-[1400px] mx-auto">
-    <a href="${homeHref}" class="font-sans font-medium tracking-tight text-[15px] text-white no-underline">${escapeHtml(identity.name)} <span class="text-system-dim font-mono ml-1">· dr</span></a>
+    <a href="${homeRel}" class="font-sans font-medium tracking-tight text-[15px] text-white no-underline">${escapeHtml(identity.name)} <span class="text-system-dim font-mono ml-1">· dr</span></a>
     <div class="flex items-center h-full">
       <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase">${navLinks}</div>
       <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
-        <a href="${altHref}" hreflang="${altLang}" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">${lang === "en" ? "EN" : "ES"}<span class="text-system-dim/50">/${lang === "en" ? "ES" : "EN"}</span></a>
+        <a href="${altRel}" hreflang="${altLang}" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">${lang === "en" ? "EN" : "ES"}<span class="text-system-dim/50">/${lang === "en" ? "ES" : "EN"}</span></a>
         <div class="flex items-center space-x-2 group cursor-help" title="${escapeHtml(sysTitle)}">
           <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
           <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">${escapeHtml(sysIterating)}</span>
@@ -194,7 +198,7 @@ ${FAVICON_TAG}
 <main id="main" class="flex-grow pt-28 pb-20 px-4 sm:px-8 relative z-10 flex flex-col items-center">
 
   <div class="w-full max-w-5xl mb-6 reveal">
-    <a href="${homeHref}#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">← ${escapeHtml(backLabel)}</a>
+    <a href="${homeRel}#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">← ${escapeHtml(backLabel)}</a>
   </div>
 
   <div class="w-full max-w-5xl relative reveal">

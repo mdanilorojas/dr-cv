@@ -124,7 +124,7 @@ describe("loadCases", () => {
     const cases = loadCases(realCasesDir);
     expect(cases.length).toBe(3);
     const slugs = cases.map((c) => c.slug).sort();
-    expect(slugs).toEqual(["developer-portal", "enregla", "life-update-mobile"]);
+    expect(slugs).toEqual(["developer-portal", "juan-valdez", "life-update-mobile"]);
   });
 });
 

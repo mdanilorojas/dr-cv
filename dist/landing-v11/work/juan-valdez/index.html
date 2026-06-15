@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EnRegla — compliance SaaS, 0 → 1.0-MVP in 40 days · Danilo Rojas</title>
-<meta name="description" content="SaaS de compliance multi-sede for LATAM SMBs. 0 → 1.0-MVP in production in 40 days, co-built with Claude Code using MCP servers and parallel subagents.">
-<meta property="og:title" content="EnRegla — compliance SaaS, 0 → 1.0-MVP in 40 days · Danilo Rojas">
-<meta property="og:description" content="SaaS de compliance multi-sede for LATAM SMBs. 0 → 1.0-MVP in production in 40 days, co-built with Claude Code using MCP servers and parallel subagents.">
+<title>Juan Valdez mobile app &amp; design system · Danilo Rojas</title>
+<meta name="description" content="End-to-end UI design for Juan Valdez&#39;s Colombia mobile app — the full product surface and a reusable design system. I delivered the screens, the flows, and the system, then handed engineering a clean, spec&#39;d build.">
+<meta property="og:title" content="Juan Valdez mobile app &amp; design system · Danilo Rojas">
+<meta property="og:description" content="End-to-end UI design for Juan Valdez&#39;s Colombia mobile app — the full product surface and a reusable design system. I delivered the screens, the flows, and the system, then handed engineering a clean, spec&#39;d build.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://danilorojas.design/work/enregla/">
+<meta property="og:url" content="https://danilorojas.design/work/juan-valdez/">
 <meta property="og:image" content="https://danilorojas.design/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://danilorojas.design/og.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%23030303%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2252%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-size%3D%2238%22%20font-weight%3D%22600%22%20fill%3D%22%23EDEDED%22%20letter-spacing%3D%22-1%22%3Edr%3C%2Ftext%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2216%22%20r%3D%222%22%20fill%3D%22%233B82F6%22%2F%3E%3C%2Fsvg%3E">
-<link rel="canonical" href="https://danilorojas.design/work/enregla/">
-<link rel="alternate" hreflang="en" href="https://danilorojas.design/work/enregla/">
-<link rel="alternate" hreflang="es" href="https://danilorojas.design/es/work/enregla/">
-<link rel="alternate" hreflang="x-default" href="https://danilorojas.design/work/enregla/">
+<link rel="canonical" href="https://danilorojas.design/work/juan-valdez/">
+<link rel="alternate" hreflang="en" href="https://danilorojas.design/work/juan-valdez/">
+<link rel="alternate" hreflang="es" href="https://danilorojas.design/es/work/juan-valdez/">
+<link rel="alternate" hreflang="x-default" href="https://danilorojas.design/work/juan-valdez/">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = { darkMode:'class', theme:{ extend:{
@@ -59,14 +59,8 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 .reveal.active { opacity:1; transform:translateY(0); }
 .delay-100{transition-delay:100ms;} .delay-200{transition-delay:200ms;}
 .tech-label { position:absolute; background:#030303; padding:0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:.1em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.08); z-index:10; }
-.metric-card { background-color:#070708;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"),
-    radial-gradient(130% 130% at 0% 0%, rgba(255,255,255,0.07), transparent 55%),
-    linear-gradient(160deg, rgba(255,255,255,0.045), transparent 45%);
-  background-size:140px 140px, auto, auto; background-blend-mode:overlay, normal, normal;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); transition: background-color .4s ease, box-shadow .4s ease; }
-.metric-card:hover { background-color:#0c0c0e; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+.metric-card { background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); transition: background-color .4s ease, box-shadow .4s ease; }
+.metric-card:hover { background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
 ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
 @media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} }
 
@@ -102,14 +96,14 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 
 <nav class="fixed top-0 w-full z-50 border-b border-system-line bg-system-bg/80 backdrop-blur-md">
   <div class="w-full flex justify-between items-center h-14 px-4 sm:px-8 max-w-[1400px] mx-auto">
-    <a href="/" class="font-sans font-medium tracking-tight text-[15px] text-white no-underline">Danilo Rojas <span class="text-system-dim font-mono ml-1">· dr</span></a>
+    <a href="../../" class="font-sans font-medium tracking-tight text-[15px] text-white no-underline">Danilo Rojas <span class="text-system-dim font-mono ml-1">· dr</span></a>
     <div class="flex items-center h-full">
-      <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase"><a href="/#notes" class="text-system-dim hover:text-white transition-colors">Notes</a><a href="/#work" class="text-system-dim hover:text-white transition-colors">Work</a><a href="/#method" class="text-system-dim hover:text-white transition-colors">Method</a><a href="/#about" class="text-system-dim hover:text-white transition-colors">About</a><a href="/#contact" class="text-system-dim hover:text-white transition-colors">Contact</a></div>
+      <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase"><a href="../../#notes" class="text-system-dim hover:text-white transition-colors">Notes</a><a href="../../#work" class="text-system-dim hover:text-white transition-colors">Work</a><a href="../../#method" class="text-system-dim hover:text-white transition-colors">Method</a><a href="../../#about" class="text-system-dim hover:text-white transition-colors">About</a><a href="../../#contact" class="text-system-dim hover:text-white transition-colors">Contact</a></div>
       <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
-        <a href="/es/work/enregla/" hreflang="es" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">EN<span class="text-system-dim/50">/ES</span></a>
-        <div class="flex items-center space-x-2 group cursor-help" title="Continuous learning and system optimization in progress">
+        <a href="../../es/work/juan-valdez/" hreflang="es" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">EN<span class="text-system-dim/50">/ES</span></a>
+        <div class="flex items-center space-x-2 group cursor-help" title="A human running the loop agents run — orchestrating, evaluating, compounding">
           <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
-          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Sys_Iterating</span>
+          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Human_Compounding</span>
         </div>
       </div>
     </div>
@@ -120,47 +114,29 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 <main id="main" class="flex-grow pt-28 pb-20 px-4 sm:px-8 relative z-10 flex flex-col items-center">
 
   <div class="w-full max-w-5xl mb-6 reveal">
-    <a href="/#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">← Back to work</a>
+    <a href="../../#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">← Back to work</a>
   </div>
 
   <div class="w-full max-w-5xl relative reveal">
     <div class="structural-border p-8 sm:p-12 md:p-16 relative overflow-hidden bg-system-surface/30 backdrop-blur-sm">
       <div class="font-mono text-[10px] text-system-dim uppercase tracking-widest mb-6 flex flex-wrap gap-x-3 gap-y-1">
-        <span class="text-white">own product · paying pilots</span><span class="text-system-line">//</span><span>2026</span>
+        <span class="text-white">Juan Valdez · Product / UI Designer</span><span class="text-system-line">//</span><span>2023</span>
       </div>
-      <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1] text-white max-w-4xl">EnRegla — compliance SaaS, 0 → 1.0-MVP in 40 days</h1>
-      <p class="mt-8 text-base md:text-lg text-system-dim font-light leading-relaxed max-w-2xl">SaaS de compliance multi-sede for LATAM SMBs. 0 → 1.0-MVP in production in 40 days, co-built with Claude Code using MCP servers and parallel subagents.</p>
-      <div class="mt-10 flex flex-wrap gap-2"><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">React 19</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Supabase</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">MCP</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Paying pilots</span></div>
+      <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1] text-white max-w-4xl">Juan Valdez mobile app &amp; design system</h1>
+      <p class="mt-8 text-base md:text-lg text-system-dim font-light leading-relaxed max-w-2xl">End-to-end UI design for Juan Valdez&#39;s Colombia mobile app — the full product surface and a reusable design system. I delivered the screens, the flows, and the system, then handed engineering a clean, spec&#39;d build.</p>
+      <div class="mt-10 flex flex-wrap gap-2"><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Mobile UI</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Design system</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Figma</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Brand-led</span></div>
     </div>
     <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
-    <div class="tech-label -top-2 left-10">PROJECT_FILE // 01</div>
+    <div class="tech-label -top-2 left-10">PROJECT_FILE // 02</div>
   </div>
 
-  <section class="w-full max-w-5xl mt-12 reveal">
-    <div class="structural-border p-2 sm:p-4 bg-[#050505] relative">
-      <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
-      <div class="tech-label -top-2 left-10">DEMO // PICTURE_IN_PICTURE</div>
-      <div class="v11-anim-frame" style="--v11-anim-ratio: 820 / 640;" data-anim-fit data-anim-natural-w="820">
-  <iframe
-    class="v11-anim-frame__iframe"
-    src="../../assets/animations/gallery/animations-enregla/alt-1-screenshot-to-animation-en.html"
-    title="EnRegla — screenshot to live animation"
-    loading="lazy"
-    sandbox="allow-scripts allow-same-origin"
-    referrerpolicy="no-referrer"
-    width="820"
-    height="640"
-    style="width:820px;height:640px;"
-  ></iframe>
-</div>
-    </div>
-  </section>
+  
   <section class="w-full max-w-5xl mt-24 reveal">
     <div class="border-b border-system-line pb-4 mb-8 flex items-end justify-between">
       <h2 class="text-xl md:text-2xl font-light text-system-accent">What I owned.</h2>
-      <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">SCOPE // 01</span>
+      <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">SCOPE // 02</span>
     </div>
-    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4"><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>346 commits · 21 SQL migrations · 31 UI components · 1 edge function with cron</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Supabase MCP server wired into Claude Code for direct SQL + migrations</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Recursive DS migration (17 parts × 5 rounds) scored 78.4 → 95.6</li></ul>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4"><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Complete UI design across the core mobile flows</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Reusable design system: components, type scale, color, spacing</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Brand-led product design for a national CPG / retail audience</li></ul>
   </section>
   <section class="w-full max-w-5xl mt-24 reveal">
     <div class="border-b border-system-line pb-4 mb-8 flex items-end justify-between">
@@ -170,39 +146,39 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
     <dl class="border-b border-system-line">
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Context</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">LATAM SMB compliance. Multi-site reporting was done in spreadsheets, manually, every month. Nobody owned the data model.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Juan Valdez — Colombia&#39;s flagship coffee brand — needed its mobile app designed as a real product, not a set of disconnected screens.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Problem</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Existing tools priced out SMBs or required a sysadmin to deploy. Nothing shipped as a 40-day 0→1.0.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">The product had to feel unmistakably Juan Valdez while staying simple enough for a broad, everyday audience — and it needed a system underneath so it could grow without falling apart.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Approach</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Built the SaaS as a co-author exercise with Claude Code. Supabase MCP server in the loop for SQL + migrations. Parallel subagents on UI, data model, edge functions.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">I designed the full UI across the core flows and built a reusable design system — components, type scale, color, and spacing — so every screen stayed consistent and the brand carried through end to end.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Ship</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">346 commits in 40 days. 21 SQL migrations, 31 UI components, 1 edge function with cron. Live with paying pilots.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">A complete, brand-led mobile UI and the design system behind it, delivered to engineering as a clean, spec&#39;d handoff.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Outcome</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">DS migration ran 5 recursive rounds scoring 78.4 → 95.6. First pilots reporting monthly compliance in minutes instead of days.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">A coherent product surface engineering could build from directly, with a system that keeps new screens on-brand and consistent.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Differently</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Next time I write the MCP servers before the schema. The agent kept proposing columns it couldn&#39;t write back — half the recursion was plumbing.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">I&#39;d pair the design system with a living component doc from the start, so the handoff stays in sync as the app evolves.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Craft floor</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">RLS on every table. Type-safe Supabase client. Dark-mode primary with per-token WCAG trail. 0 hand-edited SQL in prod.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">One system, brand-true. Type, color, and spacing decided once and reused everywhere. Screens designed to hand off, not to admire in isolation.</dd>
     </div>
     </dl>
   </section>
-  <a class="group structural-border mt-16 p-8 md:p-10 flex items-center justify-between bg-system-surface/20 no-underline reveal max-w-5xl w-full relative" href="/work/developer-portal/index.html">
+  <a class="group structural-border mt-16 p-8 md:p-10 flex items-center justify-between bg-system-surface/20 no-underline reveal max-w-5xl w-full relative" href="../../work/life-update-mobile/index.html">
     <div class="crosshair ch-tr"></div><div class="crosshair ch-br"></div>
     <div>
       <div class="font-mono text-[10px] text-system-dim uppercase tracking-widest mb-2">Next case</div>
-      <div class="text-xl md:text-2xl font-light text-white">Developer Portal — design system + dark-first DS, shipped as agent-consumable skill</div>
+      <div class="text-xl md:text-2xl font-light text-white">Life Update — AI focus app</div>
     </div>
     <svg class="w-6 h-6 text-system-dim group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>

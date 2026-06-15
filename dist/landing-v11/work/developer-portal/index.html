@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Developer Portal — design system + dark-first DS, shipped as agent-consumable skill · Danilo Rojas</title>
-<meta name="description" content="Two intertwined design systems for a government-facing developer platform: /te-skin, a 17-component slash-command skill that agents invoke to return ready-to-use HTML + CSS + W3C tokens; and TE Black, a dark-first enterprise DS where every semantic color carries its WCAG audit inline. Packaged, versioned, agent-ready.">
-<meta property="og:title" content="Developer Portal — design system + dark-first DS, shipped as agent-consumable skill · Danilo Rojas">
-<meta property="og:description" content="Two intertwined design systems for a government-facing developer platform: /te-skin, a 17-component slash-command skill that agents invoke to return ready-to-use HTML + CSS + W3C tokens; and TE Black, a dark-first enterprise DS where every semantic color carries its WCAG audit inline. Packaged, versioned, agent-ready.">
+<title>Developer Portal design system · Danilo Rojas</title>
+<meta name="description" content="A dark-first design system for a government-facing developer platform. I defined the tokens, components, and accessibility rules so every team ships consistent, WCAG-compliant UI — packaged so engineering can pull ready-to-use components without redesigning anything.">
+<meta property="og:title" content="Developer Portal design system · Danilo Rojas">
+<meta property="og:description" content="A dark-first design system for a government-facing developer platform. I defined the tokens, components, and accessibility rules so every team ships consistent, WCAG-compliant UI — packaged so engineering can pull ready-to-use components without redesigning anything.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://danilorojas.design/work/developer-portal/">
 <meta property="og:image" content="https://danilorojas.design/og.png">
@@ -59,14 +59,8 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 .reveal.active { opacity:1; transform:translateY(0); }
 .delay-100{transition-delay:100ms;} .delay-200{transition-delay:200ms;}
 .tech-label { position:absolute; background:#030303; padding:0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:.1em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.08); z-index:10; }
-.metric-card { background-color:#070708;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"),
-    radial-gradient(130% 130% at 0% 0%, rgba(255,255,255,0.07), transparent 55%),
-    linear-gradient(160deg, rgba(255,255,255,0.045), transparent 45%);
-  background-size:140px 140px, auto, auto; background-blend-mode:overlay, normal, normal;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); transition: background-color .4s ease, box-shadow .4s ease; }
-.metric-card:hover { background-color:#0c0c0e; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+.metric-card { background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); transition: background-color .4s ease, box-shadow .4s ease; }
+.metric-card:hover { background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
 ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
 @media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} }
 
@@ -102,14 +96,14 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 
 <nav class="fixed top-0 w-full z-50 border-b border-system-line bg-system-bg/80 backdrop-blur-md">
   <div class="w-full flex justify-between items-center h-14 px-4 sm:px-8 max-w-[1400px] mx-auto">
-    <a href="/" class="font-sans font-medium tracking-tight text-[15px] text-white no-underline">Danilo Rojas <span class="text-system-dim font-mono ml-1">· dr</span></a>
+    <a href="../../" class="font-sans font-medium tracking-tight text-[15px] text-white no-underline">Danilo Rojas <span class="text-system-dim font-mono ml-1">· dr</span></a>
     <div class="flex items-center h-full">
-      <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase"><a href="/#notes" class="text-system-dim hover:text-white transition-colors">Notes</a><a href="/#work" class="text-system-dim hover:text-white transition-colors">Work</a><a href="/#method" class="text-system-dim hover:text-white transition-colors">Method</a><a href="/#about" class="text-system-dim hover:text-white transition-colors">About</a><a href="/#contact" class="text-system-dim hover:text-white transition-colors">Contact</a></div>
+      <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase"><a href="../../#notes" class="text-system-dim hover:text-white transition-colors">Notes</a><a href="../../#work" class="text-system-dim hover:text-white transition-colors">Work</a><a href="../../#method" class="text-system-dim hover:text-white transition-colors">Method</a><a href="../../#about" class="text-system-dim hover:text-white transition-colors">About</a><a href="../../#contact" class="text-system-dim hover:text-white transition-colors">Contact</a></div>
       <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
-        <a href="/es/work/developer-portal/" hreflang="es" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">EN<span class="text-system-dim/50">/ES</span></a>
-        <div class="flex items-center space-x-2 group cursor-help" title="Continuous learning and system optimization in progress">
+        <a href="../../es/work/developer-portal/" hreflang="es" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">EN<span class="text-system-dim/50">/ES</span></a>
+        <div class="flex items-center space-x-2 group cursor-help" title="A human running the loop agents run — orchestrating, evaluating, compounding">
           <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
-          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Sys_Iterating</span>
+          <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Human_Compounding</span>
         </div>
       </div>
     </div>
@@ -120,20 +114,20 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 <main id="main" class="flex-grow pt-28 pb-20 px-4 sm:px-8 relative z-10 flex flex-col items-center">
 
   <div class="w-full max-w-5xl mb-6 reveal">
-    <a href="/#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">← Back to work</a>
+    <a href="../../#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">← Back to work</a>
   </div>
 
   <div class="w-full max-w-5xl relative reveal">
     <div class="structural-border p-8 sm:p-12 md:p-16 relative overflow-hidden bg-system-surface/30 backdrop-blur-sm">
       <div class="font-mono text-[10px] text-system-dim uppercase tracking-widest mb-6 flex flex-wrap gap-x-3 gap-y-1">
-        <span class="text-white">Booz Allen Hamilton · Developer Portal</span><span class="text-system-line">//</span><span>2024 — 2026</span>
+        <span class="text-white">Booz Allen Hamilton · Senior Product Designer</span><span class="text-system-line">//</span><span>2024 — 2026</span>
       </div>
-      <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1] text-white max-w-4xl">Developer Portal — design system + dark-first DS, shipped as agent-consumable skill</h1>
-      <p class="mt-8 text-base md:text-lg text-system-dim font-light leading-relaxed max-w-2xl">Two intertwined design systems for a government-facing developer platform: /te-skin, a 17-component slash-command skill that agents invoke to return ready-to-use HTML + CSS + W3C tokens; and TE Black, a dark-first enterprise DS where every semantic color carries its WCAG audit inline. Packaged, versioned, agent-ready.</p>
-      <div class="mt-10 flex flex-wrap gap-2"><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Agent-consumable</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Developer Portal</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">W3C tokens</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Houdini · WCAG 2.2</span></div>
+      <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1] text-white max-w-4xl">Developer Portal design system</h1>
+      <p class="mt-8 text-base md:text-lg text-system-dim font-light leading-relaxed max-w-2xl">A dark-first design system for a government-facing developer platform. I defined the tokens, components, and accessibility rules so every team ships consistent, WCAG-compliant UI — packaged so engineering can pull ready-to-use components without redesigning anything.</p>
+      <div class="mt-10 flex flex-wrap gap-2"><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Design system</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Accessibility</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Component library</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Design tokens</span></div>
     </div>
     <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
-    <div class="tech-label -top-2 left-10">PROJECT_FILE // 02</div>
+    <div class="tech-label -top-2 left-10">PROJECT_FILE // 01</div>
   </div>
 
   <section class="w-full max-w-5xl mt-12 reveal">
@@ -158,9 +152,9 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
   <section class="w-full max-w-5xl mt-24 reveal">
     <div class="border-b border-system-line pb-4 mb-8 flex items-end justify-between">
       <h2 class="text-xl md:text-2xl font-light text-system-accent">What I owned.</h2>
-      <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">SCOPE // 02</span>
+      <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">SCOPE // 01</span>
     </div>
-    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4"><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>/te-skin — 17 components, versioned 2.0.0, HTML + CSS + JSON metadata per component</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>TE Black — dark-first DS with WCAG ratio stored inline with every token, rejected values kept as audit trail</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>3-layer CSS (tokens / components / patterns), shadcn alias layer for React drop-in, Houdini + canvas mesh-gradient backgrounds</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Design DNA codified: hard constraints, soft guidelines, named anti-patterns, testing checklist</li></ul>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4"><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Dark-first design system with WCAG contrast decided and documented per token</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>17 production components with states, usage rules, and named anti-patterns</li><li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>Handoff spec engineering builds from directly — design DNA, constraints, checklists</li></ul>
   </section>
   <section class="w-full max-w-5xl mt-24 reveal">
     <div class="border-b border-system-line pb-4 mb-8 flex items-end justify-between">
@@ -170,39 +164,39 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
     <dl class="border-b border-system-line">
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Context</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Booz Allen Hamilton · Developer Portal — a government-facing platform where two design systems run side by side: /te-skin (the component library) and TE Black (the dark-first palette). Design review was a two-week bottleneck on every ticket and existing components washed out under 12-hour mission lighting.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Booz Allen Hamilton&#39;s government-facing Developer Portal ran on two design systems side by side. Design review was a two-week bottleneck on every ticket, and the existing UI washed out under the low light operators actually worked in.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Problem</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Designers reviewed the same WCAG + token mismatches on every PR. The DS existed as Figma — the agents couldn&#39;t reach it. And dark mode was treated as a theme even though operators on the platform lived in it.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Teams re-reviewed the same accessibility and token mismatches on every release. The design system lived only in Figma, so engineering kept rebuilding it by hand. And dark mode was treated as an afterthought even though operators lived in it.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Approach</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Packaged the DS as a Claude Code slash-command skill (/te-skin). Tokens + decision trees + 17 recursive review rules invokable inline. In parallel, authored TE Black: dark-primary palette with the per-token WCAG audit written into the definition itself, not a downstream lint.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">I made the system dark-first and wrote the accessibility decision into each token — every color carries the contrast ratio it passed. Then I packaged the components and rules as a spec engineering (and their agents) could consume directly, instead of interpreting a Figma file.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Ship</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Shipped in four weeks. Two-agent workflow: one proposes UI, one runs recursive review. Five rounds raised the score 78.4 → 95.6. Tokens expose wcag.normal and wcag.large ratios for every ink-on-surface pair; component library migrated in the same PR as the tokens.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">A dark-first design system: 17 components with states, usage rules, and anti-patterns, plus tokens that expose their WCAG ratio for every ink-on-surface pair. Delivered as a handoff engineering builds straight from.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Outcome</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Design review cycles dropped from 2 weeks → 36 hours. Every contrast pair provably â‰¥ 4.5:1, and operators stopped reporting dim text in weekly retros. Jennifer Sheppard, Product Lead, called it \&quot;work I wanted to keep reusing.\&quot;</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Design review dropped from two weeks to under two days. Every contrast pair provably ≥ 4.5:1, and operators stopped reporting dim text in retros. Jennifer Sheppard, the Product Lead, called it work she wanted to keep reusing.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Differently</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">I would ship a public skill scaffold first and publish the audit trail as a CI gate. The client-specific tokens should have been a layer, not the base; and a failed WCAG ratio should fail the build, not rely on convention.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">I&#39;d separate the client-specific tokens from the base as a clean layer from day one, and make a failed contrast ratio block the release instead of relying on review to catch it.</dd>
     </div>
       <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">Craft floor</dt>
-      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">WCAG audit trail stored per token. Dark-mode primary. Tokens in CSS + JSON + Figma library in sync. Skill idempotent under re-invocation. APCA-adjacent luminance verified. No manual edits in the generated output.</dd>
+      <dd class="text-system-dim font-light leading-relaxed max-w-2xl">Accessibility decided per token, not linted after. Dark mode as the primary, not a theme. The same system in design and in code, so nothing drifts between them.</dd>
     </div>
     </dl>
   </section>
-  <a class="group structural-border mt-16 p-8 md:p-10 flex items-center justify-between bg-system-surface/20 no-underline reveal max-w-5xl w-full relative" href="/work/life-update-mobile/index.html">
+  <a class="group structural-border mt-16 p-8 md:p-10 flex items-center justify-between bg-system-surface/20 no-underline reveal max-w-5xl w-full relative" href="../../work/juan-valdez/index.html">
     <div class="crosshair ch-tr"></div><div class="crosshair ch-br"></div>
     <div>
       <div class="font-mono text-[10px] text-system-dim uppercase tracking-widest mb-2">Next case</div>
-      <div class="text-xl md:text-2xl font-light text-white">Life Update Mobile — Gemini API in runtime</div>
+      <div class="text-xl md:text-2xl font-light text-white">Juan Valdez mobile app &amp; design system</div>
     </div>
     <svg class="w-6 h-6 text-system-dim group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
