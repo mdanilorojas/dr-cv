@@ -71,14 +71,14 @@ describe("v11 horizon timeline â€” investing chips are links", () => {
 });
 
 describe("v11 horizon timeline â€” horizon column composition", () => {
-  it("horizon column has exactly 2 evidence chips + 1 bet chip", () => {
+  it("horizon column has exactly 2 evidence chips + 2 bet chips", () => {
     const col = extractColumn(htmlEn, "horizon");
     const chips = extractChips(col);
-    expect(chips.length).toBe(3);
+    expect(chips.length).toBe(4);
     const evidence = chips.filter((c) => c.includes('data-kind="evidence"'));
     const bets = chips.filter((c) => c.includes('data-kind="bet"'));
     expect(evidence.length).toBe(2);
-    expect(bets.length).toBe(1);
+    expect(bets.length).toBe(2);
   });
 
   it("bet chip has no href and has a visible bet badge", () => {
