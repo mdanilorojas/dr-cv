@@ -105,7 +105,7 @@ function writeFavicon(): void {
   const svg = `<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
   <rect width="64" height="64" rx="12" fill="#030303"/>
   <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle"
-        font-family="Inter, Arial, sans-serif" font-size="29" font-weight="600"
+        font-family="Inter, Arial, sans-serif" font-size="38" font-weight="600"
         fill="#EDEDED" letter-spacing="-1">
     dr
   </text>
