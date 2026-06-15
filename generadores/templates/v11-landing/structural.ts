@@ -2,6 +2,7 @@ import type { LandingData, Case, HorizonColumn } from "../../lib/types.js";
 import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 import { V11_COPY, sortedCases } from "./index.js";
 import type { V11LandingAssets } from "./index.js";
+import { FAVICON_TAG } from "./v11-styles.js";
 
 /* ============================================================================
  * Dark "structural / blueprint" landing — data-driven, bilingual.
@@ -249,7 +250,7 @@ export function renderStructuralLanding(
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="${escapeHtml(assets.ogImageUrl)}">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+${FAVICON_TAG}
 <link rel="canonical" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${lang}" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${altLang}" href="https://danilorojas.design${altHref}">
@@ -307,11 +308,18 @@ export function renderStructuralLanding(
           </div>
         </div>
       </div>
-      <div class="absolute -right-20 top-1/2 -translate-y-1/2 opacity-10 hidden lg:block pointer-events-none select-none">
-        <svg width="600" height="600" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.1" class="animate-spin-slow">
-          <circle cx="50" cy="50" r="48" stroke-dasharray="1 3" /><circle cx="50" cy="50" r="35" />
-          <rect x="25" y="25" width="50" height="50" transform="rotate(45 50 50)" />
-          <path d="M 50 0 L 50 100 M 0 50 L 100 50" stroke-dasharray="0.5 2" /><circle cx="50" cy="50" r="10" fill="currentColor" opacity="0.1"/>
+      <div class="absolute right-8 lg:right-16 top-1/2 -translate-y-1/2 opacity-[0.15] hidden lg:block pointer-events-none select-none">
+        <svg width="340" height="340" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.25" class="animate-[spin_24s_linear_infinite]">
+          <circle cx="50" cy="50" r="45" stroke-dasharray="0.5 2" />
+          <circle cx="50" cy="50" r="32" />
+          <circle cx="50" cy="50" r="28" stroke-dasharray="2 1" opacity="0.5" />
+          <rect x="27.37" y="27.37" width="45.25" height="45.25" transform="rotate(45 50 50)" />
+          <path d="M 50 2 L 50 98 M 2 50 L 98 50" stroke-dasharray="0.5 1.5" opacity="0.6" />
+          <circle cx="50" cy="50" r="4" fill="currentColor" opacity="0.2"/>
+          <circle cx="50" cy="5" r="1" fill="currentColor" />
+          <circle cx="50" cy="95" r="1" fill="currentColor" />
+          <circle cx="5" cy="50" r="1" fill="currentColor" />
+          <circle cx="95" cy="50" r="1" fill="currentColor" />
         </svg>
       </div>
     </div>

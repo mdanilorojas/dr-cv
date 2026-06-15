@@ -12,7 +12,7 @@
  */
 import type { Case, LandingData } from "../../lib/types.js";
 import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
-import { V11_STYLES } from "./v11-styles.js";
+import { V11_STYLES, FAVICON_TAG } from "./v11-styles.js";
 import { V11_SCRIPT } from "./v11-script.js";
 import { pipAnimationCss } from "./animations/picture-in-picture.js";
 import { renderIframeAnimation, hasIframeAnimation, iframeAnimationCss, iframeAnimationScript } from "./animations/iframe-animation.js";
@@ -133,7 +133,7 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
 <meta name="twitter:title" content="${escapeHtml(seoTitle)}">
 <meta name="twitter:description" content="${escapeHtml(seoDesc)}">
 <meta name="twitter:image" content="${escapeHtml(assets.ogImageUrl)}">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+${FAVICON_TAG}
 <link rel="canonical" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${lang}" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${lang === "en" ? "es" : "en"}" href="https://danilorojas.design${altHref}">

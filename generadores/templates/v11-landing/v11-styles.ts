@@ -3,6 +3,11 @@
  * Imports design-system/tokens-web.css via the orchestrator concat.
  * No Huly-glow CTA (V11 R8 #1). Self-hosted fonts (V11 R7).
  */
+
+/** Inline SVG favicon ("dr" mark). Data-URI so it resolves on file://, GitHub Pages, and any Vercel root. */
+const FAVICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#030303"/><text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="600" fill="#EDEDED" letter-spacing="-1">dr</text><circle cx="48" cy="16" r="2" fill="#3B82F6"/></svg>`;
+export const FAVICON_TAG = `<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,${encodeURIComponent(FAVICON_SVG)}">`;
+
 export const V11_STYLES = `
 /* ============== self-hosted fonts (V11 R7) ============== */
 @font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/inter-400.woff2") format("woff2");}
