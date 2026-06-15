@@ -46,16 +46,21 @@ body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialias
 .tech-label { position:absolute; background:#030303; padding:0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:.1em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.08); z-index:10; }
 .metric-card { background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); transition: background-color .4s ease, box-shadow .4s ease; }
 .metric-card:hover { background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
-.status-beat { animation: beat 1.6s ease-in-out infinite; }
-@keyframes beat {
-  0%,100%{ transform:scale(1); box-shadow:0 0 6px rgba(59,130,246,.6); }
-  12%{ transform:scale(1.5); box-shadow:0 0 12px rgba(59,130,246,1); }
-  24%{ transform:scale(1); }
-  36%{ transform:scale(1.35); box-shadow:0 0 10px rgba(59,130,246,.9); }
-  50%{ transform:scale(1); } }
+.status-glyph{ overflow:visible; }
 ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
-@media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} .status-beat{animation:none;} }
+@media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} .status-glyph animateMotion, .status-glyph animate{ display:none; } }
 `;
+
+/* Status glyph — "accretion": particles spiral into a nucleus (compounding).
+ * Grey, ~21px (30% larger than the old 16px dot), brightens to white on hover. */
+export const STATUS_GLYPH = `<svg class="status-glyph text-system-dim group-hover:text-white transition-colors" width="21" height="21" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+  <circle cx="20" cy="20" r="2" fill="currentColor"/>
+  <g fill="currentColor">
+    <circle r="1.3"><animateMotion path="M 36 20 Q 28 12 20 20" dur="8s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" repeatCount="indefinite"/></circle>
+    <circle r="1.3"><animateMotion path="M 20 4 Q 28 12 20 20" dur="8s" begin="-2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="-2.6s" repeatCount="indefinite"/></circle>
+    <circle r="1.3"><animateMotion path="M 4 20 Q 12 28 20 20" dur="8s" begin="-5.3s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="-5.3s" repeatCount="indefinite"/></circle>
+  </g>
+</svg>`;
 
 export const TW_CONFIG = `
 tailwind.config = { darkMode:'class', theme:{ extend:{
@@ -271,7 +276,7 @@ ${FAVICON_TAG}
       <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
         <a href="${altRel}" hreflang="${altLang}" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">${lang === "en" ? "EN" : "ES"}<span class="text-system-dim/50">/${lang === "en" ? "ES" : "EN"}</span></a>
         <div class="flex items-center space-x-2 group cursor-help" title="${escapeHtml(sysTitle)}">
-          <div class="status-beat w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+          ${STATUS_GLYPH}
           <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">${escapeHtml(sysIterating)}</span>
         </div>
       </div>

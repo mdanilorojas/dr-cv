@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Status glyph — atom / big bang</title>
+<style>
+  *{box-sizing:border-box;}
+  body{ margin:0; background:#030303; color:#ededed; font-family:Inter,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  .bg-grid{ position:fixed; inset:0; z-index:-1;
+    background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size:80px 80px; }
+  .wrap{ max-width:860px; margin:0 auto; padding:56px 24px 96px; }
+  h1{ font-weight:300; font-size:20px; }
+  .sub{ color:#8a8a8a; font-size:13px; font-weight:300; margin:4px 0 8px; }
+  .row{ display:flex; align-items:center; gap:22px; padding:18px 20px; margin-top:22px;
+    border:1px solid rgba(255,255,255,0.08); background:#070708; }
+  .label{ font-size:12px; color:#8a8a8a; font-weight:300; width:200px; }
+  .label b{ color:#fff; font-weight:500; }
+  .zoom{ width:48px; height:48px; flex:none; }
+  .badge{ display:flex; align-items:center; gap:8px; margin-left:auto; }
+  .badge .txt{ font-family:'JetBrains Mono',ui-monospace,monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:#8a8a8a; }
+  .real{ width:16px; height:16px; flex:none; }
+  /* grey, structural — matches crosshair hairlines */
+  svg{ color:#9a9a9a; overflow:visible; }
+  .stroke{ fill:none; stroke:currentColor; }
+  .fill{ fill:currentColor; stroke:none; }
+  @media(prefers-reduced-motion:reduce){ animate,animateTransform{ display:none; } }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="wrap">
+  <h1>Status glyph — móvil, gris, blueprint</h1>
+  <p class="sub">Izq: zoom 48px (para ver el detalle). Der: tamaño real 16px en el badge. Todo lento, monocromo gris.</p>
+
+  <!-- ===== A · ATOM — 3 órbitas girando a distinta velocidad ===== -->
+  <div class="row">
+    <span class="label"><b>A · Atom</b><br>3 órbitas, velocidades distintas. Evolución.</span>
+    <svg class="zoom" viewBox="0 0 40 40">
+      <use href="#atom"/>
+    </svg>
+    <div class="badge"><span class="txt">Human_Compounding</span>
+      <svg class="real" viewBox="0 0 40 40"><use href="#atom"/></svg>
+    </div>
+  </div>
+
+  <!-- ===== B · BIG BANG — punto emite partículas que expanden y se apagan ===== -->
+  <div class="row">
+    <span class="label"><b>B · Big Bang</b><br>núcleo emite, universo se expande, repite.</span>
+    <svg class="zoom" viewBox="0 0 40 40"><use href="#bang"/></svg>
+    <div class="badge"><span class="txt">Human_Compounding</span>
+      <svg class="real" viewBox="0 0 40 40"><use href="#bang"/></svg>
+    </div>
+  </div>
+
+  <!-- ===== C · ORBIT — un electrón orbita lento un núcleo ===== -->
+  <div class="row">
+    <span class="label"><b>C · Orbit</b><br>un electrón, una órbita. Mínimo absoluto.</span>
+    <svg class="zoom" viewBox="0 0 40 40"><use href="#orbit"/></svg>
+    <div class="badge"><span class="txt">Human_Compounding</span>
+      <svg class="real" viewBox="0 0 40 40"><use href="#orbit"/></svg>
+    </div>
+  </div>
+
+  <!-- ===== D · CONSTELLATION — nodos + líneas, respira y gira lento ===== -->
+  <div class="row">
+    <span class="label"><b>D · Constellation</b><br>nodos conectados, gira lentísimo.</span>
+    <svg class="zoom" viewBox="0 0 40 40"><use href="#const"/></svg>
+    <div class="badge"><span class="txt">Human_Compounding</span>
+      <svg class="real" viewBox="0 0 40 40"><use href="#const"/></svg>
+    </div>
+  </div>
+
+  <!-- ===== E · ACCRETION — partículas espiralan hacia el centro (compounding) ===== -->
+  <div class="row">
+    <span class="label"><b>E · Accretion</b><br>partículas caen al centro. Acumulación.</span>
+    <svg class="zoom" viewBox="0 0 40 40"><use href="#accr"/></svg>
+    <div class="badge"><span class="txt">Human_Compounding</span>
+      <svg class="real" viewBox="0 0 40 40"><use href="#accr"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SVG DEFS ===================== -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- A · ATOM -->
+    <g id="atom">
+      <circle class="fill" cx="20" cy="20" r="2"/>
+      <g>
+        <ellipse class="stroke" cx="20" cy="20" rx="16" ry="6" opacity=".5"/>
+        <circle class="fill" cx="36" cy="20" r="1.6"/>
+        <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="14s" repeatCount="indefinite"/>
+      </g>
+      <g transform="rotate(60 20 20)">
+        <ellipse class="stroke" cx="20" cy="20" rx="16" ry="6" opacity=".4"/>
+        <circle class="fill" cx="36" cy="20" r="1.6"/>
+        <animateTransform attributeName="transform" type="rotate" from="60 20 20" to="420 20 20" dur="20s" repeatCount="indefinite"/>
+      </g>
+      <g transform="rotate(120 20 20)">
+        <ellipse class="stroke" cx="20" cy="20" rx="16" ry="6" opacity=".3"/>
+        <circle class="fill" cx="36" cy="20" r="1.6"/>
+        <animateTransform attributeName="transform" type="rotate" from="120 20 20" to="480 20 20" dur="26s" repeatCount="indefinite"/>
+      </g>
+    </g>
+
+    <!-- B · BIG BANG -->
+    <g id="bang">
+      <circle class="fill" cx="20" cy="20" r="2">
+        <animate attributeName="r" values="2;3;2" dur="9s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;.6;1" dur="9s" repeatCount="indefinite"/>
+      </circle>
+      <circle class="stroke" cx="20" cy="20" r="3" opacity="0">
+        <animate attributeName="r" values="3;17" dur="9s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;.5;0" dur="9s" keyTimes="0;.15;1" repeatCount="indefinite"/>
+      </circle>
+      <!-- particles -->
+      <g class="fill">
+        <circle cx="20" cy="20" r="1"><animate attributeName="cx" values="20;36" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.9;0" dur="9s" keyTimes="0;.2;1" repeatCount="indefinite"/></circle>
+        <circle cx="20" cy="20" r="1"><animate attributeName="cy" values="20;4"  dur="9s" begin="-1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.9;0" dur="9s" keyTimes="0;.2;1" begin="-1s" repeatCount="indefinite"/></circle>
+        <circle cx="20" cy="20" r="1"><animate attributeName="cx" values="20;6"  dur="9s" begin="-2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.9;0" dur="9s" keyTimes="0;.2;1" begin="-2s" repeatCount="indefinite"/></circle>
+        <circle cx="20" cy="20" r="1"><animate attributeName="cx" values="20;34" dur="9s" begin="-.5s" repeatCount="indefinite"/><animate attributeName="cy" values="20;8" dur="9s" begin="-.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.8;0" dur="9s" keyTimes="0;.2;1" begin="-.5s" repeatCount="indefinite"/></circle>
+        <circle cx="20" cy="20" r="1"><animate attributeName="cx" values="20;8"  dur="9s" begin="-3s" repeatCount="indefinite"/><animate attributeName="cy" values="20;33" dur="9s" begin="-3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.8;0" dur="9s" keyTimes="0;.2;1" begin="-3s" repeatCount="indefinite"/></circle>
+      </g>
+    </g>
+
+    <!-- C · ORBIT -->
+    <g id="orbit">
+      <circle class="fill" cx="20" cy="20" r="2"/>
+      <circle class="stroke" cx="20" cy="20" r="13" opacity=".25"/>
+      <g>
+        <circle class="fill" cx="33" cy="20" r="1.8"/>
+        <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="16s" repeatCount="indefinite"/>
+      </g>
+    </g>
+
+    <!-- D · CONSTELLATION -->
+    <g id="const">
+      <g>
+        <line class="stroke" x1="20" y1="8" x2="32" y2="26" opacity=".3"/>
+        <line class="stroke" x1="32" y1="26" x2="8" y2="26" opacity=".3"/>
+        <line class="stroke" x1="8" y1="26" x2="20" y2="8" opacity=".3"/>
+        <circle class="fill" cx="20" cy="8" r="1.6"><animate attributeName="opacity" values="1;.4;1" dur="6s" repeatCount="indefinite"/></circle>
+        <circle class="fill" cx="32" cy="26" r="1.6"><animate attributeName="opacity" values=".4;1;.4" dur="6s" repeatCount="indefinite"/></circle>
+        <circle class="fill" cx="8" cy="26" r="1.6"><animate attributeName="opacity" values="1;.5;1" dur="7s" repeatCount="indefinite"/></circle>
+        <circle class="fill" cx="20" cy="20" r="1.2" opacity=".7"/>
+        <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="40s" repeatCount="indefinite"/>
+      </g>
+    </g>
+
+    <!-- E · ACCRETION -->
+    <g id="accr">
+      <circle class="fill" cx="20" cy="20" r="2"/>
+      <g class="fill">
+        <circle r="1.3"><animateMotion path="M 36 20 Q 28 12 20 20" dur="8s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" repeatCount="indefinite"/></circle>
+        <circle r="1.3"><animateMotion path="M 20 4 Q 28 12 20 20" dur="8s" begin="-2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="-2.6s" repeatCount="indefinite"/></circle>
+        <circle r="1.3"><animateMotion path="M 4 20 Q 12 28 20 20" dur="8s" begin="-5.3s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="-5.3s" repeatCount="indefinite"/></circle>
+      </g>
+    </g>
+  </defs>
+</svg>
+</body>
+</html>

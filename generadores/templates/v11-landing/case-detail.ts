@@ -13,7 +13,7 @@
 import type { Case, LandingData } from "../../lib/types.js";
 import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 import { FAVICON_TAG } from "./v11-styles.js";
-import { FONT_FACES, CUSTOM_CSS, TW_CONFIG, runtimeScript } from "./structural.js";
+import { FONT_FACES, CUSTOM_CSS, TW_CONFIG, runtimeScript, STATUS_GLYPH } from "./structural.js";
 import { renderIframeAnimation, hasIframeAnimation, iframeAnimationCss, iframeAnimationScript } from "./animations/iframe-animation.js";
 import {
   beatsFor,
@@ -186,7 +186,7 @@ ${FAVICON_TAG}
       <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
         <a href="${altRel}" hreflang="${altLang}" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">${lang === "en" ? "EN" : "ES"}<span class="text-system-dim/50">/${lang === "en" ? "ES" : "EN"}</span></a>
         <div class="flex items-center space-x-2 group cursor-help" title="${escapeHtml(sysTitle)}">
-          <div class="status-beat w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+          ${STATUS_GLYPH}
           <span class="font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">${escapeHtml(sysIterating)}</span>
         </div>
       </div>
