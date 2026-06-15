@@ -120,7 +120,7 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
     : "";
 
   const nextBlock = next
-    ? `<a class="group structural-border mt-16 p-8 md:p-10 flex items-center justify-between bg-system-surface/20 no-underline reveal max-w-5xl w-full relative" href="${homeHref}work/${encodeURIComponent(next.slug)}/">
+    ? `<a class="group structural-border mt-16 p-8 md:p-10 flex items-center justify-between bg-system-surface/20 no-underline reveal max-w-5xl w-full relative" href="${homeHref}work/${encodeURIComponent(next.slug)}/index.html">
     <div class="crosshair ch-tr"></div><div class="crosshair ch-br"></div>
     <div>
       <div class="font-mono text-[10px] text-system-dim uppercase tracking-widest mb-2">${escapeHtml(nextLabel)}</div>

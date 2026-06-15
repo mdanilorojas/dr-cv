@@ -105,7 +105,7 @@ function renderCaseCard(c: Case, i: number, lang: Lang, delay: string): string {
   const bullets = (lang === "en" ? c.bulletsEn : c.bulletsEs).slice(0, 3)
     .map((b) => `<li class="flex items-start"><span class="mr-2 text-system-line group-hover:text-white">→</span> ${escapeHtml(b)}</li>`).join("");
   const cta = escapeHtml(t(lang, V11_COPY.work.caseCtaEn, V11_COPY.work.caseCtaEs));
-  return `<a href="work/${escapeHtml(c.slug)}/" class="structural-border p-6 flex flex-col group reveal ${delay} bg-system-surface/20 no-underline">
+  return `<a href="work/${escapeHtml(c.slug)}/index.html" class="structural-border p-6 flex flex-col group reveal ${delay} bg-system-surface/20 no-underline">
   <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
   <div class="aspect-video border border-system-line mb-6 relative overflow-hidden flex items-center justify-center bg-[#050505]">${CARD_GRAPHICS[i % CARD_GRAPHICS.length]}</div>
   <div class="flex-grow">
@@ -205,18 +205,6 @@ export function renderStructuralLanding(
     .join("");
 
   const phases = data.horizon.columns.map((col) => renderPhase(col, lang)).join("");
-
-  const testimonial = data.testimonials.find((x) => x.author.includes("Giraldez")) ?? data.testimonials[0];
-  const tQuote = testimonial ? escapeHtml(lang === "es" && testimonial.quoteEs ? testimonial.quoteEs : testimonial.quote) : "";
-  const tBadge = t(lang, "Verified", "Verificado");
-  const testimonialHtml = testimonial ? `<div class="mt-16 structural-border p-6 md:p-8 bg-system-surface/10 max-w-4xl relative">
-    <div class="crosshair ch-br"></div>
-    <div class="font-serif italic text-lg md:text-xl text-system-dim mb-4 leading-relaxed">"${tQuote}"</div>
-    <div class="flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-system-dim">
-      <div class="w-1 h-1 bg-white rounded-full"></div><span>${escapeHtml(testimonial.author)}</span>
-      <span class="text-system-line">|</span><span class="text-[9px] border border-system-line/50 px-1.5 py-0.5">${escapeHtml(tBadge)}</span>
-    </div>
-  </div>` : "";
 
   const clientsRow = escapeHtml(data.clients.map((cl) => cl.name).join(" · "));
   const eduRows = data.education.map((e) => {
@@ -377,7 +365,6 @@ ${FAVICON_TAG}
       <div class="absolute left-[7.5px] top-2 bottom-2 w-[1px] bg-system-line hidden md:block"></div>
       ${phases}
     </div>
-    ${testimonialHtml}
   </section>
 
   <section id="about" class="w-full max-w-6xl mt-32 pt-16 reveal">
