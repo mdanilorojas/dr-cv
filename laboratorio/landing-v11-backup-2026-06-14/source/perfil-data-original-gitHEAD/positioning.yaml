@@ -1,0 +1,25 @@
+thesis:
+  en: "I ship real products â€” and I ship the tools agents use to help me ship them."
+  es: "Entrego publicables reales â€” y entrego las herramientas que los agentes usan para ayudarme."
+tagline:
+  en: "Fifteen years of delivery. Enterprise clients, production SaaS, active consulting at Booz Allen Hamilton. I keep the craft; agents give me the leverage."
+  es: "Quince aÃ±os entregando. Clientes enterprise, SaaS en producciÃ³n, consultorÃ­a activa en Booz Allen Hamilton. Yo pongo el craft; los agentes dan el leverage."
+proofNumbers:
+  - value: "15"
+    unit: "+"
+    labelEn: "Years shipping product"
+    labelEs: "AÃ±os shippeando"
+  - value: "346"
+    labelEn: "Commits Â· last 40 days"
+    labelEs: "Commits Â· 40 dÃ­as"
+  - value: "1"
+    unit: ".0"
+    labelEn: "SaaS live in production"
+    labelEs: "SaaS en producciÃ³n"
+  - value: "95"
+    unit: ".6"
+    labelEn: "DS migration score"
+    labelEs: "Score migraciÃ³n DS"
+
+thesisBairesdev:
+  en: "Agentic Designer. 15 years delivering product â€” today I ship SaaS, design systems, and frontend with agents as force multiplier."

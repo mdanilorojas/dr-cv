@@ -56,11 +56,11 @@ describe("renderBairesdevCv", () => {
     expect(html).toContain("Education");
   });
 
-  it("renders the agentic-forward thesis (not the generic one)", () => {
+  it("renders the senior-product-designer thesis (not the generic one)", () => {
     const html = renderBairesdevCv(data);
-    expect(html).toContain("Agentic Designer.");
-    expect(html).toContain("15 years delivering product");
-    expect(html).toContain("agents as force multiplier");
+    expect(html).toContain("Senior Product Designer.");
+    expect(html).toContain("18 years shipping product");
+    expect(html).toContain("AI as leverage");
     expect(html).not.toContain("I ship real products â€” and I ship the tools");
   });
 

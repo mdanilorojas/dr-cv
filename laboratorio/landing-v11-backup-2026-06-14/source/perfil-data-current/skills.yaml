@@ -1,0 +1,111 @@
+byLayer:
+  name: Visual A
+  axis: "axis · product layer"
+  groups:
+    - title: Strategy
+      skills:
+        - { name: "Product vision", level: mastered }
+        - { name: "Roadmapping · RICE", level: mastered }
+        - { name: "GTM specs", level: mastered }
+        - { name: "Multi-persona", level: mastered }
+        - { name: "Pricing · packaging", level: learning }
+        - { name: "MRR / CAC / LTV", level: learning }
+    - title: Design
+      skills:
+        - { name: "Design systems", level: mastered }
+        - { name: "Multi-theme (dark + light)", level: mastered }
+        - { name: "W3C design tokens", level: mastered }
+        - { name: "Figma · Style Dictionary", level: mastered }
+        - { name: "Recursive DS review", level: mastered }
+        - { name: "Interactive HTML docs", level: mastered }
+        - { name: "Named anti-patterns", level: mastered }
+        - { name: "Agentic UX patterns", level: learning }
+        - { name: "User research n>10", level: learning }
+    - title: Engineering
+      skills:
+        - { name: "TypeScript · React 19", level: mastered }
+        - { name: "Next 16 · Vite · Tailwind", level: mastered }
+        - { name: "Supabase · Prisma", level: mastered }
+        - { name: "SQL · RLS · edge", level: mastered }
+        - { name: "CI · Vercel · DNS", level: mastered }
+        - { name: "Houdini · canvas · glass", level: mastered }
+        - { name: "SharePoint SPA engineering", level: mastered }
+        - { name: "Test coverage discipline", level: learning }
+        - { name: "Sentry · PostHog", level: learning }
+        - { name: "Distributed backend", level: learning }
+    - title: Agents
+      skills:
+        - { name: "Claude Code · power user", level: mastered }
+        - { name: "MCP servers", level: mastered }
+        - { name: "Subagent orchestration", level: mastered }
+        - { name: "Skills-lock · reproducible", level: mastered }
+        - { name: "DS as agent-consumable skill", level: mastered }
+        - { name: "Gemini API in runtime", level: mastered }
+        - { name: "Evals · promptfoo", level: learning }
+        - { name: "RAG in production", level: learning }
+
+byOutcome:
+  name: Visual B
+  axis: "axis · client outcome"
+  groups:
+    - title: Discovery
+      skills:
+        - { name: "Problem framing", level: mastered }
+        - { name: "Non-goals discipline", level: mastered }
+        - { name: "Persona-driven specs", level: mastered }
+        - { name: "Live user interviews", level: learning }
+    - title: Build
+      skills:
+        - { name: "0 → prod in a day", level: mastered }
+        - { name: "0 → 1.0-MVP in 40 days", level: mastered }
+        - { name: "Full-stack TS + SQL", level: mastered }
+        - { name: "DS migrations (17 parts)", level: mastered }
+        - { name: "Functional prototypes", level: mastered }
+        - { name: "LLM-native features", level: learning }
+    - title: Ship
+      skills:
+        - { name: "Vercel · GH Actions", level: mastered }
+        - { name: "Conventional commits", level: mastered }
+        - { name: "Deploy · DNS · domains", level: mastered }
+        - { name: "RLS + demo-mode", level: mastered }
+        - { name: "SLOs · on-call", level: learning }
+        - { name: "Load testing", level: learning }
+    - title: Scale
+      skills:
+        - { name: "Enterprise clients (15 yrs)", level: mastered }
+        - { name: "Design ops · distributed DS", level: mastered }
+        - { name: "Cross-team consulting (BAH)", level: mastered }
+        - { name: "Solo founder · agent-multiplied", level: mastered }
+        - { name: "Growth loops · PLG", level: learning }
+        - { name: "Team hiring", level: learning }
+
+inventory:
+  - { skill: "UX/UI",                   years: "10+" }
+  - { skill: "HTML",                    years: "10+" }
+  - { skill: "CSS",                     years: "10+" }
+  - { skill: "JavaScript",              years: "10+" }
+  - { skill: "Agile Methodologies",     years: "10+" }
+  - { skill: "Figma",                   years: "8+"  }
+  - { skill: "Git / GitHub",            years: "5+"  }
+  - { skill: "SASS",                    years: "5+"  }
+  - { skill: "Sales / Business Dev",    years: "5+"  }
+  - { skill: "React",                   years: "4+"  }
+  - { skill: "SEO",                     years: "4+"  }
+  - { skill: "Illustrator",             years: "4+"  }
+  - { skill: "WordPress",               years: "4+"  }
+  - { skill: "TypeScript",              years: "3+"  }
+  - { skill: "SQL",                     years: "3+"  }
+  - { skill: "REST API",                years: "3+"  }
+  - { skill: "Graphic Design",          years: "3+"  }
+  - { skill: "Photoshop",               years: "3+"  }
+  - { skill: "Next.js",                 years: "2+"  }
+  - { skill: "Tailwind CSS",            years: "2+"  }
+  - { skill: "Supabase",                years: "2+"  }
+  - { skill: "PostgreSQL",              years: "2+"  }
+  - { skill: "REST",                    years: "2+"  }
+  - { skill: "Artificial Intelligence", years: "2+"  }
+  - { skill: "Prompt Engineering",      years: "2+"  }
+  - { skill: "LLM Integration",         years: "2+"  }
+  - { skill: "AI Agents",               years: "1+"  }
+  - { skill: "Anthropic Claude API",    years: "1+"  }
+  - { skill: "Vercel",                  years: "1+"  }

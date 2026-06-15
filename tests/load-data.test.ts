@@ -305,14 +305,14 @@ describe("loadCvData â€” inventory round-trip", () => {
 });
 
 describe("loadCvData â€” thesisBairesdev round-trip", () => {
-  it("perfil/data/positioning.yaml exposes thesisBairesdev.en starting with 'Agentic Designer.'", () => {
+  it("perfil/data/positioning.yaml exposes thesisBairesdev.en starting with 'Senior Product Designer.'", () => {
     const here = path.dirname(fileURLToPath(import.meta.url));
     const dataDir = path.join(here, "..", "perfil", "data");
     const cv = loadCvData(dataDir);
     expect(cv.positioning.thesisBairesdev).toBeDefined();
-    expect(cv.positioning.thesisBairesdev!.en.startsWith("Agentic Designer."))
+    expect(cv.positioning.thesisBairesdev!.en.startsWith("Senior Product Designer."))
       .toBe(true);
-    expect(cv.positioning.thesisBairesdev!.en).toContain("15 years");
-    expect(cv.positioning.thesisBairesdev!.en).toContain("agents as force multiplier");
+    expect(cv.positioning.thesisBairesdev!.en).toContain("18 years");
+    expect(cv.positioning.thesisBairesdev!.en).toContain("AI as leverage");
   });
 });
