@@ -33,16 +33,16 @@ const ANIMATION_BY_SLUG: Record<string, AnimationSource> = {
   "life-update-mobile": {
     folder: "animations-life-update",
     filePrefix: "alt-4-live-annotation",
-    naturalWidth: 680,
-    naturalHeight: 660,
+    naturalWidth: 668,
+    naturalHeight: 640,
     titleEn: "Life Update Mobile — live annotation",
     titleEs: "Life Update Mobile — anotación en vivo",
   },
   "developer-portal": {
     folder: "animations-te",
     filePrefix: "alt-2-picture-in-picture",
-    naturalWidth: 920,
-    naturalHeight: 660,
+    naturalWidth: 820,
+    naturalHeight: 500,
     titleEn: "Developer Portal — picture in picture",
     titleEs: "Developer Portal — picture in picture",
   },
@@ -60,7 +60,7 @@ export function renderIframeAnimation(input: RenderInput): string {
   const source = ANIMATION_BY_SLUG[slug];
   if (!source) return "";
 
-  const src = `${basePath}assets/animations/gallery/${source.folder}/${source.filePrefix}-${lang}.html`;
+  const src = `${basePath}assets/animations/gallery/${source.folder}/${source.filePrefix}-${lang}.html?embed=1`;
   const title = lang === "en" ? source.titleEn : source.titleEs;
   const ratio = `${source.naturalWidth} / ${source.naturalHeight}`;
 
@@ -69,7 +69,7 @@ export function renderIframeAnimation(input: RenderInput): string {
   // scrollbars. A tiny runtime then CSS-scales the iframe so its full
   // width fits the wrapper, and the wrapper's aspect-ratio reserves the
   // resulting scaled height.
-  return `<div class="v11-anim-frame" style="--v11-anim-ratio: ${ratio};" data-anim-fit data-anim-natural-w="${source.naturalWidth}">
+  return `<div class="v11-anim-frame" style="--v11-anim-ratio: ${ratio};" data-anim-fit data-anim-natural-w="${source.naturalWidth}" data-anim-natural-h="${source.naturalHeight}">
   <iframe
     class="v11-anim-frame__iframe"
     src="${escapeHtml(src)}"
@@ -111,80 +111,33 @@ export const iframeAnimationCss = `
 
 export const iframeAnimationScript = `
 (function(){
-  // CSS injected into each animation iframe to strip captions, labels,
-  // hints, and sibling callouts — only the UI stage (.window / .phone)
-  // should render. Also removes stage padding and body centering so the
-  // iframe content box hugs the animation's intrinsic size.
-  var EMBED_CSS = [
-    'html, body { margin:0 !important; padding:0 !important; min-height:0 !important; background:transparent !important; display:block !important; place-items:initial !important; }',
-    /* Keep the stage grid so side panels (e.g. annotation callouts) stay
-       laid out beside the primary visual; just strip padding and let the
-       columns hug their content instead of stretching to the iframe width. */
-    '.stage { padding:0 !important; gap:28px !important; grid-template-columns:auto auto !important; display:inline-grid !important; text-align:left !important; }',
-    /* Drop only the surrounding chrome — never the annotation panels. */
-    '.caption, .alt-label, .hint { display:none !important; }',
-    '.window { margin:0 !important; }',
-    '.phone-wrap { margin:0 !important; }'
-  ].join('\\n');
-
+  // Pure CSS-transform scaling driven only by the wrapper width and the
+  // iframe's declared natural size (data-anim-natural-w + width attr). We
+  // never read the iframe document, so this works under file:// and across
+  // origins. The embedded animation handles its own chrome-stripping and
+  // autoplay via the ?embed=1 flag in its URL.
+  // Leave a margin so the stage never touches the frame edges.
+  var FILL = 0.82;
   function fitOne(wrapper){
     var iframe = wrapper.querySelector('iframe');
     if (!iframe) return;
-    var doc;
-    try { doc = iframe.contentDocument; } catch(_){ return; }
-    if (!doc || !doc.body) return;
-
-    // Inject embed CSS once.
-    if (!doc.getElementById('v11-embed-style')) {
-      var style = doc.createElement('style');
-      style.id = 'v11-embed-style';
-      style.textContent = EMBED_CSS;
-      (doc.head || doc.documentElement).appendChild(style);
-    }
-
-    // Measure the primary stage element — fall back to body if absent.
-    var target = doc.querySelector('.window')
-              || doc.querySelector('.phone-wrap')
-              || doc.querySelector('.stage')
-              || doc.body;
-    var rect = target.getBoundingClientRect();
-    var naturalW = Math.max(1, Math.round(rect.width));
-    var naturalH = Math.max(1, Math.round(rect.height));
-
-    // Size the iframe to the measured natural box so no scrollbars appear.
-    iframe.style.width  = naturalW + 'px';
-    iframe.style.height = naturalH + 'px';
-    iframe.setAttribute('width', String(naturalW));
-    iframe.setAttribute('height', String(naturalH));
-
-    // Update aspect ratio on wrapper so it reserves the right height.
-    wrapper.style.setProperty('--v11-anim-ratio', naturalW + ' / ' + naturalH);
-
-    // Apply scale to fit wrapper width.
+    var naturalW = parseFloat(wrapper.getAttribute('data-anim-natural-w'))
+                || parseFloat(iframe.getAttribute('width')) || 1;
+    var naturalH = parseFloat(wrapper.getAttribute('data-anim-natural-h'))
+                || parseFloat(iframe.getAttribute('height')) || naturalW;
     var w = wrapper.clientWidth;
+    var h = wrapper.clientHeight;
     if (!w) return;
-    var scale = w / naturalW;
+    var scale = (w / naturalW) * FILL;
     wrapper.style.setProperty('--v11-anim-scale', String(scale));
+    // Center the scaled stage within the frame.
+    iframe.style.left = Math.max(0, (w - naturalW * scale) / 2) + 'px';
+    iframe.style.top  = Math.max(0, (h - naturalH * scale) / 2) + 'px';
   }
-
   function fitAll(){
     var wrappers = document.querySelectorAll('[data-anim-fit]');
     for (var i = 0; i < wrappers.length; i++) fitOne(wrappers[i]);
   }
-
-  // Hook each iframe's load so we inject + measure as soon as its doc is ready.
-  document.querySelectorAll('[data-anim-fit] iframe').forEach(function(iframe){
-    iframe.addEventListener('load', function(){
-      var wrapper = iframe.closest('[data-anim-fit]');
-      if (wrapper) fitOne(wrapper);
-    });
-    // If already loaded (cache), run now.
-    try { if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
-      var wrapper = iframe.closest('[data-anim-fit]');
-      if (wrapper) fitOne(wrapper);
-    }} catch(_){}
-  });
-
   fitAll();
   window.addEventListener('resize', fitAll, { passive: true });
   window.addEventListener('load', fitAll);

@@ -116,20 +116,20 @@
 
   .dim { position: absolute; inset: 0; background: rgba(10,10,10,0.75); opacity: 0; z-index: 15; backdrop-filter: blur(4px); }
 
-  .phone-wrap:hover .pin-1 { animation: pinIn 400ms cubic-bezier(.34,1.56,.64,1) forwards 300ms, pinOut 400ms ease forwards 2400ms; }
-  .phone-wrap:hover .cal-1 { animation: calIn 400ms ease forwards 500ms, calOut 400ms ease forwards 2400ms; }
+  :is(.phone-wrap:hover,.phone-wrap.play) .pin-1 { animation: pinIn 400ms cubic-bezier(.34,1.56,.64,1) forwards 300ms, pinOut 400ms ease forwards 2400ms; }
+  :is(.phone-wrap:hover,.phone-wrap.play) .cal-1 { animation: calIn 400ms ease forwards 500ms, calOut 400ms ease forwards 2400ms; }
 
-  .phone-wrap:hover .pin-2 { animation: pinIn 400ms cubic-bezier(.34,1.56,.64,1) forwards 2600ms, pinOut 400ms ease forwards 4700ms; }
-  .phone-wrap:hover .cal-2 { animation: calIn 400ms ease forwards 2800ms, calOut 400ms ease forwards 4700ms; }
+  :is(.phone-wrap:hover,.phone-wrap.play) .pin-2 { animation: pinIn 400ms cubic-bezier(.34,1.56,.64,1) forwards 2600ms, pinOut 400ms ease forwards 4700ms; }
+  :is(.phone-wrap:hover,.phone-wrap.play) .cal-2 { animation: calIn 400ms ease forwards 2800ms, calOut 400ms ease forwards 4700ms; }
 
-  .phone-wrap:hover .pin-3 { animation: pinIn 400ms cubic-bezier(.34,1.56,.64,1) forwards 4900ms, pinOut 400ms ease forwards 7000ms; }
-  .phone-wrap:hover .cal-3 { animation: calIn 400ms ease forwards 5100ms, calOut 400ms ease forwards 7000ms; }
+  :is(.phone-wrap:hover,.phone-wrap.play) .pin-3 { animation: pinIn 400ms cubic-bezier(.34,1.56,.64,1) forwards 4900ms, pinOut 400ms ease forwards 7000ms; }
+  :is(.phone-wrap:hover,.phone-wrap.play) .cal-3 { animation: calIn 400ms ease forwards 5100ms, calOut 400ms ease forwards 7000ms; }
 
-  .phone-wrap:hover .pin-4 { animation: pinIn 400ms cubic-bezier(.34,1.56,.64,1) forwards 7200ms, pinOut 400ms ease forwards 9300ms; }
-  .phone-wrap:hover .cal-4 { animation: calIn 400ms ease forwards 7400ms, calOut 400ms ease forwards 9300ms; }
+  :is(.phone-wrap:hover,.phone-wrap.play) .pin-4 { animation: pinIn 400ms cubic-bezier(.34,1.56,.64,1) forwards 7200ms, pinOut 400ms ease forwards 9300ms; }
+  :is(.phone-wrap:hover,.phone-wrap.play) .cal-4 { animation: calIn 400ms ease forwards 7400ms, calOut 400ms ease forwards 9300ms; }
 
-  .phone-wrap:hover .dim { animation: dimIn 400ms ease forwards 9500ms; }
-  .phone-wrap:hover .summary { animation: summaryIn 600ms cubic-bezier(.34,1.56,.64,1) forwards 9700ms; }
+  :is(.phone-wrap:hover,.phone-wrap.play) .dim { animation: dimIn 400ms ease forwards 9500ms; }
+  :is(.phone-wrap:hover,.phone-wrap.play) .summary { animation: summaryIn 600ms cubic-bezier(.34,1.56,.64,1) forwards 9700ms; }
 
   @keyframes pinIn  { to { opacity: 1; transform: scale(1); } }
   @keyframes pinOut { 0% { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.5); } }
@@ -137,6 +137,12 @@
   @keyframes calOut { 0% { opacity: 1; } to { opacity: 0; transform: translateX(-8px); } }
   @keyframes dimIn  { to { opacity: 1; } }
   @keyframes summaryIn { to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+
+  /* ── Embed mode (?embed=1): strip chrome, transparent bg, autoplay ── */
+  html.embed, html.embed body { background:transparent !important; display:block !important; min-height:0 !important; place-items:initial !important; overflow:hidden !important; }
+  html.embed .caption, html.embed .alt-label, html.embed .hint { display:none !important; }
+  html.embed .stage { padding:0 !important; gap:28px !important; display:inline-grid !important; grid-template-columns:auto auto !important; text-align:left !important; }
+  html.embed .phone-wrap { margin:0 !important; }
 </style>
 </head>
 <body>
@@ -189,5 +195,17 @@
 
     <div class="hint">hover · cuatro pins sobre la pantalla real, luego el resumen</div>
   </div>
+  <script>
+(function(){
+  var p=new URLSearchParams(location.search);
+  if(!p.has("embed")) return;
+  document.documentElement.classList.add("embed");
+  var el=document.querySelector(".phone-wrap");
+  if(!el) return;
+  function play(){ el.classList.remove("play"); void el.offsetWidth; el.classList.add("play"); }
+  play();
+  setInterval(play, 12000);
+})();
+</script>
 </body>
 </html>
