@@ -73,7 +73,7 @@
   */
 
   /* bg1: visible al inicio, se desvanece al entrar bg2 (crossfade) */
-  .window:hover .shot-1 {
+  :is(.window:hover,.window.play) .shot-1 {
     animation: bg1-fade 1400ms ease forwards 1000ms;
   }
   @keyframes bg1-fade {
@@ -82,7 +82,7 @@
   }
 
   /* bg2: CROSSFADE de entrada desde opacidad 0 con suave scale-down */
-  .window:hover .shot-2 {
+  :is(.window:hover,.window.play) .shot-2 {
     animation: bg2-in 1000ms ease forwards 1100ms, bg2-out 800ms ease forwards 2500ms;
   }
   @keyframes bg2-in {
@@ -96,7 +96,7 @@
   }
 
   /* bg3: SWIPE de entrada desde la derecha */
-  .window:hover .shot-3 {
+  :is(.window:hover,.window.play) .shot-3 {
     animation: bg3-in 900ms cubic-bezier(.4,0,.2,1) forwards 2500ms,
                bg3-out 900ms ease forwards 3800ms;
   }
@@ -110,7 +110,7 @@
   }
 
   /* bg4: ZOOM-IN reveal — entra desde ligeramente zoomed-out con fade */
-  .window:hover .shot-4 {
+  :is(.window:hover,.window.play) .shot-4 {
     animation: bg4-in 1200ms cubic-bezier(.2,0,.1,1) forwards 3900ms;
   }
   @keyframes bg4-in {
@@ -126,7 +126,7 @@
     opacity: 0;
     pointer-events: none;
   }
-  .window:hover .tint { animation: tint-in 1000ms ease forwards 4400ms; }
+  :is(.window:hover,.window.play) .tint { animation: tint-in 1000ms ease forwards 4400ms; }
   @keyframes tint-in { to { opacity: 1; } }
 
   /* ── Ventana PIP (sin cambios respecto al alt-2 original) ──────────── */
@@ -145,7 +145,7 @@
     transition: transform 400ms ease, opacity 400ms ease, box-shadow 400ms ease;
     z-index: 5;
   }
-  .window:hover .pip { transform: scale(1.05); opacity: 1; box-shadow: 0 20px 48px -6px rgba(35,210,215,0.35), 0 0 0 1px rgba(35,210,215,0.5); }
+  :is(.window:hover,.window.play) .pip { transform: scale(1.05); opacity: 1; box-shadow: 0 20px 48px -6px rgba(35,210,215,0.35), 0 0 0 1px rgba(35,210,215,0.5); }
 
   .pip-chrome {
     height: 22px; background: var(--panel-2); border-bottom: 1px solid var(--line);
@@ -161,10 +161,10 @@
   .pip-step { position: absolute; inset: 16px; display: grid; place-items: center; text-align: center; opacity: 0; }
 
   .pip-step.s1 { opacity: 1; }
-  .window:hover .pip-step.s1 { animation: cycle 1200ms ease forwards 0ms; }
-  .window:hover .pip-step.s2 { animation: cycle 1400ms ease forwards 1200ms; }
-  .window:hover .pip-step.s3 { animation: cycle 1400ms ease forwards 2600ms; }
-  .window:hover .pip-step.s4 { animation: cycleKeep 1800ms ease forwards 4000ms; }
+  :is(.window:hover,.window.play) .pip-step.s1 { animation: cycle 1200ms ease forwards 0ms; }
+  :is(.window:hover,.window.play) .pip-step.s2 { animation: cycle 1400ms ease forwards 1200ms; }
+  :is(.window:hover,.window.play) .pip-step.s3 { animation: cycle 1400ms ease forwards 2600ms; }
+  :is(.window:hover,.window.play) .pip-step.s4 { animation: cycleKeep 1800ms ease forwards 4000ms; }
   @keyframes cycle { 0% { opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
   @keyframes cycleKeep { 0% { opacity: 0; } 15%,100% { opacity: 1; } }
 
@@ -178,7 +178,7 @@
     background: linear-gradient(90deg, var(--teal), #6effff, var(--teal));
     width: 0;
   }
-  .window:hover .pip-step.s2 .pip-proc-bar::after { animation: fill 1200ms ease forwards 100ms; }
+  :is(.window:hover,.window.play) .pip-step.s2 .pip-proc-bar::after { animation: fill 1200ms ease forwards 100ms; }
   @keyframes fill { to { width: 100%; } }
 
   .pip-envs { display: flex; gap: 6px; }
@@ -192,8 +192,8 @@
   }
   .pip-check svg { width: 20px; height: 20px; color: var(--green); }
   .pip-check svg path { stroke-dasharray: 30; stroke-dashoffset: 30; }
-  .window:hover .pip-step.s4 .pip-check { animation: popCheck 300ms cubic-bezier(.34,1.56,.64,1) forwards 4100ms; }
-  .window:hover .pip-step.s4 .pip-check svg path { animation: drawCheck 350ms ease forwards 4350ms; }
+  :is(.window:hover,.window.play) .pip-step.s4 .pip-check { animation: popCheck 300ms cubic-bezier(.34,1.56,.64,1) forwards 4100ms; }
+  :is(.window:hover,.window.play) .pip-step.s4 .pip-check svg path { animation: drawCheck 350ms ease forwards 4350ms; }
   @keyframes popCheck { to { transform: scale(1); } }
   @keyframes drawCheck { to { stroke-dashoffset: 0; } }
 
@@ -218,14 +218,20 @@
   .tag.t1, .tag.t2, .tag.t3, .tag.t4 { top: 100px; right: 300px; }
 
   /* Cada tag se muestra durante su escena */
-  .window:hover .tag.t1 { animation: tagShow 1200ms ease forwards 200ms, tagHide 400ms ease forwards 1000ms; }
-  .window:hover .tag.t2 { animation: tagShow 1200ms ease forwards 1400ms, tagHide 400ms ease forwards 2400ms; }
-  .window:hover .tag.t3 { animation: tagShow 1200ms ease forwards 2800ms, tagHide 400ms ease forwards 3800ms; }
-  .window:hover .tag.t4 { animation: tagShowKeep 1200ms ease forwards 4500ms; }
+  :is(.window:hover,.window.play) .tag.t1 { animation: tagShow 1200ms ease forwards 200ms, tagHide 400ms ease forwards 1000ms; }
+  :is(.window:hover,.window.play) .tag.t2 { animation: tagShow 1200ms ease forwards 1400ms, tagHide 400ms ease forwards 2400ms; }
+  :is(.window:hover,.window.play) .tag.t3 { animation: tagShow 1200ms ease forwards 2800ms, tagHide 400ms ease forwards 3800ms; }
+  :is(.window:hover,.window.play) .tag.t4 { animation: tagShowKeep 1200ms ease forwards 4500ms; }
 
   @keyframes tagShow { to { opacity: 1; transform: translateX(0); } }
   @keyframes tagShowKeep { to { opacity: 1; transform: translateX(0); } }
   @keyframes tagHide { to { opacity: 0; transform: translateX(-6px); } }
+
+  /* ── Embed mode (?embed=1): strip chrome, transparent bg, autoplay ── */
+  html.embed, html.embed body { background:transparent !important; display:block !important; min-height:0 !important; place-items:initial !important; overflow:hidden !important; }
+  html.embed .caption, html.embed .alt-label, html.embed .hint { display:none !important; }
+  html.embed .stage { padding:0 !important; }
+  html.embed .window { margin:0 !important; }
 </style>
 </head>
 <body>
@@ -291,5 +297,17 @@
 
     <div class="hint">hover · home → catálogo → design system → observabilidad · sincronizado con el flujo de deploy</div>
   </div>
+  <script>
+(function(){
+  var p=new URLSearchParams(location.search);
+  if(!p.has("embed")) return;
+  document.documentElement.classList.add("embed");
+  var el=document.querySelector(".window");
+  if(!el) return;
+  function play(){ el.classList.remove("play"); void el.offsetWidth; el.classList.add("play"); }
+  play();
+  setInterval(play, 12000);
+})();
+</script>
 </body>
 </html>

@@ -488,7 +488,7 @@ ${FAVICON_TAG}
   <footer id="contact" class="w-full max-w-6xl mt-32 pt-16 pb-8">
     <div class="structural-border p-8 md:p-16 reveal relative bg-system-surface">
       <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
-      <div class="tech-label -top-2 left-10">SYS: INITIALIZE_CONNECTION</div>
+      <div class="tech-label -top-2 left-10">SYS: DEPLOY_HANDSHAKE</div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
           <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">${escapeHtml(t(lang, V11_COPY.contact.eyebrowEn, V11_COPY.contact.eyebrowEs))}</span>
