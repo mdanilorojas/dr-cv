@@ -33,8 +33,8 @@ const ANIMATION_BY_SLUG: Record<string, AnimationSource> = {
   "life-update-mobile": {
     folder: "animations-life-update",
     filePrefix: "alt-4-live-annotation",
-    naturalWidth: 780,
-    naturalHeight: 800,
+    naturalWidth: 680,
+    naturalHeight: 660,
     titleEn: "Life Update Mobile — live annotation",
     titleEs: "Life Update Mobile — anotación en vivo",
   },
@@ -117,9 +117,12 @@ export const iframeAnimationScript = `
   // iframe content box hugs the animation's intrinsic size.
   var EMBED_CSS = [
     'html, body { margin:0 !important; padding:0 !important; min-height:0 !important; background:transparent !important; display:block !important; place-items:initial !important; }',
-    '.stage { padding:0 !important; gap:0 !important; grid-template-columns:auto !important; display:block !important; text-align:left !important; }',
-    '.caption, .alt-label, .hint, .callouts { display:none !important; }',
-    /* keep only the primary visual (window OR phone-wrap) */
+    /* Keep the stage grid so side panels (e.g. annotation callouts) stay
+       laid out beside the primary visual; just strip padding and let the
+       columns hug their content instead of stretching to the iframe width. */
+    '.stage { padding:0 !important; gap:28px !important; grid-template-columns:auto auto !important; display:inline-grid !important; text-align:left !important; }',
+    /* Drop only the surrounding chrome — never the annotation panels. */
+    '.caption, .alt-label, .hint { display:none !important; }',
     '.window { margin:0 !important; }',
     '.phone-wrap { margin:0 !important; }'
   ].join('\\n');
