@@ -13,7 +13,7 @@
 import type { Case, LandingData } from "../../lib/types.js";
 import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 import { FAVICON_TAG } from "./v11-styles.js";
-import { FONT_FACES, CUSTOM_CSS, TW_CONFIG, runtimeScript, STATUS_GLYPH } from "./structural.js";
+import { FONT_FACES, CUSTOM_CSS, TW_CONFIG, runtimeScript, STATUS_GLYPH, THEME_BOOT, THEME_TOGGLE } from "./structural.js";
 import { renderIframeAnimation, hasIframeAnimation, iframeAnimationCss, iframeAnimationScript } from "./animations/iframe-animation.js";
 import {
   beatsFor,
@@ -76,7 +76,7 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
     ["#method", t(lang, "Method", "Método")],
     ["#about", t(lang, "About", "Sobre mí")],
     ["#contact", t(lang, "Contact", "Contacto")],
-  ].map(([h, l]) => `<a href="${homeDoc}${h}" class="text-system-dim hover:text-white transition-colors">${escapeHtml(l)}</a>`).join("");
+  ].map(([h, l]) => `<a href="${homeDoc}${h}" class="text-system-dim hover:text-system-accent transition-colors">${escapeHtml(l)}</a>`).join("");
 
   // Picture-in-picture demo (live two levels deep → basePath back to dist root).
   const animBasePath = lang === "en" ? "../../" : "../../../";
@@ -85,7 +85,7 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
     : "";
   const animationBlock = animationHtml
     ? `<section class="w-full max-w-5xl mt-12 reveal">
-    <div class="structural-border p-2 sm:p-4 bg-[#050505] relative">
+    <div class="structural-border p-2 sm:p-4 bg-system-surface relative">
       <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
       <div class="tech-label -top-2 left-10">DEMO // PICTURE_IN_PICTURE</div>
       ${animationHtml}
@@ -95,27 +95,27 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
 
   const bulletsHtml = bullets.length > 0
     ? `<section class="w-full max-w-5xl mt-24 reveal">
-    <div class="border-b border-system-line pb-4 mb-8 flex items-end justify-between">
+    <div class="border-b border-system-line/10 pb-4 mb-8 flex items-end justify-between">
       <h2 class="text-xl md:text-2xl font-light text-system-accent">${escapeHtml(t(lang, "What I owned.", "Lo que lideré."))}</h2>
       <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">SCOPE // ${fileNo}</span>
     </div>
-    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">${bullets.map((b) => `<li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line">→</span>${escapeHtml(b)}</li>`).join("")}</ul>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">${bullets.map((b) => `<li class="flex items-start text-system-dim font-light leading-relaxed"><span class="mr-3 text-system-line/10">→</span>${escapeHtml(b)}</li>`).join("")}</ul>
   </section>`
     : "";
 
   const beatRow = (label: string, body: string): string =>
-    `<div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line first:border-t-0">
+    `<div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-2 md:gap-8 py-7 border-t border-system-line/10 first:border-t-0">
       <dt class="font-mono text-[10px] text-system-dim uppercase tracking-widest pt-1">${escapeHtml(label)}</dt>
       <dd class="text-system-dim font-light leading-relaxed max-w-2xl">${escapeHtml(body)}</dd>
     </div>`;
 
   const beatsHtml = beats
     ? `<section class="w-full max-w-5xl mt-24 reveal">
-    <div class="border-b border-system-line pb-4 mb-8 flex items-end justify-between">
+    <div class="border-b border-system-line/10 pb-4 mb-8 flex items-end justify-between">
       <h2 class="text-xl md:text-2xl font-light text-system-accent">${escapeHtml(t(lang, "How this shipped.", "Cómo se entregó."))}</h2>
       <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">DOC // NARRATIVE</span>
     </div>
-    <dl class="border-b border-system-line">
+    <dl class="border-b border-system-line/10">
       ${beatRow(labels.context, beats.context[lang])}
       ${beatRow(labels.problem, beats.problem[lang])}
       ${beatRow(labels.approach, beats.approach[lang])}
@@ -132,9 +132,9 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
     <div class="crosshair ch-tr"></div><div class="crosshair ch-br"></div>
     <div>
       <div class="font-mono text-[10px] text-system-dim uppercase tracking-widest mb-2">${escapeHtml(nextLabel)}</div>
-      <div class="text-xl md:text-2xl font-light text-white">${escapeHtml(t(lang, next.titleEn, next.titleEs))}</div>
+      <div class="text-xl md:text-2xl font-light text-system-accent">${escapeHtml(t(lang, next.titleEn, next.titleEs))}</div>
     </div>
-    <svg class="w-6 h-6 text-system-dim group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    <svg class="w-6 h-6 text-system-dim group-hover:text-system-accent transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>`
     : "";
 
@@ -148,7 +148,7 @@ export function renderCaseDetailPage(input: CaseDetailInput): string {
     .filter((s): s is [string, string] => typeof s[1] === "string")
     .map(([label, handle]) => {
       const href = handle.startsWith("http") ? handle : `https://${handle}`;
-      return `<a href="${escapeHtml(href)}" rel="noopener" target="_blank" class="hover:text-white transition-colors">${escapeHtml(label)}</a>`;
+      return `<a href="${escapeHtml(href)}" rel="noopener" target="_blank" class="hover:text-system-accent transition-colors">${escapeHtml(label)}</a>`;
     }).join("");
 
   return `<!doctype html>
@@ -172,45 +172,47 @@ ${FAVICON_TAG}
 <link rel="alternate" hreflang="${lang}" href="https://danilorojas.design${selfHref}">
 <link rel="alternate" hreflang="${altLang}" href="https://danilorojas.design${altHref}">
 <link rel="alternate" hreflang="x-default" href="https://danilorojas.design/work/${c.slug}/">
+<script>${THEME_BOOT}</script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>${TW_CONFIG}</script>
 <style>${FONT_FACES}${CUSTOM_CSS}${iframeAnimationCss}</style>
 </head>
-<body class="relative overflow-x-hidden selection:bg-white selection:text-black min-h-screen flex flex-col font-sans">
+<body class="relative overflow-x-hidden selection:bg-system-accent selection:text-system-bg min-h-screen flex flex-col font-sans">
 
-<a class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:bg-white focus:text-black focus:px-3 focus:py-1 focus:text-sm" href="#main">${escapeHtml(skipLabel)}</a>
+<a class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:bg-system-accent focus:text-system-bg focus:px-3 focus:py-1 focus:text-sm" href="#main">${escapeHtml(skipLabel)}</a>
 <div class="bg-grid"></div>
 <div class="mouse-glow" id="mouseGlow"></div>
 
-<nav class="fixed top-0 w-full z-50 border-b border-system-line bg-system-bg/80 backdrop-blur-md">
+<nav class="fixed top-0 w-full z-50 border-b border-system-line/10 bg-system-bg/80 backdrop-blur-md">
   <div class="w-full flex justify-between items-center h-14 px-4 sm:px-8 max-w-[1400px] mx-auto">
-    <a href="${homeDoc}" class="font-sans font-medium tracking-tight text-[15px] text-white no-underline">${escapeHtml(identity.name)} <span class="text-system-dim font-mono ml-1">· dr</span></a>
+    <a href="${homeDoc}" class="font-sans font-medium tracking-tight text-[15px] text-system-accent no-underline">${escapeHtml(identity.name)} <span class="text-system-dim font-mono ml-1">· dr</span></a>
     <div class="flex items-center h-full">
       <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase">${navLinks}</div>
-      <div class="flex items-center border-l border-system-line h-full pl-6 space-x-4">
-        <a href="${altRel}" hreflang="${altLang}" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white">${lang === "en" ? "EN" : "ES"}<span class="text-system-dim/50">/${lang === "en" ? "ES" : "EN"}</span></a>
+      <div class="flex items-center border-l border-system-line/10 h-full pl-6 space-x-4">
+        ${THEME_TOGGLE}
+        <a href="${altRel}" hreflang="${altLang}" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-system-accent">${lang === "en" ? "EN" : "ES"}<span class="text-system-dim/50">/${lang === "en" ? "ES" : "EN"}</span></a>
         <div id="statusBadge" class="flex items-center space-x-2 group cursor-help" title="${escapeHtml(sysTitle)}">
           ${STATUS_GLYPH}
-          <span class="status-hint font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">${escapeHtml(sysIterating)}</span>
+          <span class="status-hint font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-system-accent transition-colors hidden sm:inline-block">${escapeHtml(sysIterating)}</span>
         </div>
       </div>
     </div>
   </div>
-  <div class="h-[1px] bg-white w-0 absolute bottom-0 left-0" id="scrollProgress"></div>
+  <div class="h-[1px] bg-system-accent w-0 absolute bottom-0 left-0" id="scrollProgress"></div>
 </nav>
 
 <main id="main" class="flex-grow pt-28 pb-20 px-4 sm:px-8 relative z-10 flex flex-col items-center">
 
   <div class="w-full max-w-5xl mb-6 reveal">
-    <a href="${homeDoc}#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">← ${escapeHtml(backLabel)}</a>
+    <a href="${homeDoc}#work" class="font-mono text-[10px] text-system-dim uppercase tracking-widest hover:text-system-accent transition-colors no-underline">← ${escapeHtml(backLabel)}</a>
   </div>
 
   <div class="w-full max-w-5xl relative reveal">
     <div class="structural-border p-8 sm:p-12 md:p-16 relative overflow-hidden bg-system-surface/30 backdrop-blur-sm">
       <div class="font-mono text-[10px] text-system-dim uppercase tracking-widest mb-6 flex flex-wrap gap-x-3 gap-y-1">
-        <span class="text-white">${escapeHtml(client)}</span><span class="text-system-line">//</span><span>${escapeHtml(dates)}</span>
+        <span class="text-system-accent">${escapeHtml(client)}</span><span class="text-system-line/10">//</span><span>${escapeHtml(dates)}</span>
       </div>
-      <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1] text-white max-w-4xl">${escapeHtml(title)}</h1>
+      <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1] text-system-accent max-w-4xl">${escapeHtml(title)}</h1>
       <p class="mt-8 text-base md:text-lg text-system-dim font-light leading-relaxed max-w-2xl">${escapeHtml(hook)}</p>
       <div class="mt-10 flex flex-wrap gap-2">${stackChips}</div>
     </div>
@@ -224,16 +226,16 @@ ${FAVICON_TAG}
   ${nextBlock}
 
   <footer id="contact" class="w-full max-w-5xl mt-32 pt-16 pb-8">
-    <div class="structural-border p-8 md:p-16 reveal relative bg-[#050505]">
+    <div class="structural-border p-8 md:p-16 reveal relative bg-system-surface">
       <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
       <div class="tech-label -top-2 left-10">SYS: INITIALIZE_CONNECTION</div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
           <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">${escapeHtml(t(lang, V11_COPY.contact.eyebrowEn, V11_COPY.contact.eyebrowEs))}</span>
-          <h2 class="text-3xl md:text-4xl font-light mb-4 text-white">${escapeHtml(t(lang, V11_COPY.contact.titleEn, V11_COPY.contact.titleEs))}</h2>
+          <h2 class="text-3xl md:text-4xl font-light mb-4 text-system-accent">${escapeHtml(t(lang, V11_COPY.contact.titleEn, V11_COPY.contact.titleEs))}</h2>
           <p class="text-system-dim font-light mb-8 max-w-md">${escapeHtml(t(lang, V11_COPY.contact.leadEn, V11_COPY.contact.leadEs))}</p>
           <div class="space-y-6">
-            <button id="emailBtn" type="button" class="group relative px-6 py-3 bg-white text-black font-mono text-[11px] tracking-widest uppercase inline-flex items-center">
+            <button id="emailBtn" type="button" class="group relative px-6 py-3 bg-system-accent text-system-bg font-mono text-[11px] tracking-widest uppercase inline-flex items-center">
               <span class="relative z-10 mr-2">${escapeHtml(contact.email)}</span>
               <svg class="relative z-10 w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             </button>
@@ -241,15 +243,15 @@ ${FAVICON_TAG}
           </div>
         </div>
         <div class="flex flex-col justify-end">
-          <div class="border border-system-line p-1 bg-system-bg">
+          <div class="border border-system-line/10 p-1 bg-system-bg">
             <div class="border border-system-line/50 p-6 relative">
               <div class="font-mono text-[10px] text-system-dim mb-4 uppercase flex justify-between"><span>Terminal.exe</span><span>v11.0</span></div>
               <div class="font-mono text-xs text-system-dim space-y-2">
                 <div>&gt; ${t(lang, "System diagnostics", "Diagnóstico del sistema")}... <span class="text-green-500">OK</span></div>
                 <div>&gt; ${t(lang, "Loading profile", "Cargando perfil")}... <span class="text-green-500">100%</span></div>
-                <div class="text-white">&gt; ${escapeHtml(identity.availability)}</div>
+                <div class="text-system-accent">&gt; ${escapeHtml(identity.availability)}</div>
                 <div>&gt; ${t(lang, "Awaiting handshake", "Esperando handshake")}_</div>
-                <div class="animate-pulse w-2 h-4 bg-white mt-2 inline-block"></div>
+                <div class="animate-pulse w-2 h-4 bg-system-accent mt-2 inline-block"></div>
               </div>
             </div>
           </div>
