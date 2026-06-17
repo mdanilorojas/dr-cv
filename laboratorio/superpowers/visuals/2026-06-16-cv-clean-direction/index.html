@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CV clean — direction (dark vs light)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',system-ui,sans-serif;background:#161616;color:#ededed;padding:32px clamp(12px,3vw,40px) 80px;}
+  .head{max-width:1700px;margin:0 auto 28px;}
+  .head h1{font-weight:500;font-size:21px;letter-spacing:-.01em;}
+  .head p{color:#9a9a9a;font-size:13.5px;margin-top:8px;max-width:70ch;line-height:1.6;}
+  .legend{font-family:'JetBrains Mono',monospace;font-size:11px;color:#777;margin-top:12px;display:flex;gap:22px;flex-wrap:wrap;}
+  .legend b{color:#cfcfcf;font-weight:500;}
+  .stage{display:flex;gap:36px;justify-content:center;align-items:flex-start;flex-wrap:wrap;}
+  .col{display:flex;flex-direction:column;align-items:center;gap:12px;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#888;}
+
+  /* A4 page */
+  .page{
+    width:794px;height:1123px;overflow:hidden;position:relative;
+    --mono:'JetBrains Mono',monospace;
+    font-size:11px;line-height:1.5;
+    padding:64px 60px;
+  }
+  /* hairline grid backdrop, very faint */
+  .page::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(to right,var(--grid) 1px,transparent 1px),linear-gradient(to bottom,var(--grid) 1px,transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image:radial-gradient(circle at 50% 38%,#000 55%,transparent 100%);
+            mask-image:radial-gradient(circle at 50% 38%,#000 55%,transparent 100%);}
+
+  /* themes */
+  .dark{background:#0a0a0a;color:#ededed;--ink:#ffffff;--dim:#8a8a8a;--line:rgba(255,255,255,.14);--line-soft:rgba(255,255,255,.08);--grid:rgba(255,255,255,.035);--accent:#ffffff;}
+  .light{background:#f6f4ef;color:#1c1e24;--ink:#111318;--dim:#6a6e78;--line:rgba(20,22,28,.16);--line-soft:rgba(20,22,28,.09);--grid:rgba(20,22,28,.05);--accent:#111318;}
+
+  .ml{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);}
+
+  /* header */
+  .cv-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1;}
+  .name{font-size:30px;font-weight:500;letter-spacing:-.02em;color:var(--ink);line-height:1.05;}
+  .role{margin-top:8px;font-size:12.5px;color:var(--dim);font-weight:400;}
+  .contact{text-align:right;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--dim);line-height:1.9;}
+  .contact b{color:var(--ink);font-weight:500;}
+  .avail{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);}
+  .dot{width:6px;height:6px;border-radius:50%;background:#10b981;box-shadow:0 0 0 2px rgba(16,185,129,.18);}
+
+  .rule{height:1px;background:var(--line);margin:26px 0;position:relative;z-index:1;}
+  .rule-soft{height:1px;background:var(--line-soft);}
+
+  .lead{font-size:18px;line-height:1.4;font-weight:300;color:var(--ink);max-width:60ch;position:relative;z-index:1;letter-spacing:-.01em;}
+  .lead .em{color:var(--ink);font-weight:500;}
+  .lead .muted{color:var(--dim);}
+
+  /* proof row */
+  .proof{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line);margin:24px 0 4px;position:relative;z-index:1;}
+  .proof .cell{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 14px 12px;}
+  .proof .n{font-size:25px;font-weight:300;letter-spacing:-.02em;color:var(--ink);}
+  .proof .l{margin-top:4px;font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);line-height:1.4;}
+
+  /* section */
+  .sec{position:relative;z-index:1;margin-top:24px;}
+  .sec-h{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:14px;}
+  .sec-h h2{font-size:13px;font-weight:500;color:var(--ink);letter-spacing:-.01em;}
+  .sec-h .k{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);}
+
+  /* experience entry */
+  .job{display:grid;grid-template-columns:84px 1fr;gap:16px;padding:11px 0;border-top:1px solid var(--line-soft);}
+  .job:first-of-type{border-top:0;}
+  .job .yr{font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:.04em;padding-top:2px;}
+  .job .co{font-size:12.5px;font-weight:600;color:var(--ink);}
+  .job .ro{font-size:11px;color:var(--dim);margin-top:1px;}
+  .job .de{font-size:10px;color:var(--dim);line-height:1.5;margin-top:5px;max-width:62ch;}
+  .job .badge{font-family:var(--mono);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--line);padding:2px 6px;color:var(--dim);margin-left:8px;vertical-align:middle;}
+
+  /* two col bottom */
+  .grid2{display:grid;grid-template-columns:1.3fr 1fr;gap:34px;}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
+  .chip{font-family:var(--mono);font-size:8.5px;letter-spacing:.04em;border:1px solid var(--line);padding:3px 7px;color:var(--dim);}
+  .skline{display:flex;justify-content:space-between;font-size:10px;padding:4px 0;border-top:1px solid var(--line-soft);color:var(--dim);}
+  .skline b{color:var(--ink);font-weight:500;}
+  .edu{font-size:10px;color:var(--dim);padding:4px 0;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;gap:10px;}
+  .edu b{color:var(--ink);font-weight:500;}
+
+  .foot{position:absolute;left:60px;right:60px;bottom:34px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);z-index:1;}
+</style>
+</head>
+<body>
+  <div class="head">
+    <h1>CV clean — dirección (A4, 1 página, reflejo de la landing)</h1>
+    <p>Mismo lenguaje structural/blueprint de la landing: mono microlabels, hairlines, monocromo, un solo registro. Misma data real. Elige dirección de base — luego pulimos contenido.</p>
+    <div class="legend"><span><b>DARK</b> — default de la landing, brand fuerte, ink-heavy al imprimir</span><span><b>LIGHT</b> — paper, imprime perfecto, clásico premium</span></div>
+  </div>
+
+  <div class="stage">
+    <!-- DARK -->
+    <div class="col"><span class="tag">Dirección A · Dark</span>
+    <div class="page dark">
+      <div class="cv-top">
+        <div>
+          <div class="name">Danilo Rojas</div>
+          <div class="role">Senior Product Designer · UX/UI · AI-augmented</div>
+          <div class="avail"><span class="dot"></span>Open to work · Remote global</div>
+        </div>
+        <div class="contact">
+          <div><b>danilorojas.design</b></div>
+          <div>hola@danilorojas.design</div>
+          <div>linkedin.com/in/mdanilorojas</div>
+          <div>github.com/mdanilorojas</div>
+          <div>Quito · Ecuador</div>
+        </div>
+      </div>
+      <div class="rule"></div>
+      <div class="lead">I design products for <span class="em">complex, regulated environments.</span> <span class="muted">Eighteen years in product, fifteen in design — senior UX judgment, enterprise compliance documentation, AI as leverage, not costume.</span></div>
+      <div class="proof">
+        <div class="cell"><div class="n">18+</div><div class="l">Years building products</div></div>
+        <div class="cell"><div class="n">15</div><div class="l">Years in design</div></div>
+        <div class="cell"><div class="n">4</div><div class="l">Years FAA · DoD · VA programs</div></div>
+        <div class="cell"><div class="n">50+</div><div class="l">Product initiatives shipped</div></div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><h2>Experience</h2><span class="k">EXP // selected</span></div>
+        <div class="job"><div class="yr">2022—NOW</div><div><div class="co">Booz Allen Hamilton<span class="badge">Army · DoD</span></div><div class="ro">Design-engineering consultant</div><div class="de">Two parallel design systems (/te-skin agent-consumable skill + TE Black, a11y audited into tokens), a Developer Portal product, and a SharePoint SPA. Cross-team consulting to Army/DoD; support for FAA, DoD & VA.</div></div></div>
+        <div class="job"><div class="yr">2026—NOW</div><div><div class="co">Compliance SaaS · LATAM<span class="badge">paying pilots</span></div><div class="ro">Founder · product &amp; design</div><div class="de">0 → 1.0 MVP in 40 days: 346 commits, 21 SQL migrations, 31 components, edge function + cron, a 17-part DS migration across 5 recursive review rounds (78.4 → 95.6).</div></div></div>
+        <div class="job"><div class="yr">2016—NOW</div><div><div class="co">Xentinels DesignOps</div><div class="ro">Product Manager · UX/UI Designer</div><div class="de">Formalized a Central Design team for a distributed-yet-centralized design system: roadmap, roles, contribution culture, tokens + accessible components for Merck, Mondelēz, Banco Pichincha, Quifatex, Azzorti.</div></div></div>
+        <div class="job"><div class="yr">2011—17</div><div><div class="co">Arpatel · Tecniequipos · Canadian Bank Note</div><div class="ro">Co-founder / Senior Designer-Dev / Project Admin</div><div class="de">Retail POS, CRM and order-management; a proprietary events platform (PHP · JS · MariaDB); regional network project administration.</div></div></div>
+      </div>
+
+      <div class="sec grid2">
+        <div>
+          <div class="sec-h"><h2>Capabilities</h2><span class="k">CAP // mastered</span></div>
+          <div class="skline"><b>Design systems</b><span>multi-theme · W3C tokens · recursive review</span></div>
+          <div class="skline"><b>Engineering</b><span>TS · React 19 · Supabase · SQL/RLS · CI</span></div>
+          <div class="skline"><b>Agents</b><span>Claude Code · MCP · subagent orchestration</span></div>
+          <div class="skline"><b>Strategy</b><span>product vision · roadmapping · GTM specs</span></div>
+        </div>
+        <div>
+          <div class="sec-h"><h2>Education</h2><span class="k">EDU</span></div>
+          <div class="edu"><b>B.Sc. Computer Systems Eng.</b><span>EPN · 2015</span></div>
+          <div class="edu"><b>Google UX Design</b><span>Coursera · 2021</span></div>
+          <div class="edu"><b>Design Thinking</b><span>IBM · 2020</span></div>
+        </div>
+      </div>
+      <div class="foot"><span>Danilo Rojas — Senior Product Designer</span><span>danilorojas.design</span></div>
+    </div></div>
+
+    <!-- LIGHT -->
+    <div class="col"><span class="tag">Dirección B · Light</span>
+    <div class="page light">
+      <div class="cv-top">
+        <div>
+          <div class="name">Danilo Rojas</div>
+          <div class="role">Senior Product Designer · UX/UI · AI-augmented</div>
+          <div class="avail"><span class="dot"></span>Open to work · Remote global</div>
+        </div>
+        <div class="contact">
+          <div><b>danilorojas.design</b></div>
+          <div>hola@danilorojas.design</div>
+          <div>linkedin.com/in/mdanilorojas</div>
+          <div>github.com/mdanilorojas</div>
+          <div>Quito · Ecuador</div>
+        </div>
+      </div>
+      <div class="rule"></div>
+      <div class="lead">I design products for <span class="em">complex, regulated environments.</span> <span class="muted">Eighteen years in product, fifteen in design — senior UX judgment, enterprise compliance documentation, AI as leverage, not costume.</span></div>
+      <div class="proof">
+        <div class="cell"><div class="n">18+</div><div class="l">Years building products</div></div>
+        <div class="cell"><div class="n">15</div><div class="l">Years in design</div></div>
+        <div class="cell"><div class="n">4</div><div class="l">Years FAA · DoD · VA programs</div></div>
+        <div class="cell"><div class="n">50+</div><div class="l">Product initiatives shipped</div></div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h"><h2>Experience</h2><span class="k">EXP // selected</span></div>
+        <div class="job"><div class="yr">2022—NOW</div><div><div class="co">Booz Allen Hamilton<span class="badge">Army · DoD</span></div><div class="ro">Design-engineering consultant</div><div class="de">Two parallel design systems (/te-skin agent-consumable skill + TE Black, a11y audited into tokens), a Developer Portal product, and a SharePoint SPA. Cross-team consulting to Army/DoD; support for FAA, DoD &amp; VA.</div></div></div>
+        <div class="job"><div class="yr">2026—NOW</div><div><div class="co">Compliance SaaS · LATAM<span class="badge">paying pilots</span></div><div class="ro">Founder · product &amp; design</div><div class="de">0 → 1.0 MVP in 40 days: 346 commits, 21 SQL migrations, 31 components, edge function + cron, a 17-part DS migration across 5 recursive review rounds (78.4 → 95.6).</div></div></div>
+        <div class="job"><div class="yr">2016—NOW</div><div><div class="co">Xentinels DesignOps</div><div class="ro">Product Manager · UX/UI Designer</div><div class="de">Formalized a Central Design team for a distributed-yet-centralized design system: roadmap, roles, contribution culture, tokens + accessible components for Merck, Mondelēz, Banco Pichincha, Quifatex, Azzorti.</div></div></div>
+        <div class="job"><div class="yr">2011—17</div><div><div class="co">Arpatel · Tecniequipos · Canadian Bank Note</div><div class="ro">Co-founder / Senior Designer-Dev / Project Admin</div><div class="de">Retail POS, CRM and order-management; a proprietary events platform (PHP · JS · MariaDB); regional network project administration.</div></div></div>
+      </div>
+
+      <div class="sec grid2">
+        <div>
+          <div class="sec-h"><h2>Capabilities</h2><span class="k">CAP // mastered</span></div>
+          <div class="skline"><b>Design systems</b><span>multi-theme · W3C tokens · recursive review</span></div>
+          <div class="skline"><b>Engineering</b><span>TS · React 19 · Supabase · SQL/RLS · CI</span></div>
+          <div class="skline"><b>Agents</b><span>Claude Code · MCP · subagent orchestration</span></div>
+          <div class="skline"><b>Strategy</b><span>product vision · roadmapping · GTM specs</span></div>
+        </div>
+        <div>
+          <div class="sec-h"><h2>Education</h2><span class="k">EDU</span></div>
+          <div class="edu"><b>B.Sc. Computer Systems Eng.</b><span>EPN · 2015</span></div>
+          <div class="edu"><b>Google UX Design</b><span>Coursera · 2021</span></div>
+          <div class="edu"><b>Design Thinking</b><span>IBM · 2020</span></div>
+        </div>
+      </div>
+      <div class="foot"><span>Danilo Rojas — Senior Product Designer</span><span>danilorojas.design</span></div>
+    </div></div>
+  </div>
+</body>
+</html>
