@@ -39,3 +39,16 @@ describe("renderCleanCv (EN)", () => {
     expect(html).not.toContain("Years building products");
   });
 });
+
+describe("renderCleanCv (ES)", () => {
+  const html = renderCleanCv(data, "es");
+  it("localizes the lead and section headings", () => {
+    expect(html).toContain('<html lang="es">');
+    expect(html).toContain("entornos complejos y regulados");
+    expect(html).toContain("Experiencia");
+    expect(html).toContain("Educación");
+  });
+  it("localizes role summaries", () => {
+    expect(html).toContain("Fundador · producto y diseño");
+  });
+});
