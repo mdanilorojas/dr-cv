@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CV Narrative Polish — Design Spec</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',system-ui,sans-serif;background:#f6f4ef;color:#1c1e24;line-height:1.6;padding:48px clamp(16px,5vw,64px) 120px;}
+  .wrap{max-width:920px;margin:0 auto;}
+  h1{font-size:28px;font-weight:600;letter-spacing:-.02em;}
+  .meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#6a6e78;margin-top:8px;letter-spacing:.04em;}
+  h2{font-size:18px;font-weight:600;margin:38px 0 14px;letter-spacing:-.01em;border-bottom:1px solid rgba(20,22,28,.14);padding-bottom:8px;}
+  p{margin:10px 0;}
+  .card{background:#fff;border:1px solid rgba(20,22,28,.12);border-radius:10px;padding:20px 22px;margin:14px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0;}
+  td,th{border:1px solid rgba(20,22,28,.12);padding:8px 12px;text-align:left;vertical-align:top;}
+  th{background:#efece5;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#4a4e58;}
+  ol,ul{margin:8px 0 8px 22px;}
+  li{margin:5px 0;}
+  code{font-family:'JetBrains Mono',monospace;font-size:.86em;background:#efece5;padding:1px 6px;border-radius:4px;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .flow{background:#fff;border:1px solid rgba(20,22,28,.12);border-radius:10px;padding:20px;overflow-x:auto;margin:14px 0;}
+  .layout{display:grid;grid-template-columns:1fr;gap:8px;font-size:13px;}
+  .row{border:1px dashed rgba(20,22,28,.22);border-radius:6px;padding:10px 14px;}
+  .row b{font-weight:600;}
+  .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a8e98;}
+</style>
+</head>
+<body><div class="wrap">
+  <h1>CV Narrative Polish — Design Spec</h1>
+  <div class="meta">2026-06-16 · status: in-review · companion to the .md spec</div>
+
+  <h2>Narrative Alignment Decisions</h2>
+  <table>
+    <tr><th>Section</th><th>Old Focus (Raw Engineering)</th><th>New Focus (Product Design Authority)</th></tr>
+    <tr><td><b>Tagline / Role</b></td><td>Senior Product Designer · UX/UI · AI-augmented</td><td>Senior Product Designer · Design Systems & UX Research</td></tr>
+    <tr><td><b>Thesis</b></td><td>Regulated environments, 18 yrs, AI as leverage not costume</td><td>Design systems engineering, cognitive ergonomics, bridging deep UX/UI with developer velocity</td></tr>
+    <tr><td><b>Booz Allen</b></td><td>Design-engineering consultant, built /te-skin, consulted Army</td><td>Led end-to-end UX/UI Developer Portal, AAA accessible design systems, pioneered agentic UX research/persona emulators</td></tr>
+    <tr><td><b>Compliance SaaS</b></td><td>MVP in 40 days, SQL migrations, Cron tasks, 31 components</td><td>Discovery to launch, translated complex compliance rules into self-serve UI, modular Figma-to-code design system</td></tr>
+    <tr><td><b>Xentinels</b></td><td>Centralized design operations, delivered tokens for Merck/Mondelez</td><td>Directed DesignOps, scaled multi-theme tokens, n>100 interviews, reduced time-to-market by 35%</td></tr>
+    <tr><td><b>Capabilities</b></td><td>Raw tech details (SQL, Cron, Supabase)</td><td>UX Research, Design Systems, Design Engineering, Agentic UX / AI</td></tr>
+  </table>
+
+  <h2>User Flow — Refining & Testing the Narrative</h2>
+  <div class="flow">
+    <svg width="860" height="250" viewBox="0 0 860 250" font-family="Inter, sans-serif" font-size="12">
+      <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1c1e24"/></marker></defs>
+      <g fill="#fff" stroke="#1c1e24" stroke-width="1.3">
+        <rect x="10" y="100" width="160" height="50" rx="7"/>
+        <rect x="220" y="100" width="160" height="50" rx="7"/>
+        <rect x="430" y="100" width="170" height="50" rx="7"/>
+        <rect x="650" y="100" width="170" height="50" rx="7"/>
+      </g>
+      <g fill="#1c1e24" text-anchor="middle">
+        <text x="90" y="125">Reframe Narrative Spec</text><text x="90" y="138" fill="#6a6e78" font-size="10">define design authority</text>
+        <text x="300" y="125">Edit HTML Visuals File</text><text x="300" y="138" fill="#6a6e78" font-size="10">in-place text refactoring</text>
+        <text x="515" y="125">A4 Page Budget Check</text><text x="515" y="138" fill="#6a6e78" font-size="10">verify no vertical overflow</text>
+        <text x="735" y="125">Run Vitest Suite</text><text x="735" y="138" fill="#6a6e78" font-size="10">ensure test compliance</text>
+      </g>
+      <g stroke="#1c1e24" stroke-width="1.3" fill="none" marker-end="url(#arrow)">
+        <path d="M170,125 L216,125"/>
+        <path d="M380,125 L426,125"/>
+        <path d="M600,125 L646,125"/>
+      </g>
+    </svg>
+  </div>
+
+  <h2>Layout Verification Checklist</h2>
+  <div class="layout">
+    <div class="row"><span class="k">1 · Single-Page A4 Budget</span><br>Ensured that section vertical spacings are kept to <code>space-y-6</code> to prevent rendering page overflows.</div>
+    <div class="row"><span class="k">2 · Grayscale Monochrome Theme</span><br>Aesthetic is maintained strictly through typographic contrast, sans accent colors.</div>
+    <div class="row"><span class="k">3 · Capabilities Matrix Reorganization</span><br>Categorized skill groups under high-impact headers: <b>Product & UX</b>, <b>Design Systems</b>, <b>Design Engineering</b>, and <b>Agentic UX / AI</b>.</div>
+  </div>
+</div></body>
+</html>

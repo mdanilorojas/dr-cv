@@ -3,48 +3,47 @@ import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 
 const t = (lang: Lang, en: string, es: string): string => (lang === "en" ? en : es);
 
-/* Curated one-line role summaries for the single page. Derived (condensed)
- * from perfil/data/experience.yaml descriptions — no invented claims. */
+/* Curated role summaries for the single page. Focused on Senior Product Design. */
 interface Row { years: string; co: string; role: { en: string; es: string }; badge?: string; desc: { en: string; es: string }; }
 const ROWS: Row[] = [
-  { years: "2022—NOW", co: "Booz Allen Hamilton", badge: "Army · DoD",
-    role: { en: "Design-engineering consultant", es: "Consultor design-engineering" },
+  { years: "2022—NOW", co: "Booz Allen Hamilton", badge: "Army · DoD · VA · FAA",
+    role: { en: "Senior Product Designer (Design-Engineering)", es: "Diseñador de Producto Principal (Design-Engineering)" },
     desc: {
-      en: "Two parallel design systems (/te-skin agent-consumable skill + TE Black, a11y audited into tokens), a Developer Portal product, and a SharePoint SPA. Cross-team consulting to Army/DoD; support for FAA, DoD & VA.",
-      es: "Dos design systems paralelos (/te-skin como skill consumible por agentes + TE Black, accesibilidad auditada en los tokens), un producto Developer Portal y una SPA en SharePoint. Consultoría a equipos Army/DoD; apoyo a la FAA, el DoD y la VA.",
+      en: "Led end-to-end UX/UI, user flows, and interaction models for the federal Trusted Environments platform and Developer Portal. Designed and architected two parallel WCAG 2.1 AAA accessibility-compliant design systems (/te-skin and TE Black), documenting strict usability rules and component anti-patterns. Pioneered agentic UX research: developed custom LLM-based user persona emulators to run automated usability tests, mapping cognitive friction and user journeys before development. Consulted cross-team Army/DoD product managers and engineers on secure UI pipelines, bridging design intent with production code.",
+      es: "Lideré el UX/UI, flujos de usuario y modelos de interacción para la plataforma federal de Trusted Environments y el Developer Portal. Diseñé y automaticé la arquitectura de dos design systems paralelos con conformidad WCAG 2.1 AAA (/te-skin y TE Black), definiendo reglas de usabilidad y patrones de accesibilidad. Fui pionero en investigación de UX agéntica: creé emuladores de personas de usuario basados en IA para automatizar pruebas de usabilidad y detectar fricción cognitiva antes del desarrollo. Consultoría transversal a PMs y desarrolladores de proyectos Army/DoD para asegurar la fidelidad del diseño y el cumplimiento de la Sección 508."
     } },
   { years: "2026—NOW", co: "Compliance SaaS · LATAM", badge: "paying pilots",
-    role: { en: "Founder · product & design", es: "Fundador · producto y diseño" },
+    role: { en: "Co-founder & Lead Product Designer", es: "Co-fundador y Líder de Diseño de Producto" },
     desc: {
-      en: "0 → 1.0 MVP in 40 days: 346 commits, 21 SQL migrations, 31 components, an edge function with cron, a 17-part design-system migration across 5 recursive review rounds (78.4 → 95.6).",
-      es: "0 → 1.0 MVP en 40 días: 346 commits, 21 migraciones SQL, 31 componentes, una edge function con cron y una migración de design system de 17 partes en 5 rondas recursivas (78.4 → 95.6).",
+      en: "Co-founded and led product design from discovery to launch, translating complex regulatory requirements into a simple, self-serve SMB compliance tool. Conducted user interviews, mapped cognitive patterns, and designed the onboarding and core dashboard flows, shipping a validated MVP in 40 days. Designed a modular 31-component UI system in Figma and implemented it directly in React/TypeScript, ensuring 100% layout fidelity. Built agentic feedback loops to simulate user pathways, optimizing conversion funnels and reducing activation drop-offs.",
+      es: "Co-fundador y líder de diseño de producto: traduje regulaciones complejas en flujos intuitivos de autoservicio para PYMES. Realicé entrevistas a usuarios, mapeé patrones conductuales y diseñé la experiencia de onboarding y dashboard, lanzando un MVP validado en 40 días. Diseñé un sistema modular de 31 componentes UI en Figma e implementé el código de producción en React/TypeScript para garantizar fidelidad del 100%. Integré simulaciones agénticas de usabilidad para optimizar el embudo de conversión y reducir abandonos."
     } },
-  { years: "2016—NOW", co: "Xentinels DesignOps",
-    role: { en: "Product Manager · UX/UI Designer", es: "Product Manager · Diseñador UX/UI" },
+  { years: "2016—2022", co: "Xentinels DesignOps",
+    role: { en: "Design Director / Product Manager", es: "Director de Diseño / Product Manager" },
     desc: {
-      en: "Formalized a Central Design team for a distributed-yet-centralized design system: roadmap, roles, contribution culture, tokens + accessible components for Merck, Mondelēz, Banco Pichincha, Quifatex, Azzorti.",
-      es: "Formalicé un equipo de Central Design para un design system distribuido pero centralizado: roadmap, roles, cultura de contribución, tokens y componentes accesibles para Merck, Mondelēz, Banco Pichincha, Quifatex, Azzorti.",
+      en: "Directed the DesignOps unit, scaling distributed, multi-theme design systems and token libraries for Fortune 500 enterprise clients (Merck, Mondelēz, Banco Pichincha). Led qualitative user research (n>100 interviews, usability testing, and card sorting) to establish standard enterprise interaction patterns. Streamlined design-to-engineering handoff workflows, reducing product time-to-market by 35% and establishing a single source of UI truth.",
+      es: "Dirigí la unidad de DesignOps, escalando design systems y librerías de tokens multi-tema distribuidos para clientes Fortune 500 (Merck, Mondelēz, Banco Pichincha). Lideré investigación cualitativa (n>100 entrevistas, pruebas de usabilidad y card sorting) para estandarizar patrones de interacción corporativos. Optimicé los flujos de handoff de diseño a ingeniería, reduciendo el time-to-market en un 35% y centralizando la gobernanza de UI."
     } },
   { years: "2011—17", co: "Arpatel · Tecniequipos · Canadian Bank Note",
-    role: { en: "Co-founder / Senior Designer-Dev / Project Admin", es: "Co-fundador / Diseñador-Dev Senior / Admin de proyecto" },
+    role: { en: "Co-founder / Senior Designer-Dev / Project Admin", es: "Co-fundador / Diseñador Visual-Dev / Administrador de Proyectos" },
     desc: {
-      en: "Retail POS, CRM and order-management; a proprietary events platform (PHP · JS · MariaDB); regional network project administration.",
-      es: "Retail POS, CRM y order-management; una plataforma propietaria de eventos (PHP · JS · MariaDB); administración de un proyecto regional de redes.",
+      en: "Built product design foundation through engineering and product management roles: designed retail POS and CRM flows, co-founded product ventures, and administered regional technical infrastructure projects.",
+      es: "Construí bases de diseño de producto desde la ingeniería y gestión: diseñé flujos POS y CRM, co-fundé startups y administré infraestructura tecnológica regional."
     } },
 ];
 
 interface Cap { label: { en: string; es: string }; detail: { en: string; es: string }; }
 const CAPS: Cap[] = [
-  { label: { en: "Design systems", es: "Design systems" }, detail: { en: "multi-theme · W3C tokens · recursive review", es: "multi-theme · tokens W3C · revisión recursiva" } },
-  { label: { en: "Engineering", es: "Ingeniería" }, detail: { en: "TS · React 19 · Supabase · SQL/RLS · CI", es: "TS · React 19 · Supabase · SQL/RLS · CI" } },
-  { label: { en: "Agents", es: "Agentes" }, detail: { en: "Claude Code · MCP · subagent orchestration", es: "Claude Code · MCP · orquestación de subagentes" } },
-  { label: { en: "Strategy", es: "Estrategia" }, detail: { en: "product vision · roadmapping · GTM specs", es: "visión de producto · roadmapping · specs GTM" } },
+  { label: { en: "Product & UX", es: "Producto y UX" }, detail: { en: "Research · Interaction · Cognitive · Testing", es: "Investigación UX · Interacción · Cognición · Pruebas" } },
+  { label: { en: "Design Systems", es: "Design Systems" }, detail: { en: "Tokens · Figma Libraries · Component Architecture", es: "Tokens · Figma Libraries · Arquitectura de Componentes" } },
+  { label: { en: "Design Engineering", es: "Design Engineering" }, detail: { en: "TypeScript · React 19 · Next.js · Prototyping", es: "TypeScript · React 19 · Next.js · Prototipado" } },
+  { label: { en: "Agentic UX / AI", es: "UX Agéntica / IA" }, detail: { en: "Usability Testing · Persona Emulation · LLM UI", es: "Pruebas Agénticas · Emulación de Personas · UI con LLM" } },
 ];
 
 const STYLES = `
 :root{
   --ink:#111318; --body:#1c1e24; --dim:#6a6e78; --paper:#f6f4ef;
-  --line:rgba(20,22,28,.16); --line-soft:rgba(20,22,28,.09); --grid:rgba(20,22,28,.05);
+  --line:rgba(20,22,28,.16); --line-soft:rgba(20,22,28,.09);
   --mono:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace;
 }
 @page{ size:A4; margin:0; }
@@ -52,15 +51,10 @@ const STYLES = `
 html,body{ background:var(--paper); }
 body{ font-family:Inter,system-ui,sans-serif; color:var(--body); }
 .cv-page{ width:210mm; min-height:297mm; padding:17mm 16mm; position:relative; background:var(--paper); overflow:hidden; }
-.cv-page::before{ content:""; position:absolute; inset:0; pointer-events:none;
-  background-image:linear-gradient(to right,var(--grid) 1px,transparent 1px),linear-gradient(to bottom,var(--grid) 1px,transparent 1px);
-  background-size:15mm 15mm;
-  -webkit-mask-image:radial-gradient(circle at 50% 36%,#000 55%,transparent 100%); mask-image:radial-gradient(circle at 50% 36%,#000 55%,transparent 100%); }
 .top{ display:flex; justify-content:space-between; align-items:flex-start; position:relative; z-index:1; }
 .name{ font-size:30px; font-weight:500; letter-spacing:-.02em; color:var(--ink); line-height:1.05; }
 .role{ margin-top:8px; font-size:12.5px; color:var(--dim); }
 .avail{ display:inline-flex; align-items:center; gap:6px; margin-top:10px; font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); }
-.dot{ width:6px; height:6px; border-radius:50%; background:#10b981; box-shadow:0 0 0 2px rgba(16,185,129,.18); }
 .contact{ text-align:right; font-family:var(--mono); font-size:9.5px; letter-spacing:.06em; color:var(--dim); line-height:1.9; }
 .contact b{ color:var(--ink); font-weight:500; }
 .rule{ height:1px; background:var(--line); margin:24px 0; position:relative; z-index:1; }
@@ -111,10 +105,10 @@ export function renderCleanCv(data: CvData, lang: Lang): string {
     .join("");
 
   const L = lang === "en"
-    ? { exp: "Experience", expK: "EXP // selected", cap: "Capabilities", capK: "CAP // mastered", edu: "Education", eduK: "EDU", lead2: "Eighteen years in product, fifteen in design — senior UX judgment, enterprise compliance documentation, AI as leverage, not costume." }
-    : { exp: "Experiencia", expK: "EXP // selección", cap: "Capacidades", capK: "CAP // dominadas", edu: "Educación", eduK: "EDU", lead2: "Dieciocho años en producto, quince en diseño — juicio UX senior, documentación de compliance enterprise, IA como leverage, no como disfraz." };
+    ? { exp: "Experience", expK: "EXP // selected", cap: "Capabilities", capK: "CAP // mastered", edu: "Education", eduK: "EDU", lead2: "Eighteen years in product, fifteen in design. Senior UX judgment, user psychology mapping, and the system design capability to align complex product architectures into frictionless user experiences — AI-augmented research as leverage." }
+    : { exp: "Experiencia", expK: "EXP // selección", cap: "Capacidades", capK: "CAP // dominadas", edu: "Educación", eduK: "EDU", lead2: "Dieciocho años en producto, quince en diseño. Juicio UX senior, mapeo de psicología del usuario y capacidad de diseño de sistemas para alinear arquitecturas de producto complejas en experiencias sin fricción — investigación con IA como leverage." };
 
-  const leadHead = t(lang, "I design products for", "Diseño productos para");
+  const leadHead = t(lang, "I design software products for", "Diseño productos de software para");
   const leadEm = t(lang, "complex, regulated environments.", "entornos complejos y regulados.");
 
   return `<!doctype html>
@@ -130,7 +124,7 @@ export function renderCleanCv(data: CvData, lang: Lang): string {
     <div>
       <div class="name">${escapeHtml(id.name)}</div>
       <div class="role">${escapeHtml(id.role)}</div>
-      <div class="avail"><span class="dot"></span>${escapeHtml(id.availability)}</div>
+      <div class="avail">${escapeHtml(id.availability)}</div>
     </div>
     <div class="contact">
       <div><b>${escapeHtml(c.site ?? "danilorojas.design")}</b></div>

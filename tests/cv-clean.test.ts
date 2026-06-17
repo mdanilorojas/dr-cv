@@ -30,7 +30,7 @@ describe("renderCleanCv (EN)", () => {
   });
 
   it("renders capabilities and education", () => {
-    expect(html).toContain("Design systems");
+    expect(html).toContain("Design Systems");
     expect(html).toContain("Escuela Politécnica Nacional");
   });
 
@@ -49,6 +49,6 @@ describe("renderCleanCv (ES)", () => {
     expect(html).toContain("Educación");
   });
   it("localizes role summaries", () => {
-    expect(html).toContain("Fundador · producto y diseño");
+    expect(html).toContain("Co-fundador y Líder de Diseño de Producto");
   });
 });

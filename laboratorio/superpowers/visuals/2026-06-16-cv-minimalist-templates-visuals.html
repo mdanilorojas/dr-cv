@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Companion — Swiss Editorial CV</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #EFE8DA;
+      color: #1C1A17;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="p-8">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <header class="mono mb-12 border-b border-black/10 pb-6 flex justify-between items-end">
+      <div>
+        <p class="text-xs uppercase tracking-widest text-[#1C1A17] font-semibold">Double Deliverable // Visual Companion</p>
+        <h1 class="text-3xl font-light tracking-tight mt-1">Swiss Editorial CV Template</h1>
+      </div>
+      <div class="text-right">
+        <p class="text-xs text-black/50">Status: <span class="text-green-700 font-semibold">Refined (No Open-To-Work)</span></p>
+        <p class="text-xs text-black/40 mt-1">Date: 2026-06-16</p>
+      </div>
+    </header>
+
+    <!-- Spec Reference & Info -->
+    <section class="mb-12 bg-white/40 p-6 rounded-lg border border-black/5 backdrop-blur-sm">
+      <h2 class="mono text-sm uppercase tracking-wider mb-3 font-semibold">Design Choice: Typographic Swiss Editorial</h2>
+      <p class="text-sm leading-relaxed text-black/70 mb-4">
+        This design couples the <strong>content from your screenshot</strong> (updated positions, correct dates, capabilities, and education) with the <strong>clean Swiss Editorial visual style</strong>.
+      </p>
+      <p class="text-sm leading-relaxed text-black/70">
+        It features <strong>no background grids, no borders, no boxes, and no metrics grids</strong>. Spacing, alignment, and typography carry the entire design, presented in pure monochrome grayscale.
+      </p>
+    </section>
+
+    <!-- Tabs for EN / ES -->
+    <div class="mb-6 flex space-x-2 border-b border-black/10 pb-px">
+      <button onclick="switchTab('en')" id="btn-en" class="px-5 py-2.5 font-mono text-xs tracking-wider uppercase border-t border-x rounded-t-md bg-white border-black/10 font-bold text-black -mb-px">
+        English Version
+      </button>
+      <button onclick="switchTab('es')" id="btn-es" class="px-5 py-2.5 font-mono text-xs tracking-wider uppercase border-t border-x rounded-t-md bg-transparent border-transparent text-black/60 hover:text-black">
+        Versión Español
+      </button>
+    </div>
+
+    <!-- Layout Previews -->
+    <div class="flex justify-center bg-black/5 p-8 rounded-xl border border-black/10">
+      
+      <!-- English Concept Preview -->
+      <div id="tab-en" class="w-[210mm] min-h-[297mm] bg-[#FAFAF7] p-[20mm] border border-black/20 shadow-2xl relative transition-all duration-300 flex flex-col justify-between">
+        
+        <div>
+          <!-- Header block -->
+          <div class="flex justify-between items-start mb-10">
+            <div>
+              <h2 class="text-4xl font-bold tracking-tighter text-[#1C1A17]">Danilo Rojas</h2>
+              <p class="text-xs font-mono uppercase tracking-widest text-[#5C626E] mt-2 font-semibold">Senior Product Designer · Design Systems & UX Research</p>
+              <div class="mt-4 flex items-center gap-1.5 text-[9px] font-mono text-[#5C626E]">
+                <span class="w-1.5 h-1.5 rounded-full border border-black/30"></span>
+                <span>REMOTE GLOBAL</span>
+              </div>
+            </div>
+            <div class="text-right mono text-[9px] text-[#5C626E] leading-relaxed">
+              <div>danilorojas.design</div>
+              <div>hola@danilorojas.design</div>
+              <div>linkedin.com/in/mdanilorojas</div>
+              <div>github.com/mdanilorojas</div>
+              <div>Quito · Ecuador</div>
+            </div>
+          </div>
+
+          <!-- Headline / Thesis -->
+          <div class="mb-10 max-w-xl">
+            <p class="text-[13px] text-black/85 leading-relaxed font-light">
+              I design software products for <strong class="font-semibold text-black">complex, regulated environments.</strong> Former systems engineer turned Senior Product Designer — bridging deep UX/UI judgment, cognitive ergonomics, and front-end execution to translate complex compliance and data models into frictionless user experiences.
+            </p>
+          </div>
+
+          <!-- Experience Section -->
+          <div class="space-y-6 pr-4">
+            <div class="flex justify-between items-baseline border-b border-black/5 pb-2">
+              <h3 class="text-xs uppercase tracking-widest text-black/40 font-bold">Experience</h3>
+            </div>
+            
+            <!-- Booz Allen -->
+            <div class="grid grid-cols-5 gap-6">
+              <div class="mono text-[10px] text-[#5C626E] leading-relaxed">
+                2022–NOW
+              </div>
+              <div class="col-span-4">
+                <div class="flex items-center gap-2">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-[#1C1A17]">Booz Allen Hamilton</h4>
+                  <span class="mono text-[8px] border border-black/10 px-1 bg-black/5 rounded text-black/50 uppercase">Army · DoD · VA · FAA</span>
+                </div>
+                <p class="mono text-[9px] text-[#5C626E] mt-0.5">Senior Product Designer (Design-Engineering)</p>
+                <ul class="text-[11px] text-black/80 mt-2 space-y-1.5 font-light list-disc list-inside">
+                  <li>Led end-to-end UX/UI, user flows, and interaction models for the federal Trusted Environments platform and Developer Portal.</li>
+                  <li>Designed and architected two parallel WCAG 2.1 AAA accessibility-compliant design systems (<span class="mono text-[10px]">/te-skin</span> and TE Black), documenting strict usability rules and component anti-patterns.</li>
+                  <li>Pioneered agentic UX research: developed custom LLM-based user persona emulators to run automated usability tests, mapping cognitive friction and user journeys before development.</li>
+                  <li>Consulted cross-team Army/DoD product managers and engineers on secure UI pipelines, bridging design intent with production code.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Compliance SaaS -->
+            <div class="grid grid-cols-5 gap-6 border-t border-black/5 pt-4">
+              <div class="mono text-[10px] text-[#5C626E]">
+                2026–NOW
+              </div>
+              <div class="col-span-4">
+                <div class="flex items-center gap-2">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-[#1C1A17]">Compliance SaaS · LATAM</h4>
+                  <span class="mono text-[8px] border border-black/10 px-1 bg-black/5 rounded text-black/50 uppercase">Paying Pilots</span>
+                </div>
+                <p class="mono text-[9px] text-[#5C626E] mt-0.5">Co-founder & Lead Product Designer</p>
+                <ul class="text-[11px] text-black/80 mt-2 space-y-1.5 font-light list-disc list-inside">
+                  <li>Co-founded and led product design from discovery to launch, translating complex regulatory requirements into a simple, self-serve SMB compliance tool.</li>
+                  <li>Conducted user interviews, mapped cognitive patterns, and designed the onboarding and core dashboard flows, shipping a validated MVP in 40 days.</li>
+                  <li>Designed a modular 31-component UI system in Figma and implemented it directly in React/TypeScript, ensuring 100% layout fidelity.</li>
+                  <li>Built agentic feedback loops to simulate user pathways, optimizing conversion funnels and reducing activation drop-offs.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Xentinels -->
+            <div class="grid grid-cols-5 gap-6 border-t border-black/5 pt-4">
+              <div class="mono text-[10px] text-[#5C626E]">
+                2016–2022
+              </div>
+              <div class="col-span-4">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-[#1C1A17]">Xentinels DesignOps</h4>
+                <p class="mono text-[9px] text-[#5C626E] mt-0.5">Design Director / Product Manager</p>
+                <ul class="text-[11px] text-black/80 mt-2 space-y-1.5 font-light list-disc list-inside">
+                  <li>Directed the DesignOps unit, scaling distributed, multi-theme design systems and token libraries for Fortune 500 enterprise clients (Merck, Mondelēz, Banco Pichincha).</li>
+                  <li>Led qualitative user research (n>100 interviews, usability testing, and card sorting) to establish standard enterprise interaction patterns.</li>
+                  <li>Streamlined design-to-engineering handoff workflows, reducing product time-to-market by 35% and establishing a single source of UI truth.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Previews timeline -->
+            <div class="grid grid-cols-5 gap-6 border-t border-black/5 pt-4">
+              <div class="mono text-[10px] text-[#5C626E]">
+                2011–17
+              </div>
+              <div class="col-span-4">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-[#1C1A17]">Arpatel · Tecniequipos · Canadian Bank Note</h4>
+                <p class="mono text-[9px] text-[#5C626E] mt-0.5">Co-founder / Senior Designer-Dev / Project Admin</p>
+                <p class="text-[11px] text-black/75 mt-1.5 leading-relaxed font-light">
+                  Built product design foundation through engineering and product management roles: designed retail POS and CRM flows, co-founded product ventures, and administered regional technical infrastructure projects.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom sections: Capabilities & Education (side by side) -->
+          <div class="grid grid-cols-2 gap-12 border-t border-black/10 pt-6 mt-8">
+            <!-- Capabilities -->
+            <div>
+              <div class="flex justify-between items-baseline border-b border-black/10 pb-2 mb-3">
+                <h3 class="text-xs uppercase tracking-widest text-black/40 font-bold">Capabilities</h3>
+                <span class="mono text-[8px] text-[#5C626E]">CAP // MASTERED</span>
+              </div>
+              <div class="text-[11px] space-y-2 leading-relaxed">
+                <div class="flex justify-between"><span class="font-semibold text-black/80">Product & UX</span><span class="text-[#5C626E] mono text-[10px]">Research · Interaction · Cognitive · Testing</span></div>
+                <div class="flex justify-between"><span class="font-semibold text-black/80">Design Systems</span><span class="text-[#5C626E] mono text-[10px]">Tokens · Figma Libraries · Component Architecture</span></div>
+                <div class="flex justify-between"><span class="font-semibold text-black/80">Design Engineering</span><span class="text-[#5C626E] mono text-[10px]">TypeScript · React 19 · Next.js · Prototyping</span></div>
+                <div class="flex justify-between"><span class="font-semibold text-black/80">Agentic UX / AI</span><span class="text-[#5C626E] mono text-[10px]">Usability Testing · Persona Emulation · LLM UI</span></div>
+              </div>
+            </div>
+
+            <!-- Education -->
+            <div>
+              <div class="flex justify-between items-baseline border-b border-black/10 pb-2 mb-3">
+                <h3 class="text-xs uppercase tracking-widest text-black/40 font-bold">Education</h3>
+                <span class="mono text-[8px] text-[#5C626E]">EDU</span>
+              </div>
+              <div class="text-[11px] space-y-2 leading-relaxed">
+                <div class="flex justify-between"><span class="font-semibold text-black/80">B.Sc. Computer Systems Eng.</span><span class="text-[#5C626E] mono text-[10px]">EPN · 2015</span></div>
+                <div class="flex justify-between"><span class="font-semibold text-black/80">Google UX Design</span><span class="text-[#5C626E] mono text-[10px]">Coursera · 2021</span></div>
+                <div class="flex justify-between"><span class="font-semibold text-black/80">Design Thinking</span><span class="text-[#5C626E] mono text-[10px]">IBM · 2020</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Print Footer -->
+        <div class="border-t border-black/10 pt-4 mt-8 flex justify-between text-[8px] mono text-black/40 uppercase tracking-wider">
+          <div>Danilo Rojas — Senior Product Designer</div>
+          <div>danilorojas.design</div>
+        </div>
+      </div>
+
+       <div id="tab-es" class="w-[210mm] min-h-[297mm] bg-[#FAFAF7] p-[20mm] border border-black/20 shadow-2xl relative hidden transition-all duration-300 flex flex-col justify-between">
+        
+        <div>
+          <!-- Header block -->
+          <div class="flex justify-between items-start mb-10">
+            <div>
+              <h2 class="text-4xl font-bold tracking-tighter text-[#1C1A17]">Danilo Rojas</h2>
+              <p class="text-xs font-mono uppercase tracking-widest text-[#5C626E] mt-2 font-semibold">Diseñador de Producto Senior · Design Systems y UX Research</p>
+              <div class="mt-4 flex items-center gap-1.5 text-[9px] font-mono text-[#5C626E]">
+                <span class="w-1.5 h-1.5 rounded-full border border-black/30"></span>
+                <span>REMOTE GLOBAL</span>
+              </div>
+            </div>
+            <div class="text-right mono text-[9px] text-[#5C626E] leading-relaxed">
+              <div>danilorojas.design</div>
+              <div>hola@danilorojas.design</div>
+              <div>linkedin.com/in/mdanilorojas</div>
+              <div>github.com/mdanilorojas</div>
+              <div>Quito · Ecuador</div>
+            </div>
+          </div>
+
+          <!-- Headline / Thesis -->
+          <div class="mb-10 max-w-xl">
+            <p class="text-[13px] text-black/85 leading-relaxed font-light">
+              Diseño productos de software para <strong class="font-semibold text-black">entornos complejos y regulados.</strong> Ex-ingeniero de sistemas convertido en Diseñador de Producto Senior — conectando juicio UX/UI profundo, ergonomía cognitiva y ejecución front-end para traducir flujos complejos de cumplimiento y datos en experiencias intuitivas.
+            </p>
+          </div>
+
+          <!-- Experience Section -->
+          <div class="space-y-6 pr-4">
+            <div class="flex justify-between items-baseline border-b border-black/5 pb-2">
+              <h3 class="text-xs uppercase tracking-widest text-black/40 font-bold">Experiencia Seleccionada</h3>
+            </div>
+            
+            <!-- Booz Allen -->
+            <div class="grid grid-cols-5 gap-6">
+              <div class="mono text-[10px] text-[#5C626E] leading-relaxed">
+                2022–PRESENTE
+              </div>
+              <div class="col-span-4">
+                <div class="flex items-center gap-2">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-[#1C1A17]">Booz Allen Hamilton</h4>
+                  <span class="mono text-[8px] border border-black/10 px-1 bg-black/5 rounded text-black/50 uppercase">Army · DoD · VA · FAA</span>
+                </div>
+                <p class="mono text-[9px] text-[#5C626E] mt-0.5">Diseñador de Producto Principal (Design-Engineering)</p>
+                <ul class="text-[11px] text-black/80 mt-2 space-y-1.5 font-light list-disc list-inside">
+                  <li>Lideré el UX/UI, flujos de usuario y modelos de interacción para la plataforma federal de Trusted Environments y el Developer Portal.</li>
+                  <li>Diseñé y automaticé la arquitectura de dos design systems paralelos con conformidad WCAG 2.1 AAA (<span class="mono text-[10px]">/te-skin</span> y TE Black), definiendo reglas de usabilidad y patrones de accesibilidad.</li>
+                  <li>Fui pionero en investigación de UX agéntica: creé emuladores de personas de usuario basados en IA para automatizar pruebas de usabilidad y detectar fricción cognitiva antes del desarrollo.</li>
+                  <li>Consultoría transversal a PMs y desarrolladores de proyectos Army/DoD para asegurar la fidelidad del diseño y el cumplimiento de la Sección 508.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Compliance SaaS -->
+            <div class="grid grid-cols-5 gap-6 border-t border-black/5 pt-4">
+              <div class="mono text-[10px] text-[#5C626E]">
+                2026–PRESENTE
+              </div>
+              <div class="col-span-4">
+                <div class="flex items-center gap-2">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-[#1C1A17]">Compliance SaaS · LATAM</h4>
+                  <span class="mono text-[8px] border border-black/10 px-1 bg-black/5 rounded text-black/50 uppercase">Pilotos de Pago</span>
+                </div>
+                <p class="mono text-[9px] text-[#5C626E] mt-0.5">Co-fundador y Líder de Diseño de Producto</p>
+                <ul class="text-[11px] text-black/80 mt-2 space-y-1.5 font-light list-disc list-inside">
+                  <li>Co-fundador y líder de diseño de producto: traduje regulaciones complejas en flujos intuitivos de autoservicio para PYMES.</li>
+                  <li>Realicé entrevistas a usuarios, mapeé patrones conductuales y diseñé la experiencia de onboarding y dashboard, lanzando un MVP validado en 40 días.</li>
+                  <li>Diseñé un sistema modular de 31 componentes UI en Figma e implementé el código de producción en React/TypeScript para garantizar fidelidad del 100%.</li>
+                  <li>Integré simulaciones agénticas de usabilidad para optimizar el embudo de conversión y reducir abandonos.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Xentinels -->
+            <div class="grid grid-cols-5 gap-6 border-t border-black/5 pt-4">
+              <div class="mono text-[10px] text-[#5C626E]">
+                2016–2022
+              </div>
+              <div class="col-span-4">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-[#1C1A17]">Xentinels DesignOps</h4>
+                <p class="mono text-[9px] text-[#5C626E] mt-0.5">Director de Diseño / Product Manager</p>
+                <ul class="text-[11px] text-black/80 mt-2 space-y-1.5 font-light list-disc list-inside">
+                  <li>Dirigí la unidad de DesignOps, escalando design systems y librerías de tokens multi-tema distribuidos para clientes Fortune 500 (Merck, Mondelēz, Banco Pichincha).</li>
+                  <li>Lideré investigación cualitativa (n>100 entrevistas, pruebas de usabilidad y card sorting) para estandarizar patrones de interacción corporativos.</li>
+                  <li>Optimicé los flujos de handoff de diseño a ingeniería, reduciendo el time-to-market en un 35% y centralizando la gobernanza de UI.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Previews timeline -->
+            <div class="grid grid-cols-5 gap-6 border-t border-black/5 pt-4">
+              <div class="mono text-[10px] text-[#5C626E]">
+                2011–17
+              </div>
+              <div class="col-span-4">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-[#1C1A17]">Arpatel · Tecniequipos · Canadian Bank Note</h4>
+                <p class="mono text-[9px] text-[#5C626E] mt-0.5">Co-fundador / Diseñador Visual-Dev / Administrador de Proyectos</p>
+                <p class="text-[11px] text-black/75 mt-1.5 leading-relaxed font-light">
+                  Construí bases de diseño de producto desde la ingeniería y gestión: diseñé flujos POS y CRM, co-fundé startups y administré infraestructura tecnológica regional.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom sections: Capabilities & Education (side by side) -->
+          <div class="grid grid-cols-2 gap-12 border-t border-black/10 pt-6 mt-8">
+            <!-- Capabilities -->
+            <div>
+              <div class="flex justify-between items-baseline border-b border-black/10 pb-2 mb-3">
+                <h3 class="text-xs uppercase tracking-widest text-black/40 font-bold">Habilidades</h3>
+                <span class="mono text-[8px] text-[#5C626E]">CAP // MASTERED</span>
+              </div>
+              <div class="text-[11px] space-y-2 leading-relaxed">
+                <div class="flex justify-between"><span class="font-semibold text-black/80">Producto y UX</span><span class="text-[#5C626E] mono text-[10px]">Investigación UX · Interacción · Cognición · Pruebas</span></div>
+                <div class="flex justify-between"><span class="font-semibold text-black/80">Design Systems</span><span class="text-[#5C626E] mono text-[10px]">Tokens · Figma Libraries · Arquitectura de Componentes</span></div>
+                <div class="flex justify-between"><span class="font-semibold text-black/80">Design Engineering</span><span class="text-[#5C626E] mono text-[10px]">TypeScript · React 19 · Next.js · Prototipado</span></div>
+                <div class="flex justify-between"><span class="font-semibold text-black/80">UX Agéntica / IA</span><span class="text-[#5C626E] mono text-[10px]">Pruebas Agénticas · Emulación de Personas · UI con LLM</span></div>
+              </div>
+            </div>
+
+            <!-- Education -->
+            <div>
+              <div class="flex justify-between items-baseline border-b border-black/10 pb-2 mb-3">
+                <h3 class="text-xs uppercase tracking-widest text-black/40 font-bold">Educación</h3>
+                <span class="mono text-[8px] text-[#5C626E]">EDU</span>
+              </div>
+              <div class="text-[11px] space-y-2 leading-relaxed">
+                <div class="flex justify-between"><span class="font-semibold text-black/80">Ing. en Sistemas Informáticos</span><span class="text-[#5C626E] mono text-[10px]">EPN · 2015</span></div>
+                <div class="flex justify-between"><span class="font-semibold text-black/80">Google UX Design</span><span class="text-[#5C626E] mono text-[10px]">Coursera · 2021</span></div>
+                <div class="flex justify-between"><span class="font-semibold text-black/80">Design Thinking</span><span class="text-[#5C626E] mono text-[10px]">IBM · 2020</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Print Footer -->
+        <div class="border-t border-black/10 pt-4 mt-8 flex justify-between text-[8px] mono text-black/40 uppercase tracking-wider">
+          <div>Danilo Rojas — Senior Product Designer</div>
+          <div>danilorojas.design</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function switchTab(lang) {
+      // Hide both tabs
+      document.getElementById('tab-en').classList.add('hidden');
+      document.getElementById('tab-es').classList.add('hidden');
+      
+      // Reset buttons style
+      document.getElementById('btn-en').className = "px-5 py-2.5 font-mono text-xs tracking-wider uppercase border-t border-x rounded-t-md bg-transparent border-transparent text-black/60 hover:text-black";
+      document.getElementById('btn-es').className = "px-5 py-2.5 font-mono text-xs tracking-wider uppercase border-t border-x rounded-t-md bg-transparent border-transparent text-black/60 hover:text-black";
+      
+      // Show selected tab
+      document.getElementById('tab-' + lang).classList.remove('hidden');
+      
+      // Set active button style
+      document.getElementById('btn-' + lang).className = "px-5 py-2.5 font-mono text-xs tracking-wider uppercase border-t border-x rounded-t-md bg-white border-black/10 font-bold text-black -mb-px";
+    }
+  </script>
+</body>
+</html>
