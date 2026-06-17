@@ -455,16 +455,24 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
   border-top: 0;
 }
 
+
+.cv-summary__competencies {
+  font-size: 8.3pt;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
 </style>
 </head>
 <body>
 
 <article class="cv-page">
   
-<header class="cv-identity cv-identity--bairesdev">
+<header class="cv-identity cv-identity--bairesdev-v2">
   <div class="cv-identity__main">
     <h1 class="cv-identity__name">Danilo <span class="cv-identity__name-accent">Rojas</span></h1>
-    <div class="cv-identity__role">Product Designer &amp; Engineer · 15+ years</div>
+    <div class="cv-identity__role">Senior Product Designer · Design Systems · Design Engineering · 15+ years</div>
     <span class="cv-identity__availability">Open to work · Remote global</span>
   </div>
   <div class="cv-identity__contact">
@@ -473,7 +481,7 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
 </header>
 
   
-<aside class="cv-skills cv-skills--bairesdev">
+<aside class="cv-skills cv-skills--bairesdev-v2">
   <h3 class="cv-skills__heading">Skills</h3>
   
     <div class="cv-skills__group">
@@ -531,63 +539,70 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
 <section class="cv-summary cv-summary--bairesdev">
   <div class="cv-summary__eyebrow">Professional Summary</div>
   <h2 class="cv-summary__thesis">Senior Product Designer. 18 years shipping product — UX judgment, enterprise compliance documentation, AI as leverage.</h2>
+  <p class="cv-summary__competencies">Product Strategy &amp; Roadmapping · UX Research &amp; Usability Testing · Design Systems &amp; Design Tokens (W3C) · Figma · Design Engineering (TypeScript, React 19, Next.js) · Accessibility (WCAG 2.1 AA) · Agentic UX / LLM-driven workflows (Claude Code, MCP) · SQL · Supabase</p>
 </section>
-
-    <section class="cv-section">
-      <h3 class="cv-section__heading">Experience Highlights</h3>
-      
-<article class="cv-case cv-case--bairesdev">
-  <header class="cv-case__meta">
-    <span class="cv-case__client">Booz Allen Hamilton · Senior Product Designer</span>
-    <span class="cv-case__years">2024 — 2026</span>
-  </header>
-  <h3 class="cv-case__title">Developer Portal design system</h3>
-  <p class="cv-case__hook">Dark-first design system for a government platform — accessible by default, built for engineering to use off the shelf.</p>
-  <ul class="cv-case__bullets">
-    <li>Dark-first design system with WCAG contrast decided and documented per token</li>
-<li>17 production components with states, usage rules, and named anti-patterns</li>
-<li>Handoff spec engineering builds from directly — design DNA, constraints, checklists</li>
-  </ul>
-  <div class="cv-case__stack"><span class="cv-case__stack-pill">Design system</span> <span class="cv-case__stack-pill">Accessibility</span> <span class="cv-case__stack-pill">Component library</span> <span class="cv-case__stack-pill">Design tokens</span></div>
-</article>
-
-<article class="cv-case cv-case--bairesdev">
-  <header class="cv-case__meta">
-    <span class="cv-case__client">Personal product · Design + AI</span>
-    <span class="cv-case__years">2026</span>
-  </header>
-  <h3 class="cv-case__title">Life Update — AI focus app</h3>
-  <p class="cv-case__hook">Personal focus app — your day scored against your 5-year plan. I designed the product and the AI, then shipped the MVP.</p>
-  <ul class="cv-case__bullets">
-    <li>Product + interaction design for AI-scored daily focus</li>
-<li>Designed the AI behavior: semantic distance from each entry to a long-term plan</li>
-<li>Shipped a working MVP to validate the concept end-to-end</li>
-  </ul>
-  <div class="cv-case__stack"><span class="cv-case__stack-pill">Product design</span> <span class="cv-case__stack-pill">AI / LLM behavior</span> <span class="cv-case__stack-pill">0→1 MVP</span></div>
-</article>
-    </section>
 
     <section class="cv-section">
       <h3 class="cv-section__heading">Professional Experience</h3>
       
 <div class="cv-xp cv-xp--full">
   <div class="cv-xp__header">
+    <div class="cv-xp__company">Compliance SaaS · LATAM (independent)</div>
+    <div class="cv-xp__dates">2026 — Present</div>
+  </div>
+  <div class="cv-xp__role">Founder · product &amp; design <span class="cv-xp__badge">paying pilots</span></div>
+  <p class="cv-xp__description">Founded and shipped a multi-site compliance SaaS for LATAM SMBs end-to-end — product strategy, UX, and full-stack delivery. Took it from 0 to a validated 1.0 MVP in production in 40 days: 346 commits, 21 SQL migrations, 31 production UI components, and a cron-driven edge function. Ran a 17-part design-system migration across 5 recursive review rounds, raising the system score from 78.4 to 95.6.</p>
+  <div class="cv-xp__stack"><span class="cv-xp__stack-pill">React 19</span> <span class="cv-xp__stack-pill">Supabase</span> <span class="cv-xp__stack-pill">Claude Code</span> <span class="cv-xp__stack-pill">MCP</span> <span class="cv-xp__stack-pill">RLS</span></div>
+</div>
+
+<div class="cv-xp cv-xp--full">
+  <div class="cv-xp__header">
     <div class="cv-xp__company">Booz Allen Hamilton</div>
     <div class="cv-xp__dates">2022 — Present</div>
   </div>
   <div class="cv-xp__role">Design-engineering consultant <span class="cv-xp__badge">Army · DoD</span></div>
-  <p class="cv-xp__description">Design-engineering across the Trusted Environments umbrella — landing, a Developer Portal product, and PM collaboration. Two parallel design systems (/te-skin as an agent-consumable skill + TE Black, dark-first with accessibility audited into the tokens). SharePoint SPA. Cross-team consulting to Army/DoD product teams, plus small support projects for the FAA, the DoD, and the VA veterans benefits/payment system.</p>
+  <p class="cv-xp__description">Lead design-engineer for the federal Trusted Environments program — own the landing experience, the Developer Portal product, and PM collaboration end-to-end. Architected two parallel design systems (/te-skin, an agent-consumable skill, and TE Black, dark-first) with accessibility audited directly into the design tokens. Built and shipped a SharePoint SPA. Consult cross-team to Army/DoD product groups, with additional support delivered to the FAA and the VA veterans benefits/payment system.</p>
   <div class="cv-xp__stack"><span class="cv-xp__stack-pill">/te-skin</span> <span class="cv-xp__stack-pill">Developer Portal</span> <span class="cv-xp__stack-pill">TE Black DS</span> <span class="cv-xp__stack-pill">SharePoint SPA</span> <span class="cv-xp__stack-pill">User personas</span> <span class="cv-xp__stack-pill">FAA · DoD · VA</span></div>
 </div>
 
 <div class="cv-xp cv-xp--full">
   <div class="cv-xp__header">
-    <div class="cv-xp__company">Compliance SaaS · LATAM (independent)</div>
-    <div class="cv-xp__dates">2026 — Present</div>
+    <div class="cv-xp__company">Xentinels DesignOps</div>
+    <div class="cv-xp__dates">2016 — 2022</div>
   </div>
-  <div class="cv-xp__role">Founder · product &amp; design <span class="cv-xp__badge">paying pilots</span></div>
-  <p class="cv-xp__description">Founded a multi-site compliance SaaS for LATAM SMBs. 0 → 1.0 MVP in production in 40 days: 346 commits, 21 SQL migrations, 31 UI components, 1 edge function with cron, a 17-part design-system migration across 5 recursive review rounds (78.4 → 95.6).</p>
-  <div class="cv-xp__stack"><span class="cv-xp__stack-pill">React 19</span> <span class="cv-xp__stack-pill">Supabase</span> <span class="cv-xp__stack-pill">Claude Code</span> <span class="cv-xp__stack-pill">MCP</span> <span class="cv-xp__stack-pill">RLS</span></div>
+  <div class="cv-xp__role">Product Manager / UX-UI Designer </div>
+  <p class="cv-xp__description">Built and led a DesignOps practice inside Central Design, scaling a distributed-yet-centralized design system and token library for enterprise clients (Merck, Mondelēz, Banco Pichincha, Quifatex, Grupo Superior, Moderna Corp., Azzorti, Flamingo CO.). Owned the roadmap, governance, and contribution model that let other teams ship into the system safely.</p>
+  <div class="cv-xp__stack"><span class="cv-xp__stack-pill">Design system</span> <span class="cv-xp__stack-pill">Figma</span> <span class="cv-xp__stack-pill">Tokens</span> <span class="cv-xp__stack-pill">Team lead</span> <span class="cv-xp__stack-pill">Enterprise</span></div>
+</div>
+
+<div class="cv-xp cv-xp--full">
+  <div class="cv-xp__header">
+    <div class="cv-xp__company">Arpatel Cia. Ltda.</div>
+    <div class="cv-xp__dates">2014 — 2017</div>
+  </div>
+  <div class="cv-xp__role">Co-Founder · Product Manager </div>
+  <p class="cv-xp__description">Co-founded the company and set long-term product strategy. Built the website, CRM templates, and order-management flows; designed and shipped a Retail POS experience (alpha + beta) with prototyped search and scan interaction patterns.</p>
+  <div class="cv-xp__stack"><span class="cv-xp__stack-pill">Retail POS</span> <span class="cv-xp__stack-pill">CRM</span> <span class="cv-xp__stack-pill">Prototyping</span> <span class="cv-xp__stack-pill">Strategy</span></div>
+</div>
+
+<div class="cv-xp cv-xp--full">
+  <div class="cv-xp__header">
+    <div class="cv-xp__company">Tecniequipos S.A.</div>
+    <div class="cv-xp__dates">2013 — 2015</div>
+  </div>
+  <div class="cv-xp__role">Senior Visual Designer / Developer </div>
+  <p class="cv-xp__description">Developed a proprietary event platform and managed e-commerce, reporting, and business-systems administration, delivering production requirements in PHP, JavaScript, HTML, CSS, and MariaDB.</p>
+  <div class="cv-xp__stack"><span class="cv-xp__stack-pill">PHP</span> <span class="cv-xp__stack-pill">JavaScript</span> <span class="cv-xp__stack-pill">MariaDB</span> <span class="cv-xp__stack-pill">HTML · CSS</span></div>
+</div>
+
+<div class="cv-xp cv-xp--full">
+  <div class="cv-xp__header">
+    <div class="cv-xp__company">Canadian Bank Note</div>
+    <div class="cv-xp__dates">2011 — 2013</div>
+  </div>
+  <div class="cv-xp__role">Project Administrator </div>
+  <p class="cv-xp__description">Administered a regional electrical-network project — supervised installation and inventory management, and designed execution strategy driven by historical data.</p>
+  <div class="cv-xp__stack"><span class="cv-xp__stack-pill">Project mgmt</span> <span class="cv-xp__stack-pill">Operations</span></div>
 </div>
     </section>
   </div>
@@ -629,47 +644,37 @@ h1, h2, h3, h4 { margin: 0; color: var(--ink); font-weight: 600; }
 
   <div class="cv-right">
     <section class="cv-section">
-      <h3 class="cv-section__heading">Past Experience</h3>
+      <h3 class="cv-section__heading">Selected Case Studies</h3>
       
-<div class="cv-xp cv-xp--condensed">
-  <div class="cv-xp__header">
-    <div class="cv-xp__company">Xentinels DesignOps</div>
-    <div class="cv-xp__dates">2016 — 2022</div>
-  </div>
-  <div class="cv-xp__role">Product Manager / UX-UI Designer </div>
-  
-  
-</div>
+<article class="cv-case cv-case--bairesdev-v2">
+  <header class="cv-case__meta">
+    <span class="cv-case__client">Booz Allen Hamilton · Senior Product Designer</span>
+    <span class="cv-case__years">2024 — 2026</span>
+  </header>
+  <h3 class="cv-case__title">Developer Portal design system</h3>
+  <p class="cv-case__hook">Dark-first design system for a government platform — accessible by default, built for engineering to use off the shelf.</p>
+  <ul class="cv-case__bullets">
+    <li>Dark-first design system with WCAG contrast decided and documented per token</li>
+<li>17 production components with states, usage rules, and named anti-patterns</li>
+<li>Handoff spec engineering builds from directly — design DNA, constraints, checklists</li>
+  </ul>
+  <div class="cv-case__stack"><span class="cv-case__stack-pill">Design system</span> <span class="cv-case__stack-pill">Accessibility</span> <span class="cv-case__stack-pill">Component library</span> <span class="cv-case__stack-pill">Design tokens</span></div>
+</article>
 
-<div class="cv-xp cv-xp--condensed">
-  <div class="cv-xp__header">
-    <div class="cv-xp__company">Arpatel Cia. Ltda.</div>
-    <div class="cv-xp__dates">2014 — 2017</div>
-  </div>
-  <div class="cv-xp__role">Co-Founder · Product Manager </div>
-  
-  
-</div>
-
-<div class="cv-xp cv-xp--condensed">
-  <div class="cv-xp__header">
-    <div class="cv-xp__company">Tecniequipos S.A.</div>
-    <div class="cv-xp__dates">2013 — 2015</div>
-  </div>
-  <div class="cv-xp__role">Senior Visual Designer / Developer </div>
-  
-  
-</div>
-
-<div class="cv-xp cv-xp--condensed">
-  <div class="cv-xp__header">
-    <div class="cv-xp__company">Canadian Bank Note</div>
-    <div class="cv-xp__dates">2011 — 2013</div>
-  </div>
-  <div class="cv-xp__role">Project Administrator </div>
-  
-  
-</div>
+<article class="cv-case cv-case--bairesdev-v2">
+  <header class="cv-case__meta">
+    <span class="cv-case__client">Personal product · Design + AI</span>
+    <span class="cv-case__years">2026</span>
+  </header>
+  <h3 class="cv-case__title">Life Update — AI focus app</h3>
+  <p class="cv-case__hook">Personal focus app — your day scored against your 5-year plan. I designed the product and the AI, then shipped the MVP.</p>
+  <ul class="cv-case__bullets">
+    <li>Product + interaction design for AI-scored daily focus</li>
+<li>Designed the AI behavior: semantic distance from each entry to a long-term plan</li>
+<li>Shipped a working MVP to validate the concept end-to-end</li>
+  </ul>
+  <div class="cv-case__stack"><span class="cv-case__stack-pill">Product design</span> <span class="cv-case__stack-pill">AI / LLM behavior</span> <span class="cv-case__stack-pill">0→1 MVP</span></div>
+</article>
     </section>
 
     <section class="cv-section">

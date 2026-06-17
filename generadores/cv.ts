@@ -7,6 +7,7 @@ import { renderPdf } from "./lib/render-pdf.js";
 import { renderWarmCv } from "./templates/cv/warm.js";
 import { renderSeriousCv } from "./templates/cv/serious.js";
 import { renderBairesdevCv } from "./templates/cv/bairesdev.js";
+import { renderBairesdevV2Cv } from "./templates/cv/bairesdev-v2.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, "..");
@@ -38,6 +39,7 @@ async function main() {
   await emit("cv-serious-en", renderSeriousCv(data, "en", tokensCss));
   await emit("cv-serious-es", renderSeriousCv(data, "es", tokensCss));
   await emit("cv-bairesdev-en", renderBairesdevCv(data));
+  await emit("cv-bairesdev-v2-en", renderBairesdevV2Cv(data));
 
   console.log("[cv] done.");
 }

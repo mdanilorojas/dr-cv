@@ -11,7 +11,12 @@ export interface RenderPdfOptions {
  * Uses A4 format with zero margins because the HTML already has A4 padding.
  */
 export async function renderPdf(opts: RenderPdfOptions): Promise<void> {
-  const browser = await puppeteer.launch({ headless: true });
+  // Chromium's sandbox needs a non-root user; containers/CI often run as root.
+  const isRoot = typeof process.getuid === "function" && process.getuid() === 0;
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: isRoot ? ["--no-sandbox", "--disable-setuid-sandbox"] : [],
+  });
   try {
     const page = await browser.newPage();
     await page.setContent(opts.html, { waitUntil: "networkidle0" });

@@ -23,7 +23,7 @@ past:
   - company: "Xentinels DesignOps"
     role: "Product Manager / UX-UI Designer"
     startYear: 2016
-    endYear: present
+    endYear: 2022
     descriptionEn: "Formalized a team within Central Design to deliver a distributed-yet-centralized Design System. Defined the roadmap, roles, responsibilities and ways of working. Built a contribution culture to scale. Delivered a unified set of guidelines, tokens and accessible components for enterprise clients (Merck, Mondelēz, Banco Pichincha, Quifatex, Grupo Superior, Moderna Corp., Azzorti, Flamingo CO.)."
     descriptionEs: "Formalicé un equipo dentro de Central Design para ofrecer un DS distribuido pero centralizado. Definí la hoja de ruta, roles, responsabilidades y formas de trabajo. Creé una cultura de contribución para escalar. Entregué un toolkit unificado de pautas, tokens y componentes accesibles para clientes enterprise (Merck, Mondelēz, Banco Pichincha, Quifatex, Grupo Superior, Moderna Corp., Azzorti, Flamingo CO.)."
     stack: ["Design system", "Figma", "Tokens", "Team lead", "Enterprise"]

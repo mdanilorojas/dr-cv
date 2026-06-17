@@ -1,7 +1,7 @@
 import type { Identity } from "../../../lib/types.js";
 import { escapeHtml, type Lang } from "../../skills-sheet-page-1.js";
 
-export type CvVariant = "warm" | "serious" | "bairesdev";
+export type CvVariant = "warm" | "serious" | "bairesdev" | "bairesdev-v2";
 
 export interface IdentityBlockOptions {
   variant: CvVariant;
@@ -19,6 +19,9 @@ function splitName(name: string): { first: string; last: string } {
 function roleForVariant(identity: Identity, variant: CvVariant): string {
   if (variant === "bairesdev") {
     return "Product Designer & Engineer · 15+ years";
+  }
+  if (variant === "bairesdev-v2") {
+    return "Senior Product Designer · Design Systems · Design Engineering · 15+ years";
   }
   return identity.role;
 }

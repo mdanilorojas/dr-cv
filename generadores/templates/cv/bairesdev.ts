@@ -7,7 +7,7 @@ import { renderCaseCard } from "./components/case-card.js";
 import { renderEducationBlock } from "./components/education-block.js";
 import { renderSkillsInventory } from "./components/skills-inventory.js";
 
-const BAIRESDEV_TOKENS = `
+export const BAIRESDEV_TOKENS = `
 :root {
   --ink:         #111111;
   --ink-body:    #2b2b2b;
@@ -42,7 +42,7 @@ const BAIRESDEV_TOKENS = `
 }
 `;
 
-const BAIRESDEV_STYLES = `
+export const BAIRESDEV_STYLES = `
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {

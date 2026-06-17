@@ -10,7 +10,7 @@ export interface CaseCardOptions {
 
 function featuredClass(variant: CvVariant, featured: boolean): string {
   if (!featured) return "";
-  if (variant === "bairesdev") return ""; // bairesdev never features
+  if (variant === "bairesdev" || variant === "bairesdev-v2") return ""; // bairesdev never features
   if (variant === "warm") return "cv-case--featured cv-case--dark";
   if (variant === "serious") return "cv-case--featured cv-case--accent-border";
   return "";

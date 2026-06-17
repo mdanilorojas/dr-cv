@@ -30,7 +30,7 @@ export function renderSkillsSidebar(skills: Skills, options: SkillsSidebarOption
   const sourceGroups = skills.byLayer.groups;
 
   let orderedGroups: SkillGroup[];
-  if (options.variant === "bairesdev") {
+  if (options.variant === "bairesdev" || options.variant === "bairesdev-v2") {
     orderedGroups = BAIRESDEV_ORDER
       .map((title) => sourceGroups.find((g) => g.title === title))
       .filter((g): g is SkillGroup => g !== undefined);
