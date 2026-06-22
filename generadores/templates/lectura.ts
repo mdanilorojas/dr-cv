@@ -315,7 +315,7 @@ for (const block of BLOCKS) {
 }
 
 // Progreso
-const dayNum = Math.floor((today - start) / 86400000) + 1;
+const dayNum = Math.round((today - start) / 86400000) + 1;
 const prog = document.getElementById("progress");
 if (dayNum < 1) prog.textContent = \`Empieza el \${fmt(start)}.\`;
 else if (dayNum > total) prog.textContent = \`Ruta completa (\${total} días).\`;
