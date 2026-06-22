@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseLecturaMd } from "../generadores/lib/parse-lectura.js";
+import { renderLecturaPage } from "../generadores/templates/lectura.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const actualMdPath = path.join(__dirname, "..", "lectura", "ruta_lectura_product_design_ai_agents.md");
@@ -79,5 +80,32 @@ describe("parseLecturaMd", () => {
         expect(item.extract).not.toContain("**Tiempo:**");
       }
     }
+  });
+});
+
+describe("renderLecturaPage", () => {
+  it("creates full HTML document structure with dark blueprint stylesheet and calculates dates", () => {
+    const mockBlocks = [
+      {
+        blockTitle: "Bloque 1 · Producto",
+        items: [
+          {
+            title: "Test Item",
+            url: "https://example.com/test",
+            badge: "Must-read",
+            time: "60 min",
+            extract: "Test extract content"
+          }
+        ]
+      }
+    ];
+    const html = renderLecturaPage(mockBlocks);
+    expect(html).toContain("<!doctype html>");
+    expect(html).toContain("danilorojas.design/lectura");
+    expect(html).toContain("Bloque 1 · Producto");
+    expect(html).toContain("Test Item");
+    expect(html).toContain("https://example.com/test");
+    expect(html).toContain("class=\"bg-grid\"");
+    expect(html).toContain("class=\"crosshair ch-tl\"");
   });
 });
