@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,sans-serif;background:#EFE8DA;color:#1C1A17;padding:36px}
+.mono{font-family:'JetBrains Mono',monospace}
+h1{font-size:18px;margin-bottom:6px}
+.sub{font-size:13px;color:#5C626E;margin-bottom:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.card{background:#FAFAF7;border:1px solid rgba(0,0,0,.15);border-radius:10px;padding:24px}
+.tag{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#5C626E;margin-bottom:14px}
+.opt{font-size:11px;color:#8a7;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.hd{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid rgba(0,0,0,.12);padding-bottom:6px;margin-bottom:14px}
+.hd h3{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(0,0,0,.4);font-weight:700}
+
+/* A — two-column aligned grid */
+.A .row{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:7px 0;border-top:1px solid rgba(0,0,0,.06)}
+.A .row:first-child{border-top:0}
+.A .lbl{font-size:11px;font-weight:600;color:rgba(0,0,0,.85)}
+.A .det{font-size:10px;color:#5C626E}
+.A .det .mono{font-size:10px}
+
+/* B — stacked label over detail */
+.B .row{padding:8px 0;border-top:1px solid rgba(0,0,0,.06)}
+.B .row:first-child{border-top:0}
+.B .lbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.5);font-weight:600;margin-bottom:3px}
+.B .det{font-size:11px;color:rgba(0,0,0,.8);font-weight:300}
+
+/* C — label + chips */
+.C .row{padding:9px 0;border-top:1px solid rgba(0,0,0,.06)}
+.C .row:first-child{border-top:0}
+.C .lbl{font-size:10px;font-weight:600;color:rgba(0,0,0,.85);margin-bottom:6px}
+.C .chips{display:flex;flex-wrap:wrap;gap:5px}
+.C .chip{font-size:9px;border:1px solid rgba(0,0,0,.15);padding:2px 7px;color:#5C626E;font-family:'JetBrains Mono',monospace}
+</style></head>
+<body>
+<h1>Capabilities — 3 opciones de orden</h1>
+<p class="sub">El problema actual: <code>flex justify-between</code> parte la etiqueta en 2 líneas y el detalle mono choca. Elige A, B o C.</p>
+<div class="grid">
+
+  <div class="card A">
+    <div class="opt">Opción A · grid alineado</div>
+    <div class="hd"><h3>Capabilities</h3><span class="tag">CAP // MASTERED</span></div>
+    <div class="row"><div class="lbl">Product &amp; UX</div><div class="det mono">Research · Interaction · Cognitive · Testing</div></div>
+    <div class="row"><div class="lbl">Design Systems</div><div class="det mono">Tokens · Figma Libraries · Component Architecture</div></div>
+    <div class="row"><div class="lbl">Design Engineering</div><div class="det mono">TypeScript · React 19 · Next.js · Prototyping</div></div>
+    <div class="row"><div class="lbl">Agentic UX / AI</div><div class="det mono">Usability Testing · Persona Emulation · LLM UI</div></div>
+  </div>
+
+  <div class="card B">
+    <div class="opt">Opción B · etiqueta arriba</div>
+    <div class="hd"><h3>Capabilities</h3><span class="tag">CAP // MASTERED</span></div>
+    <div class="row"><div class="lbl mono">Product &amp; UX</div><div class="det">Research · Interaction · Cognitive ergonomics · Usability testing</div></div>
+    <div class="row"><div class="lbl mono">Design Systems</div><div class="det">Tokens · Figma libraries · Component architecture</div></div>
+    <div class="row"><div class="lbl mono">Design Engineering</div><div class="det">TypeScript · React 19 · Next.js · Prototyping</div></div>
+    <div class="row"><div class="lbl mono">Agentic UX / AI</div><div class="det">Usability testing · Persona emulation · LLM-driven UI</div></div>
+  </div>
+
+  <div class="card C">
+    <div class="opt">Opción C · chips</div>
+    <div class="hd"><h3>Capabilities</h3><span class="tag">CAP // MASTERED</span></div>
+    <div class="row"><div class="lbl">Product &amp; UX</div><div class="chips"><span class="chip">Research</span><span class="chip">Interaction</span><span class="chip">Cognitive</span><span class="chip">Testing</span></div></div>
+    <div class="row"><div class="lbl">Design Systems</div><div class="chips"><span class="chip">Tokens</span><span class="chip">Figma Libraries</span><span class="chip">Component Arch.</span></div></div>
+    <div class="row"><div class="lbl">Design Engineering</div><div class="chips"><span class="chip">TypeScript</span><span class="chip">React 19</span><span class="chip">Next.js</span><span class="chip">Prototyping</span></div></div>
+    <div class="row"><div class="lbl">Agentic UX / AI</div><div class="chips"><span class="chip">Usability Testing</span><span class="chip">Persona Emulation</span><span class="chip">LLM UI</span></div></div>
+  </div>
+
+</div>
+</body></html>

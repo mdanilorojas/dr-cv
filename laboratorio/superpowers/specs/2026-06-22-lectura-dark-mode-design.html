@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruta de lectura — design spec</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',system-ui,sans-serif;background:#0d0d0f;color:#ededed;line-height:1.6;padding:48px clamp(16px,5vw,64px) 120px;}
+  .wrap{max-width:920px;margin:0 auto;}
+  h1{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:600;letter-spacing:-.02em;color:#fff;}
+  .meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#8a8e98;margin-top:8px;letter-spacing:.04em;}
+  h2{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:600;margin:38px 0 14px;letter-spacing:-.01em;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:8px;color:#8a8e98;text-transform:uppercase;}
+  p{margin:10px 0;color:#bfbfbf;}
+  .card{background:#030303;border:1px solid rgba(255,255,255,.08);border-radius:0px;padding:20px 22px;margin:14px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0;background:#030303;}
+  td,th{border:1px solid rgba(255,255,255,.08);padding:10px 12px;text-align:left;vertical-align:top;}
+  th{background:#0a0a0a;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8a8e98;}
+  ol,ul{margin:8px 0 8px 22px;color:#bfbfbf;}
+  li{margin:5px 0;}
+  code{font-family:'JetBrains Mono',monospace;font-size:.86em;background:#0a0a0a;color:#D9663F;padding:2px 6px;border-radius:2px;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .flow{background:#fff;border:1px solid rgba(20,22,28,.12);border-radius:4px;padding:20px;overflow-x:auto;margin:14px 0;}
+  .layout{display:grid;grid-template-columns:1fr;gap:8px;font-size:13px;}
+  .row{border:1px dashed rgba(255,255,255,.22);border-radius:0px;padding:10px 14px;background:#0a0a0a;}
+  .row b{font-weight:600;color:#fff;}
+  .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a8e98;}
+</style>
+</head>
+<body><div class="wrap">
+  <h1>Ruta de lectura — design spec</h1>
+  <div class="meta">2026-06-22 · status: approved · companion to the .md spec</div>
+
+  <h2>Decisiones de Diseño</h2>
+  <table>
+    <tr><th>Eje</th><th>Decisión</th></tr>
+    <tr><td>Estilo Visual</td><td>Dark Blueprint (fondo <code>#030303</code>, retícula fina, bordes blueprint y acento terracota).</td></tr>
+    <tr><td>Fuente de verdad</td><td><code>lectura/ruta_lectura_product_design_ai_agents.md</code>. Parseado automático en build.</td></tr>
+    <tr><td>Formato de salida</td><td>HTML estático optimizado en <code>dist/landing-v11/lectura/index.html</code>.</td></tr>
+    <tr><td>Frecuencia</td><td>Cambio automático de artículo destacado por día, vía JS local en navegador.</td></tr>
+    <tr><td>Integración</td><td>Reemplazar index estático en <code>handTools</code> en el compilador de la landing v11.</td></tr>
+  </table>
+
+  <h2>Arquitectura de Archivos</h2>
+  <div class="card">
+    <ul>
+      <li>Parser: <code>generadores/lib/parse-lectura.ts</code> parsea el archivo MD de lectura a JSON estructurado.</li>
+      <li>Template: <code>generadores/templates/lectura.ts</code> define la estructura HTML + CSS del blueprint y el script cliente.</li>
+      <li>Generator: <code>generadores/v11-landing.ts</code> importa el parser y la template para emitir el HTML final.</li>
+    </ul>
+  </div>
+
+  <h2>Maquetación Visual de Tarjetas</h2>
+  <div class="layout">
+    <div class="row"><span class="k">1 · header</span><br>Migaja de pan: <b>danilorojas.design/lectura</b> en mono · Título en JetBrains Mono · Subtítulo de lectura fácil.</div>
+    <div class="row"><span class="k">2 · jumpbar (sticky)</span><br>Botón "Ir a hoy" terracota · Indicador de progreso "Día N de M" en JetBrains Mono.</div>
+    <div class="row"><span class="k">3 · day card (past)</span><br>Opacidad 40% (pasado) · Esquinas blueprint decorativas · badge de prioridad gris · extracto simple con viñetas.</div>
+    <div class="row"><span class="k">4 · day card (today)</span><br>Borde azul brillante · badge azul <b>HOY</b> · botón "Leer artículo hoy →" resaltado · scroll focus al cargar.</div>
+    <div class="row"><span class="k">5 · day card (future)</span><br>Borde sutil gris · badge de prioridad estándar · enlace de lectura simple.</div>
+  </div>
+
+  <h2>User Flow — Compilación y Consumo</h2>
+  <div class="flow">
+    <svg width="860" height="250" viewBox="0 0 860 250" font-family="Inter, sans-serif" font-size="12">
+      <defs><marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1c1e24"/></marker></defs>
+      <g fill="#fff" stroke="#1c1e24" stroke-width="1.3">
+        <rect x="10" y="100" width="160" height="50" rx="4"/>
+        <rect x="210" y="100" width="160" height="50" rx="4"/>
+        <rect x="410" y="100" width="170" height="50" rx="4"/>
+        <rect x="620" y="40" width="150" height="50" rx="4"/>
+        <rect x="620" y="160" width="150" height="50" rx="4"/>
+      </g>
+      <g fill="#1c1e24" text-anchor="middle">
+        <text x="90" y="120">Editar lectura/.md</text><text x="90" y="136" fill="#6a6e78" font-size="10">source of truth</text>
+        <text x="290" y="120">npm run build:landing-v11</text><text x="290" y="136" fill="#6a6e78" font-size="10">ejecuta parser + template</text>
+        <text x="495" y="120">dist/landing-v11/lectura/</text><text x="495" y="136" fill="#6a6e78" font-size="10">index.html autogenerado</text>
+        <text x="695" y="62">Vercel Deploy</text><text x="695" y="78" fill="#6a6e78" font-size="10">gh actions / push hooks</text>
+        <text x="695" y="182">Lectura del día</text><text x="695" y="198" fill="#6a6e78" font-size="10">resaltada en navegador</text>
+      </g>
+      <g stroke="#1c1e24" stroke-width="1.3" fill="none" marker-end="url(#a)">
+        <path d="M170,125 L206,125"/>
+        <path d="M370,125 L406,125"/>
+        <path d="M580,115 L612,70"/>
+        <path d="M580,135 L612,180"/>
+        <path d="M695,90 C695,110 695,120 695,158" marker-end="url(#a)"/>
+      </g>
+    </svg>
+  </div>
+</div></body>
+</html>

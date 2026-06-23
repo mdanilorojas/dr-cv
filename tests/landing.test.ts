@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadLandingData } from "../generadores/lib/load-data.js";
@@ -84,3 +85,15 @@ describe("landing redesign", () => {
   // cases are refreshed; tracked here so it is not forgotten.
   it.todo("Work cases carry no retired brand names (pending case refresh)");
 });
+
+describe("lectura integration", () => {
+  it("generates the reading path dynamically at dist/landing-v11/lectura/index.html", () => {
+    const distLecturaPath = path.join(__dirname, "..", "dist", "landing-v11", "lectura", "index.html");
+    expect(fs.existsSync(distLecturaPath)).toBe(true);
+    const content = fs.readFileSync(distLecturaPath, "utf8");
+    expect(content).toContain("<h1>Ruta de lectura — Blueprint</h1>");
+    expect(content).toContain("const BLOCKS =");
+    expect(content).toContain("Shape Up — Introduction");
+  });
+});
+

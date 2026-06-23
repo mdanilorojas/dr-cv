@@ -216,3 +216,17 @@ export interface LandingData extends CvData {
   horizon: HorizonSection;
   notes: Notes;
 }
+
+// ============= LECTURA / READING GUIDE =============
+export interface LecturaItem {
+  title: string;
+  url: string;
+  badge: string;
+  time: string;
+  extract: string;
+}
+
+export interface LecturaBlock {
+  blockTitle: string;
+  items: LecturaItem[];
+}

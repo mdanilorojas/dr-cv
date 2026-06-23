@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Danilo Rojas · Curriculum Vitae</title>
+<style>
+:root{
+  --ink:#111318; --body:#1c1e24; --dim:#6a6e78; --paper:#f6f4ef;
+  --line:rgba(20,22,28,.16); --line-soft:rgba(20,22,28,.09);
+  --mono:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace;
+}
+@page{ size:A4; margin:0; }
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ background:var(--paper); }
+body{ font-family:Inter,system-ui,sans-serif; color:var(--body); }
+.cv-page{ width:210mm; min-height:297mm; padding:17mm 16mm; position:relative; background:var(--paper); overflow:hidden; }
+.top{ display:flex; justify-content:space-between; align-items:flex-start; position:relative; z-index:1; }
+.name{ font-size:30px; font-weight:500; letter-spacing:-.02em; color:var(--ink); line-height:1.05; }
+.role{ margin-top:8px; font-size:12.5px; color:var(--dim); }
+.avail{ display:inline-flex; align-items:center; gap:6px; margin-top:10px; font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); }
+.contact{ text-align:right; font-family:var(--mono); font-size:9.5px; letter-spacing:.06em; color:var(--dim); line-height:1.9; }
+.contact b{ color:var(--ink); font-weight:500; }
+.rule{ height:1px; background:var(--line); margin:24px 0; position:relative; z-index:1; }
+.lead{ font-size:18px; line-height:1.4; font-weight:300; letter-spacing:-.01em; color:var(--ink); max-width:60ch; position:relative; z-index:1; }
+.lead .em{ font-weight:500; }
+.lead .muted{ color:var(--dim); }
+.sec{ position:relative; z-index:1; margin-top:24px; }
+.sec-h{ display:flex; align-items:baseline; justify-content:space-between; border-bottom:1px solid var(--line); padding-bottom:6px; margin-bottom:12px; }
+.sec-h h2{ font-size:13px; font-weight:500; color:var(--ink); letter-spacing:-.01em; }
+.sec-h .k{ font-family:var(--mono); font-size:8.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); }
+.job{ display:grid; grid-template-columns:84px 1fr; gap:16px; padding:11px 0; border-top:1px solid var(--line-soft); }
+.job:first-of-type{ border-top:0; }
+.job .yr{ font-family:var(--mono); font-size:9px; color:var(--dim); letter-spacing:.04em; padding-top:2px; }
+.job .co{ font-size:12.5px; font-weight:600; color:var(--ink); }
+.job .ro{ font-size:11px; color:var(--dim); margin-top:1px; }
+.job .de{ font-size:10px; color:var(--dim); line-height:1.5; margin-top:5px; max-width:64ch; }
+.badge{ font-family:var(--mono); font-size:7.5px; letter-spacing:.12em; text-transform:uppercase; border:1px solid var(--line); padding:2px 6px; color:var(--dim); margin-left:8px; vertical-align:middle; }
+.grid2{ display:grid; grid-template-columns:1.3fr 1fr; gap:34px; }
+.skline{ display:flex; justify-content:space-between; gap:12px; font-size:10px; padding:4px 0; border-top:1px solid var(--line-soft); color:var(--dim); }
+.skline b{ color:var(--ink); font-weight:500; white-space:nowrap; }
+.edu{ font-size:10px; color:var(--dim); padding:4px 0; border-top:1px solid var(--line-soft); display:flex; justify-content:space-between; gap:10px; }
+.edu b{ color:var(--ink); font-weight:500; }
+.foot{ position:absolute; left:16mm; right:16mm; bottom:12mm; display:flex; justify-content:space-between; font-family:var(--mono); font-size:8.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); z-index:1; }
+</style>
+</head>
+<body>
+<article class="cv-page">
+  <div class="top">
+    <div>
+      <div class="name">Danilo Rojas</div>
+      <div class="role">Senior Product Designer · UX/UI · AI-augmented</div>
+      <div class="avail">Remote global</div>
+    </div>
+    <div class="contact">
+      <div><b>danilorojas.design</b></div>
+      <div>hola@danilorojas.design</div>
+      <div>linkedin.com/in/mdanilorojas</div>
+      <div>github.com/mdanilorojas</div>
+      <div>Quito · Ecuador</div>
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="lead">I design software products for <span class="em">complex, regulated environments.</span> <span class="muted">Eighteen years in product, fifteen in design. Senior UX judgment, user psychology mapping, and the system design capability to align complex product architectures into frictionless user experiences — AI-augmented research as leverage.</span></div>
+
+  <section class="sec">
+    <div class="sec-h"><h2>Experience</h2><span class="k">EXP // selected</span></div>
+    
+    <div class="job">
+      <div class="yr">2022—NOW</div>
+      <div>
+        <div class="co">Booz Allen Hamilton<span class="badge">Army · DoD · VA · FAA</span></div>
+        <div class="ro">Senior Product Designer (Design-Engineering)</div>
+        <div class="de">Led end-to-end UX/UI, user flows, and interaction models for the federal Trusted Environments platform and Developer Portal. Designed and architected two parallel WCAG 2.1 AAA accessibility-compliant design systems (/te-skin and TE Black), documenting strict usability rules and component anti-patterns. Pioneered agentic UX research: developed custom LLM-based user persona emulators to run automated usability tests, mapping cognitive friction and user journeys before development. Consulted cross-team Army/DoD product managers and engineers on secure UI pipelines, bridging design intent with production code.</div>
+      </div>
+    </div>
+    <div class="job">
+      <div class="yr">2026—NOW</div>
+      <div>
+        <div class="co">Compliance SaaS · LATAM<span class="badge">paying pilots</span></div>
+        <div class="ro">Co-founder &amp; Lead Product Designer</div>
+        <div class="de">Co-founded and led product design from discovery to launch, translating complex regulatory requirements into a simple, self-serve SMB compliance tool. Conducted user interviews, mapped cognitive patterns, and designed the onboarding and core dashboard flows, shipping a validated MVP in 40 days. Designed a modular 31-component UI system in Figma and implemented it directly in React/TypeScript, ensuring 100% layout fidelity. Built agentic feedback loops to simulate user pathways, optimizing conversion funnels and reducing activation drop-offs.</div>
+      </div>
+    </div>
+    <div class="job">
+      <div class="yr">2016—2022</div>
+      <div>
+        <div class="co">Xentinels DesignOps</div>
+        <div class="ro">Design Director / Product Manager</div>
+        <div class="de">Directed the DesignOps unit, scaling distributed, multi-theme design systems and token libraries for Fortune 500 enterprise clients (Merck, Mondelēz, Banco Pichincha). Led qualitative user research (n&gt;100 interviews, usability testing, and card sorting) to establish standard enterprise interaction patterns. Streamlined design-to-engineering handoff workflows, reducing product time-to-market by 35% and establishing a single source of UI truth.</div>
+      </div>
+    </div>
+    <div class="job">
+      <div class="yr">2011—17</div>
+      <div>
+        <div class="co">Arpatel · Tecniequipos · Canadian Bank Note</div>
+        <div class="ro">Co-founder / Senior Designer-Dev / Project Admin</div>
+        <div class="de">Built product design foundation through engineering and product management roles: designed retail POS and CRM flows, co-founded product ventures, and administered regional technical infrastructure projects.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec grid2">
+    <div>
+      <div class="sec-h"><h2>Capabilities</h2><span class="k">CAP // mastered</span></div>
+      <div class="skline"><b>Product &amp; UX</b><span>Research · Interaction · Cognitive · Testing</span></div><div class="skline"><b>Design Systems</b><span>Tokens · Figma Libraries · Component Architecture</span></div><div class="skline"><b>Design Engineering</b><span>TypeScript · React 19 · Next.js · Prototyping</span></div><div class="skline"><b>Agentic UX / AI</b><span>Usability Testing · Persona Emulation · LLM UI</span></div>
+    </div>
+    <div>
+      <div class="sec-h"><h2>Education</h2><span class="k">EDU</span></div>
+      <div class="edu"><b>B.Sc. in Computer Systems Engineering</b><span>Escuela Politécnica Nacional (EPN) · 2015</span></div><div class="edu"><b>Google UX Design Certificate</b><span>Coursera · 2021</span></div><div class="edu"><b>Design Thinking</b><span>IBM · 2020</span></div>
+    </div>
+  </section>
+
+  <div class="foot"><span>Danilo Rojas — Senior Product Designer</span><span>danilorojas.design</span></div>
+</article>
+</body>
+</html>
