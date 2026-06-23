@@ -8,6 +8,8 @@ import { renderStructuralLanding } from "./templates/v11-landing/structural.js";
 import { renderCaseDetailPage } from "./templates/v11-landing/case-detail.js";
 import { renderOgCardHtml } from "./templates/v11-landing/og-card.js";
 import { renderOgImage } from "./lib/render-og.js";
+import { parseLecturaMd } from "./lib/parse-lectura.js";
+import { renderLecturaPage } from "./templates/lectura.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, "..");
@@ -192,6 +194,13 @@ async function main(): Promise<void> {
       }),
     );
   }
+
+  // Generate reading path dynamically
+  const lecturaMdPath = path.join(projectRoot, "lectura", "ruta_lectura_product_design_ai_agents.md");
+  const lecturaMd = readFileSync(lecturaMdPath, "utf8");
+  const parsedLectura = parseLecturaMd(lecturaMd);
+  const lecturaHtml = renderLecturaPage(parsedLectura);
+  await emit(path.join("lectura", "index.html"), lecturaHtml);
 
   console.log("[v11-landing] done.");
 }

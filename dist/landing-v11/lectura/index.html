@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ruta de lectura · danilorojas.design</title>
+<meta name="description" content="Ruta de lectura para Product Designers senior, ingenieros y especialistas en AI agents. Un artículo por día, en orden de dependencias cognitivas." />
+<link rel="canonical" href="https://danilorojas.design/lectura" />
+<meta name="robots" content="noindex" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --bg: #030303;
+    --surface: #0a0a0a;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-hover: rgba(255, 255, 255, 0.25);
+    --text: #ededed;
+    --dim: #8a8a92;
+    --accent: #D9663F;
+    --accent-hover: #C2542F;
+    --ui-grid: rgba(255, 255, 255, 0.04);
+    --ui-glow: rgba(255, 255, 255, 0.03);
+
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-serif: 'Source Serif 4', serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 20px 120px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .bg-grid {
+    position: fixed; inset: 0; z-index: -1;
+    background-image: 
+      linear-gradient(to right, var(--ui-grid) 1px, transparent 1px), 
+      linear-gradient(to bottom, var(--ui-grid) 1px, transparent 1px);
+    background-size: 80px 80px; 
+    background-position: center top;
+    mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
+    -webkit-mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
+  }
+
+  .wrap { max-width: 720px; margin: 0 auto; z-index: 1; position: relative; }
+  
+  header {
+    padding: 56px 0 24px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 8px;
+  }
+  .nav-breadcrumb {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-breadcrumb a {
+    color: var(--dim);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .nav-breadcrumb a:hover {
+    color: var(--text);
+  }
+  header h1 { 
+    font-family: var(--font-mono);
+    font-size: clamp(22px, 3.5vw, 28px); 
+    font-weight: 500; 
+    letter-spacing: -0.02em; 
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  header p { 
+    color: var(--dim); 
+    margin-top: 10px; 
+    font-size: 15px; 
+    font-family: var(--font-serif);
+    font-style: italic;
+  }
+
+  .jump {
+    position: sticky; top: 0; z-index: 5;
+    background: rgba(3,3,3,0.85); backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 14px 0; margin-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap;
+  }
+  .jump-left { display: flex; align-items: center; gap: 12px; }
+  .jump button {
+    background: var(--accent); color: #fff; border: 0;
+    padding: 8px 16px; border-radius: 4px; 
+    font-family: var(--font-mono); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;
+    cursor: pointer; transition: background 0.2s ease;
+  }
+  .jump button:hover { background: var(--accent-hover); }
+  .jump .progress { 
+    font-family: var(--font-mono); color: var(--dim); font-size: 12px; 
+  }
+
+  .block-label {
+    font-family: var(--font-mono);
+    color: var(--dim); font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    margin: 48px 0 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .block-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--line);
+  }
+
+  .day {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    border-radius: 0;
+    padding: 24px;
+    margin: 16px 0;
+    position: relative;
+    scroll-margin-top: 88px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  .day:hover {
+    border-color: var(--line-hover);
+    background: #0d0d0f;
+  }
+  .day.past { opacity: 0.45; }
+  .day.past:hover { opacity: 0.75; }
+  .day.today {
+    background: #090b11;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 1px #3b82f6;
+  }
+
+  .crosshair {
+    position: absolute; width: 9px; height: 9px; pointer-events: none;
+    opacity: 0.25; transition: transform 0.4s cubic-bezier(.4,0,.2,1), opacity 0.4s;
+  }
+  .day:hover .crosshair {
+    transform: scale(1.3) rotate(90deg); opacity: 0.7;
+  }
+  .crosshair::before, .crosshair::after {
+    content: ''; position: absolute; background-color: var(--text);
+  }
+  .crosshair::before { top: 4px; left: 0; width: 9px; height: 1px; }
+  .crosshair::after { top: 0; left: 4px; width: 1px; height: 9px; }
+  .ch-tl { top: -5px; left: -5px; }
+  .ch-tr { top: -5px; right: -5px; }
+  .ch-bl { bottom: -5px; left: -5px; }
+  .ch-br { bottom: -5px; right: -5px; }
+
+  .day .meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 12px; flex-wrap: wrap; margin-bottom: 10px;
+    font-family: var(--font-mono);
+  }
+  .day .date { font-size: 12px; color: var(--dim); }
+  .day.today .date { color: #60a5fa; font-weight: 600; }
+  .day .badge {
+    font-size: 10px; color: var(--dim);
+    border: 1px solid var(--line); border-radius: 2px; padding: 1px 6px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .day .today-tag {
+    font-size: 10px; font-weight: 700; color: #fff;
+    background: #3b82f6; border-radius: 2px; padding: 1px 6px;
+  }
+  .day h2 { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
+  
+  .day .extract { 
+    color: #c5c5cb; font-size: 14px; margin-top: 10px; 
+    font-family: var(--font-body);
+    white-space: pre-wrap;
+  }
+  .day .extract ul, .day .extract ol {
+    list-style: none; padding-left: 0; margin-top: 8px;
+  }
+  .day .extract li {
+    position: relative; padding-left: 14px; margin-bottom: 4px;
+  }
+  .day .extract li::before {
+    content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: bold;
+  }
+  
+  .day .row { display: flex; gap: 16px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+  .day a.read {
+    display: inline-block; background: transparent; color: var(--text);
+    border: 1px solid var(--line); text-decoration: none; padding: 6px 14px; 
+    border-radius: 2px; font-family: var(--font-mono); font-weight: 500; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.05em; transition: border-color 0.2s, background-color 0.2s;
+  }
+  .day a.read:hover {
+    border-color: var(--text); background: rgba(255, 255, 255, 0.05);
+  }
+  .day.today a.read {
+    background: #1e3a8a; color: #bfdbfe; border-color: rgba(59, 130, 246, 0.5);
+  }
+  .day.today a.read:hover {
+    background: #2563eb; color: #ffffff; border-color: #3b82f6;
+  }
+  .day .time { color: var(--dim); font-size: 12px; font-family: var(--font-mono); }
+  
+  footer { 
+    color: var(--dim); font-size: 12px; margin-top: 64px; text-align: center; 
+    font-family: var(--font-mono); border-top: 1px solid var(--line); padding-top: 24px;
+  }
+  footer a { color: var(--dim); }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="wrap">
+  <header>
+    <div class="nav-breadcrumb">
+      <a href="https://danilorojas.design">danilorojas.design</a>
+      <span>/</span>
+      <span>lectura</span>
+    </div>
+    <h1>Ruta de lectura — Blueprint</h1>
+    <p>Product Designer senior + ingeniería + AI agents. Un artículo por día, en orden de dependencias cognitivas.</p>
+  </header>
+
+  <div class="jump">
+    <div class="jump-left">
+      <button id="todayBtn">Ir a hoy</button>
+      <span class="progress" id="progress"></span>
+    </div>
+  </div>
+
+  <div id="list"></div>
+
+  <footer>
+    Orden basado en <em>ruta_lectura_product_design_ai_agents.md</em>. Empieza el 22 jun 2026, un día por artículo.
+  </footer>
+</div>
+
+<script>
+const BLOCKS = [{"blockTitle":"Bloque 1 · Producto: juicio antes de herramientas","items":[{"title":"Shape Up — Introduction","url":"https://basecamp.com/shapeup/0.3-chapter-01","badge":"Must-read","time":"45–60 min","extract":"**Por qué va primero:** porque enseña a pensar en shaping, riesgo, límites, ciclos y responsabilidad. Para ti es clave porque un agente sin un appetite claro solo acelera caos.\n**Qué extraer:**\n<ul>\n<li>Cómo definir trabajo “bounded”.</li>\n<li>Cómo separar shaping de building.</li>\n<li>Cómo convertir ideas vagas en proyectos con límites.</li>\n<li>Cómo pensar en riesgo antes de ejecución.</li>\n</ul>\n**Output:** escribe una página llamada `product-shaping-rules.md` con 10 reglas para tus proyectos."},{"title":"Shape Up — Principles of Shaping / Set Boundaries","url":"https://basecamp.com/shapeup/4.0-appendix-01","badge":"Must-read","time":"60 min","extract":"**Qué extraer:**\n<ul>\n<li>Appetite > estimate.</li>\n<li>Rough, solved, bounded.</li>\n<li>Work that matters, not endless backlog.</li>\n</ul>\n**Aplicación directa:** EnRegla no debería ser “construir un SaaS”. Debe ser un bet de 6 semanas: por ejemplo, “carpeta viva de cumplimiento para constructoras con 1 flujo verificable”."},{"title":"Microsoft HAX Toolkit — Guidelines for Human-AI Interaction","url":"https://www.microsoft.com/en-us/haxtoolkit/?p=105","badge":"Must-read","time":"60–90 min","extract":"**Por qué importa:** es una base seria para diseñar experiencias con IA: qué puede hacer el sistema, qué tan bien lo hace, cómo corregirlo cuando falla y cómo calibrar confianza.\n**Qué extraer:**\n<ul>\n<li>Cómo diseñar onboarding de capacidades y límites.</li>\n<li>Cómo mostrar incertidumbre.</li>\n<li>Cómo permitir corrección y recuperación.</li>\n<li>Cómo diseñar interacción con sistemas no determinísticos.</li>\n</ul>\n**Output:** crea una checklist de 18 puntos para evaluar cualquier feature IA que diseñes."},{"title":"Design Principles for Generative AI Applications","url":"https://arxiv.org/abs/2401.14484","badge":"Must-read","time":"60–90 min","extract":"**Por qué importa:** traduce UX tradicional a sistemas generativos. Esto te ayuda a no caer en “poner un chat” como solución universal.\n**Qué extraer:**\n<ul>\n<li>Control del usuario.</li>\n<li>Transparencia.</li>\n<li>Iteración.</li>\n<li>Prevención de daño.</li>\n<li>Diseño para fallos inevitables.</li>\n</ul>"}]},{"blockTitle":"Bloque 2 · Fundamentos de agentes: entender el loop real","items":[{"title":"The Bitter Lesson — Richard Sutton","url":"http://www.incompleteideas.net/IncIdeas/BitterLesson.html","badge":"Must-read","time":"30–45 min","extract":"**Por qué va aquí:** te da el criterio de fondo: los sistemas que escalan suelen ganar sobre reglas manuales demasiado humanas. Pero para producto, la conclusión correcta no es “automatiza todo”; es “diseña sistemas donde búsqueda, feedback y aprendizaje puedan operar”.\n**Qué extraer:**\n<ul>\n<li>Search + learning como patrón central.</li>\n<li>Por qué conviene diseñar entornos donde el agente pueda probar, observar y corregir.</li>\n</ul>"},{"title":"LLM Powered Autonomous Agents — Lilian Weng","url":"https://lilianweng.github.io/posts/2023-06-23-agent/","badge":"Must-read","time":"90–120 min","extract":"**Por qué importa:** es el mapa mental clásico: planning, memory, tool use, reflection.\n**Qué extraer:**\n<ul>\n<li>Planning: cómo se descompone una tarea.</li>\n<li>Memory: qué debe recordar el sistema.</li>\n<li>Tool use: cómo se conecta a acciones reales.</li>\n<li>Reflection: cómo mejora después de fallar.</li>\n</ul>\n**Output:** dibuja tu propio mapa: `agent-system-overview-for-product-design.md`."},{"title":"ReAct: Synergizing Reasoning and Acting in Language Models","url":"https://arxiv.org/abs/2210.03629","badge":"Must-read, pero puedes leer abstract + intro + diagrams","time":"45–60 min","extract":"**Por qué importa:** ReAct es la base mental de muchos agentes: razonar, actuar, observar, ajustar.\n**Qué extraer:**\n<ul>\n<li>Por qué el agente necesita acciones externas, no solo “pensar”.</li>\n<li>Por qué observar resultados reduce alucinación.</li>\n<li>Cómo se ve un loop de acción verificable.</li>\n</ul>"},{"title":"Reflexion: Language Agents with Verbal Reinforcement Learning","url":"https://arxiv.org/abs/2303.11366","badge":"Must-read parcial","time":"45–60 min","extract":"**Por qué importa:** introduce una idea crucial para tus workflows: el agente puede mejorar sin reentrenarse si guarda feedback verbal y lo usa en próximos intentos.\n**Qué extraer:**\n<ul>\n<li>Feedback textual.</li>\n<li>Episodic memory.</li>\n<li>Aprendizaje por intentos.</li>\n<li>Cómo convertir errores repetidos en reglas del repo o del workflow.</li>\n</ul>"}]},{"blockTitle":"Bloque 3 · Arquitectura práctica de agentes","items":[{"title":"Anthropic — Building Effective Agents","url":"https://www.anthropic.com/engineering/building-effective-agents","badge":"Must-read","time":"90 min","extract":"**Por qué importa:** distingue workflows de agents y recomienda empezar simple. Es probablemente el artículo más importante para no sobreconstruir.\n**Qué extraer:**\n<ul>\n<li>Workflow vs agent.</li>\n<li>Prompt chaining.</li>\n<li>Routing.</li>\n<li>Parallelization.</li>\n<li>Orchestrator-workers.</li>\n<li>Evaluator-optimizer.</li>\n<li>Cuándo NO usar agentes.</li>\n</ul>\n**Output:** crea `agent-patterns-for-enregla.md` con 5 flujos posibles y cuál usarías primero."},{"title":"OpenAI — A Practical Guide to Building Agents","url":"https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/","badge":"Must-read","time":"90 min","extract":"**Por qué importa:** está escrito para product + engineering teams. Te ayuda a traducir use cases a herramientas, instrucciones, orquestación y guardrails.\n**Qué extraer:**\n<ul>\n<li>Cuándo un caso amerita agente.</li>\n<li>Cómo diseñar instrucciones.</li>\n<li>Cómo diseñar tools.</li>\n<li>Cómo pensar guardrails y handoffs.</li>\n</ul>\n**Aplicación directa:** Compliance Ops: agente que revisa documentos, detecta vencimientos, genera checklist, crea evidencia, pero no toma decisiones legales sin revisión humana."},{"title":"OpenAI Cookbook — GPT-4.1 Prompting Guide","url":"https://cookbook.openai.com/examples/gpt4-1_prompting_guide","badge":"Must-read táctico","time":"60 min","extract":"**Por qué importa:** tiene patrones útiles para agentes: persistencia, tool use, planificación, instrucciones literales, diff/editing, long context.\n**Qué extraer:**\n<ul>\n<li>Cómo escribir instrucciones que no se diluyen.</li>\n<li>Cómo pedir comportamiento agentic sin perder control.</li>\n<li>Cómo estructurar tareas de código y documentación.</li>\n</ul>"},{"title":"Anthropic — The “think” tool / extended thinking","url":"https://www.anthropic.com/engineering/claude-think-tool","badge":"Leer conceptual","time":"45 min","extract":"**Por qué importa:** no por el “truco”, sino por el patrón: en tareas con herramientas, el agente necesita pausas de deliberación antes o entre acciones.\n**Qué extraer:**\n<ul>\n<li>Cuándo conviene más razonamiento.</li>\n<li>Cuándo conviene acción directa.</li>\n<li>Cómo insertar checkpoints antes de tocar archivos, correr scripts o producir decisiones.</li>\n</ul>"}]},{"blockTitle":"Bloque 4 · Herramientas que usas: Claude Code, Codex, Cursor","items":[{"title":"Anthropic — Claude Code Best Practices","url":"https://www.anthropic.com/engineering/claude-code-best-practices","badge":"Must-read operativo","time":"60–90 min","extract":"**Qué extraer:**\n<ul>\n<li>Cómo iniciar repos.</li>\n<li>Cómo dar contexto.</li>\n<li>Cómo pedir cambios pequeños.</li>\n<li>Cómo revisar outputs.</li>\n<li>Cómo usar Claude como agente de código, no como chatbot.</li>\n</ul>\n**Output:** actualiza un `CLAUDE.md` real de tu repo."},{"title":"Claude Code Docs — Common Workflows","url":"https://code.claude.com/docs/en/common-workflows","badge":"Must-read práctico","time":"45–60 min","extract":"**Qué extraer:**\n<ul>\n<li>Codebase overview.</li>\n<li>Find relevant code.</li>\n<li>Trace flow.</li>\n<li>Fix bugs.</li>\n<li>Refactor.</li>\n<li>Write tests.</li>\n<li>Create PRs.</li>\n<li>Work with images.</li>\n<li>Schedule runs.</li>\n</ul>\n**Aplicación directa:** úsalo para tus repos de landing, EnRegla, Aura, compliance docs."},{"title":"Claude Code Docs — Memory / CLAUDE.md","url":"https://code.claude.com/docs/en/memory","badge":"Must-read práctico","time":"45 min","extract":"**Por qué importa:** si los agentes repiten errores, el problema no es solo el modelo; es tu memoria del proyecto.\n**Qué extraer:**\n<ul>\n<li>`CLAUDE.md` para reglas del proyecto.</li>\n<li>Auto memory para aprendizajes.</li>\n<li>Reglas por carpeta.</li>\n<li>Qué debe ir en instrucciones permanentes vs skills.</li>\n</ul>"},{"title":"OpenAI — Introducing Codex","url":"https://openai.com/index/introducing-codex/","badge":"Must-read operativo","time":"45–60 min","extract":"**Qué extraer:**\n<ul>\n<li>Codex como agente que trabaja en un entorno propio.</li>\n<li>Evidencia de logs y tests.</li>\n<li>Revisión, PRs, integración local.</li>\n<li>`AGENTS.md` como guía del repo.</li>\n</ul>\n**Output:** crea un `AGENTS.md` base para cada repo importante."},{"title":"OpenAI — Codex Product Page / Help","url":"https://openai.com/codex/","badge":"Skim mensual","time":"20–30 min","extract":"<ul>\n<li>https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan</li>\n</ul>\n**Qué extraer:**\n<ul>\n<li>Cambios de disponibilidad.</li>\n<li>Worktrees.</li>\n<li>Skills.</li>\n<li>Multi-agent coding workflows.</li>\n<li>Límites y planes.</li>\n</ul>"},{"title":"Cursor — Rules","url":"https://docs.cursor.com/context/rules","badge":"Must-read si usas Cursor","time":"45 min","extract":"**Qué extraer:**\n<ul>\n<li>`.cursor/rules`.</li>\n<li>Project rules vs user rules vs memories.</li>\n<li>Rules como contexto reusable.</li>\n<li>Cómo evitar repetir instrucciones en cada chat.</li>\n</ul>"},{"title":"Cursor — Background Agents","url":"https://docs.cursor.com/background-agent","badge":"Leer si vas a correr trabajo paralelo","time":"30 min","extract":"**Qué extraer:**\n<ul>\n<li>Cuándo usar agentes remotos.</li>\n<li>Cómo dar follow-up.</li>\n<li>Cuándo tomar control.</li>\n<li>Qué tipo de tareas conviene delegar.</li>\n</ul>"},{"title":"Cursor — Bugbot updates, June 2026","url":"https://cursor.com/changelog/bugbot-updates-june-2026","badge":"Skim","time":"20 min","extract":"**Por qué importa:** la tendencia es clara: la velocidad de agentes exige revisión automática, security review y feedback antes del PR.\n**Qué extraer:**\n<ul>\n<li>`/review` antes de push.</li>\n<li>Bugbot + security review.</li>\n<li>Revisiones incrementales.</li>\n<li>Cómo separar agente escritor de agente revisor.</li>\n</ul>"}]},{"blockTitle":"Bloque 5 · Lo nuevo: loops, auto-research, harnesses, skills","items":[{"title":"Addy Osmani — Loop Engineering","url":"https://addyosmani.com/blog/loop-engineering/","badge":"Must-read actual","time":"45–60 min","extract":"**Por qué importa:** esto es exactamente lo que mencionaste: pasar de escribir prompts a diseñar loops que promptéan agentes.\n**Lectura correcta:** no lo leas como hype. Léelo como arquitectura operacional.\n**Qué extraer:**\n<ul>\n<li>Qué es un loop.</li>\n<li>Qué condiciones de salida necesita.</li>\n<li>Por qué worktrees importan.</li>\n<li>Por qué skills/plugins/connectors/subagents importan.</li>\n<li>Riesgo de costo/token burn.</li>\n</ul>\n**Output:** crea `LOOP.md` con un loop real para tu landing o EnRegla:\n```md\n# LOOP.md\nGoal:\nSuccess criteria:\nAllowed files:\nDisallowed actions:\nVerification commands:\nReviewer agent:\nMax iterations:\nStop conditions:\nFinal evidence required:\n```"},{"title":"Addy Osmani — Agent Harness Engineering","url":"https://addyosmani.com/blog/agent-harness-engineering/","badge":"Must-read","time":"45–60 min","extract":"**Por qué importa:** es la pieza que conecta con tu realidad. No gana quien “promptea mejor”; gana quien construye mejor scaffolding: prompts, tools, tests, hooks, sandboxes, feedback loops, recovery paths.\n**Qué extraer:**\n<ul>\n<li>El modelo no es el producto completo.</li>\n<li>El harness es infraestructura.</li>\n<li>Cada error repetido debe convertirse en una regla, test, hook o skill.</li>\n</ul>"},{"title":"Addy Osmani — Agent Skills","url":"https://addyosmani.com/blog/agent-skills/","badge":"Must-read","time":"45 min","extract":"**Por qué importa:** para tu perfil, los skills son una forma de empaquetar criterio senior: no solo “hazlo”, sino “hazlo como un senior lo revisaría”.\n**Qué extraer:**\n<ul>\n<li>Spec writing.</li>\n<li>Tests.</li>\n<li>Reviewability.</li>\n<li>Security boundaries.</li>\n<li>Evidence.</li>\n<li>Scope discipline.</li>\n</ul>\n**Output:** crea 3 skills conceptuales:\n1. `product-spec-skill.md`\n2. `ux-review-skill.md`\n3. `compliance-evidence-skill.md`"},{"title":"Addy Osmani — Agent Engineer Course","url":"https://addyosmani.com/agents/","badge":"Referencia continua","time":"19 lecciones, no leer todo de golpe","extract":"**Cómo usarlo:** úsalo como índice. Lee una lección cuando te falte ese concepto en un proyecto real.\n**Orden sugerido dentro del curso:**\n1. What are AI agents?\n2. Tools.\n3. Agentic design patterns.\n4. Memory and context.\n5. Multi-agent systems.\n6. Agent skills.\n7. Orchestrators."},{"title":"OpenAI — Deep Research","url":"https://openai.com/index/introducing-deep-research/","badge":"Must-read para auto-research","time":"45–60 min","extract":"<ul>\n<li>https://help.openai.com/en/articles/10500283</li>\n</ul>\n**Qué extraer:**\n<ul>\n<li>Multi-step research.</li>\n<li>Plan before execution.</li>\n<li>Source selection.</li>\n<li>Interrupt/refine.</li>\n<li>Citations and verifiability.</li>\n<li>Public web + uploaded files + connected apps.</li>\n</ul>\n**Aplicación directa:** crear research reports para compliance, API Ecuador, verticales UAFE, permisos, benchmarking de software regulado."},{"title":"Google — Gemini Deep Research Agent / Deep Research Max","url":"https://ai.google.dev/gemini-api/docs/interactions/deep-research","badge":"Leer para arquitectura, no solo producto","time":"45–60 min","extract":"<ul>\n<li>https://blog.google/innovation-and-ai/models-and-research/gemini-models/next-generation-gemini-deep-research/</li>\n</ul>\n**Qué extraer:**\n<ul>\n<li>Collaborative planning.</li>\n<li>Background execution.</li>\n<li>MCP servers.</li>\n<li>Visualizations.</li>\n<li>Cost ranges.</li>\n<li>Long-running research loops.</li>\n</ul>\n**Aplicación directa:** diseñar tu propio flujo de auto-research con plan → búsqueda → lectura → synthesis → contradiction log → final brief."},{"title":"Deep Research Agents — Systematic Examination and Roadmap","url":"https://arxiv.org/abs/2506.18096","badge":"Leer abstract + taxonomy + roadmap","time":"45–60 min","extract":"**Por qué importa:** te da vocabulario para evaluar research agents sin depender de marketing.\n**Qué extraer:**\n<ul>\n<li>Static vs dynamic workflows.</li>\n<li>Browser-based vs API-based acquisition.</li>\n<li>Tool use.</li>\n<li>MCP.</li>\n<li>Planning strategies.</li>\n<li>Benchmark limitations.</li>\n</ul>"},{"title":"Evaluating Deep Research Agents on Expert Consulting Work","url":"https://arxiv.org/abs/2605.17554","badge":"Leer para escepticismo","time":"45 min","extract":"**Por qué importa:** te recuerda que deep research puede producir reports bonitos pero fallar en tareas de consultoría si no hay verifiers, rubrics y trampas cognitivas.\n**Qué extraer:**\n<ul>\n<li>Rubrics.</li>\n<li>Ground-truth verifiers.</li>\n<li>Cognitive traps.</li>\n<li>Required sections.</li>\n<li>Fabrication signatures.</li>\n</ul>\n**Aplicación directa:** cada research report de EnRegla debería tener verifiers: fuentes oficiales, fechas, jurisdicción, contradicciones, certeza y decisiones que NO se pueden automatizar."}]},{"blockTitle":"Bloque 6 · Product Design x Figma x AI-native UI","items":[{"title":"Figma — Introducing Figma Make","url":"https://www.figma.com/blog/introducing-figma-make/","badge":"Must-read para AI product design","time":"30–45 min","extract":"**Qué extraer:**\n<ul>\n<li>Prompt-to-app.</li>\n<li>Start from design.</li>\n<li>Edit in code.</li>\n<li>Prototype real enough to feel.</li>\n<li>Cómo Figma se mueve hacia producto ejecutable.</li>\n</ul>"},{"title":"Figma — Figma Make GA","url":"https://www.figma.com/blog/figma-make-general-availability/","badge":"Skim","time":"20–30 min","extract":"**Qué extraer:**\n<ul>\n<li>Import libraries.</li>\n<li>Design consistency.</li>\n<li>Prototyping to app-like artifacts.</li>\n<li>Qué puede ser útil vs qué sigue siendo débil.</li>\n</ul>"},{"title":"Figma Newsroom / Release Notes — Mayo-Junio 2026","url":"https://www.figma.com/newsroom/","badge":"Radar semanal","time":"15 min cada viernes","extract":"<ul>\n<li>https://www.figma.com/release-notes/</li>\n</ul>\n**Qué buscar:**\n<ul>\n<li>Design agent on canvas.</li>\n<li>Figma Make on local code.</li>\n<li>MCP server workflows.</li>\n<li>Slots / design system guardrails.</li>\n<li>FigJam as coding agent whiteboard.</li>\n</ul>\n**Cómo leerlo:** no como fan de Figma. Léelo preguntando: “¿Qué parte del diseño se volvió ejecutable? ¿Qué parte todavía necesita juicio humano?”"},{"title":"Imagining Design Workflows in Agentic AI Futures","url":"https://arxiv.org/abs/2509.20731","badge":"Leer conceptual","time":"45 min","extract":"**Por qué importa:** estudia cómo diseñadores imaginan trabajar con agentes: autoridad, control, intención y colaboración.\n**Qué extraer:**\n<ul>\n<li>Quién decide.</li>\n<li>Qué delegar.</li>\n<li>Qué no delegar.</li>\n<li>Cómo explicar intención a agentes.</li>\n</ul>"},{"title":"The Emerging Use of GenAI for UX Research in Software Development","url":"https://arxiv.org/abs/2512.15944","badge":"Leer si vas a automatizar UX research","time":"45–60 min","extract":"**Qué extraer:**\n<ul>\n<li>Riesgo de que PMs sobreestimen IA.</li>\n<li>Desconfianza de UX researchers en análisis generado.</li>\n<li>Cómo usar IA sin borrar interpretación humana.</li>\n<li>Qué outputs requieren revisión humana.</li>\n</ul>"}]},{"blockTitle":"Bloque 7 · Riesgos: velocidad sin mantenibilidad","items":[{"title":"Beyond Functional Correctness: Design Issues in AI IDE-Generated Large-Scale Projects","url":"https://arxiv.org/abs/2604.06373","badge":"Must-read defensivo","time":"45–60 min","extract":"**Por qué importa:** muestra que los proyectos generados por IDEs con IA pueden funcionar, pero acumular problemas de mantenibilidad: duplicación, complejidad, métodos grandes, accesibilidad, manejo de errores.\n**Qué extraer:**\n<ul>\n<li>Funcionar ≠ estar bien diseñado.</li>\n<li>El diseñador con ingeniería debe revisar estructura, no solo pantalla.</li>\n<li>La mantenibilidad también es UX del equipo.</li>\n</ul>"},{"title":"SWE-PRBench: Benchmarking AI Code Review Quality","url":"https://arxiv.org/abs/2603.26130","badge":"Leer abstract + findings","time":"30–45 min","extract":"**Por qué importa:** ayuda a no confiar ciegamente en AI code review. Los revisores automáticos son útiles, pero no reemplazan revisión experta.\n**Qué extraer:**\n<ul>\n<li>Context dilution.</li>\n<li>Diff-only vs full context.</li>\n<li>Human-flagged issues.</li>\n<li>Por qué necesitas tests, acceptance criteria y revisión humana.</li>\n</ul>"},{"title":"Comparing AI Coding Agents: Pull Request Acceptance","url":"https://arxiv.org/abs/2602.08915","badge":"Skim","time":"30 min","extract":"**Qué extraer:**\n<ul>\n<li>No hay un agente ganador para todo.</li>\n<li>Las tareas de documentación, fixes y features tienen dinámicas distintas.</li>\n<li>Selecciona agente según tarea, no por fanatismo.</li>\n</ul>"}]}];
+
+// Inicio: 22 jun 2026 (mediodía local para evitar bordes de zona horaria).
+const START = new Date(2026, 5, 22, 12, 0, 0);
+
+const WD = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+const MO = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+
+function fmt(d) {
+  return `${WD[d.getDay()]} ${d.getDate()} ${MO[d.getMonth()]} ${d.getFullYear()}`;
+}
+function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+
+const today = startOfDay(new Date());
+const start = startOfDay(START);
+const list = document.getElementById("list");
+
+let dayIdx = 0;
+let todayEl = null;
+let total = 0;
+
+for (const block of BLOCKS) {
+  const h = document.createElement("div");
+  h.className = "block-label";
+  h.textContent = block.blockTitle;
+  list.appendChild(h);
+
+  for (const item of block.items) {
+    const date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + dayIdx);
+    const isToday = date.getTime() === today.getTime();
+    const isPast = date.getTime() < today.getTime();
+    total++;
+
+    const card = document.createElement("div");
+    card.className = "day" + (isToday ? " today" : isPast ? " past" : "");
+    if (isToday) { card.id = "today"; todayEl = card; }
+
+    card.innerHTML = `
+      <div class="crosshair ch-tl"></div>
+      <div class="crosshair ch-tr"></div>
+      <div class="crosshair ch-bl"></div>
+      <div class="crosshair ch-br"></div>
+      <div class="meta">
+        <span class="date">Día ${dayIdx + 1} · ${fmt(date)}</span>
+        ${isToday ? '<span class="today-tag">HOY</span>' : `<span class="badge">${item.badge}</span>`}
+      </div>
+      <h2>${item.title}</h2>
+      <div class="extract">${item.extract}</div>
+      <div class="row">
+        <a class="read" href="${item.url}" target="_blank" rel="noopener">Leer ${isToday ? 'artículo hoy' : ''} →</a>
+        <span class="time">${item.time}${isToday ? " · " + item.badge : ""}</span>
+      </div>`;
+    list.appendChild(card);
+    dayIdx++;
+  }
+}
+
+// Progreso
+const dayNum = Math.round((today - start) / 86400000) + 1;
+const prog = document.getElementById("progress");
+if (dayNum < 1) prog.textContent = `Empieza el ${fmt(start)}.`;
+else if (dayNum > total) prog.textContent = `Ruta completa (${total} días).`;
+else prog.textContent = `Hoy: día ${dayNum} de ${total}.`;
+
+// Ir a hoy
+const btn = document.getElementById("todayBtn");
+function goToday() {
+  if (todayEl) todayEl.scrollIntoView({ behavior: "smooth", block: "center" });
+  else window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+}
+btn.addEventListener("click", goToday);
+window.addEventListener("load", () => setTimeout(goToday, 100));
+</script>
+</body>
+</html>
