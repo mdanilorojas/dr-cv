@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Danilo Rojas — Senior Product Designer</title>
+<meta name="description" content="Eighteen years designing products. Senior UX judgment, enterprise-grade compliance documentation, and AI as leverage — not costume.">
+<meta property="og:title" content="Danilo Rojas — Senior Product Designer">
+<meta property="og:description" content="Eighteen years designing products. Senior UX judgment, enterprise-grade compliance documentation, and AI as leverage — not costume.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://danilorojas.design/">
+<meta property="og:image" content="https://danilorojas.design/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://danilorojas.design/og.png">
+<meta property="og:image:alt" content="Danilo Rojas — Senior Product Designer for complex, regulated environments.">
+<meta name="twitter:image:alt" content="Danilo Rojas — Senior Product Designer for complex, regulated environments.">
+<meta name="author" content="Danilo Rojas">
+<meta name="theme-color" content="#030303">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%23030303%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2252%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-size%3D%2238%22%20font-weight%3D%22600%22%20fill%3D%22%23EDEDED%22%20letter-spacing%3D%22-1%22%3Edr%3C%2Ftext%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2216%22%20r%3D%222%22%20fill%3D%22%233B82F6%22%2F%3E%3C%2Fsvg%3E">
+<link rel="canonical" href="https://danilorojas.design/">
+<link rel="alternate" hreflang="en" href="https://danilorojas.design/">
+<link rel="alternate" hreflang="es" href="https://danilorojas.design/es/">
+<link rel="alternate" hreflang="x-default" href="https://danilorojas.design/">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { darkMode:'class', theme:{ extend:{
+  fontFamily:{ sans:['Inter','sans-serif'], mono:['JetBrains Mono','monospace'], serif:['Source Serif 4','serif'] },
+  colors:{ system:{ bg:'#030303', surface:'#0a0a0a', line:'rgba(255,255,255,0.08)', lineHover:'rgba(255,255,255,0.25)', text:'#ededed', dim:'#8a8a8a', accent:'#ffffff' } },
+  animation:{ 'spin-slow':'spin 12s linear infinite', 'pulse-slow':'pulse 4s cubic-bezier(0.4,0,0.6,1) infinite' }
+} } }
+</script>
+<style>
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/inter-400.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url("/assets/fonts/inter-500.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url("/assets/fonts/inter-600.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:700;font-display:swap;src:url("/assets/fonts/inter-700.woff2") format("woff2");}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/jetbrains-mono-400.woff2") format("woff2");}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:500;font-display:swap;src:url("/assets/fonts/jetbrains-mono-500.woff2") format("woff2");}
+@font-face{font-family:"Source Serif 4";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/source-serif-4-400.woff2") format("woff2");}
+@font-face{font-family:"Source Serif 4";font-style:normal;font-weight:600;font-display:swap;src:url("/assets/fonts/source-serif-4-600.woff2") format("woff2");}
+@font-face{font-family:"Source Serif 4";font-style:italic;font-weight:400;font-display:swap;src:url("/assets/fonts/source-serif-4-400-italic.woff2") format("woff2");}
+
+:root { --mouse-x: 50%; --mouse-y: 50%; }
+body { background-color:#030303; color:#ededed; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+.bg-grid { position:fixed; inset:0; z-index:-1;
+  background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size:80px 80px; background-position:center top;
+  mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%); }
+.mouse-glow { position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.04), transparent 40%); }
+.structural-border { border:1px solid rgba(255,255,255,0.08); position:relative; transition:border-color .4s ease, background-color .4s ease; }
+.structural-border:hover { border-color: rgba(255,255,255,0.25); }
+.crosshair { position:absolute; width:13px; height:13px; pointer-events:none; transition:transform .5s cubic-bezier(.4,0,.2,1); }
+.structural-border:hover .crosshair { transform:scale(1.5) rotate(90deg); opacity:.8; }
+.crosshair::before, .crosshair::after { content:''; position:absolute; background-color:#8a8a8a; opacity:.5; }
+.crosshair::before { top:6px; left:0; width:13px; height:1px; }
+.crosshair::after { top:0; left:6px; width:1px; height:13px; }
+.ch-tl{top:-7px;left:-7px;} .ch-tr{top:-7px;right:-7px;} .ch-bl{bottom:-7px;left:-7px;} .ch-br{bottom:-7px;right:-7px;}
+.reveal { opacity:0; transform:translateY(20px); transition:all .8s cubic-bezier(.16,1,.3,1); }
+.reveal.active { opacity:1; transform:translateY(0); }
+.delay-100{transition-delay:100ms;} .delay-200{transition-delay:200ms;}
+.tech-label { position:absolute; background:#030303; padding:0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:.1em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.08); z-index:10; }
+.metric-card { background-color:#0d0d10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); transition: background-color .4s ease, box-shadow .4s ease; }
+.metric-card:hover { background-color:#141418; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+.status-glyph{ overflow:visible; }
+.status-hint{ border-bottom:1px dashed rgba(255,255,255,.22); padding-bottom:2px; transition:border-color .35s ease; }
+.group:hover .status-hint{ border-color:rgba(255,255,255,.85); }
+::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#030303;} ::-webkit-scrollbar-thumb{background:#333;} ::-webkit-scrollbar-thumb:hover{background:#555;}
+@media (prefers-reduced-motion: reduce){ .reveal{transition:none;opacity:1;transform:none;} .crosshair{transition:none;} .status-glyph animateMotion, .status-glyph animate{ display:none; } }
+.skip-link{position:absolute;left:-9999px;top:0;z-index:100;background:#fff;color:#000;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;}
+.skip-link:focus{left:8px;top:8px;}
+a:focus-visible,button:focus-visible{outline:2px solid #3B82F6;outline-offset:3px;border-radius:1px;}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Danilo Rojas",
+  "url": "https://danilorojas.design/",
+  "image": "https://danilorojas.design/og.png",
+  "jobTitle": "Senior Product Designer",
+  "description": "Eighteen years designing products for complex, regulated environments. Senior UX judgment, enterprise-grade compliance documentation, and AI as leverage.",
+  "knowsAbout": ["Product Design", "UX Design", "Design Systems", "Agentic AI Workflows", "Compliance Documentation"],
+  "sameAs": [
+    "https://linkedin.com/in/mdanilorojas",
+    "https://github.com/mdanilorojas",
+    "https://behance.net/mariodanilo"
+  ]
+}
+</script>
+</head>
+<body class="relative overflow-x-hidden selection:bg-white selection:text-black min-h-screen flex flex-col font-sans">
+
+<a href="#work" class="skip-link">Skip to content</a>
+<div class="bg-grid"></div>
+<div class="mouse-glow" id="mouseGlow"></div>
+
+<nav aria-label="Primary" class="fixed top-0 w-full z-50 border-b border-system-line bg-system-bg/80 backdrop-blur-md">
+  <div class="w-full flex justify-between items-center h-14 px-4 sm:px-8 max-w-[1400px] mx-auto">
+    <div class="font-sans font-medium tracking-tight text-[15px] text-white">Danilo Rojas <span class="text-system-dim font-mono ml-1">· dr</span></div>
+    <div class="flex items-center h-full">
+      <div class="hidden md:flex space-x-8 mr-8 font-mono text-[10px] tracking-widest uppercase"><a href="#notes" class="text-system-dim hover:text-white transition-colors">Notes</a><a href="#work" class="text-system-dim hover:text-white transition-colors">Work</a><a href="#words" class="text-system-dim hover:text-white transition-colors">Words</a><a href="#method" class="text-system-dim hover:text-white transition-colors">Method</a><a href="#about" class="text-system-dim hover:text-white transition-colors">About</a></div>
+      <a href="#contact" class="inline-flex items-center border border-system-line px-3 py-1.5 mr-4 md:mr-6 text-[10px] font-mono uppercase tracking-widest text-white hover:bg-white hover:text-black transition-colors no-underline">Contact</a>
+      <div class="flex items-center border-l border-system-line h-full pl-4 md:pl-6 space-x-4">
+        <a href="es/index.html" hreflang="es" lang="es" aria-label="Ver esta página en español" class="font-mono text-[10px] tracking-widest text-system-dim cursor-pointer hover:text-white"><span class="text-white">EN</span><span class="text-system-dim/50">/ES</span></a>
+        <div id="statusBadge" class="flex items-center space-x-2 group cursor-help" title="A human running the loop agents run — orchestrating, evaluating, compounding">
+          <svg class="status-glyph text-system-dim group-hover:text-white transition-colors" width="21" height="21" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+  <circle cx="20" cy="20" r="2" fill="currentColor"/>
+  <g fill="currentColor">
+    <circle r="1.3" opacity="0"><animateMotion path="M 36 20 Q 28 12 20 20" dur="8s" begin="statusBadge.mouseover" end="statusBadge.mouseout" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="statusBadge.mouseover" end="statusBadge.mouseout" repeatCount="indefinite"/></circle>
+    <circle r="1.3" opacity="0"><animateMotion path="M 20 4 Q 28 12 20 20" dur="8s" begin="statusBadge.mouseover-2.6s" end="statusBadge.mouseout" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="statusBadge.mouseover-2.6s" end="statusBadge.mouseout" repeatCount="indefinite"/></circle>
+    <circle r="1.3" opacity="0"><animateMotion path="M 4 20 Q 12 28 20 20" dur="8s" begin="statusBadge.mouseover-5.3s" end="statusBadge.mouseout" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="8s" begin="statusBadge.mouseover-5.3s" end="statusBadge.mouseout" repeatCount="indefinite"/></circle>
+  </g>
+</svg>
+          <span class="status-hint font-mono text-[10px] text-system-dim uppercase tracking-widest group-hover:text-white transition-colors hidden sm:inline-block">Human_Compounding</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="h-[1px] bg-white w-0 absolute bottom-0 left-0" id="scrollProgress"></div>
+</nav>
+
+<main class="flex-grow pt-28 pb-20 px-4 sm:px-8 relative z-10 flex flex-col items-center">
+
+  <div class="w-full max-w-6xl relative mt-10 sm:mt-16">
+    <div class="structural-border p-8 sm:p-16 md:p-24 reveal relative overflow-hidden bg-system-surface/30 backdrop-blur-sm">
+      <div class="max-w-4xl relative z-10 pt-4">
+        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-system-line mb-8 p-1 bg-system-surface/80 backdrop-blur-md flex items-center justify-center relative group">
+          <div class="w-full h-full rounded-full bg-system-bg border border-system-line/50 overflow-hidden flex items-center justify-center relative">
+            <img src="assets/photo/danilo.jpg" alt="Portrait of Danilo Rojas" width="80" height="80" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500">
+          </div>
+          <div class="absolute -inset-2 border border-system-line/30 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-[spin_4s_linear_infinite] transition-opacity duration-500"></div>
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.16] mb-8 text-system-dim max-w-5xl">
+          <span class="text-white font-medium">I&#39;m Danilo Rojas.</span><br>
+          I design products for <span class="text-white">complex, regulated environments.</span>
+        </h1>
+        <div class="flex items-center gap-4 mb-10">
+          <div class="w-8 h-[1px] bg-system-dim/50 hidden sm:block"></div>
+          <p class="text-base md:text-lg text-system-dim font-sans font-light tracking-wide max-w-2xl leading-relaxed">Eighteen years of senior UX judgment for regulated, high-stakes products — where engineering rigor meets human craft.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-6 mt-12">
+          <a href="#contact" class="group relative px-6 py-3 bg-white text-black font-medium text-sm tracking-wide inline-block text-center border border-white hover:bg-transparent hover:text-white transition-colors no-underline">Let&#39;s work together</a>
+          <a href="#work" class="px-6 py-3 text-system-dim font-medium text-sm tracking-wide inline-block text-center border border-system-line hover:border-white hover:text-white transition-colors no-underline">View selected work</a>
+          <div class="flex items-center space-x-2">
+            <div class="w-2 h-2 rounded-full border border-green-500/50 flex items-center justify-center"><div class="w-1 h-1 bg-green-500 rounded-full animate-pulse-slow"></div></div>
+            <span class="text-xs font-mono text-system-dim uppercase tracking-widest">Remote global</span>
+          </div>
+        </div>
+      </div>
+      <div class="absolute right-8 lg:right-16 top-1/2 -translate-y-1/2 opacity-[0.15] hidden lg:block pointer-events-none select-none">
+        <svg aria-hidden="true" width="340" height="340" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.25" class="animate-[spin_24s_linear_infinite]">
+          <circle cx="50" cy="50" r="45" stroke-dasharray="0.5 2" />
+          <circle cx="50" cy="50" r="32" />
+          <circle cx="50" cy="50" r="28" stroke-dasharray="2 1" opacity="0.5" />
+          <rect x="27.37" y="27.37" width="45.25" height="45.25" transform="rotate(45 50 50)" />
+          <path d="M 50 2 L 50 98 M 2 50 L 98 50" stroke-dasharray="0.5 1.5" opacity="0.6" />
+          <circle cx="50" cy="50" r="4" fill="currentColor" opacity="0.2"/>
+          <circle cx="50" cy="5" r="1" fill="currentColor" />
+          <circle cx="50" cy="95" r="1" fill="currentColor" />
+          <circle cx="5" cy="50" r="1" fill="currentColor" />
+          <circle cx="95" cy="50" r="1" fill="currentColor" />
+        </svg>
+      </div>
+    </div>
+    <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+    <div class="tech-label -top-2 left-10">PRODUCT DESIGN · AGENTIC WORKFLOWS</div>
+    <div class="absolute top-0 bottom-0 left-1/4 w-[1px] bg-system-line -z-10 hidden md:block"></div>
+  </div>
+
+  <section class="w-full max-w-6xl mt-12 reveal">
+    <div class="py-6 border-y border-system-line/50 flex flex-wrap justify-center items-center gap-x-8 gap-y-4 px-4 bg-system-surface/10">
+      <span class="font-mono font-medium text-[10px] text-white uppercase tracking-widest hidden md:block mr-4">Trusted by //</span>
+      <a href="https://www.faa.gov/" target="_blank" rel="noopener" class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">FAA</a><span class="text-system-line">·</span><a href="https://www.defense.gov/" target="_blank" rel="noopener" class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">DoD</a><span class="text-system-line">·</span><a href="https://www.va.gov/" target="_blank" rel="noopener" class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">VA</a><span class="text-system-line">·</span><a href="https://www.boozallen.com/" target="_blank" rel="noopener" class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">Booz Allen Hamilton</a><span class="text-system-line">·</span><a href="https://www.pichincha.com/" target="_blank" rel="noopener" class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">Pichincha Bank</a><span class="text-system-line">·</span><a href="https://www.rappi.com/" target="_blank" rel="noopener" class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">Rappi</a><span class="text-system-line">·</span><a href="https://www.juanvaldez.com/" target="_blank" rel="noopener" class="font-mono text-[11px] text-system-dim uppercase tracking-widest hover:text-white transition-colors no-underline">Juan Valdez</a>
+    </div>
+  </section>
+
+  <section class="w-full max-w-6xl mt-24 reveal">
+    <div class="mb-8 flex items-center justify-between">
+      <h2 class="text-xl md:text-2xl font-light text-system-accent">The math behind the craft.</h2>
+      <div class="h-[1px] flex-grow bg-system-line mx-6 hidden md:block"></div>
+      <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase">DAT // Metrics</span>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 border-t border-l border-system-line"><div class="structural-border metric-card border-t-0 border-l-0 p-8 flex flex-col justify-center min-h-[160px]">
+    <div class="crosshair ch-br"></div>
+    <div class="text-4xl md:text-5xl font-light text-white mb-2 tracking-tighter">18<span class="text-system-dim">+</span></div>
+    <div class="font-mono text-[10px] text-system-dim uppercase tracking-wider leading-relaxed">Years building products</div>
+  </div><div class="structural-border metric-card border-t-0 border-l-0 p-8 flex flex-col justify-center min-h-[160px]">
+    <div class="crosshair ch-br"></div>
+    <div class="text-4xl md:text-5xl font-light text-white mb-2 tracking-tighter">15</div>
+    <div class="font-mono text-[10px] text-system-dim uppercase tracking-wider leading-relaxed">Years in design</div>
+  </div><div class="structural-border metric-card border-t-0 border-l-0 p-8 flex flex-col justify-center min-h-[160px]">
+    <div class="crosshair ch-br"></div>
+    <div class="text-4xl md:text-5xl font-light text-white mb-2 tracking-tighter">4</div>
+    <div class="font-mono text-[10px] text-system-dim uppercase tracking-wider leading-relaxed">Years supporting FAA, DoD &amp; VA programs</div>
+  </div><div class="structural-border metric-card border-t-0 border-l-0 p-8 flex flex-col justify-center min-h-[160px]">
+    <div class="crosshair ch-br"></div>
+    <div class="text-4xl md:text-5xl font-light text-white mb-2 tracking-tighter">50<span class="text-system-dim">+</span></div>
+    <div class="font-mono text-[10px] text-system-dim uppercase tracking-wider leading-relaxed">Product initiatives delivered</div>
+  </div></div>
+  </section>
+
+  <section id="notes" aria-label="Notes" class="w-full max-w-6xl mt-32 pt-16 reveal relative">
+    <div class="absolute left-[24px] md:left-[40px] top-0 bottom-0 w-[1px] bg-system-line/50 -z-10"></div>
+    <div class="mb-16 pl-0 md:pl-24">
+      <h2 class="text-2xl md:text-4xl font-serif italic text-system-accent font-light max-w-2xl leading-tight">"The writing is evidence of judgment."</h2>
+      <div class="mt-4 font-mono text-[10px] text-system-dim tracking-widest uppercase">DOC // Philosophy</div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 pl-6 md:pl-24 relative"><article class="relative">
+    <div class="absolute -left-6 md:-left-24 top-1 font-mono text-[10px] text-system-dim bg-system-bg py-1">01</div>
+    <h3 class="text-lg font-medium text-white mb-4">Most teams do not lack solutions.</h3>
+    <p class="text-system-dim text-sm md:text-base font-light leading-relaxed">Teams rarely fail for lack of ideas, UI options, or tools. They fail because the problem was misdiagnosed, the constraints were never made explicit, or they shipped around the real decision. Good design reduces ambiguity before it produces screens.</p>
+  </article><article class="relative">
+    <div class="absolute -left-6 md:-left-24 top-1 font-mono text-[10px] text-system-dim bg-system-bg py-1">02</div>
+    <h3 class="text-lg font-medium text-white mb-4">Handoff is where judgment disappears.</h3>
+    <p class="text-system-dim text-sm md:text-base font-light leading-relaxed">Traditional handoff turns product decisions into artifacts and asks another team to reconstruct the intent later — that gap is where waste lives. The answer isn&#39;t designers pretending to be engineers; it&#39;s making judgment executable through systems, rubrics, and agents.</p>
+  </article></div>
+  </section>
+
+  <section id="work" aria-label="Selected work" class="w-full max-w-6xl mt-32 pt-16">
+    <div class="flex justify-between items-end border-b border-system-line pb-4 mb-12 reveal">
+      <div>
+        <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">Selected work</span>
+        <h2 class="text-2xl md:text-3xl font-light text-system-accent">Three products. Designed to the handoff.</h2>
+      </div>
+    </div>
+    <p class="text-system-dim max-w-2xl mb-16 font-light leading-relaxed reveal delay-100">Each one taken from problem to a build engineering can run with — design systems, product flows, and the AI behavior, spec&#39;d and ready. I take the design as far as it goes; engineering takes it further.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6"><a href="work/developer-portal/index.html" class="structural-border p-6 flex flex-col group reveal  bg-system-surface/20 no-underline">
+  <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+  <div class="aspect-video border border-system-line mb-6 relative overflow-hidden flex items-center justify-center bg-[#050505]"><div class="w-2/3 h-2/3 grid grid-cols-3 gap-1 p-1 border border-system-line/20 group-hover:border-white/30 transition-colors duration-500">
+     <div class="bg-white/[0.02] group-hover:bg-white/15 transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/[0.06] transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/15 transition-colors duration-500"></div>
+     <div class="bg-white/[0.02] group-hover:bg-white/[0.06] transition-colors duration-500"></div><div class="bg-white/[0.03] group-hover:bg-white/25 transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/[0.06] transition-colors duration-500"></div>
+     <div class="bg-white/[0.02] group-hover:bg-white/15 transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/[0.06] transition-colors duration-500"></div><div class="bg-white/[0.02] group-hover:bg-white/15 transition-colors duration-500"></div>
+   </div></div>
+  <div class="flex-grow">
+    <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>Booz Allen Hamilton · Senior Product Designer</span><span>2026</span></div>
+    <h3 class="text-lg text-white font-medium mb-3">Developer Portal design system</h3>
+    <p class="text-sm text-system-dim mb-6 font-light leading-relaxed">Dark-first design system for a government platform — accessible by default, built for engineering to use off the shelf.</p>
+  </div>
+  <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
+    <span class="text-xs font-mono uppercase tracking-widest">How this shipped</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </div>
+</a><a href="work/juan-valdez/index.html" class="structural-border p-6 flex flex-col group reveal delay-100 bg-system-surface/20 no-underline">
+  <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+  <div class="aspect-video border border-system-line mb-6 relative overflow-hidden flex items-center justify-center bg-[#050505]"><div class="w-16 h-16 rounded-full border border-system-line relative flex items-center justify-center group-hover:border-white/30 transition-colors">
+     <div class="w-2 h-2 bg-white/50 rounded-full"></div>
+     <div class="absolute -left-8 top-1/2 w-8 h-[1px] bg-system-line"></div><div class="absolute -right-8 top-1/2 w-8 h-[1px] bg-system-line"></div>
+     <div class="absolute left-1/2 -top-8 h-8 w-[1px] bg-system-line"></div><div class="absolute left-1/2 -bottom-8 h-8 w-[1px] bg-system-line"></div>
+   </div></div>
+  <div class="flex-grow">
+    <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>Juan Valdez · Product / UI Designer</span><span>2023</span></div>
+    <h3 class="text-lg text-white font-medium mb-3">Juan Valdez mobile app &amp; design system</h3>
+    <p class="text-sm text-system-dim mb-6 font-light leading-relaxed">End-to-end mobile UI and a reusable design system for Juan Valdez Colombia — designed, then handed off clean.</p>
+  </div>
+  <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
+    <span class="text-xs font-mono uppercase tracking-widest">How this shipped</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </div>
+</a><a href="work/life-update-mobile/index.html" class="structural-border p-6 flex flex-col group reveal delay-200 bg-system-surface/20 no-underline">
+  <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+  <div class="aspect-video border border-system-line mb-6 relative overflow-hidden flex items-center justify-center bg-[#050505]"><div class="w-12 h-20 border border-system-line rounded-sm relative flex items-center justify-center group-hover:border-white/30 transition-colors">
+     <div class="w-full h-[1px] bg-system-line absolute top-3"></div><div class="w-4 h-4 bg-white/10 rounded-full animate-pulse-slow"></div><div class="w-1/2 h-[1px] bg-system-line absolute bottom-2 rounded-full"></div>
+   </div></div>
+  <div class="flex-grow">
+    <div class="font-mono text-[10px] text-system-dim uppercase mb-2 flex justify-between"><span>Personal product · Design + AI</span><span>2026</span></div>
+    <h3 class="text-lg text-white font-medium mb-3">Life Update — AI focus app</h3>
+    <p class="text-sm text-system-dim mb-6 font-light leading-relaxed">Personal focus app — your day scored against your 5-year plan. I designed the product and the AI, then shipped the MVP.</p>
+  </div>
+  <div class="mt-auto border-t border-system-line pt-4 flex justify-between items-center group-hover:text-white text-system-dim transition-colors">
+    <span class="text-xs font-mono uppercase tracking-widest">How this shipped</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </div>
+</a></div>
+  </section>
+
+  <section id="words" aria-label="Testimonials" class="w-full max-w-6xl mt-32 pt-16">
+    <div class="flex justify-between items-end border-b border-system-line pb-4 mb-12 reveal">
+      <div>
+        <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">In their words</span>
+        <h2 class="text-2xl md:text-3xl font-light text-system-accent">What the people I shipped with say.</h2>
+      </div>
+      <span class="font-mono text-[10px] text-system-dim tracking-widest uppercase hidden md:block">REF // Booz Allen Hamilton</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <figure class="structural-border p-6 flex flex-col bg-system-surface/20 reveal">
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+        <blockquote class="font-serif italic text-system-text font-light leading-relaxed text-[15px] flex-grow">&ldquo;Danilo is doing wonderful things using AI in the right ways. He dove into the developer-portal world and delivered work I wanted to keep reusing. A real loss for us.&rdquo;</blockquote>
+        <figcaption class="mt-6 pt-4 border-t border-system-line">
+          <div class="text-sm text-white font-medium">Jennifer Sheppard</div>
+          <div class="font-mono text-[10px] text-system-dim uppercase tracking-wider mt-1">Product Lead · Developer Portal · Booz Allen Hamilton</div>
+        </figcaption>
+      </figure>
+      <figure class="structural-border p-6 flex flex-col bg-system-surface/20 reveal delay-100">
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+        <blockquote class="font-serif italic text-system-text font-light leading-relaxed text-[15px] flex-grow">&ldquo;Danilo blends design, requirements, development and AI — the unicorn most companies are looking for in this changing time. A huge boon for any team.&rdquo;</blockquote>
+        <figcaption class="mt-6 pt-4 border-t border-system-line">
+          <div class="text-sm text-white font-medium">Alexander Giraldez</div>
+          <div class="font-mono text-[10px] text-system-dim uppercase tracking-wider mt-1">Design Lead · Trusted Environments · Booz Allen Hamilton</div>
+        </figcaption>
+      </figure>
+      <figure class="structural-border p-6 flex flex-col bg-system-surface/20 reveal delay-200">
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+        <blockquote class="font-serif italic text-system-text font-light leading-relaxed text-[15px] flex-grow">&ldquo;One of the deepest understandings of the big-picture system flow on our team — translating complex functionality into sleek, intuitive designs. One of the easiest people to work with in my professional life. An incredible designer and coworker.&rdquo;</blockquote>
+        <figcaption class="mt-6 pt-4 border-t border-system-line">
+          <div class="text-sm text-white font-medium">Lauren Donner</div>
+          <div class="font-mono text-[10px] text-system-dim uppercase tracking-wider mt-1">Developer Lead · Trusted Environments · Booz Allen Hamilton</div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="method" aria-label="Method" class="w-full max-w-6xl mt-32 pt-16 reveal">
+    <div class="border-b border-system-line pb-4 mb-12">
+      <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">Method</span>
+      <h2 class="text-2xl md:text-3xl font-light text-system-accent">How I work.</h2>
+    </div>
+    <div class="mb-16">
+      <p class="text-xl md:text-2xl text-white font-light max-w-3xl mb-6 leading-relaxed">My work sits between user needs, business constraints, and execution.</p>
+      <p class="text-system-dim font-light max-w-2xl leading-relaxed">I keep a running map of what I have earned, what I am investing in now, and what I am betting on next. It is how I keep improving without losing the craft floor.</p>
+    </div>
+    <div class="space-y-8 relative">
+      <div class="absolute left-[7.5px] top-2 bottom-2 w-[1px] bg-system-line hidden md:block"></div>
+      <div class="relative pl-0 md:pl-10 group">
+  <div class="hidden md:block absolute left-[4px] top-2 w-2 h-2 rounded-full bg-system-surface border border-system-dim group-hover:bg-white transition-colors"></div>
+  <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 mb-3"><h3 class="text-lg font-medium text-white min-w-[140px]">Earned · 2010–2023</h3><span class="font-mono text-[10px] text-system-dim uppercase tracking-widest">The craft I mastered, now commoditized</span></div>
+  <div class="flex flex-wrap gap-2"><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Figma mastery</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Hand-coded UI</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Design reviews</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Component libraries</span><span class="border border-system-line/50 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-system-bg">Style-guide PDFs</span></div>
+</div><div class="relative pl-0 md:pl-10 group">
+  <div class="hidden md:block absolute left-[4px] top-2 w-2 h-2 rounded-full bg-system-surface border border-system-dim group-hover:bg-blue-500 transition-colors group-hover:shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
+  <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 mb-3"><h3 class="text-lg font-medium text-white min-w-[140px]">Investing · 2024–Now</h3><span class="font-mono text-[10px] uppercase tracking-widest text-blue-400">Where my hours go today</span></div>
+  <div class="flex flex-wrap gap-2"><span class="border border-blue-900/30 px-3 py-1.5 text-[11px] font-mono text-blue-100 bg-blue-900/10">Agent orchestration</span><span class="border border-blue-900/30 px-3 py-1.5 text-[11px] font-mono text-blue-100 bg-blue-900/10">MCP servers</span><span class="border border-blue-900/30 px-3 py-1.5 text-[11px] font-mono text-blue-100 bg-blue-900/10">Design-system-as-skill</span><span class="border border-blue-900/30 px-3 py-1.5 text-[11px] font-mono text-blue-100 bg-blue-900/10">Recursive critic loops</span><span class="border border-blue-900/30 px-3 py-1.5 text-[11px] font-mono text-blue-100 bg-blue-900/10">Taste as rubric</span></div>
+</div><div class="relative pl-0 md:pl-10 group">
+  <div class="hidden md:block absolute left-[4px] top-2 w-2 h-2 rounded-full bg-system-surface border border-system-dim border-dashed group-hover:border-white transition-colors"></div>
+  <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 mb-3"><h3 class="text-lg font-medium text-system-dim min-w-[140px]">Next horizon · 12 mo</h3><span class="font-mono text-[10px] text-system-dim uppercase tracking-widest opacity-50">What I&#39;m walking toward</span></div>
+  <div class="flex flex-wrap gap-2 opacity-50"><span class="border border-system-line/30 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-transparent border-dashed">Agent-native product UX</span><span class="border border-system-line/30 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-transparent border-dashed">Eval-driven UI</span><span class="border border-system-line/30 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-transparent border-dashed">Audited agent workflows</span><span class="border border-system-line/30 px-3 py-1.5 text-[11px] font-mono text-system-dim bg-transparent border-dashed">Team-scale agent tooling</span></div>
+</div>
+    </div>
+  </section>
+
+  <section id="about" aria-label="About" class="w-full max-w-6xl mt-32 pt-16 reveal">
+    <div class="border-b border-system-line pb-4 mb-12">
+      <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">About</span>
+      <h2 class="text-2xl md:text-3xl font-light text-system-accent">A long way to the surface.</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+      <div><p class="text-system-dim font-light leading-relaxed">I started in databases and backend, moved to frontend, then to UI, then to UX — eighteen years in product, fifteen in design. The path means I design with the whole system in mind, not just the screen. At Booz Allen Hamilton I carried that into government and compliance work for the FAA, the DoD, and the VA, where the rigor of the documentation matters as much as the interface.</p></div>
+      <div class="space-y-12">
+        <div>
+          <div class="font-mono text-[10px] text-white uppercase tracking-widest mb-4 border-b border-system-line/50 pb-2">Clients</div>
+          <p class="text-sm text-system-dim font-light leading-relaxed">Merck &amp; Co. · Mondelēz Intl. · Banco Pichincha · Quifatex · Grupo Superior · Moderna Corp. · Azzorti · Flamingo CO. · Produbanco · Mefia · Juan Valdez</p>
+        </div>
+        <div>
+          <div class="font-mono text-[10px] text-white uppercase tracking-widest mb-4 border-b border-system-line/50 pb-2">Education</div>
+          <ul class="text-sm text-system-dim font-light space-y-3"><li class="flex justify-between items-baseline gap-4"><span>B.Sc. in Computer Systems Engineering</span><span class="font-mono text-[10px] tracking-widest text-right">Escuela Politécnica Nacional (EPN) · 2015</span></li><li class="flex justify-between items-baseline gap-4"><span>Google UX Design Certificate</span><span class="font-mono text-[10px] tracking-widest text-right">Coursera · 2021</span></li><li class="flex justify-between items-baseline gap-4"><span>Design Thinking</span><span class="font-mono text-[10px] tracking-widest text-right">IBM · 2020</span></li><li class="flex justify-between items-baseline gap-4"><span>UX &amp; UI Fundamental Patterns</span><span class="font-mono text-[10px] tracking-widest text-right">Independent study</span></li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" aria-label="Contact" class="w-full max-w-6xl mt-32 pt-16 pb-8">
+    <div class="structural-border p-8 md:p-16 reveal relative bg-[#050505]">
+      <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      <div class="tech-label -top-2 left-10">SYS: INITIALIZE_CONNECTION</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div>
+          <span class="font-mono text-[10px] text-system-dim tracking-widest block mb-2 uppercase">Contact</span>
+          <h2 class="text-3xl md:text-4xl font-light mb-4 text-white">Let&#39;s talk.</h2>
+          <p class="text-system-dim font-light mb-8 max-w-md">Direct email is the fastest path. I reply within one business day.</p>
+          <div class="space-y-6">
+            <div class="inline-flex items-stretch border border-white">
+              <a href="mailto:hola@danilorojas.design?subject=Project%20inquiry" class="px-6 py-3 bg-white text-black font-mono text-[11px] tracking-widest uppercase inline-flex items-center no-underline hover:bg-transparent hover:text-white transition-colors">hola@danilorojas.design</a>
+              <button id="emailBtn" type="button" aria-label="Copy email to clipboard" class="px-3 bg-white text-black inline-flex items-center border-l border-black/20 hover:bg-transparent hover:text-white transition-colors">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+            <div id="copyMsg" class="h-4 text-[10px] font-mono text-green-500 opacity-0 transition-opacity" role="status" aria-live="polite">Email copied to clipboard.</div>
+          </div>
+        </div>
+        <div class="flex flex-col justify-end">
+          <div class="border border-system-line p-1 bg-system-bg">
+            <div class="border border-system-line/50 p-6 relative">
+              <div class="font-mono text-[10px] text-system-dim mb-4 uppercase flex justify-between"><span>Terminal.exe</span><span>v11.0</span></div>
+              <div class="font-mono text-xs text-system-dim space-y-2">
+                <div>&gt; System diagnostics... <span class="text-green-500">OK</span></div>
+                <div>&gt; Loading profile... <span class="text-green-500">100%</span></div>
+                <div class="text-white">&gt; Open to work · Remote global</div>
+                <div>&gt; Awaiting handshake_</div>
+                <div class="animate-pulse w-2 h-4 bg-white mt-2 inline-block"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-12 flex flex-col md:flex-row justify-between items-start md:items-center font-mono text-[10px] text-system-dim uppercase tracking-widest reveal delay-200 gap-4">
+      <div>Built by Danilo Rojas · Updated 2026-06-15</div>
+      <div class="flex space-x-6"><a href="https://linkedin.com/in/mdanilorojas" rel="me noopener" target="_blank" class="hover:text-white transition-colors">LinkedIn</a><a href="https://github.com/mdanilorojas" rel="me noopener" target="_blank" class="hover:text-white transition-colors">GitHub</a><a href="https://behance.net/mariodanilo" rel="me noopener" target="_blank" class="hover:text-white transition-colors">Behance</a></div>
+    </div>
+  </footer>
+
+</main>
+<script>document.addEventListener('DOMContentLoaded',function(){
+var root=document.documentElement;
+document.addEventListener('mousemove',function(ev){root.style.setProperty('--mouse-x',ev.clientX+'px');root.style.setProperty('--mouse-y',ev.clientY+'px');});
+var sp=document.getElementById('scrollProgress');
+window.addEventListener('scroll',function(){var t=document.documentElement.scrollTop;var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;sp.style.width=(t/h*100)+'%';},{passive:true});
+var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var els=document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window && !rm){var io=new IntersectionObserver(function(en,ob){en.forEach(function(x){if(!x.isIntersecting)return;x.target.classList.add('active');ob.unobserve(x.target);});},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});els.forEach(function(el){io.observe(el);});}
+else{els.forEach(function(el){el.classList.add('active');});}
+setTimeout(function(){els.forEach(function(el){if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('active');});},100);
+var btn=document.getElementById('emailBtn');var msg=document.getElementById('copyMsg');
+if(btn){btn.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText('hola@danilorojas.design').then(function(){if(msg){msg.style.opacity='1';setTimeout(function(){msg.style.opacity='0';},2000);}});});}
+});</script>
+</body>
+</html>

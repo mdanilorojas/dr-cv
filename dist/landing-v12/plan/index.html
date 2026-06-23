@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan Maestro 250k — Danilo Rojas</title>
+  <meta name="description" content="Plan de carrera por compuertas hacia un rol de USD 250k/año como AI Product Designer.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <style>
+    :root {
+      /* Personal Design System (v11 tokens) — aliased to local semantic names. */
+      --bg: #0A0B0E; --panel: #14161C; --panel2: #1C1F27; --inset: #0D0F13;
+      --line: rgba(255,255,255,.08); --line-strong: rgba(255,255,255,.18);
+      --text: #F4F4F5; --body: #D7D8DB; --muted: #95979E; --soft: #797D86;
+      --accent: #FF8964; --accent-soft: rgba(255,137,100,.14); --accent-line: rgba(255,137,100,.28);
+      --blue: #5683DA; --green: #4ADE80; --yellow: #E5A84B; --red: #F87171;
+      --font-body: 'Inter', 'Helvetica Neue', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+      --radius-card: 12px; --radius: 8px;
+      --shadow-card: 0 6px 25px rgba(0,0,0,.50);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font: 15px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; }
+
+    nav { padding: 14px 24px; border-bottom: 1px solid var(--line); background: var(--inset); display: flex; align-items: center; gap: 8px; }
+    nav a { font-family: var(--font-mono); font-size: 13px; color: var(--soft); text-decoration: none; }
+    nav a:hover { color: var(--text); }
+    nav .sep { color: var(--line); }
+    nav .current { color: var(--muted); font-family: var(--font-mono); font-size: 13px; }
+
+    header { background: #13151a; border-bottom: 1px solid var(--line); padding: 40px 24px 28px; }
+    header .inner, main { max-width: 1060px; margin: 0 auto; }
+    header .eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    header h1 { font-size: clamp(26px, 4.5vw, 44px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; }
+    header .sub { color: var(--muted); margin-top: 10px; font-size: 15px; max-width: 680px; }
+
+    main { padding: 36px 18px 90px; }
+
+    .section-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--soft); margin: 48px 0 14px; }
+    .section-label .n { color: var(--accent); margin-right: 8px; }
+    .section-label:first-child { margin-top: 0; }
+
+    p { color: var(--muted); }
+    strong { color: var(--text); }
+
+    .quote { border-left: 3px solid var(--accent); background: var(--panel); padding: 14px 20px; border-radius: 0 var(--radius) var(--radius) 0; font-size: 16px; color: var(--body); margin: 18px 0; }
+
+    /* Ladder */
+    .ladder { display: flex; align-items: flex-end; gap: 12px; margin: 18px 0 0; }
+    .rung { flex: 1; border-radius: 10px 10px 0 0; padding: 14px 10px; text-align: center; font-family: var(--font-mono); border: 1px solid var(--line); border-bottom: none; }
+    .rung .amt { font-size: 20px; font-weight: 700; }
+    .rung .who { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+    .r1 { background: rgba(121,125,134,.10); min-height: 64px; }
+    .r2 { background: rgba(86,131,218,.12); min-height: 112px; }
+    .r2 .amt { color: var(--blue); }
+    .r3 { background: var(--accent-soft); min-height: 168px; }
+    .r3 .amt { color: var(--accent); }
+    .ladder-base { border-top: 2px solid var(--line-strong); }
+
+    /* Cards */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 14px 16px; }
+    .card .k { font-family: var(--font-mono); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--soft); margin-bottom: 6px; }
+    .card .v { font-size: 14px; color: var(--body); }
+    .bad { color: var(--red); font-weight: 600; }
+    .good { color: var(--green); font-weight: 600; }
+
+    /* Gates pipeline */
+    .gate { display: grid; grid-template-columns: 96px 1fr; gap: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 18px 20px; position: relative; box-shadow: var(--shadow-card); }
+    .gate + .gate { margin-top: 32px; }
+    .gate + .gate::before { content: ""; position: absolute; top: -33px; left: 56px; width: 2px; height: 32px; background: linear-gradient(var(--soft), var(--accent)); }
+    .gate + .gate::after { content: "▼"; position: absolute; top: -15px; left: 49px; color: var(--accent); font-size: 11px; }
+    .gate .id { font-family: var(--font-mono); font-weight: 700; font-size: 20px; color: var(--accent); }
+    .gate .id small { display: block; font-size: 10px; color: var(--soft); font-weight: 500; margin-top: 4px; text-transform: uppercase; letter-spacing: .1em; }
+    .gate h3 { font-size: 16px; margin-bottom: 6px; }
+    .gate p { font-size: 13.5px; margin-bottom: 10px; }
+    .crit { font-size: 13px; background: var(--panel2); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px; color: var(--body); }
+    .crit b { color: var(--green); font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .1em; display: block; margin-bottom: 4px; }
+    .trigger { margin-top: 10px; font-size: 13px; border: 1px dashed var(--accent-line); border-radius: var(--radius); padding: 10px 14px; color: var(--accent); }
+
+    /* Loop steps */
+    .loop { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+    .step { flex: 1 1 140px; background: var(--inset); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; font-size: 12.5px; color: var(--body); }
+    .step .sn { font-family: var(--font-mono); color: var(--blue); font-size: 10px; display: block; margin-bottom: 3px; }
+    .loop-note { font-size: 12.5px; color: var(--soft); font-family: var(--font-mono); margin-bottom: 10px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+    th { color: var(--soft); font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+    td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
+    td { color: var(--muted); }
+    code { font-family: var(--font-mono); font-size: 12px; color: var(--blue); background: rgba(86,131,218,.08); padding: 1px 6px; border-radius: 5px; }
+
+    .fail { border-left: 3px solid var(--red); background: var(--panel); border-radius: 0 var(--radius) var(--radius) 0; padding: 11px 16px; margin: 8px 0; font-size: 13.5px; color: var(--muted); }
+    .fail b { color: var(--red); }
+    .fail.exception { border-left-color: var(--yellow); }
+    .fail.exception b { color: var(--yellow); }
+
+    footer { border-top: 1px solid var(--line); padding: 24px; text-align: center; color: var(--soft); font-family: var(--font-mono); font-size: 12px; }
+
+    @media (max-width: 560px) {
+      .gate { grid-template-columns: 1fr; }
+      .gate + .gate::before, .gate + .gate::after { left: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/">danilorojas.design</a>
+  <span class="sep">/</span>
+  <span class="current">plan</span>
+  <span style="flex:1"></span>
+  <a href="/app">app</a>
+  <span class="sep">·</span>
+  <a href="/daily">daily</a>
+</nav>
+
+<header>
+  <div class="inner">
+    <div class="eyebrow">Plan maestro · 2026-06-11 · por compuertas, sin fechas</div>
+    <h1>De $60k a $250k/año<br>como AI Product Designer</h1>
+    <p class="sub">Cinco compuertas con criterio de salida verificable. El tiempo se calibra al cerrar G1 — escenarios: 1 año perfecto · ~3 promedio · 5 máximo. Nunca fechas duras, nunca porcentajes inventados.</p>
+  </div>
+</header>
+
+<main>
+
+  <div class="section-label"><span class="n">01</span>La escalera — no hay salto</div>
+  <p>El salto no es geográfico, es de <strong>categoría</strong>: salir del cajón "LATAM nearshore" ($1.4k–5k/mes vía agencias) y competir con evidencia nivel Staff/Principal. En cada escalón se sobre-entrega al 250% para justificar el siguiente.</p>
+  <div class="ladder">
+    <div class="rung r1"><div class="amt">$60k</div><div class="who">BairesDev · hoy<br>puente estable</div></div>
+    <div class="rung r2"><div class="amt">~$100k</div><div class="who">escalón · bajo el promedio<br>remoto US ($145k)</div></div>
+    <div class="rung r3"><div class="amt">$250k</div><div class="who">Staff / Principal<br>rango real $209k–$334k</div></div>
+  </div>
+  <div class="ladder-base"></div>
+
+  <div class="section-label"><span class="n">02</span>Estado real — baseline 2026-06-11</div>
+  <div class="cards">
+    <div class="card"><div class="k">Ingreso</div><div class="v"><span class="good">BairesDev $5k/mes estable</span> · bench top talent · reassignment en curso</div></div>
+    <div class="card"><div class="k">UR Training</div><div class="v">30/96 crudas · <span class="bad">0 auditadas</span></div></div>
+    <div class="card"><div class="k">Portfolio</div><div class="v"><span class="bad">0 casos publicados</span> · drafts Dev Portal + Life Update</div></div>
+    <div class="card"><div class="k">Inglés</div><div class="v"><span class="bad">Insuficiente</span> para entrevista senior</div></div>
+    <div class="card"><div class="k">Legal / cobro US</div><div class="v"><span class="bad">Inexistente</span> · 0 trámites</div></div>
+    <div class="card"><div class="k">Sistema operativo</div><div class="v"><span class="good">Daily + weekly review activos</span></div></div>
+  </div>
+
+  <div class="section-label"><span class="n">03</span>Mercado 2026 — datos, no opinión</div>
+  <div class="cards">
+    <div class="card"><div class="k">$250k es real</div><div class="v">Principal PD US promedio <strong>$262k</strong> · Staff ~$286k TC</div></div>
+    <div class="card"><div class="k">AI premium</div><div class="v">Skills AI pagan <strong>+56%</strong> · 73% de hiring managers las exigen</div></div>
+    <div class="card"><div class="k">Demanda senior</div><div class="v">56% busca seniors vs 25% juniors</div></div>
+    <div class="card"><div class="k">Qué evalúan</div><div class="v">Systems thinking · estrategia · orquestar sistemas inteligentes · outcomes</div></div>
+  </div>
+
+  <div class="section-label"><span class="n">04</span>Pipeline de compuertas</div>
+
+  <div class="gate">
+    <div class="id">G1<small>Diagnóstico</small></div>
+    <div>
+      <h3>96/96 respondidas y auditadas</h3>
+      <p>Auditar las 30 existentes con rúbrica senior (contexto → decisión → tradeoff → evidencia → cierre, en inglés). Responder las 66 restantes por bloques. Score por respuesta. Verificador: IA. En paralelo, esfuerzo bajo: doc de investigación LLC/cobro US (solo investigación, cero trámites).</p>
+      <div class="crit"><b>Sale cuando</b> 96/96 auditadas + matriz de gaps (skill × severidad) + calibración de escenarios de tiempo + orden de bloques para G2.</div>
+    </div>
+  </div>
+
+  <div class="gate">
+    <div class="id">G2<small>Training</small></div>
+    <div>
+      <h3>Loop por bloque temático (~5 bloques)</h3>
+      <div class="loop">
+        <div class="step"><span class="sn">1</span>Entrenar gaps del bloque</div>
+        <div class="step"><span class="sn">2</span>Re-responder preguntas débiles</div>
+        <div class="step"><span class="sn">3</span>Mock interview oral EN (grabada)</div>
+        <div class="step"><span class="sn">4</span>Proyecto de práctica publicable</div>
+        <div class="step"><span class="sn">5</span>Portfolio + skills + CV + landing</div>
+      </div>
+      <div class="loop-note">↺ si rúbrica o mock fallan → re-entrenar ese bloque, no avanzar. El mercado ve evidencia nueva en cada cierre.</div>
+      <div class="crit"><b>Bloque aprobado cuando</b> rúbrica pasada + mock fluido + proyecto publicado.</div>
+    </div>
+  </div>
+
+  <div class="gate">
+    <div class="id">G3<small>Dominio</small></div>
+    <div>
+      <h3>Cliente BairesDev dominado con holgura</h3>
+      <p>Desempeño "riéndote" sostenido 4–8 semanas en el cliente asignado + mocks en inglés fluidos. Verificador: weekly review + feedback del cliente.</p>
+      <div class="crit"><b>Sale cuando</b> holgura sostenida + inglés fluido en mock.</div>
+      <div class="trigger">⚡ Trigger al abrir: ejecutar LLC + EIN + banco (investigación ya lista desde G1) y arrancar caza del escalón ~$100k. Antes de G3: cero plata y cero tiempo en legal.</div>
+    </div>
+  </div>
+
+  <div class="gate">
+    <div class="id">G4<small>Escalón</small></div>
+    <div>
+      <h3>Rol/cliente ~$100k + sobre-entrega 250%</h3>
+      <p>Casos élite nuevos, referencias, leverage de negociación. Renuncia a BairesDev solo cuando el ingreso del escalón sea ≥ y estable.</p>
+      <div class="crit"><b>Sale cuando</b> contrato firmado + 3 meses de entrega sobresaliente.</div>
+    </div>
+  </div>
+
+  <div class="gate">
+    <div class="id">G5<small>Meta</small></div>
+    <div>
+      <h3>Cliente directo $250k</h3>
+      <p>LLC operativa + paquete de negociación + 3+ casos élite + pipeline de conversaciones activas.</p>
+      <div class="crit"><b>Sale cuando</b> contrato directo firmado en rango $200–250k+.</div>
+    </div>
+  </div>
+
+  <div class="section-label"><span class="n">05</span>Rutas de fallo y excepciones</div>
+  <div class="fail"><b>Bloque no pasa rúbrica/mock</b> → re-entrenar ese bloque. No se avanza con deuda.</div>
+  <div class="fail"><b>Cliente BairesDev no se domina</b> → G3 no abre; volver a G2 con los gaps que el trabajo real reveló.</div>
+  <div class="fail"><b>Caza $100k sin tracción en ~8 semanas</b> → revisar posicionamiento con datos de conversaciones reales. No cambiar el plan por impulso.</div>
+  <div class="fail exception"><b>Oferta directa antes de G3</b> → excepción: LLC exprés. La oportunidad real mata la secuencia.</div>
+
+  <div class="section-label"><span class="n">06</span>Tracks paralelos y pausas</div>
+  <table>
+    <tr><th>Track</th><th>Regla</th></tr>
+    <tr><td>Inglés</td><td>Todo el training en inglés. Mocks orales grabados. Criterio de fluidez vive en G3.</td></tr>
+    <tr><td>Cuerpo</td><td>Pirámide intacta: salud primero, 4x/semana.</td></tr>
+    <tr><td>Ops</td><td>Daily tracker + weekly review. El review dominical actualiza <code>gates.yaml</code>.</td></tr>
+    <tr><td>Publicables</td><td>CV, landing y skills sheet se regeneran al cierre de cada bloque.</td></tr>
+    <tr><td>En Regla</td><td><strong>Pausa total documentada.</strong> Cero horas. Se reevalúa con G4 asegurada.</td></tr>
+    <tr><td>Life Update</td><td>Solo tablero personal. Cero desarrollo.</td></tr>
+  </table>
+
+  <div class="section-label"><span class="n">07</span>Regla de datos reales</div>
+  <p>El estado de compuertas y bloques vive en <code>carrera/execution/gates.yaml</code> — única fuente que cualquier mapa visual puede leer. <strong>Prohibido cualquier porcentaje inventado:</strong> si un número no tiene fuente, el nodo dice "sin datos".</p>
+
+  <div class="quote">No necesito claridad total. Necesito ejecutar el siguiente movimiento correcto.</div>
+
+</main>
+
+<footer>danilorojas.design/plan · fuente: carrera/plan/index.html · spec: laboratorio/superpowers/specs/2026-06-11-plan-maestro-250k-design.md</footer>
+
+</body>
+</html>

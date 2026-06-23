@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ruta de lectura · un día a la vez · danilorojas.design</title>
+<meta name="robots" content="noindex" />
+<style>
+  :root {
+    --bg: #030303;
+    --card: #0d0d0f;
+    --card-today: #10131c;
+    --line: #1d1d22;
+    --text: #ededed;
+    --muted: #8a8a92;
+    --accent: #3b82f6;
+    --done: #2d6a4f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 20px 120px;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  header {
+    padding: 56px 0 24px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 8px;
+  }
+  header h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+  header p { color: var(--muted); margin-top: 10px; font-size: 15px; }
+  .jump {
+    position: sticky; top: 0; z-index: 5;
+    background: rgba(3,3,3,0.85); backdrop-filter: blur(8px);
+    padding: 14px 0; margin-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  .jump button {
+    background: var(--accent); color: #fff; border: 0;
+    padding: 9px 16px; border-radius: 8px; font: inherit; font-weight: 600;
+    cursor: pointer; font-size: 14px;
+  }
+  .jump .progress { color: var(--muted); font-size: 13px; }
+  .block-label {
+    color: var(--muted); font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin: 32px 0 4px;
+  }
+  .day {
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin: 12px 0;
+    scroll-margin-top: 88px;
+  }
+  .day.past { opacity: 0.45; }
+  .day.today {
+    background: var(--card-today);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .day .meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 12px; flex-wrap: wrap; margin-bottom: 8px;
+  }
+  .day .date { font-size: 13px; color: var(--muted); }
+  .day.today .date { color: var(--accent); font-weight: 600; }
+  .day .badge {
+    font-size: 11px; color: var(--muted);
+    border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px;
+  }
+  .day .today-tag {
+    font-size: 11px; font-weight: 700; color: #fff;
+    background: var(--accent); border-radius: 999px; padding: 2px 9px;
+  }
+  .day h2 { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+  .day .extract { color: var(--muted); font-size: 14px; margin-top: 8px; }
+  .day .row { display: flex; gap: 16px; align-items: center; margin-top: 14px; flex-wrap: wrap; }
+  .day a.read {
+    display: inline-block; background: var(--accent); color: #fff;
+    text-decoration: none; padding: 9px 18px; border-radius: 8px;
+    font-weight: 600; font-size: 14px;
+  }
+  .day a.read:hover { filter: brightness(1.1); }
+  .day .time { color: var(--muted); font-size: 13px; }
+  footer { color: var(--muted); font-size: 13px; margin-top: 48px; text-align: center; }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Ruta de lectura — un día a la vez</h1>
+    <p>Product Designer senior + ingeniería + AI agents. Un artículo por día, en orden de dependencias cognitivas. Baja hasta hoy y empieza.</p>
+  </header>
+
+  <div class="jump">
+    <button id="todayBtn">Ir a hoy</button>
+    <span class="progress" id="progress"></span>
+  </div>
+
+  <div id="list"></div>
+
+  <footer>
+    Orden basado en <em>ruta_lectura_product_design_ai_agents.md</em>. Empieza el 22 jun 2026, un día por artículo.
+  </footer>
+</div>
+
+<script>
+// Inicio: 22 jun 2026 (mediodía local para evitar bordes de zona horaria).
+const START = new Date(2026, 5, 22, 12, 0, 0);
+
+const BLOCKS = [
+  ["Bloque 1 · Producto: juicio antes de herramientas", [
+    ["Shape Up — Introduction", "https://basecamp.com/shapeup/0.3-chapter-01", "Must-read", "45–60 min", "Shaping, riesgo, límites, ciclos. Un agente sin appetite claro solo acelera caos."],
+    ["Shape Up — Principles of Shaping / Set Boundaries", "https://basecamp.com/shapeup/4.0-appendix-01", "Must-read", "60 min", "Appetite > estimate. Rough, solved, bounded. Trabajo que importa, no backlog infinito."],
+    ["Microsoft HAX Toolkit — Guidelines for Human-AI Interaction", "https://www.microsoft.com/en-us/haxtoolkit/?p=105", "Must-read", "60–90 min", "Onboarding de capacidades, mostrar incertidumbre, corrección y recuperación."],
+    ["Design Principles for Generative AI Applications", "https://arxiv.org/abs/2401.14484", "Must-read", "60–90 min", "Control, transparencia, iteración, prevención de daño, diseño para fallos."],
+  ]],
+  ["Bloque 2 · Fundamentos de agentes: el loop real", [
+    ["The Bitter Lesson — Richard Sutton", "http://www.incompleteideas.net/IncIdeas/BitterLesson.html", "Must-read", "30–45 min", "Search + learning como patrón central. Diseña entornos donde el agente prueba, observa, corrige."],
+    ["LLM Powered Autonomous Agents — Lilian Weng", "https://lilianweng.github.io/posts/2023-06-23-agent/", "Must-read", "90–120 min", "El mapa mental clásico: planning, memory, tool use, reflection."],
+    ["ReAct: Synergizing Reasoning and Acting", "https://arxiv.org/abs/2210.03629", "Must-read (abstract+intro+diagramas)", "45–60 min", "Razonar, actuar, observar, ajustar. Observar resultados reduce alucinación."],
+    ["Reflexion: Language Agents with Verbal RL", "https://arxiv.org/abs/2303.11366", "Must-read parcial", "45–60 min", "Feedback textual + memoria episódica: mejorar sin reentrenar. Errores → reglas del repo."],
+  ]],
+  ["Bloque 3 · Arquitectura práctica de agentes", [
+    ["Anthropic — Building Effective Agents", "https://www.anthropic.com/engineering/building-effective-agents", "Must-read", "90 min", "Workflow vs agent. Chaining, routing, parallelization, orchestrator-workers. Cuándo NO usar agentes."],
+    ["OpenAI — A Practical Guide to Building Agents", "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/", "Must-read", "90 min", "Cuándo un caso amerita agente. Instrucciones, tools, guardrails, handoffs."],
+    ["OpenAI Cookbook — GPT-4.1 Prompting Guide", "https://cookbook.openai.com/examples/gpt4-1_prompting_guide", "Must-read táctico", "60 min", "Instrucciones que no se diluyen. Comportamiento agentic sin perder control."],
+    ["Anthropic — The “think” tool / extended thinking", "https://www.anthropic.com/engineering/claude-think-tool", "Leer conceptual", "45 min", "Pausas de deliberación entre acciones. Checkpoints antes de tocar archivos o correr scripts."],
+  ]],
+  ["Bloque 4 · Herramientas: Claude Code, Codex, Cursor", [
+    ["Anthropic — Claude Code Best Practices", "https://www.anthropic.com/engineering/claude-code-best-practices", "Must-read operativo", "60–90 min", "Iniciar repos, dar contexto, cambios pequeños, revisar outputs. Claude como agente, no chatbot."],
+    ["Claude Code Docs — Common Workflows", "https://code.claude.com/docs/en/common-workflows", "Must-read práctico", "45–60 min", "Overview, find code, trace flow, fix bugs, refactor, tests, PRs, schedule runs."],
+    ["Claude Code Docs — Memory / CLAUDE.md", "https://code.claude.com/docs/en/memory", "Must-read práctico", "45 min", "CLAUDE.md para reglas, auto memory para aprendizajes, reglas por carpeta."],
+    ["OpenAI — Introducing Codex", "https://openai.com/index/introducing-codex/", "Must-read operativo", "45–60 min", "Codex como agente en entorno propio. Logs, tests, PRs. AGENTS.md como guía del repo."],
+    ["OpenAI — Codex Product Page / Help", "https://openai.com/codex/", "Skim mensual", "20–30 min", "Disponibilidad, worktrees, skills, multi-agent workflows, límites y planes."],
+    ["Cursor — Rules", "https://docs.cursor.com/context/rules", "Must-read si usas Cursor", "45 min", ".cursor/rules. Project vs user rules vs memories. Contexto reusable sin repetir."],
+    ["Cursor — Background Agents", "https://docs.cursor.com/background-agent", "Leer si corres trabajo paralelo", "30 min", "Cuándo usar agentes remotos, follow-up, tomar control, qué delegar."],
+    ["Cursor — Bugbot updates, June 2026", "https://cursor.com/changelog/bugbot-updates-june-2026", "Skim", "20 min", "/review antes de push, security review, separar agente escritor de revisor."],
+  ]],
+  ["Bloque 5 · Lo nuevo: loops, auto-research, harnesses, skills", [
+    ["Addy Osmani — Loop Engineering", "https://addyosmani.com/blog/loop-engineering/", "Must-read actual", "45–60 min", "De prompts a loops. Condiciones de salida, worktrees, skills, riesgo de token burn."],
+    ["Addy Osmani — Agent Harness Engineering", "https://addyosmani.com/blog/agent-harness-engineering/", "Must-read", "45–60 min", "El harness es infraestructura. Cada error repetido → regla, test, hook o skill."],
+    ["Addy Osmani — Agent Skills", "https://addyosmani.com/blog/agent-skills/", "Must-read", "45 min", "Empaquetar criterio senior: spec, tests, reviewability, security, evidence, scope."],
+    ["Addy Osmani — Agent Engineer Course", "https://addyosmani.com/agents/", "Referencia continua", "1 lección hoy", "Úsalo como índice: agents, tools, patterns, memory, multi-agent, skills, orchestrators."],
+    ["OpenAI — Deep Research", "https://openai.com/index/introducing-deep-research/", "Must-read", "45–60 min", "Multi-step research, plan antes de ejecutar, selección de fuentes, citas y verificabilidad."],
+    ["Google — Gemini Deep Research Agent", "https://ai.google.dev/gemini-api/docs/interactions/deep-research", "Leer arquitectura", "45–60 min", "Planning colaborativo, ejecución en background, MCP, loops de research largos."],
+    ["Deep Research Agents — Examination & Roadmap", "https://arxiv.org/abs/2506.18096", "Leer abstract + taxonomy", "45–60 min", "Static vs dynamic workflows, browser vs API, MCP, límites de benchmarks."],
+    ["Evaluating Deep Research Agents on Expert Consulting", "https://arxiv.org/abs/2605.17554", "Leer para escepticismo", "45 min", "Rubrics, verifiers ground-truth, trampas cognitivas, firmas de fabricación."],
+  ]],
+  ["Bloque 6 · Product Design × Figma × AI-native UI", [
+    ["Figma — Introducing Figma Make", "https://www.figma.com/blog/introducing-figma-make/", "Must-read AI product design", "30–45 min", "Prompt-to-app, start from design, edit in code. Figma hacia producto ejecutable."],
+    ["Figma — Figma Make GA", "https://www.figma.com/blog/figma-make-general-availability/", "Skim", "20–30 min", "Import libraries, consistencia, prototyping. Qué es útil vs qué sigue débil."],
+    ["Figma Newsroom / Release Notes", "https://www.figma.com/newsroom/", "Radar semanal", "15 min", "Design agent on canvas, Figma Make on local code, MCP, slots. ¿Qué se volvió ejecutable?"],
+    ["Imagining Design Workflows in Agentic AI Futures", "https://arxiv.org/abs/2509.20731", "Leer conceptual", "45 min", "Quién decide, qué delegar, qué no, cómo explicar intención a agentes."],
+    ["The Emerging Use of GenAI for UX Research", "https://arxiv.org/abs/2512.15944", "Leer si automatizas UX research", "45–60 min", "Riesgo de sobreestimar IA. Usar IA sin borrar interpretación humana."],
+  ]],
+  ["Bloque 7 · Riesgos: velocidad sin mantenibilidad", [
+    ["Beyond Functional Correctness (AI IDE projects)", "https://arxiv.org/abs/2604.06373", "Must-read defensivo", "45–60 min", "Funcionar ≠ bien diseñado. Revisa estructura, no solo pantalla. Mantenibilidad es UX del equipo."],
+    ["SWE-PRBench: AI Code Review Quality", "https://arxiv.org/abs/2603.26130", "Leer abstract + findings", "30–45 min", "Context dilution, diff-only vs full context. AI review no reemplaza revisión experta."],
+    ["Comparing AI Coding Agents: PR Acceptance", "https://arxiv.org/abs/2602.08915", "Skim", "30 min", "No hay agente ganador para todo. Selecciona por tarea, no por fanatismo."],
+  ]],
+];
+
+const WD = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+const MO = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+
+function fmt(d) {
+  return `${WD[d.getDay()]} ${d.getDate()} ${MO[d.getMonth()]} ${d.getFullYear()}`;
+}
+function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+
+const today = startOfDay(new Date());
+const start = startOfDay(START);
+const list = document.getElementById("list");
+
+let dayIdx = 0;
+let todayEl = null;
+let total = 0;
+
+for (const [label, items] of BLOCKS) {
+  const h = document.createElement("div");
+  h.className = "block-label";
+  h.textContent = label;
+  list.appendChild(h);
+
+  for (const [title, url, badge, time, extract] of items) {
+    const date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + dayIdx);
+    const isToday = date.getTime() === today.getTime();
+    const isPast = date.getTime() < today.getTime();
+    total++;
+
+    const card = document.createElement("div");
+    card.className = "day" + (isToday ? " today" : isPast ? " past" : "");
+    if (isToday) { card.id = "today"; todayEl = card; }
+
+    card.innerHTML = `
+      <div class="meta">
+        <span class="date">Día ${dayIdx + 1} · ${fmt(date)}</span>
+        ${isToday ? '<span class="today-tag">HOY</span>' : `<span class="badge">${badge}</span>`}
+      </div>
+      <h2>${title}</h2>
+      <div class="extract">${extract}</div>
+      <div class="row">
+        <a class="read" href="${url}" target="_blank" rel="noopener">Leer →</a>
+        <span class="time">${time}${isToday ? " · " + badge : ""}</span>
+      </div>`;
+    list.appendChild(card);
+    dayIdx++;
+  }
+}
+
+// Progreso
+const dayNum = Math.floor((today - start) / 86400000) + 1;
+const prog = document.getElementById("progress");
+if (dayNum < 1) prog.textContent = `Empieza el ${fmt(start)}.`;
+else if (dayNum > total) prog.textContent = `Ruta completa (${total} días). Vuelve al ritual semanal.`;
+else prog.textContent = `Hoy: día ${dayNum} de ${total}.`;
+
+// Ir a hoy
+const btn = document.getElementById("todayBtn");
+function goToday() {
+  if (todayEl) todayEl.scrollIntoView({ behavior: "smooth", block: "center" });
+  else window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+}
+btn.addEventListener("click", goToday);
+window.addEventListener("load", () => setTimeout(goToday, 60));
+</script>
+</body>
+</html>

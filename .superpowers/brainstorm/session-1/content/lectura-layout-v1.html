@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mockup: Ruta de lectura · danilorojas.design</title>
+  <style>
+    /* Custom fonts matching portafolio */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap');
+
+    :root {
+      --bg: #030303;
+      --surface: #0a0a0a;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-hover: rgba(255, 255, 255, 0.25);
+      --text: #ededed;
+      --dim: #8a8a8a;
+      --accent: #D9663F; /* Terracotta accents from design system */
+      --accent-hover: #C2542F;
+      --ui-grid: rgba(255, 255, 255, 0.04);
+      --ui-glow: rgba(255, 255, 255, 0.035);
+      
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-serif: 'Source Serif 4', serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 20px 120px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background Grid */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: -1;
+      background-image: 
+        linear-gradient(to right, var(--ui-grid) 1px, transparent 1px), 
+        linear-gradient(to bottom, var(--ui-grid) 1px, transparent 1px);
+      background-size: 80px 80px; 
+      background-position: center top;
+      mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
+      -webkit-mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
+    }
+
+    .wrap { max-width: 720px; margin: 0 auto; z-index: 1; position: relative; }
+    
+    header {
+      padding: 64px 0 28px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 8px;
+    }
+    .nav-breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-breadcrumb a {
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-breadcrumb a:hover {
+      color: var(--text);
+    }
+    header h1 { 
+      font-family: var(--font-mono);
+      font-size: clamp(22px, 3.5vw, 28px); 
+      font-weight: 500; 
+      letter-spacing: -0.02em; 
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    header p { 
+      color: var(--dim); 
+      margin-top: 10px; 
+      font-size: 15px; 
+      font-family: var(--font-serif);
+      font-style: italic;
+    }
+
+    .jump {
+      position: sticky; top: 0; z-index: 5;
+      background: rgba(3, 3, 3, 0.85); 
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 16px 0; margin-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap;
+    }
+    .jump-left { display: flex; align-items: center; gap: 12px; }
+    .jump button {
+      background: var(--accent); 
+      color: #fff; 
+      border: 0;
+      padding: 8px 16px; 
+      border-radius: 4px; 
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .jump button:hover { background: var(--accent-hover); }
+    .jump .progress { 
+      font-family: var(--font-mono); 
+      color: var(--dim); 
+      font-size: 12px; 
+      letter-spacing: -0.01em;
+    }
+
+    .block-label {
+      font-family: var(--font-mono);
+      color: var(--dim); 
+      font-size: 11px; 
+      font-weight: 600;
+      text-transform: uppercase; 
+      letter-spacing: 0.12em;
+      margin: 48px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .block-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* Structural Blueprint Card styling */
+    .day {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 0px; /* Sharp blueprint corners */
+      padding: 24px 24px;
+      margin: 16px 0;
+      position: relative;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+    .day:hover {
+      border-color: var(--line-hover);
+      background: #0e0e10;
+    }
+    .day.past { 
+      opacity: 0.4; 
+    }
+    .day.past:hover {
+      opacity: 0.7;
+    }
+    
+    /* Blue-accent border for today's card matching main landing design system */
+    .day.today {
+      background: #090b11;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    /* Corners Crosshairs */
+    .crosshair {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      pointer-events: none;
+      opacity: 0.3;
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1), opacity 0.4s;
+    }
+    .day:hover .crosshair {
+      transform: scale(1.3) rotate(90deg);
+      opacity: 0.7;
+    }
+    .crosshair::before, .crosshair::after {
+      content: '';
+      position: absolute;
+      background-color: var(--text);
+    }
+    .crosshair::before { top: 4px; left: 0; width: 9px; height: 1px; }
+    .crosshair::after { top: 0; left: 4px; width: 1px; height: 9px; }
+    .ch-tl { top: -5px; left: -5px; }
+    .ch-tr { top: -5px; right: -5px; }
+    .ch-bl { bottom: -5px; left: -5px; }
+    .ch-br { bottom: -5px; right: -5px; }
+
+    .day .meta {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 12px; flex-wrap: wrap; margin-bottom: 12px;
+      font-family: var(--font-mono);
+    }
+    .day .date { font-size: 12px; color: var(--dim); }
+    .day.today .date { color: #60a5fa; font-weight: 600; }
+    .day .badge {
+      font-size: 10px; color: var(--dim);
+      border: 1px solid var(--line); border-radius: 2px; padding: 1px 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .day .today-tag {
+      font-size: 10px; font-weight: 700; color: #fff;
+      background: #3b82f6; border-radius: 2px; padding: 1px 6px;
+      letter-spacing: 0.05em;
+    }
+    .day h2 { 
+      font-size: 18px; 
+      font-weight: 600; 
+      letter-spacing: -0.01em; 
+      color: var(--text);
+    }
+    .day .extract { 
+      color: #bfbfbf; 
+      font-size: 14px; 
+      margin-top: 12px;
+      font-family: var(--font-body);
+    }
+    .day .extract ul, .day .extract ol {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 8px;
+    }
+    .day .extract li {
+      position: relative;
+      padding-left: 14px;
+      margin-bottom: 4px;
+    }
+    .day .extract li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .day .row { display: flex; gap: 16px; align-items: center; margin-top: 18px; flex-wrap: wrap; }
+    
+    .day a.read {
+      display: inline-block; 
+      background: transparent; 
+      color: var(--text);
+      border: 1px solid var(--line);
+      text-decoration: none; 
+      padding: 6px 14px; 
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-weight: 500; 
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+    .day a.read:hover {
+      border-color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .day.today a.read {
+      background: #1e3a8a;
+      color: #bfdbfe;
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+    .day.today a.read:hover {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+
+    .day .time { 
+      color: var(--dim); 
+      font-size: 12px; 
+      font-family: var(--font-mono);
+    }
+
+    footer { 
+      color: var(--dim); 
+      font-size: 12px; 
+      margin-top: 64px; 
+      text-align: center; 
+      font-family: var(--font-mono);
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+    }
+    footer a { color: var(--text); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="wrap">
+  <header>
+    <div class="nav-breadcrumb">
+      <a href="https://danilorojas.design">danilorojas.design</a>
+      <span>/</span>
+      <span>lectura</span>
+    </div>
+    <h1>Ruta de lectura · Blueprint Edition</h1>
+    <p>Product Designer senior + ingeniería + AI agents. Un artículo por día, en orden de dependencias cognitivas.</p>
+  </header>
+
+  <div class="jump">
+    <div class="jump-left">
+      <button id="todayBtn">Ir a hoy</button>
+      <span class="progress" id="progress">Hoy: día 1 de 36.</span>
+    </div>
+  </div>
+
+  <div id="list">
+    <div class="block-label">Bloque 1 · Producto: juicio antes de herramientas</div>
+
+    <!-- Card: Past Day (Día 1) -->
+    <div class="day past">
+      <!-- Corners for blueprint style -->
+      <div class="crosshair ch-tl"></div>
+      <div class="crosshair ch-tr"></div>
+      <div class="crosshair ch-bl"></div>
+      <div class="crosshair ch-br"></div>
+      <div class="meta">
+        <span class="date">Día 1 · domingo 21 jun 2026</span>
+        <span class="badge">Must-read</span>
+      </div>
+      <h2>Shape Up — Introduction</h2>
+      <div class="extract">
+        Shaping, riesgo, límites, ciclos. Un agente sin appetite claro solo acelera caos.
+        <ul>
+          <li>Cómo definir trabajo "bounded"</li>
+          <li>Cómo separar shaping de building</li>
+        </ul>
+      </div>
+      <div class="row">
+        <a class="read" href="https://basecamp.com/shapeup/0.3-chapter-01" target="_blank" rel="noopener">Leer →</a>
+        <span class="time">45–60 min</span>
+      </div>
+    </div>
+
+    <!-- Card: Today (Día 2) -->
+    <div class="day today">
+      <div class="crosshair ch-tl"></div>
+      <div class="crosshair ch-tr"></div>
+      <div class="crosshair ch-bl"></div>
+      <div class="crosshair ch-br"></div>
+      <div class="meta">
+        <span class="date">Día 2 · lunes 22 jun 2026</span>
+        <span class="today-tag">HOY</span>
+      </div>
+      <h2>Shape Up — Principles of Shaping / Set Boundaries</h2>
+      <div class="extract">
+        Appetite > estimate. Rough, solved, bounded. Trabajo que importa, no backlog infinito.
+        <ul>
+          <li>Appetite en lugar de estimación</li>
+          <li>Cómo acotar ideas</li>
+        </ul>
+      </div>
+      <div class="row">
+        <a class="read" href="https://basecamp.com/shapeup/4.0-appendix-01" target="_blank" rel="noopener">Leer artículo hoy →</a>
+        <span class="time">60 min · Must-read</span>
+      </div>
+    </div>
+
+    <!-- Card: Future (Día 3) -->
+    <div class="day">
+      <div class="crosshair ch-tl"></div>
+      <div class="crosshair ch-tr"></div>
+      <div class="crosshair ch-bl"></div>
+      <div class="crosshair ch-br"></div>
+      <div class="meta">
+        <span class="date">Día 3 · martes 23 jun 2026</span>
+        <span class="badge">Must-read</span>
+      </div>
+      <h2>Microsoft HAX Toolkit — Guidelines for Human-AI Interaction</h2>
+      <div class="extract">
+        Onboarding de capacidades, mostrar incertidumbre, corrección y recuperación de fallas de IA.
+      </div>
+      <div class="row">
+        <a class="read" href="https://www.microsoft.com/en-us/haxtoolkit/?p=105" target="_blank" rel="noopener">Leer →</a>
+        <span class="time">60–90 min</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Basado en <em>ruta_lectura_product_design_ai_agents.md</em>. Empieza el 21 jun 2026.
+  </footer>
+</div>
+</body>
+</html>

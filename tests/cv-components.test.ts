@@ -31,7 +31,7 @@ const identityFixture: Identity = {
   languages: "EN Â· ES",
   availability: "Open to work Â· Remote global",
   contact: {
-    email: "danilorojas@hotmail.com",
+    email: "hola@danilorojas.design",
     linkedin: "linkedin.com/in/mdanilorojas",
     github: "github.com/mdanilorojas",
   },
