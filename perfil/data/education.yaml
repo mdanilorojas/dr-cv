@@ -1,7 +1,13 @@
 - year: 2015
+  name: "M.A. in Interaction Design & UX"
+  institution: "Universitat Oberta de Catalunya (UOC)"
+- year: 2015
   name: "B.Sc. in Computer Systems Engineering"
   institution: "Escuela Politécnica Nacional (EPN)"
   location: "Quito, Ecuador"
+- year: 2025
+  name: "AI for Designers"
+  institution: "Interaction Design Foundation (IxDF)"
 - year: 2021
   name: "Google UX Design Certificate"
   institution: "Coursera"
