@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inspiration · Danilo Rojas</title>
+<meta name="description" content="The design references behind danilorojas.design — designers, studios, experiential sites, and product craft worth studying.">
+<meta name="robots" content="index, follow">
+<style>
+  :root{
+    --bg:#050505; --surface:#0d0d0f; --line:#ffffff14; --line-2:#ffffff0a;
+    --fg:#f5f4f1; --dim:#9aa0ab; --dim-2:#6a6f78; --accent:#f5f4f1;
+    --mono:ui-monospace,"JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  header{border-bottom:1px solid var(--line);padding:28px 0 14px}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .back{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);transition:color .2s}
+  .back:hover{color:var(--fg)}
+  .badge{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim-2);border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+
+  .hero{padding:56px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim-2);margin-bottom:18px}
+  h1{font-size:clamp(34px,6vw,64px);font-weight:600;letter-spacing:-.03em;line-height:1.04}
+  .lede{margin-top:18px;max-width:60ch;color:var(--dim);font-size:17px;font-weight:300}
+
+  section{padding:44px 0;border-bottom:1px solid var(--line-2)}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:24px}
+  .sec-head h2{font-size:13px;font-family:var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--dim);font-weight:600}
+  .sec-head .n{font-family:var(--mono);font-size:11px;color:var(--dim-2)}
+  .sec-head .rule{flex:1;height:1px;background:var(--line-2)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--line-2);border:1px solid var(--line-2)}
+  .card{display:block;background:var(--surface);padding:18px 18px 16px;transition:background .18s,transform .18s}
+  .card:hover{background:#15151a}
+  .card .name{font-size:16px;font-weight:500;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+  .card .name .arrow{color:var(--dim-2);font-size:13px;transition:transform .18s,color .18s}
+  .card:hover .name .arrow{transform:translate(2px,-2px);color:var(--fg)}
+  .card .url{display:block;font-family:var(--mono);font-size:11px;color:var(--dim-2);margin-top:4px;word-break:break-all}
+  .card .note{display:block;margin-top:9px;font-size:13px;color:var(--dim);font-weight:300;line-height:1.45}
+
+  footer{padding:40px 0 64px;color:var(--dim-2);font-family:var(--mono);font-size:11px;letter-spacing:.06em;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="top">
+      <a class="back" href="/">← danilorojas.design</a>
+      <span class="badge" id="count">— references</span>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="eyebrow">Field notes · design references</div>
+    <h1>Inspiration.</h1>
+    <p class="lede">The portfolios, studios, and products I keep open in tabs. Personal designers, award-winning studios, experiential web, and the SaaS craft that sets the bar — the raw material behind this site.</p>
+  </div>
+
+  <section>
+    <div class="sec-head"><h2>Designers</h2><span class="n" data-count></span><span class="rule"></span></div>
+    <div class="grid">
+      <a class="card" href="https://brittanychiang.com" target="_blank" rel="noopener"><span class="name">Brittany Chiang <span class="arrow">↗</span></span><span class="url">brittanychiang.com</span><span class="note">Dark, monospace, fixed-sidebar dev portfolio. Restraint as a flex.</span></a>
+      <a class="card" href="https://rauno.me" target="_blank" rel="noopener"><span class="name">Rauno Freiberg <span class="arrow">↗</span></span><span class="url">rauno.me</span><span class="note">Vercel design engineer. Obsessive UI detail and interaction craft.</span></a>
+      <a class="card" href="https://emilkowal.ski" target="_blank" rel="noopener"><span class="name">Emil Kowalski <span class="arrow">↗</span></span><span class="url">emilkowal.ski</span><span class="note">Motion-first. Maker of Sonner & Vaul. Subtle, dark, precise.</span></a>
+      <a class="card" href="https://paco.me" target="_blank" rel="noopener"><span class="name">Paco Coursey <span class="arrow">↗</span></span><span class="url">paco.me</span><span class="note">Maker of cmdk. Keyboard-grade micro-interactions.</span></a>
+      <a class="card" href="https://ped.ro" target="_blank" rel="noopener"><span class="name">Pedro Duarte <span class="arrow">↗</span></span><span class="url">ped.ro</span><span class="note">Radix UI. Minimal typographic writing.</span></a>
+      <a class="card" href="https://joshwcomeau.com" target="_blank" rel="noopener"><span class="name">Josh Comeau <span class="arrow">↗</span></span><span class="url">joshwcomeau.com</span><span class="note">Interactive blog. Whimsy meets teaching.</span></a>
+      <a class="card" href="https://bruno-simon.com" target="_blank" rel="noopener"><span class="name">Bruno Simon <span class="arrow">↗</span></span><span class="url">bruno-simon.com</span><span class="note">Drivable 3D WebGL portfolio. Peak playful wow.</span></a>
+      <a class="card" href="https://www.olivierlarose.com" target="_blank" rel="noopener"><span class="name">Olivier Larose <span class="arrow">↗</span></span><span class="url">olivierlarose.com</span><span class="note">Framer-motion scroll choreography, with tutorials.</span></a>
+      <a class="card" href="https://www.robin-noguier.com" target="_blank" rel="noopener"><span class="name">Robin Noguier <span class="arrow">↗</span></span><span class="url">robin-noguier.com</span><span class="note">Cinematic award portfolio. Page transitions.</span></a>
+      <a class="card" href="https://henry.codes" target="_blank" rel="noopener"><span class="name">Henry Desroches <span class="arrow">↗</span></span><span class="url">henry.codes</span><span class="note">Big, bold typographic developer site.</span></a>
+      <a class="card" href="https://jhey.dev" target="_blank" rel="noopener"><span class="name">Jhey Tompkins <span class="arrow">↗</span></span><span class="url">jhey.dev</span><span class="note">Pure-CSS animation wizardry and demos.</span></a>
+      <a class="card" href="https://samuelkraft.com" target="_blank" rel="noopener"><span class="name">Samuel Kraft <span class="arrow">↗</span></span><span class="url">samuelkraft.com</span><span class="note">Design engineer. Editorial layout, subtle motion.</span></a>
+      <a class="card" href="https://leerob.com" target="_blank" rel="noopener"><span class="name">Lee Robinson <span class="arrow">↗</span></span><span class="url">leerob.com</span><span class="note">Content-first, fast, minimal. Vercel.</span></a>
+      <a class="card" href="https://johno.com" target="_blank" rel="noopener"><span class="name">John Otander <span class="arrow">↗</span></span><span class="url">johno.com</span><span class="note">Maker of MDX. Extreme reduction.</span></a>
+      <a class="card" href="https://nerdy.dev" target="_blank" rel="noopener"><span class="name">Adam Argyle <span class="arrow">↗</span></span><span class="url">nerdy.dev</span><span class="note">CSS at the bleeding edge. Vibrant color.</span></a>
+      <a class="card" href="https://shud.in" target="_blank" rel="noopener"><span class="name">Shu Ding <span class="arrow">↗</span></span><span class="url">shud.in</span><span class="note">Maker of Nextra. Typographic minimalism.</span></a>
+      <a class="card" href="https://rsms.me" target="_blank" rel="noopener"><span class="name">Rasmus Andersson <span class="arrow">↗</span></span><span class="url">rsms.me</span><span class="note">Creator of Inter. Systems-level type & tooling.</span></a>
+      <a class="card" href="https://tholman.com" target="_blank" rel="noopener"><span class="name">Tim Holman <span class="arrow">↗</span></span><span class="url">tholman.com</span><span class="note">Creative coder. Easter eggs, personality.</span></a>
+      <a class="card" href="https://davidwhyte.com/experience" target="_blank" rel="noopener"><span class="name">David Whyte <span class="arrow">↗</span></span><span class="url">davidwhyte.com/experience</span><span class="note">Generative / interactive web experiment.</span></a>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Studios</h2><span class="n" data-count></span><span class="rule"></span></div>
+    <div class="grid">
+      <a class="card" href="https://activetheory.net" target="_blank" rel="noopener"><span class="name">Active Theory <span class="arrow">↗</span></span><span class="url">activetheory.net</span><span class="note">Immersive WebGL, narrative-driven.</span></a>
+      <a class="card" href="https://basement.studio" target="_blank" rel="noopener"><span class="name">Basement Studio <span class="arrow">↗</span></span><span class="url">basement.studio</span><span class="note">Dark, bold, design-engineering hybrid. My lane.</span></a>
+      <a class="card" href="https://lusion.co" target="_blank" rel="noopener"><span class="name">Lusion <span class="arrow">↗</span></span><span class="url">lusion.co</span><span class="note">Cinematic 3D, rich materials.</span></a>
+      <a class="card" href="https://resn.co.nz" target="_blank" rel="noopener"><span class="name">Resn <span class="arrow">↗</span></span><span class="url">resn.co.nz</span><span class="note">Strange, memorable digital experiences.</span></a>
+      <a class="card" href="https://ueno.co" target="_blank" rel="noopener"><span class="name">Ueno <span class="arrow">↗</span></span><span class="url">ueno.co</span><span class="note">Product + brand with a strong voice.</span></a>
+      <a class="card" href="https://huncwot.com" target="_blank" rel="noopener"><span class="name">Huncwot <span class="arrow">↗</span></span><span class="url">huncwot.com</span><span class="note">Editorial art direction.</span></a>
+      <a class="card" href="https://unseen.studio" target="_blank" rel="noopener"><span class="name">Unseen Studio <span class="arrow">↗</span></span><span class="url">unseen.studio</span><span class="note">Type in motion, editorial.</span></a>
+      <a class="card" href="https://noomoagency.com" target="_blank" rel="noopener"><span class="name">Noomo Agency <span class="arrow">↗</span></span><span class="url">noomoagency.com</span><span class="note">3D hero + scroll storytelling.</span></a>
+      <a class="card" href="https://14islands.com" target="_blank" rel="noopener"><span class="name">14islands <span class="arrow">↗</span></span><span class="url">14islands.com</span><span class="note">Creative dev with performance.</span></a>
+      <a class="card" href="https://www.thelinestudio.com" target="_blank" rel="noopener"><span class="name">The Line Studio <span class="arrow">↗</span></span><span class="url">thelinestudio.com</span><span class="note">Illustration & narrative animation.</span></a>
+      <a class="card" href="https://www.immersive-g.com" target="_blank" rel="noopener"><span class="name">Immersive Garden <span class="arrow">↗</span></span><span class="url">immersive-g.com</span><span class="note">Atmospheric cinematic 3D.</span></a>
+      <a class="card" href="https://inkfishnyc.com" target="_blank" rel="noopener"><span class="name">Inkfish <span class="arrow">↗</span></span><span class="url">inkfishnyc.com</span><span class="note">Immersive WebGL experiences.</span></a>
+      <a class="card" href="https://mont-fort.com" target="_blank" rel="noopener"><span class="name">Mont-Fort <span class="arrow">↗</span></span><span class="url">mont-fort.com</span><span class="note">Award-winning interactive studio.</span></a>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Experiential &amp; Award sites</h2><span class="n" data-count></span><span class="rule"></span></div>
+    <div class="grid">
+      <a class="card" href="https://igloo.inc" target="_blank" rel="noopener"><span class="name">Igloo Inc <span class="arrow">↗</span></span><span class="url">igloo.inc</span><span class="note">3D brand world, Awwwards heavyweight.</span></a>
+      <a class="card" href="https://zentry.com" target="_blank" rel="noopener"><span class="name">Zentry <span class="arrow">↗</span></span><span class="url">zentry.com</span><span class="note">Game-world landing, epic scroll.</span></a>
+      <a class="card" href="https://kprverse.com" target="_blank" rel="noopener"><span class="name">KPR Verse <span class="arrow">↗</span></span><span class="url">kprverse.com</span><span class="note">Immersive narrative microsite.</span></a>
+      <a class="card" href="https://dontboardme.com" target="_blank" rel="noopener"><span class="name">Don't Board Me <span class="arrow">↗</span></span><span class="url">dontboardme.com</span><span class="note">Playful interaction-led site.</span></a>
+      <a class="card" href="https://manayerbamate.com" target="_blank" rel="noopener"><span class="name">Mana Yerba Mate <span class="arrow">↗</span></span><span class="url">manayerbamate.com</span><span class="note">Product brand site with craft.</span></a>
+      <a class="card" href="https://siena.film" target="_blank" rel="noopener"><span class="name">Siena <span class="arrow">↗</span></span><span class="url">siena.film</span><span class="note">Cinematic studio / film site.</span></a>
+      <a class="card" href="https://terminal-industries.com" target="_blank" rel="noopener"><span class="name">Terminal Industries <span class="arrow">↗</span></span><span class="url">terminal-industries.com</span><span class="note">Industrial-tech brand site.</span></a>
+      <a class="card" href="https://oryzo.ai" target="_blank" rel="noopener"><span class="name">Oryzo <span class="arrow">↗</span></span><span class="url">oryzo.ai</span><span class="note">Modern AI product site.</span></a>
+      <a class="card" href="https://www.getty.edu/tracingart" target="_blank" rel="noopener"><span class="name">Getty · Tracing Art <span class="arrow">↗</span></span><span class="url">getty.edu/tracingart</span><span class="note">Museum interactive experience.</span></a>
+      <a class="card" href="https://landonorris.com" target="_blank" rel="noopener"><span class="name">Lando Norris <span class="arrow">↗</span></span><span class="url">landonorris.com</span><span class="note">Athlete brand site, bold motion.</span></a>
+      <a class="card" href="https://opalcamera.com/opal-tadpole" target="_blank" rel="noopener"><span class="name">Opal Tadpole <span class="arrow">↗</span></span><span class="url">opalcamera.com/opal-tadpole</span><span class="note">Hardware product page, premium feel.</span></a>
+      <a class="card" href="https://animejs.com" target="_blank" rel="noopener"><span class="name">Anime.js <span class="arrow">↗</span></span><span class="url">animejs.com</span><span class="note">Motion library site — animation as the demo.</span></a>
+      <a class="card" href="https://www.duolingo.com" target="_blank" rel="noopener"><span class="name">Duolingo <span class="arrow">↗</span></span><span class="url">duolingo.com</span><span class="note">Mascot-led brand & playful product design.</span></a>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Product craft</h2><span class="n" data-count></span><span class="rule"></span></div>
+    <div class="grid">
+      <a class="card" href="https://linear.app" target="_blank" rel="noopener"><span class="name">Linear <span class="arrow">↗</span></span><span class="url">linear.app</span><span class="note">The benchmark. Speed, restraint, dark craft.</span></a>
+      <a class="card" href="https://cursor.com" target="_blank" rel="noopener"><span class="name">Cursor <span class="arrow">↗</span></span><span class="url">cursor.com</span><span class="note">AI-IDE marketing with editorial polish.</span></a>
+      <a class="card" href="https://raycast.com" target="_blank" rel="noopener"><span class="name">Raycast <span class="arrow">↗</span></span><span class="url">raycast.com</span><span class="note">Crisp product site, strong gradients & type.</span></a>
+      <a class="card" href="https://vercel.com" target="_blank" rel="noopener"><span class="name">Vercel <span class="arrow">↗</span></span><span class="url">vercel.com</span><span class="note">Black/white system design, geometric.</span></a>
+      <a class="card" href="https://v0.app" target="_blank" rel="noopener"><span class="name">v0 <span class="arrow">↗</span></span><span class="url">v0.app</span><span class="note">Minimal generative-UI product surface.</span></a>
+      <a class="card" href="https://www.framer.com" target="_blank" rel="noopener"><span class="name">Framer <span class="arrow">↗</span></span><span class="url">framer.com</span><span class="note">Motion-rich marketing, design-tool craft.</span></a>
+      <a class="card" href="https://stripe.com" target="_blank" rel="noopener"><span class="name">Stripe <span class="arrow">↗</span></span><span class="url">stripe.com</span><span class="note">Gradient + grid gold standard, docs craft.</span></a>
+      <a class="card" href="https://replicate.com" target="_blank" rel="noopener"><span class="name">Replicate <span class="arrow">↗</span></span><span class="url">replicate.com</span><span class="note">Developer product clarity.</span></a>
+      <a class="card" href="https://www.anthropic.com" target="_blank" rel="noopener"><span class="name">Anthropic <span class="arrow">↗</span></span><span class="url">anthropic.com</span><span class="note">Warm-minimal editorial, distinctive type.</span></a>
+      <a class="card" href="https://openai.com" target="_blank" rel="noopener"><span class="name">OpenAI <span class="arrow">↗</span></span><span class="url">openai.com</span><span class="note">Clean editorial system at scale.</span></a>
+      <a class="card" href="https://huly.io" target="_blank" rel="noopener"><span class="name">Huly <span class="arrow">↗</span></span><span class="url">huly.io</span><span class="note">Dark product site with shader detail.</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Curated by Danilo Rojas · field notes</span>
+    <span><a href="/" class="back">danilorojas.design</a></span>
+  </footer>
+</div>
+
+<script>
+  // ponytail: count links from the DOM so the badge never drifts from reality
+  (function(){
+    var total = document.querySelectorAll('.card').length;
+    document.getElementById('count').textContent = total + ' references';
+    document.querySelectorAll('section').forEach(function(s){
+      var n = s.querySelectorAll('.card').length;
+      var slot = s.querySelector('[data-count]');
+      if (slot) slot.textContent = String(n).padStart(2,'0');
+    });
+  })();
+</script>
+</body>
+</html>
