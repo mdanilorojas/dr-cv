@@ -378,10 +378,9 @@ ${FAVICON_TAG}
           </div>
           <div class="absolute -inset-2 border border-system-line/30 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-[spin_4s_linear_infinite] transition-opacity duration-500"></div>
         </div>
-        <h1 class="text-3xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.16] mb-8 text-system-dim max-w-5xl">
-          <span class="text-system-accent font-medium">${escapeHtml(t(lang, "I'm", "Soy"))} ${escapeHtml(identity.name)}.</span><br>
-          ${escapeHtml(t(lang, "I design products for", "Diseño productos para"))} <span class="text-system-accent">${escapeHtml(heroEmph)}</span>
-        </h1>
+        <h1 class="text-4xl sm:text-5xl md:text-7xl font-semibold tracking-tight leading-[1.05] mb-3 text-system-accent">${escapeHtml(identity.name)}</h1>
+        <p class="font-mono text-xs sm:text-sm tracking-widest uppercase text-system-dim mb-7">${escapeHtml(t(lang, "Product Designer · Agentic Workflows", "Diseñador de Producto · Agentic Workflows"))}</p>
+        <p class="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight leading-[1.2] text-system-dim max-w-3xl mb-8">${escapeHtml(t(lang, "I design products for", "Diseño productos para"))} <span class="text-system-accent">${escapeHtml(heroEmph)}</span></p>
         ${heroSub ? `<div class="flex items-center gap-4 mb-10">
           <div class="w-8 h-[1px] bg-system-dim/50 hidden sm:block"></div>
           <p class="text-base md:text-lg text-system-dim font-sans font-light tracking-wide max-w-2xl leading-relaxed">${escapeHtml(heroSub)}</p>
