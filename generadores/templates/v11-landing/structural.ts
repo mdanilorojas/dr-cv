@@ -409,7 +409,7 @@ ${FAVICON_TAG}
       </div>
     </div>
     <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
-    <div class="tech-label -top-2 left-10">PRODUCT DESIGN · AGENTIC WORKFLOWS</div>
+    <div class="tech-label -top-2 left-10">HUMAN CRAFT × AGENTIC LEVERAGE</div>
     <div class="absolute top-0 bottom-0 left-1/4 w-[1px] bg-system-line/10 -z-10 hidden md:block"></div>
   </div>
 
