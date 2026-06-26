@@ -15,6 +15,8 @@ Filtro mental del recruiter/hiring manager, en este orden:
 
 Si estos tres no quedan claros de inmediato, cierran la pestana. No hay segunda oportunidad para "se entiende mejor si sigues leyendo".
 
+**Capa previa a humanos:** buena parte de recruiting ya corre un filtro AI-asistido antes de que un humano abra el portfolio. La revision humana que sigue dura 2-3 minutos en total, con 10-15 segundos solo en la home. Implicacion practica: el texto de la home y el primer caso debe ser legible y parseable como texto plano (no solo como imagen/canvas), porque ese filtro automatizado lee contenido, no estetica.
+
 **Segunda pasada (menos de 2 minutos), si pasa el filtro inicial:** abre el sitio -> lee la frase de presentacion -> entra al primer caso -> escanea su estructura -> salta directo a resultados. Implicaciones practicas: el primer caso debe ser el mas fuerte (no el cronologicamente mas reciente), y el resultado tiene que ser visible sin scroll profundo — si esta enterrado al final de un caso largo, no lo van a leer.
 
 ## Como evaluan (hiring manager, segunda pasada)
@@ -36,6 +38,10 @@ Si estos tres no quedan claros de inmediato, cierran la pestana. No hay segunda 
 | Como se ve en el portfolio | 1 caso fuerte con metricas claras de producto | Casos que muestran influencia cross-team sin autoridad formal | Casos que muestran como cambiaste la direccion de un negocio/org |
 
 Nota de calibracion: el nivel es relativo al tamano de la empresa — un Principal en una startup de 100 personas puede equivaler a un Senior en una de 1500. No asumas que el titulo de tu rol anterior se traduce 1:1 al de la empresa objetivo; calibra el caso al scope real, no al nombre del cargo.
+
+**Pregunta diagnostico para saber si un caso es Staff y no Senior:** ¿el caso resuelve "¿estan distintos equipos resolviendo el mismo problema de formas distintas?" o define un patron que otros equipos reutilizan? Si el caso solo describe una feature de tu propio equipo, es Senior aunque el titulo diga Staff. Dato de referencia de asignacion de tiempo: Senior gasta ~50-60% en ejecucion directa; Staff baja a ~25% porque el resto es influencia cross-team — si tu narrativa de caso es 90% "yo ejecute X", el portfolio se lee Senior independientemente del titulo que pongas.
+
+**Red flag especifico de mismatch:** titulo Staff/Principal con casos que solo muestran trabajo de feature aislada, sin mencion de patrones compartidos, multiplicador de equipo o cambio de direccion. El nivel se demuestra en el contenido del caso, no se declara en el titulo de la pagina.
 
 ## Estructura de case study (framework)
 
@@ -78,6 +84,8 @@ Seis bloques, en este orden. Cada uno debe poder leerse en 20-30 segundos si el 
 10. "Shippeado a produccion" sin evidencia verificable (link, dashboard, captura de monitoreo, video corto). Es el claim mas comun y el primero que se chequea en entrevista — si no lo puedes mostrar, no lo afirmes asi.
 11. Craft visual debil disfrazado de "yo soy mas de research/estrategia" — para la mayoria de roles de product design (no research puro), pulido visual flojo descalifica aunque el proceso sea solido.
 12. Cero mencion de como usas AI en tu proceso de diseno. En 2026 esto ya no se lee como neutral, se lee como senial de que no te has adaptado.
+13. Exceso de texto de proceso o diagramas de double-diamond/journey-map genericos sin una decision concreta al lado. Estos diagramas estan sobreusados y ya no diferencian — si los usas, que sirvan para mostrar UNA decision especifica, no el proceso completo.
+14. El template/design-system del portfolio le gana en atencion al trabajo mismo. Si el visitante recuerda el layout antes que el caso, el craft visual esta compitiendo contra tu propio contenido.
 
 ## Patrones que funcionan (2026)
 
@@ -88,6 +96,8 @@ Seis bloques, en este orden. Cada uno debe poder leerse en 20-30 segundos si el 
 - **Narrativa escrita corta (500-800 palabras):** alternativa o complemento al case study visual — traza una decision especifica desde el punto ambiguo de partida hasta el resultado, en prosa, sin diagramas pesados. Funciona mejor que un formato visual cargado cuando el lector tiene poco tiempo y quiere "verte pensar", no "ver pantallas".
 - **Prototipo funcional, no solo mockup:** para roles staff/principal AI-adjacent, un prototipo con codigo real y datos reales (Framer, ProtoPie, o repo) que un ingeniero podria continuar pesa mas que una serie de pantallas en Figma — siempre que sea verificable (link vivo, repo, o video corto del flujo funcionando). Afirmar que algo es "shippable" sin poder mostrarlo es el red flag #10 de la lista anterior.
 - **Vocabulario de fluidez AI en roles staff+/principal AI-adjacent:** generative UI patterns, tokenizacion de design systems, comportamiento de modelos/LLM, patrones de diseno de sistemas agenticos. No hace falta dominarlo todo — mencionarlo con criterio real (no como buzzword suelto) es una senial de seniority que los JDs de 2026 ya piden explicitamente.
+- **Caso de eval propio, sin necesitar un trabajo AI actual:** elegi una feature AI publica (ChatGPT, Claude, Notion AI), corre un eval de ~50 casos, y documenta que falla, que pasa, y las categorias del fallo. Es el ejercicio mas barato de producir y el que mas credibilidad da para roles AI-adjacent — diseño de evals es la habilidad menos preparada en entrevistas AI, y mostrarla en el portfolio es diferenciador inmediato.
+- **Tres arquetipos validos de caso AI** (usa el que tengas, no fuerces los tres): (1) feature AI dentro de un producto existente (ej. smart replies); (2) producto AI-first desde cero (ej. herramienta generativa); (3) rediseno de un workflow completo alrededor de una feature AI (ej. automatizacion de edicion de video). Cualquiera de los tres es valido si muestra el "messy middle" — los quirks, limites y comportamiento impredecible del modelo — y no solo la pantalla final pulida.
 
 ## Tailoring por familia de rol
 
@@ -112,8 +122,11 @@ Calibra cada caso eligiendo 1-2 filas relevantes al rol objetivo; no fuerces tod
 - [ ] La navegacion del portfolio mismo es clara — lo probé como si fuera un usuario nuevo.
 - [ ] Ningun caso es "concept"/fantasia sin restricciones reales de negocio.
 - [ ] El portfolio esta tailored al role family del puesto especifico (tabla de arriba), no generico.
+- [ ] El nivel que proyecto en el portfolio coincide con el nivel del JD al que aplico (no aplico mas senior ni mas junior de lo que el caso realmente demuestra).
+- [ ] Ningun caso es solo texto/diagrama de proceso sin una decision concreta — si hay double-diamond o journey map, esta ahi para mostrar UNA decision, no el proceso completo.
 
 ## Changelog
 
 - **2026-06-26** — Creacion inicial del playbook. Investigacion sobre que buscan recruiters/hiring managers en 2026 (judgment > craft, evals para AI design, formato "pensamiento abierto"), diferencias senior/staff/principal por scope, framework de case study en 6 bloques, red flags, y tabla de tailoring por familia de rol (B2B SaaS, AI, fintech, enterprise/regulado, gobierno).
 - **2026-06-26** — Pasada de research adicional. Agregado: modelo de doble pasada de revision (6-8s filtro + <2min lectura real, con implicancia de que el primer caso debe ser el mas fuerte); atribucion explicita de contribucion individual vs equipo en el bloque de contexto; 4 red flags nuevos (mejora sin baseline, "shippeado" sin evidencia verificable, craft visual debil, ausencia de mencion de AI en el proceso); patrones nuevos de prototipo funcional verificable y vocabulario de fluidez AI (generative UI, tokenizacion, sistemas agenticos) para roles staff+/principal AI-adjacent.
+- **2026-06-26 (pasada 3, UTC)** — Investigacion sobre filtro AI-asistido de recruiting (capa previa al humano, home debe ser legible como texto plano); pregunta diagnostico concreta para distinguir Staff de Senior (patrones cross-team vs feature aislada) con dato de asignacion de tiempo (Senior ~50-60% ejecucion vs Staff ~25%); 2 red flags nuevos (exceso de diagramas double-diamond/journey-map genericos sin decision concreta, template del portfolio compitiendo con el trabajo); ejercicio concreto de eval propio sobre feature AI publica (ChatGPT/Claude/Notion AI, ~50 casos) como proyecto de portfolio AI-adjacent sin requerir trabajo AI actual; 3 arquetipos validos de caso AI (feature embebida, producto AI-first, rediseno de workflow) con enfasis en mostrar el "messy middle" del modelo, no solo la pantalla final.
