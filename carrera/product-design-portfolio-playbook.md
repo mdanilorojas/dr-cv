@@ -6,6 +6,8 @@ Complementa `cv-optimization-playbook.md` (CV/ATS). Este archivo cubre solo **po
 
 El portfolio no prueba craft, prueba **judgment**: que puedes tomar una decision bajo incertidumbre, asumir la consecuencia, y mejorar la siguiente. En 2026, ejecucion pura es commodity (AI la abarato); lo que escasea es estrategia, criterio y la capacidad de dirigir AI con intencion. Nada de esto garantiza una oferta — el objetivo es maximizar probabilidad de entrevista, no asegurar el resultado.
 
+**El portfolio abre la puerta, no cierra la decision.** Cada vez mas procesos saltan el walkthrough pasivo de casos y abren Figma en vivo para verte resolver un problema ahi mismo. Implicacion practica: cada caso que muestres debe ser uno que puedas defender y extender en vivo bajo preguntas — si no podrias re-tomar esa decision frente a alguien que te interrumpe, no esta listo para el portfolio.
+
 ## Que escanean primero (6-8 segundos)
 
 Filtro mental del recruiter/hiring manager, en este orden:
@@ -83,12 +85,15 @@ Seis bloques, en este orden. Cada uno debe poder leerse en 20-30 segundos si el 
 9. Mejora reportada sin baseline ("40% mejor" — ¿mejor que que?). Sin punto de comparacion explicito, el numero no significa nada y se lee como inflado.
 10. "Shippeado a produccion" sin evidencia verificable (link, dashboard, captura de monitoreo, video corto). Es el claim mas comun y el primero que se chequea en entrevista — si no lo puedes mostrar, no lo afirmes asi.
 11. Craft visual debil disfrazado de "yo soy mas de research/estrategia" — para la mayoria de roles de product design (no research puro), pulido visual flojo descalifica aunque el proceso sea solido.
-12. Cero mencion de como usas AI en tu proceso de diseno. En 2026 esto ya no se lee como neutral, se lee como senial de que no te has adaptado.
+12. Cero mencion de como usas AI en tu proceso de diseno. En 2026 esto ya no se lee como neutral, se lee como senial de que no te has adaptado — encuestas recientes a managers de diseno ubican la fluidez con AI como competencia cada vez mas exigida, con premium salarial medible para quienes la demuestran con criterio (no como buzzword).
 13. Exceso de texto de proceso o diagramas de double-diamond/journey-map genericos sin una decision concreta al lado. Estos diagramas estan sobreusados y ya no diferencian — si los usas, que sirvan para mostrar UNA decision especifica, no el proceso completo.
 14. El template/design-system del portfolio le gana en atencion al trabajo mismo. Si el visitante recuerda el layout antes que el caso, el craft visual esta compitiendo contra tu propio contenido.
+15. Estructura de caso indistinguible de un template generado por AI — el mismo esqueleto "contexto-problema-proceso-solucion-resultado" aplicado idéntico en los 5 casos, sin voz propia ni decision especifica que lo distinga de cualquier otro portfolio del mismo bootcamp. La cura no es el formato del case study, es la especificidad de la decision que cuentas dentro de el.
+16. En casos AI, ausencia total de una seccion de limitaciones (que no resuelve el modelo, donde falla, que quedo fuera de scope). Reviewers de portfolios AI ya filtran por esto: su ausencia se lee como que no pensaste en los limites o los estas ocultando, no como que todo funciono perfecto.
 
 ## Patrones que funcionan (2026)
 
+- **Video corto por caso (30-90s), no solo para AI:** la tendencia 2026 es hibrida — video al frente explicando la decision clave en menos de 90 segundos, mas un resumen de texto corto debajo, en vez de un case study largo de scroll infinito. Calza con el tiempo real de lectura humana (2-3 minutos totales) y obliga a comprimir la historia a lo esencial.
 - **Formato "pensamiento en curso" abierto:** secciones que admiten que no sabes algo aun, documentando el proceso de pensar el problema en vivo — mas valorado que un caso pulido y cerrado, porque prueba judgment en tiempo real.
 - **Evidencia de trabajo con AI como meta-skill:** un loom corto (3-5 min) mostrando como prompteas, editas, y tomas decisiones de criterio sobre output de AI. Para roles AI-adjacent esto pesa mas que un case study tradicional.
 - **3-5 casos, no mas.** Cada uno con rol explicito, restricciones explicitas, y un tradeoff nombrado.
@@ -111,6 +116,8 @@ Seis bloques, en este orden. Cada uno debe poder leerse en 20-30 segundos si el 
 
 Calibra cada caso eligiendo 1-2 filas relevantes al rol objetivo; no fuerces todas las dimensiones en un solo caso.
 
+**Profundidad sobre amplitud:** en procesos con cientos de aplicantes, la minoria que calza con los requisitos especificos del rol gana por profundidad en ese dominio, no por cobertura general. Un portfolio generico que toca todas las familias de rol pesa menos que uno afilado a una sola, con vocabulario y metricas nativas de esa industria.
+
 ## Checklist pre-publicacion
 
 - [ ] En los primeros 10 segundos, ¿se entiende que tipo de designer soy y mi seniority?
@@ -130,3 +137,4 @@ Calibra cada caso eligiendo 1-2 filas relevantes al rol objetivo; no fuerces tod
 - **2026-06-26** — Creacion inicial del playbook. Investigacion sobre que buscan recruiters/hiring managers en 2026 (judgment > craft, evals para AI design, formato "pensamiento abierto"), diferencias senior/staff/principal por scope, framework de case study en 6 bloques, red flags, y tabla de tailoring por familia de rol (B2B SaaS, AI, fintech, enterprise/regulado, gobierno).
 - **2026-06-26** — Pasada de research adicional. Agregado: modelo de doble pasada de revision (6-8s filtro + <2min lectura real, con implicancia de que el primer caso debe ser el mas fuerte); atribucion explicita de contribucion individual vs equipo en el bloque de contexto; 4 red flags nuevos (mejora sin baseline, "shippeado" sin evidencia verificable, craft visual debil, ausencia de mencion de AI en el proceso); patrones nuevos de prototipo funcional verificable y vocabulario de fluidez AI (generative UI, tokenizacion, sistemas agenticos) para roles staff+/principal AI-adjacent.
 - **2026-06-26 (pasada 3, UTC)** — Investigacion sobre filtro AI-asistido de recruiting (capa previa al humano, home debe ser legible como texto plano); pregunta diagnostico concreta para distinguir Staff de Senior (patrones cross-team vs feature aislada) con dato de asignacion de tiempo (Senior ~50-60% ejecucion vs Staff ~25%); 2 red flags nuevos (exceso de diagramas double-diamond/journey-map genericos sin decision concreta, template del portfolio compitiendo con el trabajo); ejercicio concreto de eval propio sobre feature AI publica (ChatGPT/Claude/Notion AI, ~50 casos) como proyecto de portfolio AI-adjacent sin requerir trabajo AI actual; 3 arquetipos validos de caso AI (feature embebida, producto AI-first, rediseno de workflow) con enfasis en mostrar el "messy middle" del modelo, no solo la pantalla final.
+- **2026-06-26 (pasada 4, UTC)** — Nota en Overview sobre el shift a entrevistas con resolucion en vivo en Figma (el portfolio abre la puerta, no cierra la decision); 2 red flags nuevos (estructura de caso indistinguible de un template generado por AI, ausencia de seccion de limitaciones en casos AI); patron nuevo de video corto por caso (30-90s, hibrido con texto) generalizado mas alla del loom especifico de proceso AI; nota de profundidad-sobre-amplitud en Tailoring (especialistas con vocabulario nativo de la industria ganan sobre generalistas en procesos con muchos aplicantes); refuerzo del red flag de ausencia de AI con contexto de encuestas a managers de diseno.
