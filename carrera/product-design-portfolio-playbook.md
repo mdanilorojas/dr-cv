@@ -15,6 +15,8 @@ Filtro mental del recruiter/hiring manager, en este orden:
 
 Si estos tres no quedan claros de inmediato, cierran la pestana. No hay segunda oportunidad para "se entiende mejor si sigues leyendo".
 
+**Segunda pasada (menos de 2 minutos), si pasa el filtro inicial:** abre el sitio -> lee la frase de presentacion -> entra al primer caso -> escanea su estructura -> salta directo a resultados. Implicaciones practicas: el primer caso debe ser el mas fuerte (no el cronologicamente mas reciente), y el resultado tiene que ser visible sin scroll profundo — si esta enterrado al final de un caso largo, no lo van a leer.
+
 ## Como evaluan (hiring manager, segunda pasada)
 
 - ¿El producto es real y trazable? ¿Sigue vivo, escalo? Un rediseno bonito que shippeo y no movio ninguna metrica es indistinguible de un proyecto concept — muestra craft, no judgment.
@@ -39,7 +41,7 @@ Nota de calibracion: el nivel es relativo al tamano de la empresa — un Princip
 
 Seis bloques, en este orden. Cada uno debe poder leerse en 20-30 segundos si el lector tiene prisa.
 
-1. **Contexto + tu rol** — negocio, producto, tu ownership especifico (no "we", se claro en que parte fuiste tu).
+1. **Contexto + tu rol** — negocio, producto, tu ownership especifico (no "we", se claro en que parte fuiste tu). Si el resultado fue de equipo, dilo explicito ("yo lidere X, el equipo de data construyo Y") — un logro de equipo presentado como individual se detecta en la entrevista de seguimiento, y se nota peor ahi que si lo hubieras aclarado desde el portfolio.
 2. **El problema (con restricciones reales)** — datos de negocio, restricciones tecnicas/legales/de tiempo. Sin restricciones, no hay judgment que mostrar.
 3. **Proceso** — research, hipotesis, iteracion, quien estuvo en la mesa (cross-functional). No describas el proceso, muestra una decision concreta que tomaste dentro de el.
 4. **El tradeoff que rechazaste** — la alternativa descartada y por que. Esto es lo que separa judgment de craft.
@@ -72,6 +74,10 @@ Seis bloques, en este orden. Cada uno debe poder leerse en 20-30 segundos si el 
 6. Mismo patron visual aplicado a todo — sugiere eleccion por habito, no por intencion.
 7. Cero evidencia de testing, research o iteracion con feedback real.
 8. Metricas vagas ("mejoro la experiencia") sin numero, sin fuente, sin periodo de tiempo.
+9. Mejora reportada sin baseline ("40% mejor" — ¿mejor que que?). Sin punto de comparacion explicito, el numero no significa nada y se lee como inflado.
+10. "Shippeado a produccion" sin evidencia verificable (link, dashboard, captura de monitoreo, video corto). Es el claim mas comun y el primero que se chequea en entrevista — si no lo puedes mostrar, no lo afirmes asi.
+11. Craft visual debil disfrazado de "yo soy mas de research/estrategia" — para la mayoria de roles de product design (no research puro), pulido visual flojo descalifica aunque el proceso sea solido.
+12. Cero mencion de como usas AI en tu proceso de diseno. En 2026 esto ya no se lee como neutral, se lee como senial de que no te has adaptado.
 
 ## Patrones que funcionan (2026)
 
@@ -79,6 +85,9 @@ Seis bloques, en este orden. Cada uno debe poder leerse en 20-30 segundos si el 
 - **Evidencia de trabajo con AI como meta-skill:** un loom corto (3-5 min) mostrando como prompteas, editas, y tomas decisiones de criterio sobre output de AI. Para roles AI-adjacent esto pesa mas que un case study tradicional.
 - **3-5 casos, no mas.** Cada uno con rol explicito, restricciones explicitas, y un tradeoff nombrado.
 - **Pagina de "como pienso"** separada de los casos — un compendio corto de principios/heuristicas que usas, sirve como prueba adicional de judgment sin depender de un proyecto especifico.
+- **Narrativa escrita corta (500-800 palabras):** alternativa o complemento al case study visual — traza una decision especifica desde el punto ambiguo de partida hasta el resultado, en prosa, sin diagramas pesados. Funciona mejor que un formato visual cargado cuando el lector tiene poco tiempo y quiere "verte pensar", no "ver pantallas".
+- **Prototipo funcional, no solo mockup:** para roles staff/principal AI-adjacent, un prototipo con codigo real y datos reales (Framer, ProtoPie, o repo) que un ingeniero podria continuar pesa mas que una serie de pantallas en Figma — siempre que sea verificable (link vivo, repo, o video corto del flujo funcionando). Afirmar que algo es "shippable" sin poder mostrarlo es el red flag #10 de la lista anterior.
+- **Vocabulario de fluidez AI en roles staff+/principal AI-adjacent:** generative UI patterns, tokenizacion de design systems, comportamiento de modelos/LLM, patrones de diseno de sistemas agenticos. No hace falta dominarlo todo — mencionarlo con criterio real (no como buzzword suelto) es una senial de seniority que los JDs de 2026 ya piden explicitamente.
 
 ## Tailoring por familia de rol
 
@@ -107,3 +116,4 @@ Calibra cada caso eligiendo 1-2 filas relevantes al rol objetivo; no fuerces tod
 ## Changelog
 
 - **2026-06-26** — Creacion inicial del playbook. Investigacion sobre que buscan recruiters/hiring managers en 2026 (judgment > craft, evals para AI design, formato "pensamiento abierto"), diferencias senior/staff/principal por scope, framework de case study en 6 bloques, red flags, y tabla de tailoring por familia de rol (B2B SaaS, AI, fintech, enterprise/regulado, gobierno).
+- **2026-06-26** — Pasada de research adicional. Agregado: modelo de doble pasada de revision (6-8s filtro + <2min lectura real, con implicancia de que el primer caso debe ser el mas fuerte); atribucion explicita de contribucion individual vs equipo en el bloque de contexto; 4 red flags nuevos (mejora sin baseline, "shippeado" sin evidencia verificable, craft visual debil, ausencia de mencion de AI en el proceso); patrones nuevos de prototipo funcional verificable y vocabulario de fluidez AI (generative UI, tokenizacion, sistemas agenticos) para roles staff+/principal AI-adjacent.
