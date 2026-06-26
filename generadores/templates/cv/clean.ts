@@ -72,7 +72,6 @@ body{ font-family:Inter,system-ui,sans-serif; color:var(--body); }
 .job .ro{ font-size:11px; color:var(--dim); margin-top:1px; }
 .job .de{ font-size:10px; color:var(--dim); line-height:1.5; margin-top:5px; max-width:64ch; }
 .badge{ font-family:var(--mono); font-size:7.5px; letter-spacing:.12em; text-transform:uppercase; border:1px solid var(--line); padding:2px 6px; color:var(--dim); margin-left:8px; vertical-align:middle; }
-.grid2{ display:grid; grid-template-columns:1.3fr 1fr; gap:34px; }
 .skline{ display:flex; justify-content:space-between; gap:12px; font-size:10px; padding:4px 0; border-top:1px solid var(--line-soft); color:var(--dim); }
 .skline b{ color:var(--ink); font-weight:500; white-space:nowrap; }
 .edu{ font-size:10px; color:var(--dim); padding:4px 0; border-top:1px solid var(--line-soft); display:flex; justify-content:space-between; gap:10px; }
@@ -105,8 +104,8 @@ export function renderCleanCv(data: CvData, lang: Lang): string {
     .join("");
 
   const L = lang === "en"
-    ? { exp: "Experience", expK: "EXP // selected", cap: "Capabilities", capK: "CAP // mastered", edu: "Education", eduK: "EDU", lead2: "Eighteen years in product, fifteen in design. Senior UX judgment, user psychology mapping, and the system design capability to align complex product architectures into frictionless user experiences — AI-augmented research as leverage." }
-    : { exp: "Experiencia", expK: "EXP // selección", cap: "Capacidades", capK: "CAP // dominadas", edu: "Educación", eduK: "EDU", lead2: "Dieciocho años en producto, quince en diseño. Juicio UX senior, mapeo de psicología del usuario y capacidad de diseño de sistemas para alinear arquitecturas de producto complejas en experiencias sin fricción — investigación con IA como leverage." };
+    ? { exp: "Experience", expK: "EXP // selected", cap: "Skills", capK: "SKILLS // mastered", edu: "Education", eduK: "EDU", lead2: "Eighteen years in product, fifteen in design. Senior UX judgment, user psychology mapping, and the system design capability to align complex product architectures into frictionless user experiences — AI-augmented research as leverage." }
+    : { exp: "Experiencia", expK: "EXP // selección", cap: "Habilidades", capK: "SKILLS // dominadas", edu: "Educación", eduK: "EDU", lead2: "Dieciocho años en producto, quince en diseño. Juicio UX senior, mapeo de psicología del usuario y capacidad de diseño de sistemas para alinear arquitecturas de producto complejas en experiencias sin fricción — investigación con IA como leverage." };
 
   const leadHead = t(lang, "I design software products for", "Diseño productos de software para");
   const leadEm = t(lang, "complex, regulated environments.", "entornos complejos y regulados.");
@@ -138,19 +137,18 @@ export function renderCleanCv(data: CvData, lang: Lang): string {
   <div class="lead">${escapeHtml(leadHead)} <span class="em">${escapeHtml(leadEm)}</span> <span class="muted">${escapeHtml(L.lead2)}</span></div>
 
   <section class="sec">
+    <div class="sec-h"><h2>${escapeHtml(L.cap)}</h2><span class="k">${escapeHtml(L.capK)}</span></div>
+    ${caps}
+  </section>
+
+  <section class="sec">
     <div class="sec-h"><h2>${escapeHtml(L.exp)}</h2><span class="k">${escapeHtml(L.expK)}</span></div>
     ${jobs}
   </section>
 
-  <section class="sec grid2">
-    <div>
-      <div class="sec-h"><h2>${escapeHtml(L.cap)}</h2><span class="k">${escapeHtml(L.capK)}</span></div>
-      ${caps}
-    </div>
-    <div>
-      <div class="sec-h"><h2>${escapeHtml(L.edu)}</h2><span class="k">${escapeHtml(L.eduK)}</span></div>
-      ${edu}
-    </div>
+  <section class="sec">
+    <div class="sec-h"><h2>${escapeHtml(L.edu)}</h2><span class="k">${escapeHtml(L.eduK)}</span></div>
+    ${edu}
   </section>
 
   <div class="foot"><span>${escapeHtml(id.name)} — ${escapeHtml(t(lang, "Senior Product Designer", "Diseñador de Producto Senior"))}</span><span>${escapeHtml(c.site ?? "danilorojas.design")}</span></div>
