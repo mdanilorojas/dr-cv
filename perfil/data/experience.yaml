@@ -5,28 +5,28 @@ current:
     endYear: present
     highlight: true
     badge: "Army · DoD · VA · FAA"
-    descriptionEn: "Lead product designer for federal systems under the Trusted Environments umbrella. Spearheaded accessibility-audited design systems (/te-skin and TE Black) mapped to strict compliance standards (Section 508 / WCAG 2.1). Pioneered AI-augmented user testing: built user persona emulators to run automated moderated and unmoderated usability tests, using AI-simulated archetypes to evaluate user journeys, map psychological friction, and refine workflows before shipping."
-    descriptionEs: "Diseñador de producto principal para sistemas federales bajo el programa Trusted Environments. Lideré design systems auditados en accesibilidad (/te-skin y TE Black) bajo estándares de cumplimiento de la Sección 508 y WCAG 2.1. Fui pionero en pruebas de usuario con IA: creé emuladores de personas/arquetipos para automatizar pruebas de usabilidad moderadas y no moderadas, evaluando fricción cognitiva y refinando flujos de pantalla antes de producción."
-    stack: ["User research", "Design systems", "Agentic UX testing", "Accessibility (508)", "Persona emulation", "DoD · FAA · VA"]
+    descriptionEn: "Lead product designer for federal systems under the Trusted Environments umbrella, architecting two design systems (Shadcn, Radix, BAH Brand Book) compliant with WCAG 2.2 and Section 508 — passing 95%+ of automated accessibility checks. Pioneered agentic UX research: built LLM-based persona emulators to run moderated usability testing (5 users per feature), with 92% rating the resulting improvements better. Designed a custom MCP for developers; the design system scaled from 0 to 26 internal teams at Booz Allen Hamilton, including the Vellox Reverser cybersecurity product."
+    descriptionEs: "Diseñador de producto principal para sistemas federales bajo el programa Trusted Environments, construyendo dos design systems (Shadcn, Radix, BAH Brand Book) conformes con WCAG 2.2 y Sección 508 — superando el 95% de checks automatizados de accesibilidad. Fui pionero en investigación de UX agéntica: construí emuladores de personas basados en LLM para correr pruebas de usabilidad moderadas (5 usuarios por feature), con 92% de aprobación sobre las mejoras resultantes. Diseñé un MCP propio para developers; el design system escaló de 0 a 26 equipos internos en Booz Allen Hamilton, incluyendo el producto de ciberseguridad Vellox Reverser."
+    stack: ["User research", "Design systems", "Agentic UX testing", "WCAG 2.2 / Section 508", "Custom MCP", "DoD · FAA · VA"]
 
   - company: "Compliance SaaS · LATAM"
     role: "Co-founder & Lead Product Designer"
     startYear: 2026
     endYear: present
     highlight: true
-    badge: "paying pilots"
-    descriptionEn: "Co-founded a compliance SaaS for LATAM SMBs, designing the complete MVP in 40 days. Directed product discovery: defined user archetypes using psychological patterns, mapped complex regulatory workflows into self-serve flows, and designed 31 production UI components. Automated usability feedback loops using AI-simulated personas to validate onboarding funnels before engineering kickoff."
-    descriptionEs: "Co-fundador y líder de diseño de un SaaS de cumplimiento para PYMES LATAM. Diseñé el MVP completo en 40 días dirigiendo el discovery de producto: definí arquetipos de usuario usando psicología conductual, mapeé flujos regulatorios y diseñé 31 componentes UI. Automaticé pruebas de usabilidad con IA para validar flujos de pantalla antes del desarrollo."
-    stack: ["Product discovery", "UX/UI design", "User archetypes", "Figma", "React 19", "Supabase"]
+    badge: "280+ paying users"
+    descriptionEn: "Co-founded a compliance SaaS for LATAM SMBs, leading discovery-to-launch design and shipping a validated MVP in 40 days. Designed a 31-component Figma design system, used across 16 screens and implemented directly in React/TypeScript. Ran AI-persona feedback loops to validate onboarding flows pre-engineering, growing the product to ~280 paying customers on a base of ~2,700 total users."
+    descriptionEs: "Co-fundé un SaaS de cumplimiento para PYMES LATAM, liderando el diseño de discovery a lanzamiento y validando el MVP en 40 días. Diseñé un design system de 31 componentes en Figma, usado en 16 pantallas e implementado directamente en React/TypeScript. Corrí loops de feedback con personas IA para validar los flujos de onboarding antes de ingeniería, creciendo el producto a ~280 clientes pagando sobre una base de ~2,700 usuarios totales."
+    stack: ["Product discovery", "Design systems", "Figma", "React 19", "TypeScript", "Supabase"]
 
 past:
   - company: "Xentinels DesignOps"
     role: "Design Director / Product Manager"
     startYear: 2016
     endYear: 2022
-    descriptionEn: "Led the DesignOps unit within Central Design, scaling a distributed Design System for Fortune 500 clients. Directed extensive user research (n>100 interviews, usability testing, and card sorting) to establish UI patterns, design tokens, and accessibility rubrics. This centralized system reduced time-to-market for new client products by 35% across Merck, Mondelēz, and Pichincha Bank."
-    descriptionEs: "Lideré la unidad de DesignOps en Central Design, escalando un Design System distribuido para clientes de Fortune 500. Dirigí investigación con usuarios (n>100 entrevistas, pruebas de usabilidad y card sorting) para establecer patrones de UI, tokens y rúbricas de accesibilidad. Reduje el time-to-market de clientes en un 35% en Merck, Mondelēz y Banco Pichincha."
-    stack: ["User research", "Design systems", "Cognitive walkthroughs", "Figma", "Tokens"]
+    descriptionEn: "Directed the DesignOps unit, scaling distributed, multi-theme design systems (Ant Design, Material UI, IBM Carbon, and a custom Shadcn-based system for Banco Pichincha) across Fortune 500 clients (Merck, Mondelēz, Banco Pichincha). Led qualitative research (100+ interviews, usability testing, card sorting) to define enterprise interaction patterns, and mentored ~12 junior/mid designers. Streamlined design-to-engineering handoff, cutting time-to-market 35%."
+    descriptionEs: "Dirigí la unidad de DesignOps, escalando design systems multi-tema distribuidos (Ant Design, Material UI, IBM Carbon, y un sistema propio basado en Shadcn para Banco Pichincha) en clientes Fortune 500 (Merck, Mondelēz, Banco Pichincha). Lideré investigación cualitativa (100+ entrevistas, pruebas de usabilidad, card sorting) para definir patrones de interacción enterprise, y mentoricé a ~12 diseñadores junior/mid. Optimicé el handoff de diseño a ingeniería, reduciendo el time-to-market en 35%."
+    stack: ["User research", "Design systems", "Ant Design", "Material UI", "IBM Carbon", "Shadcn"]
 
   - company: "Arpatel Cia. Ltda."
     role: "Co-Founder · Product Manager"

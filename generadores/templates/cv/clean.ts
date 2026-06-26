@@ -9,20 +9,20 @@ const ROWS: Row[] = [
   { years: "2022—NOW", co: "Booz Allen Hamilton", badge: "Army · DoD · VA · FAA",
     role: { en: "Senior Product Designer (Design-Engineering)", es: "Diseñador de Producto Principal (Design-Engineering)" },
     desc: {
-      en: "Led end-to-end UX/UI, user flows, and interaction models for the federal Trusted Environments platform and Developer Portal. Designed and architected two parallel WCAG 2.1 AAA accessibility-compliant design systems (/te-skin and TE Black), documenting strict usability rules and component anti-patterns. Pioneered agentic UX research: developed custom LLM-based user persona emulators to run automated usability tests, mapping cognitive friction and user journeys before development. Consulted cross-team Army/DoD product managers and engineers on secure UI pipelines, bridging design intent with production code.",
-      es: "Lideré el UX/UI, flujos de usuario y modelos de interacción para la plataforma federal de Trusted Environments y el Developer Portal. Diseñé y automaticé la arquitectura de dos design systems paralelos con conformidad WCAG 2.1 AAA (/te-skin y TE Black), definiendo reglas de usabilidad y patrones de accesibilidad. Fui pionero en investigación de UX agéntica: creé emuladores de personas de usuario basados en IA para automatizar pruebas de usabilidad y detectar fricción cognitiva antes del desarrollo. Consultoría transversal a PMs y desarrolladores de proyectos Army/DoD para asegurar la fidelidad del diseño y el cumplimiento de la Sección 508."
+      en: "Lead product designer for the federal Trusted Environments platform and Developer Portal, architecting two design systems (Shadcn, Radix, BAH Brand Book) compliant with WCAG 2.2 and Section 508 — passing 95%+ of automated accessibility checks. Pioneered agentic UX research: built LLM-based persona emulators to run moderated usability testing (5 users per feature), with 92% rating the resulting improvements better. Designed a custom MCP for developers; design system scaled from 0 to 26 internal teams at Booz Allen Hamilton, including the Vellox Reverser cybersecurity product.",
+      es: "Diseñador de producto principal para la plataforma federal Trusted Environments y el Developer Portal, construyendo dos design systems (Shadcn, Radix, BAH Brand Book) conformes con WCAG 2.2 y Sección 508 — superando el 95% de checks automatizados de accesibilidad. Fui pionero en investigación de UX agéntica: construí emuladores de personas basados en LLM para correr pruebas de usabilidad moderadas (5 usuarios por feature), con 92% de aprobación sobre las mejoras resultantes. Diseñé un MCP propio para developers; el design system escaló de 0 a 26 equipos internos en Booz Allen Hamilton, incluyendo el producto de ciberseguridad Vellox Reverser."
     } },
-  { years: "2026—NOW", co: "Compliance SaaS · LATAM", badge: "paying pilots",
+  { years: "2026—NOW", co: "Compliance SaaS · LATAM", badge: "280+ paying users",
     role: { en: "Co-founder & Lead Product Designer", es: "Co-fundador y Líder de Diseño de Producto" },
     desc: {
-      en: "Co-founded and led product design from discovery to launch, translating complex regulatory requirements into a simple, self-serve SMB compliance tool. Conducted user interviews, mapped cognitive patterns, and designed the onboarding and core dashboard flows, shipping a validated MVP in 40 days. Designed a modular 31-component UI system in Figma and implemented it directly in React/TypeScript, ensuring 100% layout fidelity. Built agentic feedback loops to simulate user pathways, optimizing conversion funnels and reducing activation drop-offs.",
-      es: "Co-fundador y líder de diseño de producto: traduje regulaciones complejas en flujos intuitivos de autoservicio para PYMES. Realicé entrevistas a usuarios, mapeé patrones conductuales y diseñé la experiencia de onboarding y dashboard, lanzando un MVP validado en 40 días. Diseñé un sistema modular de 31 componentes UI en Figma e implementé el código de producción en React/TypeScript para garantizar fidelidad del 100%. Integré simulaciones agénticas de usabilidad para optimizar el embudo de conversión y reducir abandonos."
+      en: "Co-founded a compliance SaaS for LATAM SMBs, leading discovery-to-launch design and shipping a validated MVP in 40 days. Designed a 31-component Figma design system, used across 16 screens and implemented directly in React/TypeScript. Ran AI-persona feedback loops to validate onboarding flows pre-engineering, growing the product to ~280 paying customers on a base of ~2,700 total users.",
+      es: "Co-fundé un SaaS de cumplimiento para PYMES LATAM, liderando el diseño de discovery a lanzamiento y validando el MVP en 40 días. Diseñé un design system de 31 componentes en Figma, usado en 16 pantallas e implementado directamente en React/TypeScript. Corrí loops de feedback con personas IA para validar los flujos de onboarding antes de ingeniería, creciendo el producto a ~280 clientes pagando sobre una base de ~2,700 usuarios totales."
     } },
   { years: "2016—2022", co: "Xentinels DesignOps",
     role: { en: "Design Director / Product Manager", es: "Director de Diseño / Product Manager" },
     desc: {
-      en: "Directed the DesignOps unit, scaling distributed, multi-theme design systems and token libraries for Fortune 500 enterprise clients (Merck, Mondelēz, Banco Pichincha). Led qualitative user research (n>100 interviews, usability testing, and card sorting) to establish standard enterprise interaction patterns. Streamlined design-to-engineering handoff workflows, reducing product time-to-market by 35% and establishing a single source of UI truth.",
-      es: "Dirigí la unidad de DesignOps, escalando design systems y librerías de tokens multi-tema distribuidos para clientes Fortune 500 (Merck, Mondelēz, Banco Pichincha). Lideré investigación cualitativa (n>100 entrevistas, pruebas de usabilidad y card sorting) para estandarizar patrones de interacción corporativos. Optimicé los flujos de handoff de diseño a ingeniería, reduciendo el time-to-market en un 35% y centralizando la gobernanza de UI."
+      en: "Directed the DesignOps unit, scaling distributed, multi-theme design systems (Ant Design, Material UI, IBM Carbon, and a custom Shadcn-based system for Banco Pichincha) across Fortune 500 clients (Merck, Mondelēz, Banco Pichincha). Led qualitative research (100+ interviews, usability testing, card sorting) to define enterprise interaction patterns, and mentored ~12 junior/mid designers. Streamlined design-to-engineering handoff, cutting time-to-market 35%.",
+      es: "Dirigí la unidad de DesignOps, escalando design systems multi-tema distribuidos (Ant Design, Material UI, IBM Carbon, y un sistema propio basado en Shadcn para Banco Pichincha) en clientes Fortune 500 (Merck, Mondelēz, Banco Pichincha). Lideré investigación cualitativa (100+ entrevistas, pruebas de usabilidad, card sorting) para definir patrones de interacción enterprise, y mentoricé a ~12 diseñadores junior/mid. Optimicé el handoff de diseño a ingeniería, reduciendo el time-to-market en 35%."
     } },
   { years: "2011—17", co: "Arpatel · Tecniequipos · Canadian Bank Note",
     role: { en: "Co-founder / Senior Designer-Dev / Project Admin", es: "Co-fundador / Diseñador Visual-Dev / Administrador de Proyectos" },
@@ -34,10 +34,10 @@ const ROWS: Row[] = [
 
 interface Cap { label: { en: string; es: string }; detail: { en: string; es: string }; }
 const CAPS: Cap[] = [
-  { label: { en: "Product & UX", es: "Producto y UX" }, detail: { en: "Research · Interaction · Cognitive · Testing", es: "Investigación UX · Interacción · Cognición · Pruebas" } },
-  { label: { en: "Design Systems", es: "Design Systems" }, detail: { en: "Tokens · Figma Libraries · Component Architecture", es: "Tokens · Figma Libraries · Arquitectura de Componentes" } },
-  { label: { en: "Design Engineering", es: "Design Engineering" }, detail: { en: "TypeScript · React 19 · Next.js · Prototyping", es: "TypeScript · React 19 · Next.js · Prototipado" } },
-  { label: { en: "Agentic UX / AI", es: "UX Agéntica / IA" }, detail: { en: "Usability Testing · Persona Emulation · LLM UI", es: "Pruebas Agénticas · Emulación de Personas · UI con LLM" } },
+  { label: { en: "Product & UX", es: "Producto y UX" }, detail: { en: "User Research · Usability Testing · Journey Mapping · NPS/CSAT", es: "Investigación UX · Pruebas de Usabilidad · Journey Mapping · NPS/CSAT" } },
+  { label: { en: "Design Systems", es: "Design Systems" }, detail: { en: "Figma · Shadcn · Radix · Storybook · WCAG 2.2 / Section 508", es: "Figma · Shadcn · Radix · Storybook · WCAG 2.2 / Sección 508" } },
+  { label: { en: "Design Engineering", es: "Design Engineering" }, detail: { en: "TypeScript · React 19 · Prototyping · Supabase", es: "TypeScript · React 19 · Prototipado · Supabase" } },
+  { label: { en: "Agentic UX / AI", es: "UX Agéntica / IA" }, detail: { en: "Agent-ready Design Systems · LLM Persona Emulation · Custom MCP Design", es: "Design Systems Agénticos · Emulación de Personas LLM · MCP a Medida" } },
 ];
 
 const STYLES = `
@@ -58,6 +58,7 @@ body{ font-family:Inter,system-ui,sans-serif; color:var(--body); }
 .contact{ text-align:right; font-family:var(--mono); font-size:9.5px; letter-spacing:.06em; color:var(--dim); line-height:1.9; }
 .contact b{ color:var(--ink); font-weight:500; }
 .rule{ height:1px; background:var(--line); margin:24px 0; position:relative; z-index:1; }
+.kicker{ font-family:var(--mono); font-size:8.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); margin-bottom:8px; position:relative; z-index:1; }
 .lead{ font-size:18px; line-height:1.4; font-weight:300; letter-spacing:-.01em; color:var(--ink); max-width:60ch; position:relative; z-index:1; }
 .lead .em{ font-weight:500; }
 .lead .muted{ color:var(--dim); }
@@ -105,8 +106,8 @@ export function renderCleanCv(data: CvData, lang: Lang): string {
     .join("");
 
   const L = lang === "en"
-    ? { exp: "Experience", expK: "EXP // selected", cap: "Capabilities", capK: "CAP // mastered", edu: "Education", eduK: "EDU", lead2: "Eighteen years in product, fifteen in design. Senior UX judgment, user psychology mapping, and the system design capability to align complex product architectures into frictionless user experiences — AI-augmented research as leverage." }
-    : { exp: "Experiencia", expK: "EXP // selección", cap: "Capacidades", capK: "CAP // dominadas", edu: "Educación", eduK: "EDU", lead2: "Dieciocho años en producto, quince en diseño. Juicio UX senior, mapeo de psicología del usuario y capacidad de diseño de sistemas para alinear arquitecturas de producto complejas en experiencias sin fricción — investigación con IA como leverage." };
+    ? { sum: "Summary", exp: "Experience", expK: "EXP // selected", cap: "Skills", capK: "SKILLS // mastered", edu: "Education", eduK: "EDU", lead2: "Eighteen years in product, fifteen in design. Senior UX judgment, user psychology mapping, and the system design capability to align complex product architectures into frictionless user experiences — AI-augmented research as leverage." }
+    : { sum: "Resumen", exp: "Experiencia", expK: "EXP // selección", cap: "Habilidades", capK: "SKILLS // dominadas", edu: "Educación", eduK: "EDU", lead2: "Dieciocho años en producto, quince en diseño. Juicio UX senior, mapeo de psicología del usuario y capacidad de diseño de sistemas para alinear arquitecturas de producto complejas en experiencias sin fricción — investigación con IA como leverage." };
 
   const leadHead = t(lang, "I design software products for", "Diseño productos de software para");
   const leadEm = t(lang, "complex, regulated environments.", "entornos complejos y regulados.");
@@ -135,6 +136,7 @@ export function renderCleanCv(data: CvData, lang: Lang): string {
     </div>
   </div>
   <div class="rule"></div>
+  <div class="kicker">${escapeHtml(L.sum)}</div>
   <div class="lead">${escapeHtml(leadHead)} <span class="em">${escapeHtml(leadEm)}</span> <span class="muted">${escapeHtml(L.lead2)}</span></div>
 
   <section class="sec">
