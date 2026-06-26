@@ -1,0 +1,93 @@
+# Fact Bank — fuente de verdad de hechos reales de Danilo Rojas
+#
+# PROPOSITO: banco de evidencia cruda (metricas, scope, metodos, tools) verificable.
+# El generador de CV COTEJA estos hechos contra lo que pide la investigacion ATS
+# (career-training / Notion "ATS Research") y selecciona + parafrasea los que matchean
+# el rol target. NUNCA se inventan datos fuera de este archivo.
+#
+# Cada hecho: claim verificable + contexto. Si un numero es estimado, se marca.
+# Actualizar aqui cuando haya datos nuevos; el CV se regenera desde aqui.
+
+meta:
+  owner: "Danilo Rojas"
+  updated: "2026-06-26"
+  rule: "El CV solo puede afirmar lo que existe en este fact-bank. Estimados marcados como tales."
+
+title:
+  # Decision: titulo dominante 2026, mas buscado por reclutadores (ATS research).
+  primary: "Senior Product Designer"
+  also_qualified: ["UX", "UI", "Agentic / AI Product Design", "Design Engineering", "Business Analysis", "Workflows"]
+  note: "Adaptar el titulo al JD exacto al generar. No combinar UX/UI/Product juntos en el headline."
+
+roles:
+  booz_allen_hamilton:
+    company: "Booz Allen Hamilton"
+    role: "Senior Product Designer (Design-Engineering)"
+    period: "2022-present"
+    program: "Federal Trusted Environments platform + Developer Portal"
+    clients_domain: ["Army", "DoD", "FAA", "VA"]
+    facts:
+      - "Construyo 2 design systems sobre Shadcn + Radix + BAH Brand Book."
+      - "Trusted Environments arranco Light-only; usuarios prefirieron Dark -> migro a full Dark."
+      - "Diseno agent-ready design system (dark): agentes de OTROS equipos lo leen/interpretan para generar assets (social stories, presentaciones PowerPoint) autonomamente. Hecho ANTES de que existiera tooling de cloud design mainstream."
+      - "Pionero en agentic UX research: emuladores de persona basados en LLM corrian tests de usabilidad automatizados."
+      - "Costo por corrida de persona-emulators: ~$400 en tokens = ~16M tokens/ciclo ($25 = 1M tokens). Cada corrida ~4-5h. Cientos de tests por screenshot."
+      - "Output = items accionables. Validacion: pruebas moderadas con 5 usuarios por feature; 92% declararon que las mejoras eran mejores."
+      - "Entregaba codigo casi listo (React + animaciones viables, componentes reales de la libreria, pantallas generadas); ingenieria solo conectaba a datos."
+      - "Reduccion ciclo design-to-dev: de ~6 semanas (Figma 2-3 sem + implementar 1x1 ~1 mes, 3-4 dias/componente) a <1 semana (casi automatico)."
+      - "Adopcion interna: de 0 (dia cero) a 26 equipos dentro de BAH (uso opcional -> adopcion organica). Incluye Vellox Reverser (ciberseguridad): https://www.boozallen.com/expertise/products/vellox-reverser.html"
+      - "Compliant con WCAG 2.2 checks. Paso 95%+ de checks automatizados (numero alto creible; dato exacto disponible si lo piden)."
+      - "Producto base para que los proyectos de BAH (empresa de ~30,000 ingenieros) arranquen desde un baseline compartido en vez de cero."
+      - "Clientes externos pidieron comprar el producto; plan de salida externa."
+      - "Equipo: ~50 personas al inicio -> 19 tras recortes. Consulto con >=50% en cada paso, casi todos al final."
+      - "Diseno un MCP propio para developers."
+      - "Implemento NPS y CSAT para evaluacion con usuarios."
+      - "Tras testing IA: tickets de problemas bajaron; tickets de feedback/ideas en Aha! subieron (mas engagement por releases mas rapidos)."
+    methods: ["Usability Testing (moderado/no moderado)", "Persona emulation (LLM)", "Journey mapping", "Cognitive friction mapping"]
+    accessibility: ["WCAG 2.2", "Section 508"]
+
+  compliance_saas_latam:
+    company: "Compliance SaaS · LATAM"
+    role: "Co-founder & Lead Product Designer"
+    period: "2026-present"
+    facts:
+      - "Co-fundo SaaS de compliance para PYMES LATAM. Lidero diseno discovery-to-launch."
+      - "MVP validado en 40 dias."
+      - "Onboarding inicial roto (producto nuevo) -> ~0 conversiones. Tras pruebas + change management + fixes, funnel funcional en 3 semanas (volumen acumulado: sem1 20%, sem2 ~30%, sem3 ~50% del total). NO afirmar como tasa de conversion estable."
+      - "Design system de 31 componentes en Figma, usado en 16 pantallas. Algunos pre-construidos para cumplimiento de auditoria IL5 / FedRAMP. [CONFIRMAR: IL5/FedRAMP son frameworks US federales; verificar que aplican a este SaaS LATAM.]"
+      - "Implementado directo en React/TypeScript."
+      - "~280 usuarios pagando sobre base de ~2,700 usuarios totales."
+      - "Loops de feedback con personas IA para validar flujos antes de ingenieria."
+    stack: ["Figma", "React 19", "TypeScript", "Supabase"]
+
+  xentinels:
+    company: "Xentinels DesignOps"
+    role: "Design Director / Product Manager"
+    period: "2016-2022"
+    clients: ["Merck", "Mondelez", "Banco Pichincha"]
+    facts:
+      - "Dirigio la unidad DesignOps; escalo design systems distribuidos multi-theme y token libraries para clientes Fortune 500."
+      - "Bases de design system: Ant Design, Material UI, IBM Carbon (customizados por cliente)."
+      - "Banco Pichincha: design system propio basado en Shadcn."
+      - "Research cualitativo: 100+ entrevistas, usability testing, card sorting -> patrones de interaccion enterprise estandar."
+      - "Mentoreo ~12 disenadores junior/mid."
+      - "Redujo time-to-market de productos de cliente 35% via handoff design-to-eng optimizado."
+
+  earlier:
+    period: "2011-2017"
+    companies: ["Arpatel (co-founder, Product Manager)", "Tecniequipos (Senior Visual Designer/Dev)", "Canadian Bank Note (Project Administrator)"]
+    facts:
+      - "Fundacion en product design via roles de ingenieria y product management: flujos de Retail POS y CRM, ventures co-fundados, admin de proyectos tecnicos regionales."
+
+skills:
+  product_ux: ["User Research", "Usability Testing", "Diary Studies", "Contextual Inquiry", "Tree Testing", "First-Click Testing", "Journey Mapping", "NPS", "CSAT"]
+  design_systems: ["Design Tokens", "Figma Libraries", "Component Architecture", "Storybook", "Ant Design", "Material UI", "IBM Carbon", "Shadcn", "Radix", "WCAG 2.2", "Section 508"]
+  tools:
+    figma_advanced: ["Variables", "Auto Layout", "Dev Mode", "Motion", "Figma Make", "API connection", "MCP"]
+    other: ["Miro", "Storybook", "Jira", "Linear", "Vercel", "GitHub", "Cursor", "Claude Code", "Claude Design", "Codex", "Antigravity"]
+  agentic_ai: ["Agent-ready Design Systems", "LLM Persona Emulation", "Agentic UX Testing", "LLM UI", "Custom MCP design", "Prompt-driven design workflows"]
+
+education:
+  - "M.A. Interaction Design & UX — Universitat Oberta de Catalunya (UOC), 2015"
+  - "B.Sc. Computer Systems Engineering — Escuela Politecnica Nacional (EPN), 2015"
+  - "AI for Designers — Interaction Design Foundation (IxDF), 2025"
