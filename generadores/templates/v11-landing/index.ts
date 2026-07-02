@@ -202,8 +202,8 @@ const COPY = {
     eyebrowEs: "Sobre mí",
     titleEn: "A long way to the surface.",
     titleEs: "Un camino largo hasta la superficie.",
-    bioEn: "I started in databases and backend, moved to frontend, then to UI, then to UX — eighteen years in product, fifteen in design. The path means I design with the whole system in mind, not just the screen. At Booz Allen Hamilton I carried that into government and compliance work for the FAA, the DoD, and the VA, where the rigor of the documentation matters as much as the interface.",
-    bioEs: "Empecé en bases de datos y backend, pasé a frontend, luego a UI, luego a UX — dieciocho años en producto, quince en diseño. El camino significa que diseño pensando en todo el sistema, no solo en la pantalla. En Booz Allen Hamilton llevé eso a trabajo de gobierno y compliance para la FAA, el DoD y el VA, donde el rigor de la documentación importa tanto como la interfaz.",
+    bioEn: "I started in databases and backend, moved to frontend, then to UI, then to UX — eighteen years in product, fifteen in design. The path means I design with the whole system in mind, not just the screen. At Booz Allen Hamilton I carried that into government and compliance work for the FAA, the DoD, and the VA, where the rigor of the documentation matters as much as the interface. Today I lead the end-to-end design of a compliance SaaS for LATAM SMBs — ~280 paying customers, with new-user activation lifted from 2.6% to 9.4% by an onboarding rebuild I instrumented in Mixpanel and validated with an A/B test.",
+    bioEs: "Empecé en bases de datos y backend, pasé a frontend, luego a UI, luego a UX — dieciocho años en producto, quince en diseño. El camino significa que diseño pensando en todo el sistema, no solo en la pantalla. En Booz Allen Hamilton llevé eso a trabajo de gobierno y compliance para la FAA, el DoD y el VA, donde el rigor de la documentación importa tanto como la interfaz. Hoy lidero de punta a punta el diseño de un SaaS de compliance para PYMES LATAM — ~280 clientes de pago, con la activación de nuevos usuarios subiendo de 2.6% a 9.4% tras reconstruir el onboarding, instrumentado en Mixpanel y validado con un A/B test.",
     clientsLabelEn: "Clients",
     clientsLabelEs: "Clientes",
     educationLabelEn: "Education",
@@ -630,7 +630,8 @@ function renderAbout(data: LandingData, lang: Lang): string {
   const educationItems = data.education
     .map((e) => {
       const year = e.year !== null ? ` <span class="v11-about__edu-year">· ${escapeHtml(String(e.year))}</span>` : "";
-      return `<li class="v11-about__edu-item"><span class="v11-about__edu-name">${escapeHtml(e.name)}</span> <span class="v11-about__edu-inst">· ${escapeHtml(e.institution)}</span>${year}</li>`;
+      const status = e.inProgress ? ` <span class="v11-about__edu-year">· ${lang === "en" ? "in progress" : "en curso"}</span>` : "";
+      return `<li class="v11-about__edu-item"><span class="v11-about__edu-name">${escapeHtml(e.name)}</span> <span class="v11-about__edu-inst">· ${escapeHtml(e.institution)}</span>${year}${status}</li>`;
     })
     .join("\n      ");
 

@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { loadCvData } from "./lib/load-data.js";
 import { renderPdf } from "./lib/render-pdf.js";
 import { renderCleanCv } from "./templates/cv/clean.js";
+import { renderAtsCv } from "./templates/cv/ats.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, "..");
@@ -29,6 +30,10 @@ async function main() {
 
   await emit("cv-clean-en", renderCleanCv(data, "en"));
   await emit("cv-clean-es", renderCleanCv(data, "es"));
+
+  // Versión ATS fechada 2026-07-02: todos los [DATO: ...] resueltos contra fact-bank — enviable.
+  await emit("cv-ats-2026-07-02-en", renderAtsCv(data, "en"));
+  await emit("cv-ats-2026-07-02-es", renderAtsCv(data, "es"));
 
   console.log("[cv] done.");
 }

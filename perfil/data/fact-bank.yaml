@@ -10,7 +10,7 @@
 
 meta:
   owner: "Danilo Rojas"
-  updated: "2026-06-26"
+  updated: "2026-07-02"
   rule: "El CV solo puede afirmar lo que existe en este fact-bank. Estimados marcados como tales."
 
 title:
@@ -48,16 +48,23 @@ roles:
 
   compliance_saas_latam:
     company: "Compliance SaaS · LATAM"
-    role: "Co-founder & Lead Product Designer"
+    # Hecho real: es co-fundador. REGLA CV (Danilo 2026-07-02): eliminar todo rastro de
+    # "co-founder" en material publico — a las empresas no les gusta. Presentar siempre
+    # como "Lead Product Designer". Aplica tambien a Arpatel (ver earlier_experience).
+    role: "Lead Product Designer"
     period: "2026-present"
     facts:
-      - "Co-fundo SaaS de compliance para PYMES LATAM. Lidero diseno discovery-to-launch."
+      - "Co-fundo SaaS de compliance para PYMES LATAM (hecho real, NO publicable como co-founder). Lidero diseno discovery-to-launch."
       - "MVP validado en 40 dias."
       - "Onboarding inicial roto (producto nuevo) -> ~0 conversiones. Tras pruebas + change management + fixes, funnel funcional en 3 semanas (volumen acumulado: sem1 20%, sem2 ~30%, sem3 ~50% del total). NO afirmar como tasa de conversion estable."
       - "Design system de 31 componentes en Figma, usado en 16 pantallas. Algunos pre-construidos para cumplimiento de auditoria IL5 / FedRAMP. [CONFIRMAR: IL5/FedRAMP son frameworks US federales; verificar que aplican a este SaaS LATAM.]"
       - "Implementado directo en React/TypeScript."
       - "~280 usuarios pagando sobre base de ~2,700 usuarios totales."
       - "Loops de feedback con personas IA para validar flujos antes de ingenieria."
+      # Datos confirmados por Danilo 2026-07-02:
+      - "Instrumento analytics de producto end-to-end en Mixpanel y definio la metrica de activacion. Rediseno de onboarding subio activacion de nuevos usuarios de 2.6% a 9.4% en ~2.5 semanas. En CV: 'menos de 3 semanas' para cuadrar con el fact del funnel (3 semanas)."
+      - "A/B test sobre registro del onboarding: registro con email vs acceso con Google. Gano acceso con Google; mejoro la completion del onboarding en 74% (confirmado Danilo 2026-07-02)."
+      - "PROHIBIDO: 'entrevistas moderadas de usuarios sintetizadas' en este rol — no ocurrio (Danilo 2026-07-02)."
     stack: ["Figma", "React 19", "TypeScript", "Supabase"]
 
   xentinels:
@@ -75,9 +82,9 @@ roles:
 
   earlier:
     period: "2011-2017"
-    companies: ["Arpatel (co-founder, Product Manager)", "Tecniequipos (Senior Visual Designer/Dev)", "Canadian Bank Note (Project Administrator)"]
+    companies: ["Arpatel (co-founder real; presentar solo como Product Manager)", "Tecniequipos (Senior Visual Designer/Dev)", "Canadian Bank Note (Project Administrator)"]
     facts:
-      - "Fundacion en product design via roles de ingenieria y product management: flujos de Retail POS y CRM, ventures co-fundados, admin de proyectos tecnicos regionales."
+      - "Fundacion en product design via roles de ingenieria y product management: flujos de Retail POS y CRM, admin de proyectos tecnicos regionales. REGLA CV: sin mencion de co-founder/ventures co-fundados."
 
 skills:
   product_ux: ["User Research", "Usability Testing", "Diary Studies", "Contextual Inquiry", "Tree Testing", "First-Click Testing", "Journey Mapping", "NPS", "CSAT"]
@@ -86,8 +93,18 @@ skills:
     figma_advanced: ["Variables", "Auto Layout", "Dev Mode", "Motion", "Figma Make", "API connection", "MCP"]
     other: ["Miro", "Storybook", "Jira", "Linear", "Vercel", "GitHub", "Cursor", "Claude Code", "Claude Design", "Codex", "Antigravity"]
   agentic_ai: ["Agent-ready Design Systems", "LLM Persona Emulation", "Agentic UX Testing", "LLM UI", "Custom MCP design", "Prompt-driven design workflows"]
+  # Evidencia real: EnRegla 2026 (ver roles.compliance_saas_latam).
+  product_analytics: ["Mixpanel", "Activation Metrics", "A/B Testing", "Funnel Analysis"]
+  learning_in_progress:
+    # 2026-07-02: Danilo confirma que se capacita a diario en estos temas; aun NO listos
+    # para claim pleno. En el CV solo pueden aparecer marcados como "en formacion".
+    # Mixpanel, A/B Testing y Funnel Analysis salieron de esta lista: evidencia real en EnRegla.
+    product_analytics: ["Jobs-to-be-Done (JTBD)", "North Star Metric", "PostHog", "Dovetail", "Maze"]
 
 education:
-  - "M.A. Interaction Design & UX — Universitat Oberta de Catalunya (UOC), 2015"
+  # 2026-07-02: Danilo confirma que el M.A. y el CPACC estan EN CURSO, no finalizados.
+  # En el CV van marcados "in progress / en curso"; nunca con fecha de obtencion.
+  - "M.A. Interaction Design & UX — Universitat Oberta de Catalunya (UOC) — EN CURSO 2026"
+  - "CPACC (Certified Professional in Accessibility Core Competencies) — IAAP — EN CURSO 2026"
   - "B.Sc. Computer Systems Engineering — Escuela Politecnica Nacional (EPN), 2015"
   - "AI for Designers — Interaction Design Foundation (IxDF), 2025"

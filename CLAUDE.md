@@ -38,6 +38,7 @@ Estas rutas son publicas por decision explicita, pero no deben aparecer como bot
 | `danilorojas.design/daily` | `carrera/daily/index.html` | `dist/landing-v11/daily/index.html` |
 | `danilorojas.design/plan` | `carrera/plan/index.html` | `dist/landing-v11/plan/index.html` |
 | `danilorojas.design/inspiration` | `publicables/inspiration/index.html` | `dist/landing-v11/inspiration/index.html` |
+| `danilorojas.design/interview` | `carrera/interview/index.html` | `dist/landing-v11/interview/index.html` |
 
 Regla: editar siempre la fuente real, nunca `dist/`. `npm run build:landing-v11` copia estas herramientas a `dist/landing-v11/`.
 

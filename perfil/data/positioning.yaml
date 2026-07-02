@@ -16,21 +16,22 @@ heroSub:
 trustStrip:
   en: ["FAA", "DoD", "VA", "Booz Allen Hamilton", "Pichincha Bank", "Rappi", "Juan Valdez"]
   es: ["FAA", "DoD", "VA", "Booz Allen Hamilton", "Banco Pichincha", "Rappi", "Juan Valdez"]
+# Fuente de verdad: perfil/data/fact-bank.yaml + CV cv-ats-2026-07-02.
 proofNumbers:
   - value: "18"
     unit: "+"
     labelEn: "Years building products"
     labelEs: "Años construyendo productos"
-  - value: "15"
-    labelEn: "Years in design"
-    labelEs: "Años en diseño"
-  - value: "4"
-    labelEn: "Years supporting FAA, DoD & VA programs"
-    labelEs: "Años apoyando programas FAA, DoD y VA"
-  - value: "50"
-    unit: "+"
-    labelEn: "Product initiatives delivered"
-    labelEs: "Iniciativas de producto entregadas"
+  - value: "26"
+    labelEn: "Teams adopted my design system at Booz Allen — from zero"
+    labelEs: "Equipos adoptaron mi design system en Booz Allen — desde cero"
+  - value: "6→1"
+    labelEn: "Design-to-development cycle, in weeks — production-ready React"
+    labelEs: "Ciclo design-to-development, en semanas — React listo para producción"
+  - value: "3.6"
+    unit: "×"
+    labelEn: "New-user activation after an onboarding rebuild (2.6% → 9.4%, Mixpanel)"
+    labelEs: "Activación de nuevos usuarios tras reconstruir el onboarding (2.6% → 9.4%, Mixpanel)"
 
 thesisBairesdev:
   en: "Senior Product Designer. 18 years shipping product — UX judgment, enterprise compliance documentation, AI as leverage."

@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prep de entrevista · PPM — Danilo Rojas</title>
+  <meta name="description" content="Guía de preparación para la entrevista de Product Designer en PPM (Digital Business Developers), Quito.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <style>
+    :root {
+      --bg: #0A0B0E; --panel: #14161C; --panel2: #1C1F27; --inset: #0D0F13;
+      --line: rgba(255,255,255,.08); --line-strong: rgba(255,255,255,.18);
+      --text: #F4F4F5; --body: #D7D8DB; --muted: #95979E; --soft: #797D86;
+      --accent: #FF8964; --accent-soft: rgba(255,137,100,.14); --accent-line: rgba(255,137,100,.28);
+      --blue: #5683DA; --blue-soft: rgba(86,131,218,.12); --green: #4ADE80; --green-soft: rgba(74,222,128,.12);
+      --yellow: #E5A84B; --yellow-soft: rgba(229,168,75,.12); --red: #F87171; --red-soft: rgba(248,113,113,.12);
+      --font-body: 'Inter', 'Helvetica Neue', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+      --radius-card: 12px; --radius: 8px;
+      --shadow-card: 0 6px 25px rgba(0,0,0,.50);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font: 15px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; }
+
+    nav { position: sticky; top: 0; z-index: 50; padding: 13px 24px; border-bottom: 1px solid var(--line); background: rgba(13,15,19,.86); backdrop-filter: blur(10px); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    nav a { font-family: var(--font-mono); font-size: 13px; color: var(--soft); text-decoration: none; }
+    nav a:hover { color: var(--text); }
+    nav .sep { color: var(--line-strong); }
+    nav .current { color: var(--muted); font-family: var(--font-mono); font-size: 13px; }
+    nav .right { margin-left: auto; display: flex; gap: 12px; }
+
+    header { background: #13151a; border-bottom: 1px solid var(--line); padding: 44px 24px 30px; }
+    header .inner, main { max-width: 1000px; margin: 0 auto; }
+    header .eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    header h1 { font-size: clamp(28px, 4.5vw, 46px); font-weight: 900; line-height: 1.04; letter-spacing: -0.025em; }
+    header h1 .dim { color: var(--soft); }
+    header .sub { color: var(--muted); margin-top: 14px; font-size: 15px; max-width: 720px; }
+    header .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    header .fact { font-family: var(--font-mono); font-size: 11.5px; color: var(--body); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 7px 12px; }
+    header .fact b { color: var(--accent); font-weight: 600; }
+
+    main { padding: 12px 18px 100px; }
+
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 30px 0 8px; }
+    .toc a { font-family: var(--font-mono); font-size: 12px; color: var(--muted); text-decoration: none; border: 1px solid var(--line); border-radius: var(--radius); padding: 6px 11px; transition: all .2s; }
+    .toc a:hover { color: var(--text); border-color: var(--accent-line); background: var(--accent-soft); }
+
+    .section-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--soft); margin: 54px 0 16px; padding-top: 8px; scroll-margin-top: 60px; }
+    .section-label .n { color: var(--accent); margin-right: 10px; }
+    .section-intro { color: var(--muted); margin: -6px 0 22px; max-width: 720px; }
+
+    h2 { font-size: 22px; font-weight: 700; letter-spacing: -.01em; margin: 0 0 4px; }
+    h3 { font-size: 16px; font-weight: 600; }
+    p { color: var(--muted); }
+    strong, b { color: var(--text); font-weight: 600; }
+    em { color: var(--body); font-style: italic; }
+    a.inline { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-line); }
+
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 22px 24px; margin: 14px 0; }
+
+    .pitch { background: linear-gradient(180deg, var(--panel2), var(--panel)); border: 1px solid var(--accent-line); border-radius: var(--radius-card); padding: 24px; margin: 16px 0; position: relative; }
+    .pitch .lang { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .pitch p { color: var(--body); font-size: 15.5px; line-height: 1.65; }
+    .pitch p + p { margin-top: 10px; }
+    .copy-btn { position: absolute; top: 18px; right: 18px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); background: var(--inset); border: 1px solid var(--line); border-radius: var(--radius); padding: 6px 10px; cursor: pointer; transition: all .2s; }
+    .copy-btn:hover { color: var(--text); border-color: var(--accent-line); }
+    .copy-btn.done { color: var(--green); border-color: var(--green); }
+
+    /* Q&A card */
+    .qa { border: 1px solid var(--line); border-radius: var(--radius-card); padding: 20px 22px; margin: 12px 0; background: var(--panel); }
+    .qa .qid { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .08em; }
+    .qa .q { font-size: 16.5px; font-weight: 600; color: var(--text); margin: 4px 0 12px; line-height: 1.4; }
+    .qa .want { font-size: 13px; color: var(--soft); font-style: italic; border-left: 2px solid var(--line-strong); padding-left: 12px; margin-bottom: 12px; }
+    .qa .a { color: var(--body); font-size: 14.5px; }
+    .qa .a p + p { margin-top: 8px; }
+    .qa .a ul { margin: 8px 0 0 20px; }
+    .qa .a li { color: var(--body); margin-bottom: 5px; }
+    .qa .tag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .04em; border-radius: 5px; padding: 3px 9px; margin: 12px 8px 0 0; }
+    .tag.metric { color: var(--green); background: var(--green-soft); border: 1px solid rgba(74,222,128,.3); }
+    .tag.trap { color: var(--yellow); background: var(--yellow-soft); border: 1px solid rgba(229,168,75,.3); }
+    .tag.ppm { color: var(--blue); background: var(--blue-soft); border: 1px solid rgba(86,131,218,.3); }
+
+    /* fit grid */
+    .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+    @media (max-width: 720px) { .fit-grid { grid-template-columns: 1fr; } }
+    .fit { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+    .fit .line { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+    .fit .you { color: var(--body); font-size: 14px; }
+    .fit .you b { color: var(--accent); }
+
+    /* STAR */
+    .star { border: 1px solid var(--line); border-radius: var(--radius-card); padding: 20px 22px; margin: 12px 0; background: var(--panel); }
+    .star .title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .star .use { font-family: var(--font-mono); font-size: 11px; color: var(--soft); margin-bottom: 14px; }
+    .star .beat { display: grid; grid-template-columns: 26px 1fr; gap: 12px; margin-bottom: 9px; align-items: start; }
+    .star .k { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--accent); padding-top: 2px; }
+    .star .v { color: var(--body); font-size: 14px; }
+    .star .v b { color: var(--text); }
+
+    /* decisions */
+    .decide { border: 1px solid var(--yellow-soft); border-left: 3px solid var(--yellow); background: linear-gradient(90deg, var(--yellow-soft), transparent 60%); border-radius: 0 var(--radius) var(--radius) 0; padding: 16px 20px; margin: 12px 0; }
+    .decide .d-q { font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .decide .d-help { color: var(--muted); font-size: 14px; }
+    .decide .d-help b { color: var(--yellow); }
+
+    /* checklist */
+    .check { list-style: none; margin: 10px 0; }
+    .check li { display: flex; gap: 12px; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--line); }
+    .check input { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; flex: none; }
+    .check label { color: var(--body); font-size: 14px; cursor: pointer; }
+    .check label b { color: var(--text); }
+
+    .askback { background: var(--inset); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px; margin: 10px 0; }
+    .askback .qq { color: var(--text); font-weight: 500; }
+    .askback .why { color: var(--soft); font-size: 13px; margin-top: 4px; }
+
+    footer { border-top: 1px solid var(--line); padding: 28px 24px; text-align: center; }
+    footer p { font-family: var(--font-mono); font-size: 11px; color: var(--soft); }
+
+    @media print {
+      nav, .copy-btn { display: none; }
+      body { background: #fff; color: #000; }
+      .panel, .qa, .star, .pitch, .fit, .decide { break-inside: avoid; border-color: #ccc; background: #fff; box-shadow: none; }
+      header { background: #fff; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/">danilorojas.design</a>
+    <span class="sep">/</span>
+    <span class="current">interview · ppm</span>
+    <span class="right">
+      <a href="#checklist">Checklist ↓</a>
+    </span>
+  </nav>
+
+  <header>
+    <div class="inner">
+      <div class="eyebrow">Prep de entrevista · confidencial</div>
+      <h1>PPM <span class="dim">— Product Designer.</span></h1>
+      <p class="sub">Guía de combate para la entrevista con PPM (Digital Business Developers, Quito). Preguntas probables, respuestas ancladas en hechos reales, banco de historias STAR y las decisiones que solo tú puedes cerrar antes del miércoles.</p>
+      <div class="facts">
+        <span class="fact"><b>Cuándo:</b> miércoles 8 de julio 2026</span>
+        <span class="fact"><b>Empresa:</b> PPM · ppm.com.ec</span>
+        <span class="fact"><b>Rol:</b> Product Designer</span>
+        <span class="fact"><b>Idioma:</b> español (clientes internacionales → EN útil)</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="toc">
+      <a href="#usar">00 · Cómo usar</a>
+      <a href="#ppm">01 · PPM en 60s</a>
+      <a href="#pitch">02 · Tu pitch</a>
+      <a href="#decidir">03 · Decisiones</a>
+      <a href="#preguntas">04 · Preguntas + respuestas</a>
+      <a href="#star">05 · Historias STAR</a>
+      <a href="#preguntales">06 · Qué preguntarles</a>
+      <a href="#checklist">07 · Checklist</a>
+    </div>
+
+    <!-- 00 -->
+    <div class="section-label" id="usar"><span class="n">00</span>Cómo usar esto</div>
+    <div class="panel">
+      <p>No memorices frases — memoriza <strong>hechos y números</strong>. Esta guía te da la munición; la conversación la armas tú en vivo. Tres reglas:</p>
+      <ul style="margin:12px 0 0 20px; color:var(--body);">
+        <li style="margin-bottom:6px;">Cada respuesta importante lleva <strong>un número real</strong>. Los números apagan el escepticismo más rápido que cualquier adjetivo.</li>
+        <li style="margin-bottom:6px;">Lee la línea <em>«Qué buscan»</em> de cada pregunta: te dice qué evalúan de verdad detrás de la pregunta literal.</li>
+        <li>Las tarjetas con <span class="tag trap" style="margin:0;">⚠ trampa</span> son preguntas donde es fácil hundirse. Prepáralas dos veces.</li>
+      </ul>
+    </div>
+
+    <!-- 01 -->
+    <div class="section-label" id="ppm"><span class="n">01</span>PPM en 60 segundos</div>
+    <p class="section-intro">Consultora de transformación digital en Quito. No hacen «diseño bonito» — hacen negocio digital para sus clientes. Tu trabajo en la entrevista es demostrar que traduces negocio ↔ tecnología ↔ experiencia, que es literalmente su tesis de tres pilares.</p>
+    <div class="panel">
+      <p style="color:var(--body);"><strong>Qué son:</strong> «Digital Business Developers». Buscan, exploran y crean conceptos, estrategias y productos digitales disruptivos para empresas que quieren transformarse. Modelo de consultora/agencia: sirven a múltiples clientes, orientados a <strong>objetivos de negocio</strong>, no a entregables sueltos.</p>
+      <p style="color:var(--body); margin-top:10px;"><strong>Sus 5 líneas de negocio</strong> — y dónde encajas en cada una:</p>
+    </div>
+    <div class="fit-grid">
+      <div class="fit">
+        <div class="line">Desarrollo (software/web)</div>
+        <div class="you">Diseñas <b>e implementas</b>: React 19 + TypeScript + Supabase. No entregas un Figma y te vas — llegas hasta código listo para el usuario. Raro en un diseñador.</div>
+      </div>
+      <div class="fit">
+        <div class="line">Estrategia digital & analítica · «Smarty»</div>
+        <div class="you">Instrumentaste <b>Mixpanel</b> end-to-end, definiste la métrica de activación y la subiste de <b>2.6% a 9.4%</b>. Hablas su idioma de datos.</div>
+      </div>
+      <div class="fit">
+        <div class="line">Automatización de marketing · «iCare»</div>
+        <div class="you">Corriste un <b>A/B test</b> sobre el onboarding (email vs. Google) que subió el completion <b>74%</b>. Experimentación con impacto medible.</div>
+      </div>
+      <div class="fit">
+        <div class="line">Loyalty (programas de fidelización)</div>
+        <div class="you">Base en CRM y retención: flujos de CRM en Arpatel, research cualitativo (100+ entrevistas) para entender por qué la gente vuelve — o no.</div>
+      </div>
+      <div class="fit">
+        <div class="line">Ecommerce</div>
+        <div class="you">Plataformas de e-commerce y POS retail desde tus años de ingeniería + diseño. Entiendes el funnel de compra de punta a punta.</div>
+      </div>
+      <div class="fit">
+        <div class="line">Su método de 3 pilares</div>
+        <div class="you"><b>Modelo de negocio · Tecnología · Experiencia del consumidor</b>. Tu arco DBA → frontend → UI → UX es exactamente esa intersección, vivida.</div>
+      </div>
+    </div>
+    <div class="panel">
+      <p><strong>Su filosofía declarada:</strong> «la innovación empieza por las personas». Conéctalo con tu profundidad en research (100+ entrevistas, usability testing, card sorting). <strong>Su gancho contigo:</strong> eres un diseñador que además programa, mide y piensa en negocio — un multiplicador para una consultora que factura por resolver problemas de negocio de clientes, no por pixeles.</p>
+    </div>
+
+    <!-- 02 -->
+    <div class="section-label" id="pitch"><span class="n">02</span>Tu pitch base — «Cuéntame de ti» (90 seg)</div>
+    <p class="section-intro">El ancla de toda la entrevista. Empieza por el arco (sistema completo), aterriza en un número de negocio, cierra apuntando a PPM. Todo verdad.</p>
+    <div class="pitch">
+      <button class="copy-btn" data-copy="pitch-es">Copiar</button>
+      <div class="lang">Español · versión hablada</div>
+      <div id="pitch-es">
+        <p>Llevo dieciocho años en producto, quince en diseño, y empecé al revés de casi todos: partí en bases de datos y backend, pasé a frontend, luego a UI y terminé en UX. Eso significa que diseño pensando en el sistema entero, no solo en la pantalla.</p>
+        <p>Hoy lidero el diseño de punta a punta de un SaaS de compliance para PYMES en LATAM — unos 280 clientes de pago. Ahí reconstruí un onboarding que estaba roto, lo instrumenté en Mixpanel y subí la activación de nuevos usuarios de 2.6% a 9.4%. Antes, en Booz Allen Hamilton, escalé un design system de cero a 26 equipos y bajé el ciclo de diseño a desarrollo de seis semanas a menos de una.</p>
+        <p>Lo que me trae a PPM es exactamente eso: ustedes hacen transformación digital orientada a negocio para sus clientes, y yo soy un diseñador que además programa, mide y traduce entre negocio y tecnología. Puedo llegar hasta código listo para el usuario, no solo hasta el Figma.</p>
+      </div>
+    </div>
+    <div class="pitch">
+      <button class="copy-btn" data-copy="pitch-en">Copiar</button>
+      <div class="lang">English · si el cliente/panel es internacional</div>
+      <div id="pitch-en">
+        <p>Eighteen years in product, fifteen in design — and I started backwards: databases and backend first, then frontend, then UI, then UX. So I design with the whole system in mind, not just the screen.</p>
+        <p>Today I lead end-to-end design for a compliance SaaS for LATAM SMBs — around 280 paying customers. I rebuilt a broken onboarding, instrumented it in Mixpanel, and lifted new-user activation from 2.6% to 9.4%. Before that, at Booz Allen Hamilton, I scaled a design system from zero to 26 teams and cut the design-to-development cycle from six weeks to under one.</p>
+        <p>What brings me to PPM is that overlap: you do business-driven digital transformation for clients, and I'm a designer who also codes, measures, and translates between business and technology — I can take work all the way to production-ready code, not just to the Figma.</p>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="section-label" id="decidir"><span class="n">03</span>Decisiones que debes cerrar ANTES del miércoles</div>
+    <p class="section-intro">Esto no lo puedo decidir por ti: son estratégicas y personales. Pero si llegas sin una respuesta clara, te van a agarrar en frío. Define cada una en una frase.</p>
+
+    <div class="decide">
+      <div class="d-q">1 · Disponibilidad: ¿sigues en Booz Allen y con EnRegla? ¿Qué le ofreces a PPM?</div>
+      <div class="d-help">Es lo primero que van a querer saber. ¿Buscas <b>full-time</b>, <b>part-time/contract</b>, o freelance por proyecto? ¿PPM sabe que tienes un SaaS propio? No lo escondas — pero enmárcalo como <b>ventaja</b> (visión de dueño de producto), no como distracción. Ten lista una frase honesta de disponibilidad real.</div>
+    </div>
+
+    <div class="decide">
+      <div class="d-q">2 · Salario: tu meta es USD 250k remoto global — PPM es una agencia local en Quito.</div>
+      <div class="d-help">Son dos ligas distintas. Decide qué es PPM para ti: ¿un ancla local, un puente, o un rol que da exposición a clientes internacionales (y por tanto mejor banda)? <b>Estrategia:</b> no des número primero — pregunta su rango. Si insisten, ancla alto justificando con tu impacto medible y tu fondo federal/enterprise. <b>Verifica</b> la banda senior local en Quito con tu red antes del miércoles (estimado a confirmar: rol senior de diseño en agencia suele moverse en un rango amplio en USD/mes según exposición a cliente internacional — no cites un número sin verificarlo).</div>
+    </div>
+
+    <div class="decide">
+      <div class="d-q">3 · ¿Por qué PPM? — la pregunta de motivación real.</div>
+      <div class="d-help">«Trabajas para Booz Allen, ¿por qué una agencia en Quito?» te la van a hacer. Necesitas una razón <b>verdadera y específica</b>: variedad de clientes, construir producto local, cercanía/zona horaria, o el tipo de reto. No digas «busco crecer» genérico. Elige tu razón real y hazla concreta.</div>
+    </div>
+
+    <div class="decide">
+      <div class="d-q">4 · Modalidad: ¿remoto, híbrido u on-site? Ellos están en Quito, tú también.</div>
+      <div class="d-help">Prepara tu preferencia y tu flexibilidad. Si te sirve la oficina (Guipúzcoa y Mallorca, Ed. QPH), dilo como algo positivo. Si necesitas remoto por EnRegla/otros compromisos, ten la justificación lista sin que suene a que no te vas a comprometer.</div>
+    </div>
+
+    <div class="decide">
+      <div class="d-q">5 · «Co-founder» en la conversación.</div>
+      <div class="d-help">En el CV EnRegla aparece como <b>«Lead Product Designer»</b> (a las empresas no les encanta contratar founders que parecen de salida). Pero si te preguntan <b>directo</b> si es tuyo, no mientas: es un venture que co-fundaste y donde lideras producto. Enmárcalo como <b>liderazgo de producto hands-on</b>, no como «tengo mi startup y busco algo mientras». Ensaya esa frase.</div>
+    </div>
+
+    <!-- 04 -->
+    <div class="section-label" id="preguntas"><span class="n">04</span>Preguntas probables + respuestas clave</div>
+    <p class="section-intro">Ocho bloques. Cada tarjeta: la pregunta, qué evalúan de verdad, y tu respuesta anclada en hechos. Los números en <strong>negrita</strong> son tus anclas — no los sueltes.</p>
+
+    <h3 style="color:var(--soft); font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; margin:28px 0 4px;">A · Trayectoria y encaje</h3>
+
+    <div class="qa">
+      <div class="qid">A1</div>
+      <div class="q">Cuéntame de ti / tu experiencia.</div>
+      <div class="want">Qué buscan: cómo estructuras una narrativa, si tienes foco, y si tu historia apunta a ellos.</div>
+      <div class="a"><p>Usa tu <a class="inline" href="#pitch">pitch base de 90 segundos</a>. Arco (sistema completo) → número de negocio (2.6%→9.4%) → puente a PPM. No recites cronología; cuenta una trayectoria con dirección.</p></div>
+      <span class="tag metric">Ancla: 18 años · 2.6%→9.4% · 0→26 equipos</span>
+    </div>
+
+    <div class="qa">
+      <div class="qid">A2</div>
+      <div class="q">¿Por qué PPM? ¿Por qué una agencia en Quito si vienes de Booz Allen?</div>
+      <div class="want">Qué buscan: motivación real y si te vas a quedar. Temen contratar a alguien sobrecalificado que se aburre y se va en seis meses.</div>
+      <div class="a">
+        <p>Ancla en la <a class="inline" href="#decidir">decisión #3</a> — tu razón real. Estructura sugerida:</p>
+        <ul>
+          <li>Qué te atrae de su modelo: <strong>variedad de clientes y problemas de negocio reales</strong>, no un solo producto interno.</li>
+          <li>Por qué encajas: eres diseñador que <strong>programa y mide</strong> — en una consultora eso multiplica lo que un cliente recibe por el mismo costo.</li>
+          <li>Qué te llevas y qué dejas: buscas <strong>impacto directo en producto de clientes</strong> y aportar tu rigor enterprise a un contexto más ágil.</li>
+        </ul>
+      </div>
+      <span class="tag trap">⚠ trampa: no digas «busco crecer» genérico</span>
+    </div>
+
+    <div class="qa">
+      <div class="qid">A3</div>
+      <div class="q">Veo que tienes tu propio SaaS y trabajas en Booz Allen. ¿Cuál es tu situación? ¿Tienes disponibilidad?</div>
+      <div class="want">Qué buscan: compromiso y conflicto de interés. ¿Vas a estar presente o repartido en tres frentes?</div>
+      <div class="a"><p>Respuesta directa según tu <a class="inline" href="#decidir">decisión #1</a>. Sé honesto sobre EnRegla y enmárcalo como ventaja: <strong>«tener un producto propio me hace pensar como dueño — priorizo por impacto de negocio, no por tareas»</strong>. Aterriza tu disponibilidad concreta para PPM en una frase clara. La honestidad temprana aquí te compra confianza para todo lo demás.</p></div>
+      <span class="tag trap">⚠ trampa: no escondas EnRegla — que no lo descubran después</span>
+    </div>
+
+    <h3 style="color:var(--soft); font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; margin:28px 0 4px;">B · Proceso de diseño</h3>
+
+    <div class="qa">
+      <div class="qid">B1</div>
+      <div class="q">Descríbeme tu proceso de diseño, de principio a fin.</div>
+      <div class="want">Qué buscan: madurez de proceso y si te adaptas al contexto o aplicas una receta rígida. En agencia el contexto cambia por cliente.</div>
+      <div class="a">
+        <p>No recites la doble diamante de memoria. Cuenta cómo trabajas <em>de verdad</em>:</p>
+        <ul>
+          <li><strong>Framing del problema primero:</strong> qué problema de negocio resuelve y para quién — disciplina de non-goals (qué NO vamos a hacer).</li>
+          <li><strong>Discovery:</strong> research cualitativo (has hecho 100+ entrevistas, usability testing, card sorting) + datos cuando existen.</li>
+          <li><strong>Diseño y validación:</strong> prototipos, usability testing con pocos usuarios por feature, y — tu diferencial — loops de feedback con personas de IA antes de tocar ingeniería.</li>
+          <li><strong>Entrega hasta donde llega:</strong> design system, flujos y a menudo código listo para producción. «Llevo el diseño hasta donde llega; ingeniería lo lleva más lejos».</li>
+          <li><strong>Medición:</strong> instrumentar y leer el resultado (Mixpanel, activación, funnel). El diseño no termina en el handoff, termina en el número.</li>
+        </ul>
+      </div>
+      <span class="tag ppm">PPM: enfatiza framing de negocio + medición — es su lenguaje</span>
+    </div>
+
+    <div class="qa">
+      <div class="qid">B2</div>
+      <div class="q">¿Cómo manejas un brief ambiguo o un cliente que no sabe lo que quiere?</div>
+      <div class="want">Qué buscan: en agencia esto es el 80% del trabajo. Quieren a alguien que ordene el caos, no que espere instrucciones.</div>
+      <div class="a"><p>Cuenta tu método: <strong>convertir ambigüedad en preguntas verificables</strong>. Empiezas por el problema de negocio y el usuario, no por la solución. Ejemplo real: el onboarding de EnRegla estaba «roto» sin más — lo convertiste en una métrica concreta (activación), lo instrumentaste, y ahí el problema se volvió medible y resoluble. <strong>«Un brief ambiguo es un problema de framing, no de diseño.»</strong></p></div>
+    </div>
+
+    <h3 style="color:var(--soft); font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; margin:28px 0 4px;">C · Impacto de negocio (su prioridad #1)</h3>
+
+    <div class="qa">
+      <div class="qid">C1</div>
+      <div class="q">Cuéntame de un proyecto donde tu diseño movió una métrica de negocio.</div>
+      <div class="want">Qué buscan: si piensas en resultados o en entregables. Para una consultora que factura por impacto, esto es lo que más pesa.</div>
+      <div class="a"><p>Historia STAR del <a class="inline" href="#star">onboarding de EnRegla</a>: activación <strong>2.6% → 9.4%</strong> tras reconstruir el funnel e instrumentarlo en Mixpanel, más el A/B test que subió el completion <strong>74%</strong>. Es tu historia estrella para PPM porque toca sus tres pilares: negocio (activación), tecnología (Mixpanel, A/B) y experiencia (onboarding).</p></div>
+      <span class="tag metric">Ancla: 2.6%→9.4% activación · +74% completion</span>
+    </div>
+
+    <div class="qa">
+      <div class="qid">C2</div>
+      <div class="q">¿Cómo mides el éxito de un diseño?</div>
+      <div class="want">Qué buscan: alfabetización en métricas. Muchos diseñadores solo hablan de estética; ellos quieren funnel, activación, retención.</div>
+      <div class="a"><p>Concreto: defines la <strong>métrica de activación</strong> (el momento en que el usuario obtiene valor real), instrumentas el funnel (<strong>Mixpanel</strong>), y validas con experimentación (<strong>A/B testing</strong>). Menciona NPS/CSAT como señales de satisfacción, pero deja claro que priorizas métricas de comportamiento sobre opinión. «El diseño termina en el número, no en el handoff.»</p></div>
+      <span class="tag ppm">PPM: conecta con «Smarty» (analítica) e «iCare» (automatización)</span>
+    </div>
+
+    <h3 style="color:var(--soft); font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; margin:28px 0 4px;">D · Colaboración, clientes y handoff</h3>
+
+    <div class="qa">
+      <div class="qid">D1</div>
+      <div class="q">¿Cómo trabajas con desarrolladores y con stakeholders de negocio?</div>
+      <div class="want">Qué buscan: en agencia eres la bisagra entre cliente, negocio y equipo técnico. Quieren un traductor, no un artista aislado.</div>
+      <div class="a"><p>Tu diferencial: <strong>hablas los dos idiomas</strong>. Vienes de backend/DBA, así que con devs discutes en su terreno; y piensas en métricas de negocio, así que con stakeholders hablas de impacto. En Booz Allen bajaste el ciclo diseño→desarrollo de <strong>6 semanas a menos de 1</strong> justamente optimizando ese handoff — entregando componentes React listos, no specs que ingeniería tiene que interpretar. Diseñaste incluso un <strong>servidor MCP propio para developers</strong>.</p></div>
+      <span class="tag metric">Ancla: ciclo 6 semanas → &lt;1 semana</span>
+    </div>
+
+    <div class="qa">
+      <div class="qid">D2</div>
+      <div class="q">Cuéntame de un conflicto con un stakeholder o cliente. ¿Cómo lo resolviste?</div>
+      <div class="want">Qué buscan: madurez, ego bajo control, capacidad de defender el usuario sin romper la relación.</div>
+      <div class="a"><p>Elige un caso real (Fortune 500 en Xentinels, o federal en BAH) donde hubo tensión entre lo que el cliente pedía y lo que el usuario necesitaba. Estructura: <strong>escuché el porqué del cliente → traje datos/research en vez de opinión → propuse una opción que servía a ambos</strong>. Cierra con el resultado. Nunca pintes al cliente como el villano.</p></div>
+      <span class="tag trap">⚠ trampa: no cuentes un conflicto que ganaste imponiéndote</span>
+    </div>
+
+    <h3 style="color:var(--soft); font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; margin:28px 0 4px;">E · Design systems y herramientas</h3>
+
+    <div class="qa">
+      <div class="qid">E1</div>
+      <div class="q">Háblame de tu experiencia con design systems.</div>
+      <div class="want">Qué buscan: si puedes crear consistencia y velocidad a escala — clave para una agencia con muchos clientes.</div>
+      <div class="a"><p>Dos niveles de prueba: en <strong>Booz Allen</strong> escalaste 2 design systems (Shadcn, Radix) de <strong>0 a 26 equipos</strong> en una firma de ~30.000 ingenieros, con WCAG 2.2 / Section 508 y 95%+ de checks automáticos. En <strong>EnRegla</strong> construiste un DS de <strong>31 componentes</strong> en Figma usado en 16 pantallas e implementado directo en React 19. Y en Xentinels manejaste sistemas multi-tema sobre Ant Design, Material UI e IBM Carbon para clientes Fortune 500. Sabes construir a medida y sobre bases existentes.</p></div>
+      <span class="tag metric">Ancla: 0→26 equipos · 31 componentes · WCAG 2.2</span>
+    </div>
+
+    <div class="qa">
+      <div class="qid">E2</div>
+      <div class="q">¿Qué herramientas usas?</div>
+      <div class="want">Qué buscan: fit operativo. Respuesta corta y segura.</div>
+      <div class="a"><p><strong>Figma</strong> a nivel avanzado (Variables, Auto Layout, Dev Mode, MCP), Storybook, Miro, Jira/Linear. Del lado técnico: <strong>React 19, TypeScript, Supabase, Vercel, GitHub</strong>. Y herramientas de IA en el flujo real: Cursor, Claude Code. No las listes como trofeos — di para qué las usas.</p></div>
+    </div>
+
+    <h3 style="color:var(--soft); font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; margin:28px 0 4px;">F · IA y diseño agéntico (tu diferencial — con cuidado)</h3>
+
+    <div class="qa">
+      <div class="qid">F1</div>
+      <div class="q">¿Cómo usas IA en tu trabajo de diseño?</div>
+      <div class="want">Qué buscan: si es sustancia o disfraz. En 2026 todos dicen «uso IA»; pocos tienen resultados reales.</div>
+      <div class="a">
+        <p>Aterriza en algo concreto y verificable, no en hype:</p>
+        <ul>
+          <li><strong>Research agéntico:</strong> en BAH construiste emuladores de persona con LLM que corrían cientos de tests de usabilidad automatizados por pantalla, validados después con usuarios reales (<strong>92%</strong> calificó mejores las mejoras).</li>
+          <li><strong>Leverage, no reemplazo:</strong> la IA acelera exploración y entrega; el juicio de diseño y la validación con usuarios reales siguen siendo tuyos. «Perfil + IA agéntica = combinación», no magia.</li>
+          <li><strong>Para PPM:</strong> significa que puedes entregar más por cliente en menos tiempo — exactamente el multiplicador que una consultora necesita.</li>
+        </ul>
+      </div>
+      <span class="tag trap">⚠ trampa: no te vendas como «genio solitario con IA» — es método + leverage</span>
+    </div>
+
+    <h3 style="color:var(--soft); font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; margin:28px 0 4px;">G · Preguntas difíciles / gaps</h3>
+
+    <div class="qa">
+      <div class="qid">G1</div>
+      <div class="q">Veo que tu maestría y tu certificación CPACC están «en curso». ¿Las terminaste?</div>
+      <div class="want">Qué buscan: honestidad y cómo manejas algo incompleto.</div>
+      <div class="a"><p>Directo y sin disculpas: <strong>«están en curso, me estoy capacitando activamente»</strong>. Enmarca: 18 años de experiencia real pesan más que el título, y el hecho de que sigas estudiando (M.A. UOC, CPACC de accesibilidad, AI for Designers) muestra que <strong>no te has estancado</strong>. La accesibilidad no es teoría para ti — ya pasas 95%+ de checks WCAG 2.2 en producción.</p></div>
+      <span class="tag trap">⚠ trampa: no infles fechas ni digas «casi termino» si no es verdad</span>
+    </div>
+
+    <div class="qa">
+      <div class="qid">G2</div>
+      <div class="q">Pareces sobrecalificado para este rol. ¿No te vas a aburrir?</div>
+      <div class="want">Qué buscan: tranquilizarse de que no eres riesgo de fuga. Es un miedo real, no un insulto.</div>
+      <div class="a"><p>Reconócelo con calma y redirige a tu <a class="inline" href="#decidir">razón real (#3)</a>. Ejemplo de marco: <strong>«Mi experiencia es enterprise y federal, sí — y justamente por eso puedo traer ese rigor a un contexto más ágil y de cliente directo, donde veo el impacto de cerca. No busco un escalón, busco variedad y cercanía al producto.»</strong> Hazlo específico a lo que PPM ofrece.</p></div>
+    </div>
+
+    <div class="qa">
+      <div class="qid">G3</div>
+      <div class="q">¿Cuáles son tus expectativas salariales?</div>
+      <div class="want">Qué buscan: si estás en su rango y si te vas a ir por dinero.</div>
+      <div class="a"><p>Ejecuta tu <a class="inline" href="#decidir">decisión #2</a>. <strong>No des número primero:</strong> «Me interesa entender primero el alcance del rol y su rango — ¿cuál es la banda que manejan para esta posición?». Si insisten, ancla con justificación (impacto medible + fondo enterprise/federal). Ten claro tu piso real de antemano.</p></div>
+      <span class="tag trap">⚠ trampa: verifica la banda local ANTES — no improvises un número</span>
+    </div>
+
+    <div class="qa">
+      <div class="qid">G4</div>
+      <div class="q">¿Cuál es tu mayor debilidad? / ¿Un error del que aprendiste?</div>
+      <div class="want">Qué buscan: autoconciencia real, no la debilidad-humilde cliché («soy muy perfeccionista»).</div>
+      <div class="a"><p>Elige algo verdadero y con aprendizaje. Buen molde para ti: la tentación de <strong>llevar el diseño demasiado lejos hacia el código</strong> y pisar terreno de ingeniería, o sobre-instrumentar antes de validar el problema. Cierra con qué cambiaste (ej. «ahora valido el problema con una métrica antes de construir»). Debilidad + corrección concreta.</p></div>
+    </div>
+
+    <h3 style="color:var(--soft); font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; margin:28px 0 4px;">H · Cierre</h3>
+
+    <div class="qa">
+      <div class="qid">H1</div>
+      <div class="q">¿Tienes alguna pregunta para nosotros?</div>
+      <div class="want">Qué buscan: interés real y nivel de seniority. «No, todo claro» te resta muchísimo.</div>
+      <div class="a"><p>Siempre ten 3–4 listas. Ve a la sección <a class="inline" href="#preguntales">06 · Qué preguntarles</a>. Cierra la entrevista con una pregunta que demuestre que piensas en su negocio, no solo en tu rol.</p></div>
+    </div>
+
+    <!-- 05 -->
+    <div class="section-label" id="star"><span class="n">05</span>Banco de historias STAR</div>
+    <p class="section-intro">Cuatro historias pre-armadas en formato Situación · Tarea · Acción · Resultado. Sirven para casi cualquier pregunta de comportamiento. Todas son hechos reales — no adornar.</p>
+
+    <div class="star">
+      <div class="title">★ El onboarding roto → activación 2.6% a 9.4%</div>
+      <div class="use">Úsala para: impacto de negocio · métricas · resolver ambigüedad · experimentación</div>
+      <div class="beat"><div class="k">S</div><div class="v">EnRegla, SaaS de compliance para PYMES LATAM. El onboarding de un producto nuevo estaba roto: casi nadie llegaba a activarse.</div></div>
+      <div class="beat"><div class="k">T</div><div class="v">Hacer que los nuevos usuarios llegaran al valor del producto — y poder <b>probarlo con datos</b>, no con opinión.</div></div>
+      <div class="beat"><div class="k">A</div><div class="v">Reconstruí el funnel en <b>3 semanas</b> con usability testing y loops de feedback con personas de IA. Instrumenté <b>Mixpanel</b> end-to-end y definí la métrica de activación. Diseñé y corrí un <b>A/B test</b>: registro con email vs. acceso con Google.</div></div>
+      <div class="beat"><div class="k">R</div><div class="v">Activación de nuevos usuarios de <b>2.6% a 9.4%</b>. El A/B ganó Google sign-in y subió el completion del onboarding <b>74%</b>. Hoy ~280 clientes de pago sobre ~2.700 usuarios.</div></div>
+    </div>
+
+    <div class="star">
+      <div class="title">★ Design system de 0 a 26 equipos (Booz Allen)</div>
+      <div class="use">Úsala para: escala · design systems · adopción · liderazgo sin autoridad formal</div>
+      <div class="beat"><div class="k">S</div><div class="v">Booz Allen Hamilton, plataforma federal Trusted Environments. Firma de ~30.000 ingenieros, cada equipo arrancaba de cero.</div></div>
+      <div class="beat"><div class="k">T</div><div class="v">Crear un baseline compartido — 2 design systems (Shadcn, Radix) — que los equipos <b>quisieran</b> adoptar, sin poder obligarlos.</div></div>
+      <div class="beat"><div class="k">A</div><div class="v">Construí los sistemas conformes con WCAG 2.2 / Section 508 (95%+ de checks automáticos), diseñé un <b>MCP propio</b> para developers, y entregué componentes React listos para producción — bajando el ciclo diseño→dev de <b>6 semanas a &lt;1</b>.</div></div>
+      <div class="beat"><div class="k">R</div><div class="v">Adopción orgánica de <b>0 a 26 equipos</b>, incluyendo el producto de ciberseguridad Vellox Reverser. Uso opcional que se volvió estándar de facto.</div></div>
+    </div>
+
+    <div class="star">
+      <div class="title">★ Research agéntico validado con usuarios reales (Booz Allen)</div>
+      <div class="use">Úsala para: IA con sustancia · innovación · rigor de research</div>
+      <div class="beat"><div class="k">S</div><div class="v">Necesitábamos correr muchas más pruebas de usabilidad de las que el presupuesto de research permitía.</div></div>
+      <div class="beat"><div class="k">T</div><div class="v">Escalar el volumen de testing sin sacrificar validez.</div></div>
+      <div class="beat"><div class="k">A</div><div class="v">Construí <b>emuladores de persona basados en LLM</b> que corrían cientos de tests automatizados por pantalla, y los validé contra <b>usability testing moderado con usuarios reales</b> (5 por feature).</div></div>
+      <div class="beat"><div class="k">R</div><div class="v"><b>92%</b> de los participantes calificó las mejoras como superiores. Pionero en esto <b>antes</b> de que existiera tooling de cloud design mainstream.</div></div>
+    </div>
+
+    <div class="star">
+      <div class="title">★ DesignOps para Fortune 500 (Xentinels)</div>
+      <div class="use">Úsala para: contexto de agencia/clientes · consistencia a escala · mentoría</div>
+      <div class="beat"><div class="k">S</div><div class="v">Unidad de DesignOps sirviendo a clientes Fortune 500 (Merck, Mondelēz, Banco Pichincha) con necesidades y marcas distintas.</div></div>
+      <div class="beat"><div class="k">T</div><div class="v">Escalar diseño consistente entre clientes y acelerar la entrega sin perder calidad.</div></div>
+      <div class="beat"><div class="k">A</div><div class="v">Escalé design systems multi-tema (Ant Design, Material UI, IBM Carbon, y uno propio en Shadcn para Pichincha), lideré research cualitativo (<b>100+ entrevistas</b>) y mentoricé a <b>~12</b> diseñadores.</div></div>
+      <div class="beat"><div class="k">R</div><div class="v">Reduje el time-to-market de los clientes en <b>35%</b> optimizando el handoff diseño→ingeniería.</div></div>
+    </div>
+
+    <!-- 06 -->
+    <div class="section-label" id="preguntales"><span class="n">06</span>Qué preguntarles a PPM</div>
+    <p class="section-intro">Preguntas que muestran seniority y que piensas en su negocio. Elige 3–4. Las mejores hacen que ellos hablen — y te dan información para decidir si el rol te conviene.</p>
+
+    <div class="askback">
+      <div class="qq">«¿Cómo es un proyecto típico para el diseñador de producto aquí? ¿Trabajo con un cliente a la vez o en paralelo?»</div>
+      <div class="why">Te dice la carga real y el modelo de trabajo. Muestra que piensas en ejecución.</div>
+    </div>
+    <div class="askback">
+      <div class="qq">«De sus líneas — Loyalty, iCare, Smarty, ecommerce — ¿dónde entraría más este rol, y dónde ven la mayor oportunidad de mejora en experiencia?»</div>
+      <div class="why">Demuestra que investigaste su negocio y que piensas en dónde aportas valor.</div>
+    </div>
+    <div class="askback">
+      <div class="qq">«¿Cómo miden el éxito de un proyecto de diseño? ¿Llegan hasta métricas de negocio del cliente o el alcance termina en la entrega?»</div>
+      <div class="why">Filtra si valoran impacto (tu terreno) o solo entregables. Te posiciona como alguien orientado a resultados.</div>
+    </div>
+    <div class="askback">
+      <div class="qq">«¿Qué tan cerca trabaja diseño con desarrollo aquí? ¿Hay design system compartido entre proyectos?»</div>
+      <div class="why">Tu fortaleza es la bisagra diseño↔código. Abre la puerta a hablar de tu MCP y tus design systems.</div>
+    </div>
+    <div class="askback">
+      <div class="qq">«¿Cómo está usando PPM la IA hoy en la entrega a clientes, y qué apetito hay por incorporarla más?»</div>
+      <div class="why">Si hay apetito, tu diferencial agéntico se vuelve tu carta más fuerte. Si no, tú puedes ser quien lo traiga.</div>
+    </div>
+    <div class="askback">
+      <div class="qq">«¿Cómo se ven los próximos 6–12 meses para el equipo de diseño y para este rol?»</div>
+      <div class="why">Señala que piensas en quedarte y crecer — calma el miedo de «se va en seis meses».</div>
+    </div>
+
+    <!-- 07 -->
+    <div class="section-label" id="checklist"><span class="n">07</span>Checklist pre-entrevista</div>
+    <p class="section-intro">Marca según avances (se guarda en este navegador). Cierra todo antes del martes en la noche para llegar el miércoles sin correr.</p>
+    <div class="panel">
+      <ul class="check" id="checklist-list">
+        <li><input type="checkbox" id="c1"><label for="c1"><b>Cerrar las 5 decisiones</b> de la sección 03 — disponibilidad, salario, por-qué-PPM, modalidad, framing de founder.</label></li>
+        <li><input type="checkbox" id="c2"><label for="c2"><b>Verificar la banda salarial senior local</b> en Quito con tu red / Glassdoor. No improvises el número.</label></li>
+        <li><input type="checkbox" id="c3"><label for="c3"><b>Investigar PPM más a fondo</b>: revisa su LinkedIn, casos de cliente recientes, quién te entrevista (búscalo en LinkedIn).</label></li>
+        <li><input type="checkbox" id="c4"><label for="c4"><b>Ensayar el pitch de 90 seg en voz alta</b> — cronométralo. Debe sonar natural, no recitado.</label></li>
+        <li><input type="checkbox" id="c5"><label for="c5"><b>Preparar el portfolio</b>: 2–3 casos listos para mostrar (EnRegla onboarding + Booz Allen DS). Ten los números a la mano.</label></li>
+        <li><input type="checkbox" id="c6"><label for="c6"><b>Tener lista tu web</b>: danilorojas.design y el CV. Manda el link si aplica.</label></li>
+        <li><input type="checkbox" id="c7"><label for="c7"><b>Elegir 3–4 preguntas</b> de la sección 06 para hacerles.</label></li>
+        <li><input type="checkbox" id="c8"><label for="c8"><b>Logística</b>: confirmar hora, formato (presencial en Ed. QPH o virtual), y probar cámara/audio/internet si es remoto.</label></li>
+        <li><input type="checkbox" id="c9"><label for="c9"><b>Repasar las tarjetas ⚠ trampa</b> una vez más — son donde es fácil hundirse.</label></li>
+        <li><input type="checkbox" id="c10"><label for="c10"><b>Dormir bien el martes.</b> El descanso rinde más que el repaso de última hora.</label></li>
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    <p>Prep confidencial · Danilo Rojas · entrevista PPM 08·07·2026 · fuente de verdad: fact-bank + CV ATS 2026-07-02</p>
+  </footer>
+
+  <script>
+    // Copy pitch buttons
+    document.querySelectorAll('.copy-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var el = document.getElementById(btn.dataset.copy);
+        if(!el || !navigator.clipboard) return;
+        navigator.clipboard.writeText(el.innerText.trim()).then(function(){
+          var old = btn.textContent; btn.textContent = 'Copiado ✓'; btn.classList.add('done');
+          setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 1800);
+        });
+      });
+    });
+    // Checklist persistence
+    var boxes = document.querySelectorAll('#checklist-list input[type=checkbox]');
+    boxes.forEach(function(b){
+      try { if(localStorage.getItem('ppm-'+b.id)==='1') b.checked = true; } catch(e){}
+      b.addEventListener('change', function(){
+        try { localStorage.setItem('ppm-'+b.id, b.checked?'1':'0'); } catch(e){}
+      });
+    });
+  </script>
+</body>
+</html>

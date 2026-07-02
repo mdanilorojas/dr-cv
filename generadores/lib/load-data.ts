@@ -314,6 +314,7 @@ function validateEducation(raw: unknown): Education {
       name: requireString(o.name, `education[${i}].name`),
       institution: requireString(o.institution, `education[${i}].institution`),
       location: typeof o.location === "string" ? o.location : undefined,
+      inProgress: o.inProgress === true ? true : undefined,
     };
   });
 }

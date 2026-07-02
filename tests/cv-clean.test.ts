@@ -49,6 +49,6 @@ describe("renderCleanCv (ES)", () => {
     expect(html).toContain("Educación");
   });
   it("localizes role summaries", () => {
-    expect(html).toContain("Co-fundador y Líder de Diseño de Producto");
+    expect(html).toContain("Líder de Diseño de Producto");
   });
 });

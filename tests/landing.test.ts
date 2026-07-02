@@ -35,9 +35,9 @@ describe("landing redesign", () => {
 
   it("renders the four proof numbers from data", () => {
     expect(en).toContain("18");
-    expect(en).toContain("15");
-    expect(en).toContain("50");
-    expect(en).toContain("FAA, DoD &amp; VA");
+    expect(en).toContain("26");
+    expect(en).toContain("6→1");
+    expect(en).toContain("2.6% → 9.4%, Mixpanel");
   });
 
   it("renders the two POV notes", () => {

@@ -10,13 +10,13 @@ current:
     stack: ["User research", "Design systems", "Agentic UX testing", "WCAG 2.2 / Section 508", "Custom MCP", "DoD · FAA · VA"]
 
   - company: "Compliance SaaS · LATAM"
-    role: "Co-founder & Lead Product Designer"
+    role: "Lead Product Designer"
     startYear: 2026
     endYear: present
     highlight: true
     badge: "280+ paying users"
-    descriptionEn: "Co-founded a compliance SaaS for LATAM SMBs, leading discovery-to-launch design and shipping a validated MVP in 40 days. Designed a 31-component Figma design system, used across 16 screens and implemented directly in React/TypeScript. Ran AI-persona feedback loops to validate onboarding flows pre-engineering, growing the product to ~280 paying customers on a base of ~2,700 total users."
-    descriptionEs: "Co-fundé un SaaS de cumplimiento para PYMES LATAM, liderando el diseño de discovery a lanzamiento y validando el MVP en 40 días. Diseñé un design system de 31 componentes en Figma, usado en 16 pantallas e implementado directamente en React/TypeScript. Corrí loops de feedback con personas IA para validar los flujos de onboarding antes de ingeniería, creciendo el producto a ~280 clientes pagando sobre una base de ~2,700 usuarios totales."
+    descriptionEn: "Lead product designer for a compliance SaaS for LATAM SMBs, owning discovery-to-launch design and shipping a validated MVP in 40 days. Designed a 31-component Figma design system, used across 16 screens and implemented directly in React/TypeScript. Ran AI-persona feedback loops to validate onboarding flows pre-engineering, growing the product to ~280 paying customers on a base of ~2,700 total users."
+    descriptionEs: "Líder de diseño de producto para un SaaS de cumplimiento para PYMES LATAM, dueño del diseño de discovery a lanzamiento y validando el MVP en 40 días. Diseñé un design system de 31 componentes en Figma, usado en 16 pantallas e implementado directamente en React/TypeScript. Corrí loops de feedback con personas IA para validar los flujos de onboarding antes de ingeniería, creciendo el producto a ~280 clientes pagando sobre una base de ~2,700 usuarios totales."
     stack: ["Product discovery", "Design systems", "Figma", "React 19", "TypeScript", "Supabase"]
 
 past:
@@ -29,7 +29,7 @@ past:
     stack: ["User research", "Design systems", "Ant Design", "Material UI", "IBM Carbon", "Shadcn"]
 
   - company: "Arpatel Cia. Ltda."
-    role: "Co-Founder · Product Manager"
+    role: "Product Manager"
     startYear: 2014
     endYear: 2017
     descriptionEn: "Strategic long-term vision for Arpatel's products. Built the web site, CRM templates, and order-management flows. Provided design support for a Retail POS experience (alpha + beta). Prototyped search and scan interaction patterns."

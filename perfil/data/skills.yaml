@@ -8,6 +8,7 @@ byLayer:
         - { name: "Roadmapping · RICE", level: mastered }
         - { name: "GTM specs", level: mastered }
         - { name: "Multi-persona", level: mastered }
+        - { name: "A/B testing · activation metrics", level: mastered }
         - { name: "Pricing · packaging", level: learning }
         - { name: "MRR / CAC / LTV", level: learning }
     - title: Design
@@ -30,6 +31,7 @@ byLayer:
         - { name: "CI · Vercel · DNS", level: mastered }
         - { name: "Houdini · canvas · glass", level: mastered }
         - { name: "SharePoint SPA engineering", level: mastered }
+        - { name: "Mixpanel instrumentation", level: mastered }
         - { name: "Test coverage discipline", level: learning }
         - { name: "Sentry · PostHog", level: learning }
         - { name: "Distributed backend", level: learning }
@@ -107,5 +109,6 @@ inventory:
   - { skill: "Prompt Engineering",      years: "2+"  }
   - { skill: "LLM Integration",         years: "2+"  }
   - { skill: "AI Agents",               years: "1+"  }
+  - { skill: "Mixpanel",                years: "1+"  }
   - { skill: "Anthropic Claude API",    years: "1+"  }
   - { skill: "Vercel",                  years: "1+"  }

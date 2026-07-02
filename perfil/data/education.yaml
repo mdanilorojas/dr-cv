@@ -1,4 +1,5 @@
-- year: 2015
+- year: null
+  inProgress: true
   name: "M.A. in Interaction Design & UX"
   institution: "Universitat Oberta de Catalunya (UOC)"
 - year: 2015

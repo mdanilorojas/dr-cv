@@ -144,6 +144,7 @@ export interface EducationItem {
   name: string;
   institution: string;
   location?: string;
+  inProgress?: boolean;        // cursándose actualmente; se muestra "in progress / en curso"
 }
 
 export type Education = EducationItem[];

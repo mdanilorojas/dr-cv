@@ -304,7 +304,8 @@ export function renderStructuralLanding(
 
   const clientsRow = escapeHtml(data.clients.map((cl) => cl.name).join(" · "));
   const eduRows = data.education.map((e) => {
-    const right = e.year ? `${escapeHtml(e.institution)} · ${e.year}` : escapeHtml(e.institution);
+    const status = e.inProgress ? (lang === "en" ? " · in progress" : " · en curso") : "";
+    const right = `${escapeHtml(e.institution)}${e.year ? ` · ${e.year}` : ""}${status}`;
     return `<li class="flex justify-between items-baseline gap-4"><span>${escapeHtml(e.name)}</span><span class="font-mono text-[10px] tracking-widest text-right">${right}</span></li>`;
   }).join("");
 

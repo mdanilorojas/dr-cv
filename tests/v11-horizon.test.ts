@@ -63,7 +63,7 @@ describe("v11 horizon timeline â€” investing chips are links", () => {
   it("all investing chips are <a> with non-empty href", () => {
     const col = extractColumn(htmlEn, "investing");
     const chips = extractChips(col);
-    expect(chips.length).toBe(5);
+    expect(chips.length).toBe(6);
     for (const chip of chips) {
       expect(chip).toMatch(/^<a [^>]*href="[^"]+"/);
     }

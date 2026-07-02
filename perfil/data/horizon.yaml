@@ -48,6 +48,8 @@ columns:
         href: "#case-developer-portal"
       - label: { en: "Taste as rubric",         es: "Taste como rúbrica" }
         href: "#method"
+      - label: { en: "Product analytics · A/B testing", es: "Analytics de producto · A/B testing" }
+        href: "#about"
 
   - id: horizon
     stage:
