@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conceptos de Product Design · Estudio PPM — Danilo Rojas</title>
+  <meta name="description" content="Glosario de conceptos de Product Design, caso de uso y preguntas trampa para la entrevista con PPM (Publipromueve), Quito.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <style>
+    :root {
+      --bg: #0A0B0E; --panel: #14161C; --panel2: #1C1F27; --inset: #0D0F13;
+      --line: rgba(255,255,255,.08); --line-strong: rgba(255,255,255,.18);
+      --text: #F4F4F5; --body: #D7D8DB; --muted: #95979E; --soft: #797D86;
+      --accent: #FF8964; --accent-soft: rgba(255,137,100,.14); --accent-line: rgba(255,137,100,.28);
+      --blue: #5683DA; --blue-soft: rgba(86,131,218,.12); --green: #4ADE80; --green-soft: rgba(74,222,128,.12);
+      --yellow: #E5A84B; --yellow-soft: rgba(229,168,75,.12); --red: #F87171; --red-soft: rgba(248,113,113,.12);
+      --purple: #B98CE0; --purple-soft: rgba(185,140,224,.12);
+      --font-body: 'Inter', 'Helvetica Neue', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+      --radius-card: 12px; --radius: 8px;
+      --shadow-card: 0 6px 25px rgba(0,0,0,.50);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font: 15px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; }
+
+    nav { position: sticky; top: 0; z-index: 50; padding: 13px 24px; border-bottom: 1px solid var(--line); background: rgba(13,15,19,.86); backdrop-filter: blur(10px); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    nav a { font-family: var(--font-mono); font-size: 13px; color: var(--soft); text-decoration: none; }
+    nav a:hover { color: var(--text); }
+    nav .sep { color: var(--line-strong); }
+    nav .current { color: var(--muted); font-family: var(--font-mono); font-size: 13px; }
+    nav .right { margin-left: auto; display: flex; gap: 12px; }
+
+    header { background: #13151a; border-bottom: 1px solid var(--line); padding: 44px 24px 30px; }
+    header .inner, main { max-width: 1040px; margin: 0 auto; }
+    header .eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    header h1 { font-size: clamp(28px, 4.5vw, 44px); font-weight: 900; line-height: 1.05; letter-spacing: -0.025em; }
+    header h1 .dim { color: var(--soft); }
+    header .sub { color: var(--muted); margin-top: 14px; font-size: 15px; max-width: 760px; }
+    header .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    header .fact { font-family: var(--font-mono); font-size: 11.5px; color: var(--body); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 7px 12px; }
+    header .fact b { color: var(--accent); font-weight: 600; }
+
+    main { padding: 12px 18px 100px; }
+
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 30px 0 8px; }
+    .toc a { font-family: var(--font-mono); font-size: 12px; color: var(--muted); text-decoration: none; border: 1px solid var(--line); border-radius: var(--radius); padding: 6px 11px; transition: all .2s; }
+    .toc a:hover { color: var(--text); border-color: var(--accent-line); background: var(--accent-soft); }
+
+    .section-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--soft); margin: 56px 0 16px; padding-top: 8px; scroll-margin-top: 60px; }
+    .section-label .n { color: var(--accent); margin-right: 10px; }
+    .section-intro { color: var(--muted); margin: -6px 0 22px; max-width: 760px; }
+
+    h2 { font-size: 22px; font-weight: 700; letter-spacing: -.01em; margin: 0 0 4px; }
+    p { color: var(--muted); }
+    strong, b { color: var(--text); font-weight: 600; }
+    em { color: var(--body); font-style: italic; }
+    a.inline { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-line); }
+
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 22px 24px; margin: 14px 0; }
+
+    /* Cluster header for glossary */
+    .cluster { font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--text); margin: 34px 0 4px; display: flex; align-items: center; gap: 10px; }
+    .cluster .badge { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent-line); border-radius: 5px; padding: 3px 8px; }
+    .cluster-note { color: var(--soft); font-size: 13px; margin: 2px 0 14px; }
+
+    /* Concept grid */
+    .cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 8px 0; }
+    @media (max-width: 760px) { .cgrid { grid-template-columns: 1fr; } }
+    .concept { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 15px 17px; }
+    .concept .term { font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .concept .term .en { font-weight: 500; color: var(--soft); font-size: 12.5px; font-family: var(--font-mono); }
+    .concept .def { color: var(--body); font-size: 13.5px; margin-top: 6px; }
+    .concept .you { color: var(--green); font-size: 12.5px; margin-top: 9px; border-left: 2px solid rgba(74,222,128,.4); padding-left: 10px; }
+    .concept .you b { color: #86efac; }
+    .concept .watch { color: var(--yellow); font-size: 12.5px; margin-top: 8px; border-left: 2px solid rgba(229,168,75,.4); padding-left: 10px; }
+    .concept .watch b { color: #f5c563; }
+
+    /* Use-case steps */
+    .uc { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 22px 24px; margin: 14px 0; }
+    .uc .brief { background: var(--inset); border: 1px solid var(--blue-soft); border-left: 3px solid var(--blue); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin-bottom: 18px; }
+    .uc .brief .lbl { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: 6px; }
+    .uc .brief p { color: var(--body); font-size: 14.5px; }
+    .step { display: grid; grid-template-columns: 30px 1fr; gap: 14px; margin-bottom: 16px; align-items: start; }
+    .step .num { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent-line); border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; }
+    .step .body h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .step .body p { color: var(--body); font-size: 13.5px; }
+    .step .body .say { color: var(--soft); font-size: 13px; font-style: italic; margin-top: 5px; border-left: 2px solid var(--line-strong); padding-left: 10px; }
+    .step .body .say b { color: var(--body); font-style: normal; }
+
+    /* Q&A / trap */
+    .qa { border: 1px solid var(--line); border-radius: var(--radius-card); padding: 18px 20px; margin: 12px 0; background: var(--panel); }
+    .qa.trap { border-color: rgba(229,168,75,.28); }
+    .qa .qid { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .08em; }
+    .qa.trap .qid { color: var(--yellow); }
+    .qa .q { font-size: 16px; font-weight: 600; color: var(--text); margin: 4px 0 10px; line-height: 1.4; }
+    .qa .want { font-size: 13px; color: var(--soft); font-style: italic; border-left: 2px solid var(--line-strong); padding-left: 12px; margin-bottom: 10px; }
+    .qa .a { color: var(--body); font-size: 14px; }
+    .qa .a p + p { margin-top: 8px; }
+    .qa .a ul { margin: 8px 0 0 20px; }
+    .qa .a li { color: var(--body); margin-bottom: 5px; }
+    .qa .a .bad { color: var(--red); }
+    .qa .a .good { color: var(--green); }
+
+    .askback { background: var(--inset); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px; margin: 10px 0; }
+    .askback .qq { color: var(--text); font-weight: 500; }
+    .askback .why { color: var(--soft); font-size: 13px; margin-top: 4px; }
+
+    /* Cheat sheet table */
+    .cheat { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+    .cheat th { text-align: left; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--soft); padding: 8px 12px; border-bottom: 1px solid var(--line-strong); }
+    .cheat td { padding: 9px 12px; border-bottom: 1px solid var(--line); color: var(--body); vertical-align: top; }
+    .cheat td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+    .cheat-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--panel); padding: 4px 8px; }
+
+    footer { border-top: 1px solid var(--line); padding: 28px 24px; text-align: center; }
+    footer p { font-family: var(--font-mono); font-size: 11px; color: var(--soft); }
+
+    @media print {
+      nav { display: none; }
+      body { background: #fff; color: #000; }
+      .panel, .qa, .concept, .uc, .askback { break-inside: avoid; border-color: #ccc; background: #fff; box-shadow: none; }
+      header { background: #fff; }
+      .cgrid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/">danilorojas.design</a>
+    <span class="sep">/</span>
+    <a href="/interview/">interview · ppm</a>
+    <span class="sep">/</span>
+    <span class="current">conceptos</span>
+    <span class="right">
+      <a href="/interview/">← Prep de combate</a>
+    </span>
+  </nav>
+
+  <header>
+    <div class="inner">
+      <div class="eyebrow">Estudio · vocabulario de Product Design</div>
+      <h1>Conceptos, caso de uso <span class="dim">y trampas.</span></h1>
+      <p class="sub">El complemento de la <a class="inline" href="/interview/">guía de combate</a>. Aquí está el vocabulario de Product Design que quizá no sepas nombrar — pero que <b>ya practicas</b>. La idea no es memorizar definiciones: es reconocer que cada concepto ya lo hiciste en EnRegla, Booz Allen o Xentinels, para poder hablarlo con seguridad y con un ejemplo real.</p>
+      <div class="facts">
+        <span class="fact"><b>Empresa:</b> Publipromueve (PPM) · Quito, La Floresta</span>
+        <span class="fact"><b>ADN:</b> agencia de publicidad / BTL / loyalty (desde 1992)</span>
+        <span class="fact"><b>Rol:</b> Product Designer</span>
+        <span class="fact"><b>Regla:</b> concepto → «ya lo hago» → ejemplo</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="toc">
+      <a href="#usar">00 · Cómo estudiar esto</a>
+      <a href="#glosario">01 · Glosario de conceptos</a>
+      <a href="#caso">02 · Caso de uso</a>
+      <a href="#trampas">03 · Preguntas trampa</a>
+      <a href="#preguntas">04 · Qué preguntar tú</a>
+      <a href="#cheat">05 · Cheat sheet final</a>
+    </div>
+
+    <!-- 00 -->
+    <div class="section-label" id="usar"><span class="n">00</span>Cómo estudiar esto</div>
+    <div class="panel">
+      <p>Tu problema no es que no sepas diseñar — llevas 15 años haciéndolo. Es que a veces no sabes el <strong>nombre formal</strong> de lo que ya haces, y en una entrevista eso puede leerse como un hueco. Este documento cierra ese hueco. Tres reglas:</p>
+      <ul style="margin:12px 0 0 20px; color:var(--body);">
+        <li style="margin-bottom:7px;">Cada concepto trae una línea <span style="color:var(--green);">verde «Ya lo haces»</span>. Ese es el puente: si te preguntan por el término, no recitas la definición del libro — cuentas <strong>el ejemplo real</strong> donde lo aplicaste. Suena a experiencia, no a Wikipedia.</li>
+        <li style="margin-bottom:7px;">Las líneas <span style="color:var(--yellow);">amarillas «Ojo»</span> marcan dónde los entrevistadores suelen tenderte una trampa con ese concepto. Léelas dos veces.</li>
+        <li>Recuerda quién es PPM: una <strong>agencia de publicidad y activación de marca con raíz en loyalty y BTL</strong>, no una big tech. Van a valorar que conectes diseño con <strong>negocio del cliente, campañas y fidelización</strong> — más que teoría de UX pura. El cluster G es tu puente a su mundo.</li>
+      </ul>
+    </div>
+
+    <!-- 01 GLOSARIO -->
+    <div class="section-label" id="glosario"><span class="n">01</span>Glosario de conceptos de Product Design</div>
+    <p class="section-intro">Siete clusters, del proceso a las métricas. No los memorices en orden — reconócelos. La mayoría ya los vives; solo les faltaba nombre.</p>
+
+    <!-- A: Frameworks de proceso -->
+    <div class="cluster"><span class="badge">A</span> Frameworks de proceso</div>
+    <div class="cluster-note">El «cómo se ordena» un proyecto de diseño. Si te preguntan «tu proceso», estos son los mapas — pero cuenta cómo trabajas tú, no recites las fases.</div>
+    <div class="cgrid">
+      <div class="concept">
+        <div class="term">Design Thinking <span class="en">/ pensamiento de diseño</span></div>
+        <div class="def">Proceso centrado en el usuario de 5 fases: <b>Empatizar → Definir → Idear → Prototipar → Testear</b>. No es lineal; iteras.</div>
+        <div class="you">Ya lo haces: en EnRegla empatizaste (entrevistas), definiste el problema (activación rota), ideaste, prototipaste y testeaste (A/B).</div>
+      </div>
+      <div class="concept">
+        <div class="term">Double Diamond <span class="en">/ doble diamante</span></div>
+        <div class="def">Modelo del British Design Council. Dos rombos: <b>Descubrir → Definir</b> (el problema correcto) y <b>Desarrollar → Entregar</b> (la solución correcta). Cada rombo abre (divergir) y cierra (converger).</div>
+        <div class="watch">Ojo: si lo citas, di «lo uso como brújula, no como receta». Los seniors odian el proceso rígido.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Jobs To Be Done <span class="en">/ JTBD</span></div>
+        <div class="def">La gente no compra un producto: «contrata» tu producto para hacer un <b>trabajo</b> (un progreso que quiere lograr). Enfócate en el trabajo, no en la demografía. «La gente no quiere un taladro, quiere un hueco en la pared.»</div>
+        <div class="you">Ya lo haces: el «trabajo» de EnRegla es <b>cumplir sin miedo a la multa</b>, no «usar un software».</div>
+      </div>
+      <div class="concept">
+        <div class="term">Lean UX / MVP <span class="en">/ producto mínimo viable</span></div>
+        <div class="def"><b>MVP</b>: la versión más pequeña que entrega valor y te deja aprender del usuario real. Lean UX = ciclo <b>construir → medir → aprender</b>, evitando diseñar de más sin evidencia.</div>
+        <div class="you">Ya lo haces: instrumentas y mides antes de invertir en construir toda la feature.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Design Sprint <span class="en">/ sprint de diseño</span></div>
+        <div class="def">Método de Google Ventures: <b>5 días</b> para pasar de problema a prototipo probado con usuarios. Comprime meses de debate en una semana.</div>
+        <div class="watch">Ojo: en agencia es oro (clientes quieren rapidez). Si no has hecho uno formal, di que trabajas «en ciclos cortos y validados», que es la misma idea.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Discovery vs Delivery <span class="en">/ dual track</span></div>
+        <div class="def"><b>Discovery</b> = averiguar qué construir (research, validación). <b>Delivery</b> = construirlo bien. Los equipos maduros corren ambos en paralelo, no en secuencia.</div>
+        <div class="you">Ya lo haces: investigas y entregas producción a la vez, no en fases estancas.</div>
+      </div>
+    </div>
+
+    <!-- B: Research -->
+    <div class="cluster"><span class="badge">B</span> Research (investigación de usuarios)</div>
+    <div class="cluster-note">Cómo sabes lo que el usuario necesita en vez de adivinarlo. Tu zona fuerte: 100+ entrevistas, usability testing, A/B.</div>
+    <div class="cgrid">
+      <div class="concept">
+        <div class="term">Cualitativo vs Cuantitativo <span class="en">/ qual vs quant</span></div>
+        <div class="def"><b>Cualitativo</b> = el «por qué» (entrevistas, observación; pocos usuarios, profundidad). <b>Cuantitativo</b> = el «cuánto» (analítica, encuestas, A/B; muchos usuarios, patrón).</div>
+        <div class="you">Ya lo haces: cualitativo (entrevistas) + cuantitativo (Mixpanel, A/B). Los combinas — eso es research maduro.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Usability testing <span class="en">/ prueba de usabilidad</span></div>
+        <div class="def">Ver a un usuario real intentar completar una tarea con tu diseño. <b>Moderada</b> (tú guías) o <b>no moderada</b> (solo, grabado). Regla clásica: <b>5 usuarios</b> detectan ~85% de los problemas.</div>
+        <div class="you">Ya lo haces: usability testing moderado, 5 por feature, en Booz Allen.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Persona <span class="en">/ arquetipo de usuario</span></div>
+        <div class="def">Personaje ficticio que representa un segmento real de usuarios (metas, frustraciones, contexto). Alinea al equipo sobre «para quién» diseñamos. <b>Proto-persona</b> = versión rápida basada en supuestos, a validar.</div>
+        <div class="you">Ya lo haces — y más lejos: construiste <b>personas emuladas con LLM</b> que corrían tests automatizados.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Heuristic evaluation <span class="en">/ evaluación heurística</span></div>
+        <div class="def">Revisar una interfaz contra reglas conocidas de usabilidad (las <b>10 heurísticas de Nielsen</b>: visibilidad del estado, control del usuario, prevención de errores, consistencia…). Barato y rápido, sin usuarios.</div>
+        <div class="watch">Ojo: pueden pedirte «evalúa esta pantalla». Es esto — buscas violaciones de heurísticas, no opinas «me gusta / no me gusta».</div>
+      </div>
+      <div class="concept">
+        <div class="term">Card sorting / Tree testing</div>
+        <div class="def"><b>Card sorting</b>: usuarios agrupan tarjetas para revelar cómo esperan que se organice la info. <b>Tree testing</b>: pruebas si encuentran algo en tu estructura de menú. Ambas validan la <b>arquitectura de información</b>.</div>
+        <div class="you">Ya lo haces: card sorting está en tu repertorio de research.</div>
+      </div>
+      <div class="concept">
+        <div class="term">A/B testing <span class="en">/ prueba A/B</span></div>
+        <div class="def">Muestras dos versiones (A y B) a grupos distintos y mides cuál convierte mejor. Decisión por dato, no por opinión. Necesita <b>volumen suficiente</b> para ser significativo.</div>
+        <div class="you">Ya lo haces: A/B email vs Google sign-in → +74% completion. Es tu historia estrella.</div>
+      </div>
+      <div class="concept">
+        <div class="term">NPS · CSAT · SUS <span class="en">/ métricas de percepción</span></div>
+        <div class="def"><b>NPS</b> (¿lo recomendarías? 0–10) mide lealtad. <b>CSAT</b> mide satisfacción con algo puntual. <b>SUS</b> = System Usability Scale, cuestionario estándar de 10 preguntas que da un score 0–100 de usabilidad.</div>
+        <div class="watch">Ojo: di que son señales de <b>opinión</b> y las pesas <b>menos</b> que las de comportamiento (activación, retención).</div>
+      </div>
+      <div class="concept">
+        <div class="term">Contextual inquiry <span class="en">/ investigación contextual</span></div>
+        <div class="def">Observar al usuario en su entorno real mientras hace la tarea, en vez de preguntarle en una sala. Revela lo que la gente hace, no lo que dice que hace.</div>
+        <div class="you">Ya lo haces: research de retención en Arpatel para entender por qué la gente vuelve — o no.</div>
+      </div>
+    </div>
+
+    <!-- C: Síntesis y definición -->
+    <div class="cluster"><span class="badge">C</span> Síntesis y definición</div>
+    <div class="cluster-note">Los artefactos que convierten research crudo en un plan de diseño. El puente entre «qué aprendí» y «qué construyo».</div>
+    <div class="cgrid">
+      <div class="concept">
+        <div class="term">User journey map <span class="en">/ mapa de recorrido</span></div>
+        <div class="def">Diagrama de todos los pasos que da el usuario para lograr una meta, con sus emociones, dolores y momentos clave en cada etapa. Revela dónde se cae la experiencia.</div>
+        <div class="you">Ya lo haces: al reconstruir el onboarding mapeaste el recorrido y viste dónde se caía el usuario.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Empathy map <span class="en">/ mapa de empatía</span></div>
+        <div class="def">Lienzo de 4 cuadrantes: qué <b>dice, piensa, hace y siente</b> el usuario. Herramienta rápida para alinear al equipo sobre la mente del usuario.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Information Architecture <span class="en">/ IA · arquitectura de info</span></div>
+        <div class="def">Cómo se estructura, organiza y etiqueta el contenido para que la gente lo encuentre. Menús, jerarquías, navegación. «Dónde vive cada cosa y cómo llego a ella.»</div>
+        <div class="you">Ya lo haces: definir estructura y navegación en 16 pantallas de EnRegla es IA.</div>
+      </div>
+      <div class="concept">
+        <div class="term">User flow <span class="en">/ flujo de usuario</span></div>
+        <div class="def">Diagrama paso a paso del camino que sigue el usuario para completar una tarea, con las decisiones y bifurcaciones. Más granular que el journey map.</div>
+        <div class="you">Ya lo haces: diseñaste el flujo del onboarding pantalla por pantalla.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Service blueprint <span class="en">/ plano de servicio</span></div>
+        <div class="def">Extiende el journey map al «detrás de escena»: qué pasa del lado de la empresa (personas, sistemas, procesos) para que la experiencia del front funcione. Clave en servicios y loyalty.</div>
+        <div class="watch">Ojo (PPM): útil en programas de fidelización — conecta la experiencia del cliente con la operación de la marca.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Affinity diagram <span class="en">/ diagrama de afinidad</span></div>
+        <div class="def">Agrupar muchos datos sueltos (notas de entrevistas, insights) por temas hasta que emergen patrones. Cómo sintetizas 100 entrevistas en 5 hallazgos.</div>
+        <div class="you">Ya lo haces: al procesar 100+ entrevistas agrupas hallazgos en patrones accionables.</div>
+      </div>
+    </div>
+
+    <!-- D: Craft / artefactos -->
+    <div class="cluster"><span class="badge">D</span> Craft y artefactos de diseño</div>
+    <div class="cluster-note">El vocabulario del entregable. Aquí es donde la gente confunde términos — y donde te pueden probar (ver trampas).</div>
+    <div class="cgrid">
+      <div class="concept">
+        <div class="term">Wireframe <span class="en">/ boceto estructural</span></div>
+        <div class="def">Esquema de baja fidelidad: cajas y jerarquía, <b>sin</b> color ni marca. Define estructura y contenido antes de invertir en lo visual. <b>Lo-fi</b> (grueso) vs <b>hi-fi</b> (detallado).</div>
+      </div>
+      <div class="concept">
+        <div class="term">Mockup vs Prototype</div>
+        <div class="def"><b>Mockup</b> = diseño visual estático, alta fidelidad, pero no clicable. <b>Prototype</b> = clicable/navegable, simula la interacción real para testear flujos.</div>
+        <div class="watch">Ojo: no los confundas. Mockup = se ve real. Prototipo = se siente real (interactúa).</div>
+      </div>
+      <div class="concept">
+        <div class="term">Design System <span class="en">/ sistema de diseño</span></div>
+        <div class="def">Fuente única de verdad: componentes reutilizables + <b>tokens</b> + patrones + reglas de uso + documentación. No es solo una librería de UI: incluye el «cómo y cuándo» usar cada pieza.</div>
+        <div class="you">Ya lo haces a nivel experto: 0→26 equipos en Booz Allen, 31 componentes en EnRegla.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Atomic Design <span class="en">/ diseño atómico</span></div>
+        <div class="def">Metodología de Brad Frost para estructurar un DS: <b>átomos</b> (botón, input) → <b>moléculas</b> (campo de búsqueda) → <b>organismos</b> (header) → <b>templates</b> → <b>páginas</b>.</div>
+        <div class="you">Ya lo haces: tus design systems siguen esta jerarquía de componibilidad.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Design tokens</div>
+        <div class="def">Las variables del diseño: color, espaciado, tipografía, radios — guardadas como datos reutilizables (ej. <span style="font-family:var(--font-mono);font-size:12px;">color-primary</span>). Cambias el token, cambia todo el sistema. Puente diseño↔código.</div>
+        <div class="you">Ya lo haces: tokens print/web en tu design system, implementados en React.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Interaction Design <span class="en">/ IxD</span></div>
+        <div class="def">Diseño del comportamiento: qué pasa cuando el usuario hace algo. Estados, transiciones, feedback, microinteracciones. El «verbo» de la interfaz.</div>
+      </div>
+      <div class="concept">
+        <div class="term">UX Writing / Microcopy</div>
+        <div class="def">Las palabras dentro de la interfaz: botones, mensajes de error, tooltips, estados vacíos. Buena microcopy reduce fricción y guía sin que el usuario piense.</div>
+        <div class="watch">Ojo (PPM): en una agencia de publicidad, el copy es rey. Menciónalo como parte de tu diseño, no como algo aparte.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Accesibilidad <span class="en">/ a11y · WCAG</span></div>
+        <div class="def">Diseñar para que <b>todos</b> puedan usarlo, incluidas personas con discapacidad. <b>WCAG</b> = el estándar (contraste, navegación por teclado, lectores de pantalla). Niveles A / AA / AAA.</div>
+        <div class="you">Ya lo haces: 95%+ de checks WCAG 2.2 / Section 508 en producción. Certificación CPACC en curso.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Responsive vs Adaptive</div>
+        <div class="def"><b>Responsive</b>: el layout fluye y se reajusta a cualquier ancho (grids flexibles). <b>Adaptive</b>: layouts fijos para breakpoints concretos. Responsive es el estándar hoy.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Handoff / Dev Mode</div>
+        <div class="def">El traspaso del diseño a desarrollo: specs, medidas, assets, tokens. En Figma <b>Dev Mode</b> lo automatiza. Buen handoff = menos ida y vuelta con ingeniería.</div>
+        <div class="you">Ya lo haces mejor que casi nadie: entregas componentes React listos, no specs para interpretar. Ciclo 6 semanas → &lt;1.</div>
+      </div>
+    </div>
+
+    <!-- E: Leyes y psicología -->
+    <div class="cluster"><span class="badge">E</span> Leyes de UX y psicología</div>
+    <div class="cluster-note">El «por qué» científico de las buenas decisiones de diseño. No las cites todas — ten 3 listas para justificar una decisión con vocabulario, no con «se ve mejor».</div>
+    <div class="cgrid">
+      <div class="concept">
+        <div class="term">Ley de Fitts</div>
+        <div class="def">El tiempo para llegar a un objetivo depende de su <b>tamaño</b> y <b>distancia</b>. Traducción: los botones importantes se hacen grandes y cercanos. Por eso el CTA no es diminuto.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Ley de Hick</div>
+        <div class="def">Mientras más opciones, más tarda la decisión. Traducción: reduce y agrupa opciones; no pongas 12 botones donde bastan 3. Menos es más rápido.</div>
+        <div class="you">Ya lo aplicas: simplificar el onboarding para que el usuario active más rápido es Hick en acción.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Ley de Jakob</div>
+        <div class="def">Los usuarios pasan la mayor parte del tiempo en <b>otros</b> sitios. Esperan que el tuyo funcione igual. Traducción: respeta convenciones; no reinventes patrones estándar sin razón.</div>
+        <div class="watch">Ojo (PPM): en campañas es tentador ser «creativo» y romper convenciones. Buen argumento: creatividad en lo visual, convención en lo funcional.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Ley de Miller <span class="en">/ 7±2</span></div>
+        <div class="def">La memoria de trabajo maneja ~7 elementos a la vez. Traducción: agrupa la información en «chunks». (Mito común: no significa «máx 7 ítems de menú» — es sobre memoria, no navegación.)</div>
+      </div>
+      <div class="concept">
+        <div class="term">Principios de Gestalt</div>
+        <div class="def">Cómo el cerebro agrupa lo que ve: <b>proximidad</b> (cerca = relacionado), <b>similitud</b>, <b>cierre</b>, <b>continuidad</b>, <b>figura/fondo</b>. Base de por qué un layout «se siente ordenado».</div>
+      </div>
+      <div class="concept">
+        <div class="term">Affordance y Signifier <span class="en">/ Don Norman</span></div>
+        <div class="def"><b>Affordance</b> = lo que un objeto permite hacer (un botón se puede presionar). <b>Signifier</b> = la pista visual que lo comunica (que <i>parezca</i> presionable). De «The Design of Everyday Things».</div>
+        <div class="watch">Ojo: si te preguntan por Norman, menciona también <b>feedback</b>, <b>mapping</b> y <b>constraints</b> — sus otros principios.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Peak-End Rule <span class="en">/ regla pico-fin</span></div>
+        <div class="def">La gente juzga una experiencia por su momento más intenso (pico) y por cómo termina (fin), no por el promedio. Traducción: cuida el clímax y el cierre del flujo.</div>
+        <div class="watch">Ojo (PPM): oro puro para loyalty y campañas — la recompensa y el cierre definen si el cliente vuelve.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Aesthetic-Usability Effect</div>
+        <div class="def">Lo que se ve bonito se <i>percibe</i> como más fácil de usar (y perdona más fallas). Justifica invertir en lo visual — pero no como excusa para ignorar la usabilidad real.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Cognitive load <span class="en">/ carga cognitiva</span></div>
+        <div class="def">El esfuerzo mental que exige tu interfaz. Meta: minimizarlo. Cada decisión, texto o paso extra es carga. «No me hagas pensar» (Steve Krug).</div>
+        <div class="you">Ya lo aplicas: reducir fricción en el onboarding = bajar carga cognitiva.</div>
+      </div>
+    </div>
+
+    <!-- F: Métricas -->
+    <div class="cluster"><span class="badge">F</span> Métricas de producto</div>
+    <div class="cluster-note">Tu ventaja competitiva: la mayoría de diseñadores no habla este idioma. Tú sí. Esto separa «diseñador de pixeles» de «diseñador de negocio».</div>
+    <div class="cgrid">
+      <div class="concept">
+        <div class="term">North Star Metric <span class="en">/ métrica estrella</span></div>
+        <div class="def">La <b>una</b> métrica que mejor captura el valor que tu producto entrega al usuario. Alinea a toda la empresa. Ej: para Spotify, tiempo escuchado; para tu SaaS, empresas que cumplen a tiempo.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Activación <span class="en">/ activation</span></div>
+        <div class="def">El momento en que un usuario nuevo <b>experimenta el valor</b> del producto por primera vez («aha moment»). Métrica clave del onboarding.</div>
+        <div class="you">Es tu historia central: activación 2.6% → 9.4% en EnRegla. La definiste, instrumentaste y moviste.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Funnel <span class="en">/ embudo de conversión</span></div>
+        <div class="def">Los pasos por los que pasa un usuario hacia una meta (visita → registro → activación → pago), midiendo cuántos se caen en cada paso. Ves exactamente dónde pierdes gente.</div>
+        <div class="you">Ya lo haces: instrumentaste el funnel de onboarding en Mixpanel y arreglaste la caída.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Retención vs Churn</div>
+        <div class="def"><b>Retención</b> = % de usuarios que vuelven con el tiempo. <b>Churn</b> = % que se van. En negocios de suscripción y loyalty, retener vale más que adquirir.</div>
+        <div class="watch">Ojo (PPM): su línea «Loyalty» vive de esto. Conéctalo con tu research de retención en Arpatel.</div>
+      </div>
+      <div class="concept">
+        <div class="term">HEART framework <span class="en">/ Google</span></div>
+        <div class="def">5 dimensiones para medir UX: <b>H</b>appiness, <b>E</b>ngagement, <b>A</b>doption, <b>R</b>etention, <b>T</b>ask success. Se baja a métricas con «Goals-Signals-Metrics».</div>
+      </div>
+      <div class="concept">
+        <div class="term">AARRR <span class="en">/ Pirate Metrics</span></div>
+        <div class="def">Embudo de crecimiento: <b>A</b>dquisición, <b>A</b>ctivación, <b>R</b>etención, <b>R</b>eferido, <b>R</b>evenue. Marco para pensar el negocio de un producto de punta a punta.</div>
+        <div class="you">Ya lo piensas: tu trabajo en EnRegla toca activación, retención y revenue directamente.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Task success · Time on task · Error rate</div>
+        <div class="def">Métricas de usabilidad medibles: <b>% que completa</b> la tarea, <b>cuánto tarda</b>, <b>cuántos errores</b> comete. Convierten «¿es usable?» en números.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Priorización <span class="en">/ RICE · MoSCoW · Impact-Effort</span></div>
+        <div class="def">Marcos para decidir qué hacer primero. <b>RICE</b> = Reach × Impact × Confidence ÷ Effort. <b>MoSCoW</b> = Must/Should/Could/Won't. <b>Impact-Effort</b> = matriz 2×2.</div>
+        <div class="you">Ya lo haces: priorizas por impacto de negocio (piensas como dueño de producto).</div>
+      </div>
+    </div>
+
+    <!-- G: Puente diseño-marketing -->
+    <div class="cluster"><span class="badge">G</span> Puente diseño ↔ marketing (el mundo de PPM)</div>
+    <div class="cluster-note">Publipromueve nació como agencia de publicidad, BTL y loyalty. Estos términos son SU idioma. Hablarlos te posiciona como alguien que entiende su negocio, no solo producto digital.</div>
+    <div class="cgrid">
+      <div class="concept">
+        <div class="term">BTL / ATL / Activación de marca</div>
+        <div class="def"><b>ATL</b> (above the line) = medios masivos (TV, radio). <b>BTL</b> (below the line) = acciones directas y segmentadas (activaciones, punto de venta, eventos). PPM viene del BTL y la activación.</div>
+        <div class="watch">Ojo: hoy el BTL se digitaliza. Tu valor: llevar esas activaciones a <b>experiencias digitales medibles</b>.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Customer Journey <span class="en">/ marketing</span></div>
+        <div class="def">El recorrido del cliente con la marca a través del embudo: <b>awareness → consideración → conversión → fidelización → advocacy</b>. Versión marketing del user journey.</div>
+        <div class="you">Ya lo dominas: es el mismo journey map que haces, extendido a la relación con la marca.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Landing page & CTA</div>
+        <div class="def"><b>Landing</b> = página de una campaña con un solo objetivo. <b>CTA</b> (call to action) = la acción que quieres que tomen. Se optimizan con A/B y análisis de conversión.</div>
+        <div class="you">Ya lo haces: construiste tu propia landing (danilorojas.design) y corres experimentos de conversión.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Loyalty / Programas de fidelización</div>
+        <div class="def">Sistemas de puntos, recompensas y tiers para que el cliente vuelva. Mezclan psicología (peak-end, gamificación), datos (CRM) y experiencia. Línea de negocio central de PPM.</div>
+        <div class="you">Ya lo tocaste: flujos de CRM y retención en Arpatel; entiendes qué hace volver a la gente.</div>
+      </div>
+      <div class="concept">
+        <div class="term">CRM & Marketing Automation</div>
+        <div class="def"><b>CRM</b> = base de la relación con cada cliente. <b>Automation</b> = flujos automáticos (emails, notificaciones) disparados por comportamiento. La línea «iCare» de PPM.</div>
+        <div class="you">Ya lo haces: instrumentación y flujos automatizados; corriste el A/B sobre el onboarding automatizado.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Omnicanalidad <span class="en">/ omnichannel</span></div>
+        <div class="def">Experiencia consistente y conectada en todos los canales (web, app, tienda física, punto de venta, redes). El cliente no siente saltos entre ellos.</div>
+        <div class="watch">Ojo (PPM): tu experiencia en POS retail + ecommerce te deja hablar de omnicanalidad con base real.</div>
+      </div>
+      <div class="concept">
+        <div class="term">LTV / CAC</div>
+        <div class="def"><b>LTV</b> = valor total que deja un cliente en su vida. <b>CAC</b> = costo de adquirirlo. El negocio sano tiene LTV &gt; CAC. La razón económica por la que la retención (loyalty) importa.</div>
+      </div>
+      <div class="concept">
+        <div class="term">Personalización & Segmentación</div>
+        <div class="def">Adaptar el mensaje/experiencia según el segmento o comportamiento del usuario. Base de campañas modernas y de loyalty efectivo. Se apoya en datos (CRM, analítica).</div>
+        <div class="you">Ya lo haces: segmentar y personalizar el onboarding según cómo llega el usuario.</div>
+      </div>
+    </div>
+
+    <!-- 02 CASO DE USO -->
+    <div class="section-label" id="caso"><span class="n">02</span>Caso de uso — el reto de diseño</div>
+    <p class="section-intro">Muchas entrevistas de diseño incluyen un ejercicio: te dan un problema abierto y ven cómo piensas en voz alta. No buscan la respuesta «correcta» — buscan tu <strong>método</strong>. Aquí un caso realista para PPM y el marco para atacar cualquiera.</p>
+
+    <div class="uc">
+      <div class="brief">
+        <div class="lbl">El brief (ejemplo probable en PPM)</div>
+        <p>«Una cadena de farmacias, cliente nuestro, tiene un programa de puntos que casi nadie usa. Quieren digitalizarlo en una app. ¿Cómo lo abordarías?»</p>
+      </div>
+      <p style="color:var(--body); margin-bottom:18px;">Este brief es perfecto para ti: toca <b>loyalty</b> (su negocio), <b>producto digital</b> (tu terreno) y <b>métricas</b> (tu ventaja). No saltes a diseñar pantallas. Piensa en voz alta con este orden:</p>
+
+      <div class="step">
+        <div class="num">1</div>
+        <div class="body">
+          <h4>Enmarca el problema antes de resolverlo</h4>
+          <p>No aceptes el brief tal cual. Haz preguntas que ordenen el caos — eso ya te separa del 80%.</p>
+          <div class="say"><b>Di:</b> «Primero necesito entender el problema real. ¿El programa se usa poco porque la gente no lo conoce, porque es difícil de usar, o porque la recompensa no motiva? Son tres problemas distintos con tres soluciones distintas. ¿Qué dice la data actual?»</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="body">
+          <h4>Define a quién y qué trabajo resuelve (JTBD)</h4>
+          <p>¿Quién es el cliente de la farmacia? ¿Qué «trabajo» contrata al programa de puntos? Probablemente <i>ahorrar en algo recurrente y necesario</i>, no «juntar puntos».</p>
+          <div class="say"><b>Di:</b> «Haría research rápido — entrevistas y mirar la data de compra — para entender la motivación real. El programa no compite por atención con otras farmacias; compite con la molestia de sacar una tarjeta o no ver el beneficio.»</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div class="body">
+          <h4>Define la métrica de éxito primero</h4>
+          <p>Aquí brillas. Antes de diseñar nada, di cómo sabrás si funcionó.</p>
+          <div class="say"><b>Di:</b> «Definiría la <b>métrica estrella</b>: por ejemplo, % de compras donde el cliente usa el programa (activación), y la <b>retención</b> a 90 días. Sin eso, rediseñar es decorar a ciegas.»</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <div class="body">
+          <h4>Mapea el recorrido y encuentra la fricción</h4>
+          <p>Journey map del momento de compra: llegar a caja → identificarse → acumular → canjear. ¿Dónde se cae? Casi siempre en «identificarse» (fricción) y en «ver el beneficio» (motivación).</p>
+          <div class="say"><b>Di:</b> «Aplicaría la <b>Ley de Hick</b> y carga cognitiva: quitar pasos para identificarse — quizás solo el número de teléfono en caja — y hacer el beneficio <b>visible y en el momento</b>, no en un estado de cuenta escondido.»</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">5</div>
+        <div class="body">
+          <h4>Propón la solución — y el peak-end</h4>
+          <p>Ahora sí, la app. Pero enmárcala en psicología de loyalty, no en pantallas bonitas.</p>
+          <div class="say"><b>Di:</b> «La <b>Regla pico-fin</b> dice que el cliente recuerda el clímax y el cierre. Así que el momento de <b>canjear</b> (el pico) debe sentirse una recompensa real, y el cierre de cada compra debe mostrar el progreso. Eso es lo que hace volver a la gente — no un catálogo de puntos.»</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">6</div>
+        <div class="body">
+          <h4>Valida y mide — cierra el loop</h4>
+          <p>Termina donde nadie más termina: en la evidencia.</p>
+          <div class="say"><b>Di:</b> «Lo probaría con 5 usuarios reales antes de construir, lanzaría un MVP instrumentado, y correría un A/B sobre la mecánica de recompensa. El diseño no termina en el Figma: termina cuando la activación sube. Justo como llevé una activación de 2.6% a 9.4% en mi producto actual.»</div>
+        </div>
+      </div>
+      <div class="panel" style="margin-top:20px;">
+        <p><strong>La estructura universal</strong> para cualquier reto de diseño, en 6 pasos: <b>1)</b> Enmarca / pregunta → <b>2)</b> Usuario y su trabajo → <b>3)</b> Métrica de éxito → <b>4)</b> Journey y fricción → <b>5)</b> Solución con justificación → <b>6)</b> Validar y medir. Si te bloqueas, vuelve al paso 1. <b>Pensar en voz alta &gt; tener la respuesta perfecta.</b></p>
+      </div>
+    </div>
+
+    <!-- 03 TRAMPAS -->
+    <div class="section-label" id="trampas"><span class="n">03</span>Preguntas trampa</div>
+    <p class="section-intro">Preguntas donde es fácil hundirse — sea por vocabulario mal usado o por caer en el marco equivocado. Cada una: qué evalúan, la respuesta pobre y la buena.</p>
+
+    <div class="qa trap">
+      <div class="qid">T1 · concepto</div>
+      <div class="q">¿Cuál es la diferencia entre UX y UI?</div>
+      <div class="want">Qué buscan: que no seas «solo un diseñador visual». Es la pregunta filtro más común.</div>
+      <div class="a">
+        <p class="bad">✗ Pobre: «UX es la experiencia y UI es la interfaz» (circular, no dice nada).</p>
+        <p class="good">✓ Bueno: «<b>UI</b> es lo que el usuario ve y toca — botones, color, layout, la capa visual e interactiva. <b>UX</b> es toda la experiencia de resolver su problema: research, flujo, arquitectura, si logra su meta sin fricción. La UI es una parte de la UX. Yo trabajo el espectro completo, y de hecho llego hasta el código, así que también vivo el lado técnico del handoff.»</p>
+      </div>
+    </div>
+
+    <div class="qa trap">
+      <div class="qid">T2 · concepto</div>
+      <div class="q">¿Un design system no es solo una librería de componentes?</div>
+      <div class="want">Qué buscan: profundidad real vs palabra de moda. Tú tienes la experiencia para responder con autoridad.</div>
+      <div class="a">
+        <p class="bad">✗ Pobre: «Sí, es una colección de componentes reutilizables.»</p>
+        <p class="good">✓ Bueno: «La librería es solo la parte visible. Un design system incluye además los <b>tokens</b>, los <b>patrones</b>, las <b>reglas de cuándo y cómo</b> usar cada cosa, la <b>documentación</b> y el proceso de gobernanza para que escale. Lo difícil no es crear los componentes: es lograr <b>adopción</b>. En Booz Allen lo llevé de 0 a 26 equipos sin poder obligar a nadie — eso es diseñar el sistema <i>y</i> la adopción.»</p>
+      </div>
+    </div>
+
+    <div class="qa trap">
+      <div class="qid">T3 · concepto</div>
+      <div class="q">Enséñame esta pantalla / dame feedback de este diseño en vivo.</div>
+      <div class="want">Qué buscan: si opinas por gusto o evalúas con criterio. La trampa es decir «me gusta» o «cambiaría el color».</div>
+      <div class="a">
+        <p class="bad">✗ Pobre: dar opiniones estéticas sueltas.</p>
+        <p class="good">✓ Bueno: «Antes de opinar: ¿cuál es el objetivo de esta pantalla y para quién? Con eso la evalúo contra <b>heurísticas</b> — ¿el usuario sabe dónde está (estado del sistema)? ¿la acción principal es clara (jerarquía, Ley de Fitts)? ¿cuántas decisiones le pido (Hick)? ¿es accesible (contraste, foco)? Separo problema de usabilidad de preferencia estética.» — Convierte opinión en método.</p>
+      </div>
+    </div>
+
+    <div class="qa trap">
+      <div class="qid">T4 · concepto</div>
+      <div class="q">¿Cuándo NO harías user research?</div>
+      <div class="want">Qué buscan: pragmatismo. Trampa: el purista dice «siempre hay que investigar» — falso en agencia con plazos.</div>
+      <div class="a">
+        <p class="good">✓ Bueno: «Cuando el costo de investigar supera el costo de equivocarse y corregir. Si es reversible y barato, a veces conviene lanzar un MVP instrumentado y aprender del comportamiento real — eso <i>es</i> research, solo que cuantitativo. También si ya existe evidencia previa o convenciones claras (Ley de Jakob). Research no es un ritual; es reducir incertidumbre donde más duele.»</p>
+      </div>
+    </div>
+
+    <div class="qa trap">
+      <div class="qid">T5 · comportamiento</div>
+      <div class="q">Un cliente pide un rediseño «más moderno» / «que se vea premium». ¿Qué haces?</div>
+      <div class="want">Qué buscan (crítico en agencia): si aceptas briefs vagos o los conviertes en objetivos. También si respetas al cliente.</div>
+      <div class="a">
+        <p class="bad">✗ Pobre: «Le muestro tendencias y hago algo moderno.»</p>
+        <p class="good">✓ Bueno: «‘Moderno’ y ‘premium’ son sensaciones, no objetivos — mi trabajo es traducirlos. Preguntaría: ¿qué debe <b>lograr</b> ese rediseño? ¿más conversión, más confianza, diferenciarse de un competidor? Un brief ambiguo es un problema de <b>framing</b>, no de diseño. Convierto ‘premium’ en decisiones concretas y en una métrica que diga si funcionó — sin descartar la intuición del cliente, la anclo en un objetivo.»</p>
+      </div>
+    </div>
+
+    <div class="qa trap">
+      <div class="qid">T6 · comportamiento</div>
+      <div class="q">Diseño vs deadline: el cliente quiere ya, sabes que falta research. ¿Qué haces?</div>
+      <div class="want">Qué buscan: madurez de agencia. Trampa: sonar rígido («no entrego sin research») o sin criterio («hago lo que pidan»).</div>
+      <div class="a">
+        <p class="good">✓ Bueno: «Priorizo por riesgo. Si la decisión es reversible y barata, entrego rápido y aprendo del dato en producción. Si es cara o difícil de revertir, negocio un mínimo de validación — aunque sea 5 usuarios en una tarde. Le doy al cliente la <b>opción informada</b>: ‘esto es lo que reduce el riesgo, esto es lo que cuesta en tiempo’. La decisión final es suya, pero con los ojos abiertos.»</p>
+      </div>
+    </div>
+
+    <div class="qa trap">
+      <div class="qid">T7 · concepto</div>
+      <div class="q">¿La accesibilidad no ralentiza y encarece el diseño?</div>
+      <div class="want">Qué buscan: si la ves como carga o como parte del craft. Terreno donde eres experto real.</div>
+      <div class="a">
+        <p class="good">✓ Bueno: «Al contrario, cuando está en el sistema desde el inicio no cuesta extra — está en los <b>tokens</b> y componentes. Retrofittear accesibilidad sí es caro; diseñarla dentro no. Y amplía el mercado: contraste y navegación clara ayudan a <b>todos</b>, no solo a personas con discapacidad. En mis design systems paso 95%+ de checks WCAG 2.2 automáticos — es parte de la definición de ‘terminado’, no un extra.»</p>
+      </div>
+    </div>
+
+    <div class="qa trap">
+      <div class="qid">T8 · concepto</div>
+      <div class="q">Dame un ejemplo de una decisión de diseño y por qué la tomaste.</div>
+      <div class="want">Qué buscan: que justifiques con razón, no con gusto. Trampa: responder «porque se veía mejor».</div>
+      <div class="a">
+        <p class="good">✓ Bueno: usa el A/B de EnRegla. «Teníamos registro por email vs. acceso con Google. En vez de decidir por opinión, corrí un <b>A/B test</b>. Google ganó y subió el completion del onboarding <b>74%</b>. La decisión no fue mi gusto — fue la evidencia. Así justifico diseño: hipótesis, medición, resultado.»</p>
+      </div>
+    </div>
+
+    <!-- 04 PREGUNTAS -->
+    <div class="section-label" id="preguntas"><span class="n">04</span>Preguntas que TÚ haces al final</div>
+    <p class="section-intro">Enfocadas en concepto y método (la guía de combate tiene las de negocio y cultura). Elige 2–3 de aquí + 2 de la otra guía. Las buenas los hacen hablar y revelan si el rol te conviene.</p>
+
+    <div class="askback">
+      <div class="qq">«¿Qué tan involucrado está el diseñador en la fase de research y definición del problema, o los briefs llegan ya cerrados desde cuentas/cliente?»</div>
+      <div class="why">Te dice si vas a enmarcar problemas (tu fuerte) o solo ejecutar. Filtra un rol interesante de uno operativo.</div>
+    </div>
+    <div class="askback">
+      <div class="qq">«¿Cómo miden el éxito de un diseño aquí? ¿Llegan hasta métricas de negocio del cliente — activación, retención, conversión — o el alcance termina en la entrega visual?»</div>
+      <div class="why">Tu ventaja es pensar en métricas. Si valoran eso, es tu carta ganadora; si no, tú puedes traerlo.</div>
+    </div>
+    <div class="askback">
+      <div class="qq">«¿Existe un design system compartido entre clientes/proyectos, o cada proyecto arranca de cero?»</div>
+      <div class="why">Abre la puerta a tu historia estrella (0→26 equipos) y muestra que piensas en escala y eficiencia — justo lo que una agencia necesita.</div>
+    </div>
+    <div class="askback">
+      <div class="qq">«En un programa de loyalty o una activación de marca, ¿cómo balancean la creatividad de campaña con la usabilidad y la data? ¿Quién tiene la última palabra?»</div>
+      <div class="why">Demuestra que entiendes su ADN (publicidad/loyalty) y la tensión real creatividad↔usabilidad. Pregunta de alguien que ya trabajó en agencia.</div>
+    </div>
+    <div class="askback">
+      <div class="qq">«¿Qué tan cerca trabaja diseño con desarrollo? ¿El diseñador entrega Figma o participa hasta la implementación?»</div>
+      <div class="why">Tu diferencial es la bisagra diseño↔código. Si valoran eso, eres raro y valioso. Abre tu historia del ciclo 6 semanas → &lt;1.</div>
+    </div>
+    <div class="askback">
+      <div class="qq">«¿Cómo está incorporando PPM la IA en la entrega a clientes hoy, y qué apetito hay por empujarla más?»</div>
+      <div class="why">Si hay apetito, tu research agéntico es tu carta más fuerte. Si no, te posicionas como quien lo puede traer.</div>
+    </div>
+
+    <!-- 05 CHEAT -->
+    <div class="section-label" id="cheat"><span class="n">05</span>Cheat sheet final — repaso de 3 minutos</div>
+    <p class="section-intro">Para el último vistazo antes de entrar. Si reconoces la fila, estás listo. Si no, vuelve al cluster.</p>
+    <div class="cheat-wrap">
+      <table class="cheat">
+        <thead><tr><th>Término</th><th>En una línea</th><th>Tu ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Design Thinking</td><td>Empatizar → Definir → Idear → Prototipar → Testear</td><td>Onboarding EnRegla</td></tr>
+          <tr><td>Double Diamond</td><td>Problema correcto (Descubrir/Definir) + Solución correcta (Desarrollar/Entregar)</td><td>Brújula, no receta</td></tr>
+          <tr><td>JTBD</td><td>La gente «contrata» tu producto para un trabajo</td><td>«Cumplir sin miedo a la multa»</td></tr>
+          <tr><td>MVP / Lean UX</td><td>Mínimo que entrega valor y deja aprender</td><td>Mides antes de construir de más</td></tr>
+          <tr><td>Cualitativo vs Cuantitativo</td><td>El «por qué» vs el «cuánto»</td><td>Entrevistas + Mixpanel</td></tr>
+          <tr><td>Usability testing</td><td>Ver a un usuario real hacer la tarea; 5 detectan ~85%</td><td>5 por feature, BAH</td></tr>
+          <tr><td>Persona</td><td>Arquetipo del usuario objetivo</td><td>Personas emuladas con LLM</td></tr>
+          <tr><td>Heurísticas (Nielsen)</td><td>10 reglas para evaluar usabilidad sin usuarios</td><td>Evaluación heurística</td></tr>
+          <tr><td>A/B testing</td><td>Dos versiones, gana el dato</td><td>Google vs email → +74%</td></tr>
+          <tr><td>Journey map</td><td>Pasos + emociones del usuario hacia su meta</td><td>Mapeaste la caída del onboarding</td></tr>
+          <tr><td>Information Architecture</td><td>Cómo se organiza y encuentra el contenido</td><td>16 pantallas EnRegla</td></tr>
+          <tr><td>Wireframe / Mockup / Prototype</td><td>Estructura / visual estático / clicable</td><td>Los tres en Figma</td></tr>
+          <tr><td>Design System</td><td>Componentes + tokens + reglas + docs + adopción</td><td>0→26 equipos · 31 componentes</td></tr>
+          <tr><td>Atomic Design</td><td>Átomos → moléculas → organismos → templates → páginas</td><td>Estructura de tu DS</td></tr>
+          <tr><td>Design tokens</td><td>Variables del diseño (color, espaciado…)</td><td>Tokens print/web en React</td></tr>
+          <tr><td>Accesibilidad / WCAG</td><td>Usable por todos; estándar A/AA/AAA</td><td>95%+ WCAG 2.2 · CPACC</td></tr>
+          <tr><td>Ley de Fitts</td><td>Objetivo grande y cercano = más rápido de alcanzar</td><td>CTA prominente</td></tr>
+          <tr><td>Ley de Hick</td><td>Más opciones = decisión más lenta</td><td>Simplificar onboarding</td></tr>
+          <tr><td>Ley de Jakob</td><td>Respeta convenciones; el usuario vive en otros sitios</td><td>Convención en lo funcional</td></tr>
+          <tr><td>Affordance / Signifier</td><td>Qué permite un objeto / la pista visual que lo dice</td><td>Norman</td></tr>
+          <tr><td>Peak-End Rule</td><td>Recordamos el pico y el final de la experiencia</td><td>Momento de canje en loyalty</td></tr>
+          <tr><td>Carga cognitiva</td><td>Esfuerzo mental que exige la interfaz; minimízalo</td><td>Reducir fricción</td></tr>
+          <tr><td>North Star Metric</td><td>La métrica que captura el valor entregado</td><td>Empresas que cumplen a tiempo</td></tr>
+          <tr><td>Activación</td><td>Primer momento de valor real («aha»)</td><td>2.6% → 9.4%</td></tr>
+          <tr><td>Funnel</td><td>Pasos hacia la meta; dónde se cae la gente</td><td>Instrumentado en Mixpanel</td></tr>
+          <tr><td>Retención / Churn</td><td>Vuelven / se van</td><td>Research Arpatel</td></tr>
+          <tr><td>HEART</td><td>Happiness, Engagement, Adoption, Retention, Task success</td><td>Framework UX de Google</td></tr>
+          <tr><td>AARRR</td><td>Adquisición, Activación, Retención, Referido, Revenue</td><td>Embudo de crecimiento</td></tr>
+          <tr><td>BTL / Activación</td><td>Marketing directo y segmentado (ADN de PPM)</td><td>Llevarlo a digital medible</td></tr>
+          <tr><td>Loyalty</td><td>Puntos/recompensas para que el cliente vuelva</td><td>Línea central de PPM</td></tr>
+          <tr><td>CRM / Automation</td><td>Relación con cliente + flujos automáticos</td><td>Línea «iCare» de PPM</td></tr>
+          <tr><td>Omnicanalidad</td><td>Experiencia consistente en todos los canales</td><td>POS retail + ecommerce</td></tr>
+          <tr><td>LTV / CAC</td><td>Valor del cliente vs costo de adquirirlo</td><td>Por qué importa la retención</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" style="margin-top:24px;">
+      <p style="color:var(--body);"><strong>Recordatorio final:</strong> no eres un candidato que estudió estos términos anoche. Eres alguien con <strong>15 años haciéndolos</strong> que ahora también les pone nombre. Si dudas de un concepto, ancla en tu ejemplo real y habla desde ahí. La experiencia gana a la definición — siempre. Suerte mañana. 🚀</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>Estudio confidencial · Danilo Rojas · entrevista PPM (Publipromueve) · complemento de /interview · fuente: fact-bank + research empresa 07·07·2026</p>
+  </footer>
+</body>
+</html>
