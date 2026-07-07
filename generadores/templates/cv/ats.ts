@@ -2,9 +2,9 @@ import type { CvData } from "../../lib/types.js";
 import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 
 /*
- * ATS-safe CV — versión fechada 2026-07-01.
+ * ATS-safe CV — versión fechada 2026-07-07.
  *
- * Cotejo: perfil/data/fact-bank.yaml (hechos) × Notion "ATS Research" (35 ciclos).
+ * Cotejo: perfil/data/fact-bank.yaml (hechos) × Notion "ATS Research" (39 ciclos).
  * Reglas aplicadas del research:
  *  - Hybrid Chronological: Summary → Skills → Tools → Work Experience → Certifications → Education.
  *  - Single-column, headers estándar, contacto en el cuerpo, URLs en texto plano, sin iconos.
@@ -102,8 +102,8 @@ const ROWS: AtsRow[] = [
         es: "Dirigí la unidad de DesignOps para clientes Fortune 500, escalando design systems multi-tema distribuidos y librerías de tokens sobre Ant Design, Material UI e IBM Carbon, más un design system propio basado en Shadcn para Banco Pichincha.",
       },
       {
-        en: "Led qualitative user research — 100+ user interviews, usability testing and card sorting — defining standard enterprise interaction patterns.",
-        es: "Lideré investigación cualitativa de usuarios — 100+ entrevistas, usability testing y card sorting — definiendo patrones de interacción enterprise estándar.",
+        en: "Led qualitative user research — 100+ user interviews, usability testing sessions and card sorting exercises with enterprise users across Fortune 500 accounts — defining standard enterprise interaction patterns.",
+        es: "Lideré investigación cualitativa de usuarios — 100+ entrevistas, sesiones de usability testing y ejercicios de card sorting con usuarios enterprise en cuentas Fortune 500 — definiendo patrones de interacción enterprise estándar.",
       },
       {
         en: "Reduced client time-to-market by 35% through an optimized design-to-engineering handoff; mentored 12 junior/mid designers.",
@@ -156,7 +156,7 @@ const SKILLS: SkillLine[] = [
   },
 ];
 
-const TOOLS = "Figma (Auto Layout, Variables, Dev Mode, Motion, Figma Make, MCP) · Miro · Storybook · Jira · Linear · GitHub · Vercel · Cursor · Claude Code";
+const TOOLS = "Figma (Auto Layout, Variables, Dev Mode, Motion (timeline + keyframes), Figma Make, MCP) · Miro · Storybook · Jira · Linear · GitHub · Vercel · Cursor · Claude Code";
 
 const STYLES = `
 /* Tri-voz tipográfica (todo system fonts, ATS-safe): Bahnschrift = display/headings,
@@ -206,7 +206,7 @@ export function renderAtsCv(data: CvData, lang: Lang): string {
         certs: "Certifications",
         edu: "Education",
         summaryText:
-          "Senior Product Designer with 12+ years leading product discovery and end-to-end design for complex, regulated environments — federal platforms (DoD, Army, FAA, VA) and B2B SaaS. Cut design-to-development cycle time from ~6 weeks to under 1 week and scaled a design system from 0 to 26 teams at Booz Allen Hamilton. Expert in Figma (Auto Layout, Variables, Dev Mode), design systems governance, accessibility (WCAG 2.2, Section 508) and AI-augmented user research.",
+          "Senior Product Designer with 12+ years leading product discovery and end-to-end design for complex, regulated environments — federal platforms (DoD, Army, FAA, VA) and B2B SaaS. Cut design-to-development cycle time from ~6 weeks to under 1 week and scaled an agent-ready design system from 0 to 26 teams at Booz Allen Hamilton. Expert in Figma (Auto Layout, Variables, Dev Mode), design systems governance, accessibility (WCAG 2.2, Section 508) and AI-augmented research workflows.",
       }
     : {
         headline: "Senior Product Designer",
@@ -218,7 +218,7 @@ export function renderAtsCv(data: CvData, lang: Lang): string {
         certs: "Certificaciones",
         edu: "Educación",
         summaryText:
-          "Senior Product Designer con 12+ años liderando product discovery y diseño end-to-end para entornos complejos y regulados — plataformas federales (DoD, Army, FAA, VA) y SaaS B2B. Reduje el ciclo design-to-development de ~6 semanas a menos de 1 semana y escalé un design system de 0 a 26 equipos en Booz Allen Hamilton. Experto en Figma (Auto Layout, Variables, Dev Mode), gobernanza de design systems, accesibilidad (WCAG 2.2, Section 508) e investigación de usuarios potenciada por IA.",
+          "Senior Product Designer con 12+ años liderando product discovery y diseño end-to-end para entornos complejos y regulados — plataformas federales (DoD, Army, FAA, VA) y SaaS B2B. Reduje el ciclo design-to-development de ~6 semanas a menos de 1 semana y escalé un design system agéntico de 0 a 26 equipos en Booz Allen Hamilton. Experto en Figma (Auto Layout, Variables, Dev Mode), gobernanza de design systems, accesibilidad (WCAG 2.2, Section 508) e investigación potenciada por IA.",
       };
 
   const skills = SKILLS.map((s) =>

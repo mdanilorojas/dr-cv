@@ -31,9 +31,9 @@ async function main() {
   await emit("cv-clean-en", renderCleanCv(data, "en"));
   await emit("cv-clean-es", renderCleanCv(data, "es"));
 
-  // Versión ATS fechada 2026-07-02: todos los [DATO: ...] resueltos contra fact-bank — enviable.
-  await emit("cv-ats-2026-07-02-en", renderAtsCv(data, "en"));
-  await emit("cv-ats-2026-07-02-es", renderAtsCv(data, "es"));
+  // Versión ATS fechada 2026-07-07: cotejo fact-bank × ATS Research Ciclo 39 — enviable.
+  await emit("cv-ats-2026-07-07-en", renderAtsCv(data, "en"));
+  await emit("cv-ats-2026-07-07-es", renderAtsCv(data, "es"));
 
   console.log("[cv] done.");
 }
