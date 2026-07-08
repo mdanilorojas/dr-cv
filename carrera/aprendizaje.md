@@ -17,7 +17,9 @@ Objetivo: crecer poco a poco hacia AI Product Designer, con vocabulario y conoci
 
 _(el agente mantiene esta lista para no repetir — uno por línea, área entre corchetes)_
 
-- _(vacío — primer día aún no corre)_
+- Code Layers [Product Design]
+- Patrón Actor-Evaluador / Reflection pattern [AI]
+- Idempotencia / Idempotency [Development]
 
 ---
 
@@ -37,3 +39,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 **Term (ES + EN)** → definición → por qué importa → ejemplo aplicado.
 
 -->
+
+### 2026-07-08 · miércoles
+
+**Product Design**
+**Code Layers (ES: Capas de código / EN: Code Layers)** → función nueva de Figma (Config 2026, esta semana) que convierte cualquier capa de diseño en una capa de código interactiva y funcional con un clic o un prompt. → Importa porque acorta la brecha diseño→desarrollo que la propia comunidad UX está señalando esta semana como "deuda de design system" que ahora paga todo el equipo, no solo el diseñador. → Aplicación: usarlo para entregar componentes de EnRegla o del design system como código casi-funcional en vez de specs estáticas, reduciendo ciclos de handoff.
+
+**AI**
+**Patrón Actor-Evaluador (ES) / Actor-Evaluator (Reflection) pattern (EN)** → arquitectura de agentes donde un modelo "actor" genera una respuesta y un segundo modelo o chequeo externo ("evaluador/crítico") la mide contra pruebas concretas, revisando en bucle hasta pasar o llegar a un límite. → Importa porque esta semana se señaló como el patrón líder de agentes 2026: un agente de un solo paso envía errores que un crítico separado sí detecta; las mejoras durables vienen de críticos con base real, límites de iteración y salidas claras, no de que el modelo se auto-discuta. → Aplicación: en un workflow agéntico que genera bullets de CV, agregar un paso "evaluador" que verifique cada bullet contra los datos reales de perfil antes de aceptarlo.
+
+**Development**
+**Idempotencia (ES) / Idempotency (EN)** → una operación es idempotente si produce el mismo resultado final sin importar cuántas veces se ejecute, incluso tras un fallo a medias. → Importa porque es la propiedad que hace seguro reintentar pipelines de build o llamadas de herramientas de un agente sin duplicar efectos secundarios. → Aplicación: diseñar los scripts de `generadores/` (y cualquier task runner agéntico) para que, si se cortan a medias, volver a correr `npm run build:all` sobrescriba `dist/` limpio en vez de acumular o duplicar archivos.
