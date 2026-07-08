@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cheat codes · Product Design — Danilo Rojas</title>
+  <meta name="description" content="Todos los cheat codes de conceptos de Product Design en una sola pantalla — repaso de 3 minutos antes de una entrevista.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <style>
+    :root {
+      --bg: #0A0B0E; --panel: #14161C; --inset: #0D0F13;
+      --line: rgba(255,255,255,.08);
+      --text: #F4F4F5; --body: #CACBCF; --muted: #90929A; --soft: #6E727B;
+      --accent: #FF8964;
+      --a: #FF8964; --b: #5683DA; --c: #4ADE80; --d: #B98CE0; --e: #E5A84B; --f: #38BDF8; --g: #F472B6;
+      --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-body); -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; min-height: 100vh; padding: 12px 14px; }
+
+    header { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--line); flex: none; }
+    header h1 { font-size: clamp(15px, 1.6vw, 20px); font-weight: 900; letter-spacing: -.02em; }
+    header h1 .dim { color: var(--soft); font-weight: 600; }
+    header .tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(255,137,100,.3); border-radius: 4px; padding: 2px 7px; }
+    header .legend { margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+    header .lg { font-family: var(--font-mono); font-size: 9.5px; color: var(--muted); display: inline-flex; align-items: center; gap: 4px; }
+    header .lg i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+    header .note { font-family: var(--font-mono); font-size: 10px; color: var(--soft); width: 100%; }
+
+    .grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); grid-auto-rows: min-content; gap: 6px; align-content: start; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--soft); border-radius: 6px; padding: 6px 9px; }
+    .card .t { font-size: 11.5px; font-weight: 800; color: var(--text); line-height: 1.15; letter-spacing: -.01em; }
+    .card .d { font-size: 10px; color: var(--body); line-height: 1.28; margin-top: 2px; }
+    .card .ex { font-size: 9.5px; color: var(--soft); font-family: var(--font-mono); margin-top: 3px; line-height: 1.2; }
+    .card .ex b { color: var(--c); font-weight: 600; }
+
+    .card.a { border-left-color: var(--a); } .card.a .t { color: #ffb59c; }
+    .card.b { border-left-color: var(--b); } .card.b .t { color: #9db8ee; }
+    .card.c { border-left-color: var(--c); } .card.c .t { color: #86efac; }
+    .card.d { border-left-color: var(--d); } .card.d .t { color: #d4b6ef; }
+    .card.e { border-left-color: var(--e); } .card.e .t { color: #f2cd8a; }
+    .card.f { border-left-color: var(--f); } .card.f .t { color: #8fd6f9; }
+    .card.g { border-left-color: var(--g); } .card.g .t { color: #f9a8d0; }
+
+    footer { flex: none; text-align: center; padding-top: 8px; margin-top: 8px; border-top: 1px solid var(--line); }
+    footer p { font-family: var(--font-mono); font-size: 9.5px; color: var(--soft); }
+
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } header .legend { display: none; } }
+
+    @media print {
+      @page { size: A4 landscape; margin: 6mm; }
+      body { background: #fff; color: #000; padding: 0; }
+      .card { background: #fff; border-color: #ccc; break-inside: avoid; }
+      .card .t { color: #000 !important; }
+      .card .d { color: #222; } .card .ex { color: #555; } .card .ex b { color: #000; }
+      header, footer { border-color: #999; }
+      .grid { grid-template-columns: repeat(5, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cheat codes <span class="dim">· Product Design</span></h1>
+    <span class="tag">repaso 3 min</span>
+    <div class="legend">
+      <span class="lg"><i style="background:var(--a)"></i>Proceso</span>
+      <span class="lg"><i style="background:var(--b)"></i>Research</span>
+      <span class="lg"><i style="background:var(--c)"></i>Síntesis</span>
+      <span class="lg"><i style="background:var(--d)"></i>Craft</span>
+      <span class="lg"><i style="background:var(--e)"></i>Leyes UX</span>
+      <span class="lg"><i style="background:var(--f)"></i>Métricas</span>
+      <span class="lg"><i style="background:var(--g)"></i>Marketing</span>
+    </div>
+    <p class="note">Reconoce la tarjeta → estás listo. ¿Dudas? Vuelve a <a href="/conceptos/" style="color:var(--accent)">/conceptos</a>. Verde = tu ejemplo real.</p>
+  </header>
+
+  <main class="grid">
+    <!-- A · Proceso -->
+    <div class="card a"><div class="t">Design Thinking</div><div class="d">Empatizar → Definir → Idear → Prototipar → Testear.</div><div class="ex"><b>Onboarding EnRegla</b></div></div>
+    <div class="card a"><div class="t">Double Diamond</div><div class="d">Problema correcto (Descubrir/Definir) + Solución correcta (Desarrollar/Entregar).</div><div class="ex"><b>Brújula, no receta</b></div></div>
+    <div class="card a"><div class="t">Jobs To Be Done</div><div class="d">La gente «contrata» tu producto para un trabajo, no por demografía.</div><div class="ex"><b>«Cumplir sin miedo a la multa»</b></div></div>
+    <div class="card a"><div class="t">MVP / Lean UX</div><div class="d">Mínimo que entrega valor y deja aprender del usuario real.</div><div class="ex"><b>Mides antes de construir de más</b></div></div>
+
+    <!-- B · Research -->
+    <div class="card b"><div class="t">Qual vs Quant</div><div class="d">El «por qué» (entrevistas) vs el «cuánto» (analítica, A/B).</div><div class="ex"><b>Entrevistas + Mixpanel</b></div></div>
+    <div class="card b"><div class="t">Usability testing</div><div class="d">Ver a un usuario real hacer la tarea; 5 detectan ~85% de fallas.</div><div class="ex"><b>5 por feature, BAH</b></div></div>
+    <div class="card b"><div class="t">Persona</div><div class="d">Arquetipo del usuario objetivo (metas, frustraciones, contexto).</div><div class="ex"><b>Personas emuladas con LLM</b></div></div>
+    <div class="card b"><div class="t">Heurísticas (Nielsen)</div><div class="d">10 reglas para evaluar usabilidad sin usuarios.</div><div class="ex"><b>Evaluación heurística</b></div></div>
+    <div class="card b"><div class="t">A/B testing</div><div class="d">Dos versiones a grupos distintos; gana el dato, no la opinión.</div><div class="ex"><b>Google vs email → +74%</b></div></div>
+
+    <!-- C · Síntesis -->
+    <div class="card c"><div class="t">Journey map</div><div class="d">Pasos + emociones del usuario hacia su meta; revela dónde se cae.</div><div class="ex"><b>Caída del onboarding</b></div></div>
+    <div class="card c"><div class="t">Information Architecture</div><div class="d">Cómo se organiza, etiqueta y encuentra el contenido.</div><div class="ex"><b>16 pantallas EnRegla</b></div></div>
+
+    <!-- D · Craft -->
+    <div class="card d"><div class="t">Wireframe/Mockup/Prototype</div><div class="d">Estructura lo-fi / visual estático / clicable navegable.</div><div class="ex"><b>Los tres en Figma</b></div></div>
+    <div class="card d"><div class="t">Design System</div><div class="d">Componentes + tokens + reglas + docs + adopción. No solo UI.</div><div class="ex"><b>0→26 equipos · 31 comp.</b></div></div>
+    <div class="card d"><div class="t">Atomic Design</div><div class="d">Átomos → moléculas → organismos → templates → páginas.</div><div class="ex"><b>Estructura de tu DS</b></div></div>
+    <div class="card d"><div class="t">Design tokens</div><div class="d">Variables del diseño (color, espaciado); puente diseño↔código.</div><div class="ex"><b>Tokens print/web en React</b></div></div>
+    <div class="card d"><div class="t">Accesibilidad / WCAG</div><div class="d">Usable por todos; estándar con niveles A / AA / AAA.</div><div class="ex"><b>95%+ WCAG 2.2 · CPACC</b></div></div>
+
+    <!-- E · Leyes UX -->
+    <div class="card e"><div class="t">Ley de Fitts</div><div class="d">Objetivo grande y cercano = más rápido de alcanzar.</div><div class="ex"><b>CTA prominente</b></div></div>
+    <div class="card e"><div class="t">Ley de Hick</div><div class="d">Más opciones = decisión más lenta. Reduce y agrupa.</div><div class="ex"><b>Simplificar onboarding</b></div></div>
+    <div class="card e"><div class="t">Ley de Jakob</div><div class="d">El usuario vive en otros sitios; respeta convenciones.</div><div class="ex"><b>Convención en lo funcional</b></div></div>
+    <div class="card e"><div class="t">Affordance / Signifier</div><div class="d">Qué permite un objeto / la pista visual que lo comunica (Norman).</div><div class="ex"><b>+ feedback, mapping</b></div></div>
+    <div class="card e"><div class="t">Peak-End Rule</div><div class="d">Recordamos el pico y el final, no el promedio de la experiencia.</div><div class="ex"><b>Momento de canje (loyalty)</b></div></div>
+    <div class="card e"><div class="t">Carga cognitiva</div><div class="d">Esfuerzo mental que exige la interfaz; minimízalo.</div><div class="ex"><b>Reducir fricción</b></div></div>
+
+    <!-- F · Métricas -->
+    <div class="card f"><div class="t">North Star Metric</div><div class="d">La única métrica que captura el valor entregado al usuario.</div><div class="ex"><b>Empresas que cumplen a tiempo</b></div></div>
+    <div class="card f"><div class="t">Activación</div><div class="d">Primer momento de valor real («aha moment»).</div><div class="ex"><b>2.6% → 9.4%</b></div></div>
+    <div class="card f"><div class="t">Funnel</div><div class="d">Pasos hacia la meta; mide dónde se cae la gente.</div><div class="ex"><b>Instrumentado en Mixpanel</b></div></div>
+    <div class="card f"><div class="t">Retención / Churn</div><div class="d">% que vuelve vs % que se va. Retener &gt; adquirir.</div><div class="ex"><b>Research Arpatel</b></div></div>
+    <div class="card f"><div class="t">HEART</div><div class="d">Happiness, Engagement, Adoption, Retention, Task success.</div><div class="ex"><b>Framework UX de Google</b></div></div>
+    <div class="card f"><div class="t">AARRR</div><div class="d">Adquisición, Activación, Retención, Referido, Revenue.</div><div class="ex"><b>Embudo de crecimiento</b></div></div>
+
+    <!-- G · Marketing / PPM -->
+    <div class="card g"><div class="t">BTL / Activación</div><div class="d">Marketing directo y segmentado (punto de venta, eventos).</div><div class="ex"><b>Llevarlo a digital medible</b></div></div>
+    <div class="card g"><div class="t">Loyalty</div><div class="d">Puntos/recompensas/tiers para que el cliente vuelva.</div><div class="ex"><b>Línea central de PPM</b></div></div>
+    <div class="card g"><div class="t">CRM / Automation</div><div class="d">Relación con cliente + flujos automáticos por comportamiento.</div><div class="ex"><b>Línea «iCare» de PPM</b></div></div>
+    <div class="card g"><div class="t">Omnicanalidad</div><div class="d">Experiencia consistente y conectada en todos los canales.</div><div class="ex"><b>POS retail + ecommerce</b></div></div>
+    <div class="card g"><div class="t">LTV / CAC</div><div class="d">Valor del cliente vs costo de adquirirlo. Sano: LTV &gt; CAC.</div><div class="ex"><b>Por qué importa retener</b></div></div>
+  </main>
+
+  <footer>
+    <p>33 cheat codes · Danilo Rojas · complemento de /conceptos · imprime en A4 horizontal (Ctrl+P) para llevarlo en papel</p>
+  </footer>
+</body>
+</html>
