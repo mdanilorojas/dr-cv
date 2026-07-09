@@ -20,6 +20,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Code Layers [Product Design]
 - Patrón Actor-Evaluador / Reflection pattern [AI]
 - Idempotencia / Idempotency [Development]
+- Claude Design (workspace de diseño con IA) [Product Design]
+- Arquitectura de agentes basada en grafos / Graph-based agent architecture [AI]
+- Modelo open-weight en selector de IDE / Open-weight model in IDE picker [Development]
 
 ---
 
@@ -50,3 +53,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Idempotencia (ES) / Idempotency (EN)** → una operación es idempotente si produce el mismo resultado final sin importar cuántas veces se ejecute, incluso tras un fallo a medias. → Importa porque es la propiedad que hace seguro reintentar pipelines de build o llamadas de herramientas de un agente sin duplicar efectos secundarios. → Aplicación: diseñar los scripts de `generadores/` (y cualquier task runner agéntico) para que, si se cortan a medias, volver a correr `npm run build:all` sobrescriba `dist/` limpio en vez de acumular o duplicar archivos.
+
+### 2026-07-09 · jueves
+
+**Product Design**
+**Claude Design (ES: workspace de diseño con IA de Anthropic / EN: Claude Design)** → workspace de IA lanzado por Anthropic esta semana que genera prototipos completos, decks, one-pagers y assets de marketing a partir de un prompt, pensado para no-diseñadores (founders, PMs). → Importa porque, igual que Figma Code Layers, corre el valor del diseñador senior lejos de producir pantallas y hacia curar sistemas y criterio de calidad, porque el artefacto ya lo puede generar cualquiera. → Aplicación: usarlo para generar un borrador rápido de deck o one-pager de EnRegla, y aportar el ojo curatorial (jerarquía, consistencia con el design system) que la herramienta no tiene.
+
+**AI**
+**Arquitectura de agentes basada en grafos (ES) / Graph-based agent architecture (EN)** → patrón detrás del rediseño de ADK 2.0 de Google esta semana: los pasos deterministas (llamadas a herramientas, ruteo, aprobación humana) se codifican como nodos de un grafo explícito, y el LLM solo se invoca en los nodos que de verdad requieren razonamiento. → Importa porque resuelve el problema opuesto al patrón actor-evaluador ya cubierto: no todo paso de un workflow agéntico necesita un modelo, y forzarlo ahí suma costo, latencia y una fuente extra de error no determinista. → Aplicación: modelar un workflow agéntico de EnRegla (p. ej. generar CVs) como grafo donde "leer perfil.json" y "renderizar PDF" son nodos de código puro, y el LLM entra solo en el nodo de "redactar bullets".
+
+**Development**
+**Modelo open-weight en selector de IDE (ES) / Open-weight model in an IDE's model picker (EN)** → esta semana Kimi K2.7 Code de Moonshot AI se convirtió en el primer modelo de pesos abiertos disponible en el selector de modelos de GitHub Copilot, junto a los propietarios. → Importa porque marca el punto donde "modelo abierto vs. cerrado" deja de ser una decisión de infraestructura exótica y pasa a ser un dropdown cotidiano, con implicaciones reales de costo, privacidad de datos y opción de auto-hospedar. → Aplicación: al evaluar qué modelo usar en tareas repetitivas y de bajo riesgo de `generadores/` (ej. limpieza de datos), considerar un modelo open-weight vía API y reservar los propietarios para el razonamiento de mayor valor.
