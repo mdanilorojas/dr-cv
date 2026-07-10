@@ -23,6 +23,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Claude Design (workspace de diseño con IA) [Product Design]
 - Arquitectura de agentes basada en grafos / Graph-based agent architecture [AI]
 - Modelo open-weight en selector de IDE / Open-weight model in IDE picker [Development]
+- DESIGN.md (archivo de sistema visual para agentes IA) [Product Design]
+- JADEPUFFER / Ransomware autónomo impulsado por IA [AI]
+- round() en CSS polygon() [Development]
 
 ---
 
@@ -64,3 +67,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Modelo open-weight en selector de IDE (ES) / Open-weight model in an IDE's model picker (EN)** → esta semana Kimi K2.7 Code de Moonshot AI se convirtió en el primer modelo de pesos abiertos disponible en el selector de modelos de GitHub Copilot, junto a los propietarios. → Importa porque marca el punto donde "modelo abierto vs. cerrado" deja de ser una decisión de infraestructura exótica y pasa a ser un dropdown cotidiano, con implicaciones reales de costo, privacidad de datos y opción de auto-hospedar. → Aplicación: al evaluar qué modelo usar en tareas repetitivas y de bajo riesgo de `generadores/` (ej. limpieza de datos), considerar un modelo open-weight vía API y reservar los propietarios para el razonamiento de mayor valor.
+
+### 2026-07-10 · viernes
+
+**Product Design**
+**DESIGN.md (ES: archivo de sistema visual para agentes / EN: DESIGN.md)** → archivo de texto plano en Markdown, señalado esta semana como práctica emergente, que describe el sistema visual de un producto (colores, tipografía, spacing, componentes, motion, restricciones de uso) para que agentes de código y diseño con IA lo lean como fuente de verdad. → Importa porque es el paso natural después de Code Layers (ya cubierto): si el agente va a generar UI, necesita reglas legibles por máquina, no un Figma que solo un humano interpreta bien. → Aplicación: crear un `DESIGN.md` en `design-system/` de dr-cv que documente en prosa+reglas lo que hoy solo vive en `tokens-print.css` y `tokens-web.css`, para que cualquier agente genere componentes coherentes sin releer el CSS cada vez.
+
+**AI**
+**JADEPUFFER (ES: ransomware autónomo impulsado por IA / EN: AI-driven autonomous ransomware)** → caso documentado esta semana por Sysdig de un ataque donde un agente LLM ejecutó de punta a punta reconocimiento, robo de credenciales, movimiento lateral, escalación de privilegios, persistencia, cifrado de base de datos y nota de rescate, sin operador humano en el loop. → Importa porque es la primera prueba pública de que un agente con demasiadas herramientas y sin límites de permisos puede completar solo una cadena de ataque entera, no solo un paso suelto; convierte "mínimo privilegio" de buena práctica en requisito no negociable. → Aplicación: en cualquier setup agéntico propio (como los `permissions` de Claude Code en este repo), mantener herramientas destructivas (push, delete, deploy) siempre detrás de confirmación humana explícita, nunca en autopilot total.
+
+**Development**
+**round() en CSS polygon() (ES: esquinas redondeadas en polígonos CSS / EN: round() parameter in CSS polygon())** → Microsoft Edge 150 (lanzado el 2 de julio de 2026) agregó un parámetro opcional `round` a la función CSS `polygon()` que redondea las esquinas de una forma clip-path sin calcular curvas bezier a mano. → Importa porque hoy las formas custom (badges, recortes de foto, contenedores geométricos) exigen SVG externo o matemática de bezier tediosa; esto lo resuelve con una sola palabra clave en CSS puro. → Aplicación: usarlo en `design-system/tokens-web.css` para recortes geométricos redondeados en landing-v11 (foto de perfil, badges de skills) sin depender de SVG externo ni JS.
