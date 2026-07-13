@@ -26,6 +26,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - DESIGN.md (archivo de sistema visual para agentes IA) [Product Design]
 - JADEPUFFER / Ransomware autónomo impulsado por IA [AI]
 - round() en CSS polygon() [Development]
+- Búsqueda web en el agente de diseño de Figma / Web search in Figma's design agent [Product Design]
+- Seguridad en tiempo de ejecución de agentes / Agentic AI runtime security [AI]
+- Atributo HTML focusgroup / HTML focusgroup attribute [Development]
 
 ---
 
@@ -78,3 +81,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **round() en CSS polygon() (ES: esquinas redondeadas en polígonos CSS / EN: round() parameter in CSS polygon())** → Microsoft Edge 150 (lanzado el 2 de julio de 2026) agregó un parámetro opcional `round` a la función CSS `polygon()` que redondea las esquinas de una forma clip-path sin calcular curvas bezier a mano. → Importa porque hoy las formas custom (badges, recortes de foto, contenedores geométricos) exigen SVG externo o matemática de bezier tediosa; esto lo resuelve con una sola palabra clave en CSS puro. → Aplicación: usarlo en `design-system/tokens-web.css` para recortes geométricos redondeados en landing-v11 (foto de perfil, badges de skills) sin depender de SVG externo ni JS.
+
+### 2026-07-13 · lunes
+
+**Product Design**
+**Búsqueda web en el agente de diseño de Figma (ES) / Web search in Figma's design agent (EN)** → función lanzada esta semana en Config 2026 que permite al agente de Figma buscar en la web en vivo para traer mejores prácticas y contenido real en lugar de placeholders "lorem ipsum". → Importa porque elimina el paso manual de research/curación de referencias antes de maquetar, acercando el output del agente a un primer borrador usable en vez de un mockup genérico. → Aplicación: pedirle al agente de Figma que pueble un layout de landing-v11 con copy y datos reales de la industria de tech recruiting en vez de placeholders, y luego curar/editar con criterio senior.
+
+**AI**
+**Seguridad en tiempo de ejecución de agentes (ES) / Agentic AI runtime security (EN)** → categoría de herramientas, con cobertura fuerte esta semana (CISA añadió un CVE crítico de Langflow a su catálogo de vulnerabilidades explotadas), que aplica política de seguridad en el momento exacto en que un agente actúa —qué herramienta puede llamar, qué dato puede tocar— en vez de solo revisar el prompt de entrada. → Importa porque cada agente desplegado es una identidad no-humana nueva con credenciales y permisos propios, un "blast radius" que los controles de seguridad tradicionales (firewall, revisión de código) no cubren; es literalmente el tema del kickoff de mañana con PPM. → Aplicación: en el review de arquitectura de agentes production-ready de mañana, proponer límites explícitos de herramientas/datos por agente y logs de auditoría por acción, no solo un guardrail en el prompt del sistema.
+
+**Development**
+**Atributo HTML focusgroup (ES) / HTML focusgroup attribute (EN)** → atributo nuevo en Microsoft Edge 150 (lanzado esta semana) que estandariza la navegación por teclado (flechas, Home/End) para widgets compuestos como toolbars, tabs, menús y grupos de radio, sin JS custom. → Importa porque hoy ese comportamiento de teclado hay que reimplementarlo a mano por componente, y es una de las causas más comunes de bugs de accesibilidad en design systems. → Aplicación: usarlo en los componentes de tabs/toolbar de `design-system/` para landing-v11, reemplazando el manejo manual de keydown por una sola línea de HTML declarativo.
