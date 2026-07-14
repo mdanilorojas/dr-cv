@@ -29,6 +29,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Búsqueda web en el agente de diseño de Figma / Web search in Figma's design agent [Product Design]
 - Seguridad en tiempo de ejecución de agentes / Agentic AI runtime security [AI]
 - Atributo HTML focusgroup / HTML focusgroup attribute [Development]
+- Motion design nativo en Figma / Native motion design in Figma [Product Design]
+- Memoria persistente de agentes vía MCP / Agent persistent memory via MCP [AI]
+- flex-wrap: balance en CSS / CSS flex-wrap: balance [Development]
 
 ---
 
@@ -92,3 +95,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Atributo HTML focusgroup (ES) / HTML focusgroup attribute (EN)** → atributo nuevo en Microsoft Edge 150 (lanzado esta semana) que estandariza la navegación por teclado (flechas, Home/End) para widgets compuestos como toolbars, tabs, menús y grupos de radio, sin JS custom. → Importa porque hoy ese comportamiento de teclado hay que reimplementarlo a mano por componente, y es una de las causas más comunes de bugs de accesibilidad en design systems. → Aplicación: usarlo en los componentes de tabs/toolbar de `design-system/` para landing-v11, reemplazando el manejo manual de keydown por una sola línea de HTML declarativo.
+
+### 2026-07-14 · martes
+
+**Product Design**
+**Motion design nativo en Figma (ES) / Native motion design in Figma (EN)** → en Config 2026 (esta semana) Figma agregó un timeline de motion con keyframes y presets directamente en Figma Design, más la opción de pedirle al agente de Figma un borrador de animación a partir de un prompt. → Importa porque cierra el círculo de Code Layers (ya cubierto): ya no solo el layout se convierte en código con un clic, ahora la animación misma se define e itera en el mismo archivo, sin handoff a After Effects o Lottie. → Aplicación: prototipar ahí mismo las micro-interacciones propias de `perfil/` (reveal de foto, transición de casos) antes de traducirlas a CSS/JS en el design system.
+
+**AI**
+**Memoria persistente de agentes vía MCP (ES) / Agent persistent memory via MCP (EN)** → AgentPrizm lanzó esta semana (9 de julio) AgentMemory + AgentSkills: una API REST sobre infraestructura MCP que le da a un agente memoria que sobrevive entre sesiones, en vez de reiniciar en cero con cada ventana de contexto nueva. → Importa porque resuelve el límite que dejan sin cerrar el patrón actor-evaluador y la arquitectura basada en grafos ya cubiertos: sin memoria persistente, un agente "reaprende" la misma corrección cada sesión en vez de acumular criterio. → Aplicación: conectar un MCP de memoria a un workflow agéntico de dr-cv (p. ej. generación de bullets de CV) para que recuerde qué formulaciones ya rechazó Danilo en sesiones previas, en vez de repetir el mismo error.
+
+**Development**
+**flex-wrap: balance en CSS (ES) / CSS flex-wrap: balance (EN)** → Chrome 150 (esta semana) envió este nuevo valor que reparte automáticamente el número de items por línea en un contenedor flex que hace wrap, evitando que la última línea quede con un solo item huérfano. → Importa porque hoy ese balanceo se resuelve a mano con JS o trucos de `nth-child`, y es un problema recurrente en grids de logos, skills o tags. → Aplicación: usarlo en las grids de skills/logos de landing-v11 o del skills sheet para que la última fila nunca quede descuadrada.
