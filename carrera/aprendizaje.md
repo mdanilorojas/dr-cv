@@ -32,6 +32,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Motion design nativo en Figma / Native motion design in Figma [Product Design]
 - Memoria persistente de agentes vía MCP / Agent persistent memory via MCP [AI]
 - flex-wrap: balance en CSS / CSS flex-wrap: balance [Development]
+- Weave / plugins generativos en Figma / Weave & generative plugins [Product Design]
+- ChatGPT Work (agente de OpenAI para tareas largas) / ChatGPT Work [AI]
+- text-fit en CSS / CSS text-fit property [Development]
 
 ---
 
@@ -106,3 +109,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **flex-wrap: balance en CSS (ES) / CSS flex-wrap: balance (EN)** → Chrome 150 (esta semana) envió este nuevo valor que reparte automáticamente el número de items por línea en un contenedor flex que hace wrap, evitando que la última línea quede con un solo item huérfano. → Importa porque hoy ese balanceo se resuelve a mano con JS o trucos de `nth-child`, y es un problema recurrente en grids de logos, skills o tags. → Aplicación: usarlo en las grids de skills/logos de landing-v11 o del skills sheet para que la última fila nunca quede descuadrada.
+
+### 2026-07-15 · miércoles
+
+**Product Design**
+**Weave / plugins generativos (ES) / Weave & generative plugins (EN)** → anunciado en Config 2026 (esta semana): dentro de Figma describes en lenguaje natural la herramienta que necesitas y el agente la construye como un plugin reusable dentro del archivo, sin escribir código. → Importa porque mueve la frontera de "quién puede extender el design system" de un puñado de plugin developers a cualquier diseñador senior con criterio de qué herramienta falta. → Aplicación: pedirle a Weave un plugin que audite que los componentes de landing-v11 usan los tokens correctos de `design-system/tokens-web.css` antes de cada build.
+
+**AI**
+**ChatGPT Work (ES: agente de OpenAI para tareas largas / EN: ChatGPT Work)** → lanzado el 9 de julio de 2026 sobre GPT-5.6, es un agente de OpenAI pensado para profesionales que puede trabajar horas seguidas en una tarea compleja (documentos, spreadsheets, presentaciones, apps web) en vez de responder turno a turno. → Importa porque confirma que la carrera entre labs en 2026 ya no es "mejor modelo por benchmark" sino "mejor harness para tareas largas sin supervisión constante" — el mismo tema de fondo de la memoria persistente vía MCP y la arquitectura de grafos ya cubiertas. → Aplicación: al decidir si delegar la generación completa de un CV o skills sheet a un agente, evaluar cuánto tiempo autónomo necesita de verdad vs. cuántos checkpoints humanos conviene mantener.
+
+**Development**
+**text-fit en CSS (ES) / CSS text-fit property (EN)** → propiedad nueva, estable esta semana en Chrome 150, que escala automáticamente el tamaño de fuente de un texto para que llene exactamente el ancho de su contenedor, sin JS ni cálculos manuales. → Importa porque hoy ese ajuste de titulares o texto dinámico a un ancho fijo se resuelve con JS custom o media queries frágiles, un problema recurrente en headlines de landing pages. → Aplicación: usarlo en el hero de landing-v11 o en el nombre/título del CV para que el texto siempre llene el contenedor sin importar el idioma (ES/EN) o el largo del nombre.
