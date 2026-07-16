@@ -15,8 +15,8 @@ const ROWS: Row[] = [
   { years: "2026—NOW", co: "Compliance SaaS · LATAM", badge: "280+ paying users",
     role: { en: "Lead Product Designer", es: "Líder de Diseño de Producto" },
     desc: {
-      en: "Lead product designer for a compliance SaaS for LATAM SMBs, owning discovery-to-launch design and shipping a validated MVP in 40 days. Designed a 31-component Figma design system, used across 16 screens and implemented directly in React/TypeScript. Ran AI-persona feedback loops to validate onboarding flows pre-engineering, growing the product to ~280 paying customers on a base of ~2,700 total users.",
-      es: "Líder de diseño de producto para un SaaS de cumplimiento para PYMES LATAM, dueño del diseño de discovery a lanzamiento y validando el MVP en 40 días. Diseñé un design system de 31 componentes en Figma, usado en 16 pantallas e implementado directamente en React/TypeScript. Corrí loops de feedback con personas IA para validar los flujos de onboarding antes de ingeniería, creciendo el producto a ~280 clientes pagando sobre una base de ~2,700 usuarios totales."
+      en: "Lead product designer for a compliance SaaS for LATAM SMBs, owning discovery-to-launch design and shipping a validated MVP in 40 days. Instrumented analytics end-to-end in Mixpanel and redesigned onboarding using AI-persona feedback loops and A/B testing — raising new-user activation from 2.6% to 9.4% in under 3 weeks and improving onboarding completion 74% (Google OAuth vs. email A/B test). Designed a 31-component Figma design system implemented directly in React/TypeScript, growing to ~280 paying customers on a base of ~2,700 users.",
+      es: "Líder de diseño de producto para un SaaS de cumplimiento para PYMES LATAM, dueño del diseño de discovery a lanzamiento y validando el MVP en 40 días. Instrumenté analytics end-to-end en Mixpanel y rediseñé el onboarding con loops de feedback de personas IA y A/B testing — elevando la activación de nuevos usuarios de 2.6% a 9.4% en menos de 3 semanas y mejorando la completion del onboarding en 74% (prueba A/B Google OAuth vs. email). Diseñé un design system de 31 componentes en Figma implementado directamente en React/TypeScript, creciendo a ~280 clientes pagando sobre una base de ~2,700 usuarios."
     } },
   { years: "2016—2022", co: "Xentinels DesignOps",
     role: { en: "Design Director / Product Manager", es: "Director de Diseño / Product Manager" },
@@ -28,9 +28,9 @@ const ROWS: Row[] = [
 
 interface Cap { label: { en: string; es: string }; detail: { en: string; es: string }; }
 const CAPS: Cap[] = [
-  { label: { en: "Product & UX", es: "Producto y UX" }, detail: { en: "User Research · Usability Testing · Journey Mapping · NPS/CSAT", es: "Investigación UX · Pruebas de Usabilidad · Journey Mapping · NPS/CSAT" } },
-  { label: { en: "Design Systems", es: "Design Systems" }, detail: { en: "Figma · Shadcn · Radix · Storybook · WCAG 2.2 / Section 508", es: "Figma · Shadcn · Radix · Storybook · WCAG 2.2 / Sección 508" } },
-  { label: { en: "Design Engineering", es: "Design Engineering" }, detail: { en: "TypeScript · React 19 · Prototyping · Supabase", es: "TypeScript · React 19 · Prototipado · Supabase" } },
+  { label: { en: "Product & UX", es: "Producto y UX" }, detail: { en: "User Research · Usability Testing · A/B Testing · Journey Mapping · NPS/CSAT", es: "Investigación UX · Pruebas de Usabilidad · Pruebas A/B · Journey Mapping · NPS/CSAT" } },
+  { label: { en: "Design Systems", es: "Design Systems" }, detail: { en: "Figma (Auto Layout, Variables, Dev Mode) · Shadcn · Radix · Storybook · WCAG 2.2 / Section 508", es: "Figma (Auto Layout, Variables, Dev Mode) · Shadcn · Radix · Storybook · WCAG 2.2 / Sección 508" } },
+  { label: { en: "Design Engineering", es: "Design Engineering" }, detail: { en: "TypeScript · React 19 · Mixpanel · Prototyping · Supabase", es: "TypeScript · React 19 · Mixpanel · Prototipado · Supabase" } },
   { label: { en: "Agentic UX / AI", es: "UX Agéntica / IA" }, detail: { en: "Agent-ready Design Systems · LLM Persona Emulation · Custom MCP Design", es: "Design Systems Agénticos · Emulación de Personas LLM · MCP a Medida" } },
 ];
 
@@ -112,8 +112,8 @@ export function renderCleanCv(data: CvData, lang: Lang): string {
     .join("");
 
   const L = lang === "en"
-    ? { sum: "Summary", exp: "Experience", expK: "EXP // selected", cap: "Skills", capK: "SKILLS // mastered", edu: "Education", eduK: "EDU", lead2: "Senior UX judgment and user psychology that drives the metrics — system design to align complex architectures into frictionless experiences, with AI-augmented research as leverage." }
-    : { sum: "Resumen", exp: "Experiencia", expK: "EXP // selección", cap: "Habilidades", capK: "SKILLS // dominadas", edu: "Educación", eduK: "EDU", lead2: "Juicio UX senior y psicología del usuario que dirige las métricas — diseño de sistemas para alinear arquitecturas complejas en experiencias sin fricción, con investigación potenciada por IA como leverage." };
+    ? { sum: "Summary", exp: "Experience", expK: "EXP // selected", cap: "Skills", capK: "SKILLS // mastered", edu: "Education", eduK: "EDU", lead2: "Raised new-user activation from 2.6% to 9.4% in 3 weeks via Mixpanel-instrumented A/B testing; scaled an agent-ready design system from 0 to 26 teams at Booz Allen Hamilton — with AI-augmented research as leverage." }
+    : { sum: "Resumen", exp: "Experiencia", expK: "EXP // selección", cap: "Habilidades", capK: "SKILLS // dominadas", edu: "Educación", eduK: "EDU", lead2: "Elevé la activación de nuevos usuarios de 2.6% a 9.4% en 3 semanas vía A/B testing instrumentado en Mixpanel; escalé un design system agéntico de 0 a 26 equipos en Booz Allen Hamilton — con investigación potenciada por IA como leverage." };
 
   const leadHead = t(lang, "I design software products for", "Diseño productos de software para");
   const leadEm = t(lang, "complex, regulated environments.", "entornos complejos y regulados.");
