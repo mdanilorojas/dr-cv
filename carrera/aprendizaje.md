@@ -35,6 +35,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Weave / plugins generativos en Figma / Weave & generative plugins [Product Design]
 - ChatGPT Work (agente de OpenAI para tareas largas) / ChatGPT Work [AI]
 - text-fit en CSS / CSS text-fit property [Development]
+- Figma Skills (sistema de habilidades para el agente) / Figma Skills system [Product Design]
+- Computer-use agéntico por lotes de acciones (Muse Spark 1.1) / Batched computer-use agent [AI]
+- background-clip: border-area en CSS / CSS background-clip: border-area [Development]
 
 ---
 
@@ -120,3 +123,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **text-fit en CSS (ES) / CSS text-fit property (EN)** → propiedad nueva, estable esta semana en Chrome 150, que escala automáticamente el tamaño de fuente de un texto para que llene exactamente el ancho de su contenedor, sin JS ni cálculos manuales. → Importa porque hoy ese ajuste de titulares o texto dinámico a un ancho fijo se resuelve con JS custom o media queries frágiles, un problema recurrente en headlines de landing pages. → Aplicación: usarlo en el hero de landing-v11 o en el nombre/título del CV para que el texto siempre llene el contenedor sin importar el idioma (ES/EN) o el largo del nombre.
+
+### 2026-07-16 · jueves
+
+**Product Design**
+**Figma Skills (ES: sistema de habilidades para el agente / EN: Figma Skills system)** → anunciado en Config 2026: te deja empaquetar tus propios workflows y convenciones de diseño como instrucciones reutilizables para el agente de Figma, que puedes crear, compartir con tu equipo o importar de la comunidad. → Importa porque es el mismo patrón de las Skills de Claude Code aplicado al diseño: el criterio senior deja de vivir solo en la cabeza del diseñador y se vuelve un artefacto reutilizable que el agente ejecuta consistentemente. → Aplicación: empaquetar como Skill de Figma las convenciones de `design-system/tokens-web.css` (spacing, jerarquía tipográfica, reglas de componentes) para que cualquier generación con el agente las respete sin que Danilo las repita cada vez.
+
+**AI**
+**Computer-use agéntico por lotes de acciones (ES) / Batched computer-use agent (EN)** → Meta lanzó esta semana (9 de julio) Muse Spark 1.1, un modelo agéntico que decide cuándo escribir un script y cuándo hacer clic directamente en la interfaz, generando lotes de acciones por paso en vez de razonar clic por clic. → Importa porque marca un salto de eficiencia sobre el patrón "un paso, un clic" de los agentes de computer-use anteriores: menos llamadas al modelo, más tolerancia a interfaces que cambian mientras el agente trabaja. → Aplicación: al automatizar tareas repetitivas en herramientas sin API (ej. subir un CV a un portal de reclutamiento), preferir un agente que planifique un lote de acciones de UI en vez de uno que decida acción por acción.
+
+**Development**
+**background-clip: border-area en CSS (ES) / CSS background-clip: border-area (EN)** → Microsoft Edge 150 (julio 2026) agregó este valor que recorta el fondo de un elemento exactamente al área pintada por el trazo del borde, permitiendo bordes con gradiente sin depender de `border-image`. → Importa porque hoy un borde con gradiente exige el truco frágil de `border-image` o un pseudo-elemento extra; esto lo resuelve con una sola declaración de `background` + `background-clip`. → Aplicación: usarlo en los bordes de las tarjetas de casos o badges de skills de landing-v11 para lograr un borde con gradiente de marca sin pseudo-elementos extra en el CSS.
