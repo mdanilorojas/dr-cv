@@ -38,6 +38,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Figma Skills (sistema de habilidades para el agente) / Figma Skills system [Product Design]
 - Computer-use agéntico por lotes de acciones (Muse Spark 1.1) / Batched computer-use agent [AI]
 - background-clip: border-area en CSS / CSS background-clip: border-area [Development]
+- Machine Experience (MX) Design [Product Design]
+- Claude Cowork multiplataforma + herramientas de escritura M365 / Claude Cowork web/mobile + M365 write tools [AI]
+- sibling-index() / sibling-count() en CSS [Development]
 
 ---
 
@@ -134,3 +137,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **background-clip: border-area en CSS (ES) / CSS background-clip: border-area (EN)** → Microsoft Edge 150 (julio 2026) agregó este valor que recorta el fondo de un elemento exactamente al área pintada por el trazo del borde, permitiendo bordes con gradiente sin depender de `border-image`. → Importa porque hoy un borde con gradiente exige el truco frágil de `border-image` o un pseudo-elemento extra; esto lo resuelve con una sola declaración de `background` + `background-clip`. → Aplicación: usarlo en los bordes de las tarjetas de casos o badges de skills de landing-v11 para lograr un borde con gradiente de marca sin pseudo-elementos extra en el CSS.
+
+### 2026-07-17 · viernes
+
+**Product Design**
+**Machine Experience / MX Design (ES: Diseño de Experiencia de Máquina)** → disciplina emergente en 2026 que diseña contenido y estructura no solo para personas sino para los sistemas de IA (agentes, crawlers, resúmenes) que ahora leen, interpretan y resumen tu producto antes de que un humano lo vea. → Importa porque un landing o CV que no está optimizado para ser "leído" correctamente por un agente de búsqueda o un ATS con IA pierde visibilidad antes de llegar a ojos humanos. → Aplicación: auditar `publicables/` (CV, landing) con la pregunta "¿un agente de IA que resume esto entendería mi propuesta de valor?", no solo "¿se ve bien?".
+
+**AI**
+**Claude Cowork multiplataforma + herramientas de escritura M365 (ES) / Claude Cowork on web/mobile + Microsoft 365 write tools (EN)** → esta semana Anthropic expandió Cowork a web y móvil (sesiones y archivos sincronizados entre dispositivos) y agregó herramientas de escritura para Microsoft 365: redactar/enviar email, gestionar eventos de calendario, crear/actualizar archivos de OneDrive y SharePoint directamente desde el agente. → Importa porque es la misma dirección que ya vimos con ChatGPT Work: el agente deja de ser un chat que sugiere texto y pasa a ejecutar la tarea completa en las herramientas reales donde vive el trabajo. → Aplicación: usar un agente conectado a Gmail/Calendar (como el que generó este mismo briefing) para que redacte y agende directamente el seguimiento de postulaciones de trabajo, no solo que lo resuma.
+
+**Development**
+**sibling-index() y sibling-count() en CSS (ES) / CSS sibling-index() and sibling-count() (EN)** → funciones nuevas en Chrome y Safari (julio 2026) que devuelven, dentro de cualquier propiedad CSS, la posición de un elemento entre sus hermanos y el total de hermanos, sin depender de `:nth-child()` ni JS. → Importa porque layouts que dependen de "posición relativa" (numerar tarjetas, escalonar animaciones, pintar la última fila distinto) hoy se resuelven con selectores frágiles o JavaScript; esto lo hace nativo y calculable en cualquier propiedad. → Aplicación: usarlo en las grids de casos o skills de landing-v11 para escalonar delays de animación (`animation-delay: calc(sibling-index() * 80ms)`) sin JS extra.
