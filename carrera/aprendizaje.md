@@ -41,6 +41,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Machine Experience (MX) Design [Product Design]
 - Claude Cowork multiplataforma + herramientas de escritura M365 / Claude Cowork web/mobile + M365 write tools [AI]
 - sibling-index() / sibling-count() en CSS [Development]
+- Generative UI / Interfaz generativa [Product Design]
+- Ejecución en segundo plano de herramientas del agente / Background tool execution [AI]
+- Gap decorations en CSS / CSS gap decorations [Development]
 
 ---
 
@@ -148,3 +151,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **sibling-index() y sibling-count() en CSS (ES) / CSS sibling-index() and sibling-count() (EN)** → funciones nuevas en Chrome y Safari (julio 2026) que devuelven, dentro de cualquier propiedad CSS, la posición de un elemento entre sus hermanos y el total de hermanos, sin depender de `:nth-child()` ni JS. → Importa porque layouts que dependen de "posición relativa" (numerar tarjetas, escalonar animaciones, pintar la última fila distinto) hoy se resuelven con selectores frágiles o JavaScript; esto lo hace nativo y calculable en cualquier propiedad. → Aplicación: usarlo en las grids de casos o skills de landing-v11 para escalonar delays de animación (`animation-delay: calc(sibling-index() * 80ms)`) sin JS extra.
+
+### 2026-07-20 · lunes
+
+**Product Design**
+**Generative UI (ES: Interfaz generativa / EN: Generative UI)** → patrón de 2026 en el que la interfaz no es fija sino que un modelo de IA la ensambla en vivo según el contexto, la intención y los datos de cada usuario, en vez de servir la misma pantalla a todos. → Importa porque corre el rol del diseñador de "dibujar cada pantalla" a "definir el sistema de componentes, reglas y restricciones que la IA puede combinar con seguridad" — que es exactamente el trabajo del AI Product Designer. → Aplicación: en EnRegla, en vez de diseñar un formulario estático por cada tipo de pliego, definir un set de componentes + reglas para que un agente arme el formulario correcto según el pliego, curando yo el catálogo y los límites.
+
+**AI**
+**Ejecución en segundo plano de herramientas del agente (ES) / Background tool execution (EN)** → patrón formalizado esta semana en las notas de Claude Code (jul 2026: las llamadas MCP que pasan de ~2 min saltan solas a background) donde una herramienta lenta corre de forma asíncrona para que la sesión del agente siga usable en vez de bloquearse esperando el resultado. → Importa porque un agente production-ready que hace tareas largas (builds, scraping, generar PDFs) no puede congelar toda la conversación; separar "disparar" de "esperar el resultado" es lo que lo vuelve usable de verdad. → Aplicación: en workflows agénticos de dr-cv, disparar `npm run build:all` o un scrape largo como tarea en background y seguir trabajando, revisando el output cuando notifique, en vez de bloquear el turno.
+
+**Development**
+**Gap decorations en CSS (ES: decoraciones del espacio / EN: CSS gap decorations)** → función nueva (Chrome 149, jun 2026) que permite pintar líneas y separadores directamente en el `gap` entre items de un grid o flexbox, con propiedades tipo `column-rule`/`row-rule`, sin pseudo-elementos ni bordes falsos. → Importa porque hoy los divisores entre tarjetas o columnas se resuelven con `border` + trucos de `:last-child` o pseudo-elementos frágiles; esto lo hace declarativo y responsive por defecto. → Aplicación: usarlo en las grids de skills o de casos de landing-v11 y en el skills sheet para separadores limpios entre columnas sin agregar markup extra.
