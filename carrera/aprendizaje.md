@@ -44,6 +44,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Generative UI / Interfaz generativa [Product Design]
 - Ejecución en segundo plano de herramientas del agente / Background tool execution [AI]
 - Gap decorations en CSS / CSS gap decorations [Development]
+- Lienzo infinito conversacional / Conversational infinite canvas [Product Design]
+- Mezcla de expertos / Mixture of Experts (MoE) [AI]
+- Posicionamiento por anclaje en CSS / CSS Anchor Positioning [Development]
 
 ---
 
@@ -162,3 +165,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Gap decorations en CSS (ES: decoraciones del espacio / EN: CSS gap decorations)** → función nueva (Chrome 149, jun 2026) que permite pintar líneas y separadores directamente en el `gap` entre items de un grid o flexbox, con propiedades tipo `column-rule`/`row-rule`, sin pseudo-elementos ni bordes falsos. → Importa porque hoy los divisores entre tarjetas o columnas se resuelven con `border` + trucos de `:last-child` o pseudo-elementos frágiles; esto lo hace declarativo y responsive por defecto. → Aplicación: usarlo en las grids de skills o de casos de landing-v11 y en el skills sheet para separadores limpios entre columnas sin agregar markup extra.
+
+### 2026-07-21 · martes
+
+**Product Design**
+**Lienzo infinito conversacional (ES) / Conversational infinite canvas (EN)** → patrón de herramientas de diseño con IA (esta semana CapCut AI Design Studio fue nombrado top design tool 2026) donde en vez de partir de una plantilla en blanco, describes lo que quieres en lenguaje natural sobre un lienzo infinito y un agente genera varias opciones de layout en vivo, iterando en conversación. → Importa porque mueve el trabajo del diseñador de "producir el primer layout" a "dirigir y curar entre opciones generadas": el valor senior es el criterio de jerarquía, marca y calidad, no el pixel-pushing inicial. → Aplicación: usarlo para generar 3–4 direcciones rápidas de un post social o one-pager de EnRegla y curar la mejor contra `design-system/tokens-web.css`.
+
+**AI**
+**Mezcla de expertos (ES) / Mixture of Experts – MoE (EN)** → arquitectura donde el modelo se divide en muchas subredes "expertas" y un router activa solo unas pocas por token; Kimi K3 de Moonshot (lanzado el 16 jul 2026, pesos abiertos el 27) tiene 2.8T de parámetros totales pero solo ~16 de 896 expertos activos por token. → Importa porque explica por qué modelos enormes pueden correr rápido y barato — solo se activa una fracción por token — y es la razón de fondo de la caída de costo/latencia que hace viable delegar tareas largas a agentes (el hilo de ChatGPT Work y Background execution ya cubiertos). → Aplicación: al elegir modelo para un workflow agéntico de dr-cv, entender que un MoE grande puede dar razonamiento de tope de gama con costo y latencia manejables, en vez de asumir que "más parámetros = más lento y caro".
+
+**Development**
+**Posicionamiento por anclaje en CSS (ES) / CSS Anchor Positioning (EN)** → feature estrella de CSS 2026 (production-ready ahora en navegadores) que ata un elemento a otro —un tooltip a su botón, un dropdown a su trigger— puramente en CSS con `anchor()` y `position-anchor`, sin JavaScript. → Importa porque hace el trabajo completo de librerías como Floating UI / Popper.js: menos JS, y adiós a los bugs de reposicionamiento cuando el usuario hace scroll o cambia el tamaño de ventana — justo el dolor más común en componentes de overlay de un design system. → Aplicación: reimplementar tooltips, popovers y menús de landing-v11 (o del design system) con anchor positioning y eliminar la dependencia de JS para posicionarlos.
