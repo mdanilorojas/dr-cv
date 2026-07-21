@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark">
+<title>Capacidad institucional aumentada — Agentes de IA para las Fuerzas Armadas</title>
+<meta name="description" content="Agentes de inteligencia artificial soberanos, auditables y bajo mando humano para procesos internos, preparación, logística y ciberdefensa de las Fuerzas Armadas del Ecuador.">
+
+<style>
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/inter-400.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url("/assets/fonts/inter-500.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url("/assets/fonts/inter-600.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:700;font-display:swap;src:url("/assets/fonts/inter-700.woff2") format("woff2");}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/jetbrains-mono-400.woff2") format("woff2");}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:500;font-display:swap;src:url("/assets/fonts/jetbrains-mono-500.woff2") format("woff2");}
+
+:root{
+  --mouse-x:50%; --mouse-y:50%;
+  --bg:#070a09;
+  --surface:#0c110f;
+  --panel:#0c110f;
+  --text:#EAF1ED;
+  --text-2:#c3d0ca;
+  --dim:#8fa39b;
+  --line:rgba(180,210,195,0.10);
+  --line-strong:rgba(180,210,195,0.22);
+  --accent:#9bc7a6;      /* salvia */
+  --accent-2:#d9b96e;    /* dorado */
+  --danger:#e5a99b;
+  --grid:rgba(155,199,166,0.045);
+  --glow:rgba(155,199,166,0.06);
+  --crosshair:#6f8a7f;
+  --metric:#0a0f0d;
+  --metric-hover:#0f1613;
+  --max:1180px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter','Helvetica Neue',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  background-color:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  position:relative;
+  min-height:100vh;
+}
+a{color:inherit;}
+::selection{background:var(--accent);color:var(--bg);}
+
+/* ── Ambient background (landing system) ───────────────────── */
+.bg-grid{position:fixed;inset:0;z-index:-2;
+  background-image:linear-gradient(to right,var(--grid) 1px,transparent 1px),linear-gradient(to bottom,var(--grid) 1px,transparent 1px);
+  background-size:80px 80px;background-position:center top;
+  mask-image:radial-gradient(circle at center,black 55%,transparent 100%);
+  -webkit-mask-image:radial-gradient(circle at center,black 55%,transparent 100%);}
+.bg-aura{position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(60rem circle at 82% -4%,rgba(155,199,166,0.055),transparent 60%),
+    radial-gradient(48rem circle at -6% 30%,rgba(217,185,110,0.03),transparent 60%);}
+.mouse-glow{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),var(--glow),transparent 40%);}
+
+.wrap{width:min(calc(100% - 40px),var(--max));margin:0 auto;}
+
+/* ── Structural border + crosshairs (landing system) ───────── */
+.frame{border:1px solid var(--line);position:relative;transition:border-color .4s ease,background-color .4s ease;background:rgba(12,17,15,0.35);backdrop-filter:blur(6px);}
+.frame:hover{border-color:var(--line-strong);}
+.crosshair{position:absolute;width:13px;height:13px;pointer-events:none;transition:transform .5s cubic-bezier(.4,0,.2,1);z-index:3;}
+.frame:hover .crosshair{transform:scale(1.5) rotate(90deg);opacity:.85;}
+.crosshair::before,.crosshair::after{content:'';position:absolute;background-color:var(--crosshair);opacity:.55;}
+.crosshair::before{top:6px;left:0;width:13px;height:1px;}
+.crosshair::after{top:0;left:6px;width:1px;height:13px;}
+.ch-tl{top:-7px;left:-7px;}.ch-tr{top:-7px;right:-7px;}.ch-bl{bottom:-7px;left:-7px;}.ch-br{bottom:-7px;right:-7px;}
+.tech-label{position:absolute;background:var(--bg);padding:0 8px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line);z-index:10;}
+
+/* ── Reveal on scroll ──────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
+.reveal.active{opacity:1;transform:translateY(0);}
+.d1{transition-delay:80ms;}.d2{transition-delay:160ms;}.d3{transition-delay:240ms;}
+
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;}
+
+/* ── Nav ───────────────────────────────────────────────────── */
+nav.top{position:fixed;top:0;left:0;width:100%;z-index:50;border-bottom:1px solid var(--line);background:rgba(7,10,9,0.82);backdrop-filter:blur(14px);}
+nav.top .wrap{display:flex;justify-content:space-between;align-items:center;height:56px;width:min(calc(100% - 32px),1400px);}
+.brand{font-weight:500;letter-spacing:-0.01em;font-size:15px;}
+.brand .mono{font-family:'JetBrains Mono',monospace;color:var(--dim);margin-left:6px;font-size:12px;}
+.nav-links{display:none;gap:26px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;}
+.nav-links a{color:var(--dim);text-decoration:none;transition:color .3s;}
+.nav-links a:hover{color:var(--text);}
+.nav-badge{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);}
+.dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(155,199,166,.6);display:grid;place-items:center;}
+.dot::after{content:'';width:3px;height:3px;border-radius:50%;background:var(--accent);animation:pulse 3.4s cubic-bezier(.4,0,.6,1) infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+#scrollbar{position:absolute;bottom:0;left:0;height:1px;background:var(--accent);width:0;}
+@media(min-width:900px){.nav-links{display:flex;}}
+
+/* ── Hero ──────────────────────────────────────────────────── */
+header{position:relative;padding:190px 0 100px;border-bottom:1px solid var(--line);overflow:hidden;}
+.hero-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:48px;align-items:center;}
+h1{font-size:clamp(2.7rem,5.6vw,5.2rem);line-height:.96;letter-spacing:-.045em;font-weight:700;max-width:13ch;}
+/* blueprint construction line */
+.hero-rule{position:absolute;top:0;bottom:0;left:64%;width:1px;background:var(--line);z-index:0;pointer-events:none;}
+/* tactical SVG stack: radar giro + small dormant magma core */
+.orb-stack{position:relative;width:min(360px,78vw);height:min(360px,78vw);display:grid;place-items:center;}
+.tsvg-hero{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+.magma-core{position:absolute;top:50%;left:50%;width:78px;height:78px;transform:translate(-50%,-50%);border-radius:50%;
+  box-shadow:0 0 26px rgba(180,90,40,.28),inset 0 0 10px rgba(0,0,0,.55);}
+.hero-lead{max-width:60ch;margin-top:30px;font-size:clamp(1.1rem,1.7vw,1.42rem);color:var(--text-2);font-weight:300;}
+.hero-lead b{color:var(--text);font-weight:500;}
+.tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:34px;}
+.tag{border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:var(--text-2);background:rgba(12,17,15,.6);}
+.boundary{margin-top:30px;padding:15px 18px;border-left:2px solid var(--accent-2);background:rgba(217,185,110,.07);max-width:70ch;color:#e9ddc2;font-size:.95rem;}
+.boundary b{color:#f2e8cf;}
+.hero-orb{display:flex;justify-content:center;align-items:center;}
+
+/* ── Sections ──────────────────────────────────────────────── */
+section{padding:96px 0;border-bottom:1px solid var(--line);position:relative;}
+h2{font-size:clamp(2rem,4.4vw,3.6rem);line-height:1.02;letter-spacing:-.04em;font-weight:600;max-width:20ch;}
+.lede{max-width:66ch;color:var(--text-2);font-size:1.12rem;font-weight:300;margin-top:20px;}
+h3{font-size:1.18rem;line-height:1.25;font-weight:600;letter-spacing:-.01em;}
+
+.statement{font-size:clamp(1.6rem,3.2vw,2.9rem);line-height:1.16;letter-spacing:-.03em;max-width:26ch;font-weight:400;}
+.statement em{color:var(--accent);font-style:normal;}
+.statement .g{color:var(--accent-2);font-style:normal;}
+.statement{max-width:none;}
+.statement span.blk{display:block;max-width:24ch;}
+
+/* pillars */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px;}
+.pillar{padding:26px;border-radius:14px;}
+.pillar .k{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--accent);margin-bottom:22px;}
+.pillar p{color:var(--dim);margin-top:10px;font-size:.98rem;}
+
+/* world strip */
+.strip{margin-top:44px;display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.strip .cell{flex:1 1 190px;padding:20px 22px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:190px;}
+.strip .cell .src{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--accent-2);text-transform:uppercase;}
+.strip .cell p{font-size:.9rem;color:var(--text-2);margin-top:7px;line-height:1.4;}
+.strip-note{margin-top:16px;font-size:.85rem;color:var(--dim);}
+
+/* areas */
+.areas{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px;}
+.area{padding:30px 26px 28px;border-radius:16px;display:flex;flex-direction:column;}
+.area .orb-mount{align-self:flex-start;margin-bottom:24px;}
+.area h3{margin-bottom:8px;}
+.area>p{color:var(--dim);font-size:.96rem;}
+.area ul{list-style:none;margin-top:18px;display:flex;flex-direction:column;gap:9px;}
+.area li{position:relative;padding-left:18px;color:var(--text-2);font-size:.92rem;}
+.area li::before{content:'';position:absolute;left:0;top:.62em;width:6px;height:1px;background:var(--accent);}
+.area .lvl{margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;}
+
+/* cyber */
+.cyber-head{display:grid;grid-template-columns:.7fr 1.3fr;gap:40px;align-items:center;}
+.cyber-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
+.ccard{padding:26px;border-radius:14px;}
+.ccard .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:.12em;margin-bottom:18px;}
+.ccard p{color:var(--dim);font-size:.94rem;margin-top:8px;}
+.credential{margin-top:40px;padding:26px 28px;border-radius:16px;border:1px solid var(--line);border-left:2px solid var(--accent-2);background:rgba(12,17,15,.4);}
+.credential p{color:var(--text-2);max-width:80ch;}
+.credential b{color:var(--text);}
+.credential .badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-2);border:1px solid var(--line);border-radius:999px;padding:5px 11px;margin-bottom:16px;}
+
+/* control */
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
+.control{padding:26px;border-radius:14px;}
+.control .icon{width:40px;height:40px;border:1px solid var(--line-strong);border-radius:50%;display:grid;place-items:center;color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:500;margin-bottom:20px;}
+.control p{color:var(--dim);font-size:.94rem;margin-top:8px;}
+.law{margin-top:24px;padding:24px 26px;border-radius:14px;border-left:2px solid var(--accent);background:rgba(155,199,166,.05);font-size:1.15rem;color:var(--text);letter-spacing:-.01em;}
+.no-first{margin-top:16px;padding:22px 24px;border-radius:14px;border:1px solid rgba(229,169,155,.3);background:rgba(229,169,155,.055);}
+.no-first h3{color:var(--danger);margin-bottom:8px;}
+.no-first p{color:var(--text-2);font-size:.95rem;}
+
+/* perfil */
+.perfil-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;margin-top:48px;}
+.perfil-card{padding:30px;border-radius:16px;}
+.perfil-card ul{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:8px;}
+.perfil-card li{position:relative;padding-left:18px;color:var(--text-2);font-size:.98rem;}
+.perfil-card li::before{content:'';position:absolute;left:0;top:.62em;width:6px;height:1px;background:var(--accent);}
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.metric{padding:24px;border-radius:14px;background:var(--metric);border:1px solid var(--line);transition:background .4s;}
+.metric:hover{background:var(--metric-hover);}
+.metric strong{display:block;font-size:2.1rem;font-weight:600;color:var(--accent);letter-spacing:-.02em;}
+.metric span{color:var(--dim);font-size:.86rem;}
+.quote{margin-top:40px;padding:30px 32px;border-radius:16px;border:1px solid var(--line);background:rgba(155,199,166,.04);font-size:clamp(1.2rem,2vw,1.65rem);letter-spacing:-.015em;color:var(--text);line-height:1.35;}
+
+/* next step */
+.step-timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px;}
+.phase{padding:24px;border-radius:14px;border-top:2px solid var(--accent);background:var(--metric);}
+.phase .w{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);}
+.phase h3{margin:10px 0 12px;font-size:1.05rem;}
+.phase ul{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.phase li{color:var(--dim);font-size:.86rem;position:relative;padding-left:14px;}
+.phase li::before{content:'';position:absolute;left:0;top:.6em;width:5px;height:1px;background:var(--dim);}
+.cta{margin-top:52px;padding:48px 44px;border-radius:20px;text-align:center;}
+.cta h2{margin:0 auto;max-width:22ch;}
+.cta p{color:var(--text-2);max-width:60ch;margin:18px auto 0;font-weight:300;font-size:1.1rem;}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;margin-top:32px;padding:15px 28px;background:var(--accent);color:#0a1410;font-weight:600;font-size:.98rem;border-radius:999px;text-decoration:none;border:1px solid var(--accent);transition:background .3s,color .3s;}
+.cta-btn:hover{background:transparent;color:var(--accent);}
+.cta-contact{margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim);letter-spacing:.04em;}
+.cta-contact a{color:var(--accent);text-decoration:none;}
+
+/* tactical line-art SVGs (blueprint, monochrome + sage signal) */
+.orb{border-radius:50%;display:block;}
+.magma-core{border-radius:50%;}
+.tsvg{width:104px;height:104px;overflow:visible;color:var(--accent);}
+.tsvg .stroke-struct{stroke:rgba(180,210,195,0.16);}
+.tsvg .stroke-mid{stroke:var(--dim);}
+.tsvg .stroke-sig{stroke:var(--accent);}
+.tsvg .fill-sig{fill:var(--accent);}
+.tsvg .fill-mid{fill:var(--dim);}
+.tsvg .fill-gold{fill:var(--accent-2);}
+.tsvg-hero .stroke-struct{stroke:rgba(180,210,195,0.13);}
+.tsvg-hero .stroke-sig{stroke:var(--accent);}
+.tsvg-hero .fill-sig{fill:var(--accent);}
+
+/* footer / sources */
+footer{padding:60px 0 90px;}
+details.sources{border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;}
+details.sources summary{cursor:pointer;padding:20px 24px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);list-style:none;}
+details.sources summary::-webkit-details-marker{display:none;}
+details.sources[open] summary{border-bottom:1px solid var(--line);color:var(--accent);}
+.sources ol{columns:2;column-gap:40px;padding:24px 24px 24px 44px;color:var(--dim);font-size:.8rem;}
+.sources li{break-inside:avoid;margin-bottom:11px;}
+.sources a{color:var(--text-2);overflow-wrap:anywhere;}
+.foot-note{margin-top:28px;font-size:.82rem;color:var(--dim);max-width:80ch;}
+
+.print-btn{position:fixed;right:18px;bottom:18px;z-index:60;border:1px solid var(--line-strong);background:var(--text);color:var(--bg);padding:11px 16px;border-radius:999px;font-weight:600;font-size:.85rem;cursor:pointer;box-shadow:0 10px 40px rgba(0,0,0,.4);}
+
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr;}.hero-orb{order:-1;justify-content:flex-start;}
+  .pillars,.areas,.cyber-cards,.controls,.step-timeline{grid-template-columns:1fr 1fr;}
+  .cyber-head,.perfil-grid{grid-template-columns:1fr;}
+}
+@media(max-width:620px){
+  header{padding:120px 0 70px;}
+  section{padding:68px 0;}
+  .pillars,.areas,.cyber-cards,.controls,.step-timeline,.metrics{grid-template-columns:1fr;}
+  .strip .cell{border-right:none;}
+  .sources ol{columns:1;}
+  .cta{padding:36px 22px;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .reveal{transition:none;opacity:1;transform:none;}
+  .crosshair{transition:none;}
+  .dot::after{animation:none;}
+}
+@media print{
+  :root{--bg:#fff;--surface:#fff;--text:#111;--text-2:#333;--dim:#555;--line:#d5ddd8;--line-strong:#c2ccc6;--metric:#f6f8f7;}
+  body{background:#fff;}
+  .bg-grid,.bg-aura,.mouse-glow,nav.top,.print-btn,canvas{display:none!important;}
+  header{padding:30px 0;page-break-after:always;}
+  section{padding:34px 0;}
+  .reveal{opacity:1;transform:none;}
+  .area,.pillar,.control,.ccard,.metric,.phase{break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-aura"></div>
+<div class="mouse-glow" id="mouseGlow"></div>
+
+<button class="print-btn" onclick="window.print()">Guardar PDF</button>
+
+<nav class="top">
+  <div class="wrap">
+    <div class="brand">Danilo Rojas <span class="mono">· army</span></div>
+    <div class="nav-links">
+      <a href="#tesis">Tesis</a>
+      <a href="#areas">Áreas</a>
+      <a href="#ciber">Ciberdefensa</a>
+      <a href="#control">Control</a>
+      <a href="#perfil">Perfil</a>
+      <a href="#paso">Próximo paso</a>
+    </div>
+    <div class="nav-badge">
+      <span class="dot"></span>
+      <span>Human_in_the_loop</span>
+    </div>
+  </div>
+  <div id="scrollbar"></div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="reveal">
+        <p class="eyebrow">Documento de conversación estratégica · Julio 2026</p>
+        <h1>Capacidad institucional aumentada.</h1>
+        <p class="hero-lead">
+          Agentes de inteligencia artificial <b>soberanos, auditables y bajo mando humano</b>
+          para procesos internos, preparación operacional, logística y ciberdefensa de las
+          Fuerzas Armadas del Ecuador.
+        </p>
+        <div class="tags">
+          <span class="tag">Soberanía de datos</span>
+          <span class="tag">Human-in-the-loop</span>
+          <span class="tag">Trazabilidad completa</span>
+          <span class="tag">Modernización gradual</span>
+        </div>
+        <div class="boundary">
+          <b>Alcance deliberado:</b> capacidad institucional, soporte a decisiones, preparación y
+          defensa digital. No propone armas autónomas ni delegar decisiones letales a una IA.
+        </div>
+      </div>
+      <div class="hero-orb reveal d1">
+        <div class="orb-stack">
+          <!-- Radar estratégico (giro minimalista blueprint) -->
+          <svg class="tsvg-hero" viewBox="0 0 240 240" fill="none" aria-hidden="true">
+            <circle cx="120" cy="120" r="112" class="stroke-struct" stroke-width="1"/>
+            <circle cx="120" cy="120" r="86" class="stroke-struct" stroke-width="1"/>
+            <circle cx="120" cy="120" r="60" class="stroke-struct" stroke-width="1"/>
+            <circle cx="120" cy="120" r="30" class="stroke-struct" stroke-width="1"/>
+            <path d="M120 8 L120 232 M8 120 L232 120" class="stroke-struct" stroke-width="1" stroke-dasharray="4 5"/>
+            <circle cx="120" cy="8" r="1.6" class="fill-sig"/><circle cx="120" cy="232" r="1.6" class="fill-sig"/>
+            <circle cx="8" cy="120" r="1.6" class="fill-sig"/><circle cx="232" cy="120" r="1.6" class="fill-sig"/>
+            <!-- blip -->
+            <circle cx="168" cy="66" r="3.5" class="fill-sig">
+              <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.08;0.34;1" dur="6s" repeatCount="indefinite"/>
+            </circle>
+            <!-- sweep -->
+            <g>
+              <animateTransform attributeName="transform" type="rotate" from="0 120 120" to="360 120 120" dur="6s" repeatCount="indefinite"/>
+              <path d="M120 120 L120 12" class="stroke-sig" stroke-width="1.4"/>
+              <path d="M120 120 L120 12 A 108 108 0 0 1 168 32 Z" fill="var(--accent)" opacity="0.05"/>
+            </g>
+          </svg>
+          <!-- núcleo magma dormido: pequeño, lento, desactivado -->
+          <canvas class="orb magma-core" data-agent="magma" width="220" height="220" aria-hidden="true"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-rule"></div>
+</header>
+
+<!-- ── Tesis ─────────────────────────────────────────────── -->
+<section id="tesis">
+  <div class="wrap">
+    <p class="eyebrow reveal">01 · Tesis ejecutiva</p>
+    <p class="statement reveal d1">
+      La primera ventaja militar de la IA no es un robot. Es una institución que
+      <em>encuentra conocimiento, coordina recursos y anticipa riesgos</em>
+      <span class="g">sin perder cadena de mando.</span>
+    </p>
+
+    <div class="pillars">
+      <article class="frame pillar reveal">
+        <div class="k">CAPACIDAD</div>
+        <h3>Más misión, menos fricción</h3>
+        <p>Menos horas en consolidar reportes, buscar normativa, transcribir novedades y perseguir información fragmentada.</p>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </article>
+      <article class="frame pillar reveal d1">
+        <div class="k">CONTROL</div>
+        <h3>Autonomía limitada por diseño</h3>
+        <p>El agente solo ve los datos y ejecuta las acciones expresamente autorizadas. Las decisiones sensibles exigen aprobación humana identificable.</p>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </article>
+      <article class="frame pillar reveal d2">
+        <div class="k">SOBERANÍA</div>
+        <h3>La institución conserva sus datos</h3>
+        <p>Modelos intercambiables, despliegue privado cuando corresponda, control de acceso por rol y registro verificable de cada consulta y acción.</p>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </article>
+    </div>
+
+    <div class="strip reveal d1">
+      <div class="cell"><div class="src">NATO · 2024–26</div><p>Adopción responsable, interoperable y evaluada de IA de defensa.</p></div>
+      <div class="cell"><div class="src">DoD · 2024</div><p>US$100M para pilotos de IA en planeamiento, logística y ciber.</p></div>
+      <div class="cell"><div class="src">DARPA · 2025</div><p>Ciberdefensa autónoma: hallar y parchear vulnerabilidades críticas.</p></div>
+      <div class="cell"><div class="src">US Army · 2023</div><p>Mantenimiento predictivo para disponibilidad de equipos.</p></div>
+      <div class="cell"><div class="src">Ecuador · may 2026</div><p>Ley de Fortalecimiento de la Ciberseguridad: infraestructura crítica.</p></div>
+    </div>
+    <p class="strip-note reveal">La tendencia internacional no es comprar “una IA militar”. Es construir capacidad: datos, personal, pilotos, evaluación y control humano.</p>
+  </div>
+</section>
+
+<!-- ── Áreas de impacto ─────────────────────────────────── -->
+<section id="areas">
+  <div class="wrap">
+    <p class="eyebrow reveal">02 · Portafolio de oportunidades</p>
+    <h2 class="reveal d1">Empezar donde el riesgo es bajo y el desperdicio es alto.</h2>
+    <p class="lede reveal d1">Tres frentes concretos donde un agente especializado quita carga hoy, con datos bajo control institucional.</p>
+
+    <div class="areas">
+      <article class="frame area reveal">
+        <div class="orb-mount"><svg class="tsvg" viewBox="0 0 240 240" fill="none" aria-hidden="true">
+          <path d="M70 70 L170 70 L120 170 Z" class="stroke-struct" stroke-width="2"/>
+          <line x1="70" y1="70" x2="170" y2="70" class="stroke-sig" stroke-width="2" stroke-dasharray="10 100"><animate attributeName="stroke-dashoffset" values="110;0" dur="1.8s" repeatCount="indefinite"/></line>
+          <line x1="170" y1="70" x2="120" y2="170" class="stroke-sig" stroke-width="2" stroke-dasharray="10 120"><animate attributeName="stroke-dashoffset" values="130;0" dur="1.8s" begin="0.6s" repeatCount="indefinite"/></line>
+          <line x1="120" y1="170" x2="70" y2="70" class="stroke-sig" stroke-width="2" stroke-dasharray="10 120"><animate attributeName="stroke-dashoffset" values="130;0" dur="1.8s" begin="1.2s" repeatCount="indefinite"/></line>
+          <circle cx="70" cy="70" r="8" fill="#0c110f" class="stroke-mid" stroke-width="2"/>
+          <circle cx="170" cy="70" r="8" fill="#0c110f" class="stroke-mid" stroke-width="2"/>
+          <circle cx="120" cy="170" r="10" class="fill-sig"><animate attributeName="r" values="8;12;8" dur="2.4s" repeatCount="indefinite"/></circle>
+        </svg></div>
+        <h3>Operación &amp; conocimiento</h3>
+        <p>El agente responde solo desde fuentes aprobadas y muestra la cita exacta.</p>
+        <ul>
+          <li>Normativa y doctrina con control de versión y vigencia</li>
+          <li>Gestión documental: clasifica, extrae, enruta y detecta faltantes</li>
+          <li>Briefing de mando: novedades, riesgos y decisiones pendientes</li>
+        </ul>
+        <div class="lvl">Riesgo · Bajo</div>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </article>
+
+      <article class="frame area reveal d1">
+        <div class="orb-mount"><svg class="tsvg" viewBox="0 0 240 240" fill="none" aria-hidden="true">
+          <rect x="96" y="40" width="48" height="160" class="stroke-struct" stroke-width="2" rx="4"/>
+          <line x1="110" y1="50" x2="110" y2="190" class="stroke-struct" stroke-width="2" stroke-dasharray="4 4"/>
+          <line x1="130" y1="50" x2="130" y2="190" class="stroke-struct" stroke-width="2" stroke-dasharray="4 4"/>
+          <rect x="108" y="50" width="4" height="20" class="fill-sig" rx="2"><animate attributeName="y" values="40;180" dur="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="1.4s" repeatCount="indefinite"/></rect>
+          <rect x="128" y="100" width="4" height="30" class="fill-mid" rx="2"><animate attributeName="y" values="40;180" dur="2s" begin="0.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2s" begin="0.5s" repeatCount="indefinite"/></rect>
+        </svg></div>
+        <h3>Logística, mantenimiento &amp; preparación</h3>
+        <p>Convierte texto, voz y formularios en órdenes estructuradas y priorizadas.</p>
+        <ul>
+          <li>Novedades de mantenimiento y trazabilidad del activo</li>
+          <li>Abastecimiento: anomalías, duplicados y alerta de desabasto</li>
+          <li>Mantenimiento predictivo: recomienda, no certifica sola</li>
+        </ul>
+        <div class="lvl">Riesgo · Bajo → Medio</div>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </article>
+
+      <article class="frame area reveal d2">
+        <div class="orb-mount"><svg class="tsvg" viewBox="0 0 240 240" fill="none" aria-hidden="true">
+          <circle cx="120" cy="120" r="90" class="stroke-struct" stroke-width="2" stroke-dasharray="10 10"><animateTransform attributeName="transform" type="rotate" from="0 120 120" to="360 120 120" dur="18s" repeatCount="indefinite"/></circle>
+          <circle cx="120" cy="120" r="70" class="stroke-struct" stroke-width="1"/>
+          <g><animateTransform attributeName="transform" type="rotate" from="360 120 120" to="0 120 120" dur="10s" repeatCount="indefinite"/>
+            <path d="M120 40 A 80 80 0 0 1 180 70" class="stroke-sig" stroke-width="3"/>
+            <path d="M120 200 A 80 80 0 0 1 60 170" class="stroke-sig" stroke-width="3"/>
+          </g>
+          <path d="M20 120 L50 120 M220 120 L190 120 M120 20 L120 50 M120 220 L120 190" class="stroke-mid" stroke-width="2"/>
+          <rect x="116" y="116" width="8" height="8" class="fill-sig"/>
+        </svg></div>
+        <h3>Decisión &amp; planeamiento</h3>
+        <p>Organiza supuestos, dependencias y alternativas. La decisión permanece en el mando.</p>
+        <ul>
+          <li>Comparación de cursos de acción con incertidumbre explícita</li>
+          <li>Simulación y entrenamiento con escenarios variables</li>
+          <li>Lecciones aprendidas: patrones y seguimiento hasta cierre</li>
+        </ul>
+        <div class="lvl">Riesgo · Medio</div>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── Ciberdefensa ─────────────────────────────────────── -->
+<section id="ciber">
+  <div class="wrap">
+    <p class="eyebrow reveal">03 · Frente prioritario</p>
+    <div class="cyber-head">
+      <div class="reveal d1" style="display:flex;justify-content:center;">
+        <svg class="tsvg" viewBox="0 0 240 240" fill="none" aria-hidden="true" style="width:min(200px,54vw);height:min(200px,54vw);">
+          <circle cx="120" cy="150" r="50" class="stroke-struct" stroke-width="2" stroke-dasharray="20 10"><animateTransform attributeName="transform" type="rotate" from="360 120 150" to="0 120 150" dur="8s" repeatCount="indefinite"/></circle>
+          <circle cx="120" cy="150" r="40" class="stroke-sig" stroke-width="1" stroke-dasharray="10 5" opacity="0.65"><animateTransform attributeName="transform" type="rotate" from="0 120 150" to="360 120 150" dur="5s" repeatCount="indefinite"/></circle>
+          <rect x="82" y="122" width="76" height="58" rx="8" class="stroke-mid" stroke-width="4"/>
+          <path d="M92 122 V 92 A 28 28 0 0 1 148 92 V 122" class="stroke-sig" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="120" cy="146" r="6" class="fill-sig"/>
+          <path d="M117 146 L115 162 L125 162 L123 146 Z" class="fill-sig"/>
+        </svg>
+      </div>
+      <div class="reveal">
+        <h2>Ciberdefensa aplicada.</h2>
+        <p class="lede">El adversario ya usa IA para atacar más rápido. La respuesta no es más personal: es un analista aumentado que triage, correlaciona y prepara la contención —bajo aprobación.</p>
+      </div>
+    </div>
+
+    <div class="cyber-cards">
+      <article class="frame ccard reveal">
+        <div class="n">SOC · TRIAGE</div>
+        <h3>Menos ruido, más señal</h3>
+        <p>Enriquece alertas, correlaciona fuentes, arma la línea de tiempo del incidente y mapea a MITRE ATT&amp;CK. Escala por criticidad.</p>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </article>
+      <article class="frame ccard reveal d1">
+        <div class="n">VULN · PARCHEO</div>
+        <h3>Encontrar y remediar</h3>
+        <p>Identifica exposición, prioriza por riesgo real y prepara el cambio en sandbox. Despliegue solo con autorización humana. (Referente: DARPA AIxCC, 2025.)</p>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </article>
+      <article class="frame ccard reveal d2">
+        <div class="n">IA · SEGURA</div>
+        <h3>Proteger a la propia IA</h3>
+        <p>Red teaming continuo contra prompt injection, fuga de datos y abuso de herramientas. Monitoreo con MITRE ATLAS y políticas por clasificación.</p>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </article>
+    </div>
+
+    <div class="credential reveal d1">
+      <span class="badge">Experiencia · Army · DoD · FAA · VA</span>
+      <p>
+        Cuatro años apoyando programas federales de EE.UU. desde <b>Booz Allen Hamilton</b>, donde el design
+        system que dirigí escaló a 26 equipos internos —incluido <b>Vellox Reverser</b>, un producto de
+        ciberseguridad. Documentación, accesibilidad y trazabilidad tratadas con el mismo rigor que la interfaz.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Control humano ───────────────────────────────────── -->
+<section id="control">
+  <div class="wrap">
+    <p class="eyebrow reveal">04 · Condiciones de confianza</p>
+    <h2 class="reveal d1">El control no es un opcional. Es la arquitectura.</h2>
+
+    <div class="controls">
+      <article class="frame control reveal">
+        <div class="icon">01</div>
+        <h3>Qué ve y qué hace</h3>
+        <p>Fuentes y clasificación explícitas. Verbos autorizados, herramientas permitidas, acciones reversibles y límites de frecuencia y costo.</p>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </article>
+      <article class="frame control reveal d1">
+        <div class="icon">02</div>
+        <h3>Quién aprueba y cómo se audita</h3>
+        <p>Responsable humano por cada decisión relevante. Registro de fuentes, instrucciones, herramientas, salidas y resultado final.</p>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </article>
+      <article class="frame control reveal d2">
+        <div class="icon">03</div>
+        <h3>Cómo se detiene</h3>
+        <p>Kill switch, revocación de credenciales, pausa por anomalía y modo seguro degradado. Capacidad inmediata de desactivación.</p>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </article>
+    </div>
+
+    <div class="law reveal d1">A mayor impacto potencial → menor autonomía, más evidencia, mayor evaluación y aprobación humana más explícita.</div>
+
+    <div class="no-first reveal">
+      <h3>No se empieza por aquí</h3>
+      <p>Decisiones letales, targeting, vigilancia masiva, sanciones de personal, acceso irrestricto a información clasificada o ejecución automática de cambios no reversibles.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Perfil ───────────────────────────────────────────── -->
+<section id="perfil">
+  <div class="wrap">
+    <p class="eyebrow reveal">05 · Capacidad del proponente</p>
+    <h2 class="reveal d1">Producto, ingeniería y entornos regulados.</h2>
+    <p class="lede reveal d1">No un proveedor de armamento. Un diseñador de sistemas complejos que convierte procesos, políticas y restricciones en productos digitales operables y auditables.</p>
+
+    <div class="perfil-grid">
+      <div class="frame perfil-card reveal">
+        <h3 style="margin-bottom:12px;">Relevante para esta conversación</h3>
+        <ul>
+          <li>18+ años construyendo productos, 15 en diseño.</li>
+          <li>4 años en programas relacionados con FAA, DoD y VA desde Booz Allen Hamilton.</li>
+          <li>Sistemas de gobierno y compliance: documentación, accesibilidad y trazabilidad al nivel de la interfaz.</li>
+          <li>De base de datos y backend a UX, design systems y producto.</li>
+          <li>Foco actual: orquestación de agentes, MCP, workflows auditados y UX agéntica.</li>
+        </ul>
+        <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+      </div>
+      <div class="metrics">
+        <div class="metric reveal"><strong>18+</strong><span>años construyendo productos</span></div>
+        <div class="metric reveal d1"><strong>15</strong><span>años en diseño</span></div>
+        <div class="metric reveal d1"><strong>4</strong><span>años FAA · DoD · VA</span></div>
+        <div class="metric reveal d2"><strong>50+</strong><span>iniciativas entregadas</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Próximo paso ─────────────────────────────────────── -->
+<section id="paso" style="border-bottom:none;">
+  <div class="wrap">
+    <p class="eyebrow reveal">06 · Propuesta de entrada</p>
+    <h2 class="reveal d1">Una misión piloto de 90 días.</h2>
+    <p class="lede reveal d1">Un proceso real, repetitivo y medible, con información no clasificada o sintetizada. Construir confianza antes de ampliar privilegios.</p>
+
+    <div class="step-timeline">
+      <article class="phase reveal"><div class="w">Sem. 1–2</div><h3>Descubrir</h3><ul><li>Mapear flujo y cadena de decisión</li><li>Cuantificar tiempos y retrabajo</li><li>Dueño, usuarios y exclusiones</li></ul></article>
+      <article class="phase reveal d1"><div class="w">Sem. 3–4</div><h3>Diseñar control</h3><ul><li>Clasificación de datos</li><li>Permisos y herramientas</li><li>Rúbrica de evaluación</li></ul></article>
+      <article class="phase reveal d1"><div class="w">Sem. 5–9</div><h3>Construir y probar</h3><ul><li>Prototipo funcional</li><li>Sandbox y datos controlados</li><li>Evals, ataques y casos límite</li></ul></article>
+      <article class="phase reveal d2"><div class="w">Sem. 10–12</div><h3>Pilotar y decidir</h3><ul><li>Usuarios reales limitados</li><li>Métricas antes / después</li><li>Detener, corregir o escalar</li></ul></article>
+    </div>
+
+    <div class="frame cta reveal d1">
+      <h2>Escojamos hoy un proceso. Lo medimos. En 90 días demostramos si hay valor real.</h2>
+      <p>Con lo que definamos en esta conversación, agendamos la segunda reunión para revisar el proceso candidato, los datos disponibles y quién custodia y aprueba el piloto.</p>
+      <a class="cta-btn" href="mailto:hola@danilorojas.design?subject=Segunda%20reuni%C3%B3n%20—%20Agentes%20IA%20Fuerzas%20Armadas">Agendar segunda reunión →</a>
+      <p class="cta-contact">Danilo Rojas · <a href="mailto:hola@danilorojas.design">hola@danilorojas.design</a> · danilorojas.design</p>
+      <div class="crosshair ch-tl"></div><div class="crosshair ch-tr"></div><div class="crosshair ch-bl"></div><div class="crosshair ch-br"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <details class="sources">
+      <summary>Fuentes públicas consultadas ▾</summary>
+      <ol>
+        <li>NATO — Summary of NATO’s revised AI Strategy (2024) &amp; Alliance Digital Strategy (2026). <a href="https://www.nato.int/en/about-us/official-texts-and-resources/official-texts/2024/07/10/summary-of-natos-revised-artificial-intelligence-ai-strategy">nato.int</a></li>
+        <li>U.S. DoD — CDAO &amp; DIU accelerate AI adoption (dic 2024). <a href="https://www.defense.gov/News/Releases/Release/Article/3996199/">defense.gov</a></li>
+        <li>DIU — Thunderforge Project (mar 2025). <a href="https://www.diu.mil/latest/dius-thunderforge-project-to-integrate-commercial-ai-powered-decision-making">diu.mil</a></li>
+        <li>DARPA — AI Cyber Challenge results (ago 2025). <a href="https://www.darpa.mil/news/2025/aixcc-results">darpa.mil</a></li>
+        <li>U.S. Army — Predictive Logistics Initiative (2023). <a href="https://www.army.mil/article/265899/">army.mil</a></li>
+        <li>UK MOD — JSP 936 Dependable AI in Defence (2024). <a href="https://www.gov.uk/government/publications/jsp-936-dependable-artificial-intelligence-ai-in-defence-part-1-directive">gov.uk</a></li>
+        <li>Registro Oficial del Ecuador — Ley de Fortalecimiento de la Ciberseguridad (22 may 2026). <a href="https://www.registroficial.gob.ec/quinto-suplemento-no-290/">registroficial.gob.ec</a></li>
+        <li>NIST — AI Risk Management Framework &amp; GenAI Profile. <a href="https://www.nist.gov/itl/ai-risk-management-framework">nist.gov</a></li>
+        <li>NSA — Deploying AI Systems Securely (2024) &amp; AI Data Security (2025). <a href="https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/3741371/">nsa.gov</a></li>
+        <li>MITRE ATLAS — amenazas contra sistemas de IA. <a href="https://atlas.mitre.org/">atlas.mitre.org</a></li>
+      </ol>
+    </details>
+    <p class="foot-note">
+      Documento conceptual basado exclusivamente en información pública. No contiene información clasificada,
+      capacidades operacionales específicas ni recomendaciones para sistemas de armas.
+    </p>
+  </div>
+</footer>
+
+<script>
+/* ── mouse glow + scrollbar + reveal ───────────────────────── */
+(function(){
+  var glow=document.getElementById('mouseGlow');
+  window.addEventListener('pointermove',function(e){
+    document.documentElement.style.setProperty('--mouse-x',e.clientX+'px');
+    document.documentElement.style.setProperty('--mouse-y',e.clientY+'px');
+  },{passive:true});
+
+  var bar=document.getElementById('scrollbar');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0?(window.scrollY/h*100):0)+'%';
+  },{passive:true});
+
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('active'); io.unobserve(en.target);} });
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+})();
+
+/* ── WebGL agent cores (ported from Duly agent-core) ───────── */
+(function(){
+  var VERT='attribute vec2 position;void main(){gl_Position=vec4(position,0.0,1.0);}';
+  var PRE=[
+    '#ifdef GL_ES','precision highp float;','#endif',
+    'uniform float u_time;uniform vec2 u_resolution;uniform float u_activity;',
+    'float hash(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}',
+    'float noise(vec2 p){vec2 i=floor(p);vec2 f=fract(p);vec2 u=f*f*(3.0-2.0*f);',
+    'return mix(mix(hash(i+vec2(0.0,0.0)),hash(i+vec2(1.0,0.0)),u.x),mix(hash(i+vec2(0.0,1.0)),hash(i+vec2(1.0,1.0)),u.x),u.y);}',
+    'float fbm(vec2 p){float v=0.0;float a=0.5;mat2 rot=mat2(cos(0.5),sin(0.5),-sin(0.5),cos(0.5));',
+    'for(int i=0;i<5;i++){v+=a*noise(p);p=rot*p*2.0+vec2(100.0);a*=0.5;}return v;}'
+  ].join('\n');
+
+  function frag(body){
+    return PRE+'\n'+body+'\n'+
+      'void main(){vec2 uv=(gl_FragCoord.xy*2.0-u_resolution.xy)/u_resolution.y;float d=length(uv);'+
+      'if(d>1.0){gl_FragColor=vec4(0.0);return;}vec3 col=getColor(uv,u_time,u_activity,d);'+
+      'col*=smoothstep(1.0,0.3,d)*0.8+0.4;float a=smoothstep(1.0,0.96,d);gl_FragColor=vec4(col*a,a);}';
+  }
+
+  // Único agente presente: magma DORMIDO — lento, apagado, pequeño.
+  // (Ignis Prime del set Duly, reteñido y bajado de brillo para leer "desactivado".)
+  var AGENTS={
+    magma:'vec3 getColor(vec2 uv,float t,float act,float d){t*=0.32;vec2 p=uv*2.6;'+
+      'float q=fbm(p-t*0.4);float r=fbm(p+q+t*0.3);float f=fbm(p+r);'+
+      'vec3 dark=vec3(0.05,0.02,0.01);vec3 ember=vec3(0.52,0.22,0.09);vec3 coreC=vec3(0.72,0.40,0.15);'+
+      'vec3 col=mix(dark,ember,f*1.15);float core=smoothstep(0.8,0.0,d)*f;'+
+      'col=mix(col,coreC,core*0.65);float pulse=0.9+0.1*sin(t*0.8);return col*0.72*pulse;}'
+  };
+
+  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var master=document.createElement('canvas');master.width=master.height=256;
+  var gl=master.getContext('webgl',{antialias:false,alpha:true,premultipliedAlpha:true});
+  var canvases=[].slice.call(document.querySelectorAll('canvas[data-agent]'));
+
+  function fallback(){
+    canvases.forEach(function(cv){
+      cv.style.background='radial-gradient(circle at 50% 42%,rgba(150,70,32,0.42),transparent 70%)';
+    });
+  }
+  if(!gl){fallback();return;}
+
+  function compile(type,src){var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){console.error(gl.getShaderInfoLog(s));return null;}return s;}
+
+  var vs=compile(gl.VERTEX_SHADER,VERT);
+  var buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+
+  var entries=[];
+  canvases.forEach(function(cv,idx){
+    var key=cv.getAttribute('data-agent');var body=AGENTS[key];if(!body||!vs)return;
+    var fs=compile(gl.FRAGMENT_SHADER,frag(body));if(!fs)return;
+    var prog=gl.createProgram();gl.attachShader(prog,vs);gl.attachShader(prog,fs);gl.linkProgram(prog);
+    var loc={pos:gl.getAttribLocation(prog,'position'),
+      time:gl.getUniformLocation(prog,'u_time'),res:gl.getUniformLocation(prog,'u_resolution'),act:gl.getUniformLocation(prog,'u_activity')};
+    var ctx=cv.getContext('2d');if(!ctx)return;
+    var glow=cv.getAttribute('data-agent');
+    var box=cv.parentElement;
+    var e={prog:prog,loc:loc,ctx:ctx,cv:cv,target:0,act:0,vis:true,start:(performance.now?performance.now():0)-idx*137};
+    box.addEventListener('mouseenter',function(){e.target=1;});
+    box.addEventListener('mouseleave',function(){e.target=0;});
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(en){e.vis=en[0].isIntersecting;}).observe(cv);
+    }
+    entries.push(e);
+    if(reduced){draw(e,0);}
+  });
+
+  function draw(e,time){
+    gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.useProgram(e.prog);
+    gl.enableVertexAttribArray(e.loc.pos);gl.vertexAttribPointer(e.loc.pos,2,gl.FLOAT,false,0,0);
+    gl.uniform1f(e.loc.time,time);gl.uniform2f(e.loc.res,256,256);gl.uniform1f(e.loc.act,e.act);
+    gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    var w=e.cv.width,h=e.cv.height;e.ctx.clearRect(0,0,w,h);e.ctx.drawImage(master,0,0,w,h);
+  }
+
+  if(reduced)return;
+  function loop(){
+    requestAnimationFrame(loop);
+    var now=performance.now?performance.now():Date.now();
+    for(var i=0;i<entries.length;i++){
+      var e=entries[i];e.act+=(e.target-e.act)*0.1;
+      if(!e.vis&&e.act<0.01)continue;
+      draw(e,(now-e.start)/1000);
+    }
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
