@@ -47,6 +47,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Lienzo infinito conversacional / Conversational infinite canvas [Product Design]
 - Mezcla de expertos / Mixture of Experts (MoE) [AI]
 - Posicionamiento por anclaje en CSS / CSS Anchor Positioning [Development]
+- Visual Search de componentes en Figma / Figma component Visual Search [Product Design]
+- Ruteo de modelos por tarea / Task-based model routing [AI]
+- field-sizing en CSS / CSS field-sizing [Development]
 
 ---
 
@@ -176,3 +179,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Posicionamiento por anclaje en CSS (ES) / CSS Anchor Positioning (EN)** → feature estrella de CSS 2026 (production-ready ahora en navegadores) que ata un elemento a otro —un tooltip a su botón, un dropdown a su trigger— puramente en CSS con `anchor()` y `position-anchor`, sin JavaScript. → Importa porque hace el trabajo completo de librerías como Floating UI / Popper.js: menos JS, y adiós a los bugs de reposicionamiento cuando el usuario hace scroll o cambia el tamaño de ventana — justo el dolor más común en componentes de overlay de un design system. → Aplicación: reimplementar tooltips, popovers y menús de landing-v11 (o del design system) con anchor positioning y eliminar la dependencia de JS para posicionarlos.
+
+### 2026-07-22 · miércoles
+
+**Product Design**
+**Visual Search de componentes en Figma (ES) / Figma component Visual Search (EN)** → función de la suite AI de Figma 2026 donde subes un screenshot o seleccionas una capa y Figma encuentra los componentes visualmente similares que ya existen en tu librería, en vez de que crees uno nuevo. → Importa porque la duplicación silenciosa de componentes es la causa #1 de "design debt" en design systems grandes: dos botones casi iguales que nadie sabe que coexisten; buscar por parecido visual (no por nombre) ataca ese problema en la raíz. → Aplicación: antes de crear una tarjeta o badge nuevo para landing-v11, buscar visualmente si ya existe algo equivalente en el design system y reutilizarlo, manteniendo `tokens-web.css` como única fuente.
+
+**AI**
+**Ruteo de modelos por tarea (ES) / Task-based model routing (EN)** → estrategia de arquitectura donde un sistema elige automáticamente qué modelo llamar según la dificultad y el costo de cada paso —un modelo pequeño y barato para lo trivial, uno grande solo para el razonamiento duro— habilitada esta semana por lanzamientos como Gemini 3.6 Flash y 3.5 Flash-Lite (Google, 22 jul) y OpenAI Flex, tiers explícitamente rápidos y baratos. → Importa porque cierra el hilo de MoE y ejecución en background ya cubiertos desde el lado del *sistema*: no es "qué modelo es mejor" sino "qué modelo por paso", y es la palanca principal para que un workflow agéntico sea sostenible en costo. → Aplicación: en workflows de dr-cv, rutear tareas mecánicas de `generadores/` (limpiar datos, formatear) a un modelo Flash/Lite y reservar el modelo tope para redactar bullets de CV.
+
+**Development**
+**field-sizing en CSS (ES) / CSS field-sizing (EN)** → propiedad que alcanzó Baseline "newly available" el 16 de junio de 2026 y permite que un `<input>` o `<textarea>` crezca o se encoja automáticamente para ajustarse a su contenido con `field-sizing: content`, sin JS que mida y reasigne alto. → Importa porque el textarea que se auto-expande al escribir es un patrón que hoy exige JS frágil (medir scrollHeight en cada keystroke) y es fuente típica de saltos de layout; ahora es una línea de CSS declarativa y accesible. → Aplicación: usarlo en los campos de formulario de EnRegla (comentarios, descripciones de pliego) para que crezcan con el texto sin JavaScript, y en cualquier textarea de contacto de landing-v11.
