@@ -50,6 +50,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Visual Search de componentes en Figma / Figma component Visual Search [Product Design]
 - Ruteo de modelos por tarea / Task-based model routing [AI]
 - field-sizing en CSS / CSS field-sizing [Development]
+- Co-diseño humano-IA / Human-AI co-design [Product Design]
+- Modelo del mundo / World model [AI]
+- Animaciones dirigidas por scroll / Scroll-driven animations (animation-timeline) [Development]
 
 ---
 
@@ -190,3 +193,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **field-sizing en CSS (ES) / CSS field-sizing (EN)** → propiedad que alcanzó Baseline "newly available" el 16 de junio de 2026 y permite que un `<input>` o `<textarea>` crezca o se encoja automáticamente para ajustarse a su contenido con `field-sizing: content`, sin JS que mida y reasigne alto. → Importa porque el textarea que se auto-expande al escribir es un patrón que hoy exige JS frágil (medir scrollHeight en cada keystroke) y es fuente típica de saltos de layout; ahora es una línea de CSS declarativa y accesible. → Aplicación: usarlo en los campos de formulario de EnRegla (comentarios, descripciones de pliego) para que crezcan con el texto sin JavaScript, y en cualquier textarea de contacto de landing-v11.
+
+### 2026-07-23 · jueves
+
+**Product Design**
+**Co-diseño humano-IA (ES) / Human-AI co-design (EN)** → salto que marca la cobertura de diseño de esta semana: la IA deja de ser un autocompletado que sugiere y pasa a *co-diseñar* con el equipo —genera variaciones, patrones de respuesta y prototipos en código a la par que el humano decide dirección, jerarquía y calidad. → Importa porque redefine el rol senior: el valor ya no es producir la variación #40, sino curar entre las que la IA genera y aportar empatía, contexto y criterio —exactamente la frontera del AI Product Designer— mientras >50% de diseñadores encuestados temen que la IA baje la calidad si nadie cura. → Aplicación: en EnRegla, tratar al agente como co-diseñador (que proponga 3–4 layouts de formulario de pliego) y quedarme yo como el filtro de calidad contra `design-system/tokens-web.css`, no como el que dibuja cada pantalla.
+
+**AI**
+**Modelo del mundo (ES) / World model (EN)** → modelo de IA que aprende una representación interna de cómo funciona un entorno (física, causa-efecto, cómo cambia el estado tras una acción) para *predecir* y *simular* qué pasará, en vez de solo generar texto; esta semana NVIDIA lanzó Cosmos 3 Edge, un world model de 4B parámetros optimizado para correr on-device en robótica y AI física. → Importa porque es la categoría de modelo detrás de los agentes que actúan en interfaces y entornos reales (computer-use, robótica): un agente que "entiende" el estado de una app puede planificar mejor que uno que reacciona clic a clic. → Aplicación: al diseñar flujos agénticos que operan software real (subir un pliego a un portal), pensar en darle al agente un modelo explícito del estado del sistema —qué pantalla es, qué cambió tras cada acción— en vez de solo screenshots sueltos.
+
+**Development**
+**Animaciones dirigidas por scroll (ES) / Scroll-driven animations — animation-timeline (EN)** → feature CSS que alcanza baseline cross-browser en 2026 (Firefox y Safari ya envían soporte completo) y ata el progreso de una animación a la posición de scroll con `animation-timeline: scroll()` o `view()`, sin JavaScript ni librerías de observador. → Importa porque los reveals al hacer scroll, barras de progreso y parallax —hoy resueltos con IntersectionObserver o GSAP— pasan a ser CSS declarativo, más ligero y performante, justo el efecto estrella de un portfolio de diseñador. → Aplicación: usarlo en landing-v11 para que las tarjetas de casos de `perfil/` aparezcan y se muevan al hacer scroll (`animation-timeline: view()`) sin JS, manteniendo el bundle liviano.
