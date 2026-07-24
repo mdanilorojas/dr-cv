@@ -53,6 +53,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Co-diseño humano-IA / Human-AI co-design [Product Design]
 - Modelo del mundo / World model [AI]
 - Animaciones dirigidas por scroll / Scroll-driven animations (animation-timeline) [Development]
+- Shaders generativos en Figma (WebGPU) / Generative shaders [Product Design]
+- Generación aumentada por recuperación / Retrieval-Augmented Generation (RAG) [AI]
+- Mixins nativos en CSS / CSS Mixins (@mixin / @apply) [Development]
 
 ---
 
@@ -204,3 +207,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Animaciones dirigidas por scroll (ES) / Scroll-driven animations — animation-timeline (EN)** → feature CSS que alcanza baseline cross-browser en 2026 (Firefox y Safari ya envían soporte completo) y ata el progreso de una animación a la posición de scroll con `animation-timeline: scroll()` o `view()`, sin JavaScript ni librerías de observador. → Importa porque los reveals al hacer scroll, barras de progreso y parallax —hoy resueltos con IntersectionObserver o GSAP— pasan a ser CSS declarativo, más ligero y performante, justo el efecto estrella de un portfolio de diseñador. → Aplicación: usarlo en landing-v11 para que las tarjetas de casos de `perfil/` aparezcan y se muevan al hacer scroll (`animation-timeline: view()`) sin JS, manteniendo el bundle liviano.
+
+### 2026-07-24 · viernes
+
+**Product Design**
+**Shaders generativos en Figma (ES) / Generative shaders — WebGPU (EN)** → capacidad presentada en Config 2026 (rollout jul 2026) donde describes en lenguaje natural un efecto o relleno (grano, degradado animado, distorsión) y el agente de Figma lo construye como un programa WebGPU parametrizado que editas con controles, sin escribir shader code. → Importa porque mueve efectos visuales "de motion designer con GLSL" al alcance de cualquier diseñador de producto, y sube el techo de lo que un landing puede expresar sin exportar a video ni Lottie. → Aplicación: generar un fondo con textura/luz sutil de marca para el hero de landing-v11 como shader parametrizado, en vez de un PNG pesado o un canvas con JS custom.
+
+**AI**
+**Generación aumentada por recuperación (ES) / Retrieval-Augmented Generation — RAG (EN)** → técnica donde, antes de responder, el modelo *recupera* fragmentos relevantes de una fuente externa (tus documentos, una base vectorial, una API) y los inyecta en el contexto, de modo que responde sobre datos reales y actuales en vez de solo lo que memorizó al entrenar. → Importa porque es el fundamento detrás de la ola de "conectores" de esta semana (el nuevo Figma Design Agent ya se enchufa a Notion, Slack, GitHub y Atlassian): un agente útil no *sabe* tus datos, los *recupera*, y eso es lo que baja alucinaciones y lo vuelve fiable en producto. → Aplicación: en EnRegla, montar RAG sobre el corpus de pliegos para que el agente responda citando el pliego real cargado, no una versión inventada; y en dr-cv, dar al agente de bullets acceso recuperado a `perfil/` como fuente de verdad.
+
+**Development**
+**Mixins nativos en CSS (ES) / CSS Mixins — @mixin / @apply (EN)** → feature CSS de 2026 que permite definir un bloque de estilos reutilizable con parámetros y lógica condicional (`@mixin --card(...) { ... }`) y aplicarlo con `@apply --card`, trayendo a CSS puro lo que antes exigía Sass o un preprocesador. → Importa porque un design system vive de patrones repetidos (tarjetas, badges, estados de foco) y hasta ahora reusarlos en CSS nativo obligaba a duplicar reglas o depender de build tooling; los mixins lo hacen nativo, mantenible y sin paso de compilación. → Aplicación: en `design-system/tokens-web.css` definir mixins como `--surface-card` o `--focus-ring` y aplicarlos en landing-v11 y publicables, garantizando consistencia sin copiar-pegar bloques de CSS.
