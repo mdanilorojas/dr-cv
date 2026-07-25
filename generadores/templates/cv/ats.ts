@@ -2,9 +2,9 @@ import type { CvData } from "../../lib/types.js";
 import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 
 /*
- * ATS-safe CV — versión fechada 2026-07-01.
+ * ATS-safe CV — versión fechada 2026-07-25.
  *
- * Cotejo: perfil/data/fact-bank.yaml (hechos) × Notion "ATS Research" (35 ciclos).
+ * Cotejo: perfil/data/fact-bank.yaml (hechos) × Notion "ATS Research" (ciclo 39).
  * Reglas aplicadas del research:
  *  - Hybrid Chronological: Summary → Skills → Tools → Work Experience → Certifications → Education.
  *  - Single-column, headers estándar, contacto en el cuerpo, URLs en texto plano, sin iconos.
