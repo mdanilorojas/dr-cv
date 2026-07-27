@@ -56,6 +56,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Shaders generativos en Figma (WebGPU) / Generative shaders [Product Design]
 - Generación aumentada por recuperación / Retrieval-Augmented Generation (RAG) [AI]
 - Mixins nativos en CSS / CSS Mixins (@mixin / @apply) [Development]
+- Diseñador como orquestador / Designer as orchestrator [Product Design]
+- Llamado programático de herramientas / Programmatic tool calling [AI]
+- attr() con tipos en CSS / Typed attr() in CSS [Development]
 
 ---
 
@@ -218,3 +221,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Mixins nativos en CSS (ES) / CSS Mixins — @mixin / @apply (EN)** → feature CSS de 2026 que permite definir un bloque de estilos reutilizable con parámetros y lógica condicional (`@mixin --card(...) { ... }`) y aplicarlo con `@apply --card`, trayendo a CSS puro lo que antes exigía Sass o un preprocesador. → Importa porque un design system vive de patrones repetidos (tarjetas, badges, estados de foco) y hasta ahora reusarlos en CSS nativo obligaba a duplicar reglas o depender de build tooling; los mixins lo hacen nativo, mantenible y sin paso de compilación. → Aplicación: en `design-system/tokens-web.css` definir mixins como `--surface-card` o `--focus-ring` y aplicarlos en landing-v11 y publicables, garantizando consistencia sin copiar-pegar bloques de CSS.
+
+### 2026-07-27 · lunes
+
+**Product Design**
+**Diseñador como orquestador (ES) / Designer as orchestrator (EN)** → modelo de rol reafirmado en el Design Summit "Designing AI Products" (14 jul 2026, con diseñadores de Google, LinkedIn, Databricks y Lyft): el diseñador deja de *ejecutar* pantallas y pasa a *orquestar* —enmarcar el problema, dirigir a las herramientas de IA que generan el artefacto y validar que el juicio humano (ética, estrategia, calidad) siga al centro. → Importa porque es el nombre explícito del puesto al que apunto: cuando el artefacto lo produce la IA (Claude Design, Figma agent, Generative UI ya cubiertos), el valor senior es coordinar el sistema y filtrar calidad, no dibujar; el rol se vuelve cross-funcional (negocio + operación + capacidades de IA). → Aplicación: posicionarme en el CV y la landing como "orquestador" de flujos diseño-IA (enmarcar → dirigir agentes → validar), no como productor de mockups; en EnRegla, orquestar el agente que arma formularios de pliego en vez de maquetar cada uno.
+
+**AI**
+**Llamado programático de herramientas (ES) / Programmatic tool calling (EN)** → capacidad nueva de las APIs de agentes 2026 (destacada esta semana en el lanzamiento de la familia GPT-5.6 y ya presente en el code-execution de Claude) donde el modelo *escribe código* que invoca y encadena varias herramientas dentro de una sola ejecución, en vez de emitir una llamada suelta por turno y esperar el resultado. → Importa porque reduce las idas y vueltas modelo↔herramienta (menos latencia, menos tokens) y le da al agente control de flujo real —bucles, condicionales, manejo de errores— sobre sus herramientas; es la evolución natural del computer-use por lotes y la arquitectura de grafos ya cubiertas. → Aplicación: en un workflow agéntico de dr-cv, dejar que el agente escriba un pequeño script que llame `leer perfil → generar bullets → validar → renderizar` de una vez, en lugar de un round-trip por cada paso.
+
+**Development**
+**attr() con tipos en CSS (ES) / Typed attr() in CSS (EN)** → versión ampliada de la función `attr()` (Chrome 133+, cobertura fuerte en 2026) que ya no devuelve solo texto: parsea el valor de un atributo HTML a un tipo CSS real —`<color>`, `<length>`, número, custom-ident— y lo usa en *cualquier* propiedad, incluidas custom properties, con fallback: `--theme-color: attr(data-color type(color), blue)`. → Importa porque permite pasar datos del HTML directo al CSS (temas por marca, tamaños, progreso) sin una línea de JS; ojo: aún no es Baseline en todos los navegadores, así que exige fallback en producción. → Aplicación: en tarjetas de casos de landing-v11 o badges de skills, leer `data-color`/`data-progress` del markup y pintar el componente con `attr(... type(color))` en vez de generar clases o estilos inline por variante.
