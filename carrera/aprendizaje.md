@@ -59,6 +59,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Diseñador como orquestador / Designer as orchestrator [Product Design]
 - Llamado programático de herramientas / Programmatic tool calling [AI]
 - attr() con tipos en CSS / Typed attr() in CSS [Development]
+- IA explicable en UX / Explainable AI (XAI) in UX [Product Design]
+- Ingeniería de contexto / Context engineering [AI]
+- Función if() en CSS / CSS if() function [Development]
 
 ---
 
@@ -232,3 +235,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **attr() con tipos en CSS (ES) / Typed attr() in CSS (EN)** → versión ampliada de la función `attr()` (Chrome 133+, cobertura fuerte en 2026) que ya no devuelve solo texto: parsea el valor de un atributo HTML a un tipo CSS real —`<color>`, `<length>`, número, custom-ident— y lo usa en *cualquier* propiedad, incluidas custom properties, con fallback: `--theme-color: attr(data-color type(color), blue)`. → Importa porque permite pasar datos del HTML directo al CSS (temas por marca, tamaños, progreso) sin una línea de JS; ojo: aún no es Baseline en todos los navegadores, así que exige fallback en producción. → Aplicación: en tarjetas de casos de landing-v11 o badges de skills, leer `data-color`/`data-progress` del markup y pintar el componente con `attr(... type(color))` en vez de generar clases o estilos inline por variante.
+
+### 2026-07-28 · martes
+
+**Product Design**
+**IA explicable en UX (ES) / Explainable AI (XAI) in UX (EN)** → práctica de diseño —marcada esta semana como tendencia central de "AI-first product design 2026"— que hace visible *por qué* la IA tomó una decisión o sugerencia (qué datos usó, qué tan segura está, cómo cambiarla) en vez de mostrar solo el resultado como una caja negra. → Importa porque la confianza es la nueva métrica de UX cuando la IA decide: un usuario que no entiende de dónde salió una recomendación no la adopta, y >50% de diseñadores ya teme que la IA baje la calidad si nadie diseña esa transparencia. → Aplicación: en EnRegla, cuando el agente rellena o sugiere un campo del pliego, mostrar la cita al pliego real y un nivel de confianza junto a cada sugerencia, para que el usuario valide en vez de aceptar a ciegas.
+
+**AI**
+**Ingeniería de contexto (ES) / Context engineering (EN)** → disciplina que reemplazó al "prompt engineering" como término clave de 2026: en vez de pulir una frase, se diseña *todo* lo que entra a la ventana de contexto del modelo —instrucciones, datos recuperados (RAG), memoria, herramientas disponibles, ejemplos— y, crucialmente, qué se deja fuera para no saturarlo. → Importa porque un agente falla más por contexto mal curado (irrelevante, contradictorio o demasiado) que por un prompt mal escrito; es la palanca real de calidad que conecta RAG, memoria persistente y ruteo de modelos ya cubiertos. → Aplicación: en workflows agénticos de dr-cv, tratar el contexto como presupuesto escaso —darle al agente de bullets solo la sección relevante de `perfil/` y la vacante, no el perfil entero— para respuestas más precisas y baratas.
+
+**Development**
+**Función if() en CSS (ES) / CSS if() function (EN)** → función nueva (Chrome 137, Firefox en progreso, Safari en roadmap 2026–27) que trae condicionales *inline* a cualquier propiedad CSS: `font-size: if(style(--size: xl): 2rem; style(--size: lg): 1.5rem; else: 1rem)`, evaluando en orden y devolviendo el primer caso verdadero. Acepta tests `style()`, `media()` y `supports()`. → Importa porque hoy variar un valor según un token o breakpoint exige clases múltiples, `data-*` o duplicar reglas; `if()` con `style()` deja decidir el valor mirando una custom property *en el mismo elemento*, sin selector padre. → Aplicación: en `design-system/tokens-web.css`, resolver variantes de componente (tamaño de badge, color por estado) leyendo un token con `if(style(--variant: …))` en vez de multiplicar clases; con fallback porque aún no es Baseline.
