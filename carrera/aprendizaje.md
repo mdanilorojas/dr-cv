@@ -62,6 +62,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - IA explicable en UX / Explainable AI (XAI) in UX [Product Design]
 - Ingeniería de contexto / Context engineering [AI]
 - Función if() en CSS / CSS if() function [Development]
+- Autonomía progresiva / Progressive autonomy — Autonomy Dial [Product Design]
+- Modelo frontera / Frontier model (Claude Opus 5) [AI]
+- View Transitions entre documentos / Cross-document View Transitions API [Development]
 
 ---
 
@@ -246,3 +249,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Función if() en CSS (ES) / CSS if() function (EN)** → función nueva (Chrome 137, Firefox en progreso, Safari en roadmap 2026–27) que trae condicionales *inline* a cualquier propiedad CSS: `font-size: if(style(--size: xl): 2rem; style(--size: lg): 1.5rem; else: 1rem)`, evaluando en orden y devolviendo el primer caso verdadero. Acepta tests `style()`, `media()` y `supports()`. → Importa porque hoy variar un valor según un token o breakpoint exige clases múltiples, `data-*` o duplicar reglas; `if()` con `style()` deja decidir el valor mirando una custom property *en el mismo elemento*, sin selector padre. → Aplicación: en `design-system/tokens-web.css`, resolver variantes de componente (tamaño de badge, color por estado) leyendo un token con `if(style(--variant: …))` en vez de multiplicar clases; con fallback porque aún no es Baseline.
+
+### 2026-07-29 · miércoles
+
+**Product Design**
+**Autonomía progresiva / delegación progresiva (ES) / Progressive autonomy — the Autonomy Dial (EN)** → patrón de UX agéntica destacado esta semana (Smashing Magazine, ShapeofAI, Agentic Design): en vez de exigir permiso total al arranque, la interfaz deja al usuario subir el nivel de independencia del agente con un "dial de autonomía", y el sistema se gana más permiso demostrando fiabilidad, no pidiéndola de entrada. → Importa porque cuando el agente actúa por ti la confianza es *la* métrica de UX: forzar autonomía total al inicio —o no ofrecer "undo"— es el anti-patrón que más productos de IA ha matado; diseñar esa gradación es literalmente el trabajo del AI Product Designer. → Aplicación: en EnRegla, que el agente que rellena pliegos arranque solo *sugiriendo* (con confirmación y undo) y gane auto-ejecución únicamente en los campos donde ya acertó de forma repetida.
+
+**AI**
+**Modelo frontera / Claude Opus 5 (ES + EN: frontier model)** → un "frontier model" es el modelo más capaz disponible en un momento dado; esta semana Anthropic lanzó **Claude Opus 5** (24 jul 2026), hoy #1 en el ranking de Artificial Analysis. → Importa porque la frontera se mueve cada pocas semanas (GPT-5.6, Gemini 3.x, Kimi K3, Opus 5): "qué modelo uso" es una decisión viva, no fija, y cada salto de capacidad cambia qué tareas puedes delegar sin supervisión humana. → Aplicación: reservar el modelo frontera (Opus 5) para el razonamiento de más valor —redactar bullets de CV, curar la propuesta económica de Novomet— y rutear lo mecánico de `generadores/` a un tier barato.
+
+**Development**
+**View Transitions entre documentos (ES) / Cross-document View Transitions API (EN)** → API que anima la transición entre dos páginas *distintas* (navegación multipágina/MPA) con CSS puro y sin librería de animación; las same-document ya son Baseline (oct 2025) y las cross-document ya corren en Chromium y Safari 18.2+ (Firefox en camino en 2026). → Importa porque las transiciones tipo-app entre páginas —hoy resueltas obligando a una SPA + Framer Motion/GSAP— pasan a HTML/CSS nativo, más liviano y sin bundle JS, justo lo ideal para un portfolio multipágina. → Aplicación: en landing-v11 (index → `/work` → casos) activar `@view-transition { navigation: auto }` para transiciones suaves entre páginas sin convertir el sitio en SPA, con fallback donde falte soporte.
