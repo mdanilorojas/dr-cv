@@ -65,6 +65,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Autonomía progresiva / Progressive autonomy — Autonomy Dial [Product Design]
 - Modelo frontera / Frontier model (Claude Opus 5) [AI]
 - View Transitions entre documentos / Cross-document View Transitions API [Development]
+- Enrutamiento de recuperación / Recovery routing (UX agéntica) [Product Design]
+- Apps MCP / MCP Apps [AI]
+- Función contrast-color() en CSS / CSS contrast-color() [Development]
 
 ---
 
@@ -260,3 +263,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **View Transitions entre documentos (ES) / Cross-document View Transitions API (EN)** → API que anima la transición entre dos páginas *distintas* (navegación multipágina/MPA) con CSS puro y sin librería de animación; las same-document ya son Baseline (oct 2025) y las cross-document ya corren en Chromium y Safari 18.2+ (Firefox en camino en 2026). → Importa porque las transiciones tipo-app entre páginas —hoy resueltas obligando a una SPA + Framer Motion/GSAP— pasan a HTML/CSS nativo, más liviano y sin bundle JS, justo lo ideal para un portfolio multipágina. → Aplicación: en landing-v11 (index → `/work` → casos) activar `@view-transition { navigation: auto }` para transiciones suaves entre páginas sin convertir el sitio en SPA, con fallback donde falte soporte.
+
+### 2026-07-30 · jueves
+
+**Product Design**
+**Enrutamiento de recuperación (ES) / Recovery routing (EN)** → patrón de UX agéntica —destacado esta semana como uno de los 5 patrones que todo agente empresarial necesita, junto a "visibilidad del plan" y "divulgación de uso de herramientas"— que diseña explícitamente qué pasa cuando el agente falla, se atasca o tiene baja confianza: ofrece caminos de salida (deshacer, reintentar, editar el paso, escalar a un humano) en vez de dejar al usuario en un callejón sin salida. → Importa porque un agente sin ruta de recuperación erosiona la confianza al primer error, y la confianza es *la* moneda de la UX agéntica; complementa la autonomía progresiva ya cubierta: no solo *cuánto* permiso das al agente, sino *qué ofreces cuando se equivoca*. → Aplicación: en EnRegla, cuando el agente que rellena un pliego falla o duda, mostrar botones claros de "corregir campo", "reintentar" y "pedir ayuda humana" en vez de un error genérico sin salida.
+
+**AI**
+**Apps MCP (ES) / MCP Apps (EN)** → extensión del Model Context Protocol, en producción en 2026 (ya envía en Claude, ChatGPT, VS Code y Goose) que permite a un servidor MCP devolver no solo texto o datos, sino componentes de interfaz interactivos que el host renderiza dentro del chat. → Importa porque es la infraestructura concreta que llevó la Generative UI (ya cubierta) de experimento a producción: estandariza *cómo* un agente entrega UI real —formularios, tarjetas, controles— en vez de solo describirla en texto, y de forma cross-plataforma. → Aplicación: exponer las herramientas de EnRegla como un servidor MCP con MCP Apps para que el formulario de pliego se renderice interactivo dentro de Claude/ChatGPT, no como texto plano que el usuario tenga que interpretar.
+
+**Development**
+**Función contrast-color() en CSS (ES) / CSS contrast-color() (EN)** → función CSS (Baseline 2026) que calcula automáticamente un color de texto legible —blanco o negro con contraste garantizado— a partir del color de fondo que le pases, sin calcular ratios WCAG a mano ni mantener pares de color. → Importa porque hoy poner texto accesible sobre un color de marca *dinámico* (que viene de un token o de datos) exige calcular el contraste en JS o duplicar variables a mano; `contrast-color()` lo resuelve en CSS puro y accesible por defecto. → Aplicación: en `design-system/tokens-web.css`, pintar el texto de badges y botones con `color: contrast-color(var(--brand))` para que siga siendo legible sin importar qué color de marca se asigne a la variante.
