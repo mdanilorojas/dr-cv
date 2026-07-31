@@ -2,7 +2,7 @@ import type { CvData } from "../../lib/types.js";
 import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 
 /*
- * ATS-safe CV — versión fechada 2026-07-01.
+ * ATS-safe CV — versión fechada 2026-07-31.
  *
  * Cotejo: perfil/data/fact-bank.yaml (hechos) × Notion "ATS Research" (35 ciclos).
  * Reglas aplicadas del research:
