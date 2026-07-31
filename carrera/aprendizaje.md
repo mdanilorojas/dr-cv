@@ -68,6 +68,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Enrutamiento de recuperación / Recovery routing (UX agéntica) [Product Design]
 - Apps MCP / MCP Apps [AI]
 - Función contrast-color() en CSS / CSS contrast-color() [Development]
+- Workbench de IA por dominio / Domain-specific AI workbench [Product Design]
+- Marco regulatorio vinculante para agentes de IA / Binding AI-agent regulation [AI]
+- Consultas de estilo de contenedor / Container style queries [Development]
 
 ---
 
@@ -274,3 +277,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Función contrast-color() en CSS (ES) / CSS contrast-color() (EN)** → función CSS (Baseline 2026) que calcula automáticamente un color de texto legible —blanco o negro con contraste garantizado— a partir del color de fondo que le pases, sin calcular ratios WCAG a mano ni mantener pares de color. → Importa porque hoy poner texto accesible sobre un color de marca *dinámico* (que viene de un token o de datos) exige calcular el contraste en JS o duplicar variables a mano; `contrast-color()` lo resuelve en CSS puro y accesible por defecto. → Aplicación: en `design-system/tokens-web.css`, pintar el texto de badges y botones con `color: contrast-color(var(--brand))` para que siga siendo legible sin importar qué color de marca se asigne a la variante.
+
+### 2026-07-31 · viernes
+
+**Product Design**
+**Workbench de IA por dominio (ES) / Domain-specific AI workbench (EN)** → patrón de producto que sube fuerte esta semana: en vez de dar al usuario un modelo de chat genérico, se envuelve el modelo en un entorno de trabajo diseñado para un oficio concreto (Claude Science para descubrimiento de fármacos, los 7 agentes de hiring de Unstop lanzados el 27 jul), con las herramientas, datos y flujos de ese dominio ya integrados. → Importa porque marca la etapa siguiente a la Generative UI y los conectores ya cubiertos: el valor del diseñador ya no es la pantalla genérica sino modelar el "banco de trabajo" completo de un oficio —qué acciones, qué contexto, qué guardrails— que es exactamente el rol del AI Product Designer. → Aplicación: pensar EnRegla no como "un chatbot sobre pliegos" sino como un workbench de licitaciones: pliego, herramientas de llenado, validación y propuesta económica en un solo entorno diseñado para ese trabajo.
+
+**AI**
+**Marco regulatorio vinculante para agentes de IA (ES) / Binding AI-agent regulation (EN)** → esta semana (27 jul 2026) China publicó el primer marco regulatorio del mundo enfocado específicamente en agentes de IA ("Implementation Opinions on the Standardized Application... of Intelligent Agents"), con reglas obligatorias sobre despliegue, trazabilidad y responsabilidad de agentes autónomos. → Importa porque cierra desde el lado legal el hilo de seguridad en runtime y autonomía progresiva ya cubiertos: cuando un agente actúa por el usuario, "quién responde si se equivoca" deja de ser filosofía y pasa a ser requisito de cumplimiento que el producto debe soportar (logs, consentimiento, límites). → Aplicación: diseñar en EnRegla, desde ya, trazabilidad por acción del agente (qué hizo, con qué dato, quién lo aprobó) para que el producto sea auditable si un cliente opera en un mercado que empieza a regular agentes.
+
+**Development**
+**Consultas de estilo de contenedor (ES) / Container style queries (EN)** → extensión de las container queries (unida a Baseline 2026) que permite a un componente cambiar su estilo según el valor de una custom property de su contenedor —`@container style(--tone: brand) { ... }`— y no solo según el tamaño del contenedor. → Importa porque es la pieza que faltaba para componentes de verdad "conscientes de su contexto" en un design system: una misma tarjeta o botón se reestiliza según el modo/tema/tono que declare su contenedor, sin clases variantes ni props duplicadas. → Aplicación: en `design-system/tokens-web.css`, envolver secciones de landing-v11 con `--tone: brand|neutral|inverse` y dejar que las tarjetas se adapten con `@container style(...)` en vez de mantener una clase por variante.
