@@ -15,8 +15,8 @@ const ROWS: Row[] = [
   { years: "2026—NOW", co: "Compliance SaaS · LATAM", badge: "280+ paying users",
     role: { en: "Lead Product Designer", es: "Líder de Diseño de Producto" },
     desc: {
-      en: "Lead product designer for a compliance SaaS for LATAM SMBs, owning discovery-to-launch design and shipping a validated MVP in 40 days. Designed a 31-component Figma design system, used across 16 screens and implemented directly in React/TypeScript. Ran AI-persona feedback loops to validate onboarding flows pre-engineering, growing the product to ~280 paying customers on a base of ~2,700 total users.",
-      es: "Líder de diseño de producto para un SaaS de cumplimiento para PYMES LATAM, dueño del diseño de discovery a lanzamiento y validando el MVP en 40 días. Diseñé un design system de 31 componentes en Figma, usado en 16 pantallas e implementado directamente en React/TypeScript. Corrí loops de feedback con personas IA para validar los flujos de onboarding antes de ingeniería, creciendo el producto a ~280 clientes pagando sobre una base de ~2,700 usuarios totales."
+      en: "Lead product designer for a compliance SaaS for LATAM SMBs, owning discovery-to-launch design and shipping a validated MVP in 40 days. Instrumented Mixpanel end-to-end and redesigned the onboarding — lifting new-user activation from 2.6% to 9.4% in under 3 weeks; an A/B test (email vs. Google login) lifted onboarding completion 74%. Designed a 31-component Figma (Variables, Auto Layout) design system across 16 screens, implemented in React/TypeScript; product grew to ~280 paying customers on a base of ~2,700.",
+      es: "Líder de diseño de producto para un SaaS de cumplimiento para PYMES LATAM, dueño del diseño de discovery a lanzamiento y validando el MVP en 40 días. Instrumenté Mixpanel end-to-end y rediseñé el onboarding — subiendo la activación de nuevos usuarios de 2,6% a 9,4% en menos de 3 semanas; un A/B test (email vs. Google login) elevó la finalización del onboarding un 74%. Diseñé un design system de 31 componentes en Figma (Variables, Auto Layout) usado en 16 pantallas e implementado en React/TypeScript; el producto creció a ~280 clientes pagando sobre ~2.700 totales."
     } },
   { years: "2016—2022", co: "Xentinels DesignOps",
     role: { en: "Design Director / Product Manager", es: "Director de Diseño / Product Manager" },
@@ -28,7 +28,7 @@ const ROWS: Row[] = [
 
 interface Cap { label: { en: string; es: string }; detail: { en: string; es: string }; }
 const CAPS: Cap[] = [
-  { label: { en: "Product & UX", es: "Producto y UX" }, detail: { en: "User Research · Usability Testing · Journey Mapping · NPS/CSAT", es: "Investigación UX · Pruebas de Usabilidad · Journey Mapping · NPS/CSAT" } },
+  { label: { en: "Product & UX", es: "Producto y UX" }, detail: { en: "User Research · Usability Testing · Journey Mapping · NPS/CSAT · Mixpanel · A/B Testing", es: "Investigación UX · Pruebas de Usabilidad · Journey Mapping · NPS/CSAT · Mixpanel · A/B Testing" } },
   { label: { en: "Design Systems", es: "Design Systems" }, detail: { en: "Figma · Shadcn · Radix · Storybook · WCAG 2.2 / Section 508", es: "Figma · Shadcn · Radix · Storybook · WCAG 2.2 / Sección 508" } },
   { label: { en: "Design Engineering", es: "Design Engineering" }, detail: { en: "TypeScript · React 19 · Prototyping · Supabase", es: "TypeScript · React 19 · Prototipado · Supabase" } },
   { label: { en: "Agentic UX / AI", es: "UX Agéntica / IA" }, detail: { en: "Agent-ready Design Systems · LLM Persona Emulation · Custom MCP Design", es: "Design Systems Agénticos · Emulación de Personas LLM · MCP a Medida" } },
