@@ -71,6 +71,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Workbench de IA por dominio / Domain-specific AI workbench [Product Design]
 - Marco regulatorio vinculante para agentes de IA / Binding AI-agent regulation [AI]
 - Consultas de estilo de contenedor / Container style queries [Development]
+- Agentic Experience (AX) / Diseño de experiencia agéntica [Product Design]
+- Sistemas multiagente / Multi-agent systems (OpenAI Astra) [AI]
+- Regla @scope en CSS / CSS @scope rule [Development]
 
 ---
 
@@ -288,3 +291,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Consultas de estilo de contenedor (ES) / Container style queries (EN)** → extensión de las container queries (unida a Baseline 2026) que permite a un componente cambiar su estilo según el valor de una custom property de su contenedor —`@container style(--tone: brand) { ... }`— y no solo según el tamaño del contenedor. → Importa porque es la pieza que faltaba para componentes de verdad "conscientes de su contexto" en un design system: una misma tarjeta o botón se reestiliza según el modo/tema/tono que declare su contenedor, sin clases variantes ni props duplicadas. → Aplicación: en `design-system/tokens-web.css`, envolver secciones de landing-v11 con `--tone: brand|neutral|inverse` y dejar que las tarjetas se adapten con `@container style(...)` en vez de mantener una clase por variante.
+
+### 2026-08-03 · lunes
+
+**Product Design**
+**Agentic Experience / AX (ES: Diseño de experiencia agéntica / EN: Agentic Experience)** → disciplina que esta semana varias fuentes describen como una rama que se separa del UX: mientras el UX diseña pantallas que el usuario opera, el AX diseña *cómo un agente actúa por el usuario* —el paso de interacción "basada en comandos" a "basada en intención", que NN/g llama el primer paradigma de UI nuevo en 60 años. → Importa porque es literalmente el nombre del rol al que apunto: Gartner proyecta que 40% de las apps empresariales correrán agentes de tarea para fin de 2026 (vs <5% en 2025), y el trabajo del diseñador pasa de ordenar pantallas a diseñar confianza, control y recuperación como una "capa de rendición de cuentas". → Aplicación: encuadrar mi portafolio y EnRegla como trabajo de AX (intención → acción del agente → validación), no de UX de pantallas; posicionarme donde la demanda está creciendo 8×.
+
+**AI**
+**Sistemas multiagente / Multi-agent systems (ES + EN, caso: OpenAI "Astra")** → arquitectura donde varios agentes especializados colaboran —dividiéndose subtareas, revisándose y coordinándose— en vez de un solo agente monolítico; OpenAI está construyendo una familia llamada **Astra** pensada para que múltiples agentes ataquen un problema complejo juntos durante *horas o días*. → Importa porque es el siguiente escalón sobre la arquitectura de grafos y el patrón actor-evaluador ya cubiertos: escala el trabajo autónomo de "un agente por turno" a "un equipo de agentes por proyecto", y define el horizonte de qué puedo delegar sin supervisión constante. → Aplicación: en dr-cv, pensar la generación de un CV como varios roles-agente (uno redacta bullets, uno valida contra `perfil/`, uno cura tono) en vez de un solo prompt gigante; cada rol con su contexto acotado.
+
+**Development**
+**Regla @scope en CSS (ES: alcance de estilos / EN: CSS @scope rule)** → regla ya totalmente implementada en Chrome (2026) que limita un bloque de estilos a un subárbol concreto del DOM —`@scope (.card) { ... }`— con límite superior e inferior, sin recurrir a convenciones de nombres tipo BEM ni a `!important`. → Importa porque la fuga de estilos entre componentes es uno de los dolores crónicos de un design system que crece; `@scope` da encapsulación real en CSS nativo, sin build tooling ni Shadow DOM. → Aplicación: en `design-system/tokens-web.css` y landing-v11, envolver componentes (tarjetas de casos, badges) en `@scope` para que sus estilos no se filtren a otras secciones, reemplazando prefijos de clase defensivos.
