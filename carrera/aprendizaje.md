@@ -74,6 +74,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Agentic Experience (AX) / Diseño de experiencia agéntica [Product Design]
 - Sistemas multiagente / Multi-agent systems (OpenAI Astra) [AI]
 - Regla @scope en CSS / CSS @scope rule [Development]
+- Modo simulación / Sandbox Mode (UX agéntica) [Product Design]
+- Destilación de modelos / Model distillation [AI]
+- Carruseles nativos en CSS / CSS ::scroll-marker y ::scroll-button [Development]
 
 ---
 
@@ -302,3 +305,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Regla @scope en CSS (ES: alcance de estilos / EN: CSS @scope rule)** → regla ya totalmente implementada en Chrome (2026) que limita un bloque de estilos a un subárbol concreto del DOM —`@scope (.card) { ... }`— con límite superior e inferior, sin recurrir a convenciones de nombres tipo BEM ni a `!important`. → Importa porque la fuga de estilos entre componentes es uno de los dolores crónicos de un design system que crece; `@scope` da encapsulación real en CSS nativo, sin build tooling ni Shadow DOM. → Aplicación: en `design-system/tokens-web.css` y landing-v11, envolver componentes (tarjetas de casos, badges) en `@scope` para que sus estilos no se filtren a otras secciones, reemplazando prefijos de clase defensivos.
+
+### 2026-08-04 · martes
+
+**Product Design**
+**Modo simulación / Sandbox Mode (ES + EN, UX agéntica)** → patrón de UX agéntica destacado esta semana entre los must-know 2026: antes de dejar que el agente actúe de verdad, la interfaz le da al usuario un espacio para *simular* el resultado —ver qué haría y qué cambiaría— sin efectos reales, especialmente crítico en dominios regulados (fintech, salud, licitaciones). → Importa porque es la contraparte de "confianza antes de ceder control": complementa la autonomía progresiva y el enrutamiento de recuperación ya cubiertos —no solo *cuánto* permiso das o *qué pasa si falla*, sino *dejar probar sin riesgo antes de comprometer*—, y es lo que convence a un usuario cauto de adoptar el agente. → Aplicación: en EnRegla, antes de que el agente rellene y envíe un pliego real, ofrecer un "modo simulación" que muestre el pliego lleno y las validaciones en un entorno de prueba, para que el usuario apruebe con confianza antes de comprometer la postulación.
+
+**AI**
+**Destilación de modelos / Model distillation (ES + EN)** → técnica donde un modelo grande y caro ("maestro") entrena a uno pequeño y rápido ("estudiante") para que imite su comportamiento, produciendo los tiers "Flash/mini/lite" —esta semana DeepSeek lanzó **V4-Flash-0731** (31 jul 2026), justo un modelo destilado de este tipo. → Importa porque explica *cómo existen* los modelos baratos y rápidos que hacen viable el ruteo por tarea ya cubierto: no es magia ni solo MoE, es un modelo grande comprimido en uno chico que conserva gran parte de la calidad a una fracción del costo y latencia. → Aplicación: al elegir el tier barato para tareas mecánicas de `generadores/` (limpiar datos, formatear), entender que un modelo destilado como V4-Flash puede dar calidad casi-frontera en lo rutinario, reservando el modelo maestro solo para el razonamiento de más valor.
+
+**Development**
+**Carruseles nativos en CSS / CSS ::scroll-marker y ::scroll-button (ES + EN)** → pseudo-elementos nuevos en Chrome (2026) que generan la navegación de un carrusel —los puntos indicadores (`::scroll-marker`) y las flechas anterior/siguiente (`::scroll-button`)— directamente desde un contenedor con scroll-snap, con el navegador manejando snap points, lógica de botones y estado activo, sin JavaScript ni librería de carrusel. → Importa porque el carrusel es de los componentes que más JS frágil y bugs de accesibilidad acumula en un design system; llevarlo a CSS puro lo hace más liviano, accesible por defecto y sin dependencias. → Aplicación: en landing-v11, construir la galería de casos de `perfil/` como un carrusel scroll-snap con `::scroll-marker`/`::scroll-button` en vez de un slider con JS, manteniendo el bundle liviano (con fallback donde falte soporte).
