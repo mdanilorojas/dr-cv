@@ -77,6 +77,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Modo simulación / Sandbox Mode (UX agéntica) [Product Design]
 - Destilación de modelos / Model distillation [AI]
 - Carruseles nativos en CSS / CSS ::scroll-marker y ::scroll-button [Development]
+- Vista previa de intención / Intent Preview [Product Design]
+- Protocolo Agente-a-Agente / A2A (Agent2Agent) [AI]
+- Regla @starting-style en CSS / CSS @starting-style [Development]
 
 ---
 
@@ -316,3 +319,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Carruseles nativos en CSS / CSS ::scroll-marker y ::scroll-button (ES + EN)** → pseudo-elementos nuevos en Chrome (2026) que generan la navegación de un carrusel —los puntos indicadores (`::scroll-marker`) y las flechas anterior/siguiente (`::scroll-button`)— directamente desde un contenedor con scroll-snap, con el navegador manejando snap points, lógica de botones y estado activo, sin JavaScript ni librería de carrusel. → Importa porque el carrusel es de los componentes que más JS frágil y bugs de accesibilidad acumula en un design system; llevarlo a CSS puro lo hace más liviano, accesible por defecto y sin dependencias. → Aplicación: en landing-v11, construir la galería de casos de `perfil/` como un carrusel scroll-snap con `::scroll-marker`/`::scroll-button` en vez de un slider con JS, manteniendo el bundle liviano (con fallback donde falte soporte).
+
+### 2026-08-05 · miércoles
+
+**Product Design**
+**Vista previa de intención (ES) / Intent Preview (EN)** → patrón de UX agéntica destacado esta semana (junto a Autonomy Dials y Action Audits) donde, antes de ejecutar, el agente te muestra *qué entendió que quieres* y *qué va a hacer* —el plan traducido a lenguaje humano— para que confirmes o corrijas la **intención**, no el resultado. → Importa porque el error más caro de un agente no suele ser fallar la ejecución sino malinterpretar la intención; mostrar la lectura del agente antes de actuar ataca ese fallo en la raíz y complementa el sandbox mode y la autonomía progresiva ya cubiertos (confirmas el *qué* antes de ver el *cómo*). → Aplicación: en EnRegla, antes de que el agente llene un pliego, mostrar un resumen tipo "voy a completar los campos X, Y, Z del pliego N con estos datos" para que el usuario confirme la intención antes de que toque un solo campo.
+
+**AI**
+**Protocolo Agente-a-Agente / A2A — Agent2Agent (ES + EN)** → estándar abierto (originado en Google, hoy bajo la Linux Foundation) que define cómo *dos agentes distintos se comunican y se delegan tareas entre sí* —descubrir capacidades, negociar y coordinar— sin importar quién los construyó ni sobre qué framework corren; esta semana el Microsoft Agent Framework llegó a GA incluyendo reenvío vía adaptador A2A. → Importa porque es la pieza que faltaba para los sistemas multiagente ya cubiertos: si MCP estandariza cómo un agente habla con sus *herramientas y datos*, A2A estandariza cómo un agente habla con *otros agentes*; sin ese estándar, cada equipo de agentes queda encerrado en su propio silo. → Aplicación: al pensar dr-cv o EnRegla como un equipo de agentes (uno redacta, uno valida, uno cura), diseñar la coordinación sobre un protocolo tipo A2A en vez de pegado a mano, para que un agente externo (p. ej. de un portal de reclutamiento) pueda enchufarse después sin reescribir todo.
+
+**Development**
+**Regla @starting-style en CSS (ES + EN)** → regla que alcanza baseline cross-browser en 2026 y define los estilos *iniciales* desde los que un elemento anima al aparecer —incluso al pasar de `display: none` a visible— habilitando animaciones de entrada sin trucos de timing en JavaScript. → Importa porque hasta ahora animar la aparición de popovers, diálogos y tooltips exigía JS que esperara un frame antes de aplicar la clase; `@starting-style` lo hace declarativo y, junto al anchor positioning ya cubierto, completa el overlay 100% en CSS (posición + entrada). → Aplicación: en el design system y landing-v11, animar la entrada de tooltips, menús y modales con `@starting-style` (fade/scale desde el estado inicial) y eliminar el JS que hoy orquesta esas transiciones.
