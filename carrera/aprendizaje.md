@@ -80,6 +80,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Vista previa de intención / Intent Preview [Product Design]
 - Protocolo Agente-a-Agente / A2A (Agent2Agent) [AI]
 - Regla @starting-style en CSS / CSS @starting-style [Development]
+- Onboarding orientado a la meta / Goal-first onboarding [Product Design]
+- SOC agéntico / Agentic SOC (Project Perception) [AI]
+- API de Navegación / Navigation API [Development]
 
 ---
 
@@ -330,3 +333,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Regla @starting-style en CSS (ES + EN)** → regla que alcanza baseline cross-browser en 2026 y define los estilos *iniciales* desde los que un elemento anima al aparecer —incluso al pasar de `display: none` a visible— habilitando animaciones de entrada sin trucos de timing en JavaScript. → Importa porque hasta ahora animar la aparición de popovers, diálogos y tooltips exigía JS que esperara un frame antes de aplicar la clase; `@starting-style` lo hace declarativo y, junto al anchor positioning ya cubierto, completa el overlay 100% en CSS (posición + entrada). → Aplicación: en el design system y landing-v11, animar la entrada de tooltips, menús y modales con `@starting-style` (fade/scale desde el estado inicial) y eliminar el JS que hoy orquesta esas transiciones.
+
+### 2026-08-06 · jueves
+
+**Product Design**
+**Onboarding orientado a la meta (ES) / Goal-first onboarding (EN)** → patrón de UX agéntica destacado esta semana entre los must-know 2026: en vez de un tour del producto, el onboarding pregunta al usuario *qué quiere lograr* y deja que el agente demuestre valor trabajando hacia esa meta de inmediato. → Importa porque en un producto agéntico el "aha moment" no es aprender la interfaz sino ver al agente cumplir un objetivo real; un walkthrough tradicional retrasa ese valor y dispara el abandono temprano —complementa el intent preview y la autonomía progresiva ya cubiertos, del lado del primer contacto. → Aplicación: en EnRegla, abrir con "¿qué pliego querés completar hoy?" y que el agente empiece a llenarlo en vivo (con confirmación), en vez de un tour guiado de la interfaz antes de mostrar valor.
+
+**AI**
+**SOC agéntico (ES) / Agentic SOC — Security Operations Center (EN)** → centro de operaciones de seguridad donde equipos de agentes especializados —rojo (simula ataques), azul (evalúa y prioriza riesgo) y verde (parcha y endurece)— cubren el ciclo completo de seguridad de forma autónoma; esta semana Microsoft lanzó **Project Perception** (public preview 3 ago 2026) sobre modelos propios MAI-Cyber-1 con ruteo por tamaño de tarea (modelos pesados para análisis profundo, ligeros para lo rutinario). → Importa porque es el ejemplo más concreto hasta hoy de un *workbench de dominio* construido como un equipo multiagente en producción: une multiagente, ruteo por tarea y workbench por dominio (ya cubiertos) en un solo producto real con roles adversariales/defensivos/remediadores. → Aplicación: modelar EnRegla como un equipo de roles-agente (uno lee el pliego, uno valida contra requisitos, uno redacta la propuesta) con ruteo por tarea, en vez de un solo chatbot monolítico.
+
+**Development**
+**API de Navegación (ES) / Navigation API (EN)** → API del navegador que alcanza baseline en 2026 (ya en Firefox 147) y unifica el manejo de la navegación de una app —interceptar navegaciones, gestionar historial y estado con un solo evento `navigate`— reemplazando los hacks frágiles de la vieja History API (`pushState`/`popstate`). → Importa porque el ruteo del lado del cliente en SPAs hoy exige una librería de router o parches sobre History; la Navigation API lo hace nativo y, junto a las Cross-document View Transitions ya cubiertas, habilita transiciones tipo-app con mucho menos JavaScript. → Aplicación: si landing-v11 crece hacia navegación tipo-app entre casos de `perfil/`, interceptar y animar rutas con la Navigation API nativa en vez de sumar un router JS al bundle.
