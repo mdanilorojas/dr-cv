@@ -83,6 +83,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Onboarding orientado a la meta / Goal-first onboarding [Product Design]
 - SOC agéntico / Agentic SOC (Project Perception) [AI]
 - API de Navegación / Navigation API [Development]
+- Divulgación de uso de herramientas / Tool-use disclosure [Product Design]
+- Direccionabilidad de agentes / Steerability (GPT-5.3-Codex) [AI]
+- text-wrap: pretty en CSS / CSS text-wrap: pretty [Development]
 
 ---
 
@@ -344,3 +347,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **API de Navegación (ES) / Navigation API (EN)** → API del navegador que alcanza baseline en 2026 (ya en Firefox 147) y unifica el manejo de la navegación de una app —interceptar navegaciones, gestionar historial y estado con un solo evento `navigate`— reemplazando los hacks frágiles de la vieja History API (`pushState`/`popstate`). → Importa porque el ruteo del lado del cliente en SPAs hoy exige una librería de router o parches sobre History; la Navigation API lo hace nativo y, junto a las Cross-document View Transitions ya cubiertas, habilita transiciones tipo-app con mucho menos JavaScript. → Aplicación: si landing-v11 crece hacia navegación tipo-app entre casos de `perfil/`, interceptar y animar rutas con la Navigation API nativa en vez de sumar un router JS al bundle.
+
+### 2026-08-07 · viernes
+
+**Product Design**
+**Divulgación de uso de herramientas (ES) / Tool-use disclosure (EN)** → patrón de UX agéntica destacado esta semana (ProCreator, Smashing Magazine) que muestra *en el momento de la decisión* qué sistema externo llamó el agente, qué le devolvió y si el resultado se puede inspeccionar —no escondido en un log colapsado. → Importa porque es la diferencia entre una salida auditable y una caja negra: complementa el intent preview y el action audit ya rondados —no solo *qué va a hacer* o *qué hizo*, sino *con qué herramienta y con qué resultado en vivo*—, y es de los 5 patrones que todo agente empresarial necesita. → Aplicación: en EnRegla, cuando el agente consulta el pliego real o valida un requisito, mostrar la herramienta usada y el dato devuelto junto a cada campo llenado, para que el usuario inspeccione la fuente en vez de confiar a ciegas.
+
+**AI**
+**Direccionabilidad de agentes / Steerability (ES + EN, caso: GPT-5.3-Codex)** → capacidad de *corregir el rumbo de un agente mientras trabaja* —darle nuevas instrucciones a mitad de tarea sin reiniciar— en vez de esperar a que termine para evaluar; esta semana OpenAI lanzó **GPT-5.3-Codex**, ~25% más rápido y explícitamente diseñado para que lo dirijas en vivo mientras genera y actúa. → Importa porque marca el paso de "dispara y reza" a colaboración real: un agente que corre horas (el hilo de ChatGPT Work y multiagente ya cubiertos) es inútil si no puedes ajustarlo sin perder todo su progreso; la direccionabilidad es lo que vuelve segura la autonomía larga. → Aplicación: en workflows agénticos de dr-cv, elegir harness/modelo que permita intervenir a mitad de una generación de CV ("cambiá el tono de estos bullets") sin reiniciar el proceso completo desde cero.
+
+**Development**
+**text-wrap: pretty en CSS (ES + EN)** → propiedad que alcanza Baseline en 2026 y ajusta *cómo se cortan las líneas de un bloque de texto* para evitar "huérfanos" (una sola palabra en la última línea) y ríos feos, optimizando las últimas líneas de un párrafo sin JS ni saltos manuales. → Importa porque la tipografía de cuerpo y de titulares —clave en un CV o landing de diseñador— hoy se pule a mano con `&nbsp;` o quiebres forzados frágiles que se rompen al cambiar de idioma (ES/EN) o de ancho; `text-wrap: pretty` lo resuelve declarativo y responsive (complementa `text-wrap: balance`, ideal para titulares cortos). → Aplicación: aplicar `text-wrap: pretty` a los párrafos de casos y descripciones de landing-v11 y del skills sheet para que ninguna línea quede con una palabra huérfana en ES ni en EN.
