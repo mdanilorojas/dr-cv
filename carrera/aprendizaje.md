@@ -86,6 +86,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Divulgación de uso de herramientas / Tool-use disclosure [Product Design]
 - Direccionabilidad de agentes / Steerability (GPT-5.3-Codex) [AI]
 - text-wrap: pretty en CSS / CSS text-wrap: pretty [Development]
+- Golfos de ejecución y evaluación / Gulfs of Execution and Evaluation [Product Design]
+- Observabilidad de agentes / Agent observability & replayable event log [AI]
+- Función shape() en CSS / CSS shape() function [Development]
 
 ---
 
@@ -358,3 +361,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **text-wrap: pretty en CSS (ES + EN)** → propiedad que alcanza Baseline en 2026 y ajusta *cómo se cortan las líneas de un bloque de texto* para evitar "huérfanos" (una sola palabra en la última línea) y ríos feos, optimizando las últimas líneas de un párrafo sin JS ni saltos manuales. → Importa porque la tipografía de cuerpo y de titulares —clave en un CV o landing de diseñador— hoy se pule a mano con `&nbsp;` o quiebres forzados frágiles que se rompen al cambiar de idioma (ES/EN) o de ancho; `text-wrap: pretty` lo resuelve declarativo y responsive (complementa `text-wrap: balance`, ideal para titulares cortos). → Aplicación: aplicar `text-wrap: pretty` a los párrafos de casos y descripciones de landing-v11 y del skills sheet para que ninguna línea quede con una palabra huérfana en ES ni en EN.
+
+### 2026-08-10 · lunes
+
+**Product Design**
+**Golfos de ejecución y evaluación (ES) / Gulfs of Execution and Evaluation (EN)** → los dos "abismos" clásicos de Don Norman: el *golfo de ejecución* es la distancia entre lo que el usuario quiere lograr y cómo lo expresa al sistema; el *golfo de evaluación* es la distancia entre lo que el sistema hizo y si el usuario logra entenderlo. → Importa porque es el marco fundacional que ordena bajo un solo lente todos los patrones agénticos ya cubiertos: intent preview y goal-first onboarding cierran el golfo de *ejecución* (decir la intención), mientras tool-use disclosure, action audit y XAI cierran el de *evaluación* (entender qué pasó); nombrarlos te da un checklist para auditar cualquier agente. → Aplicación: al diseñar EnRegla, revisar cada flujo con dos preguntas — "¿es fácil decirle al agente lo que quiero?" (ejecución) y "¿entiendo qué hizo y por qué?" (evaluación) — y priorizar el golfo más ancho.
+
+**AI**
+**Observabilidad de agentes / replayable event log (ES) / Agent observability & replayable event log (EN)** → capacidad de registrar cada acción interna de un agente —cada spawn de subagente, llamada a herramienta, corrección y cancelación— como un log de eventos inspeccionable y *reproducible* paso a paso; destacada esta semana en **Muse Code** de Meta (agente de código multiagente, ago 2026), donde todo el proceso es observable y "replayable". → Importa porque cierra el hilo de multiagente, steerability y trazabilidad regulatoria ya cubiertos desde el lado operativo: un equipo de agentes que corre horas es imposible de depurar, auditar o mejorar si no puedes *rebobinar* exactamente qué hizo cada uno y por qué; la observabilidad es a los agentes lo que los logs y el debugger son al software. → Aplicación: en workflows agénticos de dr-cv (generar CV con roles-agente), guardar un event log de cada paso —qué dato leyó de `perfil/`, qué bullet propuso, qué rechazó el validador— para depurar y auditar en vez de confiar en la salida final a ciegas.
+
+**Development**
+**Función shape() en CSS (ES) / CSS shape() function (EN)** → función que alcanzó Baseline en febrero de 2026 (Chrome 119+, Firefox 136+, Safari 18.2+) y define formas para `clip-path` y `offset-path` con comandos tipo SVG (`move`, `line`, `curve`, `arc`) pero escritos en CSS nativo: acepta unidades CSS (`%`, `rem`, `vw`), `calc()` y otras funciones matemáticas, en vez del string en `px` rígido de `path()`. → Importa porque hoy una forma custom responsive (recorte de foto, badge, contenedor geométrico) obliga a SVG externo o al `path()` de unidad fija que no se adapta al contenedor; `shape()` la hace fluida, legible y editable directo en la hoja de estilos, y complementa el `round()` en `polygon()` ya cubierto para curvas reales. → Aplicación: en `design-system/tokens-web.css` y landing-v11, recortar la foto de perfil o las tarjetas de casos con `clip-path: shape(...)` usando `%`/`calc()` para que la forma escale con el contenedor sin depender de SVG ni JS.
