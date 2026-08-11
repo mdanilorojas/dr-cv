@@ -89,6 +89,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Golfos de ejecución y evaluación / Gulfs of Execution and Evaluation [Product Design]
 - Observabilidad de agentes / Agent observability & replayable event log [AI]
 - Función shape() en CSS / CSS shape() function [Development]
+- Surfacing de memoria / Memory surfacing [Product Design]
+- Evaluaciones de modelos y agentes / Evals [AI]
+- Unidades rex y rcap en CSS / CSS rex & rcap units [Development]
 
 ---
 
@@ -372,3 +375,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Función shape() en CSS (ES) / CSS shape() function (EN)** → función que alcanzó Baseline en febrero de 2026 (Chrome 119+, Firefox 136+, Safari 18.2+) y define formas para `clip-path` y `offset-path` con comandos tipo SVG (`move`, `line`, `curve`, `arc`) pero escritos en CSS nativo: acepta unidades CSS (`%`, `rem`, `vw`), `calc()` y otras funciones matemáticas, en vez del string en `px` rígido de `path()`. → Importa porque hoy una forma custom responsive (recorte de foto, badge, contenedor geométrico) obliga a SVG externo o al `path()` de unidad fija que no se adapta al contenedor; `shape()` la hace fluida, legible y editable directo en la hoja de estilos, y complementa el `round()` en `polygon()` ya cubierto para curvas reales. → Aplicación: en `design-system/tokens-web.css` y landing-v11, recortar la foto de perfil o las tarjetas de casos con `clip-path: shape(...)` usando `%`/`calc()` para que la forma escale con el contenedor sin depender de SVG ni JS.
+
+### 2026-08-11 · martes
+
+**Product Design**
+**Surfacing de memoria (ES) / Memory surfacing (EN)** → patrón de UX agéntica listado esta semana entre los 5 que todo agente empresarial necesita: hacer *visible y editable* qué recuerda el agente de ti (preferencias, hechos, decisiones pasadas) en vez de guardarlo en una memoria invisible que el usuario no puede ver ni corregir. → Importa porque cierra el otro extremo de la memoria persistente vía MCP ya cubierta: no basta con que el agente recuerde —el usuario debe poder *auditar y editar* ese recuerdo, o la memoria se vuelve una caja negra que decide por ti con datos que no controlas (y erosiona la confianza, la moneda de la UX agéntica). → Aplicación: en EnRegla, mostrar un panel "esto es lo que recuerdo de tus pliegos anteriores" con cada dato editable/borrable, para que el usuario corrija antes de que el agente lo reutilice en un llenado nuevo.
+
+**AI**
+**Evaluaciones / Evals (ES + EN)** → conjunto de pruebas sistemáticas y medibles que corren un modelo o agente contra casos con respuesta esperada para cuantificar su calidad, seguridad y regresiones —el equivalente a los tests unitarios para software, pero para comportamiento de IA—; esta semana Innodata lanzó (4 ago 2026) la primera etapa de su AI Cyber Training Suite: 12 datasets y sistemas de evaluación construidos con miles de fallos de seguridad reales para medir si un agente de código introduce vulnerabilidades. → Importa porque es el fundamento que hace *auditable* todo lo demás (patrón actor-evaluador, observabilidad, ruteo por tarea ya cubiertos): sin evals no sabes si un cambio de prompt, modelo o contexto mejoró o empeoró el resultado —solo tienes una corazonada—, y es la disciplina que separa un agente de juguete de uno production-ready. → Aplicación: en workflows agénticos de dr-cv, montar un set de evals para la generación de bullets (casos de `perfil/` con el bullet "correcto" esperado) y correrlo en cada cambio de prompt/modelo, en vez de juzgar la calidad leyendo salidas sueltas a ojo.
+
+**Development**
+**Unidades rex y rcap en CSS (ES + EN)** → dos unidades de longitud nuevas con cobertura fuerte en 2026: `rex` equivale a la altura-x (x-height) de la fuente del elemento raíz —la altura de una letra minúscula sin ascendentes—, y `rcap` a la altura de mayúscula (cap-height) de esa fuente raíz, dando medidas *tipográficamente* ancladas en vez de un `rem` que solo mira el tamaño de fuente nominal. → Importa porque el espaciado y el sizing que "se ven bien" dependen de la forma real de la letra, no del `font-size` declarado: alinear un ícono a la altura-x del texto o dimensionar un badge a la cap-height hoy exige números mágicos que se rompen al cambiar de tipografía; `rex`/`rcap` lo hacen relativo a la métrica real y estable entre fuentes. → Aplicación: en `design-system/tokens-web.css`, dimensionar íconos inline, viñetas y badges de landing-v11 con `rex`/`rcap` para que se alineen ópticamente al texto sin ajustes manuales por cada cambio de fuente (con fallback a `em` donde falte soporte).
