@@ -92,6 +92,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Surfacing de memoria / Memory surfacing [Product Design]
 - Evaluaciones de modelos y agentes / Evals [AI]
 - Unidades rex y rcap en CSS / CSS rex & rcap units [Development]
+- Visibilidad del plan / Planning visibility [Product Design]
+- Compactación de contexto / Context compaction [AI]
+- Sintaxis de color relativo en CSS / CSS relative color syntax [Development]
 
 ---
 
@@ -386,3 +389,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Unidades rex y rcap en CSS (ES + EN)** → dos unidades de longitud nuevas con cobertura fuerte en 2026: `rex` equivale a la altura-x (x-height) de la fuente del elemento raíz —la altura de una letra minúscula sin ascendentes—, y `rcap` a la altura de mayúscula (cap-height) de esa fuente raíz, dando medidas *tipográficamente* ancladas en vez de un `rem` que solo mira el tamaño de fuente nominal. → Importa porque el espaciado y el sizing que "se ven bien" dependen de la forma real de la letra, no del `font-size` declarado: alinear un ícono a la altura-x del texto o dimensionar un badge a la cap-height hoy exige números mágicos que se rompen al cambiar de tipografía; `rex`/`rcap` lo hacen relativo a la métrica real y estable entre fuentes. → Aplicación: en `design-system/tokens-web.css`, dimensionar íconos inline, viñetas y badges de landing-v11 con `rex`/`rcap` para que se alineen ópticamente al texto sin ajustes manuales por cada cambio de fuente (con fallback a `em` donde falte soporte).
+
+### 2026-08-12 · miércoles
+
+**Product Design**
+**Visibilidad del plan (ES) / Planning visibility (EN)** → patrón de UX agéntica listado esta semana como uno de los 5 que todo agente empresarial necesita: mostrar la *secuencia de acciones que el agente piensa ejecutar* antes de arrancar, más seguimiento en vivo del progreso ("paso 3 de 7"), puntos de intervención para redirigir a mitad de camino y un audit trail de qué hizo y por qué. → Importa porque cierra el hueco entre el intent preview (confirmar *qué entendió*) y la observabilidad (auditar *qué hizo* después): la visibilidad del plan es el estado *durante* la ejecución —ver el plan desplegarse y poder frenarlo o corregirlo en el momento, no solo antes ni solo después—, y sin ella un agente de varios pasos es una caja negra que el usuario solo puede aceptar o cancelar. → Aplicación: en EnRegla, cuando el agente llena un pliego, mostrar la lista de pasos que hará ("1. leer requisitos, 2. completar datos, 3. validar montos, 4. armar propuesta") con progreso en vivo y un botón para intervenir en cualquier paso, en vez de un spinner opaco hasta el final.
+
+**AI**
+**Compactación de contexto (ES) / Context compaction (EN)** → técnica donde el agente, al acercarse al límite de su ventana de contexto, *comprime automáticamente* el historial viejo —resumiéndolo o descartando lo irrelevante— para seguir trabajando en una tarea larga sin perder el hilo ni quedarse sin espacio; Muse Spark 1.2 de Meta (6 ago 2026, ventana de 1M con "context compaction" y llamadas de herramientas en paralelo) la trae de fábrica. → Importa porque es la pieza operativa que hace viable el trabajo autónomo de horas (el hilo de ChatGPT Work, steerability y multiagente ya cubiertos): sin compactación, un agente que corre mucho tiempo o llama muchas herramientas se ahoga en su propio historial; con ella, mantiene lo esencial y sigue. Es el complemento dinámico de la ingeniería de contexto ya cubierta —no solo *qué metes* al contexto, sino *cómo lo podás* cuando se llena. → Aplicación: en workflows agénticos largos de dr-cv (generar todos los CVs + skills sheet de una), elegir un harness/modelo que compacte el contexto en vez de cortarse a la mitad, y diseñar los pasos para que el resumen conserve las decisiones clave (qué bullets ya rechazó Danilo).
+
+**Development**
+**Sintaxis de color relativo en CSS (ES) / CSS relative color syntax (EN)** → sintaxis que alcanzó baseline cross-browser completo en 2026 (`oklch(from var(--base) l c h)`, también en `rgb()`/`hsl()`) que deriva un color nuevo a partir de otro descomponiéndolo en sus canales y dejándote modificar solo los que quieras con `calc()` —p. ej. `oklch(from var(--brand) calc(l + 0.1) c h)` para un tono más claro. → Importa porque un design system con un solo token de marca puede *generar toda su escala* (hover, active, tints, bordes, estados) en CSS puro, sin mantener a mano 8 variables por color ni pasar por Sass; cambiar el token base recalcula toda la familia sola. → Aplicación: en `design-system/tokens-web.css`, definir solo `--brand` y derivar `--brand-hover`, `--brand-tint` y bordes con `oklch(from var(--brand) …)`, de modo que reskinear landing-v11 sea cambiar un valor en vez de una paleta entera.
