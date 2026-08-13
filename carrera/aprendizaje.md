@@ -95,6 +95,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Visibilidad del plan / Planning visibility [Product Design]
 - Compactación de contexto / Context compaction [AI]
 - Sintaxis de color relativo en CSS / CSS relative color syntax [Development]
+- Gusto/criterio y craft como diferenciador (anti "AI sameness") / Taste & craft as differentiator [Product Design]
+- Embeddings / vectores de significado [AI]
+- interpolate-size + calc-size() en CSS / CSS interpolate-size & calc-size() [Development]
 
 ---
 
@@ -400,3 +403,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Sintaxis de color relativo en CSS (ES) / CSS relative color syntax (EN)** → sintaxis que alcanzó baseline cross-browser completo en 2026 (`oklch(from var(--base) l c h)`, también en `rgb()`/`hsl()`) que deriva un color nuevo a partir de otro descomponiéndolo en sus canales y dejándote modificar solo los que quieras con `calc()` —p. ej. `oklch(from var(--brand) calc(l + 0.1) c h)` para un tono más claro. → Importa porque un design system con un solo token de marca puede *generar toda su escala* (hover, active, tints, bordes, estados) en CSS puro, sin mantener a mano 8 variables por color ni pasar por Sass; cambiar el token base recalcula toda la familia sola. → Aplicación: en `design-system/tokens-web.css`, definir solo `--brand` y derivar `--brand-hover`, `--brand-tint` y bordes con `oklch(from var(--brand) …)`, de modo que reskinear landing-v11 sea cambiar un valor en vez de una paleta entera.
+
+### 2026-08-13 · jueves
+
+**Product Design**
+**Gusto/criterio y craft como diferenciador (ES) / Taste & craft as the differentiator — anti "AI sameness" (EN)** → tendencia central de los reportes de diseño de esta semana (State of AI in Design / Product Design Trends 2026): tras la ola de outputs generados por IA que se parecen entre sí ("AI slop/sameness"), el mercado 2026 vuelve a premiar la *intención* y el *craft*, y el "gusto" —saber qué se siente bien y por qué— se vuelve el activo que la IA no replica. → Importa porque cuando cualquiera genera una pantalla decente con un prompt, el diferenciador senior ya no es *producir* sino *juzgar*: el criterio de calidad, jerarquía y emoción es el moat del AI Product Designer, justo cuando >50% de diseñadores teme que la IA baje la calidad si nadie cura. → Aplicación: posicionar mi valor en CV/landing como "criterio y craft sobre outputs de IA", no como volumen de mockups; en EnRegla, ser el filtro que evita que los formularios generados caigan en el molde genérico.
+
+**AI**
+**Embeddings / vectores de significado (ES) / Embeddings (EN)** → representación de un texto (o imagen) como un vector de números donde la *distancia* entre vectores mide similitud de significado, no de palabras: "pliego de licitación" y "documento de contratación pública" quedan cerca aunque no compartan términos. → Importa porque es el sustrato que hace funcionar el RAG ya cubierto y toda búsqueda semántica: sin embeddings el agente busca por coincidencia exacta de palabras (frágil); con ellos recupera por *concepto*, que es lo que baja alucinaciones y vuelve fiable un agente sobre tus datos. → Aplicación: en EnRegla, indexar los pliegos como embeddings en una base vectorial para que el agente encuentre la cláusula *relevante por significado* aunque el usuario la describa con otras palabras; en dr-cv, embeddear `perfil/` para recuperar el caso más pertinente a cada vacante.
+
+**Development**
+**interpolate-size + calc-size() en CSS (ES: animar hacia tamaños intrínsecos / EN: interpolate-size & calc-size())** → par de features CSS 2026 (Chrome, en camino a Baseline) que por fin permiten *animar* una transición hacia valores intrínsecos como `height: auto`, `min-content` o `fit-content`: activas `interpolate-size: allow-keywords` y usas `calc-size()` para calcular sobre el tamaño real del contenido. → Importa porque "no se puede animar a `height:auto`" es uno de los dolores más viejos de CSS —hoy resuelto con JS que mide `scrollHeight` o con `max-height` frágil—; esto lo hace declarativo, fluido y accesible. → Aplicación: en landing-v11 y el skills sheet, animar acordeones, el "ver más" de casos de `perfil/` y reveals que se expanden a su alto natural con CSS puro, sin JS de medición (con fallback donde falte soporte).
