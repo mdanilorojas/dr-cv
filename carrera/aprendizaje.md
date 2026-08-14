@@ -98,6 +98,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Gusto/criterio y craft como diferenciador (anti "AI sameness") / Taste & craft as differentiator [Product Design]
 - Embeddings / vectores de significado [AI]
 - interpolate-size + calc-size() en CSS / CSS interpolate-size & calc-size() [Development]
+- Compuertas de aprobación / Approval gates (human sign-off) [Product Design]
+- Cuantización / Quantization [AI]
+- scrollbar-gutter y scrollbar-color en CSS / CSS scrollbar-gutter & scrollbar-color [Development]
 
 ---
 
@@ -414,3 +417,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **interpolate-size + calc-size() en CSS (ES: animar hacia tamaños intrínsecos / EN: interpolate-size & calc-size())** → par de features CSS 2026 (Chrome, en camino a Baseline) que por fin permiten *animar* una transición hacia valores intrínsecos como `height: auto`, `min-content` o `fit-content`: activas `interpolate-size: allow-keywords` y usas `calc-size()` para calcular sobre el tamaño real del contenido. → Importa porque "no se puede animar a `height:auto`" es uno de los dolores más viejos de CSS —hoy resuelto con JS que mide `scrollHeight` o con `max-height` frágil—; esto lo hace declarativo, fluido y accesible. → Aplicación: en landing-v11 y el skills sheet, animar acordeones, el "ver más" de casos de `perfil/` y reveals que se expanden a su alto natural con CSS puro, sin JS de medición (con fallback donde falte soporte).
+
+### 2026-08-14 · viernes
+
+**Product Design**
+**Compuertas de aprobación (ES) / Approval gates (EN)** → punto de control donde el agente se *detiene* y exige el visto bueno explícito de un humano antes de ejecutar una acción de alto riesgo o irreversible (enviar, pagar, borrar, firmar), en vez de actuar solo. → Importa porque esta semana varias fuentes de agentic UX 2026 (ProCreator, Fuse Lab) la listan entre los patrones esenciales, y es distinta de la autonomía progresiva (*cuánto* permiso das) y del sandbox mode (*probar* sin riesgo) ya cubiertos: la compuerta es el freno *obligatorio* en el momento exacto de la acción peligrosa —el último seguro antes del daño real. → Aplicación: en EnRegla, que el agente pueda llenar y validar un pliego solo, pero que enviar o firmar la oferta pase siempre por una compuerta de aprobación humana explícita, nunca en autopilot.
+
+**AI**
+**Cuantización (ES) / Quantization (EN)** → técnica que baja la *precisión numérica* de los pesos de un modelo (de 16 bits a 8 o 4 bits) para que ocupe mucha menos memoria y corra más rápido, con pérdida de calidad mínima. → Importa porque es el segundo mecanismo —junto a la destilación ya cubierta— detrás de los tiers "Turbo/Flash" que salieron esta misma semana (ByteDance **Seed 2.1 Turbo**, 10 ago; Google **Gemini 3.7 Flash**, 13 ago): explica por qué puedes correr un modelo casi-frontera barato, o incluso *on-device*, sin reentrenar nada. → Aplicación: al elegir un modelo local o barato para tareas mecánicas de `generadores/` (limpiar datos, formatear), entender que una versión cuantizada da casi la misma calidad a una fracción del costo, memoria y latencia que el modelo full-precision.
+
+**Development**
+**scrollbar-gutter y scrollbar-color en CSS (ES + EN)** → dos propiedades (Baseline 2026) que controlan la barra de scroll sin JavaScript ni el viejo hack `::-webkit-scrollbar`: `scrollbar-gutter: stable` *reserva* el espacio de la barra para que el contenido no "salte" cuando aparece, y `scrollbar-color` define el color del pulgar y de la pista. → Importa porque el *layout shift* al aparecer la scrollbar y las barras nativas que rompen la estética de marca son molestias clásicas de un design system; ahora se resuelven declarativas, accesibles y consistentes entre navegadores. → Aplicación: en `design-system/tokens-web.css` y landing-v11, aplicar `scrollbar-gutter: stable` a los contenedores con overflow para eliminar el salto de layout y teñir la barra con los tokens de marca vía `scrollbar-color`.
