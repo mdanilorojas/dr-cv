@@ -101,6 +101,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Compuertas de aprobación / Approval gates (human sign-off) [Product Design]
 - Cuantización / Quantization [AI]
 - scrollbar-gutter y scrollbar-color en CSS / CSS scrollbar-gutter & scrollbar-color [Development]
+- Panel de propiedades en Figma Make / Properties panel in Figma Make [Product Design]
+- Llamadas de herramientas asíncronas y en paralelo / Asynchronous & parallel tool calls [AI]
+- Pseudo-clase :open en CSS / CSS :open pseudo-class [Development]
 
 ---
 
@@ -428,3 +431,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **scrollbar-gutter y scrollbar-color en CSS (ES + EN)** → dos propiedades (Baseline 2026) que controlan la barra de scroll sin JavaScript ni el viejo hack `::-webkit-scrollbar`: `scrollbar-gutter: stable` *reserva* el espacio de la barra para que el contenido no "salte" cuando aparece, y `scrollbar-color` define el color del pulgar y de la pista. → Importa porque el *layout shift* al aparecer la scrollbar y las barras nativas que rompen la estética de marca son molestias clásicas de un design system; ahora se resuelven declarativas, accesibles y consistentes entre navegadores. → Aplicación: en `design-system/tokens-web.css` y landing-v11, aplicar `scrollbar-gutter: stable` a los contenedores con overflow para eliminar el salto de layout y teñir la barra con los tokens de marca vía `scrollbar-color`.
+
+### 2026-08-17 · lunes
+
+**Product Design**
+**Panel de propiedades en Figma Make (ES) / Properties panel in Figma Make (EN)** → función que Figma sacó esta semana (ago 2026) para Figma Make: sobre el código que genera la IA aparece un panel de propiedades y anotaciones con controles de diseño familiares (espaciado, color, tipografía) para editar visualmente ese código sin escribirlo, más prompts dirigidos a un elemento puntual. → Importa porque cierra el hueco entre "la IA generó código" y "no soy dev para tocarlo": devuelve al diseñador el control fino sobre el artefacto generado con la interfaz que ya domina, en vez de tener que reprompear a ciegas o pedirle a un ingeniero; es la edición bidireccional diseño↔código que vuelve usable el output de un agente. → Aplicación: al generar una sección de landing-v11 o un one-pager de EnRegla con Make, ajustar spacing y tokens desde el panel para alinearlo a `design-system/tokens-web.css` en vez de regenerar todo con otro prompt.
+
+**AI**
+**Llamadas de herramientas asíncronas y en paralelo (ES) / Asynchronous & parallel tool calls (EN)** → capacidad de un agente de disparar varias herramientas *independientes a la vez* y esperar sus resultados en concurrencia, en vez de una por turno en serie; llegó de fábrica en Muse Spark 1.2 de Meta (6 ago 2026) y es distinta del *programmatic tool calling* (escribir código que encadena herramientas) y de la *background execution* (una tarea larga que corre sola): acá el foco es el *paralelismo* de pasos que no dependen entre sí. → Importa porque recorta latencia y tokens de forma dramática cuando el trabajo se puede abanicar —leer 5 fuentes, validar 5 campos, generar 5 variantes— y es el patrón detrás de los agentes que "hacen mucho rápido"; el diseñador debe saber cuándo un flujo es paralelizable (pasos sin dependencia) y cuándo no (cada paso necesita el anterior). → Aplicación: en un workflow agéntico de dr-cv, generar en paralelo los bullets de varias secciones del CV a la vez y unirlos al final, en vez de esperar sección por sección; en EnRegla, validar varios campos de un pliego concurrentemente.
+
+**Development**
+**Pseudo-clase :open en CSS (ES) / CSS :open pseudo-class (EN)** → selector nuevo (Baseline 2026) que matchea un elemento *cuando está en su estado abierto* —un `<details>` desplegado, un `<dialog>` visible, un `<select>` con su lista desplegada— para estilarlo sin una clase `.is-open` puesta por JavaScript. → Importa porque hoy el estado "abierto" de acordeones, popovers y menús se refleja en CSS agregando/quitando clases con JS (frágil y fácil de desincronizar); `:open` lo hace nativo, siempre en sync con el estado real del elemento, y limpia el design system de un montón de JS de toggle. → Aplicación: en los acordeones de casos de `perfil/` y los `<details>` de FAQ de landing-v11, animar el ícono de flecha y el fondo con `summary:open`/`details:open` en vez de togglear una clase por script.
