@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+# CLI de control del TTS.
+#
+#   tts on | off | toggle | status
+#   tts say "texto"       leer algo ahora (ignora el interruptor)
+#   tts read <archivo>    leer un archivo markdown
+#   tts clip              leer el portapapeles
+#   tts last              leer la ultima respuesta de Claude Code
+#   tts stop              cortar la reproduccion actual
+#   tts voice [nombre]    ver o cambiar la voz
+#   tts rate  [+/-N%]     ver o cambiar la velocidad
+#   tts voices [filtro]   listar voces disponibles
+#   tts test              prueba de audio
+
+set -uo pipefail
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/config.sh"
+
+SPEAK="$TTS_HOME/speak.sh"
+
+persist() { # clave valor
+  local key="$1" value="$2"
+  touch "$TTS_LOCAL"
+  grep -v "^${key}=" "$TTS_LOCAL" >"$TTS_LOCAL.tmp" 2>/dev/null || true
+  echo "${key}=\"${value}\"" >>"$TTS_LOCAL.tmp"
+  mv "$TTS_LOCAL.tmp" "$TTS_LOCAL"
+}
+
+stop_playback() { tts_stop_all; }
+
+status() {
+  if tts_enabled; then echo "tts: ON"; else echo "tts: OFF"; fi
+  echo "  voz         ${TTS_VOICE}"
+  echo "  velocidad   ${TTS_RATE}"
+  echo "  volumen     ${TTS_VOLUME}"
+  echo "  max chars   ${TTS_MAX_CHARS}"
+  echo "  motor       ${TTS_EDGE:-FALTA edge-tts}"
+  echo "  reproductor ${TTS_PLAYER:-FALTA mpv/ffplay}"
+}
+
+CMD="${1:-status}"
+[ $# -gt 0 ] && shift
+
+case "$CMD" in
+  on)
+    touch "$TTS_FLAG"
+    echo "tts: ON (voz ${TTS_VOICE})"
+    ;;
+  off)
+    rm -f "$TTS_FLAG"
+    stop_playback
+    echo "tts: OFF"
+    ;;
+  toggle)
+    if tts_enabled; then rm -f "$TTS_FLAG"; stop_playback; echo "tts: OFF"
+    else touch "$TTS_FLAG"; echo "tts: ON"; fi
+    ;;
+  status)  status ;;
+  stop)    stop_playback; echo "tts: reproduccion detenida" ;;
+
+  say)     "$SPEAK" --force -- "$@" ;;
+  read)    "$SPEAK" --force --file "${1:?uso: tts read <archivo>}" ;;
+  clip)    "$SPEAK" --force --clip ;;
+  last)    "$TTS_HOME/hooks/read-last.sh" --force ;;
+
+  voice)
+    if [ $# -eq 0 ]; then echo "$TTS_VOICE"; else
+      persist TTS_VOICE "$1"; echo "tts: voz -> $1"
+      "$SPEAK" --force -- "Voz cambiada. Asi sueno ahora."
+    fi
+    ;;
+  rate)
+    if [ $# -eq 0 ]; then echo "$TTS_RATE"; else
+      persist TTS_RATE "$1"; echo "tts: velocidad -> $1"
+    fi
+    ;;
+  voices)
+    [ -n "${TTS_EDGE:-}" ] || { echo "falta edge-tts" >&2; exit 1; }
+    if [ $# -eq 0 ]; then
+      "$TTS_EDGE" --list-voices | grep -E '^(es|en)-' | awk '{print $1, $2}'
+    else
+      "$TTS_EDGE" --list-voices | grep -i "$1" | awk '{print $1, $2}'
+    fi
+    ;;
+  test)
+    "$SPEAK" --force -- \
+      "Prueba de audio. Si escuchas esto, el sistema de lectura esta funcionando correctamente."
+    echo "tts: reproduciendo prueba con ${TTS_VOICE}"
+    ;;
+  -h|--help|help)
+    sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'
+    ;;
+  *)
+    echo "tts: comando desconocido '$CMD'. Prueba: tts help" >&2
+    exit 1
+    ;;
+esac
