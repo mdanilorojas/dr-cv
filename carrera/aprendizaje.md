@@ -104,6 +104,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Panel de propiedades en Figma Make / Properties panel in Figma Make [Product Design]
 - Llamadas de herramientas asíncronas y en paralelo / Asynchronous & parallel tool calls [AI]
 - Pseudo-clase :open en CSS / CSS :open pseudo-class [Development]
+- Design Tokens en formato DTCG / Design Tokens (DTCG/W3C format) [Product Design]
+- Comercio agéntico y protocolos de pago de agentes / Agentic commerce & agent payment protocols (ACP, UCP, AP2, x402) [AI]
+- Iterator helpers en JavaScript / JavaScript Iterator helpers [Development]
 
 ---
 
@@ -442,3 +445,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Pseudo-clase :open en CSS (ES) / CSS :open pseudo-class (EN)** → selector nuevo (Baseline 2026) que matchea un elemento *cuando está en su estado abierto* —un `<details>` desplegado, un `<dialog>` visible, un `<select>` con su lista desplegada— para estilarlo sin una clase `.is-open` puesta por JavaScript. → Importa porque hoy el estado "abierto" de acordeones, popovers y menús se refleja en CSS agregando/quitando clases con JS (frágil y fácil de desincronizar); `:open` lo hace nativo, siempre en sync con el estado real del elemento, y limpia el design system de un montón de JS de toggle. → Aplicación: en los acordeones de casos de `perfil/` y los `<details>` de FAQ de landing-v11, animar el ícono de flecha y el fondo con `summary:open`/`details:open` en vez de togglear una clase por script.
+
+### 2026-08-18 · martes
+
+**Product Design**
+**Design Tokens en formato DTCG (ES: tokens de diseño / EN: Design Tokens — DTCG/W3C format)** → los design tokens son las decisiones de diseño (color, spacing, tipografía, radios, sombras) guardadas como pares nombre→valor independientes de plataforma; el DTCG (Design Tokens Community Group, del W3C) estandariza un formato JSON único para exportar esos tokens a CSS, iOS, Android o Figma desde una sola fuente. → Importa porque es el sustrato que hace que un design system sea *una sola verdad* en vez de valores copiados por plataforma: sin un formato común, el token de marca vive duplicado en el CSS, en el diseño y en el código nativo, y se desincroniza. → Aplicación: mover `design-system/tokens-web.css` y `tokens-print.css` a un `tokens.json` en formato DTCG como fuente única y generar desde ahí el CSS de web y de print, para que un cambio de marca se propague solo a landing-v11, CVs y skills sheet.
+
+**AI**
+**Comercio agéntico / protocolos de pago de agentes (ES) / Agentic commerce & agent payment protocols (EN)** → modelo, en plena carrera de estándares en 2026, donde un agente autónomo ejecuta la compra completa (descubrir → autorizar → pagar → recibir) a partir de una meta ("comprá zapatillas bajo $150 que lleguen el viernes"); protocolos como **ACP** de OpenAI (Instant Checkout en ChatGPT), **UCP** de Google/Shopify, **AP2** de Google y **x402** definen la capa de confianza y pago para que el agente transaccione con seguridad. → Importa porque extiende todo lo agéntico ya cubierto (A2A, MCP, autonomía progresiva) al dinero real: cuando un agente *paga* por vos, "límites, autorización y trazabilidad" dejan de ser solo UX y pasan a ser infraestructura de pago regulada —McKinsey proyecta $3–5 billones en transacciones para 2030. → Aplicación: en EnRegla, si un agente llegara a ejecutar pasos con costo (comprar un pliego, pagar una garantía), montar la compuerta de pago sobre un protocolo tipo AP2/ACP con límites y firma humana explícita, en vez de darle una tarjeta al agente sin frenos.
+
+**Development**
+**Iterator helpers en JavaScript (ES: ayudantes de iterador / EN: JavaScript Iterator helpers)** → métodos nativos sobre iteradores (`.map()`, `.filter()`, `.take()`, `.drop()`, y `Iterator.prototype.concat()` que alcanzó Baseline 2026) que encadenan transformaciones *perezosamente* —procesando elemento a elemento bajo demanda— sin materializar los arrays intermedios en memoria que obliga hoy `array.map().filter()`. → Importa porque procesar colecciones grandes o streams (leer y transformar muchos registros) con arrays intermedios desperdicia memoria y frena; los iterator helpers dan pipelines lazy en JS puro, sin Lodash ni generadores escritos a mano. → Aplicación: en los scripts de `generadores/`, encadenar la lectura y transformación de datos de `perfil/` con iterator helpers (`.filter().map().take()`) para armar CVs/skills sheet procesando solo lo necesario, sin cargar y copiar todo el dataset en cada paso.
