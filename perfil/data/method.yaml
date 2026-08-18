@@ -1,0 +1,156 @@
+# Método de trabajo — fuente de verdad.
+# Estado: draft v0.1 (2026-08-17). Destilado de la práctica, no adoptado de un libro.
+# Consumidores previstos: CV (sección "How I work"), landing (nota larga), post LinkedIn.
+# Regla: todo claim aquí debe ser defendible con un caso de perfil/data/cases/ o fact-bank.yaml.
+#
+# ESCALA DE VERDAD — cada claim lleva `truth:`. Sin etiqueta no se publica.
+#   fact       hecho verificable: está en fact-bank.yaml, en un caso, o en un artefacto (repo, deploy).
+#   framing    verdad narrada: el hecho existe, la forma de contarlo es elección. Defendible si preguntan.
+#   opinion    tesis propia. No es hecho ni pretende serlo. Se dice como "I think".
+#   aspiration todavía no es verdad. Se dice como "I'm working on". NUNCA como logro.
+#
+# Regla de mercado: al público solo salen fact + framing + opinion marcada. aspiration va en limits/todo.
+
+name: Instrumental Design
+alias: Northforge            # nombre de marca, más épico; usar solo en contextos informales
+status: draft
+version: "0.1"
+updated: "2026-08-17"
+
+tagline:
+  en: "Design that builds its own instruments."
+  es: "Diseño que construye sus propios instrumentos."
+
+# El doble sentido es el nombre: instrumental = esencial, y = hecho de instrumentos.
+thesis:
+  truth: opinion
+  en: >
+    Most design methods start with the user and end with a screen. Mine starts with the
+    destination and, when the tool to reach it doesn't exist, builds it — an emulator, an
+    MCP server, a design system agents can read. The screen is the last thing, not the first.
+  es: >
+    La mayoría de los métodos de diseño empiezan por el usuario y terminan en una pantalla.
+    El mío empieza por el destino y, cuando la herramienta para llegar no existe, la construye
+    — un emulador, un servidor MCP, un design system que los agentes pueden leer. La pantalla
+    es lo último, no lo primero.
+
+# De dónde sale: la trayectoria explica el orden en que miro un problema.
+origin:
+  truth: fact          # identity/positioning: 'De DBA a UX'; trayectoria en experience.yaml
+  en: >
+    Database engineer, then backend, then frontend, then UX/UI, then product. Not a zigzag —
+    one direction: each step moved closer to the point where the system touches a person.
+    That's why I design from the inside out: I understand what's under the screen before
+    I draw it.
+  es: >
+    Ingeniero de bases de datos, luego backend, luego frontend, luego UX/UI, luego producto.
+    No es un zigzag — una sola dirección: cada paso me acercó al punto donde el sistema toca
+    a una persona. Por eso diseño de adentro hacia afuera: entiendo qué hay debajo de la
+    pantalla antes de dibujarla.
+
+steps:
+  - id: north
+    order: 1
+    nameEn: "Fix the north"
+    nameEs: "Fijar el norte"
+    en: "Start from the destination, not the solution. Write it down with the metric that will say we got there. If it can't be measured, don't start."
+    es: "Empezar por el destino, no por la solución. Escribirlo con la métrica que dirá que llegamos. Si no se puede medir, no se empieza."
+    lineage: "Working Backwards (Amazon) · outcome-first / OKR"
+    evidence: "Activation metric defined before rebuilding onboarding (2.6% → 9.4%)"
+    truth: framing
+    truth_note: "El hábito es real; 'defined before rebuilding' es narración — la métrica se definió al instrumentar Mixpanel, no antes de tocar nada. Decir: 'I define the metric before I ship', no 'before I start'."
+
+  - id: bottom
+    order: 2
+    nameEn: "Go to the bottom of the system"
+    nameEs: "Bajar al fondo del sistema"
+    en: "Before designing, understand the real structure: data, APIs, constraints. Verify them, don't assume them."
+    es: "Antes de diseñar, entender la estructura real: datos, APIs, restricciones. Verificarlas, no asumirlas."
+    lineage: "First principles · systems thinking"
+    evidence: "APIs verified with curl before designing on them (Helix demo)"
+    truth: fact
+    truth_note: "proceso-log Helix: APIs verificadas con curl antes de diseñar."
+
+  - id: instrument
+    order: 3
+    nameEn: "Build the missing instrument"
+    nameEs: "Construir el instrumento que falta"
+    en: "When the tool to reach the north doesn't exist, build it. Not the product — the thing that makes the product possible."
+    es: "Cuando la herramienta para llegar al norte no existe, construirla. No el producto — la cosa que hace posible el producto."
+    lineage: "DesignOps · toolmaking; no clean name in design — this is the step that is mine"
+    evidence: "LLM persona emulators · custom MCP server for the design system · agent-ready design system"
+    truth: fact
+    truth_note: "fact-bank BAH: persona emulators, MCP server, DS agent-ready. Los tres verificados por Danilo 2026-07-02."
+    signature: true
+
+  - id: build
+    order: 4
+    nameEn: "Prototype in code"
+    nameEs: "Prototipar en código"
+    en: "Build to think. A prototype that runs ends the argument about whether it's feasible."
+    es: "Construir para pensar. Un prototipo que corre termina la discusión de si es factible."
+    lineage: "Build-Measure-Learn (Lean Startup) · rapid prototyping (Tom Chi)"
+    evidence: "Design-to-dev cycle from ~6 weeks to under 1 by shipping production-ready React"
+    truth: fact
+    truth_note: "fact-bank BAH: 6 semanas → <1 vía React listo para producción."
+
+  - id: verify
+    order: 5
+    nameEn: "Verify against the truth and against yourself"
+    nameEs: "Verificar contra la verdad y contra uno mismo"
+    en: "No number without a source. Adversarial review of my own specs. Machines find candidates at scale; people confirm what matters."
+    es: "Ningún número sin fuente. Review adversarial de mis propios specs. Las máquinas encuentran candidatos a escala; las personas confirman lo que importa."
+    lineage: "Evidence-based design · red teaming"
+    evidence: "Hundreds of automated usability passes, then 5 real users per feature; 92% rated improvements better"
+    truth: framing
+    truth_note: "fact-bank existe (fact); 92% y 5 usuarios/feature (fact, BAH). 'Adversarial review of my own specs' es fact en Helix; como hábito permanente es framing — decir 'I do this on the work that matters', no 'always'."
+
+  - id: loop
+    order: 6
+    nameEn: "Run the loop on the process too"
+    nameEs: "Correr el loop también sobre el proceso"
+    en: "The method is reviewed and revised on the same cadence as the work. Documented in real time, not reconstructed after."
+    es: "El método se revisa y corrige con la misma cadencia que el trabajo. Documentado en tiempo real, no reconstruido después."
+    lineage: "Double-loop learning (Argyris) · kaizen"
+    evidence: "Making-of documented live inside the Helix demo"
+    truth: fact
+    truth_note: "docs/making-of.md en Helix, escrito durante el build."
+
+# Qué framework conocido se le parece más, para no sonar a rueda reinventada.
+lineage_summary:
+  truth: opinion
+  en: "Closest to Working Backwards plus Build-Measure-Learn, wrapped in a Double Diamond. Two things are mine: I enter through the bottom of the system, not through empathy; and I build tools in the middle."
+  es: "Lo más cercano: Working Backwards más Build-Measure-Learn, envuelto en un Double Diamond. Dos cosas son mías: entro por el fondo del sistema, no por la empatía; y construyo herramientas en medio."
+
+# Límites conocidos — lo que el método no hace bien todavía. Se publican: honestidad es parte de la marca.
+limits:                 # truth: fact — son límites reales, publicables como tales
+  - id: listen-first
+    en: "Built for working alone. In a team the north is co-written, not delivered — alignment is the work, not a step before it."
+    es: "Construido para trabajar solo. En equipo el norte se co-escribe, no se entrega — la alineación es el trabajo, no un paso previo."
+  - id: stop-rule
+    en: "Steps 3 and 4 are the strength and the leak. Set the stop rule before opening the editor: 'done when ___', 'kill if by ___ not ___'."
+    es: "Los pasos 3 y 4 son la fuerza y la fuga. Fijar la regla de parada antes de abrir el editor: 'terminado cuando ___', 'lo mato si a las ___ no ___'."
+  - id: vocabulary
+    en: "The practice runs ahead of the vocabulary. Naming things in industry terms is how others recognize the practice."
+    es: "La práctica va por delante del vocabulario. Nombrar las cosas en términos de la industria es cómo otros reconocen la práctica."
+  - id: ugly-early
+    en: "Verification arrives late — after building. Show the ugly draft at step 1–2; a 'no' to a paragraph is cheaper than a 'no' to a prototype."
+    es: "La verificación llega tarde — después de construir. Mostrar el borrador feo en el paso 1–2; un 'no' a un párrafo es más barato que un 'no' a un prototipo."
+
+# Frases listas para decir. Una vez, sin vender.
+phrases:                # truth: framing — cada frase se apoya solo en claims fact/framing de arriba
+  process:
+    en: "I don't start with a solution, I start with the destination and write down how we'll know we got there. Then I go to the bottom of the system — I came from databases, so I need to see what's underneath before I draw what's on top. If the tool to get there doesn't exist, I build it. I prototype in code because a thing that runs ends the argument. I verify everything twice — against data and against my own bias. And I run the same loop on the process itself."
+  name:
+    en: "I've ended up calling it Instrumental Design — design that builds its own instruments. Fix the destination first and make it measurable; then build whatever gets you there and doesn't exist yet — an emulator, an MCP server, a prototype that runs; then verify, and run the same review on the process."
+  motor:
+    en: "The method is Instrumental Design. The attitude underneath is simpler — do what it takes to get there. The method is what keeps that from becoming just effort."
+  growth:
+    en: "My method was built for working alone: fix the destination, go deep, build what's missing, ship code, verify hard. What I'm deliberately changing for a team is who's in the room at each step — I co-write the destination instead of delivering it, I show the ugly draft before the polished prototype, and I set a stop rule before I start building, because building is the thing I over-do."
+
+# Pendientes para publicarlo (loop sobre el método):
+todo:
+  - "Iterar el nombre una vez más contra 3–5 personas de la industria antes de postear."
+  - "Escribir el post largo (LinkedIn / landing) desde thesis + steps + limits, ≤ 600 palabras."
+  - "Añadir sección 'How I work' al CV generado desde este archivo (generadores/)."
+  - "Reflejar el paso 3 en la intro de Helix: hoy muestra el loop, no nombra el instrumento."

@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "TTS: leer selección",
+      "type": "shell",
+      "command": "${workspaceFolder}/tools/tts/tts",
+      "args": ["say", "${selectedText}"],
+      "presentation": { "reveal": "never", "panel": "shared", "close": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "TTS: leer archivo actual",
+      "type": "shell",
+      "command": "${workspaceFolder}/tools/tts/tts",
+      "args": ["read", "${file}"],
+      "presentation": { "reveal": "never", "panel": "shared", "close": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "TTS: leer portapapeles",
+      "type": "shell",
+      "command": "${workspaceFolder}/tools/tts/tts",
+      "args": ["clip"],
+      "presentation": { "reveal": "never", "panel": "shared", "close": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "TTS: on/off",
+      "type": "shell",
+      "command": "${workspaceFolder}/tools/tts/tts",
+      "args": ["toggle"],
+      "presentation": { "reveal": "silent", "panel": "shared", "close": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "TTS: parar",
+      "type": "shell",
+      "command": "${workspaceFolder}/tools/tts/tts",
+      "args": ["stop"],
+      "presentation": { "reveal": "never", "panel": "shared", "close": true },
+      "problemMatcher": []
+    }
+  ]
+}

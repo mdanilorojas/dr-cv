@@ -6,3 +6,10 @@ node_modules/
 
 # Raw design-handoff zip drops — unpacked into laboratorio/mentor-os/
 Repos/
+
+# Interview prep — client names + strategy, never public (repo is PUBLIC)
+Entrevistas/
+tools/tts/.state/
+
+# Auditoria interna de claims del perfil — uso privado, nunca publica
+perfil/data/TRUTH-AUDIT.md
