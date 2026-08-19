@@ -107,6 +107,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Design Tokens en formato DTCG / Design Tokens (DTCG/W3C format) [Product Design]
 - Comercio agéntico y protocolos de pago de agentes / Agentic commerce & agent payment protocols (ACP, UCP, AP2, x402) [AI]
 - Iterator helpers en JavaScript / JavaScript Iterator helpers [Development]
+- Calibración de confianza / Trust calibration [Product Design]
+- Ajuste fino / Fine-tuning [AI]
+- Selector relacional :has() / CSS :has() relational selector [Development]
 
 ---
 
@@ -456,3 +459,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Iterator helpers en JavaScript (ES: ayudantes de iterador / EN: JavaScript Iterator helpers)** → métodos nativos sobre iteradores (`.map()`, `.filter()`, `.take()`, `.drop()`, y `Iterator.prototype.concat()` que alcanzó Baseline 2026) que encadenan transformaciones *perezosamente* —procesando elemento a elemento bajo demanda— sin materializar los arrays intermedios en memoria que obliga hoy `array.map().filter()`. → Importa porque procesar colecciones grandes o streams (leer y transformar muchos registros) con arrays intermedios desperdicia memoria y frena; los iterator helpers dan pipelines lazy en JS puro, sin Lodash ni generadores escritos a mano. → Aplicación: en los scripts de `generadores/`, encadenar la lectura y transformación de datos de `perfil/` con iterator helpers (`.filter().map().take()`) para armar CVs/skills sheet procesando solo lo necesario, sin cargar y copiar todo el dataset en cada paso.
+
+### 2026-08-19 · miércoles
+
+**Product Design**
+**Calibración de confianza (ES) / Trust calibration (EN)** → diseñar el producto para que la confianza que el usuario deposita en el agente coincida con su fiabilidad *real* —evitando tanto la sobre-confianza (aceptar a ciegas lo que el agente falla) como la sub-confianza (rechazar lo que hace bien)— ajustando señales de confianza, historial de acierto y fricción según el riesgo de cada acción. → Importa porque es el marco que ordena bajo un solo objetivo casi todos los patrones agénticos ya cubiertos (intent preview, XAI, autonomy dial, sandbox mode, approval gates): todos existen para *calibrar* confianza, y una UX que produce sobre-confianza es tan peligrosa como una que produce desconfianza —el usuario delega donde no debe o no delega donde sí. → Aplicación: en EnRegla, mostrar el nivel de acierto histórico del agente por tipo de campo y subir o bajar la fricción (confirmar vs. auto-ejecutar) para que el usuario confíe justo donde el agente lo merece, no de forma uniforme.
+
+**AI**
+**Ajuste fino (ES) / Fine-tuning (EN)** → técnica para especializar un modelo pre-entrenado continuando su entrenamiento sobre un dataset propio y etiquetado, de modo que aprenda un dominio, tono o formato específico —a diferencia del RAG, que inyecta datos en el contexto *sin* tocar los pesos, y de la destilación, que comprime un modelo grande en uno chico. → Importa porque completa la trilogía de "cómo hago que un modelo sea mío" (RAG vs. fine-tuning vs. destilación, ya cubiertos los otros dos): el fine-tuning cambia el *comportamiento por defecto* del modelo (ideal para estilo/formato consistente), mientras que RAG cambia *lo que sabe en cada consulta* (ideal para datos frescos y citables); saber cuál usar —o combinarlos— es una decisión central de arquitectura de producto IA, no un detalle de infraestructura. → Aplicación: en dr-cv, si quiero que los bullets salgan siempre en mi voz y formato, evaluar un fine-tuning ligero sobre ejemplos ya aprobados; pero para que el agente cite el pliego real de EnRegla uso RAG, no fine-tuning.
+
+**Development**
+**Selector relacional :has() (ES) / CSS :has() relational selector (EN)** → pseudo-clase que estiliza un elemento según lo que *contiene* o lo que le *sigue* —`.card:has(img)`, `label:has(+ input:invalid)`— resolviendo por fin el histórico "selector de padre" que CSS nunca tuvo; alcanzó Baseline "Widely available" en junio de 2026 y fue la feature más votada del State of CSS. → Importa porque un montón de lógica que hoy exige JavaScript (poner una clase en el padre cuando cambia un hijo) pasa a CSS declarativo: layouts que reaccionan a su propio contenido, estados de formulario, temas condicionales, todo sin tocar el DOM ni desincronizar clases. → Aplicación: en landing-v11 y el design system, cambiar el estilo de una tarjeta según si trae imagen (`.case:has(img)`), o marcar en error un campo de EnRegla mirando su input (`.field:has(:invalid)`), eliminando el JS de toggle de clases.
