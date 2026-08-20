@@ -110,6 +110,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Calibración de confianza / Trust calibration [Product Design]
 - Ajuste fino / Fine-tuning [AI]
 - Selector relacional :has() / CSS :has() relational selector [Development]
+- Glassmorphism 2.0 [Product Design]
+- Cómputo en tiempo de inferencia / Test-time compute (inference-time scaling) [AI]
+- API de Resaltado Personalizado / CSS Custom Highlight API (::highlight()) [Development]
 
 ---
 
@@ -470,3 +473,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Selector relacional :has() (ES) / CSS :has() relational selector (EN)** → pseudo-clase que estiliza un elemento según lo que *contiene* o lo que le *sigue* —`.card:has(img)`, `label:has(+ input:invalid)`— resolviendo por fin el histórico "selector de padre" que CSS nunca tuvo; alcanzó Baseline "Widely available" en junio de 2026 y fue la feature más votada del State of CSS. → Importa porque un montón de lógica que hoy exige JavaScript (poner una clase en el padre cuando cambia un hijo) pasa a CSS declarativo: layouts que reaccionan a su propio contenido, estados de formulario, temas condicionales, todo sin tocar el DOM ni desincronizar clases. → Aplicación: en landing-v11 y el design system, cambiar el estilo de una tarjeta según si trae imagen (`.case:has(img)`), o marcar en error un campo de EnRegla mirando su input (`.field:has(:invalid)`), eliminando el JS de toggle de clases.
+
+### 2026-08-20 · jueves
+
+**Product Design**
+**Glassmorphism 2.0 (ES + EN)** → evolución del "vidrio esmerilado" (paneles translúcidos con blur de fondo) que domina las tendencias visuales de 2026: ahora con profundidad por capas, refracción y sombras más realistas, tokens de opacidad/blur controlados y —clave— contraste y fallbacks accesibles, en vez del efecto plano y a veces ilegible de la primera ola. → Importa porque es la tendencia estética *del momento* (aparece en casi todos los reportes de UX 2026 junto a Liquid Glass de Apple), pero mal aplicada destroza la legibilidad y el rendimiento; el valor senior es usarla con *craft* —jerarquía y accesibilidad primero—, no pegar blur por moda, justo la diferencia entre gusto y "AI sameness" ya cubierta. → Aplicación: en landing-v11, definir en `design-system/tokens-web.css` tokens de superficie glass (`--glass-blur`, `--glass-opacity`, borde de luz) con `backdrop-filter` y un fallback sólido, y usarlos en el nav o las tarjetas de casos verificando contraste AA sobre cualquier fondo.
+
+**AI**
+**Cómputo en tiempo de inferencia (ES) / Test-time compute — inference-time scaling (EN)** → idea de que un modelo puede volverse más capaz no solo entrenándolo más grande, sino *dejándolo pensar más al responder* —generando y evaluando pasos de razonamiento intermedios antes de contestar—; es el mecanismo detrás de los "reasoning models" y de por qué los lanzamientos de esta semana (GLM-5.3 de Z.AI el 14 ago, Gemini 3.7 Flash el 13 ago) ofrecen modos rápidos vs. modos que "razonan" más. → Importa porque cambia la palanca de calidad de "qué modelo" a "cuánto cómputo le doy a *este* problema": tareas duras merecen más pasos de razonamiento (más lento y caro), las triviales no; es el complemento por-consulta del ruteo por tarea y la cuantización ya cubiertos, y una decisión real de diseño de producto IA (¿cuánto hago esperar al usuario por más calidad?). → Aplicación: en workflows de dr-cv, subir el esfuerzo de razonamiento solo en el paso de redactar bullets de CV (donde la calidad manda) y usar el modo rápido para limpiar/formatear datos en `generadores/`, balanceando latencia y costo por paso.
+
+**Development**
+**API de Resaltado Personalizado (ES) / CSS Custom Highlight API — ::highlight() (EN)** → API (nueva en Baseline 2026) que deja pintar rangos arbitrarios de texto —resultados de búsqueda, errores de sintaxis, anotaciones— creando un `Highlight` con objetos `Range` en JS y estilándolos con el pseudo-elemento `::highlight(nombre)` en CSS, *sin* inyectar `<span>` en el DOM. → Importa porque hasta ahora resaltar texto exigía trocear el nodo con `<mark>`/`<span>` (rompe el DOM, ensucia la selección y el screen-reader, y es lento en textos largos); esta API separa el resaltado visual del contenido, dejando el marcado limpio y accesible. → Aplicación: en un buscador de casos o skills de landing-v11, o en un visor de pliegos de EnRegla, resaltar los términos que coinciden con la búsqueda usando `::highlight()` con un token de marca, sin envolver cada match en un span ni romper el texto original.
