@@ -113,6 +113,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Glassmorphism 2.0 [Product Design]
 - Cómputo en tiempo de inferencia / Test-time compute (inference-time scaling) [AI]
 - API de Resaltado Personalizado / CSS Custom Highlight API (::highlight()) [Development]
+- UX ambiental / agentes always-on / Ambient UX — always-on agents (Microsoft Scout) [Product Design]
+- Reordenamiento / Reranking (pipeline RAG) [AI]
+- Anidamiento nativo en CSS / Native CSS Nesting (&) [Development]
 
 ---
 
@@ -484,3 +487,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **API de Resaltado Personalizado (ES) / CSS Custom Highlight API — ::highlight() (EN)** → API (nueva en Baseline 2026) que deja pintar rangos arbitrarios de texto —resultados de búsqueda, errores de sintaxis, anotaciones— creando un `Highlight` con objetos `Range` en JS y estilándolos con el pseudo-elemento `::highlight(nombre)` en CSS, *sin* inyectar `<span>` en el DOM. → Importa porque hasta ahora resaltar texto exigía trocear el nodo con `<mark>`/`<span>` (rompe el DOM, ensucia la selección y el screen-reader, y es lento en textos largos); esta API separa el resaltado visual del contenido, dejando el marcado limpio y accesible. → Aplicación: en un buscador de casos o skills de landing-v11, o en un visor de pliegos de EnRegla, resaltar los términos que coinciden con la búsqueda usando `::highlight()` con un token de marca, sin envolver cada match en un span ni romper el texto original.
+
+### 2026-08-21 · viernes
+
+**Product Design**
+**UX ambiental / agentes always-on (ES: Diseño de experiencia ambiental / EN: Ambient UX — always-on agents)** → disciplina de diseño para agentes que corren *continuamente en segundo plano* y actúan de forma proactiva sin que se lo pidas —destacada esta semana con Microsoft Scout (Build 2026), un agente always-on que monitorea Teams/Outlook/archivos y prepara borradores y avisos antes de que preguntes. → Importa porque invierte el modelo de interacción de "el usuario abre la app y pide" a "el agente vigila y propone", lo que exige diseñar señales de presencia discretas, control de interrupciones y confianza para que el agente no se vuelva ruido ni vigilancia; es distinto del *background tool execution* ya cubierto (eso es infra: una herramienta lenta corre async), acá se diseña la *experiencia* de un agente que trabaja solo mientras no lo miras. → Aplicación: si EnRegla gana un agente que vigila portales de licitación y avisa "salió un pliego que te encaja", diseñar cómo notifica (discreto, agrupado, accionable) y cómo el usuario calibra cuánto puede actuar solo, en vez de un chat que solo responde cuando lo abren.
+
+**AI**
+**Reordenamiento / Reranking (ES + EN)** → segundo paso de un pipeline RAG donde, tras recuperar por embeddings los N fragmentos más *parecidos*, un modelo *reranker* los reordena por relevancia real a la consulta y descarta los que solo coincidían en superficie, antes de pasárselos al modelo generador. → Importa porque cierra el hueco que deja el embedding ya cubierto: la búsqueda vectorial trae "lo semánticamente cercano", pero cercano ≠ el más útil; sin rerank el contexto se llena de fragmentos ruidosos que empujan alucinaciones y gastan ventana —el rerank es la palanca #1 de calidad cuando un RAG "ya recupera pero responde regular". → Aplicación: en EnRegla, tras recuperar por embeddings las ~20 cláusulas de pliego más parecidas, pasar un reranker que deje solo las 3–5 que de verdad responden la pregunta antes de dárselas al agente, subiendo precisión y bajando costo de contexto.
+
+**Development**
+**Anidamiento nativo en CSS / Native CSS Nesting (ES + EN)** → capacidad ya Baseline "widely available" de anidar reglas CSS unas dentro de otras usando `&` para referir al selector padre —`.card { & .title { … } &:hover { … } }`— trayendo a CSS puro la anidación que antes exigía Sass o Less. → Importa porque un design system se lee y mantiene mejor cuando los estilos de un componente viven juntos en un bloque, en vez de dispersos con selectores repetidos; el anidamiento nativo elimina la dependencia de preprocesador y su paso de build, y combina con `@scope` y los mixins ya cubiertos. → Aplicación: en `design-system/tokens-web.css`, reescribir los componentes de landing-v11 (tarjetas de casos, badges) con anidación nativa para agrupar estados (`&:hover`, `&:has(img)`) y variantes bajo un solo selector padre, sin Sass ni clases repetidas.
