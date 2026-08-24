@@ -116,6 +116,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - UX ambiental / agentes always-on / Ambient UX — always-on agents (Microsoft Scout) [Product Design]
 - Reordenamiento / Reranking (pipeline RAG) [AI]
 - Anidamiento nativo en CSS / Native CSS Nesting (&) [Development]
+- Gobernanza de design system / Design system governance [Product Design]
+- Subagentes persistentes / Persistent subagents [AI]
+- Sintaxis de dos valores en display / Multi-keyword (two-value) display syntax [Development]
 
 ---
 
@@ -498,3 +501,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Anidamiento nativo en CSS / Native CSS Nesting (ES + EN)** → capacidad ya Baseline "widely available" de anidar reglas CSS unas dentro de otras usando `&` para referir al selector padre —`.card { & .title { … } &:hover { … } }`— trayendo a CSS puro la anidación que antes exigía Sass o Less. → Importa porque un design system se lee y mantiene mejor cuando los estilos de un componente viven juntos en un bloque, en vez de dispersos con selectores repetidos; el anidamiento nativo elimina la dependencia de preprocesador y su paso de build, y combina con `@scope` y los mixins ya cubiertos. → Aplicación: en `design-system/tokens-web.css`, reescribir los componentes de landing-v11 (tarjetas de casos, badges) con anidación nativa para agrupar estados (`&:hover`, `&:has(img)`) y variantes bajo un solo selector padre, sin Sass ni clases repetidas.
+
+### 2026-08-24 · lunes
+
+**Product Design**
+**Gobernanza de design system (ES) / Design system governance (EN)** → conjunto de reglas, roles y chequeos automáticos que deciden *quién puede cambiar qué* en un design system y *cómo se valida* cada cambio (accesibilidad, uso correcto de tokens, cumplimiento), destacado esta semana como rasgo de los "governance-grade design systems" de 2026, donde la IA referencia el sistema como única fuente de verdad. → Importa porque cuando agentes de IA generan UI a gran escala, el cuello de botella ya no es *producir* componentes sino *evitar que el sistema se degrade* (duplicados, tokens sueltos, drift de marca): la gobernanza es lo que convierte un set de tokens en un sistema confiable, y es trabajo senior puro, no pixel-pushing. → Aplicación: definir en dr-cv reglas explícitas de gobernanza para `design-system/` (qué cambios requieren revisión humana, un check automático de que landing-v11 solo usa tokens de `tokens-web.css`) para que cualquier generación agéntica respete la marca sin que Danilo audite a mano.
+
+**AI**
+**Subagentes persistentes (ES) / Persistent subagents (EN)** → patrón de orquestación —visible esta semana en Meta Muse Code, que ofrece "coordinación multiagente con subagentes persistentes y auditabilidad completa"— donde un agente principal delega partes de una tarea a agentes hijos especializados que *conservan su propio contexto y estado a lo largo del trabajo*, en vez de spawnearse y morir en cada paso. → Importa porque afina los "sistemas multiagente" ya cubiertos con dos piezas clave: contexto aislado por subagente (cada uno se enfoca sin saturar la ventana del principal) y persistencia (retienen lo aprendido durante la tarea), que es exactamente cómo Claude Code corre este briefing —un subagente lee, otro busca— y por qué escala sin perder el hilo. → Aplicación: modelar un workflow de dr-cv como agente principal + subagentes persistentes (uno cura datos de `perfil/`, otro redacta bullets, otro valida contra tokens), cada uno con su contexto acotado y trazable, en vez de un solo agente que hace todo y se satura.
+
+**Development**
+**Sintaxis de dos valores en display (ES) / Multi-keyword (two-value) display syntax (EN)** → forma de la propiedad `display` —Baseline "widely available" en 2026— que declara por separado el tipo de caja *externo* (cómo se comporta el elemento con sus vecinos) y el *interno* (cómo se disponen sus hijos): `display: block flow`, `display: inline flex`, `display: block flow-root`, en vez de los atajos históricos de una sola palabra. → Importa porque revela lo que `display` siempre hizo en secreto —todo elemento tiene *dos* comportamientos, outer e inner— y vuelve explícitas combinaciones antes imposibles de nombrar (`inline flow-root` como reemplazo limpio del truco de `inline-block`), clave para razonar bien sobre layout en un design system. → Aplicación: en `design-system/tokens-web.css`, usar la sintaxis de dos valores para dejar clarísima la intención de cada contenedor de landing-v11 (`block flex` para el hero, `inline flow-root` para chips de skills), documentando el comportamiento real en vez de memorizar atajos.
