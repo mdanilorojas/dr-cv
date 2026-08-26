@@ -119,6 +119,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Gobernanza de design system / Design system governance [Product Design]
 - Subagentes persistentes / Persistent subagents [AI]
 - Sintaxis de dos valores en display / Multi-keyword (two-value) display syntax [Development]
+- Tarjeta de llamada de herramienta / Tool-call card [Product Design]
+- Decodificación especulativa / Speculative decoding [AI]
+- Propiedad corner-shape en CSS / CSS corner-shape (squircles) [Development]
 
 ---
 
@@ -512,3 +515,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Sintaxis de dos valores en display (ES) / Multi-keyword (two-value) display syntax (EN)** → forma de la propiedad `display` —Baseline "widely available" en 2026— que declara por separado el tipo de caja *externo* (cómo se comporta el elemento con sus vecinos) y el *interno* (cómo se disponen sus hijos): `display: block flow`, `display: inline flex`, `display: block flow-root`, en vez de los atajos históricos de una sola palabra. → Importa porque revela lo que `display` siempre hizo en secreto —todo elemento tiene *dos* comportamientos, outer e inner— y vuelve explícitas combinaciones antes imposibles de nombrar (`inline flow-root` como reemplazo limpio del truco de `inline-block`), clave para razonar bien sobre layout en un design system. → Aplicación: en `design-system/tokens-web.css`, usar la sintaxis de dos valores para dejar clarísima la intención de cada contenedor de landing-v11 (`block flex` para el hero, `inline flow-root` para chips de skills), documentando el comportamiento real en vez de memorizar atajos.
+
+### 2026-08-26 · miércoles
+
+**Product Design**
+**Tarjeta de llamada de herramienta (ES) / Tool-call card (EN)** → patrón de UI AI-native que gana tracción esta semana en los reportes de "State of AI in UX 2026": cuando un agente usa una herramienta (buscar, consultar una API, correr código), la interfaz lo muestra como una *tarjeta* dentro de la conversación con qué herramienta llamó, con qué inputs y qué devolvió, en vez de esconder el paso. → Importa porque es una de las piezas de design system que hace tres años no existía y hoy define la confianza en productos agénticos: el usuario ve *qué está haciendo* el agente y puede detectar cuándo se equivoca, en lugar de recibir un resultado mágico sin trazabilidad —es divulgación de uso de herramientas (ya cubierto) convertida en componente concreto. → Aplicación: si EnRegla suma un agente que consulta el portal de licitaciones, diseñar una tool-call card que muestre "buscando pliegos → filtro: obras públicas → 4 resultados" para que el usuario confíe en el paso y lo pueda auditar, con estados de cargando/éxito/error definidos en el design system.
+
+**AI**
+**Decodificación especulativa (ES) / Speculative decoding (EN)** → técnica de aceleración de inferencia donde un modelo pequeño y rápido "adivina" varios tokens por adelantado y el modelo grande solo los *verifica* de un tirón (aceptando los correctos y corrigiendo desde el primer error), en vez de generar token por token con el modelo grande. → Importa porque es una de las razones de fondo detrás de la ola de tiers "Flash/Turbo" de esta semana (Gemini 3.7 Flash el 13-ago, GLM-5.2 Turbo el 17-ago): dan la calidad del modelo grande a una fracción de la latencia, y explica —junto a MoE, quantization y test-time compute ya cubiertos— por qué delegar tareas largas a agentes se volvió económicamente viable. → Aplicación: al elegir modelo para pasos interactivos de un workflow de dr-cv (donde importa que responda rápido, como iterar bullets con Danilo en vivo), preferir un tier que use speculative decoding para respuesta veloz, y reservar razonamiento pesado sin prisa para pasos batch.
+
+**Development**
+**Propiedad corner-shape en CSS (ES) / CSS corner-shape — squircles (EN)** → propiedad CSS (disponible en navegadores basados en Chromium en 2026, con más adopción esta temporada) que trabaja junto a `border-radius` para definir *la forma* de la esquina —`corner-shape: superellipse(...)` para el squircle tipo Apple, `bevel`, `notch`, `scoop`— no solo su radio. → Importa porque el squircle (esquina superelíptica, más suave que un radio circular) es hoy un marcador de craft visual que antes exigía SVG, `clip-path` o máscaras frágiles; con `corner-shape` es una línea declarativa que respeta el layout y el contenido. → Aplicación: en `design-system/tokens-web.css`, definir un token de esquina squircle para botones y tarjetas de landing-v11 (`corner-shape: superellipse(4)` + `border-radius`) para un acabado premium y consistente sin depender de SVG ni recortes manuales.
