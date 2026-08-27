@@ -122,6 +122,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Tarjeta de llamada de herramienta / Tool-call card [Product Design]
 - Decodificación especulativa / Speculative decoding [AI]
 - Propiedad corner-shape en CSS / CSS corner-shape (squircles) [Development]
+- Interrupibilidad del agente / Barge-in (interrupción y toma de control) [Product Design]
+- Aprendizaje por refuerzo para agentes / Agentic reinforcement learning (RL) [AI]
+- text-box-trim y text-box-edge en CSS / CSS leading-trim [Development]
 
 ---
 
@@ -526,3 +529,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Propiedad corner-shape en CSS (ES) / CSS corner-shape — squircles (EN)** → propiedad CSS (disponible en navegadores basados en Chromium en 2026, con más adopción esta temporada) que trabaja junto a `border-radius` para definir *la forma* de la esquina —`corner-shape: superellipse(...)` para el squircle tipo Apple, `bevel`, `notch`, `scoop`— no solo su radio. → Importa porque el squircle (esquina superelíptica, más suave que un radio circular) es hoy un marcador de craft visual que antes exigía SVG, `clip-path` o máscaras frágiles; con `corner-shape` es una línea declarativa que respeta el layout y el contenido. → Aplicación: en `design-system/tokens-web.css`, definir un token de esquina squircle para botones y tarjetas de landing-v11 (`corner-shape: superellipse(4)` + `border-radius`) para un acabado premium y consistente sin depender de SVG ni recortes manuales.
+
+### 2026-08-27 · jueves
+
+**Product Design**
+**Interrupibilidad del agente / Barge-in (ES: interrupción y toma de control / EN: barge-in)** → patrón de agent UX de 2026 donde la interfaz deja al usuario *cortar o redirigir al agente mientras ya está actuando* —no antes (compuerta de aprobación) ni después de un error (enrutamiento de recuperación), sino en pleno vuelo— pausando, editando el objetivo o tomando el control manual sin perder el estado. → Importa porque cierra el tercer momento del control agéntico: los reportes de "UI for AI Agents 2026" lo listan junto a transparencia, override y recuperación como lo que un producto agéntico *debe* ofrecer, y es distinto de los approval gates y la recovery routing ya cubiertos —cubre el "durante", no el "antes" ni el "después". → Aplicación: si EnRegla suma un agente que arma un pliego, diseñar un control de barge-in siempre visible ("pausar / editar objetivo / tomar control") con estado preservado, para que el usuario intervenga sin reiniciar la tarea.
+
+**AI**
+**Aprendizaje por refuerzo para agentes / Agentic reinforcement learning (ES + EN: RL)** → entrenar a un agente premiando *trayectorias de acción exitosas* (completar la tarea multi-paso) en vez de solo predecir el siguiente token, para que aprenda a usar herramientas y planear mejor; Microsoft liberó esta semana **Agent Lightning v1.0** (17-ago-2026), un framework open-source que aplica RL a un agente *sin cambiar su código, herramientas ni entorno*. → Importa porque es la palanca de mejora que va *más allá* del fine-tuning ya cubierto: no ajusta el estilo del texto sino la *política de decisiones* del agente (cuándo llamar qué herramienta, cuándo parar), y frameworks como Agent Lightning bajan la barrera para hacerlo sobre agentes existentes. → Aplicación: si un workflow agéntico de dr-cv (p. ej. generar CVs) acumula suficientes ejemplos de qué trayectorias Danilo aceptó vs. rechazó, ese log de recompensa es exactamente el material con que un enfoque de RL afinaría la política del agente, en vez de reescribir prompts a mano.
+
+**Development**
+**text-box-trim y text-box-edge en CSS / CSS leading-trim (ES + EN)** → par de propiedades —cross-browser completo *este mes* (Firefox 154, ago-2026; Chrome/Edge desde 133 y Safari desde 18.2)— que recortan el espacio muerto (leading) que la fuente agrega arriba de la primera línea y debajo de la última, alineando el texto a la altura de mayúscula (`cap`) y a la línea base (`alphabetic`) en vez de a la caja fantasma de la fuente. → Importa porque ese hueco invisible sobre y bajo el texto es la causa #1 de que botones, chips y tarjetas se vean con padding desparejo; hoy se corrige con márgenes negativos frágiles por fuente, y `text-box-trim` lo vuelve una regla declarativa —clave para el ritmo vertical de un design system. → Aplicación: en `design-system/tokens-web.css`, aplicar `text-box-trim: trim-both; text-box-edge: cap alphabetic;` a botones y badges de landing-v11 para que el texto quede ópticamente centrado sin hacks de margen por tipografía.
