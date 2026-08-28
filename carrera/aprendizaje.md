@@ -125,6 +125,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Interrupibilidad del agente / Barge-in (interrupción y toma de control) [Product Design]
 - Aprendizaje por refuerzo para agentes / Agentic reinforcement learning (RL) [AI]
 - text-box-trim y text-box-edge en CSS / CSS leading-trim [Development]
+- Chips de cita / Citation chips [Product Design]
+- Sandbox de fiabilidad de agentes / Agent reliability sandbox (Microsoft ThinkingBox) [AI]
+- reading-flow y reading-order en CSS / CSS reading-flow & reading-order [Development]
 
 ---
 
@@ -540,3 +543,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **text-box-trim y text-box-edge en CSS / CSS leading-trim (ES + EN)** → par de propiedades —cross-browser completo *este mes* (Firefox 154, ago-2026; Chrome/Edge desde 133 y Safari desde 18.2)— que recortan el espacio muerto (leading) que la fuente agrega arriba de la primera línea y debajo de la última, alineando el texto a la altura de mayúscula (`cap`) y a la línea base (`alphabetic`) en vez de a la caja fantasma de la fuente. → Importa porque ese hueco invisible sobre y bajo el texto es la causa #1 de que botones, chips y tarjetas se vean con padding desparejo; hoy se corrige con márgenes negativos frágiles por fuente, y `text-box-trim` lo vuelve una regla declarativa —clave para el ritmo vertical de un design system. → Aplicación: en `design-system/tokens-web.css`, aplicar `text-box-trim: trim-both; text-box-edge: cap alphabetic;` a botones y badges de landing-v11 para que el texto quede ópticamente centrado sin hacks de margen por tipografía.
+
+### 2026-08-28 · viernes
+
+**Product Design**
+**Chips de cita (ES) / Citation chips (EN)** → componente AI-native que aparece en los reportes de "design systems para IA 2026" como pieza nueva: cuando un agente afirma algo generado a partir de fuentes, cada afirmación lleva un pequeño chip clickable que enlaza a la fuente exacta (documento, cláusula, fila) de donde salió. → Importa porque la trazabilidad ya no es un lujo sino la condición para confiar en output de IA: sin cita verificable, un resumen generado es una caja negra; el chip convierte "confía en mí" en "compruébalo tú mismo" —es el hermano de la tool-call card (ya cubierta), pero para el *contenido* en vez del *paso*. → Aplicación: si EnRegla resume un pliego con IA, colocar un citation chip junto a cada requisito extraído (p. ej. "plazo de entrega ↗ cláusula 4.2") para que el usuario salte a la fuente y verifique antes de decidir, con estilos de chip definidos en `design-system/tokens-web.css`.
+
+**AI**
+**Sandbox de fiabilidad de agentes (ES) / Agent reliability sandbox — Microsoft ThinkingBox (EN)** → Microsoft liberó esta semana **ThinkingBox**, un entorno open-source tipo sandbox que pone a un agente a ejecutar tareas reales de varios pasos para medir si de verdad *las completa de forma fiable*, no solo si suena bien en una respuesta de chat. → Importa porque expone la brecha que los benchmarks clásicos y los evals de una sola respuesta (ya cubiertos) no capturan: "puede describir el plan" ≠ "lo ejecuta sin romperse a mitad de camino"; para un producto agéntico, la fiabilidad multi-paso es la métrica que decide si se puede desplegar. → Aplicación: antes de confiar un workflow agéntico de dr-cv (ej. generar y desplegar CVs de punta a punta) a modo autónomo, correrlo en un entorno tipo sandbox repetidas veces y medir *tasa de completado real*, no solo la calidad de un output aislado, para decidir cuántos checkpoints humanos mantener.
+
+**Development**
+**reading-flow y reading-order en CSS (ES) / CSS reading-flow & reading-order (EN)** → propiedades de 2026 (Chrome, Baseline emergente) que permiten definir el orden de *foco de teclado y lectura de lectores de pantalla* de los hijos de un flex/grid siguiendo el orden visual (`reading-flow: flex-visual`) o uno explícito (`reading-order: <n>`), desacoplando el orden de tabulación del orden del DOM. → Importa porque hoy reordenar visualmente con `order`, `row-reverse` o `grid-template-areas` rompe silenciosamente el orden de tabulación —un bug de accesibilidad clásico donde el foco "salta" ilógicamente; estas propiedades lo arreglan sin tocar el HTML. → Aplicación: en las grids de casos o skills de landing-v11 donde el orden visual difiere del orden del markup (por responsive o por `order`), aplicar `reading-flow: flex-visual` para que la navegación por teclado siga lo que el ojo ve, cerrando una brecha de accesibilidad del design system.
