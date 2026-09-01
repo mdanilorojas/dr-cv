@@ -206,7 +206,7 @@ export function renderAtsCv(data: CvData, lang: Lang): string {
         certs: "Certifications",
         edu: "Education",
         summaryText:
-          "Senior Product Designer with 12+ years leading product discovery and end-to-end design for complex, regulated environments — federal platforms (DoD, Army, FAA, VA) and B2B SaaS. Cut design-to-development cycle time from ~6 weeks to under 1 week and scaled a design system from 0 to 26 teams at Booz Allen Hamilton. Expert in Figma (Auto Layout, Variables, Dev Mode), design systems governance, accessibility (WCAG 2.2, Section 508) and AI-augmented user research.",
+          "Senior Product Designer with 12+ years leading product discovery and end-to-end design for complex, regulated environments — federal platforms (DoD, Army, FAA, VA) and B2B SaaS. Cut design-to-development cycle time from ~6 weeks to under 1 week, scaled a design system from 0 to 26 teams at Booz Allen Hamilton, and lifted new-user activation from 2.6% to 9.4% in under 3 weeks. Expert in Figma (Auto Layout, Variables, Dev Mode, Motion), design systems governance, accessibility (WCAG 2.2, Section 508) and AI-augmented user research.",
       }
     : {
         headline: "Senior Product Designer",
@@ -218,7 +218,7 @@ export function renderAtsCv(data: CvData, lang: Lang): string {
         certs: "Certificaciones",
         edu: "Educación",
         summaryText:
-          "Senior Product Designer con 12+ años liderando product discovery y diseño end-to-end para entornos complejos y regulados — plataformas federales (DoD, Army, FAA, VA) y SaaS B2B. Reduje el ciclo design-to-development de ~6 semanas a menos de 1 semana y escalé un design system de 0 a 26 equipos en Booz Allen Hamilton. Experto en Figma (Auto Layout, Variables, Dev Mode), gobernanza de design systems, accesibilidad (WCAG 2.2, Section 508) e investigación de usuarios potenciada por IA.",
+          "Senior Product Designer con 12+ años liderando product discovery y diseño end-to-end para entornos complejos y regulados — plataformas federales (DoD, Army, FAA, VA) y SaaS B2B. Reduje el ciclo design-to-development de ~6 semanas a menos de 1 semana, escalé un design system de 0 a 26 equipos en Booz Allen Hamilton, y subí la activación de nuevos usuarios de 2.6% a 9.4% en menos de 3 semanas. Experto en Figma (Auto Layout, Variables, Dev Mode, Motion), gobernanza de design systems, accesibilidad (WCAG 2.2, Section 508) e investigación de usuarios potenciada por IA.",
       };
 
   const skills = SKILLS.map((s) =>

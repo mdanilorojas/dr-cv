@@ -31,9 +31,14 @@ async function main() {
   await emit("cv-clean-en", renderCleanCv(data, "en"));
   await emit("cv-clean-es", renderCleanCv(data, "es"));
 
-  // Versión ATS fechada 2026-07-02: todos los [DATO: ...] resueltos contra fact-bank — enviable.
+  // Versión ATS fechada 2026-07-02: base anterior (conservada para referencia).
   await emit("cv-ats-2026-07-02-en", renderAtsCv(data, "en"));
   await emit("cv-ats-2026-07-02-es", renderAtsCv(data, "es"));
+
+  // Versión ATS fechada 2026-09-01: cotejo fact-bank × ATS Research Ciclo 39.
+  // Mejoras: 3er métrica en summary (activación 2.6%→9.4%), Motion en Figma features.
+  await emit("cv-ats-2026-09-01-en", renderAtsCv(data, "en"));
+  await emit("cv-ats-2026-09-01-es", renderAtsCv(data, "es"));
 
   console.log("[cv] done.");
 }
