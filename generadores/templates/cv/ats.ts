@@ -18,9 +18,10 @@ import { escapeHtml, type Lang } from "../skills-sheet-page-1.js";
 
 const t = (lang: Lang, en: string, es: string): string => (lang === "en" ? en : es);
 
-/* v2 (2026-07-01): incorpora los 8 gaps del diagnóstico. Los items con `todo: true`
- * requieren datos reales de Danilo antes de entrar al fact-bank; se renderizan
- * resaltados en amarillo con [DATO: ...] para que la versión no sea enviable por error. */
+/* v3 (2026-09-13): cotejo fact-bank × ATS Research Ciclo 39.
+ * Cambios: summary añade 3er métrica (activación 2.6%→9.4%); SKILLS AI añade
+ * "LLM UI design · Prompt-driven design workflows" (fact-bank skills.agentic_ai);
+ * TOOLS añade Mixpanel (evidencia fact-bank roles.compliance_saas_latam). */
 
 interface AtsRow {
   dates: { en: string; es: string };
@@ -152,11 +153,11 @@ const SKILLS: SkillLine[] = [
   },
   {
     label: { en: "AI & Agentic Design", es: "IA y Diseño Agéntico" },
-    items: "Agent-ready Design Systems · LLM Persona Emulation · Agentic UX Testing · Custom MCP design · AI-augmented design workflows",
+    items: "Agent-ready Design Systems · LLM Persona Emulation · Agentic UX Testing · LLM UI design · Custom MCP design · Prompt-driven design workflows · AI-augmented design workflows",
   },
 ];
 
-const TOOLS = "Figma (Auto Layout, Variables, Dev Mode, Motion, Figma Make, MCP) · Miro · Storybook · Jira · Linear · GitHub · Vercel · Cursor · Claude Code";
+const TOOLS = "Figma (Auto Layout, Variables, Dev Mode, Motion, Figma Make, MCP) · Miro · Mixpanel · Storybook · Jira · Linear · GitHub · Vercel · Cursor · Claude Code";
 
 const STYLES = `
 /* Tri-voz tipográfica (todo system fonts, ATS-safe): Bahnschrift = display/headings,
@@ -206,7 +207,7 @@ export function renderAtsCv(data: CvData, lang: Lang): string {
         certs: "Certifications",
         edu: "Education",
         summaryText:
-          "Senior Product Designer with 12+ years leading product discovery and end-to-end design for complex, regulated environments — federal platforms (DoD, Army, FAA, VA) and B2B SaaS. Cut design-to-development cycle time from ~6 weeks to under 1 week and scaled a design system from 0 to 26 teams at Booz Allen Hamilton. Expert in Figma (Auto Layout, Variables, Dev Mode), design systems governance, accessibility (WCAG 2.2, Section 508) and AI-augmented user research.",
+          "Senior Product Designer with 12+ years leading product discovery and end-to-end design for complex, regulated environments — federal platforms (DoD, Army, FAA, VA) and B2B SaaS. Cut design-to-development cycle time from ~6 weeks to under 1 week, scaled a design system from 0 to 26 teams at Booz Allen Hamilton, and lifted new-user activation from 2.6% to 9.4% in under 3 weeks. Expert in Figma (Auto Layout, Variables, Dev Mode), design systems governance, accessibility (WCAG 2.2, Section 508) and AI-augmented workflows.",
       }
     : {
         headline: "Senior Product Designer",
@@ -218,7 +219,7 @@ export function renderAtsCv(data: CvData, lang: Lang): string {
         certs: "Certificaciones",
         edu: "Educación",
         summaryText:
-          "Senior Product Designer con 12+ años liderando product discovery y diseño end-to-end para entornos complejos y regulados — plataformas federales (DoD, Army, FAA, VA) y SaaS B2B. Reduje el ciclo design-to-development de ~6 semanas a menos de 1 semana y escalé un design system de 0 a 26 equipos en Booz Allen Hamilton. Experto en Figma (Auto Layout, Variables, Dev Mode), gobernanza de design systems, accesibilidad (WCAG 2.2, Section 508) e investigación de usuarios potenciada por IA.",
+          "Senior Product Designer con 12+ años liderando product discovery y diseño end-to-end para entornos complejos y regulados — plataformas federales (DoD, Army, FAA, VA) y SaaS B2B. Reduje el ciclo design-to-development de ~6 semanas a menos de 1 semana, escalé un design system de 0 a 26 equipos en Booz Allen Hamilton, y subí la activación de nuevos usuarios de 2.6% a 9.4% en menos de 3 semanas. Experto en Figma (Auto Layout, Variables, Dev Mode), gobernanza de design systems, accesibilidad (WCAG 2.2, Section 508) y flujos de trabajo potenciados por IA.",
       };
 
   const skills = SKILLS.map((s) =>
