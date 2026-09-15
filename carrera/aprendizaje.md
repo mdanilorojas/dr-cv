@@ -128,6 +128,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Chips de cita / Citation chips [Product Design]
 - Sandbox de fiabilidad de agentes / Agent reliability sandbox (Microsoft ThinkingBox) [AI]
 - reading-flow y reading-order en CSS / CSS reading-flow & reading-order [Development]
+- Interfaz adaptativa / Adaptive UI [Product Design]
+- Harness de agentes gestionado / Managed agent runtime (OpenAI Agents API) [AI]
+- Grid Lanes / masonry nativo en CSS / CSS Grid Lanes (native masonry) [Development]
 
 ---
 
@@ -554,3 +557,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **reading-flow y reading-order en CSS (ES) / CSS reading-flow & reading-order (EN)** → propiedades de 2026 (Chrome, Baseline emergente) que permiten definir el orden de *foco de teclado y lectura de lectores de pantalla* de los hijos de un flex/grid siguiendo el orden visual (`reading-flow: flex-visual`) o uno explícito (`reading-order: <n>`), desacoplando el orden de tabulación del orden del DOM. → Importa porque hoy reordenar visualmente con `order`, `row-reverse` o `grid-template-areas` rompe silenciosamente el orden de tabulación —un bug de accesibilidad clásico donde el foco "salta" ilógicamente; estas propiedades lo arreglan sin tocar el HTML. → Aplicación: en las grids de casos o skills de landing-v11 donde el orden visual difiere del orden del markup (por responsive o por `order`), aplicar `reading-flow: flex-visual` para que la navegación por teclado siga lo que el ojo ve, cerrando una brecha de accesibilidad del design system.
+
+### 2026-09-15 · martes
+
+**Product Design**
+**Interfaz adaptativa (ES) / Adaptive UI (EN)** → interfaz que reconfigura en vivo el contenido, la jerarquía y la densidad de elementos que *ya existen* según el usuario, su contexto y su comportamiento —distinta de la Generative UI ya cubierta: no dibuja pantallas nuevas desde cero, reordena y ajusta las que ya están. → Importa porque Gartner proyecta que el 30% de las apps nuevas usará interfaces adaptativas en 2026 (vs. <5% hace dos años) y los reportes de UX de esta semana la ponen como palanca directa de retención y conversión; el trabajo senior no es "personalizar todo" sino *definir qué puede adaptarse y qué debe quedar fijo* (marca, accesibilidad, jerarquía crítica). → Aplicación: en EnRegla, mostrar primero los módulos que ese usuario usa más y replegar los avanzados hasta que los necesite, adaptando la densidad del panel por perfil sin rehacer la pantalla ni romper el sistema.
+
+**AI**
+**Harness de agentes gestionado (ES) / Managed agent runtime — OpenAI Agents API (EN)** → OpenAI lanzó el 10-sep-2026 su **Agents API** en beta pública: mueve el "harness" del agente —sesiones de larga duración, sandbox de ejecución, uso de herramientas, compactación de contexto y orquestación de subagentes— a un servicio gestionado, donde tú solo pasas tarea, modelo, herramientas y entorno en una sola llamada. → Importa porque convierte en *producto* la fontanería que hoy cada equipo reimplementa a mano: el foco pasa de "cómo mantengo viva y ordenada la sesión del agente" a "qué hace el agente", y baja radicalmente la barrera para meter agentes de larga duración en un producto real —es el mismo movimiento de ChatGPT Work y Claude Cowork ya cubiertos, ahora expuesto como API para desarrolladores. → Aplicación: si un workflow agéntico de dr-cv necesita correr horas (scrapear portales de licitación, generar y validar CVs de punta a punta), delegar sesión/sandbox/subagentes a un runtime gestionado en vez de construir el orquestador desde cero, reservando tu esfuerzo para la lógica de valor.
+
+**Development**
+**Grid Lanes / masonry nativo en CSS (ES) / CSS Grid Lanes — native masonry (EN)** → nuevo modo de layout (antes "propuesta masonry", renombrado a *Grid Lanes* en 2026; **Safari 26 lo envió primero** en WWDC 2026, Chrome y Firefox lo implementan tras flag este año) donde defines tracks en un solo eje —normalmente columnas— y los items se empaquetan apretados en el otro eje cayendo en la "lane" con más espacio libre, con la propiedad `flow-tolerance` para controlar qué tan estricto es el empaquetado. → Importa porque el layout tipo Pinterest (tarjetas de distinta altura) exigió desde siempre JavaScript (Masonry.js) o trucos frágiles de columnas que rompen el orden de lectura y tabulación; ahora es CSS nativo, responsive y accesible, cerrando uno de los últimos huecos grandes de layout que quedaban. → Aplicación: en landing-v11, resolver una galería de casos o de referencias visuales con imágenes de altura desigual con `grid-lanes` puro —sin JS, sin desorden de tabulación— y tokenizar el `flow-tolerance` en `design-system/tokens-web.css`.
