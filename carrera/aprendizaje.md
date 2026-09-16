@@ -131,6 +131,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Interfaz adaptativa / Adaptive UI [Product Design]
 - Harness de agentes gestionado / Managed agent runtime (OpenAI Agents API) [AI]
 - Grid Lanes / masonry nativo en CSS / CSS Grid Lanes (native masonry) [Development]
+- Medidor de confianza / Confidence meter [Product Design]
+- Agente de horizonte largo / Long-horizon agent [AI]
+- Consultas de estado de scroll / CSS scroll-state() container queries [Development]
 
 ---
 
@@ -568,3 +571,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Grid Lanes / masonry nativo en CSS (ES) / CSS Grid Lanes — native masonry (EN)** → nuevo modo de layout (antes "propuesta masonry", renombrado a *Grid Lanes* en 2026; **Safari 26 lo envió primero** en WWDC 2026, Chrome y Firefox lo implementan tras flag este año) donde defines tracks en un solo eje —normalmente columnas— y los items se empaquetan apretados en el otro eje cayendo en la "lane" con más espacio libre, con la propiedad `flow-tolerance` para controlar qué tan estricto es el empaquetado. → Importa porque el layout tipo Pinterest (tarjetas de distinta altura) exigió desde siempre JavaScript (Masonry.js) o trucos frágiles de columnas que rompen el orden de lectura y tabulación; ahora es CSS nativo, responsive y accesible, cerrando uno de los últimos huecos grandes de layout que quedaban. → Aplicación: en landing-v11, resolver una galería de casos o de referencias visuales con imágenes de altura desigual con `grid-lanes` puro —sin JS, sin desorden de tabulación— y tokenizar el `flow-tolerance` en `design-system/tokens-web.css`.
+
+### 2026-09-16 · miércoles
+
+**Product Design**
+**Medidor de confianza (ES) / Confidence meter (EN)** → componente AI-native que aparece esta semana en los reportes de "AI product design systems 2026" (junto a tool-call cards y citation chips): una señal visual —barra, porcentaje o etiqueta alto/medio/bajo— que muestra *cuán segura* está la IA de un output concreto, en vez de presentar todo con la misma autoridad. → Importa porque es la *pieza de design system* que materializa la calibración de confianza ya cubierta (ese es el principio; esto es el widget): sin ella, un dato inventado y uno verificado se ven idénticos y el usuario sobre-confía; bien diseñada, gradúa cuánta fricción/revisión pedir según la certeza. → Aplicación: en EnRegla, cuando un agente extrae un requisito dudoso de un pliego, mostrar un medidor de confianza junto al dato (p. ej. "confianza media — verificar") que dispare un paso de revisión humana, con estados y umbrales definidos en `design-system/tokens-web.css`.
+
+**AI**
+**Agente de horizonte largo (ES) / Long-horizon agent (EN)** → agente diseñado para perseguir un objetivo a lo largo de *días o semanas y múltiples sesiones*, no de un solo chat —Salesforce estrenó esta semana su runtime de horizonte largo en el agente "Hunter" (piloto) de Agentforce, que sostiene la meta entre sesiones en vez de reiniciar. → Importa porque marca la nueva frontera de capacidad de 2026: no "responder mejor" sino *no perder el hilo del objetivo en el tiempo* —una mezcla de memoria persistente, re-planificación y checkpoints que va más allá del harness gestionado y la memoria vía MCP ya cubiertos (esos son las piezas; horizonte largo es la *capacidad* que habilitan y la métrica que hay que evaluar). → Aplicación: si dr-cv/EnRegla suma un agente que vigila portales de licitación durante semanas, pensarlo como agente de horizonte largo —con estado del objetivo persistido y checkpoints humanos periódicos— y evaluarlo por *tasa de completado sostenido en el tiempo*, no por la calidad de una respuesta suelta.
+
+**Development**
+**Consultas de estado de scroll (ES) / CSS scroll-state() container queries (EN)** → extensión de las container queries (Chrome, Baseline emergente 2026) que permite estilar un elemento según su *estado de scroll* —`@container scroll-state(stuck: top)` cuando un `position: sticky` queda pegado, `snapped` cuando cae en un snap point, o `scrollable` cuando aún hay contenido por desplazar— todo en CSS puro. → Importa porque hasta ahora detectar "¿el header ya está pegado?" o "¿esta tarjeta hizo snap?" exigía `IntersectionObserver` y JS que se desincroniza; esto lo vuelve declarativo y reactivo, cerrando un hueco clásico de componentes sticky/carrusel en un design system. → Aplicación: en landing-v11, cambiar el estilo del nav cuando queda pegado (`scroll-state(stuck: top)` → sombra + fondo compacto) o resaltar la tarjeta de caso activa en un carrusel con snap, sin una línea de JavaScript.
