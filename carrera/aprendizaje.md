@@ -134,6 +134,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Medidor de confianza / Confidence meter [Product Design]
 - Agente de horizonte largo / Long-horizon agent [AI]
 - Consultas de estado de scroll / CSS scroll-state() container queries [Development]
+- Vista de diferencias para ediciones de IA / AI edit diff view (review-changes UI) [Product Design]
+- Gating de capacidades / Capability gating [AI]
+- appearance: base-select / Customizable select en CSS [Development]
 
 ---
 
@@ -582,3 +585,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Consultas de estado de scroll (ES) / CSS scroll-state() container queries (EN)** → extensión de las container queries (Chrome, Baseline emergente 2026) que permite estilar un elemento según su *estado de scroll* —`@container scroll-state(stuck: top)` cuando un `position: sticky` queda pegado, `snapped` cuando cae en un snap point, o `scrollable` cuando aún hay contenido por desplazar— todo en CSS puro. → Importa porque hasta ahora detectar "¿el header ya está pegado?" o "¿esta tarjeta hizo snap?" exigía `IntersectionObserver` y JS que se desincroniza; esto lo vuelve declarativo y reactivo, cerrando un hueco clásico de componentes sticky/carrusel en un design system. → Aplicación: en landing-v11, cambiar el estilo del nav cuando queda pegado (`scroll-state(stuck: top)` → sombra + fondo compacto) o resaltar la tarjeta de caso activa en un carrusel con snap, sin una línea de JavaScript.
+
+### 2026-09-17 · jueves
+
+**Product Design**
+**Vista de diferencias para ediciones de IA (ES) / AI edit diff view — review-changes UI (EN)** → componente AI-native (destacado esta semana en los reportes de "8 UX patterns for AI-native products 2026") que, cuando un agente modifica un documento o un diseño, muestra los cambios como un *diff revisable* (antes/después, resaltado de lo agregado y lo quitado) que el usuario acepta, rechaza o edita por bloques, en vez de recibir el resultado ya aplicado. → Importa porque es el eslabón entre la compuerta de aprobación (el "sí/no" ya cubierto) y la confianza real: revisar el cambio concreto pieza por pieza es lo que hace segura la edición agéntica sobre contenido que importa, y evita el "todo o nada". → Aplicación: si un agente de EnRegla reescribe una sección de un pliego o el flujo de dr-cv ajusta bullets de un CV, presentar los cambios como diff aceptable por bloque (con estilos de inserción/eliminación en `design-system/tokens-web.css`) en vez de sobrescribir el texto directo.
+
+**AI**
+**Gating de capacidades (ES) / Capability gating (EN)** → práctica de gobernanza donde el proveedor no abre a todos las capacidades de mayor riesgo de un modelo (ciber, bio) sino que las pone detrás de verificación de identidad/uso; Google lanzó el 2-sep-2026 **Gemini 3.8 Flash Cyber**, una variante con capacidades ofensivas de ciberseguridad tras una compuerta (Fairwind) en vez de disponible por defecto. → Importa porque marca cómo los labs separan "modelo potente" de "capacidad peligrosa": el mismo modelo se ofrece con distintos niveles de acceso según el riesgo, y eso define qué puedes de verdad construir y desplegar y bajo qué controles —una capa nueva que el AI Product Designer debe leer al diseñar confianza y límites. → Aplicación: al elegir modelo/tier para un workflow agéntico de dr-cv/EnRegla, verificar no solo precio y latencia sino qué capacidades están gated y qué verificación exigen, porque eso condiciona si el producto puede usarlas en producción.
+
+**Development**
+**appearance: base-select en CSS (ES: select nativo totalmente estilizable / EN: customizable select — appearance: base-select)** → conjunto de features CSS (Chrome, Baseline emergente 2026) que por fin permite estilizar por completo un `<select>` nativo: `appearance: base-select` opta por el nuevo modelo, y desde ahí puedes poner HTML rico dentro de cada `<option>`, estilar y animar el popup (que se renderiza en el top layer) manteniendo accesibilidad y comportamiento de teclado nativos. → Importa porque el `<select>` fue por décadas el único control de formulario imposible de estilizar sin recrearlo con JS —con los bugs de accesibilidad que eso arrastra—; esto elimina la necesidad de librerías de "custom select". → Aplicación: en los formularios de landing-v11 o de EnRegla, usar `appearance: base-select` para selects que combinen con el design system (íconos, dos líneas por opción) sin dependencia de JS ni perder la navegación por teclado nativa.
