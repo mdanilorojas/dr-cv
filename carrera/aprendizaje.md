@@ -137,6 +137,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Vista de diferencias para ediciones de IA / AI edit diff view (review-changes UI) [Product Design]
 - Gating de capacidades / Capability gating [AI]
 - appearance: base-select / Customizable select en CSS [Development]
+- Micro-experiencias agénticas / Agentic Micro-Experiences [Product Design]
+- Modelo de lenguaje pequeño / Small Language Model (SLM) [AI]
+- Funciones personalizadas en CSS / CSS custom functions (@function) [Development]
 
 ---
 
@@ -596,3 +599,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **appearance: base-select en CSS (ES: select nativo totalmente estilizable / EN: customizable select — appearance: base-select)** → conjunto de features CSS (Chrome, Baseline emergente 2026) que por fin permite estilizar por completo un `<select>` nativo: `appearance: base-select` opta por el nuevo modelo, y desde ahí puedes poner HTML rico dentro de cada `<option>`, estilar y animar el popup (que se renderiza en el top layer) manteniendo accesibilidad y comportamiento de teclado nativos. → Importa porque el `<select>` fue por décadas el único control de formulario imposible de estilizar sin recrearlo con JS —con los bugs de accesibilidad que eso arrastra—; esto elimina la necesidad de librerías de "custom select". → Aplicación: en los formularios de landing-v11 o de EnRegla, usar `appearance: base-select` para selects que combinen con el design system (íconos, dos líneas por opción) sin dependencia de JS ni perder la navegación por teclado nativa.
+
+### 2026-09-18 · viernes
+
+**Product Design**
+**Micro-experiencias agénticas (ES) / Agentic Micro-Experiences (EN)** → pequeños módulos de interfaz acotados a *una sola tarea* donde un agente actúa dentro de un flujo mayor (un panel que reserva, resume o precarga algo puntual), en vez de un chat monolítico que pretende hacerlo todo. → Importa porque los reportes de tendencias de esta semana (sep 2026) los ponen como la *unidad práctica* de la Generative UI ya cubierta: en lugar de "una IA que rehace toda la pantalla", inyectas capacidad agéntica quirúrgica solo donde aporta, dejando el resto del producto estable y predecible —más fácil de diseñar, medir y ganar confianza. → Aplicación: en EnRegla, en vez de un asistente global, embeber un micro-módulo agéntico en el paso "requisitos" que extraiga y precargue datos del pliego, manteniendo el resto del formulario como control humano normal.
+
+**AI**
+**Modelo de lenguaje pequeño (ES) / Small Language Model – SLM (EN)** → modelo de lenguaje compacto (típicamente <10B parámetros: Phi-4, Llama 3.2 1B/3B, Qwen3-4B, Ministral) optimizado para correr barato, rápido y hasta *on-device/edge*, con tool calling nativo. → Importa porque la tesis fuerte de 2026 es que un sistema multiagente de varios SLM especializados suele ser más barato, más veloz y más fácil de depurar que un solo prompt a un modelo frontera; complementa MoE, destilación y quantization ya cubiertos —esas son *técnicas*; el SLM es la *clase de modelo* y el patrón de "muchos pequeños especializados" frente a "uno grande generalista". → Aplicación: en un workflow agéntico de dr-cv, usar un SLM (local o barato) para tareas mecánicas de bajo riesgo (clasificar, extraer, formatear datos de perfil) y reservar el modelo frontera solo para el nodo de redacción con criterio.
+
+**Development**
+**Funciones personalizadas en CSS (ES) / CSS custom functions — @function (EN)** → regla nueva `@function` (Chrome, 2026) que permite definir funciones CSS reutilizables que reciben parámetros y devuelven un *valor calculado* usable en cualquier propiedad —a diferencia de `@mixin`/`@apply` ya cubierto, que inyecta un *bloque de declaraciones*, `@function` devuelve un solo valor. → Importa porque hoy la lógica de valores reutilizables (una escala de spacing fluida, un radio derivado, un cálculo de contraste) se repite a mano o exige un preprocesador como Sass; `@function` la vuelve nativa, dinámica y consciente de custom properties en tiempo de ejecución. → Aplicación: en `design-system/tokens-web.css`, definir `@function --space(--step) { result: calc(var(--space-base) * pow(1.25, var(--step))); }` y llamar `padding: --space(2)` en toda landing-v11 para una escala espacial coherente sin depender de Sass.
