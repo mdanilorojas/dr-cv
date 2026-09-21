@@ -140,6 +140,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Micro-experiencias agénticas / Agentic Micro-Experiences [Product Design]
 - Modelo de lenguaje pequeño / Small Language Model (SLM) [AI]
 - Funciones personalizadas en CSS / CSS custom functions (@function) [Development]
+- Trabajos por hacer / Jobs To Be Done (JTBD) [Product Design]
+- Salidas estructuradas / Structured outputs (JSON mode) [AI]
+- Animación del caret en CSS / CSS caret-animation [Development]
 
 ---
 
@@ -610,3 +613,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Funciones personalizadas en CSS (ES) / CSS custom functions — @function (EN)** → regla nueva `@function` (Chrome, 2026) que permite definir funciones CSS reutilizables que reciben parámetros y devuelven un *valor calculado* usable en cualquier propiedad —a diferencia de `@mixin`/`@apply` ya cubierto, que inyecta un *bloque de declaraciones*, `@function` devuelve un solo valor. → Importa porque hoy la lógica de valores reutilizables (una escala de spacing fluida, un radio derivado, un cálculo de contraste) se repite a mano o exige un preprocesador como Sass; `@function` la vuelve nativa, dinámica y consciente de custom properties en tiempo de ejecución. → Aplicación: en `design-system/tokens-web.css`, definir `@function --space(--step) { result: calc(var(--space-base) * pow(1.25, var(--step))); }` y llamar `padding: --space(2)` en toda landing-v11 para una escala espacial coherente sin depender de Sass.
+
+### 2026-09-21 · lunes
+
+**Product Design**
+**Trabajos por hacer (ES) / Jobs To Be Done — JTBD (EN)** → marco fundacional que dice que la gente no "compra un producto" sino que lo "contrata" para lograr un progreso concreto en una situación (el *job*); diseñas para ese job, no para el demográfico ni para la feature. → Importa porque es la brújula que ordena qué construir cuando la IA hace barato producir cualquier feature (ver Generative UI, Adaptive UI ya cubiertos): sin un job claro, terminas curando ruido; con él, priorizas por el progreso que el usuario intenta lograr, que es justo el criterio senior que un agente no tiene. → Aplicación: en EnRegla, definir el job real ("ganar más licitaciones sin ahogarme en pliegos") y priorizar el roadmap por qué acerca a ese progreso, en vez de acumular módulos porque "se pueden generar".
+
+**AI**
+**Salidas estructuradas (ES) / Structured outputs — JSON mode / constrained decoding (EN)** → modo en que el modelo se *obliga* a devolver una salida que cumple un esquema definido (JSON con campos y tipos fijos) en vez de texto libre, garantizando que el output sea parseable por el siguiente paso de código. → Importa porque es lo que vuelve fiable meter un LLM dentro de un pipeline agéntico: sin esquema, un texto "casi bien" rompe el nodo siguiente; es distinto del *tool calling* ya cubierto (eso es invocar funciones) — aquí lo que se fuerza es la *forma del dato de salida*, la pieza que hace determinista el borde entre el modelo y el código. → Aplicación: en EnRegla, pedir al modelo que extraiga los requisitos de un pliego como JSON con esquema fijo (`{requisito, plazo, monto, confianza}`) para poblar el formulario directo, sin regex frágiles ni parseo manual del texto.
+
+**Development**
+**Animación del caret en CSS (ES) / CSS caret-animation (EN)** → propiedad CSS (Chrome 140, 2026) que por fin controla el parpadeo del *caret* (cursor de texto) en inputs y elementos editables: `auto` deja el parpadeo por defecto del navegador y `manual` te cede el control (detenerlo, o animarlo con `@keyframes` sobre `caret-color`). → Importa porque hasta ahora el caret era 100% del navegador e inestilizable —el último detalle de un input que rompía la coherencia visual—; en editores, campos destacados o experiencias de escritura de marca ese parpadeo genérico se notaba. → Aplicación: en los formularios de landing-v11 o EnRegla, usar `caret-animation: manual` para un cursor cuyo ritmo combine con el motion del design system, en vez del parpadeo genérico del navegador.
