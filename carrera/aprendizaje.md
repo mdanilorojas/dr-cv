@@ -143,6 +143,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Trabajos por hacer / Jobs To Be Done (JTBD) [Product Design]
 - Salidas estructuradas / Structured outputs (JSON mode) [AI]
 - Animación del caret en CSS / CSS caret-animation [Development]
+- Prompts sugeridos / presets de prompt / Suggested prompts (starter prompts) [Product Design]
+- Agente de navegador / Browser agent (agentic browser) [AI]
+- Función color-mix() en CSS / CSS color-mix() [Development]
 
 ---
 
@@ -624,3 +627,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Animación del caret en CSS (ES) / CSS caret-animation (EN)** → propiedad CSS (Chrome 140, 2026) que por fin controla el parpadeo del *caret* (cursor de texto) en inputs y elementos editables: `auto` deja el parpadeo por defecto del navegador y `manual` te cede el control (detenerlo, o animarlo con `@keyframes` sobre `caret-color`). → Importa porque hasta ahora el caret era 100% del navegador e inestilizable —el último detalle de un input que rompía la coherencia visual—; en editores, campos destacados o experiencias de escritura de marca ese parpadeo genérico se notaba. → Aplicación: en los formularios de landing-v11 o EnRegla, usar `caret-animation: manual` para un cursor cuyo ritmo combine con el motion del design system, en vez del parpadeo genérico del navegador.
+
+### 2026-09-22 · martes
+
+**Product Design**
+**Prompts sugeridos / presets de prompt (ES) / Suggested prompts — prompt presets, starter prompts (EN)** → patrón AI-native (destacado esta semana en el set de "Design Patterns for AI Products 2026" de Vitaly Friedman) que ofrece al usuario un pequeño set de prompts predefinidos y editables —chips o tarjetas— en lugar de una caja de texto vacía que obliga a inventar qué pedir. → Importa porque resuelve el "blank canvas problem" de las interfaces conversacionales ya cubiertas (lienzo infinito, generative UI): la mayoría de usuarios no sabe qué puede pedirle a la IA, así que los presets comunican las capacidades del producto *y* suben la tasa de éxito del primer intento —es donde el diseñador inyecta criterio sobre qué caminos ofrecer. → Aplicación: en un asistente de EnRegla, en vez de un input vacío, mostrar 3–4 chips ("Extraer requisitos de este pliego", "Resumir plazos y montos", "Comparar con licitación anterior") como componente tokenizado en `design-system/tokens-web.css`, curando yo qué jobs se exponen.
+
+**AI**
+**Agente de navegador (ES) / Browser agent — agentic browser (EN)** → agente que opera un navegador real (navega, hace clic, llena formularios, lee la página) para completar tareas web de punta a punta; esta semana **Jev**, sobre el modelo *System One* de TypeSafe, mostró automatización web en tan poco como ~7 segundos. → Importa porque es la evolución del computer-use por lotes ya cubierto llevada específicamente a la web: la interfaz de trabajo deja de ser el chat y pasa a ser *el sitio mismo*, lo que abre (y arriesga) automatizar portales sin API —justo el tipo de tarea de reclutamiento/licitación que a Danilo le consume tiempo. → Aplicación: para postulaciones o vigilancia de portales de licitación sin API en EnRegla, evaluar un agente de navegador que rellene y monitoree formularios, manteniendo confirmación humana antes de cualquier envío real (mínimo privilegio, ya cubierto).
+
+**Development**
+**Función color-mix() en CSS (ES) / CSS color-mix() (EN)** → función que mezcla dos colores en un espacio de color elegible (`color-mix(in oklch, var(--brand) 80%, white)`), alcanzando Baseline cross-browser completo en 2026 junto con la sintaxis de color relativo ya cubierta. → Importa porque es distinta de `relative color syntax` (que *deriva* de un solo color) y de `contrast-color()` (que *elige* legible): `color-mix()` *combina* dos, que es exactamente cómo se generan escalas de tints/shades, estados hover/disabled y overlays a partir de un token base, sin hardcodear cada variante. → Aplicación: en `design-system/tokens-web.css`, derivar toda la escala de un color de marca (`--brand-100 … --brand-900`) con `color-mix(in oklch, var(--brand), white/black %)` y los estados hover como `color-mix(in oklch, var(--brand) 88%, black)`, en vez de definir a mano cada hex.
