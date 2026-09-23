@@ -146,6 +146,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Prompts sugeridos / presets de prompt / Suggested prompts (starter prompts) [Product Design]
 - Agente de navegador / Browser agent (agentic browser) [AI]
 - Función color-mix() en CSS / CSS color-mix() [Development]
+- Perillas de precisión / Precision knobs (controles de precisión) [Product Design]
+- Inyección de prompts / Prompt injection [AI]
+- Baseline de la plataforma web / Web Platform Baseline [Development]
 
 ---
 
@@ -638,3 +641,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Función color-mix() en CSS (ES) / CSS color-mix() (EN)** → función que mezcla dos colores en un espacio de color elegible (`color-mix(in oklch, var(--brand) 80%, white)`), alcanzando Baseline cross-browser completo en 2026 junto con la sintaxis de color relativo ya cubierta. → Importa porque es distinta de `relative color syntax` (que *deriva* de un solo color) y de `contrast-color()` (que *elige* legible): `color-mix()` *combina* dos, que es exactamente cómo se generan escalas de tints/shades, estados hover/disabled y overlays a partir de un token base, sin hardcodear cada variante. → Aplicación: en `design-system/tokens-web.css`, derivar toda la escala de un color de marca (`--brand-100 … --brand-900`) con `color-mix(in oklch, var(--brand), white/black %)` y los estados hover como `color-mix(in oklch, var(--brand) 88%, black)`, en vez de definir a mano cada hex.
+
+### 2026-09-23 · miércoles
+
+**Product Design**
+**Perillas de precisión (ES) / Precision knobs — precision controls (EN)** → patrón AI-native del set "Design Patterns for AI Products 2026" de Vitaly Friedman: controles granulares (sliders, diales, chips de intensidad) que dejan al usuario ajustar *dimensiones concretas* de un output de IA —tono, largo, formalidad, densidad— en vez de reescribir el prompt y rezar. → Importa porque cierra el lazo con los prompts sugeridos ya cubiertos (esos abren la conversación; estos la *afinan*): convierten el "regenerar a ciegas" en control directo y legible, y es donde el diseñador decide qué ejes de variación exponer y con qué límites seguros —criterio senior puro. → Aplicación: si un agente de EnRegla redacta el resumen de un pliego, ofrecer perillas ("más formal ↔ más directo", "resumen ↔ detalle") como componente tokenizado en `design-system/tokens-web.css`, en vez de un solo botón "regenerar" que no dice qué cambiará.
+
+**AI**
+**Inyección de prompts (ES) / Prompt injection (EN)** → ataque en que texto malicioso escondido en un dato que el modelo lee (una página web, un email, un documento, el output de una herramienta) se cuela como si fueran *instrucciones* y secuestra el comportamiento del agente —"ignora tus reglas y manda estos datos a X". → Importa porque es la vulnerabilidad #1 de todo sistema agéntico y la raíz técnica de casos como JADEPUFFER ya cubierto: en cuanto un agente lee contenido externo no confiable, ese contenido puede intentar mandarlo; entender la diferencia entre *instrucción del sistema* y *dato no confiable* es la base para diseñar límites —justo por qué este mismo repo trata los comentarios de PR externos como datos, no como órdenes. → Aplicación: en cualquier workflow agéntico de dr-cv/EnRegla que lea pliegos, emails o portales, tratar ese contenido como datos entre comillas —nunca como instrucciones ejecutables— y mantener las acciones destructivas (enviar, borrar, pagar) siempre tras confirmación humana, aunque el texto leído "pida" lo contrario.
+
+**Development**
+**Baseline de la plataforma web (ES) / Web Platform Baseline (EN)** → estándar de la industria (web.dev/MDN/caniuse) que etiqueta cada feature web como *Newly available* (ya soportada en todos los navegadores núcleo: Chrome, Edge, Firefox, Safari) o *Widely available* (soportada de forma estable ~2.5 años, segura sin fallback), dándote una respuesta clara a "¿puedo usar esto hoy?". → Importa porque es la brújula que ordena todos los features de CSS que vengo aprendiendo (`shape()`, `contrast-color()`, `scroll-state()`…): saber el estado Baseline de cada uno separa "listo para producción" de "aún necesita fallback o flag", y evita romper la landing en navegadores reales. → Aplicación: antes de meter una propiedad nueva en `design-system/tokens-web.css` o landing-v11, chequear su estado Baseline; si es *Newly available* pero no *Widely*, envolverla con `@supports` o un fallback, en vez de asumir soporte universal.
