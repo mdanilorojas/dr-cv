@@ -149,6 +149,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Perillas de precisión / Precision knobs (controles de precisión) [Product Design]
 - Inyección de prompts / Prompt injection [AI]
 - Baseline de la plataforma web / Web Platform Baseline [Development]
+- Indicador de fuerza del prompt / Prompt strength indicator [Product Design]
+- Esfuerzo de razonamiento / Reasoning effort [AI]
+- Función light-dark() en CSS / CSS light-dark() [Development]
 
 ---
 
@@ -652,3 +655,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Baseline de la plataforma web (ES) / Web Platform Baseline (EN)** → estándar de la industria (web.dev/MDN/caniuse) que etiqueta cada feature web como *Newly available* (ya soportada en todos los navegadores núcleo: Chrome, Edge, Firefox, Safari) o *Widely available* (soportada de forma estable ~2.5 años, segura sin fallback), dándote una respuesta clara a "¿puedo usar esto hoy?". → Importa porque es la brújula que ordena todos los features de CSS que vengo aprendiendo (`shape()`, `contrast-color()`, `scroll-state()`…): saber el estado Baseline de cada uno separa "listo para producción" de "aún necesita fallback o flag", y evita romper la landing en navegadores reales. → Aplicación: antes de meter una propiedad nueva en `design-system/tokens-web.css` o landing-v11, chequear su estado Baseline; si es *Newly available* pero no *Widely*, envolverla con `@supports` o un fallback, en vez de asumir soporte universal.
+
+### 2026-09-24 · jueves
+
+**Product Design**
+**Indicador de fuerza del prompt (ES) / Prompt strength indicator (EN)** → patrón AI-native (del set "Design Patterns for AI Products 2026" de Vitaly Friedman) que muestra en vivo, mientras el usuario escribe, qué tan bien especificada está su instrucción —una barra o etiqueta tipo "débil / clara / lista"— señalando qué le falta (contexto, formato, ejemplos) antes de enviarla. → Importa porque ataca la causa raíz del "ping-pong" con la IA que cubren los prompts sugeridos y las perillas de precisión ya vistas: en vez de dejar que el usuario descubra que su prompt era pobre *después* de un mal output, le da feedback formativo *antes*; distinto del *medidor de confianza* (que mide la certeza del **output**) —este mide la calidad del **input**. → Aplicación: en un asistente de EnRegla, mostrar junto al campo de prompt un indicador que suba de "débil" a "listo" a medida que el usuario incluye pliego, plazo y formato deseado, enseñándole a pedir mejor y reduciendo regeneraciones.
+
+**AI**
+**Esfuerzo de razonamiento (ES) / Reasoning effort (EN)** → parámetro que fija cuánto "piensa" un modelo de razonamiento antes de responder —hoy en niveles como *low / medium / high / xhigh / max*— cambiando cuánto cómputo de inferencia gasta por respuesta; es la perilla práctica que expone el *test-time compute* ya cubierto (esta semana Claude Opus 5.5, sep 22, trae `medium` por defecto y recomienda `high`/`xhigh` para tareas de agente difíciles). → Importa porque es la palanca directa de la triada costo/latencia/calidad dentro de *un mismo modelo*: subir el esfuerzo mejora tareas difíciles pero cuesta más y tarda más, así que elegirlo por nodo —no global— es criterio de diseño de sistemas agénticos, complementando el ruteo por tarea y los SLM ya cubiertos. → Aplicación: en un workflow agéntico de dr-cv, correr los nodos mecánicos (clasificar, formatear datos de perfil) en `low` y reservar `high`/`xhigh` solo para el nodo de redacción de bullets con criterio, en vez de pagar razonamiento máximo en todo el pipeline.
+
+**Development**
+**Función light-dark() en CSS (ES) / CSS light-dark() (EN)** → función de color que devuelve el primer valor en modo claro y el segundo en modo oscuro (`color: light-dark(#171717, #e5e5e5)`), activándose al declarar `color-scheme: light dark` en `:root`; Baseline *Newly available* desde 2024 y en camino a *Widely available* (~nov 2026). → Importa porque colapsa el manejo de dark mode —hoy repartido entre un bloque `:root` y un `@media (prefers-color-scheme: dark)` que duplica cada token— en **una sola declaración por token**, eliminando la fuente de bugs de tokens que se olvidan de actualizar en uno de los dos bloques. → Aplicación: en `design-system/tokens-web.css`, definir cada token de color como `--bg: light-dark(#fff, #0a0a0a)` con `color-scheme: light dark` en `:root`, en vez de mantener el set duplicado claro/oscuro que hoy exige editar dos lugares por cada cambio de color.
