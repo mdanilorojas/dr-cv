@@ -152,6 +152,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Indicador de fuerza del prompt / Prompt strength indicator [Product Design]
 - Esfuerzo de razonamiento / Reasoning effort [AI]
 - Función light-dark() en CSS / CSS light-dark() [Development]
+- Diseño para la incertidumbre / Designing for uncertainty (probabilistic UX) [Product Design]
+- Tiempo hasta el primer token / Time to First Token (TTFT) [AI]
+- Capas de cascada en CSS / CSS Cascade Layers (@layer) [Development]
 
 ---
 
@@ -666,3 +669,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Función light-dark() en CSS (ES) / CSS light-dark() (EN)** → función de color que devuelve el primer valor en modo claro y el segundo en modo oscuro (`color: light-dark(#171717, #e5e5e5)`), activándose al declarar `color-scheme: light dark` en `:root`; Baseline *Newly available* desde 2024 y en camino a *Widely available* (~nov 2026). → Importa porque colapsa el manejo de dark mode —hoy repartido entre un bloque `:root` y un `@media (prefers-color-scheme: dark)` que duplica cada token— en **una sola declaración por token**, eliminando la fuente de bugs de tokens que se olvidan de actualizar en uno de los dos bloques. → Aplicación: en `design-system/tokens-web.css`, definir cada token de color como `--bg: light-dark(#fff, #0a0a0a)` con `color-scheme: light dark` en `:root`, en vez de mantener el set duplicado claro/oscuro que hoy exige editar dos lugares por cada cambio de color.
+
+### 2026-09-25 · viernes
+
+**Product Design**
+**Diseño para la incertidumbre (ES) / Designing for uncertainty — probabilistic UX (EN)** → principio de diseño AI-native que asume que el output del modelo es *probabilístico y falible*, así que la interfaz comunica ese carácter (rangos, alternativas, "puede equivocarse") y hace barata la corrección, en vez de presentar cada respuesta como un hecho determinista. → Importa porque es el marco que da sentido a los componentes que ya cubrí (medidor de confianza, chips de cita, vista de diferencias): esos son *tácticas*; este es la *postura de diseño* que decide cuándo mostrar confianza, ofrecer múltiples opciones o pedir verificación humana —la competencia central que separa a un AI Product Designer de un UI designer. → Aplicación: en un asistente de EnRegla que extrae datos de un pliego, nunca mostrar el monto/plazo como dato cerrado; mostrarlo con su fuente citada y un estado editable "verificar", diseñando el flujo para que corregir sea un clic, no un formulario.
+
+**AI**
+**Tiempo hasta el primer token (ES) / Time to First Token — TTFT (EN)** → métrica de latencia que mide cuánto tarda un modelo desde que recibe el prompt hasta que emite el *primer* token de respuesta, distinta de la velocidad total (tokens/segundo) y de la latencia end-to-end. → Importa porque es la métrica que gobierna la *sensación* de rapidez de un producto de IA —los lanzamientos de esta semana (Claude Opus 5.5 y GPT-6 Sol, ambos el 22 sep, se venden como "responden notablemente más rápido") compiten justo en esto— y es la que el diseñador debe conocer para decidir cuándo hace falta streaming, skeletons o estados de espera. → Aplicación: al elegir modelo o esfuerzo de razonamiento para un nodo interactivo de EnRegla (donde el usuario espera mirando), priorizar TTFT bajo + streaming del texto; reservar los modelos de TTFT alto para nodos batch/asíncronos donde nadie espera en vivo.
+
+**Development**
+**Capas de cascada en CSS (ES) / CSS Cascade Layers — @layer (EN)** → mecanismo (`@layer reset, tokens, base, components, utilities;`) que agrupa reglas CSS en capas con prioridad *explícita y ordenada*, de modo que la cascada se decide por el orden de las capas antes que por la especificidad del selector. → Importa porque resuelve la guerra de especificidad y `!important` que envenena todo design system al crecer: en vez de subir la especificidad para ganar, declaras que `utilities` siempre vence a `components` y `components` a `base`, sin importar cuántas clases tenga el selector —control de arquitectura, no de fuerza bruta. → Aplicación: reestructurar `design-system/tokens-web.css` y el CSS de landing-v11 en capas (`@layer tokens, base, components, utilities`) para que una utilidad puntual siempre pueda sobrescribir un componente sin trucos de especificidad ni `!important`.
