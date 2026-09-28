@@ -155,6 +155,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Diseño para la incertidumbre / Designing for uncertainty (probabilistic UX) [Product Design]
 - Tiempo hasta el primer token / Time to First Token (TTFT) [AI]
 - Capas de cascada en CSS / CSS Cascade Layers (@layer) [Development]
+- Teatro de diseño / Design Theater (brecha razonamiento vs. implementación en GenUI) [Product Design]
+- Frontera de eficiencia de modelos / Model efficiency frontier (cost-per-capability) [AI]
+- Función symbols() en CSS / CSS symbols() function [Development]
 
 ---
 
@@ -680,3 +683,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Capas de cascada en CSS (ES) / CSS Cascade Layers — @layer (EN)** → mecanismo (`@layer reset, tokens, base, components, utilities;`) que agrupa reglas CSS en capas con prioridad *explícita y ordenada*, de modo que la cascada se decide por el orden de las capas antes que por la especificidad del selector. → Importa porque resuelve la guerra de especificidad y `!important` que envenena todo design system al crecer: en vez de subir la especificidad para ganar, declaras que `utilities` siempre vence a `components` y `components` a `base`, sin importar cuántas clases tenga el selector —control de arquitectura, no de fuerza bruta. → Aplicación: reestructurar `design-system/tokens-web.css` y el CSS de landing-v11 en capas (`@layer tokens, base, components, utilities`) para que una utilidad puntual siempre pueda sobrescribir un componente sin trucos de especificidad ni `!important`.
+
+### 2026-09-28 · lunes
+
+**Product Design**
+**Teatro de diseño (ES) / Design Theater (EN)** → hallazgo de un paper de 2026 (arXiv) sobre herramientas de GenUI: la brecha entre el *razonamiento de diseño* que la IA declara aplicar (justificaciones, principios que cita) y lo que de verdad implementa en el código/prototipo —una fachada de rigor sin sustancia real. → Importa porque es la advertencia crítica que separa a un AI Product Designer de un operador de herramientas: no aceptar "la IA lo justificó" como prueba de calidad; refuerza *taste & craft* ya cubierto y da un nombre al reflejo de verificar, no confiar. → Aplicación: al generar UI de EnRegla con un agente, ignorar su explicación bonita y auditar el output real contra los tokens y reglas del design system —porque la justificación declarada puede ser puro teatro y el componente no respetar nada.
+
+**AI**
+**Frontera de eficiencia de modelos (ES) / Model efficiency frontier — cost-per-capability (EN)** → la curva de máxima capacidad por unidad de costo/latencia: no el modelo más *potente* (eso es el *frontier model* ya cubierto) sino el que entrega cierto nivel de capacidad al menor costo y tiempo. Esta semana la movió Claude Opus 5.5 (22 sep), que iguala a Fable 5.1 "costando bastante menos y respondiendo más rápido", y GPT-6 Sol, ~mitad de precio y ~mitad de errores que la generación previa. → Importa porque cambia la pregunta de diseño de sistemas agénticos de "¿el mejor modelo?" a "¿el punto más eficiente para *esta* tarea?", integrando ruteo por tarea, SLM y reasoning effort ya cubiertos en una sola decisión económica. → Aplicación: reevaluar periódicamente qué modelo corre cada nodo de un workflow de dr-cv/EnRegla; un lanzamiento como Opus 5.5 puede abaratar de golpe un nodo caro (redacción de bullets) sin perder calidad, si lo actualizas en vez de dejarlo fijo.
+
+**Development**
+**Función symbols() en CSS (ES) / CSS symbols() function (EN)** → función que define un estilo de contador/viñeta *en línea* (`list-style: symbols(cyclic "◆" "●" "■")`) sin tener que declarar antes un `@counter-style` con nombre; llega en Chrome 155 beta (16 sep 2026). → Importa porque hoy cualquier marcador de lista custom exige un at-rule nombrado aparte (o imágenes de fondo frágiles), y esto lo vuelve una declaración local y desechable —menos CSS global que mantener. → Aplicación: en listas de skills/beneficios de landing-v11 o del skills sheet, usar marcadores de marca inline con `symbols()` sin contaminar el design system con `@counter-style` nombrados que hay que documentar y reusar.
