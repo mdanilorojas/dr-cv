@@ -158,6 +158,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Teatro de diseño / Design Theater (brecha razonamiento vs. implementación en GenUI) [Product Design]
 - Frontera de eficiencia de modelos / Model efficiency frontier (cost-per-capability) [AI]
 - Función symbols() en CSS / CSS symbols() function [Development]
+- Modelo mental / Mental model [Product Design]
+- Temperatura / Temperature (parámetro de muestreo) [AI]
+- Función linear() de easing en CSS / CSS linear() easing function [Development]
 
 ---
 
@@ -694,3 +697,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Función symbols() en CSS (ES) / CSS symbols() function (EN)** → función que define un estilo de contador/viñeta *en línea* (`list-style: symbols(cyclic "◆" "●" "■")`) sin tener que declarar antes un `@counter-style` con nombre; llega en Chrome 155 beta (16 sep 2026). → Importa porque hoy cualquier marcador de lista custom exige un at-rule nombrado aparte (o imágenes de fondo frágiles), y esto lo vuelve una declaración local y desechable —menos CSS global que mantener. → Aplicación: en listas de skills/beneficios de landing-v11 o del skills sheet, usar marcadores de marca inline con `symbols()` sin contaminar el design system con `@counter-style` nombrados que hay que documentar y reusar.
+
+### 2026-09-29 · martes
+
+**Product Design**
+**Modelo mental (ES) / Mental model (EN)** → la representación interna que un usuario tiene de cómo funciona un sistema —qué hace, qué esperar, qué pasa si toca algo—, construida a partir de experiencias previas con productos parecidos. → Importa porque el mayor riesgo de un producto de IA es la brecha entre lo que el usuario *cree* que el agente puede/hace y lo que realmente hace; alinear la interfaz con ese modelo (o corregirlo a tiempo) es la raíz de la confianza que ya vengo trabajando con medidor de confianza, calibración de confianza y diseño para la incertidumbre ya cubiertos —esas son *tácticas*; el modelo mental es el *objeto* que esas tácticas intentan alinear. → Aplicación: en EnRegla, antes de diseñar el asistente, mapear qué cree el usuario que "la IA lee del pliego" y diseñar señales explícitas (qué leyó, qué no, qué está asumiendo) para que su modelo mental coincida con la capacidad real, evitando la sobre-confianza que rompe la relación al primer error.
+
+**AI**
+**Temperatura (ES) / Temperature (EN)** → parámetro de muestreo (típicamente 0–2) que controla cuánta aleatoriedad hay al elegir el siguiente token: baja (~0) da respuestas deterministas y repetibles; alta las hace más variadas y "creativas" (y más propensas a divagar o inventar). → Importa porque es la perilla más directa sobre el eje *fiabilidad ↔ creatividad* de un nodo LLM, y complementa reasoning effort y TTFT ya cubiertos —esos regulan cuánto piensa y cuán rápido responde; la temperatura regula *cuán predecible* es la salida—; un pipeline agéntico fiable necesita temperatura baja donde la forma del dato importa. → Aplicación: en un workflow de dr-cv/EnRegla, correr el nodo de extracción de datos del pliego (salida estructurada, ya cubierta) con temperatura ~0 para máxima consistencia y parseabilidad, y subirla solo en un nodo de brainstorm de copy donde la variedad suma valor.
+
+**Development**
+**Función linear() de easing en CSS (ES) / CSS linear() easing function (EN)** → función de temporización que define una curva de easing como una serie de puntos con posición opcional (`animation-timing-function: linear(0, 0.25 40%, 1)`), permitiendo aproximar movimientos complejos —rebotes, springs, saltos— que las curvas bezier cúbicas (`ease`, `cubic-bezier()`) no pueden expresar. → Importa porque hasta ahora un efecto spring/bounce en la web exigía JS o una librería de animación; `linear()` lo vuelve CSS puro y declarativo, la pieza que faltaba para llevar el motion de marca a un design system sin dependencias —se apoya en las animaciones dirigidas por scroll y el motion nativo de Figma ya cubiertos. → Aplicación: en `design-system/tokens-web.css`, definir un token `--ease-spring: linear(...)` (generado con una herramienta como Linear Easing Generator) y reusarlo en los reveals y microinteracciones de landing-v11 para un rebote sutil de marca sin JS ni librerías.
