@@ -161,6 +161,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Modelo mental / Mental model [Product Design]
 - Temperatura / Temperature (parámetro de muestreo) [AI]
 - Función linear() de easing en CSS / CSS linear() easing function [Development]
+- Preguntas de encuadre / Scoping questions (clarifying questions antes de actuar) [Product Design]
+- Agente proactivo / Proactive (self-initiating) agent (OpenAI Dots) [AI]
+- text-decoration-skip-spaces en CSS / CSS text-decoration-skip-spaces [Development]
 
 ---
 
@@ -708,3 +711,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Función linear() de easing en CSS (ES) / CSS linear() easing function (EN)** → función de temporización que define una curva de easing como una serie de puntos con posición opcional (`animation-timing-function: linear(0, 0.25 40%, 1)`), permitiendo aproximar movimientos complejos —rebotes, springs, saltos— que las curvas bezier cúbicas (`ease`, `cubic-bezier()`) no pueden expresar. → Importa porque hasta ahora un efecto spring/bounce en la web exigía JS o una librería de animación; `linear()` lo vuelve CSS puro y declarativo, la pieza que faltaba para llevar el motion de marca a un design system sin dependencias —se apoya en las animaciones dirigidas por scroll y el motion nativo de Figma ya cubiertos. → Aplicación: en `design-system/tokens-web.css`, definir un token `--ease-spring: linear(...)` (generado con una herramienta como Linear Easing Generator) y reusarlo en los reveals y microinteracciones de landing-v11 para un rebote sutil de marca sin JS ni librerías.
+
+### 2026-09-30 · miércoles
+
+**Product Design**
+**Preguntas de encuadre (ES) / Scoping questions (EN)** → patrón AI-native destacado esta semana en las guías de Agent UX 2026: antes de mostrar un plan o ejecutar, el agente hace 1–3 preguntas breves para acotar la tarea, cada una con un valor por defecto ya rellenado que el usuario solo confirma o edita. → Importa porque resuelve el fallo silencioso de los agentes —asumir mal el alcance y entregar algo pulido pero equivocado— sin caer en un interrogatorio que mate el flujo; es distinto de los prompts sugeridos (que arrancan la conversación) y de la vista previa de intención (que confirma *después*): esto acota *antes*, con fricción mínima, y el diseñador decide qué 1–3 ejes de ambigüedad vale la pena preguntar. → Aplicación: en un asistente de EnRegla que procesa un pliego, antes de extraer, preguntar solo lo que cambia el resultado ("¿comparar con la licitación anterior? · ¿incluir montos con o sin IVA?") con defaults prefijados, en vez de asumir y rehacer.
+
+**AI**
+**Agente proactivo (ES) / Proactive — self-initiating agent (EN)** → agente que *inicia* acciones por su cuenta de forma continua (vigila, recuerda, actúa sin que se lo pidan en ese momento), en vez de esperar un prompt turno a turno; esta semana OpenAI presentó "Dots" (dev conference, 29 sep 2026) como agentes "always-on" que completan tareas en curso a nombre del usuario, compitiendo con Muse de Meta. → Importa porque desplaza el eje de diseño de *reactivo* (yo pregunto, responde) a *proactivo* (él decide cuándo actuar), lo que multiplica el valor pero también el riesgo: un agente que actúa sin trigger necesita límites de permiso y confirmación humana más estrictos que uno reactivo (ver inyección de prompts y mínimo privilegio ya cubiertos); es el motor bajo la UX ambiental / always-on ya cubierta, pero visto desde la capacidad del agente, no desde la interfaz. → Aplicación: si en EnRegla un agente vigila portales de licitación y avisa proactivamente de nuevas oportunidades, diseñar que *notifique y proponga* pero nunca *postule solo* —la iniciativa es del agente, la acción irreversible sigue tras confirmación de Danilo.
+
+**Development**
+**text-decoration-skip-spaces en CSS (ES) / CSS text-decoration-skip-spaces (EN)** → propiedad (Chrome 155, beta 16 sep 2026) que controla si las líneas de decoración de texto —subrayado, tachado, overline— *saltan* los espacios en blanco entre palabras o los cruzan de corrido (`none` los cruza, `all` los omite). → Importa porque es un detalle de *craft* tipográfico que hoy no se puede ajustar: un subrayado que corta feo bajo los espacios o descendentes rompe la prolijidad de un enlace o un título destacado, y era territorio 100% del navegador —el mismo tipo de control fino que trajo `text-box-trim` y `caret-animation` ya cubiertos. → Aplicación: en los links y titulares subrayados de landing-v11, usar `text-decoration-skip-spaces` para que el subrayado de marca respire bajo los espacios en vez de un trazo continuo genérico, alineado con el nivel de detalle del design system.
