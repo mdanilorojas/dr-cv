@@ -164,6 +164,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Preguntas de encuadre / Scoping questions (clarifying questions antes de actuar) [Product Design]
 - Agente proactivo / Proactive (self-initiating) agent (OpenAI Dots) [AI]
 - text-decoration-skip-spaces en CSS / CSS text-decoration-skip-spaces [Development]
+- Superficie de tareas / Task surface (bandeja de tareas del agente) [Product Design]
+- Proliferación de agentes / Agent sprawl [AI]
+- Propiedad abreviada corner en CSS / CSS corner shorthand (corner-*) [Development]
 
 ---
 
@@ -722,3 +725,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **text-decoration-skip-spaces en CSS (ES) / CSS text-decoration-skip-spaces (EN)** → propiedad (Chrome 155, beta 16 sep 2026) que controla si las líneas de decoración de texto —subrayado, tachado, overline— *saltan* los espacios en blanco entre palabras o los cruzan de corrido (`none` los cruza, `all` los omite). → Importa porque es un detalle de *craft* tipográfico que hoy no se puede ajustar: un subrayado que corta feo bajo los espacios o descendentes rompe la prolijidad de un enlace o un título destacado, y era territorio 100% del navegador —el mismo tipo de control fino que trajo `text-box-trim` y `caret-animation` ya cubiertos. → Aplicación: en los links y titulares subrayados de landing-v11, usar `text-decoration-skip-spaces` para que el subrayado de marca respire bajo los espacios en vez de un trazo continuo genérico, alineado con el nivel de detalle del design system.
+
+### 2026-10-01 · jueves
+
+**Product Design**
+**Superficie de tareas (ES) / Task surface (EN)** → lugar dedicado —fuera del hilo de chat— donde las tareas que ejecuta el agente aparecen como tarjetas con estado (en curso / completada / fallida), progreso y registro de auditoría, de modo que el usuario pueda volver a cualquier tarea sin recordar en qué conversación vivía. → Importa porque, destacado esta semana en las guías de Agent UX 2026, resuelve el colapso del hilo de chat como "memoria" cuando el agente trabaja en segundo plano y en paralelo (ejecución en segundo plano ya cubierta): sin una superficie de tareas las tareas se pierden en el scroll; es distinto de la tarjeta de llamada de herramienta ya cubierta, que muestra UNA acción dentro de una respuesta —la superficie de tareas agrega TODAS las tareas en una vista persistente y supervisable. → Aplicación: en EnRegla, si un agente procesa varios pliegos a la vez, no dejarlos como mensajes sueltos en el chat; darles una bandeja de tareas con estado + enlace al resultado, para que Danilo retome cualquiera sin rebuscar el hilo.
+
+**AI**
+**Proliferación de agentes (ES) / Agent sprawl (EN)** → la multiplicación descontrolada de agentes de IA de distintos proveedores dentro de una organización, cada uno con sus credenciales, permisos e identidad propios y sin un lugar común para gestionarlos, observarlos o coordinarlos. → Importa porque es tema fresco esta semana (el lanzamiento de Ando, un chat de equipo AI-native que da a los agentes identidad e inbox, se vende justo como respuesta al "agent sprawl") y conecta seguridad en tiempo de ejecución, observabilidad y mínimo privilegio ya cubiertos: cada agente nuevo es otra identidad no-humana con su propio blast radius, y sin gobernanza el valor de cada uno se lo come el caos operativo. → Aplicación: en cualquier setup agéntico de dr-cv/EnRegla, antes de sumar un agente nuevo preguntar si uno existente ya puede hacerlo, y mantener un inventario de qué agente tiene qué permisos y qué datos toca, en vez de acumular agentes sueltos.
+
+**Development**
+**Propiedad abreviada corner en CSS (ES) / CSS corner shorthand (EN)** → familia de propiedades nuevas en Chrome 155 (`corner`, más `corner-top-left`…por esquina, y `corner-top` / `corner-block-start`…por lado físico o lógico) que fijan en una sola declaración tanto el radio (`border-radius`) como la forma (`corner-shape`, ya cubierta) de una o varias esquinas. → Importa porque hoy radio y forma se declaran por separado y esquina por esquina, lo que vuelve verboso cualquier sistema de tarjetas/botones con esquinas custom; esto lo colapsa en una abreviatura por esquina o por lado —incluida la variante lógica, consciente del idioma— que es menos CSS que mantener en el design system, apoyándose en `corner-shape` (squircles) ya cubierta. → Aplicación: en `design-system/tokens-web.css`, definir la forma de tarjetas/botones de landing-v11 con una sola línea (`corner: 12px squircle`, o solo las superiores con `corner-top`) en vez de repetir pares `border-radius` + `corner-shape` por componente.
