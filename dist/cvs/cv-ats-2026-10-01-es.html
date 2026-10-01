@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Danilo Rojas · Senior Product Designer</title>
+<style>
+/* Tri-voz tipográfica (todo system fonts, ATS-safe): Bahnschrift = display/headings,
+   Segoe UI = cuerpo humanista, Consolas = metadata (contacto, fechas, contexto). */
+:root{ --ink:#1a1d21; --body:#33383d; --dim:#6a7178; --line:#c9cdd1; }
+@page{ size:A4; margin:12mm 16mm; }
+*{ box-sizing:border-box; margin:0; padding:0; }
+body{ font-family:"Segoe UI",Arial,Helvetica,sans-serif; color:var(--body); font-size:10pt; line-height:1.5; background:#fff; }
+.page{ max-width:178mm; margin:0 auto; padding:4mm 0; }
+h1{ font-family:Bahnschrift,"Segoe UI",Arial,sans-serif; font-size:26pt; font-weight:600; color:var(--ink); letter-spacing:-.01em; }
+.headline{ font-size:11.5pt; color:var(--dim); margin-top:3pt; font-weight:350; letter-spacing:.015em; }
+.contact{ margin-top:8pt; font-family:Consolas,monospace; font-size:8pt; color:var(--dim); line-height:1.75; letter-spacing:.01em; }
+/* Tracking <=.1em: mas alto rompe la extraccion de texto del PDF ("R E S U M E N") y el parseo ATS. */
+h2{ font-family:Bahnschrift,"Segoe UI",Arial,sans-serif; font-size:8.5pt; font-weight:500; color:var(--dim); text-transform:uppercase; letter-spacing:.1em; border-bottom:.6pt solid var(--line); padding-bottom:4pt; margin:13pt 0 7pt; break-after:avoid; }
+.summary{ font-size:10pt; }
+.skline{ margin:0 0 4.5pt; }
+.skline b{ color:var(--ink); font-weight:600; }
+.job{ margin:0 0 11pt; }
+.job-h{ display:flex; justify-content:space-between; gap:12pt; align-items:baseline; }
+.job-h .co{ font-weight:600; color:var(--ink); font-size:10.5pt; }
+.job-h .dates{ font-family:Consolas,monospace; font-size:8pt; color:var(--dim); white-space:nowrap; letter-spacing:.02em; }
+.job .role{ font-weight:600; color:var(--ink); }
+.job .ctx{ font-family:Consolas,monospace; font-size:8pt; color:var(--dim); margin:1pt 0 3pt; }
+ul{ margin:4pt 0 0 13pt; }
+li{ margin:0 0 3pt; break-inside:avoid; }
+li::marker{ content:"–\2002"; color:var(--dim); }
+.plain{ margin:0 0 3.5pt; }
+.plain b{ color:var(--ink); font-weight:600; }
+/* Marcador de dato pendiente: visible en HTML y PDF para que la versión no se envíe por error. */
+.todo{ background:#fff3b0; outline:2px solid #e0a800; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Danilo Rojas</h1>
+  <p class="headline">Senior Product Designer</p>
+  <p class="contact">
+    Quito, Ecuador | Disponible en remoto<br>
+    +593987655379 | hola@danilorojas.design<br>
+    danilorojas.design | linkedin.com/in/mdanilorojas | github.com/mdanilorojas
+  </p>
+
+  <h2>Resumen</h2>
+  <p class="summary">Senior Product Designer con 12+ años liderando product discovery y diseño end-to-end para entornos complejos y regulados — plataformas federales (DoD, Army, FAA, VA) y SaaS B2B. Reduje el ciclo design-to-development de ~6 semanas a menos de 1 semana y escalé un design system de 0 a 26 equipos en Booz Allen Hamilton. Experto en Figma (Auto Layout, Variables, Dev Mode), gobernanza de design systems, accesibilidad (WCAG 2.2, Section 508) e investigación de usuarios potenciada por IA.</p>
+
+  <h2>Habilidades</h2>
+  <p class="skline"><b>User Research:</b> User Research · Usability Testing (moderated &amp; unmoderated) · Journey Mapping · Diary Studies · Contextual Inquiry · Card Sorting · Tree Testing · First-Click Testing · NPS · CSAT</p>
+  <p class="skline"><b>Diseño de Producto:</b> End-to-End Product Design · Product Discovery · Problem Framing · Interaction Design · Prototyping · Design-to-Code (React, TypeScript) · Cognitive Friction Mapping</p>
+  <p class="skline"><b>Analytics de Producto y Experimentación:</b> Mixpanel · Activation Metrics · A/B Testing · Funnel Analysis</p>
+  <p class="skline"><b>En formación activa:</b> Jobs-to-be-Done (JTBD) · North Star Metric · PostHog · Dovetail · Maze</p>
+  <p class="skline"><b>Design Systems:</b> Design Tokens · Component Architecture · Figma Libraries · Storybook · Shadcn · Radix · Ant Design · Material UI · IBM Carbon</p>
+  <p class="skline"><b>Accesibilidad:</b> Accessibility (WCAG 2.2) · Section 508 · Automated accessibility audits</p>
+  <p class="skline"><b>IA y Diseño Agéntico:</b> Agent-ready Design Systems · LLM Persona Emulation · Agentic UX Testing · Custom MCP design · AI-augmented design workflows</p>
+
+  <h2>Herramientas</h2>
+  <p class="skline">Figma (Auto Layout, Variables, Dev Mode, Motion, Figma Make, MCP) · Miro · Storybook · Jira · Linear · GitHub · Vercel · Cursor · Claude Code</p>
+
+  <h2>Experiencia Laboral</h2>
+  
+  <div class="job">
+    <div class="job-h"><span class="co">Booz Allen Hamilton</span><span class="dates">2022 – Presente</span></div>
+    <div class="role">Senior Product Designer (Design-Engineering)</div>
+    <div class="ctx">Plataforma federal Trusted Environments + Developer Portal · Army, DoD, FAA, VA</div>
+    <ul>
+      <li>Lideré el diseño de producto end-to-end de la plataforma federal Trusted Environments y su Developer Portal, reduciendo el ciclo design-to-development de ~6 semanas a menos de 1 semana al entregar componentes y pantallas React listos para producción.</li>
+      <li>Arquitecté 2 design systems sobre Shadcn, Radix y el BAH Brand Book; la adopción escaló de 0 a 26 equipos internos en una firma de ~30,000 ingenieros, incluyendo el producto de ciberseguridad Vellox Reverser.</li>
+      <li>Establecí el cumplimiento de accesibilidad (WCAG 2.2, Section 508) en todo el design system, superando el 95%+ de los checks automatizados de accesibilidad.</li>
+      <li>Pionero en investigación UX agéntica: construí emuladores de persona basados en LLM que corrían cientos de pruebas de usabilidad automatizadas por pantalla, validadas con usability testing moderado (5 usuarios por feature) — 92% de los participantes calificó las mejoras como superiores.</li>
+      <li>Diseñé un design system dark agent-ready que agentes de IA de otros equipos consumen de forma autónoma para generar assets (social stories, presentaciones) — construido antes de que existiera tooling de cloud design mainstream.</li>
+      <li>Diseñé un servidor MCP (Model Context Protocol) propio para developers y establecí medición de NPS y CSAT; los tickets de problemas bajaron mientras el engagement de ideas en Aha! subió con ciclos de release más rápidos.</li>
+    </ul>
+  </div>
+  <div class="job">
+    <div class="job-h"><span class="co">Compliance SaaS · LATAM</span><span class="dates">2026 – Presente</span></div>
+    <div class="role">Líder de Diseño de Producto</div>
+    
+    <ul>
+      <li>Dueño del diseño de discovery a lanzamiento de un SaaS de compliance para PYMES LATAM; validé el MVP en 40 días — el producto atiende ~280 clientes de pago sobre una base de ~2,700 usuarios.</li>
+      <li>Construí un design system de 31 componentes en Figma, usado en 16 pantallas e implementado directamente en React 19 + TypeScript sobre Supabase.</li>
+      <li>Reconstruí un funnel de onboarding roto en 3 semanas usando usability testing y loops de feedback con personas IA; instrumenté analytics end-to-end en Mixpanel y definí la métrica de activación — la activación de nuevos usuarios subió de 2.6% a 9.4%.</li>
+      <li>Diseñé y corrí un A/B test sobre el registro del onboarding (registro con email vs. acceso con Google); ganó el acceso con Google, subiendo la finalización del onboarding en 74%.</li>
+    </ul>
+  </div>
+  <div class="job">
+    <div class="job-h"><span class="co">Xentinels DesignOps</span><span class="dates">2016 – 2022</span></div>
+    <div class="role">Director de Diseño / Product Manager</div>
+    <div class="ctx">Clientes: Merck, Mondelēz, Banco Pichincha</div>
+    <ul>
+      <li>Dirigí la unidad de DesignOps para clientes Fortune 500, escalando design systems multi-tema distribuidos y librerías de tokens sobre Ant Design, Material UI e IBM Carbon, más un design system propio basado en Shadcn para Banco Pichincha.</li>
+      <li>Lideré investigación cualitativa de usuarios — 100+ entrevistas, usability testing y card sorting — definiendo patrones de interacción enterprise estándar.</li>
+      <li>Reduje el time-to-market de clientes en 35% mediante un handoff diseño-ingeniería optimizado; mentoricé a 12 diseñadores junior/mid.</li>
+    </ul>
+  </div>
+  
+  <div class="job">
+    <div class="job-h"><span class="co">Experiencia anterior (2011 – 2017)</span></div>
+    <p class="plain"><b>Arpatel</b> — Product Manager — flujos de producto Retail POS y CRM</p>
+    <p class="plain"><b>Tecniequipos</b> — Diseñador Visual Senior / Developer</p>
+    <p class="plain"><b>Canadian Bank Note</b> — Administrador de Proyectos — proyectos técnicos regionales</p>
+  </div>
+
+  <h2>Certificaciones</h2>
+  <p class="plain"><b>AI for Designers</b> — Interaction Design Foundation (IxDF), 2025</p>
+  <p class="plain"><b>Google UX Design Certificate</b> — Coursera, 2021</p>
+  <p class="plain"><b>Design Thinking</b> — IBM, 2020</p>
+  <p class="plain"><b>Certified Professional in Accessibility Core Competencies (CPACC)</b> — IAAP (en curso)</p>
+
+  <h2>Educación</h2>
+  <p class="plain"><b>M.A. in Interaction Design &amp; UX</b> — Universitat Oberta de Catalunya (UOC) (en curso)</p>
+  <p class="plain"><b>B.Sc. in Computer Systems Engineering</b> — Escuela Politécnica Nacional (EPN)</p>
+</div>
+</body>
+</html>
