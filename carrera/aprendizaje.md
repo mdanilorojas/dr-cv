@@ -167,6 +167,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Superficie de tareas / Task surface (bandeja de tareas del agente) [Product Design]
 - Proliferación de agentes / Agent sprawl [AI]
 - Propiedad abreviada corner en CSS / CSS corner shorthand (corner-*) [Development]
+- Divulgación progresiva / Progressive disclosure [Product Design]
+- Anclaje a fuentes / Grounding [AI]
+- Registro tipado de custom properties / CSS @property [Development]
 
 ---
 
@@ -736,3 +739,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Propiedad abreviada corner en CSS (ES) / CSS corner shorthand (EN)** → familia de propiedades nuevas en Chrome 155 (`corner`, más `corner-top-left`…por esquina, y `corner-top` / `corner-block-start`…por lado físico o lógico) que fijan en una sola declaración tanto el radio (`border-radius`) como la forma (`corner-shape`, ya cubierta) de una o varias esquinas. → Importa porque hoy radio y forma se declaran por separado y esquina por esquina, lo que vuelve verboso cualquier sistema de tarjetas/botones con esquinas custom; esto lo colapsa en una abreviatura por esquina o por lado —incluida la variante lógica, consciente del idioma— que es menos CSS que mantener en el design system, apoyándose en `corner-shape` (squircles) ya cubierta. → Aplicación: en `design-system/tokens-web.css`, definir la forma de tarjetas/botones de landing-v11 con una sola línea (`corner: 12px squircle`, o solo las superiores con `corner-top`) en vez de repetir pares `border-radius` + `corner-shape` por componente.
+
+### 2026-10-02 · viernes
+
+**Product Design**
+**Divulgación progresiva (ES) / Progressive disclosure (EN)** → patrón que muestra primero solo lo esencial y revela opciones avanzadas o detalle solo cuando el usuario los pide, en vez de volcar toda la complejidad de una vez. → Importa porque es el fundamento clásico detrás de varias tácticas AI-native que ya cubrí (preguntas de encuadre, vista previa de intención, tarjeta de llamada de herramienta): todas son formas de dosificar información/control para no abrumar; dominar el principio —no solo las tácticas— es lo que deja al diseñador decidir *cuánto* exponer en cada paso de un agente. → Aplicación: en un asistente de EnRegla, mostrar primero el resultado extraído del pliego y esconder los controles de configuración (fuentes, filtros, re-ejecución) tras un "ajustar", para que el 80% de usuarios termine en un clic y el experto aún tenga sus perillas.
+
+**AI**
+**Anclaje a fuentes (ES) / Grounding (EN)** → técnica de atar la respuesta del modelo a datos verificables concretos (el documento, la base de datos, el resultado de una herramienta) y exigir que cite o se limite a ellos, en vez de generar desde su memoria paramétrica. → Importa porque es la causa raíz que resuelven RAG, chips de cita y diseño para la incertidumbre ya cubiertos: la alucinación no se "apaga" con un prompt amable, se reduce anclando la generación a una fuente y haciendo visible de dónde salió cada dato —es la competencia técnica que sostiene la confianza que un AI Product Designer diseña. → Aplicación: en EnRegla, el nodo que extrae montos/plazos del pliego debe devolver cada valor con su cita (página/sección del documento) y, si el dato no está en la fuente, responder "no encontrado" en vez de inventarlo —grounding primero, redacción después.
+
+**Development**
+**Registro tipado de custom properties (ES) / CSS @property (EN)** → regla (`@property --mi-color { syntax: "<color>"; inherits: false; initial-value: #000; }`) que registra una variable CSS con tipo, valor inicial y herencia, en lugar de la custom property "sin tipo" por defecto; Baseline *Widely available*. → Importa porque una variable sin registrar es solo texto y **no se puede animar ni transicionar** (ni validar): registrarla con `syntax` le da tipo real, habilitando animar gradientes, ángulos o colores definidos por token —la pieza que falta para que un design system basado en variables tenga motion de verdad, apoyándose en `linear()` y las animaciones por scroll ya cubiertas. → Aplicación: en `design-system/tokens-web.css`, registrar con `@property` los tokens que quieras animar (p. ej. `--accent` como `<color>` o `--angle` como `<angle>`) para transicionar suave el acento de marca o un gradiente en hover/reveal de landing-v11, imposible con una variable sin tipo.
