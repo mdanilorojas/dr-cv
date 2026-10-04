@@ -35,6 +35,10 @@ async function main() {
   await emit("cv-ats-2026-07-02-en", renderAtsCv(data, "en"));
   await emit("cv-ats-2026-07-02-es", renderAtsCv(data, "es"));
 
+  // Versión ATS fechada 2026-10-04: cotejo Ciclo 39 — sin nuevos datos fact-bank vs Ciclo 38.
+  await emit("cv-ats-2026-10-04-en", renderAtsCv(data, "en"));
+  await emit("cv-ats-2026-10-04-es", renderAtsCv(data, "es"));
+
   console.log("[cv] done.");
 }
 
