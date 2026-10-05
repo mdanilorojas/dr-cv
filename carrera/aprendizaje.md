@@ -170,6 +170,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Divulgación progresiva / Progressive disclosure [Product Design]
 - Anclaje a fuentes / Grounding [AI]
 - Registro tipado de custom properties / CSS @property [Development]
+- Interacción basada en intención / Intent-based interaction [Product Design]
+- Comunicación full-duplex / Full-duplex [AI]
+- Función random() en CSS / CSS random() function [Development]
 
 ---
 
@@ -750,3 +753,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Registro tipado de custom properties (ES) / CSS @property (EN)** → regla (`@property --mi-color { syntax: "<color>"; inherits: false; initial-value: #000; }`) que registra una variable CSS con tipo, valor inicial y herencia, en lugar de la custom property "sin tipo" por defecto; Baseline *Widely available*. → Importa porque una variable sin registrar es solo texto y **no se puede animar ni transicionar** (ni validar): registrarla con `syntax` le da tipo real, habilitando animar gradientes, ángulos o colores definidos por token —la pieza que falta para que un design system basado en variables tenga motion de verdad, apoyándose en `linear()` y las animaciones por scroll ya cubiertas. → Aplicación: en `design-system/tokens-web.css`, registrar con `@property` los tokens que quieras animar (p. ej. `--accent` como `<color>` o `--angle` como `<angle>`) para transicionar suave el acento de marca o un gradiente en hover/reveal de landing-v11, imposible con una variable sin tipo.
+
+### 2026-10-05 · lunes
+
+**Product Design**
+**Interacción basada en intención (ES) / Intent-based interaction (EN)** → paradigma donde el usuario expresa *qué quiere lograr* (su meta) y el sistema planifica y ejecuta los pasos, en vez de operar comando por comando sobre controles concretos; señalado esta semana como "el primer paradigma de UI nuevo en 60 años". → Importa porque reencuadra el trabajo del diseñador: ya no arregla pantallas y botones, diseña cómo el usuario declara intención y cómo confía/controla/recupera lo que el agente hace; es el *paradigma* que engloba tácticas ya cubiertas (vista previa de intención, preguntas de encuadre, AX) —esas son el *cómo*, esto es el *qué* del cambio. → Aplicación: en EnRegla, diseñar la entrada como "dime qué necesitas de este pliego" (meta) en lugar de un formulario de filtros y botones, y construir alrededor las señales de plan, control y rollback que ese paradigma exige.
+
+**AI**
+**Comunicación full-duplex (ES) / Full-duplex (EN)** → en agentes de voz/video, capacidad de escuchar y hablar *al mismo tiempo* por un canal bidireccional continuo —el usuario puede interrumpir y el agente ajustarse en tiempo real— en vez del turno rígido "yo hablo, luego tú" (half-duplex); fresco esta semana con el modelo de video full-duplex que Tavus mostró a testers (oct 2026). → Importa porque es la capacidad técnica que *habilita* el barge-in ya cubierto (que es la táctica de UX): sin full-duplex un agente conversacional no se deja interrumpir con naturalidad y la charla se siente robótica, por turnos. → Aplicación: si EnRegla suma un asistente de voz, saber que "poder interrumpir al agente" no es solo diseño de UI sino que exige un pipeline full-duplex por debajo; diseñar la experiencia conversacional asumiendo esa capacidad (o su ausencia) en vez de prometer una fluidez que la infra no sostiene.
+
+**Development**
+**Función random() en CSS (ES) / CSS random() function (EN)** → función que genera un valor numérico aleatorio dentro de un rango directamente en CSS (dispersar elementos, variar rotaciones, escalonar retardos) sin JS; llega en Chrome 156 (beta, oct 2026). → Importa porque hoy cualquier variación "orgánica" —posiciones dispersas, ángulos sutilmente distintos por tarjeta, delays escalonados— exige JS o valores escritos a mano, y esto lo vuelve CSS puro y declarativo, menos código que mantener. → Aplicación: en landing-v11, variar sutilmente rotación/retardo del reveal de tarjetas de casos o de un grid de skills con `random()` para un ritmo menos mecánico, sin JS ni escribir cada valor a mano; como siempre, probando el fallback en navegadores sin soporte.
