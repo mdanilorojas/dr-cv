@@ -173,6 +173,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Interacción basada en intención / Intent-based interaction [Product Design]
 - Comunicación full-duplex / Full-duplex [AI]
 - Función random() en CSS / CSS random() function [Development]
+- Generación anclada al design system / Design-system-grounded AI generation [Product Design]
+- Cuarentena de agentes / Agent quarantine (Nvidia Open Agent Safety Platform) [AI]
+- Propiedad image-animation y pseudo-clase :animated-image en CSS / CSS image-animation & :animated-image [Development]
 
 ---
 
@@ -764,3 +767,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Función random() en CSS (ES) / CSS random() function (EN)** → función que genera un valor numérico aleatorio dentro de un rango directamente en CSS (dispersar elementos, variar rotaciones, escalonar retardos) sin JS; llega en Chrome 156 (beta, oct 2026). → Importa porque hoy cualquier variación "orgánica" —posiciones dispersas, ángulos sutilmente distintos por tarjeta, delays escalonados— exige JS o valores escritos a mano, y esto lo vuelve CSS puro y declarativo, menos código que mantener. → Aplicación: en landing-v11, variar sutilmente rotación/retardo del reveal de tarjetas de casos o de un grid de skills con `random()` para un ritmo menos mecánico, sin JS ni escribir cada valor a mano; como siempre, probando el fallback en navegadores sin soporte.
+
+### 2026-10-06 · martes
+
+**Product Design**
+**Generación anclada al design system (ES) / Design-system-grounded AI generation (EN)** → capacidad de las herramientas de diseño con IA de generar pantallas usando la librería de componentes y tokens *reales* del equipo, de modo que el output ya respeta el sistema en vez de ser un mockup genérico; tema caliente esta semana en el *State of AI in UX & Product Design 2026*. → Importa porque es distinta de Generative UI (genera UI al vuelo para el usuario) y de Code Layers (convierte diseño en código): esto ancla la *generación* a tu fuente de verdad visual —el mismo principio de *grounding* ya cubierto, pero aplicado al diseño—, lo que convierte al design system en el activo que hace usable (no desechable) al generador. → Aplicación: mantener `design-system/` + un `DESIGN.md` tan limpios y legibles por máquina que cualquier generador de IA produzca componentes de landing-v11 ya conformes a los tokens, en lugar de pantallas genéricas que haya que rehacer a mano.
+
+**AI**
+**Cuarentena de agentes (ES) / Agent quarantine (EN)** → mecanismo de seguridad que aísla de inmediato a un agente que se comporta de forma anómala —revocando sus credenciales, herramientas y acceso a datos— para *contener* el daño después de detectarlo, no solo prevenirlo antes; fresco esta semana con la Open Agent Safety Platform de Nvidia (100+ socios), vendida justo como forma de "poner en cuarentena agentes rebeldes". → Importa porque complementa la seguridad en tiempo de ejecución y el mínimo privilegio ya cubiertos: esos *previenen*, pero la cuarentena asume que algo fallará (ver JADEPUFFER) y añade la capa de contención/respuesta —defensa en profundidad para identidades no-humanas con su propio blast radius. → Aplicación: en un setup agéntico de EnRegla, diseñar un "kill switch" por agente (revocar token + deshabilitar herramientas en un paso) y un estado visible "agente en cuarentena" en la superficie de tareas, para cortar en segundos si un agente empieza a actuar raro.
+
+**Development**
+**Propiedad image-animation y pseudo-clase :animated-image en CSS (ES) / CSS image-animation property & :animated-image pseudo-class (EN)** → funciones nuevas en Chrome 156 (beta, oct 2026) que permiten pausar/reanudar imágenes animadas (GIF, WebP y AVIF animados) desde CSS —`image-animation: none`— y seleccionar justo esos elementos con `:animated-image`, sin JS. → Importa porque hoy no hay forma nativa de detener un GIF en autoplay, que es a la vez un problema de accesibilidad (distracción, mareo) y de *craft*; combinado con `@media (prefers-reduced-motion)` respetas la preferencia del usuario en una línea, el mismo control fino que trajeron `text-box-trim` y `caret-animation` ya cubiertos. → Aplicación: en landing-v11, si un caso de `perfil/` usa un GIF/AVIF animado, pausarlo por defecto y reproducir solo en hover, y detenerlo del todo bajo `prefers-reduced-motion`, todo en CSS puro con su fallback para navegadores sin soporte.
