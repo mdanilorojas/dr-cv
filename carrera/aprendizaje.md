@@ -176,6 +176,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Generación anclada al design system / Design-system-grounded AI generation [Product Design]
 - Cuarentena de agentes / Agent quarantine (Nvidia Open Agent Safety Platform) [AI]
 - Propiedad image-animation y pseudo-clase :animated-image en CSS / CSS image-animation & :animated-image [Development]
+- Prototipado Mago de Oz / Wizard of Oz prototyping [Product Design]
+- Patrón ReAct (Razonar + Actuar) / ReAct (Reasoning + Acting) pattern [AI]
+- Media features display-state y resizable en CSS / CSS display-state & resizable media features [Development]
 
 ---
 
@@ -778,3 +781,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Propiedad image-animation y pseudo-clase :animated-image en CSS (ES) / CSS image-animation property & :animated-image pseudo-class (EN)** → funciones nuevas en Chrome 156 (beta, oct 2026) que permiten pausar/reanudar imágenes animadas (GIF, WebP y AVIF animados) desde CSS —`image-animation: none`— y seleccionar justo esos elementos con `:animated-image`, sin JS. → Importa porque hoy no hay forma nativa de detener un GIF en autoplay, que es a la vez un problema de accesibilidad (distracción, mareo) y de *craft*; combinado con `@media (prefers-reduced-motion)` respetas la preferencia del usuario en una línea, el mismo control fino que trajeron `text-box-trim` y `caret-animation` ya cubiertos. → Aplicación: en landing-v11, si un caso de `perfil/` usa un GIF/AVIF animado, pausarlo por defecto y reproducir solo en hover, y detenerlo del todo bajo `prefers-reduced-motion`, todo en CSS puro con su fallback para navegadores sin soporte.
+
+### 2026-10-07 · miércoles
+
+**Product Design**
+**Prototipado Mago de Oz (ES) / Wizard of Oz prototyping (EN)** → técnica donde pruebas una experiencia haciendo que un humano ejecute en secreto lo que luego será automático (la "IA"), de modo que validas la interacción *antes* de construir el modelo. → Importa porque en productos de IA el mayor riesgo es invertir en ML caro sin saber si la interacción siquiera funciona; Mago de Oz prueba la UX de la IA —confianza, controles, recuperación— por una fracción del costo y es una competencia central del AI Product Designer. → Aplicación: antes de construir el generador agéntico de bullets de CV en EnRegla, falsear las "sugerencias de IA" con un humano detrás de la UI para ver si el flujo de intención y las señales de confianza funcionan, y recién entonces decidir qué automatizar.
+
+**AI**
+**Patrón ReAct — Razonar + Actuar (ES) / ReAct (Reasoning + Acting) pattern (EN)** → bucle de agente donde el modelo intercala pasos de razonamiento ("pensamiento"), acciones (llamadas a herramientas) y observaciones del resultado, repitiendo hasta resolver, en vez de planear todo de golpe o actuar a ciegas. → Importa porque es el bucle fundacional bajo la mayoría de los agentes que usan herramientas: nombrarlo te da vocabulario para razonar *dónde* fallan (mala lectura de la observación, bucles sin fin, acción sin pensar) y complementa el actor-evaluador y la arquitectura por grafos ya cubiertos. → Aplicación: estructurar un workflow agéntico de dr-cv como pasos explícitos Pensamiento→Acción(herramienta)→Observación, para poder loguear y depurar cada ciclo en vez de tratar al agente como una caja negra.
+
+**Development**
+**Media features display-state y resizable en CSS (ES) / CSS display-state & resizable media features (EN)** → media queries nuevas en Chrome 155 (estable, 6 oct 2026) que permiten que los estilos respondan al estado de la ventana (fullscreen/maximizada/minimizada) y a si es redimensionable, para web apps instaladas que usan la Window Management API (`maximize()`, `minimize()`, `restore()`, `setResizable()`). → Importa porque deja adaptar el chrome y el layout de una app web a su estado de ventana en CSS puro, sin listeners de JS, el mismo control declarativo fino que vienen trayendo las features recientes de la plataforma. → Aplicación: en landing-v11 o una futura web app de dr-cv instalable, usar `@media (display-state: ...)` para ajustar densidad/chrome cuando corre como ventana de app instalada vs. pestaña de navegador, con su fallback para navegadores sin soporte.
