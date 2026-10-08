@@ -179,6 +179,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Prototipado Mago de Oz / Wizard of Oz prototyping [Product Design]
 - Patrón ReAct (Razonar + Actuar) / ReAct (Reasoning + Acting) pattern [AI]
 - Media features display-state y resizable en CSS / CSS display-state & resizable media features [Development]
+- Benchmark de gusto / Taste Bench (Omneky) [Product Design]
+- OSWorld / benchmark de agentes de uso de computadora / computer-use benchmark [AI]
+- Indicador de reglas de estilo inactivas en DevTools / Inactive style rules indicator in DevTools [Development]
 
 ---
 
@@ -792,3 +795,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Media features display-state y resizable en CSS (ES) / CSS display-state & resizable media features (EN)** → media queries nuevas en Chrome 155 (estable, 6 oct 2026) que permiten que los estilos respondan al estado de la ventana (fullscreen/maximizada/minimizada) y a si es redimensionable, para web apps instaladas que usan la Window Management API (`maximize()`, `minimize()`, `restore()`, `setResizable()`). → Importa porque deja adaptar el chrome y el layout de una app web a su estado de ventana en CSS puro, sin listeners de JS, el mismo control declarativo fino que vienen trayendo las features recientes de la plataforma. → Aplicación: en landing-v11 o una futura web app de dr-cv instalable, usar `@media (display-state: ...)` para ajustar densidad/chrome cuando corre como ventana de app instalada vs. pestaña de navegador, con su fallback para navegadores sin soporte.
+
+### 2026-10-08 · jueves
+
+**Product Design**
+**Benchmark de gusto / Taste Bench (ES: banco de prueba de gusto / EN: Taste Bench)** → herramienta lanzada esta semana por Omneky que puntúa automáticamente la calidad visual de creatividades generativas —atractivo visual, cumplimiento del estilo de marca, detección de anomalías de diseño— y las compara antes de publicarlas. → Importa porque formaliza algo que hasta ahora solo vivía en el ojo del diseñador senior: medir "¿esto está bien hecho y on-brand?" a escala; es la contracara práctica del *Gusto/craft como diferenciador* y de la *gobernanza de design system* ya cubiertos, ahora como chequeo automatizable. → Aplicación: definir para EnRegla un set de reglas de marca legibles por máquina (tokens, do/don't) que un paso de IA use como "taste bench" para marcar outputs del generador que se salen del design system antes de que lleguen a revisión humana.
+
+**AI**
+**OSWorld (ES: benchmark de agentes de uso de computadora / EN: OSWorld, computer-use benchmark)** → banco de pruebas que mide qué tan bien un agente completa tareas reales operando un sistema operativo de escritorio (abrir apps, clicar, llenar formularios) en un entorno real, no simulado; saltó a la vista esta semana porque Claude Haiku 5.5 (7 oct) reportó 72.4%. → Importa porque es la métrica concreta detrás de la promesa "agente que usa tu computadora": cuando evalúes modelos para *computer-use* (ya cubierto como patrón), OSWorld te dice si de verdad terminan la tarea o solo dan el primer paso; es *evals* aplicado a lo agéntico. → Aplicación: al elegir qué modelo mover a tareas que operan UIs por ti en flujos de EnRegla, mirar su número de OSWorld (y Terminal-Bench) en vez del benchmark de chat, y reservar lo más caro para donde la tasa de éxito importe.
+
+**Development**
+**Indicador de reglas de estilo inactivas en DevTools (ES) / Inactive style rules indicator in DevTools (EN)** → mejora de Chrome DevTools (oct 2026) por la que el panel Elements puede seguir mostrando reglas CSS que *antes* aplicaban al elemento seleccionado pero ya no, marcadas con un indicador de "inactiva", activable en Settings. → Importa porque uno de los bugs de CSS más difíciles de depurar es "esta regla debería aplicar y no aplica": antes la regla simplemente desaparecía del panel y perdías el rastro; ahora ves que existe pero fue anulada o dejó de hacer match, acortando el diagnóstico. → Aplicación: al depurar por qué un token o componente de `design-system/` no toma el estilo esperado en landing-v11, activar este indicador para ver de un vistazo qué regla quedó inactiva (especificidad, cascada, media query) en vez de comentar CSS a ciegas.
