@@ -182,6 +182,9 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 - Benchmark de gusto / Taste Bench (Omneky) [Product Design]
 - OSWorld / benchmark de agentes de uso de computadora / computer-use benchmark [AI]
 - Indicador de reglas de estilo inactivas en DevTools / Inactive style rules indicator in DevTools [Development]
+- Investigación UX agéntica / Agentic UX research [Product Design]
+- Modelo decisor de acciones de agente / Agent action-gating model (Amazon Strands Decider 2B) [AI]
+- content-visibility y contain-intrinsic-size en CSS / CSS content-visibility & contain-intrinsic-size [Development]
 
 ---
 
@@ -806,3 +809,14 @@ _(el agente mantiene esta lista para no repetir — uno por línea, área entre 
 
 **Development**
 **Indicador de reglas de estilo inactivas en DevTools (ES) / Inactive style rules indicator in DevTools (EN)** → mejora de Chrome DevTools (oct 2026) por la que el panel Elements puede seguir mostrando reglas CSS que *antes* aplicaban al elemento seleccionado pero ya no, marcadas con un indicador de "inactiva", activable en Settings. → Importa porque uno de los bugs de CSS más difíciles de depurar es "esta regla debería aplicar y no aplica": antes la regla simplemente desaparecía del panel y perdías el rastro; ahora ves que existe pero fue anulada o dejó de hacer match, acortando el diagnóstico. → Aplicación: al depurar por qué un token o componente de `design-system/` no toma el estilo esperado en landing-v11, activar este indicador para ver de un vistazo qué regla quedó inactiva (especificidad, cascada, media query) en vez de comentar CSS a ciegas.
+
+### 2026-10-09 · viernes
+
+**Product Design**
+**Investigación UX agéntica (ES) / Agentic UX research (EN)** → agentes de IA que ejecutan por su cuenta partes del ciclo de research —correr pruebas de usabilidad, moderar entrevistas, agrupar hallazgos en temas— actuando como asistente de investigación incansable, no solo como transcriptor; señalado esta semana como patrón emergente en el *State of AI in UX & Product Design 2026*. → Importa porque el research suele ser el cuello de botella del descubrimiento, y esto lo escala; pero traslada el valor del diseñador a *encuadrar bien las preguntas* y *validar la síntesis* de la IA —el mismo criterio senior que separa insight real de alucinación ordenada. → Aplicación: usar un agente para agrupar y sintetizar notas de entrevistas de usuarios de EnRegla en temas, y luego aplicar juicio senior para decidir cuáles insights de verdad dirigen el diseño, en vez de aceptar el resumen tal cual.
+
+**AI**
+**Modelo decisor de acciones de agente (ES) / Agent action-gating model (EN)** → modelo pequeño y especializado cuyo único trabajo es juzgar, *antes* de ejecutar, si una acción propuesta por un agente debe proceder o bloquearse; fresco esta semana con Amazon Strands Decider 2B (open, ~1 oct 2026), que se inserta como guardia entre el plan del agente y su ejecución. → Importa porque complementa la seguridad en tiempo de ejecución, el mínimo privilegio y la cuarentena ya cubiertos: en vez de una lista estática de permisos, un modelo barato evalúa *cada acción en contexto* antes de que corra —es el patrón actor-evaluador aplicado a las acciones, defensa en profundidad para el blast radius de JADEPUFFER. → Aplicación: en un workflow agéntico de EnRegla, poner un decider pequeño frente a las herramientas destructivas (push/deploy/delete) para que apruebe o rechace cada llamada antes incluso de la confirmación humana, atrapando acciones malas de forma barata.
+
+**Development**
+**content-visibility y contain-intrinsic-size en CSS (ES) / CSS content-visibility & contain-intrinsic-size (EN)** → `content-visibility: auto` le dice al navegador que salte el renderizado (layout + paint) de un elemento hasta que esté cerca del viewport, y `contain-intrinsic-size` reserva un tamaño placeholder para que la barra de scroll no salte; fundamento de performance ya estable en navegadores modernos. → Importa porque es una de las palancas de rendimiento más grandes y menos usadas: en páginas largas con muchas secciones fuera de pantalla, acelera mucho el primer paint sin recurrir a virtualización con JS, el mismo control declarativo fino que vienen trayendo las features recientes de la plataforma. → Aplicación: aplicar `content-visibility: auto` a las tarjetas de casos o secciones fuera de pantalla de landing-v11 para que la página pinte rápido, con `contain-intrinsic-size` estimando su alto para mantener estable la posición de scroll.
